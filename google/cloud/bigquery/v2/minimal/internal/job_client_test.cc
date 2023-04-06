@@ -14,8 +14,11 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_client.h"
 #include "google/cloud/bigquery/v2/minimal/mocks/mock_job_connection.h"
+#include "google/cloud/mocks/mock_stream_range.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_response.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -29,30 +32,29 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
+Job MakeTestJob() {
+  Job job;
+  job.etag = "jtag";
+  job.kind = "jkind";
+  job.id = "j123";
+  job.self_link = "jselfLink";
+  job.user_email = "juserEmail";
+  job.status.state = "DONE";
+  job.reference.project_id = "p123";
+  job.reference.job_id = "j123";
+  job.configuration.job_type = "QUERY";
+  job.configuration.query_config.query = "select 1;";
+  return job;
+}
+
 TEST(JobClientTest, GetJobSuccess) {
   auto mock_job_connection = std::make_shared<MockBigQueryJobConnection>();
 
-  std::string expected_payload =
-      R"({"kind": "jkind",
-          "etag": "jtag",
-          "id": "j123",
-          "self_link": "jselfLink",
-          "user_email": "juserEmail",
-          "status": {"state": "DONE"},
-          "reference": {"project_id": "p123", "job_id": "j123"},
-          "configuration": {
-            "job_type": "QUERY",
-            "query_config": {"query": "select 1;"}
-          }})";
   EXPECT_CALL(*mock_job_connection, GetJob)
       .WillOnce([&](GetJobRequest const& request) {
         EXPECT_EQ("test-project-id", request.project_id());
         EXPECT_EQ("test-job-id", request.job_id());
-        BigQueryHttpResponse http_response;
-        http_response.payload = expected_payload;
-        auto const& job_response =
-            GetJobResponse::BuildFromHttpResponse(http_response);
-        return google::cloud::StatusOr<GetJobResponse>(job_response);
+        return make_status_or(MakeTestJob());
       });
 
   JobClient job_client(mock_job_connection);
@@ -61,20 +63,19 @@ TEST(JobClientTest, GetJobSuccess) {
   request.set_project_id("test-project-id");
   request.set_job_id("test-job-id");
 
-  auto result = job_client.GetJob(request);
+  auto job = job_client.GetJob(request);
 
-  ASSERT_STATUS_OK(result);
-  EXPECT_FALSE(result->http_response.payload.empty());
-  EXPECT_EQ(result->job.kind, "jkind");
-  EXPECT_EQ(result->job.etag, "jtag");
-  EXPECT_EQ(result->job.id, "j123");
-  EXPECT_EQ(result->job.self_link, "jselfLink");
-  EXPECT_EQ(result->job.user_email, "juserEmail");
-  EXPECT_EQ(result->job.status.state, "DONE");
-  EXPECT_EQ(result->job.reference.project_id, "p123");
-  EXPECT_EQ(result->job.reference.job_id, "j123");
-  EXPECT_EQ(result->job.configuration.job_type, "QUERY");
-  EXPECT_EQ(result->job.configuration.query_config.query, "select 1;");
+  ASSERT_STATUS_OK(job);
+  EXPECT_EQ(job->kind, "jkind");
+  EXPECT_EQ(job->etag, "jtag");
+  EXPECT_EQ(job->id, "j123");
+  EXPECT_EQ(job->self_link, "jselfLink");
+  EXPECT_EQ(job->user_email, "juserEmail");
+  EXPECT_EQ(job->status.state, "DONE");
+  EXPECT_EQ(job->reference.project_id, "p123");
+  EXPECT_EQ(job->reference.job_id, "j123");
+  EXPECT_EQ(job->configuration.job_type, "QUERY");
+  EXPECT_EQ(job->configuration.query_config.query, "select 1;");
 }
 
 TEST(JobClientTest, GetJobFailure) {
@@ -91,6 +92,27 @@ TEST(JobClientTest, GetJobFailure) {
   auto result = job_client.GetJob(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("bad-request-error")));
+}
+
+TEST(JobClientTest, ListJobs) {
+  auto mock = std::make_shared<MockBigQueryJobConnection>();
+  EXPECT_CALL(*mock, options);
+
+  EXPECT_CALL(*mock, ListJobs).WillOnce([](ListJobsRequest const& request) {
+    EXPECT_EQ(request.project_id(), "test-project-id");
+    return mocks::MakeStreamRange<ListFormatJob>(
+        {}, internal::PermissionDeniedError("denied"));
+    ;
+  });
+
+  JobClient client(std::move(mock));
+  ListJobsRequest request;
+  request.set_project_id("test-project-id");
+
+  auto range = client.ListJobs(request);
+  auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

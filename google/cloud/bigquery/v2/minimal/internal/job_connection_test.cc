@@ -31,6 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using ::google::cloud::bigquery_v2_minimal_testing::MockBigQueryJobRestStub;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AtLeast;
+using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
@@ -83,20 +84,70 @@ TEST(JobConnectionTest, GetJobSuccess) {
   request.set_project_id("test-project-id");
   request.set_job_id("test-job-id");
 
-  auto result = conn->GetJob(request);
+  auto job_result = conn->GetJob(request);
 
-  ASSERT_STATUS_OK(result);
-  EXPECT_FALSE(result->http_response.payload.empty());
-  EXPECT_EQ(result->job.kind, "jkind");
-  EXPECT_EQ(result->job.etag, "jtag");
-  EXPECT_EQ(result->job.id, "j123");
-  EXPECT_EQ(result->job.self_link, "jselfLink");
-  EXPECT_EQ(result->job.user_email, "juserEmail");
-  EXPECT_EQ(result->job.status.state, "DONE");
-  EXPECT_EQ(result->job.reference.project_id, "p123");
-  EXPECT_EQ(result->job.reference.job_id, "j123");
-  EXPECT_EQ(result->job.configuration.job_type, "QUERY");
-  EXPECT_EQ(result->job.configuration.query_config.query, "select 1;");
+  ASSERT_STATUS_OK(job_result);
+  EXPECT_EQ(job_result->kind, "jkind");
+  EXPECT_EQ(job_result->etag, "jtag");
+  EXPECT_EQ(job_result->id, "j123");
+  EXPECT_EQ(job_result->self_link, "jselfLink");
+  EXPECT_EQ(job_result->user_email, "juserEmail");
+  EXPECT_EQ(job_result->status.state, "DONE");
+  EXPECT_EQ(job_result->reference.project_id, "p123");
+  EXPECT_EQ(job_result->reference.job_id, "j123");
+  EXPECT_EQ(job_result->configuration.job_type, "QUERY");
+  EXPECT_EQ(job_result->configuration.query_config.query, "select 1;");
+}
+
+TEST(JobConnectionTest, ListJobsSuccess) {
+  auto mock = std::make_shared<MockBigQueryJobRestStub>();
+
+  EXPECT_CALL(*mock, ListJobs)
+      .WillOnce(
+          [&](rest_internal::RestContext&, ListJobsRequest const& request) {
+            EXPECT_EQ("test-project-id", request.project_id());
+            EXPECT_TRUE(request.page_token().empty());
+            ListJobsResponse page;
+            page.next_page_token = "page-1";
+            ListFormatJob job;
+            job.id = "job1";
+            page.jobs.push_back(job);
+            return make_status_or(page);
+          })
+      .WillOnce(
+          [&](rest_internal::RestContext&, ListJobsRequest const& request) {
+            EXPECT_EQ("test-project-id", request.project_id());
+            EXPECT_EQ("page-1", request.page_token());
+            ListJobsResponse page;
+            page.next_page_token = "page-2";
+            ListFormatJob job;
+            job.id = "job2";
+            page.jobs.push_back(job);
+            return make_status_or(page);
+          })
+      .WillOnce(
+          [&](rest_internal::RestContext&, ListJobsRequest const& request) {
+            EXPECT_EQ("test-project-id", request.project_id());
+            EXPECT_EQ("page-2", request.page_token());
+            ListJobsResponse page;
+            page.next_page_token = "";
+            ListFormatJob job;
+            job.id = "job3";
+            page.jobs.push_back(job);
+            return make_status_or(page);
+          });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+
+  std::vector<std::string> actual_job_ids;
+  ListJobsRequest request;
+  request.set_project_id("test-project-id");
+
+  for (auto const& job : conn->ListJobs(request)) {
+    ASSERT_STATUS_OK(job);
+    actual_job_ids.push_back(job->id);
+  }
+  EXPECT_THAT(actual_job_ids, ElementsAre("job1", "job2", "job3"));
 }
 
 // Verify that permanent errors are reported immediately.
@@ -106,10 +157,25 @@ TEST(JobConnectionTest, GetJobPermanentError) {
       .WillOnce(
           Return(Status(StatusCode::kPermissionDenied, "permission-denied")));
   auto conn = CreateTestingConnection(std::move(mock));
+
   GetJobRequest request;
   auto result = conn->GetJob(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr("permission-denied")));
+}
+
+TEST(JobConnectionTest, ListJobsPermanentError) {
+  auto mock = std::make_shared<MockBigQueryJobRestStub>();
+  EXPECT_CALL(*mock, ListJobs)
+      .WillOnce(
+          Return(Status(StatusCode::kPermissionDenied, "permission-denied")));
+  auto conn = CreateTestingConnection(std::move(mock));
+
+  ListJobsRequest request;
+  auto range = conn->ListJobs(request);
+  auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
 // Verify that too many transients errors are reported correctly.
@@ -120,10 +186,26 @@ TEST(JobConnectionTest, GetJobTooManyTransients) {
       .WillRepeatedly(
           Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
+
   GetJobRequest request;
   auto result = conn->GetJob(request);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("try-again")));
+}
+
+TEST(JobConnectionTest, ListJobsTooManyTransients) {
+  auto mock = std::make_shared<MockBigQueryJobRestStub>();
+  EXPECT_CALL(*mock, ListJobs)
+      .Times(AtLeast(2))
+      .WillRepeatedly(
+          Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
+  auto conn = CreateTestingConnection(std::move(mock));
+
+  ListJobsRequest request;
+  auto range = conn->ListJobs(request);
+  auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kDeadlineExceeded));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

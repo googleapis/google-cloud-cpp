@@ -20,6 +20,7 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -34,7 +35,8 @@ class BigQueryJobConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<GetJobResponse> GetJob(GetJobRequest const& request);
+  virtual StatusOr<Job> GetJob(GetJobRequest const& request);
+  virtual StreamRange<ListFormatJob> ListJobs(ListJobsRequest const& request);
 };
 
 std::shared_ptr<BigQueryJobConnection> MakeBigQueryJobConnection(

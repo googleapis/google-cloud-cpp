@@ -26,8 +26,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BigQueryJobConnection::~BigQueryJobConnection() = default;
 
-StatusOr<GetJobResponse> BigQueryJobConnection::GetJob(GetJobRequest const&) {
+StatusOr<Job> BigQueryJobConnection::GetJob(GetJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<ListFormatJob> BigQueryJobConnection::ListJobs(
+    ListJobsRequest const&) {
+  return google::cloud::internal::MakeStreamRange<ListFormatJob>(
+      []() -> absl::variant<Status, ListFormatJob> {
+        return Status(StatusCode::kUnimplemented, "not implemented");
+      });
 }
 
 std::shared_ptr<BigQueryJobConnection> MakeBigQueryJobConnection(

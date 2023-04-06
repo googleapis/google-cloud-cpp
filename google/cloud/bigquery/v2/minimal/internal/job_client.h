@@ -19,6 +19,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -50,10 +51,20 @@ class JobClient {
     return !(a == b);
   }
 
-  /// Gets Job information from Bigquery. For more details on BigQuery jobs,
+  /// Gets specific job information from Bigquery. For more details on BigQuery
+  /// jobs, please refer to:
+  /// https://cloud.google.com/bigquery/docs/jobs-overview
+  StatusOr<Job> GetJob(GetJobRequest const& request, Options opts = {});
+
+  /// Lists all jobs that user started in the specified project. Job information
+  /// is available for a six month period after creation. The job list is sorted
+  /// in reverse chronological order, by job creation time. Requires the Can
+  /// View project role, or the Is Owner project role if you set the allUsers
+  /// property.
+  /// For more details on BigQuery jobs,
   /// please refer to: https://cloud.google.com/bigquery/docs/jobs-overview
-  StatusOr<GetJobResponse> GetJob(GetJobRequest const& request,
-                                  Options opts = {});
+  StreamRange<ListFormatJob> ListJobs(ListJobsRequest const& request,
+                                      Options opts = {});
 
  private:
   std::shared_ptr<BigQueryJobConnection> connection_;

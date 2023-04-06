@@ -27,10 +27,15 @@ JobClient::JobClient(std::shared_ptr<BigQueryJobConnection> connection,
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 JobClient::~JobClient() = default;
 
-StatusOr<GetJobResponse> JobClient::GetJob(GetJobRequest const& request,
-                                           Options opts) {
+StatusOr<Job> JobClient::GetJob(GetJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetJob(request);
+}
+
+StreamRange<ListFormatJob> JobClient::ListJobs(ListJobsRequest const& request,
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListJobs(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
