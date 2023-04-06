@@ -29,9 +29,12 @@ class DiscoveryResource {
   DiscoveryResource(std::string name, std::string default_host,
                     std::string base_path, nlohmann::json json);
 
+  std::string const& name() const { return name_; }
   nlohmann::json const& json() const { return json_; }
 
   void AddRequestType(std::string name, DiscoveryTypeVertex const* type);
+
+  std::vector<DiscoveryTypeVertex const*> GetRequestTypesList() const;
 
   // Examines the provided path and converts any parameter names in curly braces
   // to snake case, e.g. "projects/{projectId}/zone/{zone}" yields
