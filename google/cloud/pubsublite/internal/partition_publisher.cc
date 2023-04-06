@@ -176,7 +176,7 @@ void PartitionPublisher::OnRead(absl::optional<PublishResponse> response) {
               return a.start_index() < b.start_index();
             });
   int range_idx = 0;
-  for (int msg_idx = 0; msg_idx < batch.size(); ++msg_idx) {
+  for (int msg_idx = 0; msg_idx < static_cast<int>(batch.size()); ++msg_idx) {
     auto& message = batch[msg_idx];
     if (range_idx < ranges->size() &&
         ranges->Get(range_idx).end_index() <= msg_idx) {
