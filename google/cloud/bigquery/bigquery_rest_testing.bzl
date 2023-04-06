@@ -17,6 +17,7 @@
 """Automatically generated source lists for bigquery_rest_testing - DO NOT EDIT."""
 
 bigquery_rest_testing_hdrs = [
+    "v2/minimal/testing/mock_job_log_backend.h",
     "v2/minimal/testing/mock_job_rest_stub.h",
 ]
 
