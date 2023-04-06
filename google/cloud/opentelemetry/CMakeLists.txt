@@ -16,10 +16,6 @@
 
 find_package(opentelemetry-cpp CONFIG REQUIRED)
 
-include(GoogleCloudCppDoxygen)
-google_cloud_cpp_doxygen_targets("opentelemetry_sdk" DEPENDS cloud-docs
-                                 google-cloud-cpp::trace)
-
 add_library(google_cloud_cpp_opentelemetry_sdk # cmake-format: sort
             internal/recordable.cc internal/recordable.h)
 target_link_libraries(google_cloud_cpp_opentelemetry_sdk
