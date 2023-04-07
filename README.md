@@ -387,6 +387,9 @@ See each library's `README.md` file for more information about:
 - [Workflow Executions API](google/cloud/workflows/README.md)
   [\[quickstart\]](google/cloud/workflows/quickstart/README.md)
   [\[reference\]](https://googleapis.dev/cpp/google-cloud-workflows/latest)
+- [Cloud Workstations API](google/cloud/workstations/README.md)
+  [\[quickstart\]](google/cloud/workstations/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-workstations/latest)
 
 <!-- inject-GA-libraries-end -->
 

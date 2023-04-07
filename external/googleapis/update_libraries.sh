@@ -250,6 +250,11 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/workflows/type:type_cc_grpc" \
       "@com_google_googleapis//google/cloud/workflows/executions/v1:executions_cc_grpc"
   )"
+  ["workstations"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/workstations/logging/v1:logging_cc_grpc" \
+      "@com_google_googleapis//google/cloud/workstations/v1:workstations_cc_grpc"
+  )"
 )
 
 if [[ $# -eq 0 ]]; then

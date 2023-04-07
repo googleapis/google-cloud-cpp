@@ -121,6 +121,13 @@ info, see [#7463] and [#5976].
 
 ## v2.10.0 - TBD
 
+### New Libraries
+
+We are happy to announce the following GA libraries.  Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Workstations API](/google/cloud/workstations/README.md)
+
 ## v2.9.0 - 2023-04
 
 ### [Cloud Build](/google/cloud/cloudbuild/README.md)

@@ -130,7 +130,8 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "vpcaccess"
     "webrisk"
     "websecurityscanner"
-    "workflows")
+    "workflows"
+    "workstations")
 
 export_list_to_bazel(
     "libraries.bzl" YEAR 2023 GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
