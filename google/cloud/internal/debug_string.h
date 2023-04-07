@@ -19,6 +19,7 @@
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include "absl/strings/string_view.h"
+#include <chrono>
 #include <string>
 
 namespace google {
@@ -35,12 +36,18 @@ namespace internal {
  */
 class DebugFormatter {
  public:
-  DebugFormatter(TracingOptions options, absl::string_view message_name);
+  DebugFormatter(absl::string_view name, TracingOptions options,
+                 int indent = 0);
 
-  DebugFormatter& SubMessage(absl::string_view message_name);
-  DebugFormatter& EndMessage();
+  template <typename T>
+  DebugFormatter& SubMessage(absl::string_view name, T const& message) {
+    absl::StrAppend(&str_, message.DebugString(name, options_, indent_));
+    return *this;
+  }
 
   DebugFormatter& Field(absl::string_view field_name, bool value);
+  DebugFormatter& Field(absl::string_view field_name,
+                        std::chrono::system_clock::time_point value);
 
   template <typename T>
   DebugFormatter& Field(absl::string_view field_name, T const& value) {
@@ -69,7 +76,7 @@ class DebugFormatter {
 
   TracingOptions options_;
   std::string str_;
-  int indent_ = 0;
+  int indent_;
 };
 
 // Return @p s with possible length restriction due to the application of

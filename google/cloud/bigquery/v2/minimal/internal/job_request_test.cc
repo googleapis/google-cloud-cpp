@@ -177,22 +177,23 @@ TEST(GetJobRequest, DebugString) {
   GetJobRequest request("test-project-id", "test-job-id");
   request.set_location("test-location");
 
-  EXPECT_EQ(request.DebugString(TracingOptions{}),
-            R"(google::cloud::bigquery_v2_minimal_internal::GetJobRequest {)"
+  EXPECT_EQ(request.DebugString("GetJobRequest", TracingOptions{}),
+            R"(GetJobRequest {)"
             R"( project_id: "test-project-id")"
             R"( job_id: "test-job-id")"
             R"( location: "test-location")"
             R"( })");
-  EXPECT_EQ(request.DebugString(TracingOptions{}.SetOptions(
-                "truncate_string_field_longer_than=7")),
-            R"(google::cloud::bigquery_v2_minimal_internal::GetJobRequest {)"
+  EXPECT_EQ(request.DebugString("GetJobRequest",
+                                TracingOptions{}.SetOptions(
+                                    "truncate_string_field_longer_than=7")),
+            R"(GetJobRequest {)"
             R"( project_id: "test-pr...<truncated>...")"
             R"( job_id: "test-jo...<truncated>...")"
             R"( location: "test-lo...<truncated>...")"
             R"( })");
-  EXPECT_EQ(
-      request.DebugString(TracingOptions{}.SetOptions("single_line_mode=F")),
-      R"(google::cloud::bigquery_v2_minimal_internal::GetJobRequest {
+  EXPECT_EQ(request.DebugString("GetJobRequest", TracingOptions{}.SetOptions(
+                                                     "single_line_mode=F")),
+            R"(GetJobRequest {
   project_id: "test-project-id"
   job_id: "test-job-id"
   location: "test-location"
@@ -214,8 +215,8 @@ TEST(ListJobsRequestTest, DebugString) {
       .set_state_filter(StateFilter::Running())
       .set_parent_job_id("test-job-id");
 
-  EXPECT_EQ(request.DebugString(TracingOptions{}),
-            R"(google::cloud::bigquery_v2_minimal_internal::ListJobsRequest {)"
+  EXPECT_EQ(request.DebugString("ListJobsRequest", TracingOptions{}),
+            R"(ListJobsRequest {)"
             R"( project_id: "test-project-id")"
             R"( all_users: true)"
             R"( max_results: 10)"
@@ -226,9 +227,10 @@ TEST(ListJobsRequestTest, DebugString) {
             R"( state_filter { value: "RUNNING" })"
             R"( parent_job_id: "test-job-id")"
             R"( })");
-  EXPECT_EQ(request.DebugString(TracingOptions{}.SetOptions(
-                "truncate_string_field_longer_than=7")),
-            R"(google::cloud::bigquery_v2_minimal_internal::ListJobsRequest {)"
+  EXPECT_EQ(request.DebugString("ListJobsRequest",
+                                TracingOptions{}.SetOptions(
+                                    "truncate_string_field_longer_than=7")),
+            R"(ListJobsRequest {)"
             R"( project_id: "test-pr...<truncated>...")"
             R"( all_users: true)"
             R"( max_results: 10)"
@@ -239,9 +241,9 @@ TEST(ListJobsRequestTest, DebugString) {
             R"( state_filter { value: "RUNNING" })"
             R"( parent_job_id: "test-jo...<truncated>...")"
             R"( })");
-  EXPECT_EQ(
-      request.DebugString(TracingOptions{}.SetOptions("single_line_mode=F")),
-      R"(google::cloud::bigquery_v2_minimal_internal::ListJobsRequest {
+  EXPECT_EQ(request.DebugString("ListJobsRequest", TracingOptions{}.SetOptions(
+                                                       "single_line_mode=F")),
+            R"(ListJobsRequest {
   project_id: "test-project-id"
   all_users: true
   max_results: 10
