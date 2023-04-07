@@ -70,6 +70,33 @@ class CircularBufferBackend : public LogBackend {
   std::shared_ptr<LogBackend> backend_;
 };
 
+class PerThreadCircularBufferBackend : public LogBackend {
+ public:
+  PerThreadCircularBufferBackend(std::size_t size, Severity min_flush_severity,
+                                 std::shared_ptr<LogBackend> backend)
+      : size_(size),
+        min_flush_severity_(min_flush_severity),
+        backend_(std::move(backend)) {}
+
+  std::size_t size() const { return size_; }
+  Severity min_flush_severity() const { return min_flush_severity_; }
+  std::shared_ptr<LogBackend> backend() const { return backend_; }
+
+  void Process(LogRecord const& lr) override { ProcessWithOwnership(lr); }
+  void ProcessWithOwnership(LogRecord lr) override;
+  void Flush() override;
+
+ private:
+  std::size_t index(std::size_t i) const { return i % size_; }
+  std::size_t const size_;
+
+  static thread_local std::vector<LogRecord> buffer_;
+  static thread_local std::size_t begin_;
+  static thread_local std::size_t end_;
+  Severity min_flush_severity_;
+  std::shared_ptr<LogBackend> backend_;
+};
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

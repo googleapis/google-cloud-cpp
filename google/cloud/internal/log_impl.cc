@@ -55,6 +55,27 @@ void CircularBufferBackend::FlushImpl(std::unique_lock<std::mutex> /*lk*/) {
   backend_->Flush();
 }
 
+void PerThreadCircularBufferBackend::ProcessWithOwnership(LogRecord lr) {
+  auto const needs_flush = lr.severity >= min_flush_severity_;
+  if (buffer_.empty()) buffer_.resize(size_);
+  buffer_[index(end_)] = std::move(lr);
+  ++end_;
+  if (end_ - begin_ > buffer_.size()) ++begin_;
+  if (needs_flush) Flush();
+}
+
+void PerThreadCircularBufferBackend::Flush() {
+  for (auto i = begin_; i != end_; ++i) {
+    backend_->ProcessWithOwnership(std::move(buffer_[index(i)]));
+  }
+  begin_ = end_ = 0;
+  backend_->Flush();
+}
+
+thread_local std::vector<LogRecord> PerThreadCircularBufferBackend::buffer_;
+thread_local std::size_t PerThreadCircularBufferBackend::begin_ = 0;
+thread_local std::size_t PerThreadCircularBufferBackend::end_ = 0;
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
