@@ -34,7 +34,7 @@ void MakeDirectory(std::string const& path) {
 #if _WIN32
   _mkdir(path.c_str());
 #else
-  mkdir(path.c_str(), 0755);
+  mkdir(path.c_str(), 0777);
 #endif  // _WIN32
 }
 
