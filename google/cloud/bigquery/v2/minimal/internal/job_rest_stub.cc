@@ -38,9 +38,8 @@ StatusOr<ReturnType> ParseFromRestResponse(
 
 template <typename RequestType>
 StatusOr<rest_internal::RestRequest> PrepareRestRequest(
-    rest_internal::RestContext& rest_context, RequestType const& request,
-    Options options) {
-  auto rest_request = BuildRestRequest(request, options);
+    rest_internal::RestContext& rest_context, RequestType const& request) {
+  auto rest_request = BuildRestRequest(request);
   if (!rest_request) return std::move(rest_request).status();
 
   // Copy over any headers if provided.
@@ -57,10 +56,8 @@ StatusOr<rest_internal::RestRequest> PrepareRestRequest(
 
 StatusOr<GetJobResponse> DefaultBigQueryJobRestStub::GetJob(
     rest_internal::RestContext& rest_context, GetJobRequest const& request) {
-  internal::OptionsSpan span(options_);
   // Prepare the RestRequest from GetJobRequest.
-  auto rest_request =
-      PrepareRestRequest<GetJobRequest>(rest_context, request, options_);
+  auto rest_request = PrepareRestRequest<GetJobRequest>(rest_context, request);
 
   // Call the rest stub and parse the RestResponse.
   return ParseFromRestResponse<GetJobResponse>(
@@ -69,10 +66,9 @@ StatusOr<GetJobResponse> DefaultBigQueryJobRestStub::GetJob(
 
 StatusOr<ListJobsResponse> DefaultBigQueryJobRestStub::ListJobs(
     rest_internal::RestContext& rest_context, ListJobsRequest const& request) {
-  internal::OptionsSpan span(options_);
   // Prepare the RestRequest from ListJobsRequest.
   auto rest_request =
-      PrepareRestRequest<ListJobsRequest>(rest_context, request, options_);
+      PrepareRestRequest<ListJobsRequest>(rest_context, request);
 
   // Call the rest stub and parse the RestResponse.
   return ParseFromRestResponse<ListJobsResponse>(

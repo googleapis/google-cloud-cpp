@@ -43,8 +43,8 @@ class BigQueryJobRestStub {
 class DefaultBigQueryJobRestStub : public BigQueryJobRestStub {
  public:
   explicit DefaultBigQueryJobRestStub(
-      std::unique_ptr<rest_internal::RestClient> rest_stub, Options options)
-      : rest_stub_(std::move(rest_stub)), options_(std::move(options)) {}
+      std::unique_ptr<rest_internal::RestClient> rest_stub)
+      : rest_stub_(std::move(rest_stub)) {}
 
   StatusOr<GetJobResponse> GetJob(rest_internal::RestContext& rest_context,
                                   GetJobRequest const& request) override;
@@ -53,7 +53,6 @@ class DefaultBigQueryJobRestStub : public BigQueryJobRestStub {
 
  private:
   std::unique_ptr<rest_internal::RestClient> rest_stub_;
-  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -16,6 +16,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/format_time_point.h"
+#include "google/cloud/options.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <sstream>
@@ -49,7 +50,9 @@ TEST(GetJobRequestTest, SuccessWithLocation) {
   request.set_location("useast");
   Options opts;
   opts.set<EndpointOption>("bigquery.googleapis.com");
-  auto actual = BuildRestRequest(request, opts);
+  internal::OptionsSpan span(opts);
+
+  auto actual = BuildRestRequest(request);
   ASSERT_STATUS_OK(actual);
 
   rest_internal::RestRequest expected;
@@ -63,7 +66,8 @@ TEST(GetJobRequestTest, SuccessWithoutLocation) {
   GetJobRequest request("1", "2");
   Options opts;
   opts.set<EndpointOption>("bigquery.googleapis.com");
-  auto actual = BuildRestRequest(request, opts);
+  internal::OptionsSpan span(opts);
+  auto actual = BuildRestRequest(request);
   ASSERT_STATUS_OK(actual);
 
   rest_internal::RestRequest expected;
@@ -94,7 +98,9 @@ TEST(GetJobRequestTest, SuccessWithEndpoint) {
                  ", expected: " + test.expected);
     Options opts;
     opts.set<EndpointOption>(test.endpoint);
-    auto actual = BuildRestRequest(request, opts);
+    internal::OptionsSpan span(opts);
+
+    auto actual = BuildRestRequest(request);
     ASSERT_STATUS_OK(actual);
     EXPECT_EQ(test.expected, actual->path());
   }
@@ -104,7 +110,9 @@ TEST(GetJobRequestTest, EmptyProjectId) {
   GetJobRequest request("", "test-job-id");
   Options opts;
   opts.set<EndpointOption>("bigquery.googleapis.com");
-  auto rest_request = BuildRestRequest(request, opts);
+  internal::OptionsSpan span(opts);
+
+  auto rest_request = BuildRestRequest(request);
   EXPECT_THAT(rest_request, StatusIs(StatusCode::kInvalidArgument,
                                      HasSubstr("Project Id is empty")));
 }
@@ -113,7 +121,9 @@ TEST(GetJobRequest, EmptyJobId) {
   GetJobRequest request("test-project-id", "");
   Options opts;
   opts.set<EndpointOption>("bigquery.googleapis.com");
-  auto rest_request = BuildRestRequest(request, opts);
+  internal::OptionsSpan span(opts);
+
+  auto rest_request = BuildRestRequest(request);
   EXPECT_THAT(rest_request, StatusIs(StatusCode::kInvalidArgument,
                                      HasSubstr("Job Id is empty")));
 }
@@ -133,7 +143,8 @@ TEST(ListJobsRequestTest, Success) {
   auto const request = GetListJobsRequest();
   Options opts;
   opts.set<EndpointOption>("bigquery.googleapis.com");
-  auto actual = BuildRestRequest(request, opts);
+  internal::OptionsSpan span(opts);
+  auto actual = BuildRestRequest(request);
   ASSERT_STATUS_OK(actual);
 
   rest_internal::RestRequest expected;
@@ -157,7 +168,9 @@ TEST(ListJobsRequestTest, EmptyProjectId) {
   ListJobsRequest request("");
   Options opts;
   opts.set<EndpointOption>("bigquery.googleapis.com");
-  auto rest_request = BuildRestRequest(request, opts);
+  internal::OptionsSpan span(opts);
+
+  auto rest_request = BuildRestRequest(request);
   EXPECT_THAT(rest_request, StatusIs(StatusCode::kInvalidArgument,
                                      HasSubstr("Project Id is empty")));
 }

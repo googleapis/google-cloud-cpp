@@ -211,11 +211,9 @@ class ListJobsRequest {
 };
 
 // Builds RestRequest from GetJobRequest.
-StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r,
-                                                      Options const& opts);
+StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r);
 // Builds RestRequest from ListJobsRequest.
-StatusOr<rest_internal::RestRequest> BuildRestRequest(ListJobsRequest const& r,
-                                                      Options const& opts);
+StatusOr<rest_internal::RestRequest> BuildRestRequest(ListJobsRequest const& r);
 
 std::ostream& operator<<(std::ostream& os, GetJobRequest const& request);
 std::ostream& operator<<(std::ostream& os, ListJobsRequest const& request);
