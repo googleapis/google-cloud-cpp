@@ -129,8 +129,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     set_tests_properties(
         videointelligence_quickstart
         PROPERTIES
-            DISABLED TRUE
-            LABELS "integration-test;quickstart" ENVIRONMENT
+            DISABLED TRUE LABELS "integration-test;quickstart" ENVIRONMENT
             GOOGLE_CLOUD_CPP_USER_PROJECT=$ENV{GOOGLE_CLOUD_CPP_USER_PROJECT})
 endif ()
 
