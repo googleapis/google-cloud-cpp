@@ -124,8 +124,9 @@ ListJobsRequest::ListJobsRequest(std::string project_id)
       min_creation_time_(kDefaultTimepoint),
       max_creation_time_(kDefaultTimepoint) {}
 
-StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r,
-                                                      Options const& opts) {
+StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r) {
+  auto const& opts = internal::CurrentOptions();
+
   rest_internal::RestRequest request;
   if (r.project_id().empty()) {
     return internal::InvalidArgumentError(
@@ -149,9 +150,11 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r,
   return request;
 }
 
-StatusOr<rest_internal::RestRequest> BuildRestRequest(ListJobsRequest const& r,
-                                                      Options const& opts) {
+StatusOr<rest_internal::RestRequest> BuildRestRequest(
+    ListJobsRequest const& r) {
   rest_internal::RestRequest request;
+  auto const& opts = internal::CurrentOptions();
+
   if (r.project_id().empty()) {
     return internal::InvalidArgumentError(
         "Invalid ListJobsRequest: Project Id is empty", GCP_ERROR_INFO());
