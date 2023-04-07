@@ -4522,8 +4522,9 @@ void RunAll(bool emulator) {
   SampleBanner("spanner_set_request_tag");
   SetRequestTag(client);
 
-  SampleBanner("spanner_batch_client");
-  UsePartitionQuery(client);
+  // TODO(#11201) - restore samples with PartitionDataBoost==true
+  //   SampleBanner("spanner_batch_client");
+  //   UsePartitionQuery(client);
 
   SampleBanner("spanner_read_data_with_index");
   ReadDataWithIndex(client);
@@ -4604,11 +4605,12 @@ void RunAll(bool emulator) {
   FieldAccessOnNestedStruct(client);
 
   if (!emulator) {
-    SampleBanner("spanner_partition_read");
-    PartitionRead(client);
+    // TODO(#11201) - restore samples with PartitionDataBoost==true
+    //   SampleBanner("spanner_partition_read");
+    //   PartitionRead(client);
 
-    SampleBanner("spanner_partition_query");
-    PartitionQuery(client);
+    //   SampleBanner("spanner_partition_query");
+    //   PartitionQuery(client);
   }
 
   SampleBanner("example-status-or");
