@@ -79,6 +79,8 @@ expected_dirs+=(
   ./include/google/cloud/grpc_utils
   ./include/google/cloud/internal
   ./include/google/cloud/mocks
+  ./include/google/cloud/opentelemetry
+  ./include/google/cloud/opentelemetry/internal
   # orgpolicy/v1 is not automatically added. It is used by
   # google/cloud/asset, while google/cloud/orgpolicy uses
   # the **v2** protos.
@@ -115,6 +117,7 @@ expected_dirs+=(
   ./lib64/cmake/google_cloud_cpp_grafeas
   ./lib64/cmake/google_cloud_cpp_grpc_utils
   ./lib64/cmake/google_cloud_cpp_mocks
+  ./lib64/cmake/google_cloud_cpp_opentelemetry_sdk
   ./lib64/cmake/google_cloud_cpp_pubsub_mocks
   ./lib64/cmake/google_cloud_cpp_rest_internal
   ./lib64/cmake/google_cloud_cpp_rest_protobuf_internal
