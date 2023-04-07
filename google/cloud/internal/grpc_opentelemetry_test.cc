@@ -75,6 +75,19 @@ TEST(OpenTelemetry, MakeSpanGrpc) {
               SpanAttribute<std::string>("grpc.version", grpc::Version())))));
 }
 
+TEST(OpenTelemetry, MakeSpanGrpcHandlesNonNullTerminatedStringView) {
+  auto span_catcher = InstallSpanCatcher();
+
+  char service[]{'s', 'e', 'r', 'v', 'i', 'c', 'e'};
+  char method[]{'m', 'e', 't', 'h', 'o', 'd'};
+
+  auto span = MakeSpanGrpc({service, 7}, {method, 6});
+  span->End();
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, ElementsAre(SpanNamed("service/method")));
+}
+
 TEST(OpenTelemetry, InjectTraceContextGrpc) {
   auto mock_propagator = testing_util::InstallMockPropagator();
   EXPECT_CALL(*mock_propagator, Inject)
