@@ -18,6 +18,7 @@
 
 google_cloud_cpp_opentelemetry_sdk_hdrs = [
     "internal/recordable.h",
+    "trace_exporter.h",
 ]
 
 google_cloud_cpp_opentelemetry_sdk_srcs = [

@@ -31,7 +31,7 @@ doc_args=(
   "-DGOOGLE_CLOUD_CPP_ENABLE=${ENABLED_FEATURES}"
   "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON"
   "-DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON"
-  "-DDOXYGEN_CLANG_OPTIONS=-resource-dir=$(clang -print-resource-dir) -Wno-deprecated-declarations"
+  "-DGOOGLE_CLOUD_CPP_DOXYGEN_CLANG_OPTIONS=-resource-dir=$(clang -print-resource-dir)"
 )
 
 # Extract the version number if we're on a release branch.

@@ -108,7 +108,13 @@ function (google_cloud_cpp_doxygen_targets_impl library)
 
     # Options controlling how to parse the C++ code
     set(DOXYGEN_CLANG_ASSISTED_PARSING YES)
-    set(DOXYGEN_CLANG_OPTIONS)
+    # We set -DHAVE_ABSEIL to generate documentation for libraries that expose
+    # OpenTelemetry types. Ideally, we would generalize this to pick up any
+    # linked library's compile definitions, but that would be hard, and we have
+    # other things to do.
+    set(DOXYGEN_CLANG_OPTIONS
+        "-Wno-deprecated-declarations -DHAVE_ABSEIL ${GOOGLE_CLOUD_CPP_DOXYGEN_CLANG_OPTIONS}"
+    )
     set(DOXYGEN_CLANG_DATABASE_PATH)
     set(DOXYGEN_SEARCH_INCLUDES YES)
     set(DOXYGEN_INCLUDE_PATH
