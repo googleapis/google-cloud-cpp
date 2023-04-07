@@ -116,7 +116,7 @@ target_compile_options(google_cloud_cpp_trace_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 include(CTest)
-if (BUILD_TESTING)
+if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
     add_executable(trace_quickstart "quickstart/quickstart.cc")
     target_link_libraries(trace_quickstart PRIVATE google-cloud-cpp::trace)
     google_cloud_cpp_add_common_options(trace_quickstart)

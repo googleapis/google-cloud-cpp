@@ -168,6 +168,9 @@ function (google_cloud_cpp_enable_deps)
     if (experimental-storage-grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 storage)
     endif ()
+    if (experimental-opentelemetry_sdk IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 trace)
+    endif ()
     set(GOOGLE_CLOUD_CPP_ENABLE
         "${GOOGLE_CLOUD_CPP_ENABLE}"
         PARENT_SCOPE)
@@ -235,7 +238,9 @@ function (google_cloud_cpp_enable_features)
         elseif ("${feature}" STREQUAL "experimental-http-transcoding")
             continue()
         elseif ("${feature}" STREQUAL "experimental-opentelemetry")
-
+            continue()
+        elseif ("${feature}" STREQUAL "experimental-opentelemetry_sdk")
+            add_subdirectory(google/cloud/opentelemetry)
         else ()
             if (NOT IS_DIRECTORY
                 "${CMAKE_CURRENT_SOURCE_DIR}/google/cloud/${feature}"
