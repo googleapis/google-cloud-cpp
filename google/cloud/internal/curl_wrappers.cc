@@ -248,7 +248,7 @@ std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
   // header name and value.
   std::vector<absl::string_view> s = absl::StrSplit(
       absl::string_view{data, size - 2}, absl::MaxSplits(':', 1));
-  auto value = s.size() == 2 ? absl::string_view(s[1]) : absl::string_view{};
+  auto value = s.size() == 2 ? s[1] : absl::string_view{};
   received_headers.emplace(
       absl::AsciiStrToLower(s[0]),
       std::string(absl::StripLeadingAsciiWhitespace(value)));
