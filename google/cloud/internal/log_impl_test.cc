@@ -61,11 +61,53 @@ TEST(CircularBufferBackend, Basic) {
   EXPECT_THAT(be->ExtractLines(), ElementsAre("msg 9", "msg 10"));
 }
 
+TEST(PerThreadCircularBufferBackend, Basic) {
+  auto be = std::make_shared<ScopedLog::Backend>();
+  PerThreadCircularBufferBackend buffer(3, Severity::GCP_LS_ERROR, be);
+  auto test_log_record = [](Severity severity, std::string msg) {
+    return LogRecord{
+        severity, "test_function()", "file", 1, std::this_thread::get_id(),
+        {},       std::move(msg)};
+  };
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 1"));
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_DEBUG, "msg 2"));
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_TRACE, "msg 3"));
+  buffer.ProcessWithOwnership(
+      test_log_record(Severity::GCP_LS_WARNING, "msg 4"));
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 5"));
+  EXPECT_THAT(be->ExtractLines(), IsEmpty());
+
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_ERROR, "msg 6"));
+  EXPECT_THAT(be->ExtractLines(), ElementsAre("msg 4", "msg 5", "msg 6"));
+
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 7"));
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_ERROR, "msg 8"));
+  EXPECT_THAT(be->ExtractLines(), ElementsAre("msg 7", "msg 8"));
+
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 9"));
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 10"));
+  buffer.Flush();
+  EXPECT_THAT(be->ExtractLines(), ElementsAre("msg 9", "msg 10"));
+}
+
 TEST(DefaultLogBackend, CircularBuffer) {
   ScopedEnvironment config(kLogConfig, "lastN,5,WARNING");
   ScopedEnvironment clog(kEnableClog, absl::nullopt);
   auto be = DefaultLogBackend();
   auto const* buffer = dynamic_cast<CircularBufferBackend*>(be.get());
+  ASSERT_NE(buffer, nullptr);
+  EXPECT_EQ(5, buffer->size());
+  EXPECT_EQ(Severity::GCP_LS_WARNING, buffer->min_flush_severity());
+  auto const* clog_be = dynamic_cast<StdClogBackend*>(buffer->backend().get());
+  ASSERT_THAT(clog_be, NotNull());
+  EXPECT_EQ(Severity::GCP_LS_DEBUG, clog_be->min_severity());
+}
+
+TEST(DefaultLogBackend, PerThreadCircularBuffer) {
+  ScopedEnvironment config(kLogConfig, "thread-lastN,5,WARNING");
+  ScopedEnvironment clog(kEnableClog, absl::nullopt);
+  auto be = DefaultLogBackend();
+  auto const* buffer = dynamic_cast<PerThreadCircularBufferBackend*>(be.get());
   ASSERT_NE(buffer, nullptr);
   EXPECT_EQ(5, buffer->size());
   EXPECT_EQ(Severity::GCP_LS_WARNING, buffer->min_flush_severity());
