@@ -22,22 +22,20 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
-std::string MakeJobConfiguration(TracingOptions const& options,
+std::string MakeJobConfiguration(absl::string_view name,
+                                 TracingOptions const& options,
                                  std::string job_type, std::string query) {
-  return internal::DebugFormatter(
-             options,
-             "google::cloud::bigquery_v2_minimal_internal::JobConfiguration")
+  return internal::DebugFormatter(name, options)
       .StringField("job_type", std::move(job_type))
       .StringField("query", std::move(query))
       .Build();
 }
 
-std::string MakeJobReference(TracingOptions const& options,
+std::string MakeJobReference(absl::string_view name,
+                             TracingOptions const& options,
                              std::string project_id, std::string job_id,
                              std::string location) {
-  return internal::DebugFormatter(
-             options,
-             "google::cloud::bigquery_v2_minimal_internal::JobReference")
+  return internal::DebugFormatter(name, options)
       .StringField("project_id", std::move(project_id))
       .StringField("job_id", std::move(job_id))
       .StringField("location", std::move(location))
@@ -46,13 +44,16 @@ std::string MakeJobReference(TracingOptions const& options,
 
 }  // namespace
 
-std::string Job::DebugString(TracingOptions const& options) const {
-  auto job_configuration = MakeJobConfiguration(
-      options, configuration.job_type, configuration.query_config.query);
-  auto job_reference = MakeJobReference(options, reference.project_id,
-                                        reference.job_id, reference.location);
-  return internal::DebugFormatter(
-             options, "google::cloud::bigquery_v2_minimal_internal::Job")
+std::string Job::DebugString(absl::string_view name,
+                             TracingOptions const& options, int indent) const {
+  auto job_configuration =
+      MakeJobConfiguration("JobConfiguration", options, configuration.job_type,
+                           configuration.query_config.query);
+  auto job_reference =
+      MakeJobReference("JobReference", options, reference.project_id,
+                       reference.job_id, reference.location);
+
+  return internal::DebugFormatter(name, options, indent)
       .StringField("etag", etag)
       .StringField("kind", kind)
       .StringField("id", id)
@@ -63,14 +64,17 @@ std::string Job::DebugString(TracingOptions const& options) const {
       .Build();
 }
 
-std::string ListFormatJob::DebugString(TracingOptions const& options) const {
-  auto job_configuration = MakeJobConfiguration(
-      options, configuration.job_type, configuration.query_config.query);
-  auto job_reference = MakeJobReference(options, reference.project_id,
-                                        reference.job_id, reference.location);
-  return internal::DebugFormatter(
-             options,
-             "google::cloud::bigquery_v2_minimal_internal::ListFormatJob")
+std::string ListFormatJob::DebugString(absl::string_view name,
+                                       TracingOptions const& options,
+                                       int indent) const {
+  auto job_configuration =
+      MakeJobConfiguration("JobConfiguration", options, configuration.job_type,
+                           configuration.query_config.query);
+  auto job_reference =
+      MakeJobReference("JobReference", options, reference.project_id,
+                       reference.job_id, reference.location);
+
+  return internal::DebugFormatter(name, options, indent)
       .StringField("id", id)
       .StringField("kind", kind)
       .StringField("state", state)

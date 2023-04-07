@@ -55,11 +55,12 @@ StatusOr<nlohmann::json> parse_json(std::string const& payload) {
 }
 
 std::string DebugJobsString(std::vector<ListFormatJob> const& jobs,
-                            TracingOptions const& options) {
+                            absl::string_view name,
+                            TracingOptions const& options, int indent) {
   std::string out;
   for (auto const& j : jobs) {
     std::string jout;
-    absl::StrAppend(&out, j.DebugString(options));
+    absl::StrAppend(&out, j.DebugString(name, options, indent));
   }
   return out;
 }
@@ -82,12 +83,13 @@ StatusOr<GetJobResponse> GetJobResponse::BuildFromHttpResponse(
   return result;
 }
 
-std::string GetJobResponse::DebugString(TracingOptions const& options) const {
-  return internal::DebugFormatter(
-             options,
-             "google::cloud::bigquery_v2_minimal_internal::GetJobResponse")
-      .StringField("http_response", http_response.DebugString(options))
-      .StringField("job", job.DebugString(options))
+std::string GetJobResponse::DebugString(absl::string_view name,
+                                        TracingOptions const& options,
+                                        int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("http_response",
+                   http_response.DebugString("BigQueryHttpResponse", options))
+      .StringField("job", job.DebugString("Job", options, indent))
       .Build();
 }
 
@@ -121,12 +123,14 @@ StatusOr<ListJobsResponse> ListJobsResponse::BuildFromHttpResponse(
   return result;
 }
 
-std::string ListJobsResponse::DebugString(TracingOptions const& options) const {
-  return internal::DebugFormatter(
-             options,
-             "google::cloud::bigquery_v2_minimal_internal::ListJobsResponse")
-      .StringField("http_response", http_response.DebugString(options))
-      .StringField("jobs", DebugJobsString(jobs, options))
+std::string ListJobsResponse::DebugString(absl::string_view name,
+                                          TracingOptions const& options,
+                                          int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("http_response",
+                   http_response.DebugString("BigQueryHttpResponse", options))
+      .StringField("jobs",
+                   DebugJobsString(jobs, "ListFormatJob", options, indent))
       .Build();
 }
 

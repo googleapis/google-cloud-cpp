@@ -19,6 +19,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include "absl/strings/string_view.h"
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,9 @@ class BigQueryHttpResponse {
   static StatusOr<BigQueryHttpResponse> BuildFromRestResponse(
       std::unique_ptr<rest_internal::RestResponse> rest_response);
 
-  std::string DebugString(TracingOptions const& options) const;
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 
   rest_internal::HttpStatusCode http_status_code;
   std::multimap<std::string, std::string> http_headers;
