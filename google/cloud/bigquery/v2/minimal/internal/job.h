@@ -18,6 +18,7 @@
 #include "google/cloud/bigquery/v2/minimal/internal/job_configuration.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include "absl/strings/string_view.h"
 #include "absl/types/optional.h"
 #include <nlohmann/json.hpp>
 #include <string>
@@ -54,7 +55,9 @@ struct Job {
   JobReference reference;
   JobConfiguration configuration;
 
-  std::string DebugString(TracingOptions const& options) const;
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 
 struct ListFormatJob {
@@ -70,7 +73,9 @@ struct ListFormatJob {
 
   ErrorProto error_result;
 
-  std::string DebugString(TracingOptions const& options) const;
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(JobStatus, error_result, errors,

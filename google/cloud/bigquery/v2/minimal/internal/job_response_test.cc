@@ -223,36 +223,41 @@ TEST(GetJobResponseTest, DebugString) {
   auto response = GetJobResponse::BuildFromHttpResponse(http_response);
   ASSERT_STATUS_OK(response);
 
-  EXPECT_EQ(
-      response->DebugString(TracingOptions{}),
-      R"(google::cloud::bigquery_v2_minimal_internal::GetJobResponse {)"
-      R"( http_response: "google::cloud::bigquery_v2_minimal_internal::BigQueryHttpResponse {)"
-      R"( status_code: 200 headers: "header1: value1")"
-      R"( }")"
-      R"( job: "google::cloud::bigquery_v2_minimal_internal::Job {)"
-      R"( etag: "jtag")"
-      R"( kind: "jkind")"
-      R"( id: "j123")"
-      R"( job_configuration: "google::cloud::bigq...<truncated>...")"
-      R"( })");
+  EXPECT_EQ(response->DebugString("GetJobResponse", TracingOptions{}),
+            R"(GetJobResponse {)"
+            R"( http_response: "BigQueryHttpResponse {)"
+            R"( status_code: 200)"
+            R"( headers: "header1: value1")"
+            R"( }")"
+            R"( job: "Job {)"
+            R"( etag: "jtag")"
+            R"( kind: "jkind")"
+            R"( id: "j123")"
+            R"( job_configuration: "JobConfiguration {)"
+            R"( job_type: "QUERY")"
+            R"( query: "select 1;")"
+            R"( }")"
+            R"( job_r...<truncated>...")"
+            R"( })");
 
   EXPECT_EQ(
-      response->DebugString(TracingOptions{}.SetOptions(
-          "truncate_string_field_longer_than=1024")),
-      R"(google::cloud::bigquery_v2_minimal_internal::GetJobResponse {)"
-      R"( http_response: "google::cloud::bigquery_v2_minimal_internal::BigQueryHttpResponse {)"
+      response->DebugString("GetJobResponse",
+                            TracingOptions{}.SetOptions(
+                                "truncate_string_field_longer_than=1024")),
+      R"(GetJobResponse {)"
+      R"( http_response: "BigQueryHttpResponse {)"
       R"( status_code: 200)"
       R"( headers: "header1: value1")"
       R"( }")"
-      R"( job: "google::cloud::bigquery_v2_minimal_internal::Job {)"
+      R"( job: "Job {)"
       R"( etag: "jtag")"
       R"( kind: "jkind")"
       R"( id: "j123")"
-      R"( job_configuration: "google::cloud::bigquery_v2_minimal_internal::JobConfiguration {)"
+      R"( job_configuration: "JobConfiguration {)"
       R"( job_type: "QUERY")"
       R"( query: "select 1;")"
       R"( }")"
-      R"( job_reference: "google::cloud::bigquery_v2_minimal_internal::JobReference {)"
+      R"( job_reference: "JobReference {)"
       R"( project_id: "p123")"
       R"( job_id: "j123")"
       R"( location: "")"
@@ -262,18 +267,20 @@ TEST(GetJobResponseTest, DebugString) {
       R"( }")"
       R"( })");
 
-  EXPECT_EQ(
-      response->DebugString(TracingOptions{}.SetOptions("single_line_mode=F")),
-      R"(google::cloud::bigquery_v2_minimal_internal::GetJobResponse {
-  http_response: "google::cloud::bigquery_v2_minimal_internal::BigQueryHttpResponse {
+  EXPECT_EQ(response->DebugString("GetJobResponse", TracingOptions{}.SetOptions(
+                                                        "single_line_mode=F")),
+            R"(GetJobResponse {
+  http_response: "BigQueryHttpResponse {
   status_code: 200
   headers: "header1: value1"
 }"
-  job: "google::cloud::bigquery_v2_minimal_internal::Job {
+  job: "Job {
   etag: "jtag"
   kind: "jkind"
   id: "j123"
-  job_configuration: "google::clo...<truncated>..."
+  job_configuration: "JobConfiguration {
+  job_type: "QUERY"
+  query: "select ...<truncated>..."
 })");
 }
 
@@ -303,37 +310,39 @@ TEST(ListJobsResponseTest, DebugString) {
   auto response = ListJobsResponse::BuildFromHttpResponse(http_response);
   ASSERT_STATUS_OK(response);
 
-  EXPECT_EQ(
-      response->DebugString(TracingOptions{}),
-      R"(google::cloud::bigquery_v2_minimal_internal::ListJobsResponse {)"
-      R"( http_response: "google::cloud::bigquery_v2_minimal_internal::BigQueryHttpResponse {)"
-      R"( status_code: 200)"
-      R"( headers: "header1: value1")"
-      R"( }")"
-      R"( jobs: "google::cloud::bigquery_v2_minimal_internal::ListFormatJob {)"
-      R"( id: "1")"
-      R"( kind: "kind-2")"
-      R"( state: "DONE")"
-      R"( job_configuration: "google::cl...<truncated>...")"
-      R"( })");
+  EXPECT_EQ(response->DebugString("ListJobsResponse", TracingOptions{}),
+            R"(ListJobsResponse {)"
+            R"( http_response: "BigQueryHttpResponse {)"
+            R"( status_code: 200)"
+            R"( headers: "header1: value1")"
+            R"( }")"
+            R"( jobs: "ListFormatJob {)"
+            R"( id: "1")"
+            R"( kind: "kind-2")"
+            R"( state: "DONE")"
+            R"( job_configuration: "JobConfiguration {)"
+            R"( job_type: "QUERY")"
+            R"( query: "select 1;"...<truncated>...")"
+            R"( })");
 
   EXPECT_EQ(
-      response->DebugString(TracingOptions{}.SetOptions(
-          "truncate_string_field_longer_than=1024")),
-      R"(google::cloud::bigquery_v2_minimal_internal::ListJobsResponse {)"
-      R"( http_response: "google::cloud::bigquery_v2_minimal_internal::BigQueryHttpResponse {)"
+      response->DebugString("ListJobsResponse",
+                            TracingOptions{}.SetOptions(
+                                "truncate_string_field_longer_than=1024")),
+      R"(ListJobsResponse {)"
+      R"( http_response: "BigQueryHttpResponse {)"
       R"( status_code: 200)"
       R"( headers: "header1: value1")"
       R"( }")"
-      R"( jobs: "google::cloud::bigquery_v2_minimal_internal::ListFormatJob {)"
+      R"( jobs: "ListFormatJob {)"
       R"( id: "1")"
       R"( kind: "kind-2")"
       R"( state: "DONE")"
-      R"( job_configuration: "google::cloud::bigquery_v2_minimal_internal::JobConfiguration {)"
+      R"( job_configuration: "JobConfiguration {)"
       R"( job_type: "QUERY")"
       R"( query: "select 1;")"
       R"( }")"
-      R"( job_reference: "google::cloud::bigquery_v2_minimal_internal::JobReference {)"
+      R"( job_reference: "JobReference {)"
       R"( project_id: "p123")"
       R"( job_id: "j123")"
       R"( location: "")"
@@ -344,17 +353,20 @@ TEST(ListJobsResponseTest, DebugString) {
       R"( })");
 
   EXPECT_EQ(
-      response->DebugString(TracingOptions{}.SetOptions("single_line_mode=F")),
-      R"(google::cloud::bigquery_v2_minimal_internal::ListJobsResponse {
-  http_response: "google::cloud::bigquery_v2_minimal_internal::BigQueryHttpResponse {
+      response->DebugString("ListJobsResponse",
+                            TracingOptions{}.SetOptions("single_line_mode=F")),
+      R"(ListJobsResponse {
+  http_response: "BigQueryHttpResponse {
   status_code: 200
   headers: "header1: value1"
 }"
-  jobs: "google::cloud::bigquery_v2_minimal_internal::ListFormatJob {
+  jobs: "ListFormatJob {
   id: "1"
   kind: "kind-2"
   state: "DONE"
-  job_configuration: "go...<truncated>..."
+  job_configuration: "JobConfiguration {
+  job_type: "QUERY"
+  query:...<truncated>..."
 })");
 }
 

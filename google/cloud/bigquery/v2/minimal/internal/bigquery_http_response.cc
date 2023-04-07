@@ -44,13 +44,12 @@ StatusOr<BigQueryHttpResponse> BigQueryHttpResponse::BuildFromRestResponse(
   return response;
 }
 
-std::string BigQueryHttpResponse::DebugString(
-    TracingOptions const& options) const {
+std::string BigQueryHttpResponse::DebugString(absl::string_view name,
+                                              TracingOptions const& options,
+                                              int indent) const {
   // Payload is not logged as it might contain user sensitive data like
   // ldap/emails.
-  return internal::DebugFormatter(options,
-                                  "google::cloud::bigquery_v2_minimal_internal:"
-                                  ":BigQueryHttpResponse")
+  return internal::DebugFormatter(name, options, indent)
       .Field("status_code", http_status_code)
       .StringField("headers",
                    absl::StrJoin(http_headers, ", ", absl::PairFormatter(": ")))
