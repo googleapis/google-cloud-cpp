@@ -43,6 +43,13 @@ ContactCenterInsightsConnectionIdempotencyPolicy::CreateConversation(
 }
 
 Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::UploadConversation(
+    google::cloud::contactcenterinsights::v1::
+        UploadConversationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
 ContactCenterInsightsConnectionIdempotencyPolicy::UpdateConversation(
     google::cloud::contactcenterinsights::v1::
         UpdateConversationRequest const&) {

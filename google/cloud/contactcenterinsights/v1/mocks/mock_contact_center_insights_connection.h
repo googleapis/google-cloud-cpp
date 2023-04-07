@@ -53,6 +53,13 @@ class MockContactCenterInsightsConnection
                    CreateConversationRequest const& request),
               (override));
 
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>,
+      UploadConversation,
+      (google::cloud::contactcenterinsights::v1::
+           UploadConversationRequest const& request),
+      (override));
+
   MOCK_METHOD(StatusOr<google::cloud::contactcenterinsights::v1::Conversation>,
               UpdateConversation,
               (google::cloud::contactcenterinsights::v1::

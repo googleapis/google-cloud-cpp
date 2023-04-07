@@ -59,6 +59,11 @@ class ContactCenterInsightsConnectionImpl
       google::cloud::contactcenterinsights::v1::CreateConversationRequest const&
           request) override;
 
+  future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
+  UploadConversation(
+      google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
+          request) override;
+
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
   UpdateConversation(
       google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&

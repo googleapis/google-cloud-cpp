@@ -57,6 +57,37 @@ ContactCenterInsightsConnectionImpl::CreateConversation(
       request, __func__);
 }
 
+future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
+ContactCenterInsightsConnectionImpl::UploadConversation(
+    google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
+        request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::contactcenterinsights::v1::Conversation>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::contactcenterinsights::v1::
+                 UploadConversationRequest const& request) {
+        return stub->AsyncUploadConversation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::contactcenterinsights::v1::Conversation>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UploadConversation(request), polling_policy(),
+      __func__);
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsConnectionImpl::UpdateConversation(
     google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&

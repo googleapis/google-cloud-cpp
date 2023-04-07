@@ -44,6 +44,25 @@ DefaultContactCenterInsightsStub::CreateConversation(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultContactCenterInsightsStub::AsyncUploadConversation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::contactcenterinsights::v1::UploadConversationRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::contactcenterinsights::v1::
+                 UploadConversationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUploadConversation(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 DefaultContactCenterInsightsStub::UpdateConversation(
     grpc::ClientContext& client_context,

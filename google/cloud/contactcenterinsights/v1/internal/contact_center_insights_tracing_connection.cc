@@ -44,6 +44,18 @@ ContactCenterInsightsTracingConnection::CreateConversation(
   return internal::EndSpan(*span, child_->CreateConversation(request));
 }
 
+future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
+ContactCenterInsightsTracingConnection::UploadConversation(
+    google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "UploadConversation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UploadConversation(request));
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsTracingConnection::UpdateConversation(
     google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&

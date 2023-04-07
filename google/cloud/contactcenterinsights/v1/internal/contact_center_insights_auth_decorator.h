@@ -45,6 +45,12 @@ class ContactCenterInsightsAuth : public ContactCenterInsightsStub {
       google::cloud::contactcenterinsights::v1::CreateConversationRequest const&
           request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncUploadConversation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
+          request) override;
+
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
   UpdateConversation(
       grpc::ClientContext& context,
