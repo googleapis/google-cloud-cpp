@@ -42,6 +42,10 @@ class ContactCenterInsightsConnectionIdempotencyPolicy {
       google::cloud::contactcenterinsights::v1::CreateConversationRequest const&
           request);
 
+  virtual google::cloud::Idempotency UploadConversation(
+      google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
+          request);
+
   virtual google::cloud::Idempotency UpdateConversation(
       google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&
           request);

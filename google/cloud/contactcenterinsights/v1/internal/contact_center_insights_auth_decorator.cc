@@ -40,6 +40,26 @@ ContactCenterInsightsAuth::CreateConversation(
   return child_->CreateConversation(context, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+ContactCenterInsightsAuth::AsyncUploadConversation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUploadConversation(cq, *std::move(context), request);
+      });
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsAuth::UpdateConversation(
     grpc::ClientContext& context,

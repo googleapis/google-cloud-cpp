@@ -53,6 +53,15 @@ ContactCenterInsightsClient::CreateConversation(
   return connection_->CreateConversation(request);
 }
 
+future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
+ContactCenterInsightsClient::UploadConversation(
+    google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UploadConversation(request);
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsClient::UpdateConversation(
     google::cloud::contactcenterinsights::v1::Conversation const& conversation,

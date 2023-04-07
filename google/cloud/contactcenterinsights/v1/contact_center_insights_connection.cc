@@ -43,6 +43,15 @@ ContactCenterInsightsConnection::CreateConversation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
+ContactCenterInsightsConnection::UploadConversation(
+    google::cloud::contactcenterinsights::v1::
+        UploadConversationRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsConnection::UpdateConversation(
     google::cloud::contactcenterinsights::v1::

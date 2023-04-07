@@ -44,6 +44,23 @@ ContactCenterInsightsTracingStub::CreateConversation(
                            child_->CreateConversation(context, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+ContactCenterInsightsTracingStub::AsyncUploadConversation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.contactcenterinsights.v1.ContactCenterInsights",
+      "UploadConversation");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncUploadConversation(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsTracingStub::UpdateConversation(
     grpc::ClientContext& context,

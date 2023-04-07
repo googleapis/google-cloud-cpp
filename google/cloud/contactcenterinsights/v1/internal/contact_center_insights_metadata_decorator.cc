@@ -43,6 +43,16 @@ ContactCenterInsightsMetadata::CreateConversation(
   return child_->CreateConversation(context, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+ContactCenterInsightsMetadata::AsyncUploadConversation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
+        request) {
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncUploadConversation(cq, std::move(context), request);
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsMetadata::UpdateConversation(
     grpc::ClientContext& context,

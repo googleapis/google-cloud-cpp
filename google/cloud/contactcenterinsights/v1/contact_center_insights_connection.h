@@ -74,6 +74,12 @@ class ContactCenterInsightsConnection {
       google::cloud::contactcenterinsights::v1::CreateConversationRequest const&
           request);
 
+  virtual future<
+      StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
+  UploadConversation(
+      google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
+          request);
+
   virtual StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
   UpdateConversation(
       google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&
