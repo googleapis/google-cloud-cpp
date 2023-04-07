@@ -51,6 +51,7 @@ google_cloud_cpp_rest_internal_unit_tests = [
     "internal/oauth2_service_account_credentials_test.cc",
     "internal/openssl_util_test.cc",
     "internal/rest_context_test.cc",
+    "internal/rest_opentelemetry_test.cc",
     "internal/rest_parse_json_error_test.cc",
     "internal/rest_request_test.cc",
     "internal/rest_response_test.cc",
