@@ -75,37 +75,45 @@ StateFilter StateFilter::Done() {
   return state_filter;
 }
 
-std::string GetJobRequest::DebugString(TracingOptions const& options) const {
-  return internal::DebugFormatter(
-             options,
-             "google::cloud::bigquery_v2_minimal_internal::GetJobRequest")
+std::string GetJobRequest::DebugString(absl::string_view name,
+                                       TracingOptions const& options,
+                                       int indent) const {
+  return internal::DebugFormatter(name, options, indent)
       .StringField("project_id", project_id_)
       .StringField("job_id", job_id_)
       .StringField("location", location_)
       .Build();
 }
 
-std::string ListJobsRequest::DebugString(TracingOptions const& options) const {
-  return internal::DebugFormatter(
-             options,
-             "google::cloud::bigquery_v2_minimal_internal::ListJobsRequest")
+std::string ListJobsRequest::DebugString(absl::string_view name,
+                                         TracingOptions const& options,
+                                         int indent) const {
+  return internal::DebugFormatter(name, options, indent)
       .StringField("project_id", project_id_)
       .Field("all_users", all_users_)
       .Field("max_results", max_results_)
-      .SubMessage("min_creation_time")
-      .QuotedField(internal::FormatRfc3339(min_creation_time_))
-      .EndMessage()
-      .SubMessage("max_creation_time")
-      .QuotedField(internal::FormatRfc3339(max_creation_time_))
-      .EndMessage()
+      .Field("min_creation_time", min_creation_time_)
+      .Field("max_creation_time", max_creation_time_)
       .StringField("page_token", page_token_)
-      .SubMessage("projection")
-      .StringField("value", projection_.value)
-      .EndMessage()
-      .SubMessage("state_filter")
-      .StringField("value", state_filter_.value)
-      .EndMessage()
+      .SubMessage("projection", projection_)
+      .SubMessage("state_filter", state_filter_)
       .StringField("parent_job_id", parent_job_id_)
+      .Build();
+}
+
+std::string Projection::DebugString(absl::string_view name,
+                                    TracingOptions const& options,
+                                    int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("value", value)
+      .Build();
+}
+
+std::string StateFilter::DebugString(absl::string_view name,
+                                     TracingOptions const& options,
+                                     int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("value", value)
       .Build();
 }
 

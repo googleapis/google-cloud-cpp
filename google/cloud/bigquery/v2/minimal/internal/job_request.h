@@ -20,6 +20,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include "absl/strings/string_view.h"
 #include <chrono>
 #include <ostream>
 #include <string>
@@ -64,7 +65,9 @@ class GetJobRequest {
     return std::move(set_location(std::move(location)));
   }
 
-  std::string DebugString(TracingOptions const& options) const;
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 
  private:
   std::string project_id_;
@@ -77,6 +80,10 @@ struct Projection {
   static Projection Full();
 
   std::string value;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 
 struct StateFilter {
@@ -85,6 +92,10 @@ struct StateFilter {
   static StateFilter Done();
 
   std::string value;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 
 class ListJobsRequest {
@@ -182,7 +193,9 @@ class ListJobsRequest {
     return std::move(set_parent_job_id(std::move(parent_job_id)));
   }
 
-  std::string DebugString(TracingOptions const& options) const;
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 
   // Members
  private:

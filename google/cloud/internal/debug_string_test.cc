@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/internal/debug_string.h"
+#include "absl/strings/string_view.h"
 #include <gmock/gmock.h>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -21,20 +23,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+struct SubMessage {
+  double value;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const {
+    return DebugFormatter(name, options, indent).Field("value", value).Build();
+  }
+};
+
 TEST(DebugFormatter, SingleLine) {
-  EXPECT_EQ(DebugFormatter(TracingOptions{}.SetOptions("single_line_mode=T"),
-                           "message_name")
+  EXPECT_EQ(DebugFormatter("message_name",
+                           TracingOptions{}.SetOptions("single_line_mode=T"))
                 .Field("field1", 42)
-                .SubMessage("sub_message")
-                .QuotedField("field2", 3.14159)
-                .EndMessage()
+                .SubMessage("sub_message", SubMessage{3.14159})
                 .StringField("field2", "foobar")
                 .Field("field3", true)
                 .Build(),
             R"(message_name {)"
             R"( field1: 42)"
             R"( sub_message {)"
-            R"( field2: "3.14159")"
+            R"( value: 3.14159)"
             R"( })"
             R"( field2: "foobar")"
             R"( field3: true)"
@@ -42,19 +52,17 @@ TEST(DebugFormatter, SingleLine) {
 }
 
 TEST(DebugFormatter, MultiLine) {
-  EXPECT_EQ(DebugFormatter(TracingOptions{}.SetOptions("single_line_mode=F"),
-                           "message_name")
+  EXPECT_EQ(DebugFormatter("message_name",
+                           TracingOptions{}.SetOptions("single_line_mode=F"))
                 .Field("field1", 42)
-                .SubMessage("sub_message")
-                .QuotedField("field2", 3.14159)
-                .EndMessage()
+                .SubMessage("sub_message", SubMessage{3.14159})
                 .StringField("field2", "foobar")
                 .Field("field3", true)
                 .Build(),
             R"(message_name {
   field1: 42
   sub_message {
-    field2: "3.14159"
+    value: 3.14159
   }
   field2: "foobar"
   field3: true
@@ -62,24 +70,22 @@ TEST(DebugFormatter, MultiLine) {
 }
 
 TEST(DebugFormatter, Truncated) {
-  EXPECT_EQ(DebugFormatter(TracingOptions{}.SetOptions(
-                               "truncate_string_field_longer_than=3"),
-                           "message_name")
-                .Field("field1", 42)
-                .SubMessage("sub_message")
-                .QuotedField("field2", 3.14159)
-                .EndMessage()
-                .StringField("field2", "foobar")
-                .Field("field3", true)
-                .Build(),
-            R"(message_name {)"
-            R"( field1: 42)"
-            R"( sub_message {)"
-            R"( field2: "3.14159")"
-            R"( })"
-            R"( field2: "foo...<truncated>...")"
-            R"( field3: true)"
-            R"( })");
+  EXPECT_EQ(
+      DebugFormatter("message_name", TracingOptions{}.SetOptions(
+                                         "truncate_string_field_longer_than=3"))
+          .Field("field1", 42)
+          .SubMessage("sub_message", SubMessage{3.14159})
+          .StringField("field2", "foobar")
+          .Field("field3", true)
+          .Build(),
+      R"(message_name {)"
+      R"( field1: 42)"
+      R"( sub_message {)"
+      R"( value: 3.14159)"
+      R"( })"
+      R"( field2: "foo...<truncated>...")"
+      R"( field3: true)"
+      R"( })");
 }
 
 TEST(DebugString, TruncateString) {

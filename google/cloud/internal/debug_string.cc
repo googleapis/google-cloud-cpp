@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/debug_string.h"
+#include "google/cloud/internal/format_time_point.h"
 #include <atomic>
 
 namespace google {
@@ -20,28 +21,28 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-DebugFormatter::DebugFormatter(TracingOptions options,
-                               absl::string_view message_name)
-    : options_(std::move(options)) {
-  absl::StrAppend(&str_, message_name, " {");
+DebugFormatter::DebugFormatter(absl::string_view name, TracingOptions options,
+                               int indent)
+    : options_(std::move(options)), indent_(indent) {
+  absl::StrAppend(&str_, indent_ ? Sep() : "", name, " {");
   ++indent_;
-}
-
-DebugFormatter& DebugFormatter::SubMessage(absl::string_view message_name) {
-  absl::StrAppend(&str_, Sep(), message_name, " {");
-  ++indent_;
-  return *this;
-}
-
-DebugFormatter& DebugFormatter::EndMessage() {
-  --indent_;
-  absl::StrAppend(&str_, Sep(), "}");
-  return *this;
 }
 
 DebugFormatter& DebugFormatter::Field(absl::string_view field_name,
                                       bool value) {
+  // Mirror the behavior of std::boolalpha.
   absl::StrAppend(&str_, Sep(), field_name, ": ", value ? "true" : "false");
+  return *this;
+}
+
+DebugFormatter& DebugFormatter::Field(
+    absl::string_view field_name, std::chrono::system_clock::time_point value) {
+  // Mirror the behavior of TimestampMessagePrinter.
+  absl::StrAppend(&str_, Sep(), field_name, " {");
+  ++indent_;
+  absl::StrAppend(&str_, Sep(), "\"", FormatRfc3339(value), "\"");
+  --indent_;
+  absl::StrAppend(&str_, Sep(), "}");
   return *this;
 }
 
@@ -53,7 +54,8 @@ DebugFormatter& DebugFormatter::StringField(absl::string_view field_name,
 }
 
 std::string DebugFormatter::Build() {
-  EndMessage();
+  --indent_;
+  absl::StrAppend(&str_, Sep(), "}");
   return std::move(str_);
 }
 
