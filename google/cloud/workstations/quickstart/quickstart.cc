@@ -13,23 +13,24 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/workstations/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/workstations/v1/workstations_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
-  namespace workstations = ::google::cloud::workstations;
-  auto client = workstations::Client(workstations::MakeConnection());
+  namespace workstations = ::google::cloud::workstations_v1;
+  auto client = workstations::WorkstationsClient(
+      workstations::MakeWorkstationsConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto wc : client.ListWorkstationClusters(parent)) {
+    if (!wc) throw std::move(wc).status();
+    std::cout << wc->DebugString() << "\n";
   }
 
   return 0;

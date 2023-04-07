@@ -2,8 +2,10 @@
 
 @mainpage Cloud Workstations API C++ Client Library
 
-An idiomatic C++ client library for the [Cloud Workstations API][cloud-service-docs], a service
-to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+An idiomatic C++ client library for the
+[Cloud Workstations API][cloud-service-docs], a service that provides
+preconfigured, customizable, and secure managed development environments
+on Google Cloud.
 
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -35,7 +37,7 @@ cd google-cloud-cpp/google/cloud/workstations/quickstart
 
 The following shows the code that you'll run in the
 `google/cloud/workstations/quickstart/` directory,
-which should give you a taste of the Cloud Workstations API C++ client library API.
+which should give you a taste of the Cloud Workstations API C++ client library.
 
 @snippet quickstart.cc all
 

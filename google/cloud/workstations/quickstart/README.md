@@ -8,11 +8,9 @@ some experience as a C++ developer and that you have a working C++ toolchain
 - Packaging maintainers or developers who prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
   [packaging guide](/doc/packaging.md).
-
-* Developers who prefer using a package manager such as
+- Developers who prefer using a package manager such as
   [vcpkg](https://vcpkg.io), or [Conda](https://conda.io), should follow the
   instructions for their package manager.
-
 - Developers wanting to use the libraries as part of a larger CMake or Bazel
   project should consult the current document. Note that there are similar
   documents for each library in their corresponding directories.
@@ -31,7 +29,7 @@ steps in detail.
 
 ## Configuring authentication for the C++ Client Library
 
-Like most Google Cloud Platform (GCP) services, Cloud Workstations API requires that
+Like most Google Cloud Platform (GCP) services, Cloud Workstations requires that
 your application authenticates with the service before accessing any data. If
 you are not familiar with GCP authentication please take this opportunity to
 review the [Authentication Overview][authentication-quickstart]. This library
@@ -75,7 +73,7 @@ https://cloud.google.com/docs/authentication/production
 1. Run the example, changing the placeholder(s) to appropriate values:
 
    ```bash
-   bazel run :quickstart -- [...]
+   bazel run :quickstart -- [PROJECT_ID] [LOCATION_ID]
    ```
 
 ## Using with CMake
@@ -112,7 +110,7 @@ https://cloud.google.com/docs/authentication/production
 1. Run the example, changing the placeholder(s) to appropriate values:
 
    ```bash
-   .build/quickstart [...]
+   .build/quickstart [PROJECT_ID] [LOCATION_ID]
    ```
 
 ## Platform Specific Notes

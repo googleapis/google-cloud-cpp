@@ -123,4 +123,5 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "webrisk",
     "websecurityscanner",
     "workflows",
+    "workstations",
 ]
