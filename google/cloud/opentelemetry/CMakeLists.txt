@@ -36,6 +36,57 @@ add_library(google-cloud-cpp::experimental-opentelemetry_sdk ALIAS
             google_cloud_cpp_opentelemetry_sdk)
 create_bazel_config(google_cloud_cpp_opentelemetry_sdk YEAR 2023)
 
+# Export the CMake targets to make it easy to create configuration files.
+install(
+    EXPORT google_cloud_cpp_opentelemetry_sdk-targets
+    DESTINATION
+        "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_opentelemetry_sdk"
+    COMPONENT google_cloud_cpp_development)
+
+install(
+    TARGETS google_cloud_cpp_opentelemetry_sdk
+    EXPORT google_cloud_cpp_opentelemetry_sdk-targets
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+            COMPONENT google_cloud_cpp_runtime
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_runtime
+            NAMELINK_SKIP
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development)
+# With CMake-3.12 and higher we could avoid this separate command (and the
+# duplication).
+install(
+    TARGETS google_cloud_cpp_opentelemetry_sdk
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development
+            NAMELINK_ONLY
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development)
+
+google_cloud_cpp_install_headers(google_cloud_cpp_opentelemetry_sdk
+                                 include/google/cloud/opentelemetry)
+
+google_cloud_cpp_add_pkgconfig(
+    opentelemetry_sdk "OpenTelemetry Exporters for Google Cloud"
+    "Provides exporters for sending telemetry to Google Cloud services."
+    "google_cloud_cpp_trace")
+
+# Create and install the CMake configuration files.
+configure_file("config.cmake.in"
+               "google_cloud_cpp_opentelemetry_sdk-config.cmake" @ONLY)
+write_basic_package_version_file(
+    "google_cloud_cpp_opentelemetry_sdk-config-version.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY ExactVersion)
+
+install(
+    FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_opentelemetry_sdk-config.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_opentelemetry_sdk-config-version.cmake"
+    DESTINATION
+        "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_opentelemetry_sdk"
+    COMPONENT google_cloud_cpp_development)
+
 if (NOT BUILD_TESTING)
     return()
 endif ()

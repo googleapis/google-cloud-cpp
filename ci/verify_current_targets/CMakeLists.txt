@@ -36,7 +36,7 @@ set(ga_libraries
 # Define experimental libraries. The only difference is the name of the CMake
 # targets.
 set(experimental_libraries # cmake-format: sortable
-                           bigquery_rest)
+                           bigquery_rest opentelemetry_sdk)
 
 # CMake can use pkg-config to find dependencies. We recommend using CMake
 # targets, but we want to verify our pkg-config files remain usable and
