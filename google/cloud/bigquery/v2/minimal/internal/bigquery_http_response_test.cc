@@ -100,10 +100,13 @@ TEST(BigQueryHttpResponseTest, DebugString) {
   response.http_status_code = HttpStatusCode::kOk;
   response.http_headers.insert({{"header1", "value1"}});
   response.payload = payload;
-  std::ostringstream os;
-  std::string expected =
-      "BigQueryHttpResponse{ Status_Code=200 , headers={ header1: value1 }}";
-  EXPECT_EQ(expected, response.DebugString(TracingOptions{}));
+
+  EXPECT_EQ(
+      response.DebugString(TracingOptions{}),
+      R"(google::cloud::bigquery_v2_minimal_internal::BigQueryHttpResponse {)"
+      R"( status_code: 200)"
+      R"( headers: "header1: value1")"
+      R"( })");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -16,13 +16,13 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/make_status.h"
-#include <iostream>
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+namespace {
 bool valid_job(nlohmann::json const& j) {
   return (j.contains("kind") && j.contains("etag") && j.contains("id") &&
           j.contains("status") && j.contains("reference") &&
@@ -57,13 +57,13 @@ StatusOr<nlohmann::json> parse_json(std::string const& payload) {
 std::string DebugJobsString(std::vector<ListFormatJob> const& jobs,
                             TracingOptions const& options) {
   std::string out;
-  auto const* delim = options.single_line_mode() ? " " : "\n";
   for (auto const& j : jobs) {
     std::string jout;
-    absl::StrAppend(&out, j.DebugString(options), delim);
+    absl::StrAppend(&out, j.DebugString(options));
   }
   return out;
 }
+}  // namespace
 
 StatusOr<GetJobResponse> GetJobResponse::BuildFromHttpResponse(
     BigQueryHttpResponse const& http_response) {
@@ -83,12 +83,12 @@ StatusOr<GetJobResponse> GetJobResponse::BuildFromHttpResponse(
 }
 
 std::string GetJobResponse::DebugString(TracingOptions const& options) const {
-  std::string out;
-  auto const* delim = options.single_line_mode() ? " " : "\n";
-  absl::StrAppend(&out, "GetJobResponse{", delim, "http_response={", delim,
-                  http_response.DebugString(options), delim, "}", delim,
-                  ", job={", delim, job.DebugString(options), delim, "}");
-  return out;
+  return internal::DebugFormatter(
+             options,
+             "google::cloud::bigquery_v2_minimal_internal::GetJobResponse")
+      .StringField("http_response", http_response.DebugString(options))
+      .StringField("job", job.DebugString(options))
+      .Build();
 }
 
 StatusOr<ListJobsResponse> ListJobsResponse::BuildFromHttpResponse(
@@ -122,13 +122,12 @@ StatusOr<ListJobsResponse> ListJobsResponse::BuildFromHttpResponse(
 }
 
 std::string ListJobsResponse::DebugString(TracingOptions const& options) const {
-  std::string out;
-  auto const* delim = options.single_line_mode() ? " " : "\n";
-  absl::StrAppend(&out, "ListJobsResponse{", delim, "http_response={", delim,
-                  http_response.DebugString(options), delim, "}", delim,
-                  ", jobs={", delim, DebugJobsString(jobs, options), delim,
-                  "}");
-  return internal::DebugString(out, options);
+  return internal::DebugFormatter(
+             options,
+             "google::cloud::bigquery_v2_minimal_internal::ListJobsResponse")
+      .StringField("http_response", http_response.DebugString(options))
+      .StringField("jobs", DebugJobsString(jobs, options))
+      .Build();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
