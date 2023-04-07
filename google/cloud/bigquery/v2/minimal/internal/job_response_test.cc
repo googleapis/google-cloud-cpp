@@ -223,18 +223,61 @@ TEST(GetJobResponseTest, DebugString) {
   auto response = GetJobResponse::BuildFromHttpResponse(http_response);
   ASSERT_STATUS_OK(response);
 
-  std::string expected =
-      "GetJobResponse{ http_response={ BigQueryHttpResponse{ "
-      "Status_Code=200 , headers={ header1: value1 }} } , job={ Job{ "
-      "etag=jtag , kind=jkind , id=j123 , job_configuration={ job_type=QUERY , "
-      "query=select 1; } , job_reference={ job_id=j123 , location= , "
-      "project_id=p123 } , "
-      "job_status=DONE , error_result= } }";
+  EXPECT_EQ(
+      response->DebugString(TracingOptions{}),
+      R"(google::cloud::bigquery_v2_minimal_internal::GetJobResponse {)"
+      R"( http_response: "google::cloud::bigquery_v2_minimal_internal::BigQueryHttpResponse {)"
+      R"( status_code: 200 headers: "header1: value1")"
+      R"( }")"
+      R"( job: "google::cloud::bigquery_v2_minimal_internal::Job {)"
+      R"( etag: "jtag")"
+      R"( kind: "jkind")"
+      R"( id: "j123")"
+      R"( job_configuration: "google::cloud::bigq...<truncated>...")"
+      R"( })");
 
-  EXPECT_EQ(expected, response->DebugString(TracingOptions{}));
+  EXPECT_EQ(
+      response->DebugString(TracingOptions{}.SetOptions(
+          "truncate_string_field_longer_than=1024")),
+      R"(google::cloud::bigquery_v2_minimal_internal::GetJobResponse {)"
+      R"( http_response: "google::cloud::bigquery_v2_minimal_internal::BigQueryHttpResponse {)"
+      R"( status_code: 200)"
+      R"( headers: "header1: value1")"
+      R"( }")"
+      R"( job: "google::cloud::bigquery_v2_minimal_internal::Job {)"
+      R"( etag: "jtag")"
+      R"( kind: "jkind")"
+      R"( id: "j123")"
+      R"( job_configuration: "google::cloud::bigquery_v2_minimal_internal::JobConfiguration {)"
+      R"( job_type: "QUERY")"
+      R"( query: "select 1;")"
+      R"( }")"
+      R"( job_reference: "google::cloud::bigquery_v2_minimal_internal::JobReference {)"
+      R"( project_id: "p123")"
+      R"( job_id: "j123")"
+      R"( location: "")"
+      R"( }")"
+      R"( job_status: "DONE")"
+      R"( error_result: "")"
+      R"( }")"
+      R"( })");
+
+  EXPECT_EQ(
+      response->DebugString(TracingOptions{}.SetOptions("single_line_mode=F")),
+      R"(google::cloud::bigquery_v2_minimal_internal::GetJobResponse {
+  http_response: "google::cloud::bigquery_v2_minimal_internal::BigQueryHttpResponse {
+  status_code: 200
+  headers: "header1: value1"
+}"
+  job: "google::cloud::bigquery_v2_minimal_internal::Job {
+  etag: "jtag"
+  kind: "jkind"
+  id: "j123"
+  job_configuration: "google::clo...<truncated>..."
+})");
 }
 
-TEST(ListJobsResponseTest, OutputStream) {
+TEST(ListJobsResponseTest, DebugString) {
   BigQueryHttpResponse http_response;
   http_response.http_status_code = HttpStatusCode::kOk;
   http_response.http_headers.insert({{"header1", "value1"}});
@@ -260,12 +303,59 @@ TEST(ListJobsResponseTest, OutputStream) {
   auto response = ListJobsResponse::BuildFromHttpResponse(http_response);
   ASSERT_STATUS_OK(response);
 
-  std::string expected =
-      "ListJobsResponse{ http_response={ BigQueryHttpResponse{ Status_Code=200 "
-      ", "
-      "headers={ header1: value1 }} } , jobs={ ListFormatJob{...<truncated>...";
+  EXPECT_EQ(
+      response->DebugString(TracingOptions{}),
+      R"(google::cloud::bigquery_v2_minimal_internal::ListJobsResponse {)"
+      R"( http_response: "google::cloud::bigquery_v2_minimal_internal::BigQueryHttpResponse {)"
+      R"( status_code: 200)"
+      R"( headers: "header1: value1")"
+      R"( }")"
+      R"( jobs: "google::cloud::bigquery_v2_minimal_internal::ListFormatJob {)"
+      R"( id: "1")"
+      R"( kind: "kind-2")"
+      R"( state: "DONE")"
+      R"( job_configuration: "google::cl...<truncated>...")"
+      R"( })");
 
-  EXPECT_EQ(expected, response->DebugString(TracingOptions{}));
+  EXPECT_EQ(
+      response->DebugString(TracingOptions{}.SetOptions(
+          "truncate_string_field_longer_than=1024")),
+      R"(google::cloud::bigquery_v2_minimal_internal::ListJobsResponse {)"
+      R"( http_response: "google::cloud::bigquery_v2_minimal_internal::BigQueryHttpResponse {)"
+      R"( status_code: 200)"
+      R"( headers: "header1: value1")"
+      R"( }")"
+      R"( jobs: "google::cloud::bigquery_v2_minimal_internal::ListFormatJob {)"
+      R"( id: "1")"
+      R"( kind: "kind-2")"
+      R"( state: "DONE")"
+      R"( job_configuration: "google::cloud::bigquery_v2_minimal_internal::JobConfiguration {)"
+      R"( job_type: "QUERY")"
+      R"( query: "select 1;")"
+      R"( }")"
+      R"( job_reference: "google::cloud::bigquery_v2_minimal_internal::JobReference {)"
+      R"( project_id: "p123")"
+      R"( job_id: "j123")"
+      R"( location: "")"
+      R"( }")"
+      R"( job_status: "DONE")"
+      R"( error_result: "")"
+      R"( }")"
+      R"( })");
+
+  EXPECT_EQ(
+      response->DebugString(TracingOptions{}.SetOptions("single_line_mode=F")),
+      R"(google::cloud::bigquery_v2_minimal_internal::ListJobsResponse {
+  http_response: "google::cloud::bigquery_v2_minimal_internal::BigQueryHttpResponse {
+  status_code: 200
+  headers: "header1: value1"
+}"
+  jobs: "google::cloud::bigquery_v2_minimal_internal::ListFormatJob {
+  id: "1"
+  kind: "kind-2"
+  state: "DONE"
+  job_configuration: "go...<truncated>..."
+})");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

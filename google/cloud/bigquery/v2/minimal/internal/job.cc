@@ -21,36 +21,64 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+namespace {
+std::string MakeJobConfiguration(TracingOptions const& options,
+                                 std::string job_type, std::string query) {
+  return internal::DebugFormatter(
+             options,
+             "google::cloud::bigquery_v2_minimal_internal::JobConfiguration")
+      .StringField("job_type", std::move(job_type))
+      .StringField("query", std::move(query))
+      .Build();
+}
+
+std::string MakeJobReference(TracingOptions const& options,
+                             std::string project_id, std::string job_id,
+                             std::string location) {
+  return internal::DebugFormatter(
+             options,
+             "google::cloud::bigquery_v2_minimal_internal::JobReference")
+      .StringField("project_id", std::move(project_id))
+      .StringField("job_id", std::move(job_id))
+      .StringField("location", std::move(location))
+      .Build();
+}
+
+}  // namespace
+
 std::string Job::DebugString(TracingOptions const& options) const {
-  std::string out;
-  auto const* delim = options.single_line_mode() ? " " : "\n";
-  absl::StrAppend(&out, "Job{", delim, "etag=", etag, delim, ", kind=", kind,
-                  delim, ", id=", id, delim, ", job_configuration={", delim,
-                  "job_type=", configuration.job_type, delim,
-                  ", query=", configuration.query_config.query, delim, "}",
-                  delim, ", job_reference={", delim,
-                  "job_id=", reference.job_id, delim,
-                  ", location=", reference.location, delim,
-                  ", project_id=", reference.project_id, delim, "}", delim,
-                  ", job_status=", status.state, delim,
-                  ", error_result=", status.error_result.message, delim, "}");
-  return out;
+  auto job_configuration = MakeJobConfiguration(
+      options, configuration.job_type, configuration.query_config.query);
+  auto job_reference = MakeJobReference(options, reference.project_id,
+                                        reference.job_id, reference.location);
+  return internal::DebugFormatter(
+             options, "google::cloud::bigquery_v2_minimal_internal::Job")
+      .StringField("etag", etag)
+      .StringField("kind", kind)
+      .StringField("id", id)
+      .StringField("job_configuration", job_configuration)
+      .StringField("job_reference", job_reference)
+      .StringField("job_status", status.state)
+      .StringField("error_result", status.error_result.message)
+      .Build();
 }
 
 std::string ListFormatJob::DebugString(TracingOptions const& options) const {
-  std::string out;
-  auto const* delim = options.single_line_mode() ? " " : "\n";
-  absl::StrAppend(
-      &out, "ListFormatJob{", delim, "id=", id, delim, ", kind=", kind, delim,
-      ", state=", state, delim, ", job_configuration={", delim,
-      "job_type=", configuration.job_type, delim,
-      ", query=", configuration.query_config.query, delim, "}", delim,
-      ", job_reference={", delim, "job_id=", reference.job_id, delim,
-      ", location=", reference.location, delim,
-      ", project_id=", reference.project_id, delim, "}",
-      ", job_status=", status.state, delim,
-      ", error_result=", error_result.message, delim, "}");
-  return out;
+  auto job_configuration = MakeJobConfiguration(
+      options, configuration.job_type, configuration.query_config.query);
+  auto job_reference = MakeJobReference(options, reference.project_id,
+                                        reference.job_id, reference.location);
+  return internal::DebugFormatter(
+             options,
+             "google::cloud::bigquery_v2_minimal_internal::ListFormatJob")
+      .StringField("id", id)
+      .StringField("kind", kind)
+      .StringField("state", state)
+      .StringField("job_configuration", job_configuration)
+      .StringField("job_reference", job_reference)
+      .StringField("job_status", status.state)
+      .StringField("error_result", status.error_result.message)
+      .Build();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

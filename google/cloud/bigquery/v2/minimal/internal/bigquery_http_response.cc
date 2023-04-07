@@ -16,7 +16,6 @@
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/make_status.h"
-#include <iostream>
 
 namespace google {
 namespace cloud {
@@ -47,15 +46,15 @@ StatusOr<BigQueryHttpResponse> BigQueryHttpResponse::BuildFromRestResponse(
 
 std::string BigQueryHttpResponse::DebugString(
     TracingOptions const& options) const {
-  // Payload is not being printed as it may contain user sensitive data like
-  // email, ldap etc.
-  std::string out;
-  auto const* delim = options.single_line_mode() ? " " : "\n";
-  absl::StrAppend(&out, "BigQueryHttpResponse{", delim,
-                  "Status_Code=", http_status_code, delim, ", headers={", delim,
-                  absl::StrJoin(http_headers, ", ", absl::PairFormatter(": ")),
-                  delim, "}}");
-  return out;
+  // Payload is not logged as it might contain user sensitive data like
+  // ldap/emails.
+  return internal::DebugFormatter(options,
+                                  "google::cloud::bigquery_v2_minimal_internal:"
+                                  ":BigQueryHttpResponse")
+      .Field("status_code", http_status_code)
+      .StringField("headers",
+                   absl::StrJoin(http_headers, ", ", absl::PairFormatter(": ")))
+      .Build();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

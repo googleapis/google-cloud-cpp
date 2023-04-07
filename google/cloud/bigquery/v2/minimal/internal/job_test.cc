@@ -33,13 +33,24 @@ TEST(JobTest, JobDebugString) {
   job.configuration.job_type = "QUERY";
   job.configuration.query_config.query = "select 1;";
 
-  std::string expected =
-      "Job{ etag=etag , kind=Job , id=1 , "
-      "job_configuration={ job_type=QUERY , query=select 1; } , "
-      "job_reference={ job_id=2 , location= , project_id=1 } , "
-      "job_status=DONE , error_result= }";
-
-  EXPECT_EQ(expected, job.DebugString(TracingOptions{}));
+  EXPECT_EQ(
+      job.DebugString(TracingOptions{}),
+      R"(google::cloud::bigquery_v2_minimal_internal::Job {)"
+      R"( etag: "etag")"
+      R"( kind: "Job")"
+      R"( id: "1")"
+      R"( job_configuration: "google::cloud::bigquery_v2_minimal_internal::JobConfiguration {)"
+      R"( job_type: "QUERY")"
+      R"( query: "select 1;")"
+      R"( }")"
+      R"( job_reference: "google::cloud::bigquery_v2_minimal_internal::JobReference {)"
+      R"( project_id: "1")"
+      R"( job_id: "2")"
+      R"( location: "")"
+      R"( }")"
+      R"( job_status: "DONE")"
+      R"( error_result: "")"
+      R"( })");
 }
 
 TEST(JobTest, ListFormatJobDebugString) {
@@ -53,13 +64,24 @@ TEST(JobTest, ListFormatJobDebugString) {
   job.configuration.job_type = "QUERY";
   job.configuration.query_config.query = "select 1;";
 
-  std::string expected =
-      "ListFormatJob{ id=1 , kind=Job , "
-      "state=DONE , job_configuration={ job_type=QUERY , "
-      "query=select 1; } , job_reference={ job_id=2 , "
-      "location= , project_id=1 }, job_status=DONE , error_result= }";
-
-  EXPECT_EQ(expected, job.DebugString(TracingOptions{}));
+  EXPECT_EQ(
+      job.DebugString(TracingOptions{}),
+      R"(google::cloud::bigquery_v2_minimal_internal::ListFormatJob {)"
+      R"( id: "1")"
+      R"( kind: "Job")"
+      R"( state: "DONE")"
+      R"( job_configuration: "google::cloud::bigquery_v2_minimal_internal::JobConfiguration {)"
+      R"( job_type: "QUERY")"
+      R"( query: "select 1;")"
+      R"( }")"
+      R"( job_reference: "google::cloud::bigquery_v2_minimal_internal::JobReference {)"
+      R"( project_id: "1")"
+      R"( job_id: "2")"
+      R"( location: "")"
+      R"( }")"
+      R"( job_status: "DONE")"
+      R"( error_result: "")"
+      R"( })");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
