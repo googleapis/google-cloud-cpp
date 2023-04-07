@@ -14,10 +14,12 @@
 
 #include "google/cloud/internal/curl_wrappers.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_split.h"
 #include <openssl/crypto.h>
 #include <openssl/opensslv.h>
 #include <algorithm>
@@ -242,16 +244,14 @@ std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
     // Invalid header (should end in \r\n), ignore.
     return size;
   }
-  auto const* separator = std::find(data, data + size, ':');
-  std::string header_name = std::string(data, separator);
-  std::string header_value;
-  // If there is a value, capture it, but ignore the final \r\n.
-  if (static_cast<std::size_t>(separator - data) < size - 2) {
-    header_value = std::string(separator + 2, data + size - 2);
-  }
-  std::transform(header_name.begin(), header_name.end(), header_name.begin(),
-                 [](unsigned char x) { return std::tolower(x); });
-  received_headers.emplace(std::move(header_name), std::move(header_value));
+  // Split on the ':' (if any), ignore the trailing '\r\n'. Then cleanup the
+  // header name and value.
+  std::vector<absl::string_view> s = absl::StrSplit(
+      absl::string_view{data, size - 2}, absl::MaxSplits(':', 1));
+  auto value = s.size() == 2 ? s[1] : absl::string_view{};
+  received_headers.emplace(
+      absl::AsciiStrToLower(s[0]),
+      std::string(absl::StripLeadingAsciiWhitespace(value)));
   return size;
 }
 

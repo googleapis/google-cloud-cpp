@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/curl_wrappers.h"
 #include "google/cloud/internal/curl_options.h"
+#include "absl/strings/string_view.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -21,6 +22,9 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
+using ::testing::Pair;
+using ::testing::UnorderedElementsAre;
 
 TEST(CurlWrappers, VersionToCurlCode) {
   struct Test {
@@ -143,6 +147,28 @@ TEST(CurlWrappers, CurlInitializeOptions) {
       Options{}.set<EnableCurlSigpipeHandlerOption>(false));
   EXPECT_TRUE(override2.get<EnableCurlSslLockingOption>());
   EXPECT_FALSE(override2.get<EnableCurlSigpipeHandlerOption>());
+}
+
+TEST(CurlWrappers, AppendHeaderData) {
+  absl::string_view inputs[] = {
+      "HTTP/1.1 200 OK\r\n",
+      "X-Test1: value1\r\n",
+      "X-Test1: value2\r\n",
+      "X-Test2: value",
+      "X-Test2: a:b:c\r\n",
+      "X-Test3:v3\r\n",
+      "X-Test3:    v4\r\n",
+      "",
+      "\r",
+      "\n",
+  };
+  CurlReceivedHeaders headers;
+  for (auto v : inputs) CurlAppendHeaderData(headers, v.data(), v.size());
+  EXPECT_THAT(headers,
+              UnorderedElementsAre(
+                  Pair("http/1.1 200 ok", ""), Pair("x-test1", "value1"),
+                  Pair("x-test1", "value2"), Pair("x-test2", "a:b:c"),
+                  Pair("x-test3", "v3"), Pair("x-test3", "v4")));
 }
 
 }  // namespace
