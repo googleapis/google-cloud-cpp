@@ -47,7 +47,7 @@ TEST(CircularBufferBackend, Basic) {
   buffer.ProcessWithOwnership(
       test_log_record(Severity::GCP_LS_WARNING, "msg 4"));
   buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 5"));
-  // The output should be empty, as no message with high enough severity have
+  // The output should be empty as no message with high enough severity has
   // been generated.
   EXPECT_THAT(be->ExtractLines(), IsEmpty());
 
@@ -56,13 +56,13 @@ TEST(CircularBufferBackend, Basic) {
   buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_ERROR, "msg 6"));
   EXPECT_THAT(be->ExtractLines(), ElementsAre("msg 4", "msg 5", "msg 6"));
 
-  // In this case, the buffer is not full. But a message with high enough
+  // In this case the buffer is not full, but a message with high enough
   // severity forces a flush.
   buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 7"));
   buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_ERROR, "msg 8"));
   EXPECT_THAT(be->ExtractLines(), ElementsAre("msg 7", "msg 8"));
 
-  // In this case, the buffer is not full. An explicit flush should create
+  // In this case the buffer is not full, but an explicit flush should create
   // some output.
   buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 9"));
   buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 10"));
@@ -95,7 +95,7 @@ TEST(PerThreadCircularBufferBackend, Basic) {
   buffer.ProcessWithOwnership(
       test_log_record(Severity::GCP_LS_WARNING, "msg 4"));
   buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 5"));
-  // The output should be empty, as no message with high enough severity have
+  // The output should be empty as no message with high enough severity has
   // been generated.
   noise.join();
   EXPECT_THAT(be->ExtractLines(), IsEmpty());
@@ -107,7 +107,7 @@ TEST(PerThreadCircularBufferBackend, Basic) {
   noise.join();
   EXPECT_THAT(be->ExtractLines(), ElementsAre("msg 4", "msg 5", "msg 6"));
 
-  // In this case, the buffer is not full. But a message with high enough
+  // In this case the buffer is not full, but a message with high enough
   // severity forces a flush.
   noise = std::thread{noise_generator};
   buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 7"));
@@ -115,7 +115,7 @@ TEST(PerThreadCircularBufferBackend, Basic) {
   noise.join();
   EXPECT_THAT(be->ExtractLines(), ElementsAre("msg 7", "msg 8"));
 
-  // In this case, the buffer is not full. An explicit flush should create
+  // In this case the buffer is not full, but an explicit flush should create
   // some output.
   noise = std::thread{noise_generator};
   buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 9"));
