@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#if GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/rest_opentelemetry.h"
 #include "google/cloud/internal/opentelemetry_options.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"

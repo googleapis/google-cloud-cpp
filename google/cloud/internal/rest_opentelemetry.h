@@ -14,7 +14,8 @@
 
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_OPENTELEMETRY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_OPENTELEMETRY_H
-#if GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/rest_request.h"
 #include <opentelemetry/nostd/shared_ptr.h>
 #include <opentelemetry/trace/span.h>
@@ -40,4 +41,5 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_OPENTELEMETRY_H

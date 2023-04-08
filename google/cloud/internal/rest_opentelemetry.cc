@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#if GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/rest_opentelemetry.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -37,8 +37,8 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanHttp(
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kClient;
   auto span =
-      google::cloud::internal::GetTracer(
-          google::cloud::internal::CurrentOptions())
+      internal::GetTracer(
+          internal::CurrentOptions())
           ->StartSpan(absl::StrCat("HTTP/", absl::string_view{method.data(),
                                                               method.size()}),
                       {{sc::kNetTransport, sc::NetTransportValues::kIpTcp},
