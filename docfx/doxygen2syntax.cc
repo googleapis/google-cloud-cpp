@@ -81,6 +81,26 @@ std::string LinkedTextType(pugi::xml_node const& node) {
   return std::move(os).str();
 }
 
+void TemplateParamListSyntaxContent(std::ostream& os,
+                                    pugi::xml_node const& node) {
+  auto templateparamlist = node.child("templateparamlist");
+  if (!templateparamlist) return;
+  os << "template <";
+  auto sep = std::string_view{"\n    "};
+  for (auto const& param : templateparamlist) {
+    if (std::string_view{param.name()} != "param") {
+      UnknownChildType(__func__, param);
+    }
+    os << sep << LinkedTextType(param.child("type"));
+    auto const defval = param.child("defval");
+    if (defval) {
+      os << " = " << LinkedTextType(defval);
+    }
+    sep = std::string_view{",\n    "};
+  }
+  os << ">\n";
+}
+
 }  // namespace
 
 std::string EnumSyntaxContent(pugi::xml_node const& node) {
@@ -110,53 +130,63 @@ std::string VariableSyntaxContent(pugi::xml_node const& node) {
   return std::move(os).str();
 }
 
-std::string FunctionSyntaxContent(pugi::xml_node const& node) {
-  std::ostringstream os;
-  auto templateparamlist = node.child("templateparamlist");
-  if (templateparamlist) {
-    os << "template <";
-    auto sep = std::string_view{"\n    "};
-    for (auto const& param : templateparamlist) {
-      if (std::string_view{param.name()} != "param") {
-        UnknownChildType(__func__, param);
-      }
-      os << sep << LinkedTextType(param.child("type"));
-      auto const defval = param.child("defval");
-      if (defval) {
-        os << " = " << LinkedTextType(defval);
-      }
-      sep = std::string_view{",\n    "};
-    }
-    os << ">\n";
+std::string FriendSyntaxContent(pugi::xml_node const& node) {
+  auto type = std::string_view{node.child_value("type")};
+  if (type == "class" || type == "struct") {
+    std::ostringstream os;
+    TemplateParamListSyntaxContent(os, node);
+    os << "friend " << type << " " << node.child_value("qualifiedname") << ";";
+    return std::move(os).str();
   }
+  return FunctionSyntaxContent(node, "friend ");
+}
+
+std::string FunctionSyntaxContent(pugi::xml_node const& node,
+                                  std::string_view prefix) {
+  std::ostringstream os;
+  TemplateParamListSyntaxContent(os, node);
+  os << prefix;
   auto const rettype = LinkedTextType(node.child("type"));
   if (!rettype.empty()) os << rettype << "\n";
   os << node.child_value("qualifiedname") << " (";
   auto sep = std::string_view();
   auto params = node.select_nodes("param");
   if (!params.empty()) {
+    sep = "\n    ";
     for (auto const& i : params) {
-      os << "\n    " << LinkedTextType(i.node().child("type")) << " "
-         << i.node().child_value("declname");
+      os << sep << LinkedTextType(i.node().child("type"));
+      auto declname = std::string_view{i.node().child_value("declname")};
+      if (!declname.empty()) os << " " << declname;
+      sep = ",\n    ";
     }
-    sep = std::string_view("\n  ");
+    sep = "\n  ";
   }
   os << sep << ")";
   return std::move(os).str();
 }
 
-std::string ClassSyntaxContent(pugi::xml_node const& node) {
+std::string ClassSyntaxContent(pugi::xml_node const& node,
+                               std::string_view prefix) {
+  // struct vs class
+  auto const* const kind = node.attribute("kind").as_string();
+  // If the `node` is a  '<combounddef>' element, the name of the documented
+  // entity is stored in '<compoundname>'.  Sometimes classes and structs appear
+  // in `<memberdef>` nodes, in that case the name is stored in the
+  // `<qualifiedname>`.
+  auto name = std::string_view{node.name()};
+  auto const* const entity_name = name == "compounddef"
+                                      ? node.child_value("compoundname")
+                                      : node.child_value("qualifiedname");
   std::ostringstream os;
-  os << "// Found in #include <" << node.child_value("includes") << ">\n"
-     << "class " << node.child_value("compoundname") << " { ... };";
+  os << "// Found in #include <" << node.child_value("includes") << ">\n";
+  TemplateParamListSyntaxContent(os, node);
+  os << prefix << kind << " " << entity_name << " { ... };";
   return std::move(os).str();
 }
 
-std::string StructSyntaxContent(pugi::xml_node const& node) {
-  std::ostringstream os;
-  os << "// Found in #include <" << node.child_value("includes") << ">\n"
-     << "struct " << node.child_value("compoundname") << " { ... };";
-  return std::move(os).str();
+std::string StructSyntaxContent(pugi::xml_node const& node,
+                                std::string_view prefix) {
+  return ClassSyntaxContent(node, prefix);
 }
 
 std::string NamespaceSyntaxContent(pugi::xml_node const& node) {
@@ -181,6 +211,16 @@ void AppendTypedefSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::BeginMap                                           //
        << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
        << TypedefSyntaxContent(node);
+  AppendLocation(yaml, ctx, node, "name");
+  yaml << YAML::EndMap;
+}
+
+void AppendFriendSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
+                        pugi::xml_node const& node) {
+  yaml << YAML::Key << "syntax" << YAML::Value                     //
+       << YAML::BeginMap                                           //
+       << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
+       << FriendSyntaxContent(node);
   AppendLocation(yaml, ctx, node, "name");
   yaml << YAML::EndMap;
 }
