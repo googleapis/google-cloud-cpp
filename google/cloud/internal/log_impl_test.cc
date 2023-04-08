@@ -83,8 +83,8 @@ TEST(PerThreadCircularBufferBackend, Basic) {
 
   auto noise_generator = [&] {
     for (int i = 0; i != 10; ++i) {
-      buffer.ProcessWithOwnership(test_log_record(
-          Severity::GCP_LS_INFO, "noise " + std::to_string(i)));
+      buffer.ProcessWithOwnership(
+          test_log_record(Severity::GCP_LS_INFO, "noise " + std::to_string(i)));
     }
   };
 
