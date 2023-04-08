@@ -633,6 +633,33 @@ for (StatusOr<int> const& v : sr) {
   EXPECT_EQ(kExpected, os.str());
 }
 
+TEST(Doxygen2Markdown, ParagraphXrefSect) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+      <para id='tested-node'>
+        <xrefsect id="deprecated_1_deprecated000007">
+          <xreftitle>Deprecated</xreftitle>
+          <xrefdescription>
+            <para>Use <computeroutput><ref refid="classgoogle_1_1cloud_1_1Options" kindref="compound">Options</ref></computeroutput> and <computeroutput><ref refid="structgoogle_1_1cloud_1_1EndpointOption" kindref="compound">EndpointOption</ref></computeroutput>.</para>
+          </xrefdescription>
+        </xrefsect>
+      </para>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"md(
+
+**Deprecated**
+
+Use [`Options`](xref:classgoogle_1_1cloud_1_1Options) and [`EndpointOption`](xref:structgoogle_1_1cloud_1_1EndpointOption).)md";
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//*[@id='tested-node']");
+  ASSERT_TRUE(selected);
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfParagraph(os, {}, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
+}
+
 TEST(Doxygen2Markdown, ItemizedListSimple) {
   pugi::xml_document doc;
   doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
