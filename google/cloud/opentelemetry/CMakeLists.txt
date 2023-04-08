@@ -16,8 +16,19 @@
 
 find_package(opentelemetry-cpp CONFIG REQUIRED)
 
+set(DOXYGEN_PROJECT_NAME "C++ OpenTelemetry Exporters for Google Cloud")
+set(DOXYGEN_PROJECT_BRIEF
+    "Provides exporters for sending telemetry to Google Cloud services in C++.")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
+set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "otel_internal")
+set(DOXYGEN_EXAMPLE_PATH "")
+
+include(GoogleCloudCppDoxygen)
+google_cloud_cpp_doxygen_targets("opentelemetry_sdk" DEPENDS cloud-docs
+                                 google-cloud-cpp::trace)
+
 add_library(google_cloud_cpp_opentelemetry_sdk # cmake-format: sort
-            internal/recordable.cc internal/recordable.h)
+            internal/recordable.cc internal/recordable.h trace_exporter.h)
 target_link_libraries(google_cloud_cpp_opentelemetry_sdk
                       PUBLIC google-cloud-cpp::trace opentelemetry-cpp::trace)
 google_cloud_cpp_add_common_options(google_cloud_cpp_opentelemetry_sdk)
