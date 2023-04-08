@@ -37,8 +37,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanHttp(
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kClient;
   auto span =
-      internal::GetTracer(
-          internal::CurrentOptions())
+      internal::GetTracer(internal::CurrentOptions())
           ->StartSpan(absl::StrCat("HTTP/", absl::string_view{method.data(),
                                                               method.size()}),
                       {{sc::kNetTransport, sc::NetTransportValues::kIpTcp},
