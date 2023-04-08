@@ -52,6 +52,10 @@ bool AppendIfSect2(std::ostream& os, MarkdownContext const& ctx,
 bool AppendIfSect1(std::ostream& os, MarkdownContext const& ctx,
                    pugi::xml_node const& node);
 
+/// Handles a `<xrefsect>` node.
+bool AppendIfXRefSect(std::ostream& os, MarkdownContext const& ctx,
+                      pugi::xml_node const& node);
+
 /// Outputs a description node.
 void AppendDescriptionType(std::ostream& os, MarkdownContext const& ctx,
                            pugi::xml_node const& node);

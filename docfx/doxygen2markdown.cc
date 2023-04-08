@@ -147,6 +147,26 @@ bool AppendIfSect1(std::ostream& os, MarkdownContext const& ctx,
   return true;
 }
 
+// A "xrefsect" node type is defined as:
+//
+// clang-format off
+//   <xsd:complexType name="docXRefSectType">
+//     <xsd:sequence>
+//       <xsd:element name="xreftitle" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+//       <xsd:element name="xrefdescription" type="descriptionType" />
+//     </xsd:sequence>
+//     <xsd:attribute name="id" type="xsd:string" />
+//   </xsd:complexType>
+// clang-format on
+bool AppendIfXRefSect(std::ostream& os, MarkdownContext const& ctx,
+                      pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "xrefsect") return false;
+  // Add the title in bold, then some
+  os << "**" << node.child_value("xreftitle") << "**";
+  AppendDescriptionType(os, ctx, node.child("xrefdescription"));
+  return true;
+}
+
 // All "*description" nodes have this type:
 //
 // clang-format off
@@ -435,7 +455,8 @@ bool AppendIfDocCmdGroup(std::ostream& os, MarkdownContext const& ctx,
   // Unexpected: title
   if (AppendIfVariableList(os, ctx, node)) return true;
   // Unexpected: table, header, dotfile, mscfile, diafile, toclist, language
-  // Unexpected: xrefsect, copydoc, blockquote, parblock
+  if (AppendIfXRefSect(os, ctx, node)) return true;
+  // Unexpected: copydoc, blockquote, parblock
   return false;
 }
 
