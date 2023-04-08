@@ -33,8 +33,9 @@ auto constexpr kLogConfig = "GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG";
 auto constexpr kEnableClog = "GOOGLE_CLOUD_CPP_ENABLE_CLOG";
 
 TEST(CircularBufferBackend, Basic) {
+  auto constexpr kBufferSize = 3;
   auto be = std::make_shared<ScopedLog::Backend>();
-  CircularBufferBackend buffer(3, Severity::GCP_LS_ERROR, be);
+  CircularBufferBackend buffer(kBufferSize, Severity::GCP_LS_ERROR, be);
   auto test_log_record = [](Severity severity, std::string msg) {
     return LogRecord{
         severity, "test_function()", "file", 1, std::this_thread::get_id(),
@@ -46,17 +47,80 @@ TEST(CircularBufferBackend, Basic) {
   buffer.ProcessWithOwnership(
       test_log_record(Severity::GCP_LS_WARNING, "msg 4"));
   buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 5"));
+  // The output should be empty as no message with high enough severity has
+  // been generated.
   EXPECT_THAT(be->ExtractLines(), IsEmpty());
 
+  // This should flush the messages, and only the last kBufferSize messages
+  // should be in the output.
   buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_ERROR, "msg 6"));
   EXPECT_THAT(be->ExtractLines(), ElementsAre("msg 4", "msg 5", "msg 6"));
 
+  // In this case the buffer is not full, but a message with high enough
+  // severity forces a flush.
   buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 7"));
   buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_ERROR, "msg 8"));
   EXPECT_THAT(be->ExtractLines(), ElementsAre("msg 7", "msg 8"));
 
+  // In this case the buffer is not full, but an explicit flush should create
+  // some output.
   buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 9"));
   buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 10"));
+  buffer.Flush();
+  EXPECT_THAT(be->ExtractLines(), ElementsAre("msg 9", "msg 10"));
+}
+
+TEST(PerThreadCircularBufferBackend, Basic) {
+  auto constexpr kBufferSize = 3;
+  auto be = std::make_shared<ScopedLog::Backend>();
+  PerThreadCircularBufferBackend buffer(kBufferSize, Severity::GCP_LS_ERROR,
+                                        be);
+  auto test_log_record = [](Severity severity, std::string msg) {
+    return LogRecord{
+        severity, "test_function()", "file", 1, std::this_thread::get_id(),
+        {},       std::move(msg)};
+  };
+
+  auto noise_generator = [&] {
+    for (int i = 0; i != 10; ++i) {
+      buffer.ProcessWithOwnership(
+          test_log_record(Severity::GCP_LS_INFO, "noise " + std::to_string(i)));
+    }
+  };
+
+  auto noise = std::thread{noise_generator};
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 1"));
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_DEBUG, "msg 2"));
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_TRACE, "msg 3"));
+  buffer.ProcessWithOwnership(
+      test_log_record(Severity::GCP_LS_WARNING, "msg 4"));
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 5"));
+  // The output should be empty as no message with high enough severity has
+  // been generated.
+  noise.join();
+  EXPECT_THAT(be->ExtractLines(), IsEmpty());
+
+  // This should flush the messages, and only the last kBufferSize messages
+  // should be in the output.
+  noise = std::thread{noise_generator};
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_ERROR, "msg 6"));
+  noise.join();
+  EXPECT_THAT(be->ExtractLines(), ElementsAre("msg 4", "msg 5", "msg 6"));
+
+  // In this case the buffer is not full, but a message with high enough
+  // severity forces a flush.
+  noise = std::thread{noise_generator};
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 7"));
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_ERROR, "msg 8"));
+  noise.join();
+  EXPECT_THAT(be->ExtractLines(), ElementsAre("msg 7", "msg 8"));
+
+  // In this case the buffer is not full, but an explicit flush should create
+  // some output.
+  noise = std::thread{noise_generator};
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 9"));
+  buffer.ProcessWithOwnership(test_log_record(Severity::GCP_LS_INFO, "msg 10"));
+  noise.join();
   buffer.Flush();
   EXPECT_THAT(be->ExtractLines(), ElementsAre("msg 9", "msg 10"));
 }
@@ -66,6 +130,19 @@ TEST(DefaultLogBackend, CircularBuffer) {
   ScopedEnvironment clog(kEnableClog, absl::nullopt);
   auto be = DefaultLogBackend();
   auto const* buffer = dynamic_cast<CircularBufferBackend*>(be.get());
+  ASSERT_NE(buffer, nullptr);
+  EXPECT_EQ(5, buffer->size());
+  EXPECT_EQ(Severity::GCP_LS_WARNING, buffer->min_flush_severity());
+  auto const* clog_be = dynamic_cast<StdClogBackend*>(buffer->backend().get());
+  ASSERT_THAT(clog_be, NotNull());
+  EXPECT_EQ(Severity::GCP_LS_DEBUG, clog_be->min_severity());
+}
+
+TEST(DefaultLogBackend, PerThreadCircularBuffer) {
+  ScopedEnvironment config(kLogConfig, "thread-lastN,5,WARNING");
+  ScopedEnvironment clog(kEnableClog, absl::nullopt);
+  auto be = DefaultLogBackend();
+  auto const* buffer = dynamic_cast<PerThreadCircularBufferBackend*>(be.get());
   ASSERT_NE(buffer, nullptr);
   EXPECT_EQ(5, buffer->size());
   EXPECT_EQ(Severity::GCP_LS_WARNING, buffer->min_flush_severity());

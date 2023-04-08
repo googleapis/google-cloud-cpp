@@ -211,6 +211,15 @@ std::shared_ptr<LogBackend> DefaultLogBackend() {
             std::make_shared<StdClogBackend>(min_severity));
       }
     }
+    if (fields[0] == "thread-lastN" && fields.size() == 3) {
+      auto size = ParseSize(fields[1]);
+      auto min_flush_severity = ParseSeverity(fields[2]);
+      if (size.has_value() && min_flush_severity.has_value()) {
+        return std::make_shared<PerThreadCircularBufferBackend>(
+            *size, *min_flush_severity,
+            std::make_shared<StdClogBackend>(min_severity));
+      }
+    }
     if (fields[0] == "clog" && fields.size() == 1) {
       return std::make_shared<StdClogBackend>(min_severity);
     }
