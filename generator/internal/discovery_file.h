@@ -35,8 +35,9 @@ class DiscoveryFile {
                 std::string package_name, std::string version,
                 std::vector<DiscoveryTypeVertex const*> types);
 
-  void AddImportPath(std::string import_path) {
+  DiscoveryFile& AddImportPath(std::string import_path) {
     import_paths_.insert(std::move(import_path));
+    return *this;
   }
 
   // Writes the file to output_stream.
