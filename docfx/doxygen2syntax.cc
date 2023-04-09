@@ -169,7 +169,7 @@ std::string ClassSyntaxContent(pugi::xml_node const& node,
                                std::string_view prefix) {
   // struct vs class
   auto const* const kind = node.attribute("kind").as_string();
-  // If the `node` is a  '<combounddef>' element, the name of the documented
+  // If the `node` is a  '<compounddef>' element, the name of the documented
   // entity is stored in '<compoundname>'.  Sometimes classes and structs appear
   // in `<memberdef>` nodes, in that case the name is stored in the
   // `<qualifiedname>`.
