@@ -804,8 +804,8 @@ First paragraph.
 Second paragraph.)md";
 
   auto const cases = std::vector<std::string>{
-      "see", "author", "authors",   "version",   "since", "date",
-      "pre", "post",   "copyright", "invariant", "par",   "rcs",
+      "author", "authors",   "version",   "since", "date", "pre",
+      "post",   "copyright", "invariant", "par",   "rcs",
   };
 
   for (auto const& kind : cases) {
@@ -821,6 +821,33 @@ Second paragraph.)md";
     ASSERT_TRUE(AppendIfSimpleSect(os, {}, selected.node()));
     EXPECT_EQ(kExpected, os.str());
   }
+}
+
+TEST(Doxygen2Markdown, SimpleSectSeeAlso) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <simplesect id='test-node' kind="see">
+          <title>This is the title</title>
+          <para>First paragraph.</para>
+          <para>Second paragraph.</para>
+        </simplesect>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"md(
+
+###### See Also
+
+First paragraph.
+
+Second paragraph.)md";
+
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfSimpleSect(os, {}, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
 }
 
 TEST(Doxygen2Markdown, SimpleSectBlockQuote) {

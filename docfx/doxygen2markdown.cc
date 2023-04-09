@@ -783,7 +783,10 @@ bool AppendIfSimpleSect(std::ostream& os, MarkdownContext const& ctx,
   // just repeat the text.
   if (kind == "return") return true;
 
-  if (kUseH6->count(kind) != 0) {
+  if (kind == "see") {
+    nested = ctx;
+    os << "\n\n###### See Also";
+  } else if (kUseH6->count(kind) != 0) {
     nested = ctx;
     os << "\n\n###### ";
     AppendTitle(os, nested, node);
