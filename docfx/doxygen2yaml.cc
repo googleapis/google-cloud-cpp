@@ -90,11 +90,16 @@ std::string Summary(pugi::xml_node const& node) {
   MarkdownContext ctx;
   ctx.paragraph_start = "";
   auto brief = node.child("briefdescription");
-  auto detailed = node.child("detaileddescription");
   if (!brief.empty()) {
     AppendIfBriefDescription(os, ctx, brief);
     ctx = MarkdownContext{};
   }
+  auto description = node.child("description");
+  if (!description.empty()) {
+    AppendDescriptionType(os, ctx, description);
+    ctx = MarkdownContext{};
+  }
+  auto detailed = node.child("detaileddescription");
   if (!detailed.empty()) AppendIfDetailedDescription(os, ctx, detailed);
   return std::move(os).str();
 }
