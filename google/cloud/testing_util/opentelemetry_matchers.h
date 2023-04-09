@@ -174,6 +174,11 @@ MATCHER_P(SpanEventsAreImpl, matcher,
 }
 
 template <typename... Args>
+::testing::Matcher<SpanDataPtr> SpanHasEvents(Args const&... matchers) {
+  return SpanEventsAreImpl(::testing::IsSupersetOf({matchers...}));
+}
+
+template <typename... Args>
 ::testing::Matcher<SpanDataPtr> SpanEventsAre(Args const&... matchers) {
   return SpanEventsAreImpl(::testing::ElementsAre(matchers...));
 }
