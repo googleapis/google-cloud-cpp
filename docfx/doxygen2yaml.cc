@@ -30,10 +30,28 @@ auto kind(pugi::xml_node const& node) {
 bool IgnoreForRecurse(pugi::xml_node const& node) {
   static auto const* const kNames = [] {
     return new std::set<std::string>{
-        "location",           "briefdescription", "detaileddescription",
-        "includes",           "innerclass",       "compoundname",
-        "listofallmembers",   "basecompoundref",  "inheritancegraph",
+        // Handled by each AppendIf*() function
+        "compoundname",
+        "briefdescription",
+        "detaileddescription",
+        "description",
+        "includes",
+        "location",
+        "templateparamlist",
+        // TODO(#10895) - should be a cross-reference
+        "innerclass",
+        "innernamespace",
+        "listofallmembers",
+        // TODO(#10895) - maybe include base and derived classes?
+        "basecompoundref",
+        "derivedcompoundref",
+        // Ignored, we will not include inheritance diagrams in DocFX YAML
+        "inheritancegraph",
         "collaborationgraph",
+        // TODO(#10895) - maybe include in ToC.
+        //   This is a title for a sectionref (a "group" of member functions),
+        //   maybe we can add this to break down each compound ToC.
+        "header",
     };
   }();
   auto const name = std::string{node.name()};
