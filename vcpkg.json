@@ -14,12 +14,12 @@
       ]
     },
     {
-      "$description": "If cross-compiling, we need the gRPC protoc plugin on the 'host' enviroment.",
+      "$description": "If cross-compiling, we need the gRPC protoc plugin on the 'host' environment.",
       "name": "grpc",
       "host": true
     },
     {
-      "$description": "If cross-compiling, we need the protoc compiler on the 'host' enviroment.",
+      "$description": "If cross-compiling, we need the protoc compiler on the 'host' environment.",
       "name": "protobuf",
       "host": true
     },
