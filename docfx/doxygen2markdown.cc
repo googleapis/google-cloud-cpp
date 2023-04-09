@@ -768,8 +768,8 @@ bool AppendIfSimpleSect(std::ostream& os, MarkdownContext const& ctx,
   if (std::string_view{node.name()} != "simplesect") return false;
   static auto const* const kUseH6 = [] {
     return new std::unordered_set<std::string>{
-        "see", "author", "authors",   "version",   "since", "date",
-        "pre", "post",   "copyright", "invariant", "par",   "rcs",
+        "author", "authors",   "version",   "since", "date", "pre",
+        "post",   "copyright", "invariant", "par",   "rcs",
     };
   }();
 
@@ -783,7 +783,10 @@ bool AppendIfSimpleSect(std::ostream& os, MarkdownContext const& ctx,
   // just repeat the text.
   if (kind == "return") return true;
 
-  if (kUseH6->count(kind) != 0) {
+  if (kind == "see") {
+    nested = ctx;
+    os << "\n\n###### See Also";
+  } else if (kUseH6->count(kind) != 0) {
     nested = ctx;
     os << "\n\n###### ";
     AppendTitle(os, nested, node);
