@@ -348,6 +348,82 @@ TEST(Doxygen2SyntaxContent, Typedef) {
   EXPECT_EQ(actual, kExpected);
 }
 
+TEST(Doxygen2SyntaxContent, FriendStruct) {
+  auto constexpr kXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+      <memberdef kind="friend" id="structgoogle_1_1cloud_1_1DoxygenTest2_1a4ebc3a917ee916646f8af7ce94f83248" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>struct</type>
+        <definition>friend struct DoxygenTest1</definition>
+        <argsstring></argsstring>
+        <name>DoxygenTest1</name>
+        <qualifiedname>google::cloud::DoxygenTest2::DoxygenTest1</qualifiedname>
+        <param>
+          <type><ref refid="structgoogle_1_1cloud_1_1DoxygenTest1" kindref="compound">DoxygenTest1</ref></type>
+        </param>
+        <briefdescription>
+<para>The BFF friendliest friend ever. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="docfx/testdata/test.h" line="40" column="17" bodyfile="docfx/testdata/test.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+    </doxygen>)xml";
+  auto constexpr kExpected =
+      R"""(friend struct google::cloud::DoxygenTest2::DoxygenTest1;)""";
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node(
+      "//*[@id='"
+      "structgoogle_1_1cloud_1_1DoxygenTest2_1a4ebc3a917ee916646f8af7ce94f83248"
+      "']");
+  ASSERT_TRUE(selected);
+  auto const actual = FriendSyntaxContent(selected.node());
+  EXPECT_EQ(actual, kExpected);
+}
+
+TEST(Doxygen2SyntaxContent, FriendFunction) {
+  auto constexpr kXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+      <memberdef kind="friend" id="classgoogle_1_1cloud_1_1ErrorInfo_1a3e7a9be9a728e13d3333784f63270555" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool operator==</definition>
+        <argsstring>(ErrorInfo const &amp;, ErrorInfo const &amp;)</argsstring>
+        <name>operator==</name>
+        <qualifiedname>google::cloud::ErrorInfo::operator==</qualifiedname>
+        <param>
+          <type><ref refid="classgoogle_1_1cloud_1_1ErrorInfo" kindref="compound">ErrorInfo</ref> const &amp;</type>
+        </param>
+        <param>
+          <type><ref refid="classgoogle_1_1cloud_1_1ErrorInfo" kindref="compound">ErrorInfo</ref> const &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="status.h" line="86" column="15"/>
+      </memberdef>
+    </doxygen>)xml";
+  auto constexpr kExpected =
+      R"""(friend bool
+google::cloud::ErrorInfo::operator== (
+    ErrorInfo const &,
+    ErrorInfo const &
+  ))""";
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node(
+      "//*[@id='"
+      "classgoogle_1_1cloud_1_1ErrorInfo_1a3e7a9be9a728e13d3333784f63270555"
+      "']");
+  ASSERT_TRUE(selected);
+  auto const actual = FriendSyntaxContent(selected.node());
+  EXPECT_EQ(actual, kExpected);
+}
+
 TEST(Doxygen2SyntaxContent, Variable) {
   auto constexpr kExpected = R"""(Severity severity;)""";
   pugi::xml_document doc;
@@ -424,6 +500,66 @@ class google::cloud::RuntimeStatusError { ... };)""";
   EXPECT_EQ(actual, kExpected);
 }
 
+TEST(Doxygen2SyntaxContent, TemplateClass) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="classgoogle_1_1cloud_1_1StatusOr" kind="class" language="C++" prot="public" final="yes">
+    <compoundname>google::cloud::StatusOr</compoundname>
+    <includes refid="status__or_8h" local="no">google/cloud/status_or.h</includes>
+    <templateparamlist>
+      <param>
+        <type>typename T</type>
+      </param>
+    </templateparamlist>
+    <briefdescription>
+<para>Holds a value or a <computeroutput><ref refid="classgoogle_1_1cloud_1_1Status" kindref="compound">Status</ref></computeroutput> indicating why there is no value.</para>
+    </briefdescription>
+    <location file="status_or.h" line="89" column="1" bodyfile="status_or.h" bodystart="89" bodyend="279"/>
+  </compounddef>)xml";
+
+  auto constexpr kExpected =
+      R"""(// Found in #include <google/cloud/status_or.h>
+template <
+    typename T>
+class google::cloud::StatusOr { ... };)""";
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected =
+      doc.select_node("//*[@id='classgoogle_1_1cloud_1_1StatusOr']");
+  ASSERT_TRUE(selected);
+  auto const actual = ClassSyntaxContent(selected.node());
+  EXPECT_EQ(actual, kExpected);
+}
+
+TEST(Doxygen2SyntaxContent, TemplateStruct) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="structgoogle_1_1cloud_1_1StatusOr" kind="struct" language="C++" prot="public" final="yes">
+    <compoundname>google::cloud::StatusOr</compoundname>
+    <includes refid="status__or_8h" local="no">google/cloud/status_or.h</includes>
+    <templateparamlist>
+      <param>
+        <type>typename T</type>
+      </param>
+    </templateparamlist>
+    <briefdescription>
+      <para>Holds a value or a <computeroutput><ref refid="classgoogle_1_1cloud_1_1Status" kindref="compound">Status</ref></computeroutput> indicating why there is no value.</para>
+    </briefdescription>
+    <location file="status_or.h" line="89" column="1" bodyfile="status_or.h" bodystart="89" bodyend="279"/>
+  </compounddef>)xml";
+
+  auto constexpr kExpected =
+      R"""(// Found in #include <google/cloud/status_or.h>
+template <
+    typename T>
+struct google::cloud::StatusOr { ... };)""";
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected =
+      doc.select_node("//*[@id='structgoogle_1_1cloud_1_1StatusOr']");
+  ASSERT_TRUE(selected);
+  auto const actual = StructSyntaxContent(selected.node());
+  EXPECT_EQ(actual, kExpected);
+}
+
 TEST(Doxygen2SyntaxContent, Namespace) {
   auto constexpr kExpected = R"""(namespace google::cloud::mocks { ... };)""";
   pugi::xml_document doc;
@@ -494,6 +630,64 @@ TEST(Doxygen2Syntax, Typedef) {
   YAML::Emitter yaml;
   yaml << YAML::BeginMap;
   AppendTypedefSyntax(yaml, ctx, selected.node());
+  yaml << YAML::EndMap;
+  auto const actual = std::string{yaml.c_str()};
+  EXPECT_EQ(actual, kExpected);
+}
+
+TEST(Doxygen2Syntax, Friend) {
+  auto constexpr kXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+      <memberdef kind="friend" id="classgoogle_1_1cloud_1_1ErrorInfo_1a3e7a9be9a728e13d3333784f63270555" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool operator==</definition>
+        <argsstring>(ErrorInfo const &amp;, ErrorInfo const &amp;)</argsstring>
+        <name>operator==</name>
+        <qualifiedname>google::cloud::ErrorInfo::operator==</qualifiedname>
+        <param>
+          <type><ref refid="classgoogle_1_1cloud_1_1ErrorInfo" kindref="compound">ErrorInfo</ref> const &amp;</type>
+        </param>
+        <param>
+          <type><ref refid="classgoogle_1_1cloud_1_1ErrorInfo" kindref="compound">ErrorInfo</ref> const &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="status.h" line="86" column="15"/>
+      </memberdef>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"yml(syntax:
+  contents: |
+    friend bool
+    google::cloud::ErrorInfo::operator== (
+        ErrorInfo const &,
+        ErrorInfo const &
+      )
+  source:
+    id: operator==
+    path: google/cloud/status.h
+    startLine: 86
+    remote:
+      repo: https://github.com/googleapis/google-cloud-cpp/
+      branch: main
+      path: google/cloud/status.h)yml";
+
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node(
+      "//*[@id='"
+      "classgoogle_1_1cloud_1_1ErrorInfo_1a3e7a9be9a728e13d3333784f63270555"
+      "']");
+  ASSERT_TRUE(selected);
+  YamlContext ctx;
+  ctx.parent_id = "test-only-parent-id";
+  YAML::Emitter yaml;
+  yaml << YAML::BeginMap;
+  AppendFriendSyntax(yaml, ctx, selected.node());
   yaml << YAML::EndMap;
   auto const actual = std::string{yaml.c_str()};
   EXPECT_EQ(actual, kExpected);

@@ -38,17 +38,23 @@ std::string EnumSyntaxContent(pugi::xml_node const& node);
 // Generate the `syntax.content` element for a typedef.
 std::string TypedefSyntaxContent(pugi::xml_node const& node);
 
+// Generate the `syntax.content` element for a friend.
+std::string FriendSyntaxContent(pugi::xml_node const& node);
+
 // Generate the `syntax.content` element for a variable.
 std::string VariableSyntaxContent(pugi::xml_node const& node);
 
 // Generate the `syntax.content` element for a function.
-std::string FunctionSyntaxContent(pugi::xml_node const& node);
+std::string FunctionSyntaxContent(pugi::xml_node const& node,
+                                  std::string_view prefix = {});
 
 // Generate the `syntax.content` element for a class.
-std::string ClassSyntaxContent(pugi::xml_node const& node);
+std::string ClassSyntaxContent(pugi::xml_node const& node,
+                               std::string_view prefix = {});
 
 // Generate the `syntax.content` element for a struct.
-std::string StructSyntaxContent(pugi::xml_node const& node);
+std::string StructSyntaxContent(pugi::xml_node const& node,
+                                std::string_view prefix = {});
 
 // Generate the `syntax.content` element for a namespace.
 std::string NamespaceSyntaxContent(pugi::xml_node const& node);
@@ -60,6 +66,10 @@ void AppendEnumSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
 // Generate the `syntax` element for an typedef.
 void AppendTypedefSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
                          pugi::xml_node const& node);
+
+// Generate the `syntax` element for a friend.
+void AppendFriendSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
+                        pugi::xml_node const& node);
 
 // Generate the `syntax` element for an variable.
 void AppendVariableSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
