@@ -10,19 +10,57 @@ projects. This tool is only used as part of the documentation pipeline for
 
 ## End-to-End Testing
 
+This assumes you are building with CMake. More details on CMake configuration
+in the [How-to Guide](/doc/contributor/howto-guide-setup-environment.md).
+
+### Create the input files for the common library
+
 ```
 cd google-cloud-cpp
 DOCKER_NETWORK=host ci/cloudbuild/build.sh -t publish-docs-pr
 xsltproc build-out/fedora-37-cmake-publish-docs/cmake-out/google/cloud/xml/{combine.xslt,index.xml} >../common.doxygen.xml
+```
 
+### Clone Google's tools to process DocFX
+
+```
+cd google-cloud-cpp
 git clone https://github.com/googleapis/doc-pipeline.git $HOME/doc-pipeline
+```
+
+### Clone vcpkg
+
+```
+cd google-cloud-cpp
+git clone https://github.com/microsoft/vcpkg.git $HOME/vcpkg
+```
+
+### Generate the DoxFX YAML from the Doxygen input
+
+```
+cd google-cloud-cpp
+cmake -S . -B .build -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
 cmake --build .build/ --target docfx/all \
   && rm -f $HOME/doc-pipeline/testdata/cpp/* \
   && env -C $HOME/doc-pipeline/testdata/cpp $PWD/.build/docfx/doxygen2docfx $HOME/common.doxygen.xml common 2.9.0
+```
 
+### Run the DocFX pipeline over the generated files
+
+```
 env -C $HOME/doc-pipeline \
     INPUT=testdata/cpp \
     TRAMPOLINE_BUILD_FILE=./generate.sh \
     TRAMPOLINE_IMAGE=gcr.io/cloud-devrel-kokoro-resources/docfx \
     TRAMPOLINE_DOCKERFILE=docfx/Dockerfile ci/trampoline_v2.sh
+```
+
+### Examine the HTML-ish output
+
+The output is HTML with templates and embedded markdown:
+
+```
+ls -l $HOME/doc-pipeline/site
+less $HOME/doc-pipeline/site/namespacegoogle.html
+less $HOME/doc-pipeline/site/indexpage.html
 ```
