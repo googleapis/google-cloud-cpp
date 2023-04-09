@@ -103,6 +103,8 @@ add_library(
     internal/rest_retry_loop.h
     internal/tracing_http_payload.cc
     internal/tracing_http_payload.h
+    internal/tracing_rest_client.cc
+    internal/tracing_rest_client.h
     internal/tracing_rest_response.cc
     internal/tracing_rest_response.h
     internal/unified_rest_credentials.cc
@@ -247,6 +249,7 @@ if (BUILD_TESTING)
         internal/rest_response_test.cc
         internal/rest_retry_loop_test.cc
         internal/tracing_http_payload_test.cc
+        internal/tracing_rest_client_test.cc
         internal/tracing_rest_response_test.cc
         internal/unified_rest_credentials_test.cc)
 
