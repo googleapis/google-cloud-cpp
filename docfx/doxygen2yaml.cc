@@ -52,6 +52,7 @@ void CompoundRecurse(YAML::Emitter& yaml, YamlContext const& ctx,
     if (AppendIfEnumValue(yaml, ctx, child)) continue;
     if (AppendIfEnum(yaml, ctx, child)) continue;
     if (AppendIfTypedef(yaml, ctx, child)) continue;
+    if (AppendIfFriend(yaml, ctx, child)) continue;
     if (AppendIfVariable(yaml, ctx, child)) continue;
     if (AppendIfFunction(yaml, ctx, child)) continue;
     UnknownChildType(__func__, child);
@@ -102,6 +103,7 @@ std::string Compound2Yaml(pugi::xml_node const& node) {
   YamlContext ctx;
   (void)AppendIfEnum(yaml, ctx, node);
   (void)AppendIfTypedef(yaml, ctx, node);
+  (void)AppendIfFriend(yaml, ctx, node);
   (void)AppendIfVariable(yaml, ctx, node);
   (void)AppendIfFunction(yaml, ctx, node);
   (void)AppendIfNamespace(yaml, ctx, node);
@@ -210,6 +212,31 @@ bool AppendIfTypedef(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "type" << YAML::Value << "typedef"                   //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendTypedefSyntax(yaml, ctx, node);
+  auto const summary = Summary(node);
+  if (!summary.empty()) {
+    yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
+  }
+  yaml << YAML::EndMap;
+  return true;
+}
+
+bool AppendIfFriend(YAML::Emitter& yaml, YamlContext const& ctx,
+                    pugi::xml_node const& node) {
+  if (kind(node) != "friend") return false;
+  auto const id = std::string_view{node.attribute("id").as_string()};
+  auto const name = std::string_view{node.child("name").child_value()};
+  auto const full_name =
+      std::string_view{node.child("qualifiedname").child_value()};
+  yaml << YAML::BeginMap                                                    //
+       << YAML::Key << "uid" << YAML::Value << id                           //
+       << YAML::Key << "name" << YAML::Value << YAML::Literal << name       //
+       << YAML::Key << "fullName"                                           //
+       << YAML::Value << YAML::Literal << full_name                         //
+       << YAML::Key << "id" << YAML::Value << id                            //
+       << YAML::Key << "parent" << YAML::Value << ctx.parent_id             //
+       << YAML::Key << "type" << YAML::Value << "friend"                    //
+       << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
+  AppendFriendSyntax(yaml, ctx, node);
   auto const summary = Summary(node);
   if (!summary.empty()) {
     yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;

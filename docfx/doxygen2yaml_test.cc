@@ -713,6 +713,81 @@ items:
   EXPECT_EQ(actual, kExpected);
 }
 
+TEST(Doxygen2Yaml, Friend) {
+  auto constexpr kXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+      <memberdef kind="friend" id="classgoogle_1_1cloud_1_1ErrorInfo_1a3e7a9be9a728e13d3333784f63270555" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool operator==</definition>
+        <argsstring>(ErrorInfo const &amp;, ErrorInfo const &amp;)</argsstring>
+        <name>operator==</name>
+        <qualifiedname>google::cloud::ErrorInfo::operator==</qualifiedname>
+        <param>
+          <type><ref refid="classgoogle_1_1cloud_1_1ErrorInfo" kindref="compound">ErrorInfo</ref> const &amp;</type>
+        </param>
+        <param>
+          <type><ref refid="classgoogle_1_1cloud_1_1ErrorInfo" kindref="compound">ErrorInfo</ref> const &amp;</type>
+        </param>
+        <briefdescription>
+          <para>A short description of the thing.</para>
+        </briefdescription>
+        <detaileddescription>
+          <para>A longer description would go here.</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="status.h" line="86" column="15"/>
+      </memberdef>
+    </doxygen>)xml";
+  auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
+items:
+  - uid: classgoogle_1_1cloud_1_1ErrorInfo_1a3e7a9be9a728e13d3333784f63270555
+    name: |
+      operator==
+    fullName: |
+      google::cloud::ErrorInfo::operator==
+    id: classgoogle_1_1cloud_1_1ErrorInfo_1a3e7a9be9a728e13d3333784f63270555
+    parent: test-only-parent-id
+    type: friend
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        friend bool
+        google::cloud::ErrorInfo::operator== (
+            ErrorInfo const &,
+            ErrorInfo const &
+          )
+      source:
+        id: operator==
+        path: google/cloud/status.h
+        startLine: 86
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/status.h
+    summary: |
+      A short description of the thing.
+
+      A longer description would go here.
+)yml";
+
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node(
+      "//*[@id='"
+      "classgoogle_1_1cloud_1_1ErrorInfo_1a3e7a9be9a728e13d3333784f63270555"
+      "']");
+  ASSERT_TRUE(selected);
+  YAML::Emitter yaml;
+  StartDocFxYaml(yaml);
+  YamlContext ctx;
+  ctx.parent_id = "test-only-parent-id";
+  ASSERT_TRUE(AppendIfFriend(yaml, ctx, selected.node()));
+  auto const actual = EndDocFxYaml(yaml);
+  EXPECT_EQ(actual, kExpected);
+}
+
 TEST(Doxygen2Yaml, Variable) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
