@@ -768,8 +768,8 @@ bool AppendIfSimpleSect(std::ostream& os, MarkdownContext const& ctx,
   if (std::string_view{node.name()} != "simplesect") return false;
   static auto const* const kUseH6 = [] {
     return new std::unordered_set<std::string>{
-        "see", "author", "authors",   "version",   "since", "date",
-        "pre", "post",   "copyright", "invariant", "par",   "rcs",
+        "author", "authors",   "version",   "since", "date", "pre",
+        "post",   "copyright", "invariant", "par",   "rcs",
     };
   }();
 

@@ -827,7 +827,6 @@ TEST(Doxygen2Markdown, SimpleSectSeeAlso) {
   auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
         <simplesect id='test-node' kind="see">
-          <title>This is the title</title>
           <para>First paragraph.</para>
           <para>Second paragraph.</para>
         </simplesect>
