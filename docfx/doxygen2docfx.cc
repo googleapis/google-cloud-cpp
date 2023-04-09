@@ -31,22 +31,21 @@ int main(int argc, char* argv[]) try {
   std::ofstream("docs.metadata.json") << docfx::GenerateMetadata(config);
 
   std::ofstream("toc.yml") << docfx::Doxygen2Toc(config, doc);
-  for (auto const& [filename, name] : docfx::PagesToc(doc)) {
-    auto const filter = std::string{"//compounddef[@id='"} + name + "']";
-    auto const node = doc.select_node(filter.c_str()).node();
-    std::ofstream(filename) << docfx::Page2Markdown(node);
-  }
 
-  for (auto const& [filename, name] : docfx::GroupsToc(doc)) {
-    auto const filter = std::string{"//compounddef[@id='"} + name + "']";
-    auto const node = doc.select_node(filter.c_str()).node();
-    std::ofstream(filename) << docfx::Group2Yaml(node);
-  }
-
-  for (auto const& [filename, name] : docfx::CompoundToc(doc)) {
-    auto const filter = std::string{"//compounddef[@id='"} + name + "']";
-    auto const node = doc.select_node(filter.c_str()).node();
-    std::ofstream(filename) << docfx::Compound2Yaml(node);
+  for (auto const& i : doc.select_nodes("//compounddef")) {
+    auto const& node = i.node();
+    if (!docfx::IncludeInPublicDocuments(node)) continue;
+    auto const kind = std::string_view{node.attribute("kind").as_string()};
+    auto const id = std::string{node.attribute("id").as_string()};
+    if (kind == "page") {
+      std::ofstream(id + ".md") << docfx::Page2Markdown(node);
+      continue;
+    }
+    if (kind == "group") {
+      std::ofstream(id + ".yml") << docfx::Group2Yaml(node);
+      continue;
+    }
+    std::ofstream(id + ".yml") << docfx::Compound2Yaml(node);
   }
 
   return 0;

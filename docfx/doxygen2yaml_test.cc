@@ -449,6 +449,16 @@ TEST(Doxygen2Yaml, CompoundToc) {
       <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacestd" kind="namespace" language="Unknown">
         <compoundname>std</compoundname>
       </compounddef>
+      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="classgoogle_1_1cloud_1_1future" kind="class" language="C++" prot="public" final="yes">
+        <compoundname>google::cloud::future</compoundname>
+        <basecompoundref prot="private" virt="non-virtual">internal::future_base&lt; T &gt;</basecompoundref>
+        <includes refid="future__generic_8h" local="no">google/cloud/future_generic.h</includes>
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+      </compounddef>
     </doxygen>)xml";
 
   pugi::xml_document doc;
