@@ -1,11 +1,9 @@
 {
-  "name": "google-cloud-cpp",
-  "version": "1.27.0",
-  "description": "C++ Client Libraries for Google Cloud Platform APIs.",
+  "name": "google-cloud-cpp-development",
+  "description": "Describes the vcpkg dependencies for vcpkg development.",
   "homepage": "https://github.com/googleapis/google-cloud-cpp",
   "license": "Apache-2.0",
   "supports": "!uwp",
-  "$TODO": "move `gtest` and `benchmark` to dev-dependencies",
   "dependencies": [
     "abseil",
     "crc32c",
@@ -16,10 +14,12 @@
       ]
     },
     {
+      "$description": "If cross-compiling, we need the gRPC protoc plugin on the 'host' enviroment.",
       "name": "grpc",
       "host": true
     },
     {
+      "$description": "If cross-compiling, we need the protoc compiler on the 'host' enviroment.",
       "name": "protobuf",
       "host": true
     },
@@ -29,12 +29,16 @@
     "benchmark",
     "gtest",
     {
-      "name": "pugixml",
-      "$description": "Only used for the docfx feature"
+      "$description": "Only used for the experimental-opentelemetry feature.",
+      "name": "opentelemetry-cpp"
     },
     {
-      "name": "yaml-cpp",
-      "$description": "Only used for the docfx feature"
+      "$description": "Only used for the docfx feature.",
+      "name": "pugixml"
+    },
+    {
+      "$description": "Only used for the docfx feature.",
+      "name": "yaml-cpp"
     }
   ]
 }
