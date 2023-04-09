@@ -662,6 +662,9 @@ TEST(Doxygen2Yaml, Typedef) {
         <detaileddescription>
         <para>A longer description would go here.</para>
         </detaileddescription>
+        <description>
+          <para>The rarely used <computeroutput>&lt;description&gt;</computeroutput> would go here.</para>
+        </description>
         <inbodydescription>
         </inbodydescription>
         <location file="grpc_options.h" line="148" column="1" bodyfile="grpc_options.h" bodystart="149" bodyend="-1"/>
@@ -693,6 +696,8 @@ items:
           path: google/cloud/grpc_options.h
     summary: |
       A short description of the thing.
+
+      The rarely used `<description>` would go here.
 
       A longer description would go here.
 )yml";

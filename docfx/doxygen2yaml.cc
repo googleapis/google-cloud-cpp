@@ -77,7 +77,7 @@ std::string Summary(pugi::xml_node const& node) {
   }
   auto description = node.child("description");
   if (!description.empty()) {
-    AppendDescriptionType(os, ctx, brief);
+    AppendDescriptionType(os, ctx, description);
     ctx = MarkdownContext{};
   }
   auto detailed = node.child("detaileddescription");
