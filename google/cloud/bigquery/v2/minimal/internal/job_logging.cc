@@ -21,6 +21,7 @@
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/string_view.h"
 
 namespace google {
 namespace cloud {
@@ -32,13 +33,15 @@ template <typename Functor, typename Request,
               Functor, rest_internal::RestContext&, Request const&>>
 Result JobLogWrapper(Functor&& functor, rest_internal::RestContext& context,
                      Request const& request, char const* where,
+                     absl::string_view request_name,
+                     absl::string_view response_name,
                      TracingOptions const& options) {
   auto formatter = [](std::string* out, auto const& header) {
     absl::StrAppend(out, "name=", header.first, ", value={",
                     absl::StrJoin(header.second, "&"), "}");
   };
-  GCP_LOG(DEBUG) << where << "() << " << request.DebugString(options)
-                 << ", Context={"
+  GCP_LOG(DEBUG) << where << "() << "
+                 << request.DebugString(request_name, options) << ", Context={"
                  << internal::DebugString(
                         absl::StrJoin(context.headers(), ", ", formatter),
                         options)
@@ -46,6 +49,10 @@ Result JobLogWrapper(Functor&& functor, rest_internal::RestContext& context,
 
   auto response = functor(context, request);
   GCP_LOG(DEBUG) << where << "() >> status=" << response.status();
+
+  if (response.ok()) {
+    GCP_LOG(DEBUG) << ", " << response->DebugString(response_name, options);
+  }
 
   return response;
 }
@@ -57,7 +64,7 @@ BigQueryJobLogging::BigQueryJobLogging(
       tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
-// google::cloud::internal::LogWrapper cannot be used here since the request is
+// Customized LogWrapper is used here since GetJobRequest is
 // not a protobuf message.
 StatusOr<GetJobResponse> BigQueryJobLogging::GetJob(
     rest_internal::RestContext& rest_context, GetJobRequest const& request) {
@@ -66,9 +73,12 @@ StatusOr<GetJobResponse> BigQueryJobLogging::GetJob(
              GetJobRequest const& request) {
         return child_->GetJob(rest_context, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, request, __func__, "GetJobRequest", "GetJobResponse",
+      tracing_options_);
 }
 
+// Customized LogWrapper is used here since ListJobsRequest is
+// not a protobuf message.
 StatusOr<ListJobsResponse> BigQueryJobLogging::ListJobs(
     rest_internal::RestContext& rest_context, ListJobsRequest const& request) {
   return JobLogWrapper(
@@ -76,7 +86,8 @@ StatusOr<ListJobsResponse> BigQueryJobLogging::ListJobs(
              ListJobsRequest const& request) {
         return child_->ListJobs(rest_context, request);
       },
-      rest_context, request, __func__, tracing_options_);
+      rest_context, request, __func__, "ListJobsRequest", "ListJobsResponse",
+      tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
