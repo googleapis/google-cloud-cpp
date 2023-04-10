@@ -153,9 +153,11 @@ TEST(ListJobsRequestTest, Success) {
   expected.AddQueryParameter("allUsers", "true");
   expected.AddQueryParameter("maxResults", "10");
   expected.AddQueryParameter(
-      "minCreationTime", internal::FormatRfc3339(request.min_creation_time()));
+      "minCreationTime",
+      internal::FormatRfc3339(request.min_creation_time().value()));
   expected.AddQueryParameter(
-      "maxCreationTime", internal::FormatRfc3339(request.max_creation_time()));
+      "maxCreationTime",
+      internal::FormatRfc3339(request.max_creation_time().value()));
   expected.AddQueryParameter("pageToken", "123");
   expected.AddQueryParameter("projection", "FULL");
   expected.AddQueryParameter("stateFilter", "RUNNING");

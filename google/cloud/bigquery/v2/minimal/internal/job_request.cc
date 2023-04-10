@@ -92,8 +92,8 @@ std::string ListJobsRequest::DebugString(absl::string_view name,
       .StringField("project_id", project_id_)
       .Field("all_users", all_users_)
       .Field("max_results", max_results_)
-      .Field("min_creation_time", min_creation_time_)
-      .Field("max_creation_time", max_creation_time_)
+      .Field("min_creation_time", min_creation_time_.value())
+      .Field("max_creation_time", max_creation_time_.value())
       .StringField("page_token", page_token_)
       .SubMessage("projection", projection_)
       .SubMessage("state_filter", state_filter_)
@@ -172,13 +172,15 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
   if (r.max_results() > 0) {
     request.AddQueryParameter("maxResults", std::to_string(r.max_results()));
   }
-  if (r.min_creation_time() != kDefaultTimepoint) {
-    request.AddQueryParameter("minCreationTime",
-                              internal::FormatRfc3339(r.min_creation_time()));
+  if (r.min_creation_time().has_value()) {
+    request.AddQueryParameter(
+        "minCreationTime",
+        internal::FormatRfc3339(r.min_creation_time().value()));
   }
-  if (r.max_creation_time() != kDefaultTimepoint) {
-    request.AddQueryParameter("maxCreationTime",
-                              internal::FormatRfc3339(r.max_creation_time()));
+  if (r.max_creation_time().has_value()) {
+    request.AddQueryParameter(
+        "maxCreationTime",
+        internal::FormatRfc3339(r.max_creation_time().value()));
   }
 
   auto if_not_empty_add = [&](char const* key, auto const& v) {
