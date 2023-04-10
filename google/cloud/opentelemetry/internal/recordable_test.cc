@@ -14,13 +14,15 @@
 
 #include "google/cloud/opentelemetry/internal/recordable.h"
 #include "google/cloud/version.h"
-#include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
+using ::testing::IsEmpty;
 
 auto constexpr kProjectId = "test-project";
 
@@ -40,17 +42,24 @@ TEST(SetTruncatableString, OverTheLimit) {
 
 TEST(SetTruncatableString, RespectsUnicodeSymbolBoundaries) {
   google::devtools::cloudtrace::v2::TruncatableString proto;
-  // The unicode symbol "д" is 2 bytes wide. So the string "дд" is 4 bytes long.
-  // Truncation should respect the symbol boundaries. i.e. We should not cut the
-  // symbol in half.
-  SetTruncatableString(proto, "дд", 3);
-  EXPECT_EQ(proto.value(), "д");
+  // A unicode that is 2 bytes wide.
+  std::string const u2 = "\xd0\xb4";
+  // The string `u2 + u2` is 4 bytes long. Truncation should respect the symbol
+  // boundaries. i.e. we should not cut the symbol in half.
+  SetTruncatableString(proto, u2 + u2, 3);
+  EXPECT_EQ(proto.value(), u2);
   EXPECT_EQ(proto.truncated_byte_count(), 2);
 
-  // "断" is 3 bytes wide.
-  SetTruncatableString(proto, "断断", 5);
-  EXPECT_EQ(proto.value(), "断");
+  // A unicode that is 3 bytes wide.
+  std::string const u3 = "\xe6\x96\xad";
+  SetTruncatableString(proto, u3 + u3, 5);
+  EXPECT_EQ(proto.value(), u3);
   EXPECT_EQ(proto.truncated_byte_count(), 3);
+
+  // Test the empty case.
+  SetTruncatableString(proto, u3 + u3, 2);
+  EXPECT_THAT(proto.value(), IsEmpty());
+  EXPECT_EQ(proto.truncated_byte_count(), 6);
 }
 
 TEST(Recordable, Compiles) {

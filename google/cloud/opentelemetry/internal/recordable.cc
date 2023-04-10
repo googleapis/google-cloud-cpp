@@ -27,7 +27,7 @@ bool IsTrailByte(char x) { return static_cast<signed char>(x) < -0x40; }
 void SetTruncatableString(
     google::devtools::cloudtrace::v2::TruncatableString& proto,
     opentelemetry::nostd::string_view value, std::size_t limit) {
-  if (value.size() < limit) {
+  if (value.size() <= limit) {
     proto.set_value(value.data(), value.size());
     proto.set_truncated_byte_count(0);
     return;
