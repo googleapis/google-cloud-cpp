@@ -25,8 +25,27 @@
 #include <opentelemetry/trace/span.h>
 #include <opentelemetry/trace/span_metadata.h>
 #include <opentelemetry/trace/tracer.h>
+#include <iosfwd>
 #include <memory>
 #include <string>
+
+/**
+ * Provide `opentelemetry::sdk::trace::SpanData` output streaming.
+ *
+ * Generally not a good idea to open a namespace outside our control, but it
+ * works, and -- in this test-only case -- is well worth it.
+ */
+namespace opentelemetry {
+namespace sdk {
+namespace trace {
+
+// Make the output from googletest human readable.
+std::ostream& operator<<(std::ostream&,
+                         opentelemetry::sdk::trace::SpanData const&);
+
+}  // namespace trace
+}  // namespace sdk
+}  // namespace opentelemetry
 
 namespace google {
 namespace cloud {
@@ -84,6 +103,20 @@ MATCHER(SpanKindIsClient,
   auto const& kind = arg->GetSpanKind();
   *result_listener << "has kind: " << ToString(kind);
   return kind == opentelemetry::trace::SpanKind::kClient;
+}
+
+MATCHER(SpanKindIsConsumer,
+        "has kind: " + ToString(opentelemetry::trace::SpanKind::kConsumer)) {
+  auto const& kind = arg->GetSpanKind();
+  *result_listener << "has kind: " << ToString(kind);
+  return kind == opentelemetry::trace::SpanKind::kConsumer;
+}
+
+MATCHER(SpanKindIsProducer,
+        "has kind: " + ToString(opentelemetry::trace::SpanKind::kProducer)) {
+  auto const& kind = arg->GetSpanKind();
+  *result_listener << "has kind: " << ToString(kind);
+  return kind == opentelemetry::trace::SpanKind::kProducer;
 }
 
 MATCHER_P(SpanNamed, name, "has name: " + std::string{name}) {

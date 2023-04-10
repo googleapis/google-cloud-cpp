@@ -14,11 +14,94 @@
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/sdk/trace/simple_processor.h>
 #include <opentelemetry/sdk/trace/tracer.h>
 #include <opentelemetry/sdk/trace/tracer_provider_factory.h>
 #include <opentelemetry/trace/provider.h>
+
+namespace {
+void AttributeFormatter(
+    std::string* out,
+    std::pair<std::string const,
+              opentelemetry::sdk::common::OwnedAttributeValue> const& kv) {
+  *out += kv.first;
+  *out += "=";
+  struct Visitor {
+    std::string* out;
+    void operator()(bool v) const {
+      *out += "bool:";
+      *out += v ? "true" : "false";
+    }
+    void operator()(double v) const { *out += "double:" + std::to_string(v); }
+    void operator()(std::int32_t v) const {
+      *out += "std::int32_t:" + std::to_string(v);
+    }
+    void operator()(std::uint32_t v) const {
+      *out += "std::uint32_t:" + std::to_string(v);
+    }
+    void operator()(std::int64_t v) const {
+      *out += "std::int64_t:" + std::to_string(v);
+    }
+    void operator()(std::uint64_t v) const {
+      *out += "std::uint64_t:" + std::to_string(v);
+    }
+    void operator()(std::string const& v) const { *out += "std::string:" + v; }
+    void operator()(std::vector<bool> const& v) const {
+      *out += "std::vector<bool>:[" + absl::StrJoin(v, ", ") + "]";
+    }
+    void operator()(std::vector<double> const& v) const {
+      *out += "std::vector<double>:[" + absl::StrJoin(v, ", ") + "]";
+    }
+    void operator()(std::vector<std::string> const& v) const {
+      *out += "std::vector<std::string>:[" + absl::StrJoin(v, ", ") + "]";
+    }
+    void operator()(std::vector<std::uint8_t> const& v) const {
+      *out += "std::vector<std::uint8_t>:[" + absl::StrJoin(v, ", ") + "]";
+      ;
+    }
+    void operator()(std::vector<std::int32_t> const& v) const {
+      *out += "std::vector<std::int32_t>:[" + absl::StrJoin(v, ", ") + "]";
+    }
+    void operator()(std::vector<std::uint32_t> const& v) const {
+      *out += "std::vector<std::uint32_t>:[" + absl::StrJoin(v, ", ") + "]";
+    }
+    void operator()(std::vector<std::int64_t> const& v) const {
+      *out += "std::vector<std::int64_t>:[" + absl::StrJoin(v, ", ") + "]";
+    }
+    void operator()(std::vector<std::uint64_t> const& v) const {
+      *out += "std::vector<std::uint64_t>:[" + absl::StrJoin(v, ", ") + "]";
+    }
+  };
+  absl::visit(Visitor{out}, kv.second);
+}
+}  // namespace
+
+namespace opentelemetry {
+namespace sdk {
+namespace trace {
+
+std::ostream& operator<<(std::ostream& os,
+                         opentelemetry::sdk::trace::SpanData const& rhs) {
+  os << "Span {name=" << rhs.GetName()
+     << ", kind=" << google::cloud::testing_util::ToString(rhs.GetSpanKind())
+     << ", instrumentation_scope {" << rhs.GetInstrumentationScope().GetName()
+     << ", " << rhs.GetInstrumentationScope().GetVersion() << "}, attributes=["
+     << absl::StrJoin(rhs.GetAttributes(), ", ", AttributeFormatter)
+     << "], events=[";
+  char const* sep = " ";
+  for (auto const& e : rhs.GetEvents()) {
+    os << sep << "Event {name=" << e.GetName() << ", attributes=["
+       << absl::StrJoin(e.GetAttributes(), ", ", AttributeFormatter) << "]}";
+    sep = ", ";
+  }
+  return os << "]}";
+}
+
+}  // namespace trace
+}  // namespace sdk
+}  // namespace opentelemetry
 
 namespace google {
 namespace cloud {
