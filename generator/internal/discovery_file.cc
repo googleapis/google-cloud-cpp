@@ -90,7 +90,7 @@ package $package_name$;
   std::vector<std::string> formatted_types;
   for (auto const& t : types_) {
     auto message = t->JsonToProtobufMessage();
-    if (!message) return message.status();
+    if (!message) return std::move(message).status();
     formatted_types.push_back(*std::move(message));
   }
 

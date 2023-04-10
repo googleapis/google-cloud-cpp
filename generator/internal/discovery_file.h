@@ -18,7 +18,6 @@
 #include "generator/internal/discovery_resource.h"
 #include "generator/internal/discovery_type_vertex.h"
 #include "google/cloud/status.h"
-#include <nlohmann/json.hpp>
 #include <set>
 #include <string>
 #include <vector>
@@ -31,6 +30,8 @@ namespace generator_internal {
 class DiscoveryFile {
  public:
   DiscoveryFile() = default;
+
+  // Set resources == nullptr to indicate the file only contains messages.
   DiscoveryFile(DiscoveryResource const* resource, std::string file_path,
                 std::string package_name, std::string version,
                 std::vector<DiscoveryTypeVertex const*> types);
