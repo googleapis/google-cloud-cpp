@@ -45,6 +45,10 @@ void SetTruncatableString(
       static_cast<std::int32_t>(value.size() - truncation_pos));
 }
 
+google::devtools::cloudtrace::v2::Span&& Recordable::as_proto() && {
+  return std::move(span_);
+}
+
 void Recordable::SetIdentity(
     opentelemetry::trace::SpanContext const& /*span_context*/,
     opentelemetry::trace::SpanId /*parent_span_id*/) noexcept {}
@@ -66,7 +70,12 @@ void Recordable::SetStatus(
     opentelemetry::trace::StatusCode /*code*/,
     opentelemetry::nostd::string_view /*description*/) noexcept {}
 
-void Recordable::SetName(opentelemetry::nostd::string_view /*name*/) noexcept {}
+void Recordable::SetName(opentelemetry::nostd::string_view name) noexcept {
+  // Note that the `name` field in the `Span` proto refers to the GCP resource
+  // name. We want to set the `display_name` field.
+  SetTruncatableString(*span_.mutable_display_name(), name,
+                       kDisplayNameStringLimit);
+}
 
 void Recordable::SetSpanKind(
     opentelemetry::trace::SpanKind /*span_kind*/) noexcept {}

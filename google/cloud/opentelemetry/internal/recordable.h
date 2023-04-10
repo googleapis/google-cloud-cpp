@@ -27,6 +27,9 @@ namespace cloud {
 namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+// https://github.com/googleapis/googleapis/blob/a5e03049afc43ccb1217d5dd3be53006fc278643/google/devtools/cloudtrace/v2/trace.proto#L233
+std::size_t constexpr kDisplayNameStringLimit = 128;
+
 /**
  * Helper to set [TruncatableString] fields in a [Span] proto.
  *
@@ -51,6 +54,8 @@ void SetTruncatableString(
 class Recordable final : public opentelemetry::sdk::trace::Recordable {
  public:
   explicit Recordable(Project project) : project_(std::move(project)) {}
+
+  google::devtools::cloudtrace::v2::Span&& as_proto() &&;
 
   void SetIdentity(
       opentelemetry::trace::SpanContext const& span_context,
