@@ -42,7 +42,7 @@ TEST(SetTruncatableString, OverTheLimit) {
 
 TEST(SetTruncatableString, RespectsUnicodeSymbolBoundaries) {
   google::devtools::cloudtrace::v2::TruncatableString proto;
-  // A unicode that is 2 bytes wide.
+  // A UTF-8 encoded character that is 2 bytes wide.
   std::string const u2 = "\xd0\xb4";
   // The string `u2 + u2` is 4 bytes long. Truncation should respect the symbol
   // boundaries. i.e. we should not cut the symbol in half.
@@ -50,7 +50,7 @@ TEST(SetTruncatableString, RespectsUnicodeSymbolBoundaries) {
   EXPECT_EQ(proto.value(), u2);
   EXPECT_EQ(proto.truncated_byte_count(), 2);
 
-  // A unicode that is 3 bytes wide.
+  // A UTF-8 encoded character that is 3 bytes wide.
   std::string const u3 = "\xe6\x96\xad";
   SetTruncatableString(proto, u3 + u3, 5);
   EXPECT_EQ(proto.value(), u3);
