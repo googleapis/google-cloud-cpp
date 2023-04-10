@@ -49,7 +49,10 @@ void AttributeFormatter(
     }
     void operator()(std::string const& v) const { *out += "std::string:" + v; }
     void operator()(std::vector<bool> const& v) const {
-      *out += "std::vector<bool>:[" + absl::StrJoin(v, ", ") + "]";
+      auto format = [](std::string* out, bool b) {
+        *out += b ? "true" : "false";
+      };
+      *out += "std::vector<bool>:[" + absl::StrJoin(v, ", ", format) + "]";
     }
     void operator()(std::vector<double> const& v) const {
       *out += "std::vector<double>:[" + absl::StrJoin(v, ", ") + "]";
@@ -82,7 +85,7 @@ OPENTELEMETRY_BEGIN_NAMESPACE
 namespace sdk {
 namespace trace {
 
-std::ostream& operator<<(std::ostream& os, trace::SpanData const& rhs) {
+std::ostream& operator<<(std::ostream& os, SpanData const& rhs) {
   os << "Span {name=" << rhs.GetName()
      << ", kind=" << google::cloud::testing_util::ToString(rhs.GetSpanKind())
      << ", instrumentation_scope {" << rhs.GetInstrumentationScope().GetName()

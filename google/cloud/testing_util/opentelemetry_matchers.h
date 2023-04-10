@@ -40,7 +40,7 @@ namespace sdk {
 namespace trace {
 
 // Make the output from googletest human readable.
-std::ostream& operator<<(std::ostream&, trace::SpanData const&);
+std::ostream& operator<<(std::ostream&, SpanData const&);
 
 }  // namespace trace
 }  // namespace sdk
