@@ -20,6 +20,7 @@ add_library(
     v2/minimal/internal/bigquery_http_response.h
     v2/minimal/internal/common_v2_resources.cc
     v2/minimal/internal/common_v2_resources.h
+    v2/minimal/internal/job.cc
     v2/minimal/internal/job.h
     v2/minimal/internal/job_client.cc
     v2/minimal/internal/job_client.h
@@ -135,7 +136,8 @@ function (bigquery_rest_define_tests)
         v2/minimal/internal/job_options_test.cc
         v2/minimal/internal/job_request_test.cc
         v2/minimal/internal/job_response_test.cc
-        v2/minimal/internal/job_rest_stub_test.cc)
+        v2/minimal/internal/job_rest_stub_test.cc
+        v2/minimal/internal/job_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.

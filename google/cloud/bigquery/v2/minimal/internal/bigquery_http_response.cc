@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/bigquery_http_response.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/make_status.h"
 
 namespace google {
@@ -40,6 +42,18 @@ StatusOr<BigQueryHttpResponse> BigQueryHttpResponse::BuildFromRestResponse(
 
   response.payload = std::move(*payload);
   return response;
+}
+
+std::string BigQueryHttpResponse::DebugString(absl::string_view name,
+                                              TracingOptions const& options,
+                                              int indent) const {
+  // Payload is not logged as it might contain user sensitive data like
+  // ldap/emails.
+  return internal::DebugFormatter(name, options, indent)
+      .Field("status_code", http_status_code)
+      .StringField("headers",
+                   absl::StrJoin(http_headers, ", ", absl::PairFormatter(": ")))
+      .Build();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

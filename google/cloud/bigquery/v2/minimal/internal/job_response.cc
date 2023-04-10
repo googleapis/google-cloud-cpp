@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_response.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/make_status.h"
 
 namespace google {
@@ -20,6 +22,7 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+namespace {
 bool valid_job(nlohmann::json const& j) {
   return (j.contains("kind") && j.contains("etag") && j.contains("id") &&
           j.contains("status") && j.contains("reference") &&
@@ -51,6 +54,18 @@ StatusOr<nlohmann::json> parse_json(std::string const& payload) {
   return json;
 }
 
+std::string DebugJobsString(std::vector<ListFormatJob> const& jobs,
+                            absl::string_view name,
+                            TracingOptions const& options, int indent) {
+  std::string out;
+  for (auto const& j : jobs) {
+    std::string jout;
+    absl::StrAppend(&out, j.DebugString(name, options, indent));
+  }
+  return out;
+}
+}  // namespace
+
 StatusOr<GetJobResponse> GetJobResponse::BuildFromHttpResponse(
     BigQueryHttpResponse const& http_response) {
   auto json = parse_json(http_response.payload);
@@ -66,6 +81,15 @@ StatusOr<GetJobResponse> GetJobResponse::BuildFromHttpResponse(
   result.http_response = http_response;
 
   return result;
+}
+
+std::string GetJobResponse::DebugString(absl::string_view name,
+                                        TracingOptions const& options,
+                                        int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .SubMessage("http_response", http_response)
+      .SubMessage("job", job)
+      .Build();
 }
 
 StatusOr<ListJobsResponse> ListJobsResponse::BuildFromHttpResponse(
@@ -96,6 +120,16 @@ StatusOr<ListJobsResponse> ListJobsResponse::BuildFromHttpResponse(
   }
 
   return result;
+}
+
+std::string ListJobsResponse::DebugString(absl::string_view name,
+                                          TracingOptions const& options,
+                                          int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .SubMessage("http_response", http_response)
+      .StringField("jobs",
+                   DebugJobsString(jobs, "ListFormatJob", options, indent))
+      .Build();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

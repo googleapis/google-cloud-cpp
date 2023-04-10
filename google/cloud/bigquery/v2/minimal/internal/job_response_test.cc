@@ -15,12 +15,14 @@
 #include "google/cloud/bigquery/v2/minimal/internal/job_response.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <sstream>
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::rest_internal::HttpStatusCode;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Eq;
 using ::testing::HasSubstr;
@@ -200,6 +202,164 @@ TEST(ListJobsResponseTest, InvalidListFormatJob) {
   EXPECT_THAT(response,
               StatusIs(StatusCode::kInternal,
                        HasSubstr("Not a valid Json ListFormatJob object")));
+}
+
+TEST(GetJobResponseTest, DebugString) {
+  BigQueryHttpResponse http_response;
+  http_response.http_status_code = HttpStatusCode::kOk;
+  http_response.http_headers.insert({{"header1", "value1"}});
+  http_response.payload =
+      R"({"kind": "jkind",
+          "etag": "jtag",
+          "id": "j123",
+          "self_link": "jselfLink",
+          "user_email": "juserEmail",
+          "status": {"state": "DONE"},
+          "reference": {"project_id": "p123", "job_id": "j123"},
+          "configuration": {
+            "job_type": "QUERY",
+            "query_config": {"query": "select 1;"}
+          }})";
+  auto response = GetJobResponse::BuildFromHttpResponse(http_response);
+  ASSERT_STATUS_OK(response);
+
+  EXPECT_EQ(response->DebugString("GetJobResponse", TracingOptions{}),
+            R"(GetJobResponse {)"
+            R"( http_response {)"
+            R"( status_code: 200)"
+            R"( headers: "header1: value1")"
+            R"( })"
+            R"( job {)"
+            R"( etag: "jtag")"
+            R"( kind: "jkind")"
+            R"( id: "j123")"
+            R"( job_configuration {)"
+            R"( job_type: "QUERY")"
+            R"( query: "select 1;")"
+            R"( })"
+            R"( job_reference {)"
+            R"( project_id: "p123")"
+            R"( job_id: "j123")"
+            R"( location: "")"
+            R"( })"
+            R"( job_status: "DONE")"
+            R"( error_result: "")"
+            R"( })"
+            R"( })");
+
+  EXPECT_EQ(response->DebugString("GetJobResponse", TracingOptions{}.SetOptions(
+                                                        "single_line_mode=F")),
+            R"(GetJobResponse {
+  http_response {
+    status_code: 200
+    headers: "header1: value1"
+  }
+  job {
+    etag: "jtag"
+    kind: "jkind"
+    id: "j123"
+    job_configuration {
+      job_type: "QUERY"
+      query: "select 1;"
+    }
+    job_reference {
+      project_id: "p123"
+      job_id: "j123"
+      location: ""
+    }
+    job_status: "DONE"
+    error_result: ""
+  }
+})");
+}
+
+TEST(ListJobsResponseTest, DebugString) {
+  BigQueryHttpResponse http_response;
+  http_response.http_status_code = HttpStatusCode::kOk;
+  http_response.http_headers.insert({{"header1", "value1"}});
+  http_response.payload =
+      R"({"etag": "tag-1",
+          "kind": "kind-1",
+          "next_page_token": "npt-123",
+          "jobs": [
+              {
+                "id": "1",
+                "kind": "kind-2",
+                "reference": {"project_id": "p123", "job_id": "j123"},
+                "state": "DONE",
+                "configuration": {
+                   "job_type": "QUERY",
+                   "query_config": {"query": "select 1;"}
+                },
+                "status": {"state": "DONE"},
+                "user_email": "user-email",
+                "principal_subject": "principal-subj"
+              }
+  ]})";
+  auto response = ListJobsResponse::BuildFromHttpResponse(http_response);
+  ASSERT_STATUS_OK(response);
+
+  EXPECT_EQ(response->DebugString("ListJobsResponse", TracingOptions{}),
+            R"(ListJobsResponse {)"
+            R"( http_response {)"
+            R"( status_code: 200)"
+            R"( headers: "header1: value1")"
+            R"( })"
+            R"( jobs: "ListFormatJob {)"
+            R"( id: "1")"
+            R"( kind: "kind-2")"
+            R"( state: "DONE")"
+            R"( job_configuration {)"
+            R"( job_type: "QUERY")"
+            R"( query: "select 1;")"
+            R"( })"
+            R"( job_reference { ...<truncated>...")"
+            R"( })");
+
+  EXPECT_EQ(
+      response->DebugString("ListJobsResponse",
+                            TracingOptions{}.SetOptions(
+                                "truncate_string_field_longer_than=1024")),
+      R"(ListJobsResponse {)"
+      R"( http_response {)"
+      R"( status_code: 200)"
+      R"( headers: "header1: value1")"
+      R"( })"
+      R"( jobs: "ListFormatJob {)"
+      R"( id: "1")"
+      R"( kind: "kind-2")"
+      R"( state: "DONE")"
+      R"( job_configuration {)"
+      R"( job_type: "QUERY")"
+      R"( query: "select 1;")"
+      R"( })"
+      R"( job_reference {)"
+      R"( project_id: "p123")"
+      R"( job_id: "j123")"
+      R"( location: "")"
+      R"( })"
+      R"( job_status: "DONE")"
+      R"( error_result: "")"
+      R"( }")"
+      R"( })");
+
+  EXPECT_EQ(
+      response->DebugString("ListJobsResponse",
+                            TracingOptions{}.SetOptions("single_line_mode=F")),
+      R"(ListJobsResponse {
+  http_response {
+    status_code: 200
+    headers: "header1: value1"
+  }
+  jobs: "ListFormatJob {
+  id: "1"
+  kind: "kind-2"
+  state: "DONE"
+  job_configuration {
+    job_type: "QUERY"
+    query: "select 1;"
+  ...<truncated>..."
+})");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
