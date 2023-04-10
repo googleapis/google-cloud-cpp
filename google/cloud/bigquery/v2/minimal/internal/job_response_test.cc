@@ -225,62 +225,51 @@ TEST(GetJobResponseTest, DebugString) {
 
   EXPECT_EQ(response->DebugString("GetJobResponse", TracingOptions{}),
             R"(GetJobResponse {)"
-            R"( http_response: "BigQueryHttpResponse {)"
+            R"( http_response {)"
             R"( status_code: 200)"
             R"( headers: "header1: value1")"
-            R"( }")"
-            R"( job: "Job {)"
+            R"( })"
+            R"( job {)"
             R"( etag: "jtag")"
             R"( kind: "jkind")"
             R"( id: "j123")"
-            R"( job_configuration: "JobConfiguration {)"
+            R"( job_configuration {)"
             R"( job_type: "QUERY")"
             R"( query: "select 1;")"
-            R"( }")"
-            R"( job_r...<truncated>...")"
+            R"( })"
+            R"( job_reference {)"
+            R"( project_id: "p123")"
+            R"( job_id: "j123")"
+            R"( location: "")"
+            R"( })"
+            R"( job_status: "DONE")"
+            R"( error_result: "")"
+            R"( })"
             R"( })");
-
-  EXPECT_EQ(
-      response->DebugString("GetJobResponse",
-                            TracingOptions{}.SetOptions(
-                                "truncate_string_field_longer_than=1024")),
-      R"(GetJobResponse {)"
-      R"( http_response: "BigQueryHttpResponse {)"
-      R"( status_code: 200)"
-      R"( headers: "header1: value1")"
-      R"( }")"
-      R"( job: "Job {)"
-      R"( etag: "jtag")"
-      R"( kind: "jkind")"
-      R"( id: "j123")"
-      R"( job_configuration: "JobConfiguration {)"
-      R"( job_type: "QUERY")"
-      R"( query: "select 1;")"
-      R"( }")"
-      R"( job_reference: "JobReference {)"
-      R"( project_id: "p123")"
-      R"( job_id: "j123")"
-      R"( location: "")"
-      R"( }")"
-      R"( job_status: "DONE")"
-      R"( error_result: "")"
-      R"( }")"
-      R"( })");
 
   EXPECT_EQ(response->DebugString("GetJobResponse", TracingOptions{}.SetOptions(
                                                         "single_line_mode=F")),
             R"(GetJobResponse {
-  http_response: "BigQueryHttpResponse {
-  status_code: 200
-  headers: "header1: value1"
-}"
-  job: "Job {
-  etag: "jtag"
-  kind: "jkind"
-  id: "j123"
-  job_configuration: "JobConfiguration {
-  job_type: "QUERY"
-  query: "select ...<truncated>..."
+  http_response {
+    status_code: 200
+    headers: "header1: value1"
+  }
+  job {
+    etag: "jtag"
+    kind: "jkind"
+    id: "j123"
+    job_configuration {
+      job_type: "QUERY"
+      query: "select 1;"
+    }
+    job_reference {
+      project_id: "p123"
+      job_id: "j123"
+      location: ""
+    }
+    job_status: "DONE"
+    error_result: ""
+  }
 })");
 }
 
@@ -312,17 +301,19 @@ TEST(ListJobsResponseTest, DebugString) {
 
   EXPECT_EQ(response->DebugString("ListJobsResponse", TracingOptions{}),
             R"(ListJobsResponse {)"
-            R"( http_response: "BigQueryHttpResponse {)"
+            R"( http_response {)"
             R"( status_code: 200)"
             R"( headers: "header1: value1")"
-            R"( }")"
+            R"( })"
             R"( jobs: "ListFormatJob {)"
             R"( id: "1")"
             R"( kind: "kind-2")"
             R"( state: "DONE")"
-            R"( job_configuration: "JobConfiguration {)"
+            R"( job_configuration {)"
             R"( job_type: "QUERY")"
-            R"( query: "select 1;"...<truncated>...")"
+            R"( query: "select 1;")"
+            R"( })"
+            R"( job_reference { ...<truncated>...")"
             R"( })");
 
   EXPECT_EQ(
@@ -330,23 +321,23 @@ TEST(ListJobsResponseTest, DebugString) {
                             TracingOptions{}.SetOptions(
                                 "truncate_string_field_longer_than=1024")),
       R"(ListJobsResponse {)"
-      R"( http_response: "BigQueryHttpResponse {)"
+      R"( http_response {)"
       R"( status_code: 200)"
       R"( headers: "header1: value1")"
-      R"( }")"
+      R"( })"
       R"( jobs: "ListFormatJob {)"
       R"( id: "1")"
       R"( kind: "kind-2")"
       R"( state: "DONE")"
-      R"( job_configuration: "JobConfiguration {)"
+      R"( job_configuration {)"
       R"( job_type: "QUERY")"
       R"( query: "select 1;")"
-      R"( }")"
-      R"( job_reference: "JobReference {)"
+      R"( })"
+      R"( job_reference {)"
       R"( project_id: "p123")"
       R"( job_id: "j123")"
       R"( location: "")"
-      R"( }")"
+      R"( })"
       R"( job_status: "DONE")"
       R"( error_result: "")"
       R"( }")"
@@ -356,17 +347,18 @@ TEST(ListJobsResponseTest, DebugString) {
       response->DebugString("ListJobsResponse",
                             TracingOptions{}.SetOptions("single_line_mode=F")),
       R"(ListJobsResponse {
-  http_response: "BigQueryHttpResponse {
-  status_code: 200
-  headers: "header1: value1"
-}"
+  http_response {
+    status_code: 200
+    headers: "header1: value1"
+  }
   jobs: "ListFormatJob {
   id: "1"
   kind: "kind-2"
   state: "DONE"
-  job_configuration: "JobConfiguration {
-  job_type: "QUERY"
-  query:...<truncated>..."
+  job_configuration {
+    job_type: "QUERY"
+    query: "select 1;"
+  ...<truncated>..."
 })");
 }
 

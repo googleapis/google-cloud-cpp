@@ -87,9 +87,8 @@ std::string GetJobResponse::DebugString(absl::string_view name,
                                         TracingOptions const& options,
                                         int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .StringField("http_response",
-                   http_response.DebugString("BigQueryHttpResponse", options))
-      .StringField("job", job.DebugString("Job", options, indent))
+      .SubMessage("http_response", http_response)
+      .SubMessage("job", job)
       .Build();
 }
 
@@ -127,8 +126,7 @@ std::string ListJobsResponse::DebugString(absl::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
-      .StringField("http_response",
-                   http_response.DebugString("BigQueryHttpResponse", options))
+      .SubMessage("http_response", http_response)
       .StringField("jobs",
                    DebugJobsString(jobs, "ListFormatJob", options, indent))
       .Build();

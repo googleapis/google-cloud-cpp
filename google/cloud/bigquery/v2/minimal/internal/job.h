@@ -42,6 +42,10 @@ struct JobReference {
   std::string project_id;
   std::string job_id;
   std::string location;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 
 struct Job {
