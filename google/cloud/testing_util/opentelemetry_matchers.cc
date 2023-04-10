@@ -78,12 +78,11 @@ void AttributeFormatter(
 }
 }  // namespace
 
-namespace opentelemetry {
+OPENTELEMETRY_BEGIN_NAMESPACE
 namespace sdk {
 namespace trace {
 
-std::ostream& operator<<(std::ostream& os,
-                         opentelemetry::sdk::trace::SpanData const& rhs) {
+std::ostream& operator<<(std::ostream& os, trace::SpanData const& rhs) {
   os << "Span {name=" << rhs.GetName()
      << ", kind=" << google::cloud::testing_util::ToString(rhs.GetSpanKind())
      << ", instrumentation_scope {" << rhs.GetInstrumentationScope().GetName()
@@ -101,7 +100,7 @@ std::ostream& operator<<(std::ostream& os,
 
 }  // namespace trace
 }  // namespace sdk
-}  // namespace opentelemetry
+OPENTELEMETRY_END_NAMESPACE
 
 namespace google {
 namespace cloud {

@@ -35,17 +35,16 @@
  * Generally not a good idea to open a namespace outside our control, but it
  * works, and -- in this test-only case -- is well worth it.
  */
-namespace opentelemetry {
+OPENTELEMETRY_BEGIN_NAMESPACE
 namespace sdk {
 namespace trace {
 
 // Make the output from googletest human readable.
-std::ostream& operator<<(std::ostream&,
-                         opentelemetry::sdk::trace::SpanData const&);
+std::ostream& operator<<(std::ostream&, trace::SpanData const&);
 
 }  // namespace trace
 }  // namespace sdk
-}  // namespace opentelemetry
+OPENTELEMETRY_END_NAMESPACE
 
 namespace google {
 namespace cloud {
