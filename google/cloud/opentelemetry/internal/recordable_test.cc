@@ -24,6 +24,35 @@ namespace {
 
 auto constexpr kProjectId = "test-project";
 
+TEST(SetTruncatableString, LessThanLimit) {
+  google::devtools::cloudtrace::v2::TruncatableString proto;
+  SetTruncatableString(proto, "value", 1000);
+  EXPECT_EQ(proto.value(), "value");
+  EXPECT_EQ(proto.truncated_byte_count(), 0);
+}
+
+TEST(SetTruncatableString, OverTheLimit) {
+  google::devtools::cloudtrace::v2::TruncatableString proto;
+  SetTruncatableString(proto, "abcde", 3);
+  EXPECT_EQ(proto.value(), "abc");
+  EXPECT_EQ(proto.truncated_byte_count(), 2);
+}
+
+TEST(SetTruncatableString, RespectsUnicodeSymbolBoundaries) {
+  google::devtools::cloudtrace::v2::TruncatableString proto;
+  // The unicode symbol "д" is 2 bytes wide. So the string "дд" is 4 bytes long.
+  // Truncation should respect the symbol boundaries. i.e. We should not cut the
+  // symbol in half.
+  SetTruncatableString(proto, "дд", 3);
+  EXPECT_EQ(proto.value(), "д");
+  EXPECT_EQ(proto.truncated_byte_count(), 2);
+
+  // "断" is 3 bytes wide.
+  SetTruncatableString(proto, "断断", 5);
+  EXPECT_EQ(proto.value(), "断");
+  EXPECT_EQ(proto.truncated_byte_count(), 3);
+}
+
 TEST(Recordable, Compiles) {
   auto rec = Recordable(Project(kProjectId));
   GTEST_SUCCEED();

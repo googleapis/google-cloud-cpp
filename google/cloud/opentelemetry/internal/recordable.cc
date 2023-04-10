@@ -18,6 +18,32 @@ namespace google {
 namespace cloud {
 namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+// Taken from:
+// http://35.193.25.4/TensorFlow/models/research/syntaxnet/util/utf8/unilib_utf8_utils.h
+bool IsTrailByte(char x) { return static_cast<signed char>(x) < -0x40; }
+}  // namespace
+
+void SetTruncatableString(
+    google::devtools::cloudtrace::v2::TruncatableString& proto,
+    opentelemetry::nostd::string_view value, std::size_t limit) {
+  if (value.size() < limit) {
+    proto.set_value(value.data(), value.size());
+    proto.set_truncated_byte_count(0);
+    return;
+  }
+
+  // If limit points to the beginning of a utf8 character, truncate at the
+  // limit. Otherwise, backtrack to the beginning of utf8 character.
+  auto truncation_pos = limit;
+  while (truncation_pos > 0 && IsTrailByte(value[truncation_pos])) {
+    --truncation_pos;
+  }
+
+  proto.set_value(value.data(), truncation_pos);
+  proto.set_truncated_byte_count(
+      static_cast<std::int32_t>(value.size() - truncation_pos));
+}
 
 void Recordable::SetIdentity(
     opentelemetry::trace::SpanContext const& /*span_context*/,

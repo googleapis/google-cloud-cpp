@@ -17,6 +17,7 @@
 
 #include "google/cloud/project.h"
 #include "google/cloud/version.h"
+#include <google/devtools/cloudtrace/v2/trace.pb.h>
 #include <google/devtools/cloudtrace/v2/tracing.pb.h>
 #include <opentelemetry/common/attribute_value.h>
 #include <opentelemetry/sdk/trace/recordable.h>
@@ -25,6 +26,20 @@ namespace google {
 namespace cloud {
 namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+/**
+ * Helper to set [TruncatableString] fields in a [Span] proto.
+ *
+ * The service defines the limit for such fields in its documentation.
+ *
+ * [Span]:
+ * https://cloud.google.com/trace/docs/reference/v2/rpc/google.devtools.cloudtrace.v2#google.devtools.cloudtrace.v2.Span
+ * [TruncatableString]:
+ * https://cloud.google.com/trace/docs/reference/v2/rpc/google.devtools.cloudtrace.v2#google.devtools.cloudtrace.v2.TruncatableString
+ */
+void SetTruncatableString(
+    google::devtools::cloudtrace::v2::TruncatableString& proto,
+    opentelemetry::nostd::string_view value, std::size_t limit);
 
 // TODO(#11156) - Implement this class.
 /**
