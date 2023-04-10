@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class BigQueryHttpResponse {
  public:
-  BigQueryHttpResponse() = default;
+  BigQueryHttpResponse();
   // Parses the RestResponse and builds an BigQueryHttpResponse.
   static StatusOr<BigQueryHttpResponse> BuildFromRestResponse(
       std::unique_ptr<rest_internal::RestResponse> rest_response);

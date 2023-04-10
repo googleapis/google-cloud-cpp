@@ -16,6 +16,7 @@
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/rest_response.h"
 
 namespace google {
 namespace cloud {
@@ -23,6 +24,9 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace rest = ::google::cloud::rest_internal;
+
+BigQueryHttpResponse::BigQueryHttpResponse()
+    : http_status_code(static_cast<rest_internal::HttpStatusCode>(0)) {}
 
 StatusOr<BigQueryHttpResponse> BigQueryHttpResponse::BuildFromRestResponse(
     std::unique_ptr<rest::RestResponse> rest_response) {
@@ -49,6 +53,7 @@ std::string BigQueryHttpResponse::DebugString(absl::string_view name,
                                               int indent) const {
   // Payload is not logged as it might contain user sensitive data like
   // ldap/emails.
+
   return internal::DebugFormatter(name, options, indent)
       .Field("status_code", http_status_code)
       .StringField("headers",
