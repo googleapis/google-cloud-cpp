@@ -80,19 +80,23 @@ TEST_F(JobLoggingClientTest, GetJob) {
         return GetJobResponse::BuildFromHttpResponse(std::move(http_response));
       });
 
+  // Not checking all fields exhaustively. Just that request and response are
+  // being logged.
   EXPECT_CALL(*log_backend_, ProcessWithOwnership)
       .WillOnce([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" << "));
-        EXPECT_THAT(
-            lr.message,
-            HasSubstr(
-                "google::cloud::bigquery_v2_minimal_internal::GetJobRequest"));
+        EXPECT_THAT(lr.message, HasSubstr("GetJobRequest"));
         EXPECT_THAT(lr.message, HasSubstr("job_id: \"j123\""));
         EXPECT_THAT(lr.message, HasSubstr("project_id: \"p123\""));
       })
       .WillOnce([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" >> "));
-        EXPECT_THAT(lr.message, HasSubstr("status="));
+        EXPECT_THAT(lr.message, HasSubstr("status=OK"));
+      })
+      .WillOnce([](LogRecord const& lr) {
+        EXPECT_THAT(lr.message, HasSubstr("GetJobResponse"));
+        EXPECT_THAT(lr.message, HasSubstr("status: \"DONE\""));
+        EXPECT_THAT(lr.message, HasSubstr("id: \"j123\""));
       });
 
   auto client = CreateMockJobLogging(std::move(mock_stub));
@@ -138,15 +142,19 @@ TEST_F(JobLoggingClientTest, ListJobs) {
   EXPECT_CALL(*log_backend_, ProcessWithOwnership)
       .WillOnce([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" << "));
-        EXPECT_THAT(lr.message, HasSubstr("google::cloud::bigquery_v2_minimal_"
-                                          "internal::ListJobsRequest"));
+        EXPECT_THAT(lr.message, HasSubstr("ListJobsRequest"));
         EXPECT_THAT(lr.message, HasSubstr("project_id: \"p123\""));
         EXPECT_THAT(lr.message, HasSubstr("all_users: false"));
         EXPECT_THAT(lr.message, HasSubstr("max_results: 0"));
       })
       .WillOnce([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" >> "));
-        EXPECT_THAT(lr.message, HasSubstr("status="));
+        EXPECT_THAT(lr.message, HasSubstr("status=OK"));
+      })
+      .WillOnce([](LogRecord const& lr) {
+        EXPECT_THAT(lr.message, HasSubstr("ListJobsResponse"));
+        EXPECT_THAT(lr.message, HasSubstr("id: \"1\""));
+        EXPECT_THAT(lr.message, HasSubstr("state: \"DONE\""));
       });
 
   auto client = CreateMockJobLogging(std::move(mock_stub));
