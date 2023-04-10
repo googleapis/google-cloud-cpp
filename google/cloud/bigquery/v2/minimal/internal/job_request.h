@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_REQUEST_H
 
 #include "google/cloud/internal/rest_request.h"
+#include "google/cloud/optional.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/tracing_options.h"
@@ -106,10 +107,12 @@ class ListJobsRequest {
   std::string const& project_id() const { return project_id_; }
   bool const& all_users() const { return all_users_; }
   std::int32_t const& max_results() const { return max_results_; }
-  std::chrono::system_clock::time_point const& min_creation_time() const {
+  optional<std::chrono::system_clock::time_point> const& min_creation_time()
+      const {
     return min_creation_time_;
   }
-  std::chrono::system_clock::time_point const& max_creation_time() const {
+  optional<std::chrono::system_clock::time_point> const& max_creation_time()
+      const {
     return max_creation_time_;
   }
   std::string const& page_token() const { return page_token_; }
@@ -202,8 +205,8 @@ class ListJobsRequest {
   std::string project_id_;
   bool all_users_;
   std::int32_t max_results_;
-  std::chrono::system_clock::time_point min_creation_time_;
-  std::chrono::system_clock::time_point max_creation_time_;
+  optional<std::chrono::system_clock::time_point> min_creation_time_;
+  optional<std::chrono::system_clock::time_point> max_creation_time_;
   std::string page_token_;
   Projection projection_;
   StateFilter state_filter_;
