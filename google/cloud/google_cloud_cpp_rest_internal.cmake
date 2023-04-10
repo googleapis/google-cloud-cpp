@@ -101,6 +101,8 @@ add_library(
     internal/rest_response.cc
     internal/rest_response.h
     internal/rest_retry_loop.h
+    internal/tracing_http_payload.cc
+    internal/tracing_http_payload.h
     internal/unified_rest_credentials.cc
     internal/unified_rest_credentials.h
     rest_options.h)
@@ -242,6 +244,7 @@ if (BUILD_TESTING)
         internal/rest_request_test.cc
         internal/rest_response_test.cc
         internal/rest_retry_loop_test.cc
+        internal/tracing_http_payload_test.cc
         internal/unified_rest_credentials_test.cc)
 
     # List the emulator integration tests, then setup the targets and

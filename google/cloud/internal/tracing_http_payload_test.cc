@@ -13,8 +13,9 @@
 // limitations under the License.
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include "google/cloud/internal/tracing_http_payload.h"
 #include "google/cloud/internal/rest_opentelemetry.h"
-#include "google/cloud/internal/opentelemetry_options.h"
+#include "google/cloud/testing_util/mock_http_payload.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -27,64 +28,54 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
+using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::SpanAttribute;
+using ::google::cloud::testing_util::SpanEventAttributesAre;
+using ::google::cloud::testing_util::SpanEventsAre;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
-using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanKindIsConsumer;
 using ::google::cloud::testing_util::SpanNamed;
 using ::testing::AllOf;
-using ::testing::ElementsAre;
-using ::testing::Gt;
+using ::testing::Contains;
 
-TEST(RestOpentelemetry, MakeSpanHttp) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
-  auto span_catcher = InstallSpanCatcher();
-
-  auto constexpr kUrl = "https://storage.googleapis.com/storage/v1/b/my-bucket";
-  RestRequest request(kUrl);
-  auto const secret =
-      std::string{"Bearer secret-0123456789aaaaabbbbbcccccddddd"};
-  ASSERT_THAT(secret.size(), Gt(32));
-  request.AddHeader("Authorization", secret);
-  request.AddHeader("X-Goog-Foo", "bar");
-
-  auto span = MakeSpanHttp(request, "GET");
-  span->End();
-
-  auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(
-      spans, ElementsAre(AllOf(
-                 SpanHasInstrumentationScope(), SpanKindIsClient(),
-                 SpanNamed("HTTP/GET"),
-                 SpanHasAttributes(
-                     SpanAttribute<std::string>(sc::kNetTransport,
-                                                sc::NetTransportValues::kIpTcp),
-                     SpanAttribute<std::string>(sc::kHttpMethod, "GET"),
-                     SpanAttribute<std::string>(sc::kHttpUrl, kUrl),
-                     SpanAttribute<std::string>("http.header.authorization",
-                                                secret.substr(0, 32))))));
+std::string MockContents() {
+  return "The quick brown fox jumps over the lazy dog";
 }
 
-TEST(RestOpentelemetry, MakeSpanHttpPayload) {
+TEST(TracingRestClient, Success) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto span_catcher = InstallSpanCatcher();
 
+  auto impl = MakeMockHttpPayloadSuccess(MockContents());
   RestRequest request("https://example.com/ignored");
   auto request_span = MakeSpanHttp(request, "GET");
 
   auto span = MakeSpanHttpPayload(*request_span);
-  request_span->End();
-  span->End();
+  TracingHttpPayload payload(std::move(impl), span);
+  std::vector<char> buffer(16);
+  auto read = [&] { return payload.Read(absl::Span<char>(buffer)); };
+  for (auto s = read(); s && s.value() != 0; s = read()) continue;
 
   auto spans = span_catcher->GetSpans();
+  auto make_read_event_matcher = [](auto bs, auto rs) {
+    return AllOf(EventNamed("Read"),
+                 SpanEventAttributesAre(
+                     SpanAttribute<std::int64_t>("read.buffer.size", bs),
+                     SpanAttribute<std::int64_t>("read.returned.size", rs)));
+  };
   EXPECT_THAT(
       spans,
       Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsConsumer(),
                      SpanNamed("HTTP/Response"),
                      SpanHasAttributes(SpanAttribute<std::string>(
-                         sc::kNetTransport, sc::NetTransportValues::kIpTcp)))));
+                         sc::kNetTransport, sc::NetTransportValues::kIpTcp)),
+                     SpanEventsAre(make_read_event_matcher(16, 16),
+                                   make_read_event_matcher(16, 16),
+                                   make_read_event_matcher(16, 11),
+                                   make_read_event_matcher(16, 0)))));
 }
 
 }  // namespace

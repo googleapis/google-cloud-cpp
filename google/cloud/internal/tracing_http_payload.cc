@@ -12,31 +12,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_OPENTELEMETRY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_OPENTELEMETRY_H
-
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-#include "google/cloud/internal/rest_request.h"
-#include <opentelemetry/nostd/shared_ptr.h>
-#include <opentelemetry/trace/span.h>
+
+#include "google/cloud/internal/tracing_http_payload.h"
+#include "google/cloud/internal/opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Make a span, setting attributes related to HTTP.
- *
- * @see
- * https://opentelemetry.io/docs/reference/specification/trace/semantic_conventions/http/
- * for the semantic conventions used for span names and attributes.
- */
-opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanHttp(
-    RestRequest const& request, opentelemetry::nostd::string_view method);
+TracingHttpPayload::TracingHttpPayload(
+    std::unique_ptr<HttpPayload> impl,
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span)
+    : impl_(std::move(impl)), span_(std::move(span)) {}
 
-opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>
-MakeSpanHttpPayload(opentelemetry::trace::Span const& request_span);
+bool TracingHttpPayload::HasUnreadData() const {
+  return impl_->HasUnreadData();
+}
+
+StatusOr<std::size_t> TracingHttpPayload::Read(absl::Span<char> buffer) {
+  auto status = impl_->Read(buffer);
+  if (!status) return internal::EndSpan(*span_, std::move(status));
+  span_->AddEvent(
+      "Read", {{"read.buffer.size", static_cast<std::int64_t>(buffer.size())},
+               {"read.returned.size", static_cast<std::int64_t>(*status)}});
+  if (*status == 0) span_->End();
+  return status;
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
@@ -44,5 +47,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_OPENTELEMETRY_H
