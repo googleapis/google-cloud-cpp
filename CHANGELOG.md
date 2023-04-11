@@ -131,7 +131,7 @@ the APIs in these libraries are stable, and are ready for production use.
 ### Other Changes
 
 **Bazel Testing**: starting with v2.10.0 we only test with Bazel >= 5.4.0. We
-do not consider this as breaking change, as Bazel 4.x has been in maintenance
+do not consider this a breaking change, as Bazel 4.x has been in maintenance
 mode for several months.
 
 ## v2.9.0 - 2023-04
