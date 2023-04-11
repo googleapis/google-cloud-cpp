@@ -65,37 +65,29 @@ Status DiscoveryFile::FormatFile(std::string const& product_name,
 syntax = "proto3";
 
 package $package_name$;
-
 )""");
 
   if (!import_paths_.empty()) {
-    printer.Print(vars, absl::StrJoin(import_paths_, "\n",
-                                      [](std::string* s, std::string const& p) {
-                                        *s += absl::StrFormat("import \"%s\";",
-                                                              p);
-                                      })
-                            .c_str());
-    printer.Print("\n\n");
+    printer.Print("\n");
+    for (auto const& path : import_paths_) {
+      printer.Print(vars, absl::StrFormat("import \"%s\";\n", path).c_str());
+    }
   }
 
   if (resource_) {
+    printer.Print("\n");
     auto service_definition = resource_->JsonToProtobufService();
     if (!service_definition) {
       return std::move(service_definition).status();
     }
     printer.Print(vars, std::move(service_definition)->c_str());
-    if (!types_.empty()) printer.Print("\n");
   }
 
-  std::vector<std::string> formatted_types;
   for (auto const& t : types_) {
     auto message = t->JsonToProtobufMessage();
     if (!message) return std::move(message).status();
-    formatted_types.push_back(*std::move(message));
-  }
-
-  if (!formatted_types.empty()) {
-    printer.Print(vars, absl::StrJoin(formatted_types, "\n").c_str());
+    printer.Print("\n");
+    printer.Print(vars, std::move(message)->c_str());
   }
 
   return {};
