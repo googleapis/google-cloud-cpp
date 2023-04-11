@@ -88,6 +88,84 @@ TEST(DebugFormatter, Truncated) {
       R"( })");
 }
 
+TEST(DebugFormatter, TimePoint) {
+  auto tp = std::chrono::system_clock::from_time_t(1681165293) +
+            std::chrono::nanoseconds(123456789);
+  EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
+                .Field("field1", tp)
+                .Build(),
+            R"(message_name {)"
+            R"( field1 {)"
+            R"( "2023-04-10T22:21:33.123456789Z")"
+            R"( })"
+            R"( })");
+}
+
+TEST(DebugFormatter, Multimap) {
+  std::multimap<std::string, std::string> m = {{"k1", "v1"}, {"k2", "v2"}};
+  EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
+                .Field("field1", m)
+                .Build(),
+            R"(message_name {)"
+            R"( field1 {)"
+            R"( key: "k1")"
+            R"( value: "v1")"
+            R"( })"
+            R"( field1 {)"
+            R"( key: "k2")"
+            R"( value: "v2")"
+            R"( })"
+            R"( })");
+  m.clear();
+  EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
+                .Field("field1", m)
+                .Build(),
+            R"(message_name {)"
+            R"( })");
+}
+
+TEST(DebugFormatter, Optional) {
+  absl::optional<SubMessage> m = SubMessage{3.14159};
+  EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
+                .Field("field1", m)
+                .Build(),
+            R"(message_name {)"
+            R"( field1 {)"
+            R"( value: 3.14159)"
+            R"( })"
+            R"( })");
+  m = absl::nullopt;
+  EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
+                .Field("field1", m)
+                .Build(),
+            R"(message_name {)"
+            R"( })");
+}
+
+TEST(DebugFormatter, Vector) {
+  std::vector<SubMessage> v = {SubMessage{1}, SubMessage{2}, SubMessage{3}};
+  EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
+                .Field("field1", v)
+                .Build(),
+            R"(message_name {)"
+            R"( field1 {)"
+            R"( value: 1)"
+            R"( })"
+            R"( field1 {)"
+            R"( value: 2)"
+            R"( })"
+            R"( field1 {)"
+            R"( value: 3)"
+            R"( })"
+            R"( })");
+  v.clear();
+  EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
+                .Field("field1", v)
+                .Build(),
+            R"(message_name {)"
+            R"( })");
+}
+
 TEST(DebugString, TruncateString) {
   TracingOptions tracing_options;
   tracing_options.SetOptions("truncate_string_field_longer_than=8");

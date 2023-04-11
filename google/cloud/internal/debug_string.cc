@@ -46,6 +46,21 @@ DebugFormatter& DebugFormatter::Field(
   return *this;
 }
 
+DebugFormatter& DebugFormatter::Field(
+    absl::string_view field_name,
+    std::multimap<std::string, std::string> const& value) {
+  for (auto const& e : value) {
+    absl::StrAppend(&str_, Sep(), field_name, " {");
+    ++indent_;
+    absl::StrAppend(&str_, Sep(), "key: ", "\"", e.first, "\"");
+    absl::StrAppend(&str_, Sep(), "value: ", "\"",
+                    DebugString(e.second, options_), "\"");
+    --indent_;
+    absl::StrAppend(&str_, Sep(), "}");
+  }
+  return *this;
+}
+
 DebugFormatter& DebugFormatter::StringField(absl::string_view field_name,
                                             std::string value) {
   absl::StrAppend(&str_, Sep(), field_name, ": ", "\"",

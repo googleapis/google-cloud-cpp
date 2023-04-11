@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/bigquery_http_response.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/make_status.h"
 
@@ -51,8 +50,8 @@ std::string BigQueryHttpResponse::DebugString(absl::string_view name,
   // ldap/emails.
   return internal::DebugFormatter(name, options, indent)
       .Field("status_code", http_status_code)
-      .StringField("headers",
-                   absl::StrJoin(http_headers, ", ", absl::PairFormatter(": ")))
+      .Field("http_headers", http_headers)
+      .Field("payload", "REDACTED")
       .Build();
 }
 

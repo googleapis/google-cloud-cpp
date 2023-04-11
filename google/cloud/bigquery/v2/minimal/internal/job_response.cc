@@ -23,6 +23,7 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
+
 bool valid_job(nlohmann::json const& j) {
   return (j.contains("kind") && j.contains("etag") && j.contains("id") &&
           j.contains("status") && j.contains("reference") &&
@@ -54,16 +55,6 @@ StatusOr<nlohmann::json> parse_json(std::string const& payload) {
   return json;
 }
 
-std::string DebugJobsString(std::vector<ListFormatJob> const& jobs,
-                            absl::string_view name,
-                            TracingOptions const& options, int indent) {
-  std::string out;
-  for (auto const& j : jobs) {
-    std::string jout;
-    absl::StrAppend(&out, j.DebugString(name, options, indent));
-  }
-  return out;
-}
 }  // namespace
 
 StatusOr<GetJobResponse> GetJobResponse::BuildFromHttpResponse(
@@ -126,9 +117,11 @@ std::string ListJobsResponse::DebugString(absl::string_view name,
                                           TracingOptions const& options,
                                           int indent) const {
   return internal::DebugFormatter(name, options, indent)
+      .Field("jobs", jobs)
+      .StringField("next_page_token", next_page_token)
+      .StringField("kind", kind)
+      .StringField("etag", etag)
       .SubMessage("http_response", http_response)
-      .StringField("jobs",
-                   DebugJobsString(jobs, "ListFormatJob", options, indent))
       .Build();
 }
 
