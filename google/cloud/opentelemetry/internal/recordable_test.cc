@@ -62,9 +62,22 @@ TEST(SetTruncatableString, RespectsUnicodeSymbolBoundaries) {
   EXPECT_EQ(proto.truncated_byte_count(), 6);
 }
 
-TEST(Recordable, Compiles) {
+TEST(Recordable, SetName) {
   auto rec = Recordable(Project(kProjectId));
-  GTEST_SUCCEED();
+  rec.SetName("name");
+  auto proto = std::move(rec).as_proto();
+  EXPECT_EQ(proto.display_name().value(), "name");
+}
+
+TEST(Recordable, SetNameTruncates) {
+  std::string const name(kDisplayNameStringLimit + 1, 'A');
+  std::string const expected(kDisplayNameStringLimit, 'A');
+
+  auto rec = Recordable(Project(kProjectId));
+  rec.SetName(name);
+  auto proto = std::move(rec).as_proto();
+  EXPECT_EQ(proto.display_name().value(), expected);
+  EXPECT_EQ(proto.display_name().truncated_byte_count(), 1);
 }
 
 }  // namespace
