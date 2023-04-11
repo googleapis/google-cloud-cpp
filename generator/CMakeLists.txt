@@ -41,6 +41,8 @@ add_library(
     internal/connection_rest_generator.h
     internal/descriptor_utils.cc
     internal/descriptor_utils.h
+    internal/discovery_file.cc
+    internal/discovery_file.h
     internal/discovery_resource.cc
     internal/discovery_resource.h
     internal/discovery_to_proto.cc
@@ -191,6 +193,7 @@ function (google_cloud_cpp_generator_define_tests)
         generator_test.cc
         internal/codegen_utils_test.cc
         internal/descriptor_utils_test.cc
+        internal/discovery_file_test.cc
         internal/discovery_resource_test.cc
         internal/discovery_to_proto_test.cc
         internal/discovery_type_vertex_test.cc
