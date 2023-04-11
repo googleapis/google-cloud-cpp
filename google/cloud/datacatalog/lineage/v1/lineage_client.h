@@ -65,7 +65,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.datacatalog.lineage.v1.LineageEvent]:
-/// @googleapis_link_reference{google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
+/// @googleapis_reference_link{google/cloud/datacatalog/lineage/v1/lineage.proto#L302}
 ///
 class LineageClient {
  public:

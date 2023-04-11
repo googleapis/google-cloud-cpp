@@ -60,7 +60,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.v2.Intent]:
-/// @googleapis_link_reference{google/cloud/dialogflow/v2/intent.proto#L198}
+/// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L198}
 ///
 class IntentsClient {
  public:

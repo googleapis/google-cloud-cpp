@@ -79,7 +79,7 @@ std::string FormatClassCommentsFromServiceComments(
   auto trailer = std::string{};
   for (auto const& kv : references) {
     absl::StrAppend(&trailer, "\n/// [", kv.first,
-                    "]: @googleapis_link_reference{", kv.second.filename, "#L",
+                    "]: @googleapis_reference_link{", kv.second.filename, "#L",
                     kv.second.lineno, "}");
   }
   if (!trailer.empty()) trailer += "\n///";

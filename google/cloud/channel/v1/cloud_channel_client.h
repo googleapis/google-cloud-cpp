@@ -79,11 +79,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.channel.v1.ChannelPartnerLink]:
-/// @googleapis_link_reference{google/cloud/channel/v1/channel_partner_links.proto#L66}
+/// @googleapis_reference_link{google/cloud/channel/v1/channel_partner_links.proto#L66}
 /// [google.cloud.channel.v1.Customer]:
-/// @googleapis_link_reference{google/cloud/channel/v1/customers.proto#L31}
+/// @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L31}
 /// [google.cloud.channel.v1.Entitlement]:
-/// @googleapis_link_reference{google/cloud/channel/v1/entitlements.proto#L32}
+/// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
 ///
 class CloudChannelServiceClient {
  public:

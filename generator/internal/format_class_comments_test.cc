@@ -125,13 +125,13 @@ message Resource {
       AllOf(Contains("/// A brief description of the service."),
             Contains(StartsWith(
                 "/// [test.v1.Request]: "
-                "@googleapis_link_reference{test/v1/common.proto#L")),
+                "@googleapis_reference_link{test/v1/common.proto#L")),
             Contains(StartsWith(
                 "/// [test.v1.OtherService]: "
-                "@googleapis_link_reference{test/v1/service.proto#L")),
+                "@googleapis_reference_link{test/v1/service.proto#L")),
             Contains(StartsWith(
                 "/// [test.v1.Resource.parent]: "
-                "@googleapis_link_reference{test/v1/service.proto#L")),
+                "@googleapis_reference_link{test/v1/service.proto#L")),
             Contains("/// @par Equality"), Contains("/// @par Performance"),
             Contains("/// @par Thread Safety")));
 }

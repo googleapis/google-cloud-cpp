@@ -61,9 +61,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.cx.v3.TestCase]:
-/// @googleapis_link_reference{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
+/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
 /// [google.cloud.dialogflow.cx.v3.TestCaseResult]:
-/// @googleapis_link_reference{google/cloud/dialogflow/cx/v3/test_case.proto#L256}
+/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L256}
 ///
 class TestCasesClient {
  public:

@@ -60,7 +60,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.cx.v3.Deployment]:
-/// @googleapis_link_reference{google/cloud/dialogflow/cx/v3/deployment.proto#L65}
+/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L65}
 ///
 class DeploymentsClient {
  public:

@@ -62,7 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.retail.v2.Product]:
-/// @googleapis_link_reference{google/cloud/retail/v2/product.proto#L43}
+/// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
 ///
 class ProductServiceClient {
  public:

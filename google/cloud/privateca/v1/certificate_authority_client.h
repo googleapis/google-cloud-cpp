@@ -63,7 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.security.privateca.v1.CertificateAuthorityService]:
-/// @googleapis_link_reference{google/cloud/security/privateca/v1/service.proto#L41}
+/// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L41}
 ///
 class CertificateAuthorityServiceClient {
  public:

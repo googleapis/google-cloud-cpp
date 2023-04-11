@@ -60,7 +60,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.v2.Participant]:
-/// @googleapis_link_reference{google/cloud/dialogflow/v2/participant.proto#L178}
+/// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L178}
 ///
 class ParticipantsClient {
  public:

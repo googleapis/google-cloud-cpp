@@ -60,7 +60,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.v2.EntityType]:
-/// @googleapis_link_reference{google/cloud/dialogflow/v2/entity_type.proto#L293}
+/// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
 ///
 class EntityTypesClient {
  public:

@@ -70,7 +70,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.monitoring.v3.Group]:
-/// @googleapis_link_reference{google/monitoring/v3/group.proto#L55}
+/// @googleapis_reference_link{google/monitoring/v3/group.proto#L55}
 ///
 class GroupServiceClient {
  public:

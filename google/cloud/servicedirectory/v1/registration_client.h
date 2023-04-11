@@ -74,11 +74,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.servicedirectory.v1.Endpoint]:
-/// @googleapis_link_reference{google/cloud/servicedirectory/v1/endpoint.proto#L33}
+/// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
 /// [google.cloud.servicedirectory.v1.Namespace]:
-/// @googleapis_link_reference{google/cloud/servicedirectory/v1/namespace.proto#L34}
+/// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
 /// [google.cloud.servicedirectory.v1.Service]:
-/// @googleapis_link_reference{google/cloud/servicedirectory/v1/service.proto#L36}
+/// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
 ///
 class RegistrationServiceClient {
  public:
