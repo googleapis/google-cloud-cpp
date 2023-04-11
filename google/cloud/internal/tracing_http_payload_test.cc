@@ -31,6 +31,7 @@ namespace {
 using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
+using ::google::cloud::testing_util::MockHttpPayload;
 using ::google::cloud::testing_util::SpanAttribute;
 using ::google::cloud::testing_util::SpanEventAttributesAre;
 using ::google::cloud::testing_util::SpanEventsAre;
@@ -38,14 +39,17 @@ using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsConsumer;
 using ::google::cloud::testing_util::SpanNamed;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
 using ::testing::Contains;
+using ::testing::Eq;
+using ::testing::Return;
 
 std::string MockContents() {
   return "The quick brown fox jumps over the lazy dog";
 }
 
-TEST(TracingRestClient, Success) {
+TEST(TracingHttpPayload, Success) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto span_catcher = InstallSpanCatcher();
 
@@ -76,6 +80,54 @@ TEST(TracingRestClient, Success) {
                                    make_read_event_matcher(16, 16),
                                    make_read_event_matcher(16, 11),
                                    make_read_event_matcher(16, 0)))));
+}
+
+TEST(TracingHttpPayload, Failure) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  auto span_catcher = InstallSpanCatcher();
+
+  RestRequest request("https://example.com/ignored");
+  auto request_span = MakeSpanHttp(request, "GET");
+
+  auto impl = std::make_unique<MockHttpPayload>();
+  EXPECT_CALL(*impl, Read)
+      .WillOnce(Return(16))
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
+
+  auto span = MakeSpanHttpPayload(*request_span);
+  TracingHttpPayload payload(std::move(impl), span);
+  std::vector<char> buffer(16);
+  auto status = payload.Read(absl::Span<char>(buffer.data(), buffer.size()));
+  ASSERT_STATUS_OK(status);
+  EXPECT_THAT(*status, Eq(16));
+  status = payload.Read(absl::Span<char>(buffer.data(), buffer.size()));
+  EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
+
+  auto spans = span_catcher->GetSpans();
+  auto make_read_event_success = [](auto bs, auto rs) {
+    return AllOf(EventNamed("Read"),
+                 SpanEventAttributesAre(
+                     SpanAttribute<std::int64_t>("read.buffer.size", bs),
+                     SpanAttribute<std::int64_t>("read.returned.size", rs)));
+  };
+  auto make_read_event_error = [](auto bs) {
+    return AllOf(EventNamed("Read"),
+                 SpanEventAttributesAre(
+                     SpanAttribute<std::int64_t>("read.buffer.size", bs),
+                     SpanAttribute<bool>("read.error", true)));
+  };
+  EXPECT_THAT(
+      spans,
+      Contains(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsConsumer(),
+          SpanNamed("HTTP/Response"),
+          SpanHasAttributes(
+              SpanAttribute<std::string>(sc::kNetTransport,
+                                         sc::NetTransportValues::kIpTcp),
+              SpanAttribute<int>("gcloud.status_code",
+                                 static_cast<int>(StatusCode::kUnavailable))),
+          SpanEventsAre(make_read_event_success(16, 16),
+                        make_read_event_error(16)))));
 }
 
 }  // namespace
