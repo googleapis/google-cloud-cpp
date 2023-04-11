@@ -380,7 +380,7 @@ StorageMetadata::CancelResumableWrite(
         {
             {[](google::storage::v2::CancelResumableWriteRequest const& request)
                  -> std::string const& { return request.upload_id(); },
-             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
+             std::regex{"(projects/[^/]+/buckets/[^/]+):.*",
                         std::regex::optimize}},
         }};
   }();
@@ -532,7 +532,7 @@ StorageMetadata::QueryWriteStatus(
         {
             {[](google::storage::v2::QueryWriteStatusRequest const& request)
                  -> std::string const& { return request.upload_id(); },
-             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
+             std::regex{"(projects/[^/]+/buckets/[^/]+):.*",
                         std::regex::optimize}},
         }};
   }();
@@ -743,7 +743,7 @@ StorageMetadata::AsyncQueryWriteStatus(
         {
             {[](google::storage::v2::QueryWriteStatusRequest const& request)
                  -> std::string const& { return request.upload_id(); },
-             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
+             std::regex{"(projects/[^/]+/buckets/[^/]+):.*",
                         std::regex::optimize}},
         }};
   }();

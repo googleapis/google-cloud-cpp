@@ -34,7 +34,7 @@ namespace retail_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// Auto-completion service for retail.
+/// Autocomplete service for retail.
 ///
 /// This feature is only available for users who have Retail Search enabled.
 /// Enable Retail Search on Cloud Console before using this feature.
@@ -100,12 +100,12 @@ class CompletionServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::CompleteQueryResponse,google/cloud/retail/v2/completion_service.proto#L156}
+  /// @googleapis_link{google::cloud::retail::v2::CompleteQueryResponse,google/cloud/retail/v2/completion_service.proto#L164}
   ///
   /// [google.cloud.retail.v2.CompleteQueryRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/completion_service.proto#L78}
   /// [google.cloud.retail.v2.CompleteQueryResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/completion_service.proto#L156}
+  /// @googleapis_reference_link{google/cloud/retail/v2/completion_service.proto#L164}
   ///
   StatusOr<google::cloud::retail::v2::CompleteQueryResponse> CompleteQuery(
       google::cloud::retail::v2::CompleteQueryRequest const& request,
