@@ -366,7 +366,10 @@ bool AppendIfClass(YAML::Emitter& yaml, YamlContext const& ctx,
     yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
   }
   yaml << YAML::EndMap;
-  CompoundRecurse(yaml, NestedYamlContext(ctx, node), node);
+  // TODO(#11233) - better handling for duplicate functions in Mock classes.
+  if (name.find("::Mock") == std::string_view::npos) {  // NOLINT
+    CompoundRecurse(yaml, NestedYamlContext(ctx, node), node);
+  }
   return true;
 }
 
