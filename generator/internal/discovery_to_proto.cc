@@ -61,7 +61,7 @@ StatusOr<nlohmann::json> GetDiscoveryDoc(std::string const& url) {
     parsed_discovery_doc = nlohmann::json::parse(json_file, nullptr, false);
   } else {
     auto page = GetPage(url);
-    if (!page) return page.status();
+    if (!page) return std::move(page).status();
     parsed_discovery_doc = nlohmann::json::parse(*page, nullptr, false);
   }
 
@@ -87,15 +87,15 @@ StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
   bool schemas_all_have_id = true;
   std::string id;
   for (auto const& s : schemas) {
-    if (!s.contains("id") || s["id"].empty()) {
+    if (!s.contains("id") || s["id"].is_null()) {
       GCP_LOG(ERROR) << "current schema has no id. last schema with id="
                      << (id.empty() ? "(none)" : id);
       schemas_all_have_id = false;
       continue;
     }
     id = s["id"];
-    if (!s.contains("type") || s["type"] != "object") {
-      std::string type = s.contains("type") ? s["type"] : "untyped";
+    std::string type = s.value("type", "untyped");
+    if (type != "object") {
       GCP_LOG(ERROR) << id << " not type:object; is instead " << type;
       schemas_all_type_object = false;
       continue;
@@ -116,17 +116,19 @@ StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
   return types;
 }
 
-std::map<std::string, DiscoveryResource> ExtractResourcesFromSchema(
+std::map<std::string, DiscoveryResource> ExtractResources(
     nlohmann::json const& discovery_doc, std::string const& default_hostname,
     std::string const& base_path) {
+  if (!discovery_doc.contains("resources")) return {};
   std::map<std::string, DiscoveryResource> resources;
-  auto const resources_json = discovery_doc.find("resources");
+  auto const& resources_json = discovery_doc.find("resources");
   for (auto r = resources_json->begin(); r != resources_json->end(); ++r) {
     resources.emplace(r.key(), DiscoveryResource{r.key(), default_hostname,
                                                  base_path, r.value()});
   }
   return resources;
 }
+
 Status GenerateProtosFromDiscoveryDoc(std::string const& url,
                                       std::string const&, std::string const&,
                                       std::string const&) {
