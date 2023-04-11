@@ -94,12 +94,12 @@ class PredictionServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::PredictResponse,google/cloud/retail/v2/prediction_service.proto#L191}
+  /// @googleapis_link{google::cloud::retail::v2::PredictResponse,google/cloud/retail/v2/prediction_service.proto#L194}
   ///
   /// [google.cloud.retail.v2.PredictRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/prediction_service.proto#L55}
   /// [google.cloud.retail.v2.PredictResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/prediction_service.proto#L191}
+  /// @googleapis_reference_link{google/cloud/retail/v2/prediction_service.proto#L194}
   ///
   StatusOr<google::cloud::retail::v2::PredictResponse> Predict(
       google::cloud::retail::v2::PredictRequest const& request,

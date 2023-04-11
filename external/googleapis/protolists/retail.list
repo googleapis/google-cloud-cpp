@@ -5,6 +5,8 @@
 @com_google_googleapis//google/cloud/retail/v2:control.proto
 @com_google_googleapis//google/cloud/retail/v2:control_service.proto
 @com_google_googleapis//google/cloud/retail/v2:import_config.proto
+@com_google_googleapis//google/cloud/retail/v2:model.proto
+@com_google_googleapis//google/cloud/retail/v2:model_service.proto
 @com_google_googleapis//google/cloud/retail/v2:prediction_service.proto
 @com_google_googleapis//google/cloud/retail/v2:product.proto
 @com_google_googleapis//google/cloud/retail/v2:product_service.proto

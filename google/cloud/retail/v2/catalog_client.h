@@ -98,10 +98,10 @@ class CatalogServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L364}
+  /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L369}
   ///
   /// [google.cloud.retail.v2.Catalog]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L364}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L369}
   /// [google.cloud.retail.v2.ListCatalogsRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L207}
   ///
@@ -117,10 +117,10 @@ class CatalogServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L364}
+  /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L369}
   ///
   /// [google.cloud.retail.v2.Catalog]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L364}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L369}
   /// [google.cloud.retail.v2.ListCatalogsRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L207}
   ///
@@ -145,10 +145,10 @@ class CatalogServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L364}
+  /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L369}
   ///
   /// [google.cloud.retail.v2.Catalog]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L364}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L369}
   /// [google.cloud.retail.v2.UpdateCatalogRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L258}
   ///
@@ -164,10 +164,10 @@ class CatalogServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L364}
+  /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L369}
   ///
   /// [google.cloud.retail.v2.Catalog]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L364}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L369}
   /// [google.cloud.retail.v2.UpdateCatalogRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L258}
   ///
@@ -323,10 +323,10 @@ class CatalogServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::CompletionConfig,google/cloud/retail/v2/catalog.proto#L280}
+  /// @googleapis_link{google::cloud::retail::v2::CompletionConfig,google/cloud/retail/v2/catalog.proto#L285}
   ///
   /// [google.cloud.retail.v2.CompletionConfig]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L280}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L285}
   /// [google.cloud.retail.v2.GetCompletionConfigRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L340}
   ///
@@ -341,10 +341,10 @@ class CatalogServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::CompletionConfig,google/cloud/retail/v2/catalog.proto#L280}
+  /// @googleapis_link{google::cloud::retail::v2::CompletionConfig,google/cloud/retail/v2/catalog.proto#L285}
   ///
   /// [google.cloud.retail.v2.CompletionConfig]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L280}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L285}
   /// [google.cloud.retail.v2.GetCompletionConfigRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L340}
   ///
@@ -374,10 +374,10 @@ class CatalogServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::CompletionConfig,google/cloud/retail/v2/catalog.proto#L280}
+  /// @googleapis_link{google::cloud::retail::v2::CompletionConfig,google/cloud/retail/v2/catalog.proto#L285}
   ///
   /// [google.cloud.retail.v2.CompletionConfig]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L280}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L285}
   /// [google.cloud.retail.v2.UpdateCompletionConfigRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L354}
   ///
@@ -393,10 +393,10 @@ class CatalogServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::CompletionConfig,google/cloud/retail/v2/catalog.proto#L280}
+  /// @googleapis_link{google::cloud::retail::v2::CompletionConfig,google/cloud/retail/v2/catalog.proto#L285}
   ///
   /// [google.cloud.retail.v2.CompletionConfig]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L280}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L285}
   /// [google.cloud.retail.v2.UpdateCompletionConfigRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L354}
   ///
@@ -412,10 +412,10 @@ class CatalogServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::AttributesConfig,google/cloud/retail/v2/catalog.proto#L247}
+  /// @googleapis_link{google::cloud::retail::v2::AttributesConfig,google/cloud/retail/v2/catalog.proto#L252}
   ///
   /// [google.cloud.retail.v2.AttributesConfig]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L247}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L252}
   /// [google.cloud.retail.v2.GetAttributesConfigRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L383}
   ///
@@ -430,10 +430,10 @@ class CatalogServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::AttributesConfig,google/cloud/retail/v2/catalog.proto#L247}
+  /// @googleapis_link{google::cloud::retail::v2::AttributesConfig,google/cloud/retail/v2/catalog.proto#L252}
   ///
   /// [google.cloud.retail.v2.AttributesConfig]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L247}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L252}
   /// [google.cloud.retail.v2.GetAttributesConfigRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L383}
   ///
@@ -462,10 +462,10 @@ class CatalogServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::AttributesConfig,google/cloud/retail/v2/catalog.proto#L247}
+  /// @googleapis_link{google::cloud::retail::v2::AttributesConfig,google/cloud/retail/v2/catalog.proto#L252}
   ///
   /// [google.cloud.retail.v2.AttributesConfig]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L247}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L252}
   /// [google.cloud.retail.v2.UpdateAttributesConfigRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L397}
   ///
@@ -488,10 +488,10 @@ class CatalogServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::AttributesConfig,google/cloud/retail/v2/catalog.proto#L247}
+  /// @googleapis_link{google::cloud::retail::v2::AttributesConfig,google/cloud/retail/v2/catalog.proto#L252}
   ///
   /// [google.cloud.retail.v2.AttributesConfig]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L247}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L252}
   /// [google.cloud.retail.v2.UpdateAttributesConfigRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L397}
   ///
@@ -512,12 +512,12 @@ class CatalogServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::AttributesConfig,google/cloud/retail/v2/catalog.proto#L247}
+  /// @googleapis_link{google::cloud::retail::v2::AttributesConfig,google/cloud/retail/v2/catalog.proto#L252}
   ///
   /// [google.cloud.retail.v2.AddCatalogAttributeRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L416}
   /// [google.cloud.retail.v2.AttributesConfig]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L247}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L252}
   /// [google.cloud.retail.v2.CatalogAttribute]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L89}
   ///
@@ -538,10 +538,10 @@ class CatalogServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::AttributesConfig,google/cloud/retail/v2/catalog.proto#L247}
+  /// @googleapis_link{google::cloud::retail::v2::AttributesConfig,google/cloud/retail/v2/catalog.proto#L252}
   ///
   /// [google.cloud.retail.v2.AttributesConfig]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L247}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L252}
   /// [google.cloud.retail.v2.CatalogAttribute]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L89}
   /// [google.cloud.retail.v2.RemoveCatalogAttributeRequest]:
@@ -566,14 +566,14 @@ class CatalogServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::AttributesConfig,google/cloud/retail/v2/catalog.proto#L247}
+  /// @googleapis_link{google::cloud::retail::v2::AttributesConfig,google/cloud/retail/v2/catalog.proto#L252}
   ///
   /// [google.cloud.retail.v2.AttributesConfig]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L247}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L252}
   /// [google.cloud.retail.v2.CatalogAttribute]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L89}
   /// [google.cloud.retail.v2.CatalogAttribute.key]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L174}
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L176}
   /// [google.cloud.retail.v2.ReplaceCatalogAttributeRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L453}
   ///
