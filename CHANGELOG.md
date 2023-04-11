@@ -128,6 +128,12 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [Workstations API](/google/cloud/workstations/README.md)
 
+### Other Changes
+
+**Bazel Testing**: starting with v2.10.0 we only test with Bazel >= 5.4.0. We
+do not consider this a breaking change, as Bazel 4.x has been in maintenance
+mode for several months.
+
 ## v2.9.0 - 2023-04
 
 ### [Cloud Build](/google/cloud/cloudbuild/README.md)
