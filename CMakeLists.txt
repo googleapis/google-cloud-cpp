@@ -110,6 +110,11 @@ option(GOOGLE_CLOUD_CPP_USE_MAIN_FOR_REFDOC_LINKS
        "Use main as the version part for refdoc relative links" OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_USE_MAIN_FOR_REFDOC_LINKS)
 
+option(GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND
+        "Enable the workarounds for [ctype = CORD] when using Protobuf < v23. More details at https://github.com/googleapis/google-cloud-cpp/blob/main/doc/ctype-cord-workaround.md"
+        OFF)
+mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
+
 set(GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL
     ""
     CACHE
