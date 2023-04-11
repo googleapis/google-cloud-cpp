@@ -17,7 +17,6 @@
 
 #include "google/cloud/internal/type_traits.h"
 #include "google/cloud/version.h"
-#include <google/protobuf/message.h>
 #include <google/storage/v2/storage.pb.h>
 #include <string>
 #include <type_traits>
