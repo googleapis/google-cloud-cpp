@@ -104,7 +104,11 @@ TEST(BigQueryHttpResponseTest, DebugString) {
   EXPECT_EQ(response.DebugString("BigQueryHttpResponse", TracingOptions{}),
             R"(BigQueryHttpResponse {)"
             R"( status_code: 200)"
-            R"( headers: "header1: value1")"
+            R"( http_headers {)"
+            R"( key: "header1")"
+            R"( value: "value1")"
+            R"( })"
+            R"( payload: REDACTED)"
             R"( })");
 }
 
