@@ -27,17 +27,19 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 template <typename ReturnType>
-class SplitObjectWriteData;
-
-template <>
-class SplitObjectWriteData<std::string> {
+class SplitObjectWriteData {
  public:
-  explicit SplitObjectWriteData(absl::string_view buffer);
-  explicit SplitObjectWriteData(
-      google::cloud::storage::internal::ConstBufferSequence buffers);
+  explicit SplitObjectWriteData(absl::string_view buffer)
+      : buffers_({buffer}),
+        total_size_(storage::internal::TotalBytes(buffers_)) {}
 
-  bool Done() const;
-  std::string Next();
+  explicit SplitObjectWriteData(
+      google::cloud::storage::internal::ConstBufferSequence buffers)
+      : buffers_(std::move(buffers)),
+        total_size_(storage::internal::TotalBytes(buffers_)) {}
+
+  bool Done() const { return offset_ >= total_size_; }
+  ReturnType Next();
 
  private:
   google::cloud::storage::internal::ConstBufferSequence buffers_;
@@ -46,19 +48,9 @@ class SplitObjectWriteData<std::string> {
 };
 
 template <>
-class SplitObjectWriteData<absl::Cord> {
- public:
-  explicit SplitObjectWriteData(absl::string_view buffer);
-  explicit SplitObjectWriteData(
-      google::cloud::storage::internal::ConstBufferSequence const& buffers);
-
-  bool Done() const;
-  absl::Cord Next();
-
- private:
-  absl::Cord cord_;
-  std::size_t offset_ = 0;
-};
+std::string SplitObjectWriteData<std::string>::Next();
+template <>
+absl::Cord SplitObjectWriteData<absl::Cord>::Next();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
