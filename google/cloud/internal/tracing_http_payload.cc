@@ -42,8 +42,8 @@ StatusOr<std::size_t> TracingHttpPayload::Read(absl::Span<char> buffer) {
   span_->AddEvent(
       "Read", {{"read.buffer.size", static_cast<std::int64_t>(buffer.size())},
                {"read.returned.size", static_cast<std::int64_t>(*status)}});
-  if (*status == 0) span_->End();
-  return status;
+  if (*status != 0) return status;
+  return internal::EndSpan(*span_, std::move(status));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

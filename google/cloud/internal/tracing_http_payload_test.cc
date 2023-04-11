@@ -42,7 +42,6 @@ using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
 using ::testing::Contains;
-using ::testing::Eq;
 using ::testing::Return;
 
 std::string MockContents() {
@@ -99,7 +98,7 @@ TEST(TracingHttpPayload, Failure) {
   std::vector<char> buffer(16);
   auto status = payload.Read(absl::Span<char>(buffer.data(), buffer.size()));
   ASSERT_STATUS_OK(status);
-  EXPECT_THAT(*status, Eq(16));
+  EXPECT_EQ(*status, 16);
   status = payload.Read(absl::Span<char>(buffer.data(), buffer.size()));
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 
