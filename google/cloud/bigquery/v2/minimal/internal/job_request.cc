@@ -88,12 +88,19 @@ std::string GetJobRequest::DebugString(absl::string_view name,
 std::string ListJobsRequest::DebugString(absl::string_view name,
                                          TracingOptions const& options,
                                          int indent) const {
+  auto min_creation_time = min_creation_time_.has_value()
+                               ? min_creation_time_.value()
+                               : kDefaultTimepoint;
+  auto max_creation_time = max_creation_time_.has_value()
+                               ? max_creation_time_.value()
+                               : kDefaultTimepoint;
+
   return internal::DebugFormatter(name, options, indent)
       .StringField("project_id", project_id_)
       .Field("all_users", all_users_)
       .Field("max_results", max_results_)
-      .Field("min_creation_time", min_creation_time_.value())
-      .Field("max_creation_time", max_creation_time_.value())
+      .Field("min_creation_time", min_creation_time)
+      .Field("max_creation_time", max_creation_time)
       .StringField("page_token", page_token_)
       .SubMessage("projection", projection_)
       .SubMessage("state_filter", state_filter_)
