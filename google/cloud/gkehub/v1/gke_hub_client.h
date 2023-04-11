@@ -74,9 +74,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.gkehub.v1.Feature]:
-/// @googleapis_link_reference{google/cloud/gkehub/v1/feature.proto#L34}
+/// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
 /// [google.cloud.gkehub.v1.Membership]:
-/// @googleapis_link_reference{google/cloud/gkehub/v1/membership.proto#L32}
+/// @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
 ///
 class GkeHubClient {
  public:

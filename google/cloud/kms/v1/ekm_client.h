@@ -63,7 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.kms.v1.EkmConnection]:
-/// @googleapis_link_reference{google/cloud/kms/v1/ekm_service.proto#L282}
+/// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L282}
 ///
 class EkmServiceClient {
  public:

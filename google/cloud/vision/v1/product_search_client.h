@@ -76,11 +76,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.vision.v1.Product]:
-/// @googleapis_link_reference{google/cloud/vision/v1/product_search_service.proto#L365}
+/// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
 /// [google.cloud.vision.v1.ProductSet]:
-/// @googleapis_link_reference{google/cloud/vision/v1/product_search_service.proto#L423}
+/// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L423}
 /// [google.cloud.vision.v1.ReferenceImage]:
-/// @googleapis_link_reference{google/cloud/vision/v1/product_search_service.proto#L458}
+/// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L458}
 ///
 class ProductSearchClient {
  public:

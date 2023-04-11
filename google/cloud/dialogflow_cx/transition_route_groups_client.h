@@ -60,7 +60,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]:
-/// @googleapis_link_reference{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
+/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
 ///
 class TransitionRouteGroupsClient {
  public:

@@ -59,7 +59,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.v2.Fulfillment]:
-/// @googleapis_link_reference{google/cloud/dialogflow/v2/fulfillment.proto#L75}
+/// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L75}
 ///
 class FulfillmentsClient {
  public:

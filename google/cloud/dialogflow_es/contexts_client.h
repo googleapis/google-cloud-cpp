@@ -59,7 +59,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.v2.Context]:
-/// @googleapis_link_reference{google/cloud/dialogflow/v2/context.proto#L171}
+/// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L171}
 ///
 class ContextsClient {
  public:

@@ -91,7 +91,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.accessapproval.v1.ApprovalRequest]:
-/// @googleapis_link_reference{google/cloud/accessapproval/v1/accessapproval.proto#L369}
+/// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L369}
 ///
 class AccessApprovalClient {
  public:
