@@ -1,7 +1,7 @@
 # Enabling ctype=CORD workarounds for older Protobuf versions
 
 The `[ctype = CORD]` annotation in a proto file changes the C++ representation
-of `bytes` (and `string`) fields from `std::string` to `absl::Cord`. This
+of `bytes` and `string` fields from `std::string` to `absl::Cord`. This
 annotation is critical to get good performance with GCS and gRPC.
 
 Protobuf does not support `[ctype = CORD]` until 4.23.x (aka v23.x). In older
@@ -38,7 +38,7 @@ line. For example:
 cmake -S . -B ... -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND=ON
 ```
 
-Use \`\`-DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND=OFF\` with Protobuf >= v23:
+Use `-DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND=OFF` with Protobuf >= v23:
 
 ```
 cmake -S . -B ... -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND=OFF
@@ -47,7 +47,7 @@ cmake -S . -B ... -DGOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND=OFF
 If you are not building `google-cloud-cpp` from source, then you are probably
 using a package manager, such as [vcpkg](https://vcpkg.io)
 or [Conda](https://conda.io). The `google-cloud-cpp` recipes in the package
-manager should match the Protobuf version in that package manager. If they
+manager should match the Protobuf version in that package manager. If their
 configuration is incorrect, please file a bug with the package maintainers.
 
 ## Enabling ctype=CORD workarounds with Bazel
@@ -77,7 +77,7 @@ not present, this is the correct default with **any** Protobuf version.
 
 Once the `[ctype = CORD]` annotation is included in the proto files then the
 correct default depends on the Protobuf version. If `google-cloud-cpp` is using
-Protobuf \< v23 when the annotation is included in the proto files, the
+Protobuf \< v23 and the annotation is included in the proto files, then
 `google-cloud-cpp` will enable the workarounds by default.
 
 It is very likely that the default value for this option is incorrect during
