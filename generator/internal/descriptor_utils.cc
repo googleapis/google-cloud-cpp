@@ -633,8 +633,6 @@ ParameterCommentSubstitution substitutions[] = {
     {" <parent>/instanceConfigs/nam3.", " `<parent>/instanceConfigs/nam3`."},
 
     // Extra quotes in asset/v1.
-    {R"""( as "projects/my-project-id")")""",
-     R"""( as "projects/my-project-id"))"""},
     {R"""( "folders/12345")", or a )""", R"""( "folders/12345"), or a )"""},
 
     // This triggers a bug (I think it is a bug) in Doxygen:
