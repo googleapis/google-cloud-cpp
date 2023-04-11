@@ -416,7 +416,7 @@ run the examples included with the libraries.
 
 ### Building with Bazel
 
-This library requires Bazel >= 4.0[^bazel-version-note]. From the top-level
+This library requires Bazel >= 5.4[^bazel-version-note]. From the top-level
 directory, run the usual commands.
 
 ```shell
@@ -447,7 +447,7 @@ The binary artifacts, such as examples, will be placed in `cmake-out/`.
   which is summarized in the [Foundational C++ Support Matrix][support-matrix].
   - Language Version (>= C++14).
   - Operating Systems: Windows, macOS, and Linux.
-  - Build Systems: Bazel (>= 4.0)[^bazel-version-note], CMake (>= 3.10).
+  - Build Systems: Bazel (>= 5.4)[^bazel-version-note], CMake (>= 3.10).
   - Compilers: GCC (>= 7.3), Clang (>= 6.0), MSVC (>= 2019), Apple Clang (>= 12).
 - This project uses dependencies described in [doc/packaging.md](https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging.md).
 - This project works with or without exceptions enabled.
