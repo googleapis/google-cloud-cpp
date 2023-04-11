@@ -90,13 +90,13 @@ TEST(DebugFormatter, Truncated) {
 
 TEST(DebugFormatter, TimePoint) {
   auto tp = std::chrono::system_clock::from_time_t(1681165293) +
-            std::chrono::nanoseconds(123456789);
+            std::chrono::microseconds(123456);
   EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
                 .Field("field1", tp)
                 .Build(),
             R"(message_name {)"
             R"( field1 {)"
-            R"( "2023-04-10T22:21:33.123456789Z")"
+            R"( "2023-04-10T22:21:33.123456Z")"
             R"( })"
             R"( })");
 }
