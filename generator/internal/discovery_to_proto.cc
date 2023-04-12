@@ -21,6 +21,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_format.h"
 #include "absl/strings/str_split.h"
 #include <nlohmann/json.hpp>
 #include <fstream>
@@ -127,6 +128,28 @@ std::map<std::string, DiscoveryResource> ExtractResources(
                                                  base_path, r.value()});
   }
   return resources;
+}
+
+// The DiscoveryResource& parameter will be used later to help determine what
+// protobuf files need to be imported to provide the response message.
+StatusOr<std::string> DetermineAndVerifyResponseTypeName(
+    nlohmann::json const& method_json, DiscoveryResource&,
+    std::map<std::string, DiscoveryTypeVertex>& types) {
+  std::string response_type_name;
+  auto const& response_iter = method_json.find("response");
+  if (response_iter != method_json.end()) {
+    auto const& ref_iter = response_iter->find("$ref");
+    if (ref_iter == response_iter->end()) {
+      return internal::InvalidArgumentError("Missing $ref field in response");
+    }
+    response_type_name = *ref_iter;
+    auto const& response_type = types.find(response_type_name);
+    if (response_type == types.end()) {
+      return internal::InvalidArgumentError(absl::StrFormat(
+          "Response name=%s not found in types", response_type_name));
+    }
+  }
+  return response_type_name;
 }
 
 Status GenerateProtosFromDiscoveryDoc(std::string const& url,
