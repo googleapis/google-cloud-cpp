@@ -126,6 +126,7 @@ info, see [#7463] and [#5976].
 We are happy to announce the following GA libraries.  Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
+- [ConfidentialComputing API](/google/cloud/confidentialcomputing/README.md)
 - [Workstations API](/google/cloud/workstations/README.md)
 
 ### Other Changes

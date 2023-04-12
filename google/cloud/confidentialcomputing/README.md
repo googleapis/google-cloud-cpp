@@ -1,7 +1,8 @@
 # Confidential Computing API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Confidential Computing API][cloud-service-docs], a service to \<UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+[Confidential Computing API][cloud-service-docs], a service to create challenges
+and verify attestation responses.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -16,25 +17,26 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/confidentialcomputing/ EDIT HERE .h"
+#include "google/cloud/confidentialcomputing/v1/confidential_computing_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
-  namespace confidentialcomputing = ::google::cloud::confidentialcomputing;
-  auto client =
-      confidentialcomputing::Client(confidentialcomputing::MakeConnection());
+  namespace confidentialcomputing = ::google::cloud::confidentialcomputing_v1;
+  auto client = confidentialcomputing::ConfidentialComputingClient(
+      confidentialcomputing::MakeConfidentialComputingConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
-  }
+  //  auto const project = google::cloud::Project(argv[1]);
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  auto result = client.CreateChallenge(parent, {});
+  if (!result) throw std::move(result).status();
+  std::cout << result->DebugString() << "\n";
 
   return 0;
 } catch (google::cloud::Status const& status) {
@@ -52,6 +54,6 @@ int main(int argc, char* argv[]) try {
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/confidentialcomputing
+[cloud-service-docs]: https://cloud.google.com/confidential-computing
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-confidentialcomputing/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/confidentialcomputing

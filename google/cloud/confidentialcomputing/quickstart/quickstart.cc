@@ -13,25 +13,26 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/confidentialcomputing/ EDIT HERE .h"
+#include "google/cloud/confidentialcomputing/v1/confidential_computing_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
-  namespace confidentialcomputing = ::google::cloud::confidentialcomputing;
-  auto client =
-      confidentialcomputing::Client(confidentialcomputing::MakeConnection());
+  namespace confidentialcomputing = ::google::cloud::confidentialcomputing_v1;
+  auto client = confidentialcomputing::ConfidentialComputingClient(
+      confidentialcomputing::MakeConfidentialComputingConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
-  }
+  //  auto const project = google::cloud::Project(argv[1]);
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  auto result = client.CreateChallenge(parent, {});
+  if (!result) throw std::move(result).status();
+  std::cout << result->DebugString() << "\n";
 
   return 0;
 } catch (google::cloud::Status const& status) {

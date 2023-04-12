@@ -47,6 +47,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "channel",
     "cloudbuild",
     "composer",
+    "confidentialcomputing",
     "connectors",
     "contactcenterinsights",
     "container",
