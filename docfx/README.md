@@ -64,3 +64,28 @@ ls -l $HOME/doc-pipeline/site
 less $HOME/doc-pipeline/site/namespacegoogle.html
 less $HOME/doc-pipeline/site/indexpage.html
 ```
+
+### Testing with one or all Libraries
+
+This is a bit slow, but runs all the libraries through the docfx tool. First
+prepare the workspace for the `publish-docs` build:
+
+```
+ci/cloudbuild/build.sh -t publish-docs-pr
+```
+
+Then invoke the docfx tool in one library, for example:
+
+```
+ci/cloudbuild/build.sh -t publish-docs-pr  --docker-shell
+# Run this inside the docker shell
+cmake --build cmake-out --target storage-docfx
+```
+
+Or to generate the documents for all libraries:
+
+```
+ci/cloudbuild/build.sh -t publish-docs-pr  --docker-shell
+# Run this inside the docker shell
+cmake --build cmake-out --target all-docfx
+```
