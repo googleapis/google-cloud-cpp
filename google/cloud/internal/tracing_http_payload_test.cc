@@ -28,21 +28,18 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockHttpPayload;
 using ::google::cloud::testing_util::SpanAttribute;
-using ::google::cloud::testing_util::SpanEventAttributesAre;
-using ::google::cloud::testing_util::SpanEventsAre;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
-using ::google::cloud::testing_util::SpanKindIsConsumer;
+using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
-using ::testing::Contains;
 using ::testing::Return;
+using ::testing::UnorderedElementsAre;
 
 std::string MockContents() {
   return "The quick brown fox jumps over the lazy dog";
@@ -64,21 +61,21 @@ TEST(TracingHttpPayload, Success) {
 
   auto spans = span_catcher->GetSpans();
   auto make_read_event_matcher = [](auto bs, auto rs) {
-    return AllOf(EventNamed("Read"),
-                 SpanEventAttributesAre(
+    return AllOf(SpanNamed("Read"), SpanHasInstrumentationScope(),
+                 SpanKindIsClient(),
+                 SpanHasAttributes(
                      SpanAttribute<std::int64_t>("read.buffer.size", bs),
                      SpanAttribute<std::int64_t>("read.returned.size", rs)));
   };
   EXPECT_THAT(
       spans,
-      Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsConsumer(),
-                     SpanNamed("HTTP/Response"),
-                     SpanHasAttributes(SpanAttribute<std::string>(
-                         sc::kNetTransport, sc::NetTransportValues::kIpTcp)),
-                     SpanEventsAre(make_read_event_matcher(16, 16),
-                                   make_read_event_matcher(16, 16),
-                                   make_read_event_matcher(16, 11),
-                                   make_read_event_matcher(16, 0)))));
+      UnorderedElementsAre(
+          AllOf(SpanNamed("HTTP/Response"), SpanHasInstrumentationScope(),
+                SpanKindIsClient(),
+                SpanHasAttributes(SpanAttribute<std::string>(
+                    sc::kNetTransport, sc::NetTransportValues::kIpTcp))),
+          make_read_event_matcher(16, 16), make_read_event_matcher(16, 16),
+          make_read_event_matcher(16, 11), make_read_event_matcher(16, 0)));
 }
 
 TEST(TracingHttpPayload, Failure) {
@@ -103,30 +100,30 @@ TEST(TracingHttpPayload, Failure) {
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 
   auto spans = span_catcher->GetSpans();
-  auto make_read_event_success = [](auto bs, auto rs) {
-    return AllOf(EventNamed("Read"),
-                 SpanEventAttributesAre(
+  auto make_read_success_matcher = [](auto bs, auto rs) {
+    return AllOf(SpanNamed("Read"), SpanHasInstrumentationScope(),
+                 SpanKindIsClient(),
+                 SpanHasAttributes(
                      SpanAttribute<std::int64_t>("read.buffer.size", bs),
                      SpanAttribute<std::int64_t>("read.returned.size", rs)));
   };
-  auto make_read_event_error = [](auto bs) {
-    return AllOf(EventNamed("Read"),
-                 SpanEventAttributesAre(
-                     SpanAttribute<std::int64_t>("read.buffer.size", bs),
-                     SpanAttribute<bool>("read.error", true)));
+  auto make_read_error_matcher = [](auto bs) {
+    return AllOf(
+        SpanNamed("Read"), SpanHasInstrumentationScope(), SpanKindIsClient(),
+        SpanHasAttributes(SpanAttribute<std::int64_t>("read.buffer.size", bs)));
   };
   EXPECT_THAT(
       spans,
-      Contains(AllOf(
-          SpanHasInstrumentationScope(), SpanKindIsConsumer(),
-          SpanNamed("HTTP/Response"),
-          SpanHasAttributes(
-              SpanAttribute<std::string>(sc::kNetTransport,
-                                         sc::NetTransportValues::kIpTcp),
-              SpanAttribute<int>("gcloud.status_code",
-                                 static_cast<int>(StatusCode::kUnavailable))),
-          SpanEventsAre(make_read_event_success(16, 16),
-                        make_read_event_error(16)))));
+      UnorderedElementsAre(
+          AllOf(SpanNamed("HTTP/Response"), SpanHasInstrumentationScope(),
+                SpanKindIsClient(),
+                SpanHasAttributes(
+                    SpanAttribute<std::string>(sc::kNetTransport,
+                                               sc::NetTransportValues::kIpTcp),
+                    SpanAttribute<int>(
+                        "gcloud.status_code",
+                        static_cast<int>(StatusCode::kUnavailable)))),
+          make_read_success_matcher(16, 16), make_read_error_matcher(16)));
 }
 
 }  // namespace

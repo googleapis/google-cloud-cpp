@@ -29,15 +29,13 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::SpanAttribute;
-using ::google::cloud::testing_util::SpanEventsAre;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
-using ::google::cloud::testing_util::SpanKindIsConsumer;
+using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::testing::AllOf;
 using ::testing::Return;
@@ -66,7 +64,8 @@ TEST(TracingRestResponseTest, Success) {
   request_span->End();
 
   auto payload = std::move(response).ExtractPayload();
-  std::vector<char> buffer(64);
+  auto constexpr kBufferSize = 64;
+  std::vector<char> buffer(kBufferSize);
   auto status = payload->Read(absl::Span<char>(buffer.data(), buffer.size()));
   ASSERT_STATUS_OK(status);
   EXPECT_EQ(*status, MockContents().size());
@@ -75,14 +74,23 @@ TEST(TracingRestResponseTest, Success) {
   EXPECT_EQ(*status, 0);
 
   auto spans = span_catcher->GetSpans();
+  auto make_read_event_matcher = [](std::int64_t bs, std::int64_t rs) {
+    return AllOf(SpanNamed("Read"), SpanHasInstrumentationScope(),
+                 SpanKindIsClient(),
+                 SpanHasAttributes(
+                     SpanAttribute<std::int64_t>("read.buffer.size", bs),
+                     SpanAttribute<std::int64_t>("read.returned.size", rs)));
+  };
+  auto const content_size = static_cast<std::int64_t>(MockContents().size());
   EXPECT_THAT(
       spans, UnorderedElementsAre(
                  SpanNamed("HTTP/GET"),
-                 AllOf(SpanHasInstrumentationScope(), SpanKindIsConsumer(),
+                 AllOf(SpanHasInstrumentationScope(), SpanKindIsClient(),
                        SpanNamed("HTTP/Response"),
                        SpanHasAttributes(SpanAttribute<std::string>(
-                           sc::kNetTransport, sc::NetTransportValues::kIpTcp)),
-                       SpanEventsAre(EventNamed("Read"), EventNamed("Read")))));
+                           sc::kNetTransport, sc::NetTransportValues::kIpTcp))),
+                 make_read_event_matcher(kBufferSize, content_size),
+                 make_read_event_matcher(kBufferSize, 0)));
 }
 
 }  // namespace
