@@ -62,6 +62,7 @@ google_cloud_cpp_rest_internal_hdrs = [
     "internal/rest_response.h",
     "internal/rest_retry_loop.h",
     "internal/tracing_http_payload.h",
+    "internal/tracing_rest_response.h",
     "internal/unified_rest_credentials.h",
     "rest_options.h",
 ]
@@ -104,5 +105,6 @@ google_cloud_cpp_rest_internal_srcs = [
     "internal/rest_request.cc",
     "internal/rest_response.cc",
     "internal/tracing_http_payload.cc",
+    "internal/tracing_rest_response.cc",
     "internal/unified_rest_credentials.cc",
 ]
