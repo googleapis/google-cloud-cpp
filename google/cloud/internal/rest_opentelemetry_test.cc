@@ -43,12 +43,16 @@ TEST(RestOpentelemetry, MakeSpanHttp) {
   auto span_catcher = InstallSpanCatcher();
 
   auto constexpr kUrl = "https://storage.googleapis.com/storage/v1/b/my-bucket";
-  RestRequest request(kUrl);
+  RestRequest request(kUrl, RestRequest::HttpHeaders{{"empty", {}}});
   auto const secret =
       std::string{"Bearer secret-0123456789aaaaabbbbbcccccddddd"};
   ASSERT_THAT(secret.size(), Gt(32));
   request.AddHeader("Authorization", secret);
   request.AddHeader("X-Goog-Foo", "bar");
+  auto constexpr kLongValue =
+      "0123456789aaaaabbbbb0123456789aaaaabbbbb0123456789aaaaabbbbb0123456789aa"
+      "aaabbbbb";
+  request.AddHeader("X-Goog-Bar", kLongValue);
 
   auto span = MakeSpanHttp(request, "GET");
   span->End();
@@ -64,6 +68,11 @@ TEST(RestOpentelemetry, MakeSpanHttp) {
                                          sc::NetTransportValues::kIpTcp),
               SpanAttribute<std::string>(sc::kHttpMethod, "GET"),
               SpanAttribute<std::string>(sc::kHttpUrl, kUrl),
+              SpanAttribute<std::string>("http.request.header.empty", ""),
+              SpanAttribute<std::string>("http.request.header.x-goog-foo",
+                                         "bar"),
+              SpanAttribute<std::string>("http.request.header.x-goog-bar",
+                                         kLongValue),
               SpanAttribute<std::string>("http.request.header.authorization",
                                          secret.substr(0, 32))))));
 }
