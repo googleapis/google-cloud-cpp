@@ -32,7 +32,6 @@ using ::google::cloud::testing_util::SpanAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
-using ::google::cloud::testing_util::SpanKindIsConsumer;
 using ::google::cloud::testing_util::SpanNamed;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
@@ -81,7 +80,7 @@ TEST(RestOpentelemetry, MakeSpanHttpPayload) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans,
-      Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsConsumer(),
+      Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsClient(),
                      SpanNamed("HTTP/Response"),
                      SpanHasAttributes(SpanAttribute<std::string>(
                          sc::kNetTransport, sc::NetTransportValues::kIpTcp)))));
