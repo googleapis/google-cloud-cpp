@@ -29,7 +29,7 @@ namespace generator_internal {
 StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
     nlohmann::json const& discovery_doc);
 
-std::map<std::string, DiscoveryResource> ExtractResourcesFromSchema(
+std::map<std::string, DiscoveryResource> ExtractResources(
     nlohmann::json const& discovery_doc, std::string const& default_hostname,
     std::string const& base_path);
 
