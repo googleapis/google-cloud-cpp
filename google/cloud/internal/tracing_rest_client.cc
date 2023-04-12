@@ -31,7 +31,7 @@ void ExtractAttributes(StatusOr<std::unique_ptr<RestResponse>> const& value,
   auto const& response = *value;
   if (!response) return;
   for (auto const& kv : response->Headers()) {
-    span.SetAttribute("http.header." + kv.first, kv.second);
+    span.SetAttribute("http.response.header." + kv.first, kv.second);
   }
 }
 
@@ -48,7 +48,7 @@ StatusOr<std::unique_ptr<RestResponse>> EndSpan(
     StatusOr<std::unique_ptr<RestResponse>> value) {
   if (!value) return internal::EndSpan(request_span, std::move(value));
   auto payload_span = MakeSpanHttpPayload(request_span);
-  ExtractAttributes(value, *payload_span);
+  ExtractAttributes(value, request_span);
   value = std::make_unique<TracingRestResponse>(*std::move(value),
                                                 std::move(payload_span));
   return internal::EndSpan(request_span, std::move(value));
