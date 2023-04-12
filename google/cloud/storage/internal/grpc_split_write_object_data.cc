@@ -26,17 +26,19 @@ std::string SplitObjectWriteData<std::string>::Next() {
   auto constexpr kMax = static_cast<std::size_t>(
       google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
   std::string result;
-  auto start = offset_;
-  for (auto const& b : buffers_) {
-    if (start >= b.size()) {
-      start -= b.size();
+  result.reserve(kMax);
+  while (result.size() != kMax && !buffers_.empty()) {
+    auto& b = buffers_.front();
+    // Add as much as possible from `b` without exceeding `kMax`.
+    auto n = (std::min)(kMax - result.size(), b.size());
+    result.append(b.begin(), b.begin() + n);
+    if (b.size() == n) {
+      // buffers_ is usually small (typically size <= 2), so this is not too
+      // expensive.
+      buffers_.erase(buffers_.begin());
       continue;
     }
-    auto n = (std::min)(kMax - result.size(), b.size() - start);
-    result.append(b.begin() + start, b.begin() + start + n);
-    offset_ += n;
-    start = 0;
-    if (result.size() >= kMax) return result;
+    b = storage::internal::ConstBuffer(b.data() + n, b.size() - n);
   }
   return result;
 }
@@ -46,13 +48,10 @@ absl::Cord SplitObjectWriteData<absl::Cord>::Next() {
   auto constexpr kMax = static_cast<std::size_t>(
       google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
   absl::Cord result;
-  auto start = offset_;
-  for (auto const& b : buffers_) {
-    if (start >= b.size()) {
-      start -= b.size();
-      continue;
-    }
-    auto n = (std::min)(kMax - result.size(), b.size() - start);
+  while (result.size() != kMax && !buffers_.empty()) {
+    auto& b = buffers_.front();
+    // Add as much as possible from `b` without exceeding `kMax`.
+    auto n = (std::min)(kMax - result.size(), b.size());
     if (n != 0) {
       // We need a container which guarantees the pointer is stable under move
       // construction. `std::vector<>` does not provide that guarantee. Use
@@ -60,15 +59,19 @@ absl::Cord SplitObjectWriteData<absl::Cord>::Next() {
       // will zero-initialize the array, and we are just going to overwrite the
       // bytes.
       auto buffer = std::unique_ptr<char[]>(new char[n]);
-      std::copy_n(b.begin() + start, n, buffer.get());
+      std::copy_n(b.begin(), n, buffer.get());
       // Get `buffer.get()` before we std::move-from.
       auto contents = absl::string_view{buffer.get(), n};
       result.Append(absl::MakeCordFromExternal(
           contents, [b = std::move(buffer)]() mutable {}));
     }
-    offset_ += n;
-    start = 0;
-    if (result.size() >= kMax) return result;
+    if (b.size() == n) {
+      // buffers_ is usually small (typically size <= 2), so this is not too
+      // expensive.
+      buffers_.erase(buffers_.begin());
+      continue;
+    }
+    b = storage::internal::ConstBuffer(b.data() + n, b.size() - n);
   }
   return result;
 }

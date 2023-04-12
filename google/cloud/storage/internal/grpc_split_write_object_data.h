@@ -30,21 +30,17 @@ template <typename ReturnType>
 class SplitObjectWriteData {
  public:
   explicit SplitObjectWriteData(absl::string_view buffer)
-      : buffers_({buffer}),
-        total_size_(storage::internal::TotalBytes(buffers_)) {}
+      : buffers_({buffer}) {}
 
   explicit SplitObjectWriteData(
       google::cloud::storage::internal::ConstBufferSequence buffers)
-      : buffers_(std::move(buffers)),
-        total_size_(storage::internal::TotalBytes(buffers_)) {}
+      : buffers_(std::move(buffers)) {}
 
-  bool Done() const { return offset_ >= total_size_; }
+  bool Done() const { return buffers_.empty(); }
   ReturnType Next();
 
  private:
   google::cloud::storage::internal::ConstBufferSequence buffers_;
-  std::size_t total_size_;
-  std::size_t offset_ = 0;
 };
 
 template <>
