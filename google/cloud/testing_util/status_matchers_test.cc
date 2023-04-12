@@ -166,6 +166,7 @@ TEST(StatusIsTest, FailureStatus) {
 
 TEST(StatusIsTest, FailureStatusNegation) {
   Status status(StatusCode::kNotFound, "not found");
+  EXPECT_THAT(status, Not(IsOk()));
 
   // code doesn't match
   EXPECT_THAT(status, Not(StatusIs(StatusCode::kUnknown, "not found")));
@@ -186,6 +187,8 @@ TEST(StatusIsTest, FailureStatusNegation) {
 TEST(StatusIsTest, OkStatusOr) {
   StatusOr<std::string> status("StatusOr string value");
   EXPECT_THAT(status, IsOk());
+  EXPECT_THAT(status, IsOkAndHolds(Eq("StatusOr string value")));
+  EXPECT_THAT(status, Not(IsOkAndHolds(Eq("mismatch"))));
   EXPECT_THAT(status, StatusIs(StatusCode::kOk));
   EXPECT_THAT(status, StatusIs(_));
   EXPECT_THAT(status, StatusIs(StatusCode::kOk, IsEmpty()));
@@ -207,6 +210,8 @@ TEST(StatusIsTest, FailureStatusOr) {
 
 TEST(StatusIsTest, FailureStatusOrNegation) {
   StatusOr<float> status(Status(StatusCode::kNotFound, "not found"));
+  EXPECT_THAT(status, Not(IsOk()));
+  EXPECT_THAT(status, Not(IsOkAndHolds(Eq(3.14149))));
 
   // code doesn't match
   EXPECT_THAT(status, Not(StatusIs(StatusCode::kUnknown, "not found")));
