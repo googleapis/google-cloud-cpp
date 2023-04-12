@@ -437,6 +437,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Confidential Computing
+service {
+  service_proto_path: "google/cloud/confidentialcomputing/v1/service.proto"
+  product_path: "google/cloud/confidentialcomputing/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Connectors
 service {
   service_proto_path: "google/cloud/connectors/v1/connectors_service.proto"
