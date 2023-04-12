@@ -45,16 +45,16 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanHttp(
                        {sc::kHttpUrl, request.path()}},
                       options);
   for (auto const& kv : request.headers()) {
+    auto const name = "http.request.header." + kv.first;
     if (kv.second.empty()) {
-      span->SetAttribute("http.header." + kv.first, "");
+      span->SetAttribute(name, "");
       continue;
     }
     if (absl::EqualsIgnoreCase(kv.first, "authorization")) {
-      span->SetAttribute("http.header.authorization",
-                         kv.second.front().substr(0, 32));
+      span->SetAttribute(name, kv.second.front().substr(0, 32));
       continue;
     }
-    span->SetAttribute("http.header." + kv.first, kv.second.front());
+    span->SetAttribute(name, kv.second.front());
   }
   return span;
 }
