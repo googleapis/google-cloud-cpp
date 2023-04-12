@@ -217,6 +217,23 @@ TEST(DetermineAndVerifyResponseTypeNameTest, ResponseWithRef) {
   EXPECT_THAT(*response, Eq("Foo"));
 }
 
+TEST(DetermineAndVerifyResponseTypeNameTest, EmptyResponse) {
+  auto constexpr kResponseTypeJson = R"""({})""";
+  auto constexpr kMethodJson = R"""({})""";
+  auto response_type_json =
+      nlohmann::json::parse(kResponseTypeJson, nullptr, false);
+  ASSERT_TRUE(response_type_json.is_object());
+  auto method_json = nlohmann::json::parse(kMethodJson, nullptr, false);
+  ASSERT_TRUE(method_json.is_object());
+  DiscoveryResource resource;
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", response_type_json});
+  auto response =
+      DetermineAndVerifyResponseTypeName(method_json, resource, types);
+  ASSERT_STATUS_OK(response);
+  EXPECT_THAT(*response, IsEmpty());
+}
+
 TEST(DetermineAndVerifyResponseTypeNameTest, ResponseMissingRef) {
   auto constexpr kResponseTypeJson = R"""({})""";
   auto constexpr kMethodJson = R"""({
