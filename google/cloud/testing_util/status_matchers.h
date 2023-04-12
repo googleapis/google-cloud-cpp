@@ -20,6 +20,7 @@
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
 #include <string>
+#include <type_traits>
 
 namespace google {
 namespace cloud {
@@ -65,6 +66,93 @@ class StatusIsMatcher {
  private:
   ::testing::Matcher<StatusCode> const code_matcher_;
   ::testing::Matcher<std::string const&> const message_matcher_;
+};
+
+/*
+ * Monomorphic implementation of the IsOkAndHolds() matcher.
+ */
+template <typename S>
+class IsOkAndHoldsMatcherImpl : public ::testing::MatcherInterface<S> {
+ public:
+  using status_or_type = typename std::remove_reference<S>::type;
+  using value_type = typename status_or_type::value_type;
+
+  template <typename ValueMatcher>
+  // NOLINTNEXTLINE(bugprone-forwarding-reference-overload)
+  explicit IsOkAndHoldsMatcherImpl(ValueMatcher&& value_matcher)
+      : value_matcher_(::testing::MatcherCast<value_type const&>(
+            std::forward<ValueMatcher>(value_matcher))) {}
+
+  bool MatchAndExplain(
+      status_or_type const& value,
+      ::testing::MatchResultListener* listener) const override {
+    // Because StatusOr<T> does not have a printer, gMock will render the
+    // value using RawBytesPrinter as "N-byte object <...>", which is not
+    // very useful. Accordingly, we print the enclosed Status so that a
+    // failing expectation does not require further explanation.
+    Status const& status = value.status();
+    *listener << "whose status is " << ::testing::PrintToString(status);
+
+    if (!listener->IsInterested()) {
+      return value && value_matcher_.Matches(*value);
+    }
+
+    auto* os = listener->stream();
+    *os << ", with a code that " << (value ? "is" : "isn't") << " equal to OK";
+    if (!value) return false;
+
+    ::testing::StringMatchResultListener value_listener;
+    auto const match = value_matcher_.MatchAndExplain(*value, &value_listener);
+    auto const explanation = value_listener.str();
+    *os << ", " << (match ? "and" : "but") << " a value ";
+    if (!explanation.empty()) {
+      *os << explanation;
+    } else {
+      *os << "that ";
+      if (match) {
+        value_matcher_.DescribeTo(os);
+      } else {
+        value_matcher_.DescribeNegationTo(os);
+      }
+    }
+    return match;
+  }
+
+  void DescribeTo(std::ostream* os) const override {
+    *os << "code is equal to OK and value ";
+    value_matcher_.DescribeTo(os);
+  }
+
+  void DescribeNegationTo(std::ostream* os) const override {
+    *os << "code isn't equal to OK or value ";
+    value_matcher_.DescribeNegationTo(os);
+  }
+
+ private:
+  ::testing::Matcher<value_type const&> const value_matcher_;
+};
+
+/*
+ * Implementation of the IsOkAndHolds() matcher for a StatusOr<T>, or a
+ * reference to one.
+ */
+template <typename ValueMatcher>
+class IsOkAndHoldsMatcher {
+ public:
+  explicit IsOkAndHoldsMatcher(ValueMatcher value_matcher)
+      : value_matcher_(std::move(value_matcher)) {}
+
+  // Converts to a monomorphic matcher of the given StatusOr type.
+  template <typename S>
+  // NOLINTNEXTLINE(bugprone-forwarding-reference-overload)
+  // NOLINTNEXTLINE(google-explicit-constructor)
+  operator ::testing::Matcher<S>() const {
+    return ::testing::Matcher<S>(
+        new IsOkAndHoldsMatcherImpl<S const&>(value_matcher_));
+  }
+
+ private:
+  ValueMatcher const value_matcher_;
 };
 
 }  // namespace testing_util_internal
@@ -121,6 +209,25 @@ inline ::testing::PolymorphicMatcher<testing_util_internal::StatusIsMatcher>
 IsOk() {
   // We could use ::testing::IsEmpty() here, but historically have not.
   return StatusIs(StatusCode::kOk, ::testing::_);
+}
+
+/**
+ * Returns a gMock matcher that matches a `StatusOr<T>` whose code is OK and
+ * whose value matches the `value_matcher`.
+ *
+ * @par Example:
+ * @code
+ *   StatusOr<T> v = ...;
+ *   EXPECT_THAT(v, IsOkAndHolds(T{...}));
+ * @endcode
+ */
+template <typename ValueMatcher>
+testing_util_internal::IsOkAndHoldsMatcher<
+    typename std::decay<ValueMatcher>::type>
+IsOkAndHolds(ValueMatcher&& value_matcher) {
+  return testing_util_internal::IsOkAndHoldsMatcher<
+      typename std::decay<ValueMatcher>::type>(
+      std::forward<ValueMatcher>(value_matcher));
 }
 
 /**
