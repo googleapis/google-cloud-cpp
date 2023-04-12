@@ -12,31 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_OPENTELEMETRY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_OPENTELEMETRY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_TRACING_HTTP_PAYLOAD_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_TRACING_HTTP_PAYLOAD_H
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-#include "google/cloud/internal/rest_request.h"
+
+#include "google/cloud/internal/http_payload.h"
 #include <opentelemetry/nostd/shared_ptr.h>
 #include <opentelemetry/trace/span.h>
+#include <memory>
 
 namespace google {
 namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Make a span, setting attributes related to HTTP.
- *
- * @see
- * https://opentelemetry.io/docs/reference/specification/trace/semantic_conventions/http/
- * for the semantic conventions used for span names and attributes.
- */
-opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanHttp(
-    RestRequest const& request, opentelemetry::nostd::string_view method);
+class TracingHttpPayload : public HttpPayload {
+ public:
+  explicit TracingHttpPayload(
+      std::unique_ptr<HttpPayload> impl,
+      opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span);
+  ~TracingHttpPayload() override = default;
 
-opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>
-MakeSpanHttpPayload(opentelemetry::trace::Span const& request_span);
+  bool HasUnreadData() const override;
+  StatusOr<std::size_t> Read(absl::Span<char> buffer) override;
+
+ private:
+  std::unique_ptr<HttpPayload> impl_;
+  opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_;
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
@@ -45,4 +49,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_OPENTELEMETRY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_TRACING_HTTP_PAYLOAD_H

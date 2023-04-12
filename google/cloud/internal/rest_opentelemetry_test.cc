@@ -32,6 +32,7 @@ using ::google::cloud::testing_util::SpanAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
+using ::google::cloud::testing_util::SpanKindIsConsumer;
 using ::google::cloud::testing_util::SpanNamed;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
@@ -64,6 +65,26 @@ TEST(RestOpentelemetry, MakeSpanHttp) {
                      SpanAttribute<std::string>(sc::kHttpUrl, kUrl),
                      SpanAttribute<std::string>("http.header.authorization",
                                                 secret.substr(0, 32))))));
+}
+
+TEST(RestOpentelemetry, MakeSpanHttpPayload) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  auto span_catcher = InstallSpanCatcher();
+
+  RestRequest request("https://example.com/ignored");
+  auto request_span = MakeSpanHttp(request, "GET");
+
+  auto span = MakeSpanHttpPayload(*request_span);
+  request_span->End();
+  span->End();
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsConsumer(),
+                     SpanNamed("HTTP/Response"),
+                     SpanHasAttributes(SpanAttribute<std::string>(
+                         sc::kNetTransport, sc::NetTransportValues::kIpTcp)))));
 }
 
 }  // namespace
