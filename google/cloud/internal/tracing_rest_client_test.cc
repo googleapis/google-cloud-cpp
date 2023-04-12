@@ -29,23 +29,20 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::SpanAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
-using ::google::cloud::testing_util::SpanHasEvents;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
-using ::google::cloud::testing_util::SpanKindIsConsumer;
 using ::google::cloud::testing_util::SpanNamed;
 using ::testing::AllOf;
-using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::NotNull;
 using ::testing::Return;
+using ::testing::UnorderedElementsAre;
 
 std::multimap<std::string, std::string> MockHeaders() {
   return {{"x-test-header-1", "value1"}, {"x-test-header-2", "value2"}};
@@ -89,28 +86,28 @@ TEST(TracingRestClient, Delete) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans,
-      ElementsAre(
+      UnorderedElementsAre(
           // Request span
-          AllOf(SpanHasInstrumentationScope(), SpanKindIsClient(),
-                SpanNamed("HTTP/DELETE"),
+          AllOf(SpanNamed("HTTP/DELETE"), SpanHasInstrumentationScope(),
+                SpanKindIsClient(),
                 SpanHasAttributes(
                     SpanAttribute<std::string>(sc::kNetTransport,
                                                sc::NetTransportValues::kIpTcp),
                     SpanAttribute<std::string>(sc::kHttpMethod, "DELETE"),
                     SpanAttribute<std::string>(sc::kHttpUrl, kUrl),
-                    SpanAttribute<std::string>("http.header.x-test-header-3",
-                                               "value3"))),
+                    SpanAttribute<std::string>(
+                        "http.request.header.x-test-header-3", "value3"),
+                    SpanAttribute<std::string>(
+                        "http.response.header.x-test-header-1", "value1"),
+                    SpanAttribute<std::string>(
+                        "http.response.header.x-test-header-2", "value2"))),
           // Response span
-          AllOf(SpanHasInstrumentationScope(), SpanKindIsConsumer(),
-                SpanNamed("HTTP/Response"),
-                SpanHasAttributes(
-                    SpanAttribute<std::string>(sc::kNetTransport,
-                                               sc::NetTransportValues::kIpTcp),
-                    SpanAttribute<std::string>("http.header.x-test-header-1",
-                                               "value1"),
-                    SpanAttribute<std::string>("http.header.x-test-header-2",
-                                               "value2")),
-                SpanHasEvents(EventNamed("Read")))));
+          AllOf(SpanNamed("HTTP/Response"), SpanHasInstrumentationScope(),
+                SpanKindIsClient(),
+                SpanHasAttributes(SpanAttribute<std::string>(
+                    sc::kNetTransport, sc::NetTransportValues::kIpTcp))),
+          // Read span on the HttpPayload
+          SpanNamed("Read"), SpanNamed("Read")));
 }
 
 }  // namespace
