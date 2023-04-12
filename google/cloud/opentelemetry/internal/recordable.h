@@ -27,8 +27,17 @@ namespace cloud {
 namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+// https://github.com/googleapis/googleapis/blob/11ddd42bcee5961c34e8529638d51e9866b65065/google/devtools/cloudtrace/v2/trace.proto#L255-L256
+std::size_t constexpr kSpanAttributeLimit = 32;
+
 // https://github.com/googleapis/googleapis/blob/a5e03049afc43ccb1217d5dd3be53006fc278643/google/devtools/cloudtrace/v2/trace.proto#L233
 std::size_t constexpr kDisplayNameStringLimit = 128;
+
+// https://github.com/googleapis/googleapis/blob/4e8d3907aec680562c9243774c67adc6d713fe50/google/devtools/cloudtrace/v2/trace.proto#L49
+std::size_t constexpr kAttributeKeyStringLimit = 128;
+
+// https://github.com/googleapis/googleapis/blob/4e8d3907aec680562c9243774c67adc6d713fe50/google/devtools/cloudtrace/v2/trace.proto#L50
+std::size_t constexpr kAttributeValueStringLimit = 256;
 
 /**
  * Helper to set [TruncatableString] fields in a [Span] proto.
@@ -43,6 +52,27 @@ std::size_t constexpr kDisplayNameStringLimit = 128;
 void SetTruncatableString(
     google::devtools::cloudtrace::v2::TruncatableString& proto,
     opentelemetry::nostd::string_view value, std::size_t limit);
+
+/**
+ * Helper to set [Attributes] fields in a [Span] proto.
+ *
+ * This function converts OpenTelemetry attributes to Cloud Trace attributes.
+ * Sadly there is not a great mapping for all attributes.
+ *
+ * Cloud Trace attributes also have limits, which are defined in the proto
+ * comments. For example, we are limited to 32 attributes per Span. We enforce
+ * the limit by accepting the first N attributes we are given, and dropping the
+ * rest.
+ *
+ * [Attributes]:
+ * https://cloud.google.com/trace/docs/reference/v2/rpc/google.devtools.cloudtrace.v2#google.devtools.cloudtrace.v2.Span.Attributes
+ * [Span]:
+ * https://cloud.google.com/trace/docs/reference/v2/rpc/google.devtools.cloudtrace.v2#google.devtools.cloudtrace.v2.Span
+ */
+void AddAttribute(
+    google::devtools::cloudtrace::v2::Span::Attributes& attributes,
+    opentelemetry::nostd::string_view key,
+    opentelemetry::common::AttributeValue const& value, std::size_t limit);
 
 // TODO(#11156) - Implement this class.
 /**
