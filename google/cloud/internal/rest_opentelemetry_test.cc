@@ -55,16 +55,17 @@ TEST(RestOpentelemetry, MakeSpanHttp) {
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
-      spans, ElementsAre(AllOf(
-                 SpanHasInstrumentationScope(), SpanKindIsClient(),
-                 SpanNamed("HTTP/GET"),
-                 SpanHasAttributes(
-                     SpanAttribute<std::string>(sc::kNetTransport,
-                                                sc::NetTransportValues::kIpTcp),
-                     SpanAttribute<std::string>(sc::kHttpMethod, "GET"),
-                     SpanAttribute<std::string>(sc::kHttpUrl, kUrl),
-                     SpanAttribute<std::string>("http.header.authorization",
-                                                secret.substr(0, 32))))));
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("HTTP/GET"),
+          SpanHasAttributes(
+              SpanAttribute<std::string>(sc::kNetTransport,
+                                         sc::NetTransportValues::kIpTcp),
+              SpanAttribute<std::string>(sc::kHttpMethod, "GET"),
+              SpanAttribute<std::string>(sc::kHttpUrl, kUrl),
+              SpanAttribute<std::string>("http.request.header.authorization",
+                                         secret.substr(0, 32))))));
 }
 
 TEST(RestOpentelemetry, MakeSpanHttpPayload) {
