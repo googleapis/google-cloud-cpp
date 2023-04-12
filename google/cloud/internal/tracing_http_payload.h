@@ -36,6 +36,7 @@ class TracingHttpPayload : public HttpPayload {
 
   bool HasUnreadData() const override;
   StatusOr<std::size_t> Read(absl::Span<char> buffer) override;
+  std::multimap<std::string, std::string> DebugHeaders() const override;
 
  private:
   std::unique_ptr<HttpPayload> impl_;

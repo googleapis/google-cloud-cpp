@@ -47,6 +47,11 @@ StatusOr<std::size_t> TracingHttpPayload::Read(absl::Span<char> buffer) {
   return internal::EndSpan(*span_, std::move(status));
 }
 
+std::multimap<std::string, std::string> TracingHttpPayload::DebugHeaders()
+    const {
+  return impl_->DebugHeaders();
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud

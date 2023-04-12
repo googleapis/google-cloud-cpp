@@ -20,6 +20,7 @@
 #include "google/cloud/version.h"
 #include "absl/types/span.h"
 #include <map>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -40,6 +41,11 @@ class HttpPayload {
   // read the entire payload.
   // Returns number of bytes actually read into buffer from the payload.
   virtual StatusOr<std::size_t> Read(absl::Span<char> buffer) = 0;
+
+  /// Return any debug headers captured while reading.
+  virtual std::multimap<std::string, std::string> DebugHeaders() const {
+    return {};
+  }
 };
 
 // This function makes one or more HttpPayload::Read calls and writes all the

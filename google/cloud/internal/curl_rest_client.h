@@ -42,6 +42,8 @@ class CurlRestClient : public RestClient {
  public:
   static std::string HostHeader(Options const& options,
                                 std::string const& endpoint);
+  CurlRestClient(std::string endpoint_address,
+                 std::shared_ptr<CurlHandleFactory> factory, Options options);
   ~CurlRestClient() override = default;
 
   CurlRestClient(CurlRestClient const&) = delete;
@@ -68,14 +70,6 @@ class CurlRestClient : public RestClient {
       std::vector<absl::Span<char const>> const& payload) override;
 
  private:
-  friend std::unique_ptr<RestClient> MakeDefaultRestClient(
-      std::string endpoint_address, Options options);
-
-  friend std::unique_ptr<RestClient> MakePooledRestClient(
-      std::string endpoint_address, Options options);
-
-  CurlRestClient(std::string endpoint_address,
-                 std::shared_ptr<CurlHandleFactory> factory, Options options);
   StatusOr<std::unique_ptr<CurlImpl>> CreateCurlImpl(
       RestRequest const& request);
 

@@ -43,7 +43,7 @@ class CurlHttpPayload : public HttpPayload {
 
   StatusOr<std::size_t> Read(absl::Span<char> buffer) override;
 
-  std::multimap<std::string, std::string> headers() const;
+  std::multimap<std::string, std::string> DebugHeaders() const override;
 
  private:
   friend class CurlRestResponse;
