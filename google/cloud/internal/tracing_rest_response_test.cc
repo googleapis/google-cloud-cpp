@@ -40,9 +40,8 @@ using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsConsumer;
 using ::google::cloud::testing_util::SpanNamed;
 using ::testing::AllOf;
-using ::testing::Contains;
-using ::testing::Eq;
 using ::testing::Return;
+using ::testing::UnorderedElementsAre;
 
 std::string MockContents() {
   return "The quick brown fox jumps over the lazy dog";
@@ -63,23 +62,27 @@ TEST(TracingRestResponseTest, Success) {
 
   TracingRestResponse response(std::move(impl),
                                MakeSpanHttpPayload(*request_span));
+  // End the request span to simulate the normal behavior.
+  request_span->End();
+
   auto payload = std::move(response).ExtractPayload();
   std::vector<char> buffer(64);
   auto status = payload->Read(absl::Span<char>(buffer.data(), buffer.size()));
   ASSERT_STATUS_OK(status);
-  EXPECT_THAT(*status, Eq(MockContents().size()));
+  EXPECT_EQ(*status, MockContents().size());
   status = payload->Read(absl::Span<char>(buffer.data(), buffer.size()));
   ASSERT_STATUS_OK(status);
-  EXPECT_THAT(*status, Eq(0));
+  EXPECT_EQ(*status, 0);
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
-      spans,
-      Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsConsumer(),
-                     SpanNamed("HTTP/Response"),
-                     SpanHasAttributes(SpanAttribute<std::string>(
-                         sc::kNetTransport, sc::NetTransportValues::kIpTcp)),
-                     SpanEventsAre(EventNamed("Read"), EventNamed("Read")))));
+      spans, UnorderedElementsAre(
+                 SpanNamed("HTTP/GET"),
+                 AllOf(SpanHasInstrumentationScope(), SpanKindIsConsumer(),
+                       SpanNamed("HTTP/Response"),
+                       SpanHasAttributes(SpanAttribute<std::string>(
+                           sc::kNetTransport, sc::NetTransportValues::kIpTcp)),
+                       SpanEventsAre(EventNamed("Read"), EventNamed("Read")))));
 }
 
 }  // namespace
