@@ -37,7 +37,8 @@ DoMetadataServerGetRequest(rest_internal::RestClient& client,
                                internal::GceMetadataHostname(), "/", path));
   request.AddHeader("metadata-flavor", "Google");
   if (recursive) request.AddQueryParameter("recursive", "true");
-  return client.Get(request);
+  rest_internal::RestContext context;
+  return client.Get(context, request);
 }
 
 }  // namespace

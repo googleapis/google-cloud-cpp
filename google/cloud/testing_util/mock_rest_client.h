@@ -27,25 +27,27 @@ namespace testing_util {
 class MockRestClient : public rest_internal::RestClient {
  public:
   MOCK_METHOD(StatusOr<std::unique_ptr<rest_internal::RestResponse>>, Delete,
-              (rest_internal::RestRequest const& request), (override));
+              (rest_internal::RestContext&, rest_internal::RestRequest const&),
+              (override));
   MOCK_METHOD(StatusOr<std::unique_ptr<rest_internal::RestResponse>>, Get,
-              (rest_internal::RestRequest const& request), (override));
+              (rest_internal::RestContext&, rest_internal::RestRequest const&),
+              (override));
   MOCK_METHOD(StatusOr<std::unique_ptr<rest_internal::RestResponse>>, Patch,
-              (rest_internal::RestRequest const& request,
-               std::vector<absl::Span<char const>> const& payload),
+              (rest_internal::RestContext&, rest_internal::RestRequest const&,
+               std::vector<absl::Span<char const>> const&),
               (override));
   MOCK_METHOD(StatusOr<std::unique_ptr<rest_internal::RestResponse>>, Post,
-              (rest_internal::RestRequest const& request,
-               std::vector<absl::Span<char const>> const& payload),
+              (rest_internal::RestContext&, rest_internal::RestRequest const&,
+               std::vector<absl::Span<char const>> const&),
               (override));
-  MOCK_METHOD(
-      StatusOr<std::unique_ptr<rest_internal::RestResponse>>, Post,
-      (rest_internal::RestRequest request,
-       (std::vector<std::pair<std::string, std::string>> const& form_data)),
-      (override));
+  MOCK_METHOD(StatusOr<std::unique_ptr<rest_internal::RestResponse>>, Post,
+              (rest_internal::RestContext&,
+               rest_internal::RestRequest const& request,
+               (std::vector<std::pair<std::string, std::string>> const&)),
+              (override));
   MOCK_METHOD(StatusOr<std::unique_ptr<rest_internal::RestResponse>>, Put,
-              (rest_internal::RestRequest const& request,
-               std::vector<absl::Span<char const>> const& payload),
+              (rest_internal::RestContext&, rest_internal::RestRequest const&,
+               std::vector<absl::Span<char const>> const&),
               (override));
 };
 

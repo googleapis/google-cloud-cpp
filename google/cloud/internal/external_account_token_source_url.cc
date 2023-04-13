@@ -46,7 +46,8 @@ StatusOr<std::string> FetchContents(HttpClientFactory const& client_factory,
   auto client = client_factory(options);
   auto request = rest_internal::RestRequest(url);
   for (auto const& h : headers) request.AddHeader(h.first, h.second);
-  auto status = client->Get(request);
+  rest_internal::RestContext context;
+  auto status = client->Get(context, request);
   if (!status) return DecorateHttpError(std::move(status).status(), ec);
   auto response = *std::move(status);
   if (IsHttpError(*response)) {

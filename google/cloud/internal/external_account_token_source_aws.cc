@@ -69,7 +69,8 @@ StatusOr<std::string> GetMetadata(std::string path,
   if (!session_token.empty()) {
     request.AddHeader(kMetadataTokenHeader, session_token);
   }
-  auto response = client->Get(request);
+  rest_internal::RestContext context;
+  auto response = client->Get(context, request);
   if (!response) return std::move(response).status();
   if (IsHttpError(**response)) return AsStatus(std::move(**response));
   return rest_internal::ReadAll(std::move(**response).ExtractPayload());
@@ -189,7 +190,8 @@ StatusOr<std::string> FetchMetadataToken(
                      .SetPath(std::move(info.imdsv2_session_token_url))
                      .AddHeader(kMetadataTokenTtlHeader, std::to_string(ttl));
   auto client = client_factory(opts);
-  auto response = client->Put(request, {});
+  rest_internal::RestContext context;
+  auto response = client->Put(context, request, {});
   if (!response) return std::move(response).status();
   if (IsHttpError(**response)) return AsStatus(std::move(**response));
   return rest_internal::ReadAll(std::move(**response).ExtractPayload());

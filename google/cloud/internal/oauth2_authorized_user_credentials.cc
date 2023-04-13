@@ -100,7 +100,8 @@ StatusOr<internal::AccessToken> AuthorizedUserCredentials::GetToken(
   form_data.emplace_back("client_secret", info_.client_secret);
   form_data.emplace_back("refresh_token", info_.refresh_token);
   auto client = client_factory_(options_);
-  auto response = client->Post(request, form_data);
+  rest_internal::RestContext unused;
+  auto response = client->Post(unused, request, form_data);
   if (!response.ok()) return std::move(response).status();
   if (IsHttpError(**response)) return AsStatus(std::move(**response));
   return ParseAuthorizedUserRefreshResponse(**response, tp);

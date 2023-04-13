@@ -31,6 +31,7 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::rest_internal::RestContext;
 using ::google::cloud::rest_internal::RestRequest;
 using ::google::cloud::rest_internal::RestResponse;
 using ::google::cloud::testing_util::IsOk;
@@ -216,9 +217,9 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
   EXPECT_CALL(mock_client_factory, Call).WillOnce([=](Options const&) {
     auto client = std::make_unique<MockRestClient>();
     EXPECT_CALL(*client,
-                Post(_, A<std::vector<absl::Span<char const>> const&>()))
+                Post(_, _, A<std::vector<absl::Span<char const>> const&>()))
         .WillOnce([response, service_account](
-                      RestRequest const& request,
+                      RestContext&, RestRequest const& request,
                       std::vector<absl::Span<char const>> const& payload) {
           auto mock_response = std::make_unique<MockRestResponse>();
           EXPECT_CALL(*mock_response, StatusCode)

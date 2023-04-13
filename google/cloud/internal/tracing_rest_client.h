@@ -31,21 +31,21 @@ class TracingRestClient : public RestClient {
   ~TracingRestClient() override = default;
 
   StatusOr<std::unique_ptr<RestResponse>> Delete(
-      RestRequest const& request) override;
+      RestContext& context, RestRequest const& request) override;
   StatusOr<std::unique_ptr<RestResponse>> Get(
-      RestRequest const& request) override;
+      RestContext& context, RestRequest const& request) override;
   StatusOr<std::unique_ptr<RestResponse>> Patch(
-      RestRequest const& request,
+      RestContext& context, RestRequest const& request,
       std::vector<absl::Span<char const>> const& payload) override;
   StatusOr<std::unique_ptr<RestResponse>> Post(
-      RestRequest const& request,
+      RestContext& context, RestRequest const& request,
       std::vector<absl::Span<char const>> const& payload) override;
   StatusOr<std::unique_ptr<RestResponse>> Post(
-      RestRequest request,
+      RestContext& context, RestRequest const& request,
       std::vector<std::pair<std::string, std::string>> const& form_data)
       override;
   StatusOr<std::unique_ptr<RestResponse>> Put(
-      RestRequest const& request,
+      RestContext& context, RestRequest const& request,
       std::vector<absl::Span<char const>> const& payload) override;
 
  private:

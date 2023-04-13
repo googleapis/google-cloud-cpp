@@ -56,7 +56,8 @@ TEST(ExternalAccountIntegrationTest, UrlSourced) {
     for (int i = 0; i != 5; ++i) {
       if (i != 0) std::this_thread::sleep_for(delay);
       now = std::chrono::system_clock::now();
-      auto response = client->Get(request);
+      rest_internal::RestContext context;
+      auto response = client->Get(context, request);
       auto payload = get_payload(std::move(response));
       if (payload) return payload;
       last_status = std::move(payload).status();

@@ -271,8 +271,9 @@ StorageIntegrationTest::InsertRetryTest(RetryTestRequest const& request) {
   };
 
   while (keep_trying()) {
-    auto http_response =
-        retry_client->Post(http_request, {absl::Span<char const>{payload}});
+    rest_internal::RestContext context;
+    auto http_response = retry_client->Post(context, http_request,
+                                            {absl::Span<char const>{payload}});
     if (!http_response) continue;
     if ((*http_response)->StatusCode() != rest::HttpStatusCode::kOk) continue;
     auto response_payload =

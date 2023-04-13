@@ -88,11 +88,11 @@ TEST(GoldenThingAdminRestStubTest, ListDatabases) {
 
   auto mock_200_response = CreateMockRestResponse(json_response);
   EXPECT_CALL(*mock_service_client, Get)
-      .WillOnce([&](RestRequest const&) {
+      .WillOnce([&](RestContext&, RestRequest const&) {
         return std::unique_ptr<rest_internal::RestResponse>(
             mock_503_response.release());
       })
-      .WillOnce([&](RestRequest const& request) {
+      .WillOnce([&](RestContext&, RestRequest const& request) {
         EXPECT_THAT(
             request.path(),
             Eq("/v1/projects/my_project/instances/my_instance/databases"));
@@ -133,8 +133,8 @@ TEST(GoldenThingAdminRestStubTest, AsyncCreateDatabase) {
 
   auto mock_200_response = CreateMockRestResponse(json_response);
   EXPECT_CALL(*mock_service_client,
-              Post(_, A<std::vector<absl::Span<char const>> const&>()))
-      .WillOnce([&](RestRequest const& request,
+              Post(_, _, A<std::vector<absl::Span<char const>> const&>()))
+      .WillOnce([&](RestContext&, RestRequest const& request,
                     std::vector<absl::Span<char const>> const&) {
         EXPECT_THAT(
             request.path(),
@@ -168,7 +168,7 @@ TEST(GoldenThingAdminRestStubTest, GetDatabase) {
 
   auto mock_200_response = CreateMockRestResponse(json_response);
   EXPECT_CALL(*mock_service_client, Get)
-      .WillOnce([&](RestRequest const& request) {
+      .WillOnce([&](RestContext&, RestRequest const& request) {
         EXPECT_THAT(request.path(), Eq("/v1/projects/my_project/instances/"
                                        "my_instance/databases/my_database"));
         return std::unique_ptr<rest_internal::RestResponse>(
@@ -201,7 +201,7 @@ TEST(GoldenThingAdminRestStubTest, AsyncUpdateDatabaseDdl) {
 
   auto mock_200_response = CreateMockRestResponse(json_response);
   EXPECT_CALL(*mock_service_client, Patch)
-      .WillOnce([&](RestRequest const& request,
+      .WillOnce([&](RestContext&, RestRequest const& request,
                     std::vector<absl::Span<char const>> const&) {
         EXPECT_THAT(request.path(),
                     Eq("/v1/projects/my_project/instances/"
@@ -234,7 +234,7 @@ TEST(GoldenThingAdminRestStubTest, DropDatabase) {
 
   auto mock_200_response = CreateMockRestResponse(json_response);
   EXPECT_CALL(*mock_service_client, Delete)
-      .WillOnce([&](RestRequest const& request) {
+      .WillOnce([&](RestContext&, RestRequest const& request) {
         EXPECT_THAT(request.path(), Eq("/v1/projects/my_project/instances/"
                                        "my_instance/databases/my_database"));
         return std::unique_ptr<rest_internal::RestResponse>(
@@ -259,7 +259,7 @@ TEST(GoldenThingAdminRestStubTest, GetDatabaseDdl) {
 
   auto mock_200_response = CreateMockRestResponse(json_response);
   EXPECT_CALL(*mock_service_client, Get)
-      .WillOnce([&](RestRequest const& request) {
+      .WillOnce([&](RestContext&, RestRequest const& request) {
         EXPECT_THAT(request.path(),
                     Eq("/v1/projects/my_project/instances/"
                        "my_instance/databases/my_database/ddl"));
@@ -316,8 +316,8 @@ TEST(GoldenThingAdminRestStubTest, SetIamPolicy) {
       CreateMockRestResponse(json_response_database);
   auto mock_200_response_backup = CreateMockRestResponse(json_response_backup);
   EXPECT_CALL(*mock_service_client,
-              Post(_, A<std::vector<absl::Span<char const>> const&>()))
-      .WillOnce([&](RestRequest const& request,
+              Post(_, _, A<std::vector<absl::Span<char const>> const&>()))
+      .WillOnce([&](RestContext&, RestRequest const& request,
                     std::vector<absl::Span<char const>> const&) {
         EXPECT_THAT(request.path(),
                     Eq("/v1/projects/my_project/instances/my_instance/"
@@ -325,7 +325,7 @@ TEST(GoldenThingAdminRestStubTest, SetIamPolicy) {
         return std::unique_ptr<rest_internal::RestResponse>(
             mock_200_response_database.release());
       })
-      .WillOnce([&](RestRequest const& request,
+      .WillOnce([&](RestContext&, RestRequest const& request,
                     std::vector<absl::Span<char const>> const&) {
         EXPECT_THAT(request.path(),
                     Eq("/v1/projects/my_project/instances/my_instance/backups/"
@@ -361,8 +361,8 @@ TEST(GoldenThingAdminRestStubTest, GetIamPolicy) {
       CreateMockRestResponse(json_response_database);
   auto mock_200_response_backup = CreateMockRestResponse(json_response_backup);
   EXPECT_CALL(*mock_service_client,
-              Post(_, A<std::vector<absl::Span<char const>> const&>()))
-      .WillOnce([&](RestRequest const& request,
+              Post(_, _, A<std::vector<absl::Span<char const>> const&>()))
+      .WillOnce([&](RestContext&, RestRequest const& request,
                     std::vector<absl::Span<char const>> const&) {
         EXPECT_THAT(request.path(),
                     Eq("/v1/projects/my_project/instances/my_instance/"
@@ -370,7 +370,7 @@ TEST(GoldenThingAdminRestStubTest, GetIamPolicy) {
         return std::unique_ptr<rest_internal::RestResponse>(
             mock_200_response_database.release());
       })
-      .WillOnce([&](RestRequest const& request,
+      .WillOnce([&](RestContext&, RestRequest const& request,
                     std::vector<absl::Span<char const>> const&) {
         EXPECT_THAT(request.path(),
                     Eq("/v1/projects/my_project/instances/my_instance/backups/"
@@ -408,8 +408,8 @@ TEST(GoldenThingAdminRestStubTest, TestIamPermissions) {
       CreateMockRestResponse(json_response_database);
   auto mock_200_response_backup = CreateMockRestResponse(json_response_backup);
   EXPECT_CALL(*mock_service_client,
-              Post(_, A<std::vector<absl::Span<char const>> const&>()))
-      .WillOnce([&](RestRequest const& request,
+              Post(_, _, A<std::vector<absl::Span<char const>> const&>()))
+      .WillOnce([&](RestContext&, RestRequest const& request,
                     std::vector<absl::Span<char const>> const&) {
         EXPECT_THAT(request.path(),
                     Eq("/v1/projects/my_project/instances/my_instance/"
@@ -417,7 +417,7 @@ TEST(GoldenThingAdminRestStubTest, TestIamPermissions) {
         return std::unique_ptr<rest_internal::RestResponse>(
             mock_200_response_database.release());
       })
-      .WillOnce([&](RestRequest const& request,
+      .WillOnce([&](RestContext&, RestRequest const& request,
                     std::vector<absl::Span<char const>> const&) {
         EXPECT_THAT(request.path(),
                     Eq("/v1/projects/my_project/instances/my_instance/backups/"
@@ -453,8 +453,8 @@ TEST(GoldenThingAdminRestStubTest, AsyncCreateBackup) {
 
   auto mock_200_response = CreateMockRestResponse(json_response);
   EXPECT_CALL(*mock_service_client,
-              Post(_, A<std::vector<absl::Span<char const>> const&>()))
-      .WillOnce([&](RestRequest const& request,
+              Post(_, _, A<std::vector<absl::Span<char const>> const&>()))
+      .WillOnce([&](RestContext&, RestRequest const& request,
                     std::vector<absl::Span<char const>> const&) {
         EXPECT_THAT(
             request.path(),
@@ -487,7 +487,7 @@ TEST(GoldenThingAdminRestStubTest, GetBackup) {
 
   auto mock_200_response = CreateMockRestResponse(json_response);
   EXPECT_CALL(*mock_service_client, Get)
-      .WillOnce([&](RestRequest const& request) {
+      .WillOnce([&](RestContext&, RestRequest const& request) {
         EXPECT_THAT(request.path(), Eq("/v1/projects/my_project/instances/"
                                        "my_instance/backups/my_backup"));
         return std::unique_ptr<rest_internal::RestResponse>(
@@ -517,7 +517,7 @@ TEST(GoldenThingAdminRestStubTest, UpdateBackup) {
 
   auto mock_200_response = CreateMockRestResponse(json_response);
   EXPECT_CALL(*mock_service_client, Patch)
-      .WillOnce([&](RestRequest const& request,
+      .WillOnce([&](RestContext&, RestRequest const& request,
                     std::vector<absl::Span<char const>> const&) {
         EXPECT_THAT(request.path(), Eq("/v1/projects/my_project/instances/"
                                        "my_instance/backups/my_backup"));
@@ -547,7 +547,7 @@ TEST(GoldenThingAdminRestStubTest, DeleteBackup) {
 
   auto mock_200_response = CreateMockRestResponse(json_response);
   EXPECT_CALL(*mock_service_client, Delete)
-      .WillOnce([&](RestRequest const& request) {
+      .WillOnce([&](RestContext&, RestRequest const& request) {
         EXPECT_THAT(request.path(), Eq("/v1/projects/my_project/instances/"
                                        "my_instance/backups/my_backup"));
         return std::unique_ptr<rest_internal::RestResponse>(
@@ -579,7 +579,7 @@ TEST(GoldenThingAdminRestStubTest, ListBackups) {
 
   auto mock_200_response = CreateMockRestResponse(json_response);
   EXPECT_CALL(*mock_service_client, Get)
-      .WillOnce([&](RestRequest const& request) {
+      .WillOnce([&](RestContext&, RestRequest const& request) {
         EXPECT_THAT(
             request.path(),
             Eq("/v1/projects/my_project/instances/my_instance/backups"));
@@ -620,8 +620,8 @@ TEST(GoldenThingAdminRestStubTest, AsyncRestoreDatabase) {
 
   auto mock_200_response = CreateMockRestResponse(json_response);
   EXPECT_CALL(*mock_service_client,
-              Post(_, A<std::vector<absl::Span<char const>> const&>()))
-      .WillOnce([&](RestRequest const& request,
+              Post(_, _, A<std::vector<absl::Span<char const>> const&>()))
+      .WillOnce([&](RestContext&, RestRequest const& request,
                     std::vector<absl::Span<char const>> const&) {
         EXPECT_THAT(request.path(), Eq("/v1/projects/my_project/instances/"
                                        "my_instance/databases:restore"));
@@ -660,7 +660,7 @@ TEST(GoldenThingAdminRestStubTest, ListDatabaseOperations) {
 
   auto mock_200_response = CreateMockRestResponse(json_response);
   EXPECT_CALL(*mock_service_client, Get)
-      .WillOnce([&](RestRequest const& request) {
+      .WillOnce([&](RestContext&, RestRequest const& request) {
         EXPECT_THAT(request.path(), Eq("/v1/projects/my_project/instances/"
                                        "my_instance/databaseOperations"));
         EXPECT_THAT(request.GetQueryParameter("page_size"), Contains("100"));
@@ -699,7 +699,7 @@ TEST(GoldenThingAdminRestStubTest, ListBackupOperations) {
 
   auto mock_200_response = CreateMockRestResponse(json_response);
   EXPECT_CALL(*mock_service_client, Get)
-      .WillOnce([&](RestRequest const& request) {
+      .WillOnce([&](RestContext&, RestRequest const& request) {
         EXPECT_THAT(request.path(), Eq("/v1/projects/my_project/instances/"
                                        "my_instance/backupOperations"));
         EXPECT_THAT(request.GetQueryParameter("page_size"), Contains("100"));
@@ -736,7 +736,7 @@ TEST(GoldenThingAdminRestStubTest, AsyncGetDatabase) {
 
   auto mock_200_response = CreateMockRestResponse(json_response);
   EXPECT_CALL(*mock_service_client, Get)
-      .WillOnce([&](RestRequest const& request) {
+      .WillOnce([&](RestContext&, RestRequest const& request) {
         EXPECT_THAT(request.path(), Eq("/v1/projects/my_project/instances/"
                                        "my_instance/databases/my_database"));
         return std::unique_ptr<rest_internal::RestResponse>(
@@ -772,7 +772,7 @@ TEST(GoldenThingAdminRestStubTest, AsyncDropDatabase) {
 
   auto mock_200_response = CreateMockRestResponse(json_response);
   EXPECT_CALL(*mock_service_client, Delete)
-      .WillOnce([&](RestRequest const& request) {
+      .WillOnce([&](RestContext&, RestRequest const& request) {
         EXPECT_THAT(request.path(), Eq("/v1/projects/my_project/instances/"
                                        "my_instance/databases/my_database"));
         return std::unique_ptr<rest_internal::RestResponse>(
@@ -803,7 +803,7 @@ TEST(GoldenThingAdminRestStubTest, AsyncGetOperation) {
 
   auto mock_200_response = CreateMockRestResponse(json_response);
   EXPECT_CALL(*mock_operations_client, Get)
-      .WillOnce([&](RestRequest const& request) {
+      .WillOnce([&](RestContext&, RestRequest const& request) {
         EXPECT_THAT(request.path(), Eq("/v1/my_operation"));
         return std::unique_ptr<rest_internal::RestResponse>(
             mock_200_response.release());
@@ -834,8 +834,8 @@ TEST(GoldenThingAdminRestStubTest, AsyncCancelOperation) {
 
   auto mock_200_response = CreateMockRestResponse(json_response);
   EXPECT_CALL(*mock_operations_client,
-              Post(_, A<std::vector<absl::Span<char const>> const&>()))
-      .WillOnce([&](RestRequest const& request,
+              Post(_, _, A<std::vector<absl::Span<char const>> const&>()))
+      .WillOnce([&](RestContext&, RestRequest const& request,
                     std::vector<absl::Span<char const>> const&) {
         EXPECT_THAT(request.path(), Eq("/v1/my_operation:cancel"));
         return std::unique_ptr<rest_internal::RestResponse>(

@@ -254,7 +254,8 @@ absl::optional<std::string> GetMetadata(RestClient& metadata_server,
                                         std::string const& path) {
   RestRequest request(path);
   request.AddHeader("Metadata-Flavor", "Google");
-  auto response_status = metadata_server.Get(request);
+  rest_internal::RestContext context;
+  auto response_status = metadata_server.Get(context, request);
   if (!response_status) return absl::nullopt;
   auto response = *std::move(response_status);
   auto const status_code = response->StatusCode();

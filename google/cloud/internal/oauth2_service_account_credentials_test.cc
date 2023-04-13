@@ -42,6 +42,7 @@ using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::Contains;
@@ -142,7 +143,7 @@ void CheckInfoYieldsExpectedAssertion(ServiceAccountCredentialsInfo const& info,
     auto expected_form_data = MatcherCast<FormDataType const&>(
         AllOf(Contains(Pair("assertion", assertion)),
               Contains(Pair("grant_type", kGrantParamUnescaped))));
-    EXPECT_CALL(*mock, Post(expected_request, expected_form_data))
+    EXPECT_CALL(*mock, Post(_, expected_request, expected_form_data))
         .WillOnce([assertion, post_response]() {
           auto response = std::make_unique<MockRestResponse>();
           EXPECT_CALL(*response, StatusCode)

@@ -60,8 +60,9 @@ StatusOr<GetJobResponse> DefaultBigQueryJobRestStub::GetJob(
   auto rest_request = PrepareRestRequest<GetJobRequest>(rest_context, request);
 
   // Call the rest stub and parse the RestResponse.
+  rest_internal::RestContext context;
   return ParseFromRestResponse<GetJobResponse>(
-      rest_stub_->Get(std::move(*rest_request)));
+      rest_stub_->Get(context, std::move(*rest_request)));
 }
 
 StatusOr<ListJobsResponse> DefaultBigQueryJobRestStub::ListJobs(
@@ -71,8 +72,9 @@ StatusOr<ListJobsResponse> DefaultBigQueryJobRestStub::ListJobs(
       PrepareRestRequest<ListJobsRequest>(rest_context, request);
 
   // Call the rest stub and parse the RestResponse.
+  rest_internal::RestContext context;
   return ParseFromRestResponse<ListJobsResponse>(
-      rest_stub_->Get(std::move(*rest_request)));
+      rest_stub_->Get(context, std::move(*rest_request)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

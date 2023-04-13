@@ -54,7 +54,10 @@ void MakeBigQueryRpcCall(Options options) {
   RestRequest request;
   request.SetPath("bigquery/v2/projects/bigquery-public-data/datasets");
   request.AddQueryParameter({"maxResults", "10"});
-  auto response = RetryRestRequest([&] { return client->Get(request); });
+  auto response = RetryRestRequest([&] {
+    rest_internal::RestContext context;
+    return client->Get(context, request);
+  });
   ASSERT_STATUS_OK(response);
 
   auto response_payload = std::move(**response).ExtractPayload();
@@ -73,7 +76,10 @@ void MakeStorageRpcCall(Options options) {
   auto client = MakePooledRestClient(endpoint, std::move(options));
   RestRequest request;
   request.SetPath("storage/v1/b/gcp-public-data-landsat");
-  auto response = RetryRestRequest([&] { return client->Get(request); });
+  auto response = RetryRestRequest([&] {
+    rest_internal::RestContext context;
+    return client->Get(context, request);
+  });
   ASSERT_STATUS_OK(response);
 
   auto response_payload = std::move(**response).ExtractPayload();

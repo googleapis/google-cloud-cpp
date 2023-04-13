@@ -136,15 +136,15 @@ TEST(RestStubHelpers, DeleteWithEmptyResponse) {
 
   auto mock_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_client, Delete)
-      .WillOnce([&](RestRequest const& request) {
+      .WillOnce([&](RestContext&, RestRequest const& request) {
         EXPECT_THAT(request.path(), Eq("/v1/delete/"));
         return std::unique_ptr<rest_internal::RestResponse>(mock_200_response);
       })
-      .WillOnce([&](RestRequest const& request) {
+      .WillOnce([&](RestContext&, RestRequest const& request) {
         EXPECT_THAT(request.path(), Eq("/v1/delete/"));
         return Status(StatusCode::kInternal, "Internal Error");
       })
-      .WillOnce([&](RestRequest const& request) {
+      .WillOnce([&](RestContext&, RestRequest const& request) {
         EXPECT_THAT(request.path(), Eq("/v1/delete/"));
         return std::unique_ptr<rest_internal::RestResponse>(mock_403_response);
       });
@@ -186,11 +186,11 @@ TEST(RestStubHelpers, DeleteWithNonEmptyResponse) {
 
   auto mock_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_client, Delete)
-      .WillOnce([&](RestRequest const& request) {
+      .WillOnce([&](RestContext&, RestRequest const& request) {
         EXPECT_THAT(request.path(), Eq("/v1/delete/"));
         return Status(StatusCode::kInternal, "Internal Error");
       })
-      .WillOnce([&](RestRequest const& request) {
+      .WillOnce([&](RestContext&, RestRequest const& request) {
         EXPECT_THAT(request.path(), Eq("/v1/delete/"));
         return std::unique_ptr<rest_internal::RestResponse>(mock_200_response);
       });
@@ -223,13 +223,13 @@ TEST(RestStubHelpers, Get) {
 
   auto mock_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_client, Get)
-      .WillOnce([&](RestRequest const& request) {
+      .WillOnce([&](RestContext&, RestRequest const& request) {
         EXPECT_THAT(request.path(), Eq("/v1/"));
         EXPECT_THAT(request.GetQueryParameter("name"),
                     Contains(proto_request.name()));
         return Status(StatusCode::kInternal, "Internal Error");
       })
-      .WillOnce([&](RestRequest const& request)
+      .WillOnce([&](RestContext&, RestRequest const& request)
                     -> google::cloud::StatusOr<
                         std::unique_ptr<rest_internal::RestResponse>> {
         EXPECT_THAT(request.path(), Eq("/v1/"));
@@ -299,17 +299,17 @@ TEST(RestStubHelpers, Patch) {
 
   auto mock_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_client, Patch)
-      .WillOnce([&](RestRequest const& request,
+      .WillOnce([&](RestContext&, RestRequest const& request,
                     std::vector<absl::Span<char const>> const&) {
         EXPECT_THAT(request.path(), Eq("/v1/"));
         return Status(StatusCode::kInternal, "Internal Error");
       })
-      .WillOnce([&](RestRequest const& request,
+      .WillOnce([&](RestContext& context, RestRequest const& request,
                     std::vector<absl::Span<char const>> const& payload) {
         EXPECT_THAT(request.path(), Eq("/v1/"));
         EXPECT_THAT(request.GetHeader("content-type"),
                     Contains("application/json"));
-        EXPECT_THAT(request.GetHeader("custom"), Contains("header"));
+        EXPECT_THAT(context.GetHeader("custom"), Contains("header"));
         std::string payload_str(payload[0].begin(), payload[0].end());
         EXPECT_THAT(payload_str, Eq(json_request));
         return std::unique_ptr<rest_internal::RestResponse>(mock_200_response);
@@ -349,15 +349,15 @@ TEST(RestStubHelpers, PostWithNonEmptyResponse) {
 
   auto mock_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_client,
-              Post(_, A<std::vector<absl::Span<char const>> const&>()))
-      .WillOnce([&](RestRequest const& request,
+              Post(_, _, A<std::vector<absl::Span<char const>> const&>()))
+      .WillOnce([&](RestContext&, RestRequest const& request,
                     std::vector<absl::Span<char const>> const&) {
         EXPECT_THAT(request.path(), Eq("/v1/"));
         EXPECT_THAT(request.GetQueryParameter("name"),
                     Contains(proto_request.name()));
         return Status(StatusCode::kInternal, "Internal Error");
       })
-      .WillOnce([&](RestRequest const& request,
+      .WillOnce([&](RestContext&, RestRequest const& request,
                     std::vector<absl::Span<char const>> const& payload)
                     -> google::cloud::StatusOr<
                         std::unique_ptr<rest_internal::RestResponse>> {
@@ -406,15 +406,15 @@ TEST(RestStubHelpers, PostWithEmptyResponse) {
 
   auto mock_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_client,
-              Post(_, A<std::vector<absl::Span<char const>> const&>()))
-      .WillOnce([&](RestRequest const& request,
+              Post(_, _, A<std::vector<absl::Span<char const>> const&>()))
+      .WillOnce([&](RestContext&, RestRequest const& request,
                     std::vector<absl::Span<char const>> const&) {
         EXPECT_THAT(request.path(), Eq("/v1/"));
         EXPECT_THAT(request.GetQueryParameter("name"),
                     Contains(proto_request.name()));
         return Status(StatusCode::kInternal, "Internal Error");
       })
-      .WillOnce([&](RestRequest const& request,
+      .WillOnce([&](RestContext&, RestRequest const& request,
                     std::vector<absl::Span<char const>> const& payload) {
         EXPECT_THAT(request.path(), Eq("/v1/"));
         EXPECT_THAT(request.GetQueryParameter("name"),
@@ -458,14 +458,14 @@ TEST(RestStubHelpers, Put) {
 
   auto mock_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_client, Put)
-      .WillOnce([&](RestRequest const& request,
+      .WillOnce([&](RestContext&, RestRequest const& request,
                     std::vector<absl::Span<char const>> const&) {
         EXPECT_THAT(request.path(), Eq("/v1/"));
         EXPECT_THAT(request.GetHeader("content-type"),
                     Contains("application/json"));
         return Status(StatusCode::kInternal, "Internal Error");
       })
-      .WillOnce([&](RestRequest const& request,
+      .WillOnce([&](RestContext&, RestRequest const& request,
                     std::vector<absl::Span<char const>> const& payload) {
         EXPECT_THAT(request.path(), Eq("/v1/"));
         EXPECT_THAT(request.GetHeader("content-type"),

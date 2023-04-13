@@ -355,7 +355,8 @@ StatusOr<internal::AccessToken> ServiceAccountCredentials::GetTokenOAuth(
   rest_internal::RestRequest request;
   request.SetPath(options_.get<ServiceAccountCredentialsTokenUriOption>());
   auto payload = CreateServiceAccountRefreshPayload(info_, tp);
-  auto response = client->Post(request, payload);
+  rest_internal::RestContext context;
+  auto response = client->Post(context, request, payload);
   if (!response) return std::move(response).status();
   if (IsHttpError(**response)) return AsStatus(std::move(**response));
   return ParseServiceAccountRefreshResponse(**response, tp);

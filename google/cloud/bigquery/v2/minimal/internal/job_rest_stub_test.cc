@@ -35,6 +35,7 @@ using ::google::cloud::testing_util::MockHttpPayload;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
 using ::testing::An;
 using ::testing::ByMove;
 using ::testing::Eq;
@@ -78,7 +79,7 @@ TEST(BigQueryJobStubTest, GetJobSuccess) {
           Return(ByMove(MakeMockHttpPayloadSuccess(job_response_payload))));
 
   auto mock_rest_client = std::make_unique<MockRestClient>();
-  EXPECT_CALL(*mock_rest_client, Get(An<rest::RestRequest const&>()))
+  EXPECT_CALL(*mock_rest_client, Get(_, An<rest::RestRequest const&>()))
       .WillOnce(Return(ByMove(
           std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));
 
@@ -98,7 +99,7 @@ TEST(BigQueryJobStubTest, GetJobSuccess) {
 TEST(BigQueryJobStubTest, GetJobRestClientError) {
   // Get() fails.
   auto mock_rest_client = std::make_unique<MockRestClient>();
-  EXPECT_CALL(*mock_rest_client, Get(An<rest::RestRequest const&>()))
+  EXPECT_CALL(*mock_rest_client, Get(_, An<rest::RestRequest const&>()))
       .WillOnce(
           Return(rest::AsStatus(HttpStatusCode::kInternalServerError, "")));
 
@@ -122,7 +123,7 @@ TEST(BigQueryJobStubTest, GetJobRestResponseError) {
 
   // Get() is successful.
   auto mock_rest_client = std::make_unique<MockRestClient>();
-  EXPECT_CALL(*mock_rest_client, Get(An<rest::RestRequest const&>()))
+  EXPECT_CALL(*mock_rest_client, Get(_, An<rest::RestRequest const&>()))
       .WillOnce(Return(ByMove(
           std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));
 
@@ -165,7 +166,7 @@ TEST(BigQueryJobStubTest, ListJobsSuccess) {
           Return(ByMove(MakeMockHttpPayloadSuccess(job_response_payload))));
 
   auto mock_rest_client = std::make_unique<MockRestClient>();
-  EXPECT_CALL(*mock_rest_client, Get(An<rest::RestRequest const&>()))
+  EXPECT_CALL(*mock_rest_client, Get(_, An<rest::RestRequest const&>()))
       .WillOnce(Return(ByMove(
           std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));
 
@@ -181,7 +182,7 @@ TEST(BigQueryJobStubTest, ListJobsSuccess) {
 
 TEST(BigQueryJobStubTest, ListJobsRestClientError) {
   auto mock_rest_client = std::make_unique<MockRestClient>();
-  EXPECT_CALL(*mock_rest_client, Get(An<rest::RestRequest const&>()))
+  EXPECT_CALL(*mock_rest_client, Get(_, An<rest::RestRequest const&>()))
       .WillOnce(
           Return(rest::AsStatus(HttpStatusCode::kInternalServerError, "")));
 
@@ -203,7 +204,7 @@ TEST(BigQueryJobStubTest, ListJobsRestResponseError) {
       .WillOnce(Return(std::move(mock_payload)));
 
   auto mock_rest_client = std::make_unique<MockRestClient>();
-  EXPECT_CALL(*mock_rest_client, Get(An<rest::RestRequest const&>()))
+  EXPECT_CALL(*mock_rest_client, Get(_, An<rest::RestRequest const&>()))
       .WillOnce(Return(ByMove(
           std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));
 

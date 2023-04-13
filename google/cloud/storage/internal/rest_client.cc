@@ -186,8 +186,9 @@ StatusOr<ListBucketsResponse> RestClient::ListBuckets(
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
   builder.AddQueryParameter("project", request.project_id());
+  rest_internal::RestContext context;
   return ParseFromRestResponse<ListBucketsResponse>(
-      storage_rest_client_->Get(std::move(builder).BuildRequest()));
+      storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
 StatusOr<BucketMetadata> RestClient::CreateBucket(
@@ -201,9 +202,10 @@ StatusOr<BucketMetadata> RestClient::CreateBucket(
   builder.AddQueryParameter("project", request.project_id());
   builder.AddHeader("Content-Type", "application/json");
   auto payload = request.json_payload();
-  auto response =
-      CheckedFromString<BucketMetadataParser>(storage_rest_client_->Post(
-          std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
+  rest_internal::RestContext context;
+  auto response = CheckedFromString<BucketMetadataParser>(
+      storage_rest_client_->Post(context, std::move(builder).BuildRequest(),
+                                 {absl::MakeConstSpan(payload)}));
   // GCS returns a 409 when buckets already exist:
   //     https://cloud.google.com/storage/docs/json_api/v1/status-codes#409-conflict
   // This seems to be the only case where kAlreadyExists is a better match
@@ -224,8 +226,9 @@ StatusOr<BucketMetadata> RestClient::GetBucketMetadata(
   auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
+  rest_internal::RestContext context;
   return CheckedFromString<BucketMetadataParser>(
-      storage_rest_client_->Get(std::move(builder).BuildRequest()));
+      storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
 StatusOr<EmptyResponse> RestClient::DeleteBucket(
@@ -237,8 +240,9 @@ StatusOr<EmptyResponse> RestClient::DeleteBucket(
   auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
+  rest_internal::RestContext context;
   return ReturnEmptyResponse(
-      storage_rest_client_->Delete(std::move(builder).BuildRequest()));
+      storage_rest_client_->Delete(context, std::move(builder).BuildRequest()));
 }
 
 StatusOr<BucketMetadata> RestClient::UpdateBucket(
@@ -252,8 +256,10 @@ StatusOr<BucketMetadata> RestClient::UpdateBucket(
   request.AddOptionsToHttpRequest(builder);
   builder.AddHeader("Content-Type", "application/json");
   auto payload = request.json_payload();
-  return CheckedFromString<BucketMetadataParser>(storage_rest_client_->Put(
-      std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
+  rest_internal::RestContext context;
+  return CheckedFromString<BucketMetadataParser>(
+      storage_rest_client_->Put(context, std::move(builder).BuildRequest(),
+                                {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<BucketMetadata> RestClient::PatchBucket(
@@ -267,8 +273,10 @@ StatusOr<BucketMetadata> RestClient::PatchBucket(
   request.AddOptionsToHttpRequest(builder);
   builder.AddHeader("Content-Type", "application/json");
   auto payload = request.payload();
-  return CheckedFromString<BucketMetadataParser>(storage_rest_client_->Patch(
-      std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
+  rest_internal::RestContext context;
+  return CheckedFromString<BucketMetadataParser>(
+      storage_rest_client_->Patch(context, std::move(builder).BuildRequest(),
+                                  {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<NativeIamPolicy> RestClient::GetNativeBucketIamPolicy(
@@ -280,8 +288,9 @@ StatusOr<NativeIamPolicy> RestClient::GetNativeBucketIamPolicy(
   auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
+  rest_internal::RestContext context;
   return CreateFromJson<NativeIamPolicy>(
-      storage_rest_client_->Get(std::move(builder).BuildRequest()));
+      storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
 StatusOr<NativeIamPolicy> RestClient::SetNativeBucketIamPolicy(
@@ -295,8 +304,10 @@ StatusOr<NativeIamPolicy> RestClient::SetNativeBucketIamPolicy(
   request.AddOptionsToHttpRequest(builder);
   builder.AddHeader("Content-Type", "application/json");
   auto const& payload = request.json_payload();
-  return CreateFromJson<NativeIamPolicy>(storage_rest_client_->Put(
-      std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
+  rest_internal::RestContext context;
+  return CreateFromJson<NativeIamPolicy>(
+      storage_rest_client_->Put(context, std::move(builder).BuildRequest(),
+                                {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<TestBucketIamPermissionsResponse> RestClient::TestBucketIamPermissions(
@@ -311,8 +322,9 @@ StatusOr<TestBucketIamPermissionsResponse> RestClient::TestBucketIamPermissions(
     builder.AddQueryParameter("permissions", p);
   }
   request.AddOptionsToHttpRequest(builder);
+  rest_internal::RestContext context;
   return ParseFromRestResponse<TestBucketIamPermissionsResponse>(
-      storage_rest_client_->Get(std::move(builder).BuildRequest()));
+      storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
 StatusOr<BucketMetadata> RestClient::LockBucketRetentionPolicy(
@@ -326,8 +338,10 @@ StatusOr<BucketMetadata> RestClient::LockBucketRetentionPolicy(
   request.AddOptionsToHttpRequest(builder);
   builder.AddHeader("Content-Type", "application/json");
   builder.AddOption(IfMetagenerationMatch(request.metageneration()));
-  return CheckedFromString<BucketMetadataParser>(storage_rest_client_->Post(
-      std::move(builder).BuildRequest(), {absl::MakeConstSpan(std::string{})}));
+  rest_internal::RestContext context;
+  return CheckedFromString<BucketMetadataParser>(
+      storage_rest_client_->Post(context, std::move(builder).BuildRequest(),
+                                 {absl::MakeConstSpan(std::string{})}));
 }
 
 std::string RestClient::MakeBoundary() {
@@ -397,8 +411,9 @@ StatusOr<ObjectMetadata> RestClient::InsertObjectMediaMultipart(
   auto trailer = crlf + marker + "--" + crlf;
 
   // 6. Return the results as usual.
+  rest_internal::RestContext context;
   return CheckedFromString<ObjectMetadataParser>(storage_rest_client_->Post(
-      std::move(builder).BuildRequest(),
+      context, std::move(builder).BuildRequest(),
       {absl::MakeConstSpan(header), absl::MakeConstSpan(request.payload()),
        absl::MakeConstSpan(trailer)}));
 }
@@ -424,8 +439,9 @@ StatusOr<ObjectMetadata> RestClient::InsertObjectMediaSimple(
   }
   builder.AddQueryParameter("uploadType", "media");
   builder.AddQueryParameter("name", request.object_name());
+  rest_internal::RestContext context;
   return CheckedFromString<ObjectMetadataParser>(
-      storage_rest_client_->Post(std::move(builder).BuildRequest(),
+      storage_rest_client_->Post(context, std::move(builder).BuildRequest(),
                                  {absl::MakeConstSpan(request.payload())}));
 }
 
@@ -469,8 +485,10 @@ StatusOr<ObjectMetadata> RestClient::CopyObject(
                        .dump();
   }
 
-  return CheckedFromString<ObjectMetadataParser>(storage_rest_client_->Post(
-      std::move(builder).BuildRequest(), {absl::MakeConstSpan(json_payload)}));
+  rest_internal::RestContext context;
+  return CheckedFromString<ObjectMetadataParser>(
+      storage_rest_client_->Post(context, std::move(builder).BuildRequest(),
+                                 {absl::MakeConstSpan(json_payload)}));
 }
 
 StatusOr<ObjectMetadata> RestClient::GetObjectMetadata(
@@ -482,8 +500,9 @@ StatusOr<ObjectMetadata> RestClient::GetObjectMetadata(
   auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
+  rest_internal::RestContext context;
   return CheckedFromString<ObjectMetadataParser>(
-      storage_rest_client_->Get(std::move(builder).BuildRequest()));
+      storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
 StatusOr<std::unique_ptr<ObjectReadSource>> RestClient::ReadObject(
@@ -504,7 +523,9 @@ StatusOr<std::unique_ptr<ObjectReadSource>> RestClient::ReadObject(
     builder.AddHeader("Cache-Control", "no-transform");
   }
 
-  auto response = storage_rest_client_->Get(std::move(builder).BuildRequest());
+  rest_internal::RestContext context;
+  auto response =
+      storage_rest_client_->Get(context, std::move(builder).BuildRequest());
   if (!response.ok()) return response.status();
   if (IsHttpError(**response)) return rest::AsStatus(std::move(**response));
   return std::unique_ptr<ObjectReadSource>(
@@ -521,8 +542,9 @@ StatusOr<ListObjectsResponse> RestClient::ListObjects(
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
   builder.AddQueryParameter("pageToken", request.page_token());
+  rest_internal::RestContext context;
   return ParseFromRestResponse<ListObjectsResponse>(
-      storage_rest_client_->Get(std::move(builder).BuildRequest()));
+      storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
 StatusOr<EmptyResponse> RestClient::DeleteObject(
@@ -534,8 +556,9 @@ StatusOr<EmptyResponse> RestClient::DeleteObject(
   auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
+  rest_internal::RestContext context;
   return ReturnEmptyResponse(
-      storage_rest_client_->Delete(std::move(builder).BuildRequest()));
+      storage_rest_client_->Delete(context, std::move(builder).BuildRequest()));
 }
 
 StatusOr<ObjectMetadata> RestClient::UpdateObject(
@@ -549,8 +572,10 @@ StatusOr<ObjectMetadata> RestClient::UpdateObject(
   request.AddOptionsToHttpRequest(builder);
   builder.AddHeader("Content-Type", "application/json");
   auto payload = request.json_payload();
-  return CheckedFromString<ObjectMetadataParser>(storage_rest_client_->Put(
-      std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
+  rest_internal::RestContext context;
+  return CheckedFromString<ObjectMetadataParser>(
+      storage_rest_client_->Put(context, std::move(builder).BuildRequest(),
+                                {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<ObjectMetadata> RestClient::PatchObject(
@@ -564,8 +589,10 @@ StatusOr<ObjectMetadata> RestClient::PatchObject(
   request.AddOptionsToHttpRequest(builder);
   builder.AddHeader("Content-Type", "application/json");
   auto payload = request.payload();
-  return CheckedFromString<ObjectMetadataParser>(storage_rest_client_->Patch(
-      std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
+  rest_internal::RestContext context;
+  return CheckedFromString<ObjectMetadataParser>(
+      storage_rest_client_->Patch(context, std::move(builder).BuildRequest(),
+                                  {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<ObjectMetadata> RestClient::ComposeObject(
@@ -580,8 +607,10 @@ StatusOr<ObjectMetadata> RestClient::ComposeObject(
   request.AddOptionsToHttpRequest(builder);
   builder.AddHeader("Content-Type", "application/json");
   auto payload = request.JsonPayload();
-  return CheckedFromString<ObjectMetadataParser>(storage_rest_client_->Post(
-      std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
+  rest_internal::RestContext context;
+  return CheckedFromString<ObjectMetadataParser>(
+      storage_rest_client_->Post(context, std::move(builder).BuildRequest(),
+                                 {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<RewriteObjectResponse> RestClient::RewriteObject(
@@ -606,8 +635,9 @@ StatusOr<RewriteObjectResponse> RestClient::RewriteObject(
                        .dump();
   }
 
+  rest_internal::RestContext context;
   return ParseFromRestResponse<RewriteObjectResponse>(
-      storage_rest_client_->Post(std::move(builder).BuildRequest(),
+      storage_rest_client_->Post(context, std::move(builder).BuildRequest(),
                                  {absl::MakeConstSpan(json_payload)}));
 }
 
@@ -651,8 +681,9 @@ StatusOr<CreateResumableUploadResponse> RestClient::CreateResumableUpload(
   std::string request_payload;
   if (!resource.empty()) request_payload = resource.dump();
 
+  rest_internal::RestContext context;
   return ParseFromRestResponse<CreateResumableUploadResponse>(
-      storage_rest_client_->Post(std::move(builder).BuildRequest(),
+      storage_rest_client_->Post(context, std::move(builder).BuildRequest(),
                                  {absl::MakeConstSpan(request_payload)}));
 }
 
@@ -671,8 +702,9 @@ StatusOr<QueryResumableUploadResponse> RestClient::QueryResumableUpload(
             code >= rest::HttpStatusCode::kMinNotSuccess);
   };
 
+  rest_internal::RestContext context;
   return ParseFromRestResponse<QueryResumableUploadResponse>(
-      storage_rest_client_->Put(std::move(builder).BuildRequest(), {}),
+      storage_rest_client_->Put(context, std::move(builder).BuildRequest(), {}),
       failure_predicate);
 }
 
@@ -689,8 +721,9 @@ StatusOr<EmptyResponse> RestClient::DeleteResumableUpload(
             code >= rest::HttpStatusCode::kMinNotSuccess);
   };
 
+  rest_internal::RestContext context;
   return ReturnEmptyResponse(
-      storage_rest_client_->Delete(std::move(builder).BuildRequest()),
+      storage_rest_client_->Delete(context, std::move(builder).BuildRequest()),
       failure_predicate);
 }
 
@@ -719,8 +752,9 @@ StatusOr<QueryResumableUploadResponse> RestClient::UploadChunk(
             code >= rest::HttpStatusCode::kMinNotSuccess);
   };
 
+  rest_internal::RestContext context;
   return ParseFromRestResponse<QueryResumableUploadResponse>(
-      storage_rest_client_->Put(std::move(builder).BuildRequest(),
+      storage_rest_client_->Put(context, std::move(builder).BuildRequest(),
                                 request.payload()),
       failure_predicate);
 }
@@ -734,8 +768,9 @@ StatusOr<ListBucketAclResponse> RestClient::ListBucketAcl(
   auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
+  rest_internal::RestContext context;
   return ParseFromRestResponse<ListBucketAclResponse>(
-      storage_rest_client_->Get(std::move(builder).BuildRequest()));
+      storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
 StatusOr<BucketAccessControl> RestClient::GetBucketAcl(
@@ -747,8 +782,9 @@ StatusOr<BucketAccessControl> RestClient::GetBucketAcl(
   auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
+  rest_internal::RestContext context;
   return CheckedFromString<BucketAccessControlParser>(
-      storage_rest_client_->Get(std::move(builder).BuildRequest()));
+      storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
 StatusOr<BucketAccessControl> RestClient::CreateBucketAcl(
@@ -765,8 +801,9 @@ StatusOr<BucketAccessControl> RestClient::CreateBucketAcl(
   object["entity"] = request.entity();
   object["role"] = request.role();
   auto payload = object.dump();
+  rest_internal::RestContext context;
   return CheckedFromString<BucketAccessControlParser>(
-      storage_rest_client_->Post(std::move(builder).BuildRequest(),
+      storage_rest_client_->Post(context, std::move(builder).BuildRequest(),
                                  {absl::MakeConstSpan(payload)}));
 }
 
@@ -779,8 +816,9 @@ StatusOr<EmptyResponse> RestClient::DeleteBucketAcl(
   auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
+  rest_internal::RestContext context;
   return ReturnEmptyResponse(
-      storage_rest_client_->Delete(std::move(builder).BuildRequest()));
+      storage_rest_client_->Delete(context, std::move(builder).BuildRequest()));
 }
 
 StatusOr<BucketAccessControl> RestClient::UpdateBucketAcl(
@@ -797,8 +835,10 @@ StatusOr<BucketAccessControl> RestClient::UpdateBucketAcl(
   object["entity"] = request.entity();
   object["role"] = request.role();
   auto payload = object.dump();
-  return CheckedFromString<BucketAccessControlParser>(storage_rest_client_->Put(
-      std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
+  rest_internal::RestContext context;
+  return CheckedFromString<BucketAccessControlParser>(
+      storage_rest_client_->Put(context, std::move(builder).BuildRequest(),
+                                {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<BucketAccessControl> RestClient::PatchBucketAcl(
@@ -812,8 +852,9 @@ StatusOr<BucketAccessControl> RestClient::PatchBucketAcl(
   request.AddOptionsToHttpRequest(builder);
   builder.AddHeader("Content-Type", "application/json");
   auto payload = request.payload();
+  rest_internal::RestContext context;
   return CheckedFromString<BucketAccessControlParser>(
-      storage_rest_client_->Patch(std::move(builder).BuildRequest(),
+      storage_rest_client_->Patch(context, std::move(builder).BuildRequest(),
                                   {absl::MakeConstSpan(payload)}));
 }
 
@@ -827,8 +868,9 @@ StatusOr<ListObjectAclResponse> RestClient::ListObjectAcl(
   auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
+  rest_internal::RestContext context;
   return ParseFromRestResponse<ListObjectAclResponse>(
-      storage_rest_client_->Get(std::move(builder).BuildRequest()));
+      storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
 StatusOr<ObjectAccessControl> RestClient::CreateObjectAcl(
@@ -846,8 +888,9 @@ StatusOr<ObjectAccessControl> RestClient::CreateObjectAcl(
   object["entity"] = request.entity();
   object["role"] = request.role();
   auto payload = object.dump();
+  rest_internal::RestContext context;
   return CheckedFromString<ObjectAccessControlParser>(
-      storage_rest_client_->Post(std::move(builder).BuildRequest(),
+      storage_rest_client_->Post(context, std::move(builder).BuildRequest(),
                                  {absl::MakeConstSpan(payload)}));
 }
 
@@ -861,8 +904,9 @@ StatusOr<EmptyResponse> RestClient::DeleteObjectAcl(
   auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
+  rest_internal::RestContext context;
   return ReturnEmptyResponse(
-      storage_rest_client_->Delete(std::move(builder).BuildRequest()));
+      storage_rest_client_->Delete(context, std::move(builder).BuildRequest()));
 }
 
 StatusOr<ObjectAccessControl> RestClient::GetObjectAcl(
@@ -875,8 +919,9 @@ StatusOr<ObjectAccessControl> RestClient::GetObjectAcl(
   auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
+  rest_internal::RestContext context;
   return CheckedFromString<ObjectAccessControlParser>(
-      storage_rest_client_->Get(std::move(builder).BuildRequest()));
+      storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
 StatusOr<ObjectAccessControl> RestClient::UpdateObjectAcl(
@@ -894,8 +939,10 @@ StatusOr<ObjectAccessControl> RestClient::UpdateObjectAcl(
   object["entity"] = request.entity();
   object["role"] = request.role();
   auto payload = object.dump();
-  return CheckedFromString<ObjectAccessControlParser>(storage_rest_client_->Put(
-      std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
+  rest_internal::RestContext context;
+  return CheckedFromString<ObjectAccessControlParser>(
+      storage_rest_client_->Put(context, std::move(builder).BuildRequest(),
+                                {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<ObjectAccessControl> RestClient::PatchObjectAcl(
@@ -910,8 +957,9 @@ StatusOr<ObjectAccessControl> RestClient::PatchObjectAcl(
   request.AddOptionsToHttpRequest(builder);
   builder.AddHeader("Content-Type", "application/json");
   auto payload = request.payload();
+  rest_internal::RestContext context;
   return CheckedFromString<ObjectAccessControlParser>(
-      storage_rest_client_->Patch(std::move(builder).BuildRequest(),
+      storage_rest_client_->Patch(context, std::move(builder).BuildRequest(),
                                   {absl::MakeConstSpan(payload)}));
 }
 
@@ -924,8 +972,9 @@ StatusOr<ListDefaultObjectAclResponse> RestClient::ListDefaultObjectAcl(
   auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
+  rest_internal::RestContext context;
   return ParseFromRestResponse<ListDefaultObjectAclResponse>(
-      storage_rest_client_->Get(std::move(builder).BuildRequest()));
+      storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
 StatusOr<ObjectAccessControl> RestClient::CreateDefaultObjectAcl(
@@ -942,8 +991,9 @@ StatusOr<ObjectAccessControl> RestClient::CreateDefaultObjectAcl(
   object["entity"] = request.entity();
   object["role"] = request.role();
   auto payload = object.dump();
+  rest_internal::RestContext context;
   return CheckedFromString<ObjectAccessControlParser>(
-      storage_rest_client_->Post(std::move(builder).BuildRequest(),
+      storage_rest_client_->Post(context, std::move(builder).BuildRequest(),
                                  {absl::MakeConstSpan(payload)}));
 }
 
@@ -957,8 +1007,9 @@ StatusOr<EmptyResponse> RestClient::DeleteDefaultObjectAcl(
   auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
+  rest_internal::RestContext context;
   return ReturnEmptyResponse(
-      storage_rest_client_->Delete(std::move(builder).BuildRequest()));
+      storage_rest_client_->Delete(context, std::move(builder).BuildRequest()));
 }
 
 StatusOr<ObjectAccessControl> RestClient::GetDefaultObjectAcl(
@@ -971,8 +1022,9 @@ StatusOr<ObjectAccessControl> RestClient::GetDefaultObjectAcl(
   auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
+  rest_internal::RestContext context;
   return CheckedFromString<ObjectAccessControlParser>(
-      storage_rest_client_->Get(std::move(builder).BuildRequest()));
+      storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
 StatusOr<ObjectAccessControl> RestClient::UpdateDefaultObjectAcl(
@@ -990,8 +1042,10 @@ StatusOr<ObjectAccessControl> RestClient::UpdateDefaultObjectAcl(
   object["entity"] = request.entity();
   object["role"] = request.role();
   auto payload = object.dump();
-  return CheckedFromString<ObjectAccessControlParser>(storage_rest_client_->Put(
-      std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
+  rest_internal::RestContext context;
+  return CheckedFromString<ObjectAccessControlParser>(
+      storage_rest_client_->Put(context, std::move(builder).BuildRequest(),
+                                {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<ObjectAccessControl> RestClient::PatchDefaultObjectAcl(
@@ -1006,8 +1060,9 @@ StatusOr<ObjectAccessControl> RestClient::PatchDefaultObjectAcl(
   request.AddOptionsToHttpRequest(builder);
   builder.AddHeader("Content-Type", "application/json");
   auto payload = request.payload();
+  rest_internal::RestContext context;
   return CheckedFromString<ObjectAccessControlParser>(
-      storage_rest_client_->Patch(std::move(builder).BuildRequest(),
+      storage_rest_client_->Patch(context, std::move(builder).BuildRequest(),
                                   {absl::MakeConstSpan(payload)}));
 }
 
@@ -1020,8 +1075,9 @@ StatusOr<ServiceAccount> RestClient::GetServiceAccount(
   auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
+  rest_internal::RestContext context;
   return CheckedFromString<ServiceAccountParser>(
-      storage_rest_client_->Get(std::move(builder).BuildRequest()));
+      storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
 StatusOr<ListHmacKeysResponse> RestClient::ListHmacKeys(
@@ -1033,8 +1089,9 @@ StatusOr<ListHmacKeysResponse> RestClient::ListHmacKeys(
   auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
+  rest_internal::RestContext context;
   return ParseFromRestResponse<ListHmacKeysResponse>(
-      storage_rest_client_->Get(std::move(builder).BuildRequest()));
+      storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
 StatusOr<CreateHmacKeyResponse> RestClient::CreateHmacKey(
@@ -1047,9 +1104,10 @@ StatusOr<CreateHmacKeyResponse> RestClient::CreateHmacKey(
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
   builder.AddQueryParameter("serviceAccountEmail", request.service_account());
+  rest_internal::RestContext context;
   return ParseFromRestResponse<CreateHmacKeyResponse>(
       storage_rest_client_->Post(
-          std::move(builder).BuildRequest(),
+          context, std::move(builder).BuildRequest(),
           std::vector<std::pair<std::string, std::string>>{}));
 }
 
@@ -1062,8 +1120,9 @@ StatusOr<EmptyResponse> RestClient::DeleteHmacKey(
   auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
+  rest_internal::RestContext context;
   return ReturnEmptyResponse(
-      storage_rest_client_->Delete(std::move(builder).BuildRequest()));
+      storage_rest_client_->Delete(context, std::move(builder).BuildRequest()));
 }
 
 StatusOr<HmacKeyMetadata> RestClient::GetHmacKey(
@@ -1075,8 +1134,9 @@ StatusOr<HmacKeyMetadata> RestClient::GetHmacKey(
   auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
+  rest_internal::RestContext context;
   return CheckedFromString<HmacKeyMetadataParser>(
-      storage_rest_client_->Get(std::move(builder).BuildRequest()));
+      storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
 StatusOr<HmacKeyMetadata> RestClient::UpdateHmacKey(
@@ -1097,8 +1157,10 @@ StatusOr<HmacKeyMetadata> RestClient::UpdateHmacKey(
   }
   builder.AddHeader("Content-Type", "application/json");
   auto payload = json_payload.dump();
-  return CheckedFromString<HmacKeyMetadataParser>(storage_rest_client_->Put(
-      std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
+  rest_internal::RestContext context;
+  return CheckedFromString<HmacKeyMetadataParser>(
+      storage_rest_client_->Put(context, std::move(builder).BuildRequest(),
+                                {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<SignBlobResponse> RestClient::SignBlob(
@@ -1115,8 +1177,10 @@ StatusOr<SignBlobResponse> RestClient::SignBlob(
   }
   builder.AddHeader("Content-Type", "application/json");
   auto payload = json_payload.dump();
-  return ParseFromRestResponse<SignBlobResponse>(iam_rest_client_->Post(
-      std::move(builder).BuildRequest(), {absl::MakeConstSpan(payload)}));
+  rest_internal::RestContext context;
+  return ParseFromRestResponse<SignBlobResponse>(
+      iam_rest_client_->Post(context, std::move(builder).BuildRequest(),
+                             {absl::MakeConstSpan(payload)}));
 }
 
 StatusOr<ListNotificationsResponse> RestClient::ListNotifications(
@@ -1128,8 +1192,9 @@ StatusOr<ListNotificationsResponse> RestClient::ListNotifications(
   auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
+  rest_internal::RestContext context;
   return ParseFromRestResponse<ListNotificationsResponse>(
-      storage_rest_client_->Get(std::move(builder).BuildRequest()));
+      storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
 StatusOr<NotificationMetadata> RestClient::CreateNotification(
@@ -1143,8 +1208,9 @@ StatusOr<NotificationMetadata> RestClient::CreateNotification(
   request.AddOptionsToHttpRequest(builder);
   builder.AddHeader("Content-Type", "application/json");
   auto payload = request.json_payload();
+  rest_internal::RestContext context;
   return CheckedFromString<NotificationMetadataParser>(
-      storage_rest_client_->Post(std::move(builder).BuildRequest(),
+      storage_rest_client_->Post(context, std::move(builder).BuildRequest(),
                                  {absl::MakeConstSpan(payload)}));
 }
 
@@ -1158,8 +1224,9 @@ StatusOr<NotificationMetadata> RestClient::GetNotification(
   auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
+  rest_internal::RestContext context;
   return CheckedFromString<NotificationMetadataParser>(
-      storage_rest_client_->Get(std::move(builder).BuildRequest()));
+      storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
 
 StatusOr<EmptyResponse> RestClient::DeleteNotification(
@@ -1172,8 +1239,9 @@ StatusOr<EmptyResponse> RestClient::DeleteNotification(
   auto auth = AddAuthorizationHeader(current, builder);
   if (!auth.ok()) return auth;
   request.AddOptionsToHttpRequest(builder);
+  rest_internal::RestContext context;
   return ReturnEmptyResponse(
-      storage_rest_client_->Delete(std::move(builder).BuildRequest()));
+      storage_rest_client_->Delete(context, std::move(builder).BuildRequest()));
 }
 
 }  // namespace internal

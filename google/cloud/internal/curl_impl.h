@@ -18,6 +18,7 @@
 #include "google/cloud/internal/curl_handle.h"
 #include "google/cloud/internal/curl_handle_factory.h"
 #include "google/cloud/internal/curl_wrappers.h"
+#include "google/cloud/internal/rest_context.h"
 #include "google/cloud/internal/rest_request.h"
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/options.h"
@@ -80,7 +81,7 @@ class CurlImpl {
 
   void SetHeader(std::string const& header);
   void SetHeader(std::pair<std::string, std::string> const& header);
-  void SetHeaders(RestRequest const& request);
+  void SetHeaders(RestContext const& context, RestRequest const& request);
 
   std::string MakeEscapedString(std::string const& s);
 
