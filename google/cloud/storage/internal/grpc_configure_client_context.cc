@@ -29,10 +29,13 @@ void ApplyRoutingHeaders(
 
 void ApplyRoutingHeaders(grpc::ClientContext& context,
                          storage::internal::UploadChunkRequest const& request) {
-  static auto* bucket_regex =
+  static auto* slash_format =
       new std::regex{"(projects/[^/]+/buckets/[^/]+)/.*", std::regex::optimize};
-  std::smatch match;
-  if (std::regex_match(request.upload_session_url(), match, *bucket_regex)) {
+  static auto* colon_format =
+      new std::regex{"(projects/[^/]+/buckets/[^:]+):.*", std::regex::optimize};
+  for (auto const* re : {slash_format, colon_format}) {
+    std::smatch match;
+    if (!std::regex_match(request.upload_session_url(), match, *re)) continue;
     context.AddMetadata("x-goog-request-params", "bucket=" + match[1].str());
   }
 }
