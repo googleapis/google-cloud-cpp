@@ -194,26 +194,25 @@ StatusOr<DiscoveryTypeVertex> SynthesizeRequestType(
   auto const& request_iter = method_json.find("request");
   if (request_iter != method_json.end()) {
     auto const& ref_iter = request_iter->find("$ref");
-    if (ref_iter != request_iter->end()) {
-      std::string request_resource_field_name =
-          CamelCaseToSnakeCase(std::string(*ref_iter));
-      if (!absl::EndsWith(request_resource_field_name, "_resource")) {
-        absl::StrAppend(&request_resource_field_name, "_resource");
-      }
-      synthesized_request["request_resource_field_name"] =
-          request_resource_field_name;
-      synthesized_request["properties"][request_resource_field_name] =
-          method_json["request"];
-      synthesized_request["properties"][request_resource_field_name]
-                         ["description"] = absl::StrFormat(
-                             "The %s for this request.",
-                             std::string((method_json["request"]["$ref"])));
-    } else {
+    if (ref_iter == request_iter->end()) {
       return internal::InvalidArgumentError(
           absl::StrFormat("resource %s has method %s with non $ref request",
                           resource.name(), method_name),
           GCP_ERROR_INFO().WithMetadata("json", method_json.dump()));
     }
+    std::string request_resource_field_name =
+        CamelCaseToSnakeCase(std::string(*ref_iter));
+    if (!absl::EndsWith(request_resource_field_name, "_resource")) {
+      absl::StrAppend(&request_resource_field_name, "_resource");
+    }
+    synthesized_request["request_resource_field_name"] =
+        request_resource_field_name;
+    synthesized_request["properties"][request_resource_field_name] =
+        method_json["request"];
+    synthesized_request["properties"][request_resource_field_name]
+                       ["description"] = absl::StrFormat(
+                           "The %s for this request.",
+                           std::string((method_json["request"]["$ref"])));
   }
 
   return DiscoveryTypeVertex(id, synthesized_request);
