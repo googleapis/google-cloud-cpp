@@ -13,9 +13,11 @@
 // limitations under the License.
 
 #include "generator/internal/discovery_to_proto.h"
+#include "generator/internal/codegen_utils.h"
 #include "generator/internal/discovery_resource.h"
 #include "generator/internal/discovery_type_vertex.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/log.h"
@@ -150,6 +152,71 @@ StatusOr<std::string> DetermineAndVerifyResponseTypeName(
     }
   }
   return response_type_name;
+}
+
+StatusOr<DiscoveryTypeVertex> SynthesizeRequestType(
+    nlohmann::json const& method_json, DiscoveryResource const& resource,
+    std::string const& response_type_name, std::string method_name) {
+  if (!method_json.contains("parameters")) {
+    return internal::InternalError(
+        "method_json does not contain parameters field",
+        GCP_ERROR_INFO()
+            .WithMetadata("resource", resource.name())
+            .WithMetadata("method", method_name)
+            .WithMetadata("json", method_json.dump()));
+  }
+  std::vector<std::string> const operation_request_fields = {"project", "zone",
+                                                             "region"};
+  nlohmann::json synthesized_request;
+  synthesized_request["type"] = "object";
+  synthesized_request["synthesized_request"] = true;
+  synthesized_request["resource"] = resource.name();
+  synthesized_request["method"] = method_name;
+  method_name = resource.FormatMethodName(method_name);
+  std::string id = absl::StrCat(method_name, "Request");
+  synthesized_request["id"] = id;
+  synthesized_request["description"] =
+      absl::StrFormat("Request message for %s.", method_name);
+
+  // add method parameters as properties to new type
+  auto const& params = method_json.find("parameters");
+  for (auto p = params->begin(); p != params->end(); ++p) {
+    std::string const& param_name = p.key();
+    synthesized_request["properties"][param_name] = *p;
+    if (response_type_name == "Operation" &&
+        internal::Contains(operation_request_fields, param_name)) {
+      synthesized_request["properties"][param_name]["operation_request_field"] =
+          true;
+    }
+  }
+
+  // if present add request object
+  auto const& request_iter = method_json.find("request");
+  if (request_iter != method_json.end()) {
+    auto const& ref_iter = request_iter->find("$ref");
+    if (ref_iter != request_iter->end()) {
+      std::string request_resource_field_name =
+          CamelCaseToSnakeCase(std::string(*ref_iter));
+      if (!absl::EndsWith(request_resource_field_name, "_resource")) {
+        absl::StrAppend(&request_resource_field_name, "_resource");
+      }
+      synthesized_request["request_resource_field_name"] =
+          request_resource_field_name;
+      synthesized_request["properties"][request_resource_field_name] =
+          method_json["request"];
+      synthesized_request["properties"][request_resource_field_name]
+                         ["description"] = absl::StrFormat(
+                             "The %s for this request.",
+                             std::string((method_json["request"]["$ref"])));
+    } else {
+      return internal::InvalidArgumentError(
+          absl::StrFormat("resource %s has method %s with non $ref request",
+                          resource.name(), method_name),
+          GCP_ERROR_INFO().WithMetadata("json", method_json.dump()));
+    }
+  }
+
+  return DiscoveryTypeVertex(id, synthesized_request);
 }
 
 Status GenerateProtosFromDiscoveryDoc(std::string const& url,

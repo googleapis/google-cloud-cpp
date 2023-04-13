@@ -43,6 +43,11 @@ StatusOr<std::string> DetermineAndVerifyResponseTypeName(
     nlohmann::json const& method_json, DiscoveryResource& resource,
     std::map<std::string, DiscoveryTypeVertex>& types);
 
+// Creates a type from the method parameters to represent the request.
+StatusOr<DiscoveryTypeVertex> SynthesizeRequestType(
+    nlohmann::json const& method_json, DiscoveryResource const& resource,
+    std::string const& response_type_name, std::string method_name);
+
 Status GenerateProtosFromDiscoveryDoc(std::string const& url,
                                       std::string const& protobuf_proto_path,
                                       std::string const& googleapis_proto_path,
