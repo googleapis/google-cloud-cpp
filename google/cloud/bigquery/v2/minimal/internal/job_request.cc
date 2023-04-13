@@ -88,19 +88,12 @@ std::string GetJobRequest::DebugString(absl::string_view name,
 std::string ListJobsRequest::DebugString(absl::string_view name,
                                          TracingOptions const& options,
                                          int indent) const {
-  auto min_creation_time = min_creation_time_.has_value()
-                               ? min_creation_time_.value()
-                               : kDefaultTimepoint;
-  auto max_creation_time = max_creation_time_.has_value()
-                               ? max_creation_time_.value()
-                               : kDefaultTimepoint;
-
   return internal::DebugFormatter(name, options, indent)
       .StringField("project_id", project_id_)
       .Field("all_users", all_users_)
       .Field("max_results", max_results_)
-      .Field("min_creation_time", min_creation_time)
-      .Field("max_creation_time", max_creation_time)
+      .Field("min_creation_time", *min_creation_time_)
+      .Field("max_creation_time", *max_creation_time_)
       .StringField("page_token", page_token_)
       .SubMessage("projection", projection_)
       .SubMessage("state_filter", state_filter_)
@@ -179,15 +172,13 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
   if (r.max_results() > 0) {
     request.AddQueryParameter("maxResults", std::to_string(r.max_results()));
   }
-  if (r.min_creation_time().has_value()) {
-    request.AddQueryParameter(
-        "minCreationTime",
-        internal::FormatRfc3339(r.min_creation_time().value()));
+  if (r.min_creation_time()) {
+    request.AddQueryParameter("minCreationTime",
+                              internal::FormatRfc3339(*r.min_creation_time()));
   }
-  if (r.max_creation_time().has_value()) {
-    request.AddQueryParameter(
-        "maxCreationTime",
-        internal::FormatRfc3339(r.max_creation_time().value()));
+  if (r.max_creation_time()) {
+    request.AddQueryParameter("maxCreationTime",
+                              internal::FormatRfc3339(*r.max_creation_time()));
   }
 
   auto if_not_empty_add = [&](char const* key, auto const& v) {
