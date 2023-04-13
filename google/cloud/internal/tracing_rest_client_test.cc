@@ -30,6 +30,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::InstallSpanCatcher;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
@@ -39,6 +40,7 @@ using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::testing::AllOf;
+using ::testing::ElementsAreArray;
 using ::testing::Eq;
 using ::testing::NotNull;
 using ::testing::Return;
@@ -77,11 +79,10 @@ TEST(TracingRestClient, Delete) {
   ASSERT_STATUS_OK(r);
   auto response = *std::move(r);
   ASSERT_THAT(response, NotNull());
-  EXPECT_THAT(response->StatusCode(), HttpStatusCode::kOk);
-  EXPECT_THAT(response->Headers(), MockHeaders());
+  EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
+  EXPECT_THAT(response->Headers(), ElementsAreArray(MockHeaders()));
   auto contents = ReadAll(std::move(*response).ExtractPayload());
-  ASSERT_STATUS_OK(contents);
-  EXPECT_THAT(*contents, Eq(MockContents()));
+  EXPECT_THAT(contents, IsOkAndHolds(MockContents()));
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
