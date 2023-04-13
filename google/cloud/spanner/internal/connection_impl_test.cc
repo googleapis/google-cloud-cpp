@@ -459,7 +459,8 @@ TEST(ConnectionImplTest, ReadSuccess) {
   };
   int row_number = 0;
   for (auto& row : spanner::StreamOf<RowType>(rows)) {
-    EXPECT_STATUS_OK(row);
+    ASSERT_STATUS_OK(row);
+    ASSERT_LT(row_number, expected.size());
     EXPECT_EQ(*row, expected[row_number]);
     ++row_number;
   }
@@ -595,7 +596,8 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOneTransientFailure) {
   };
   int row_number = 0;
   for (auto& row : spanner::StreamOf<RowType>(rows)) {
-    EXPECT_STATUS_OK(row);
+    ASSERT_STATUS_OK(row);
+    ASSERT_LT(row_number, expected.size());
     EXPECT_EQ(*row, expected[row_number]);
     ++row_number;
   }
@@ -661,7 +663,8 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOnePermanentFailure) {
   };
   int row_number = 0;
   for (auto& row : spanner::StreamOf<RowType>(rows)) {
-    EXPECT_STATUS_OK(row);
+    ASSERT_STATUS_OK(row);
+    ASSERT_LT(row_number, expected.size());
     EXPECT_EQ(*row, expected[row_number]);
     ++row_number;
   }
@@ -797,7 +800,8 @@ TEST(ConnectionImplTest, ExecuteQueryReadSuccess) {
   };
   int row_number = 0;
   for (auto& row : spanner::StreamOf<RowType>(rows)) {
-    EXPECT_STATUS_OK(row);
+    ASSERT_STATUS_OK(row);
+    ASSERT_LT(row_number, expected.size());
     EXPECT_EQ(*row, expected[row_number]);
     ++row_number;
   }
@@ -845,7 +849,8 @@ TEST(ConnectionImplTest, ExecuteQueryPgNumericResult) {
   };
   int row_number = 0;
   for (auto& row : spanner::StreamOf<RowType>(rows)) {
-    EXPECT_STATUS_OK(row);
+    ASSERT_STATUS_OK(row);
+    ASSERT_LT(row_number, expected.size());
     EXPECT_EQ(*row, expected[row_number]);
     ++row_number;
   }
@@ -892,7 +897,8 @@ TEST(ConnectionImplTest, ExecuteQueryJsonBResult) {
   };
   int row_number = 0;
   for (auto& row : spanner::StreamOf<RowType>(rows)) {
-    EXPECT_STATUS_OK(row);
+    ASSERT_STATUS_OK(row);
+    ASSERT_LT(row_number, expected.size());
     EXPECT_EQ(*row, expected[row_number]);
     ++row_number;
   }
@@ -1475,7 +1481,8 @@ TEST(ConnectionImplTest, ProfileQuerySuccess) {
   };
   int row_number = 0;
   for (auto& row : spanner::StreamOf<RowType>(result)) {
-    EXPECT_STATUS_OK(row);
+    ASSERT_STATUS_OK(row);
+    ASSERT_LT(row_number, expected.size());
     EXPECT_EQ(*row, expected[row_number]);
     ++row_number;
   }
@@ -1695,8 +1702,7 @@ TEST(ConnectionImplTest, AnalyzeSqlSuccess) {
   google::spanner::v1::QueryPlan expected_plan;
   ASSERT_TRUE(TextFormat::ParseFromString(kTextExpectedPlan, &expected_plan));
 
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(*result, IsProtoEqual(expected_plan));
+  EXPECT_THAT(result, IsOkAndHolds(IsProtoEqual(expected_plan)));
 }
 
 TEST(ConnectionImplTest, AnalyzeSqlCreateSessionFailure) {
@@ -1809,10 +1815,10 @@ TEST(ConnectionImplTest, ExecuteBatchDmlSuccess) {
       conn->ExecuteBatchDml({txn, request,
                              Options{}.set<spanner::RequestPriorityOption>(
                                  spanner::RequestPriority::kMedium)});
-  EXPECT_STATUS_OK(result);
+  ASSERT_STATUS_OK(result);
   EXPECT_STATUS_OK(result->status);
   EXPECT_EQ(result->stats.size(), request.size());
-  EXPECT_EQ(result->stats.size(), 3);
+  ASSERT_EQ(result->stats.size(), 3);
   EXPECT_EQ(result->stats[0].row_count, 0);
   EXPECT_EQ(result->stats[1].row_count, 1);
   EXPECT_EQ(result->stats[2].row_count, 2);
@@ -1849,10 +1855,10 @@ TEST(ConnectionImplTest, ExecuteBatchDmlPartialFailure) {
   auto txn = spanner::MakeReadWriteTransaction(
       spanner::Transaction::ReadWriteOptions().WithTag("tag"));
   auto result = conn->ExecuteBatchDml({txn, request});
-  EXPECT_STATUS_OK(result);
+  ASSERT_STATUS_OK(result);
   EXPECT_THAT(result->status, StatusIs(StatusCode::kUnknown, "oops"));
   EXPECT_NE(result->stats.size(), request.size());
-  EXPECT_EQ(result->stats.size(), 2);
+  ASSERT_EQ(result->stats.size(), 2);
   EXPECT_EQ(result->stats[0].row_count, 42);
   EXPECT_EQ(result->stats[1].row_count, 43);
   EXPECT_THAT(
@@ -1954,7 +1960,7 @@ TEST(ConnectionImplTest, ExecuteBatchDmlNoResultSets) {
   internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto txn = spanner::MakeReadWriteTransaction();
   auto result = conn->ExecuteBatchDml({txn, request});
-  EXPECT_STATUS_OK(result);
+  ASSERT_STATUS_OK(result);
   EXPECT_THAT(result->status, StatusIs(StatusCode::kAlreadyExists,
                                        HasSubstr("failed to insert ...")));
 }
@@ -2202,7 +2208,7 @@ TEST(ConnectionImplTest, CommitBeginTransactionRetry) {
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedRetryOptions());
   auto commit = conn->Commit({spanner::MakeReadWriteTransaction()});
-  EXPECT_STATUS_OK(commit);
+  ASSERT_STATUS_OK(commit);
   EXPECT_EQ(commit_timestamp, commit->commit_timestamp);
 }
 
@@ -2306,7 +2312,6 @@ TEST(ConnectionImplTest, CommitCommitInvalidatedTransaction) {
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto commit = conn->Commit({txn});
-  EXPECT_THAT(commit, Not(IsOk()));
   EXPECT_THAT(commit, StatusIs(StatusCode::kAlreadyExists,
                                HasSubstr("constraint error")));
 }
@@ -2332,7 +2337,7 @@ TEST(ConnectionImplTest, CommitCommitIdempotentTransientSuccess) {
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
   auto commit = conn->Commit({txn});
-  EXPECT_STATUS_OK(commit);
+  ASSERT_STATUS_OK(commit);
   EXPECT_EQ(commit_timestamp, commit->commit_timestamp);
 }
 
@@ -2950,7 +2955,7 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
   EXPECT_THAT(txn1,
               HasSessionAndTransaction("session-1", "ABCDEF01", false, ""));
   for (auto& row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
-    EXPECT_STATUS_OK(row);
+    ASSERT_STATUS_OK(row);
     EXPECT_EQ(std::get<0>(*row), 0);
   }
 
@@ -2960,7 +2965,7 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
   EXPECT_THAT(txn2,
               HasSessionAndTransaction("session-2", "ABCDEF02", false, ""));
   for (auto& row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
-    EXPECT_STATUS_OK(row);
+    ASSERT_STATUS_OK(row);
     EXPECT_EQ(std::get<0>(*row), 1);
   }
 
@@ -2968,7 +2973,7 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
   EXPECT_THAT(txn1,
               HasSessionAndTransaction("session-1", "ABCDEF01", false, ""));
   for (auto& row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
-    EXPECT_STATUS_OK(row);
+    ASSERT_STATUS_OK(row);
     EXPECT_EQ(std::get<0>(*row), 2);
   }
 
@@ -2976,7 +2981,7 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
   EXPECT_THAT(txn2,
               HasSessionAndTransaction("session-2", "ABCDEF02", false, ""));
   for (auto& row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
-    EXPECT_STATUS_OK(row);
+    ASSERT_STATUS_OK(row);
     EXPECT_EQ(std::get<0>(*row), 3);
   }
 }

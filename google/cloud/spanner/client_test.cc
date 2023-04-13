@@ -43,6 +43,7 @@ namespace {
 using ::google::cloud::spanner_mocks::MockConnection;
 using ::google::cloud::spanner_mocks::MockResultSetSource;
 using ::google::cloud::spanner_testing::SessionNotFoundError;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
@@ -117,8 +118,8 @@ TEST(ClientTest, ReadSuccess) {
   };
   int row_number = 0;
   for (auto& row : StreamOf<RowType>(rows)) {
-    EXPECT_STATUS_OK(row);
-    EXPECT_EQ(*row, expected[row_number]);
+    ASSERT_LT(row_number, expected.size());
+    EXPECT_THAT(row, IsOkAndHolds(expected[row_number]));
     ++row_number;
   }
   EXPECT_EQ(row_number, expected.size());
@@ -154,12 +155,12 @@ TEST(ClientTest, ReadFailure) {
   auto tups = StreamOf<std::tuple<std::string>>(rows);
   auto iter = tups.begin();
   EXPECT_NE(iter, tups.end());
-  EXPECT_STATUS_OK(*iter);
+  ASSERT_STATUS_OK(*iter);
   EXPECT_EQ(std::get<0>(**iter), "Steve");
 
   ++iter;
   EXPECT_NE(iter, tups.end());
-  EXPECT_STATUS_OK(*iter);
+  ASSERT_STATUS_OK(*iter);
   EXPECT_EQ(std::get<0>(**iter), "Ann");
 
   ++iter;
@@ -204,8 +205,8 @@ TEST(ClientTest, ExecuteQuerySuccess) {
   };
   int row_number = 0;
   for (auto& row : StreamOf<RowType>(rows)) {
-    EXPECT_STATUS_OK(row);
-    EXPECT_EQ(*row, expected[row_number]);
+    ASSERT_LT(row_number, expected.size());
+    EXPECT_THAT(row, IsOkAndHolds(expected[row_number]));
     ++row_number;
   }
   EXPECT_EQ(row_number, expected.size());
@@ -241,12 +242,12 @@ TEST(ClientTest, ExecuteQueryFailure) {
   auto tups = StreamOf<std::tuple<std::string>>(rows);
   auto iter = tups.begin();
   EXPECT_NE(iter, tups.end());
-  EXPECT_STATUS_OK(*iter);
+  ASSERT_STATUS_OK(*iter);
   EXPECT_EQ(std::get<0>(**iter), "Steve");
 
   ++iter;
   EXPECT_NE(iter, tups.end());
-  EXPECT_STATUS_OK(*iter);
+  ASSERT_STATUS_OK(*iter);
   EXPECT_EQ(std::get<0>(**iter), "Ann");
 
   ++iter;
@@ -274,7 +275,7 @@ TEST(ClientTest, ExecuteBatchDmlSuccess) {
   auto txn = MakeReadWriteTransaction();
   auto actual = client.ExecuteBatchDml(txn, request);
 
-  EXPECT_STATUS_OK(actual);
+  ASSERT_STATUS_OK(actual);
   EXPECT_STATUS_OK(actual->status);
   EXPECT_EQ(actual->stats.size(), request.size());
 }
@@ -300,7 +301,7 @@ TEST(ClientTest, ExecuteBatchDmlError) {
   auto txn = MakeReadWriteTransaction();
   auto actual = client.ExecuteBatchDml(txn, request);
 
-  EXPECT_STATUS_OK(actual);
+  ASSERT_STATUS_OK(actual);
   EXPECT_THAT(actual->status, StatusIs(StatusCode::kUnknown, "some error"));
   EXPECT_NE(actual->stats.size(), request.size());
   EXPECT_EQ(actual->stats.size(), 1);
@@ -323,7 +324,7 @@ TEST(ClientTest, ExecutePartitionedDmlSuccess) {
 
   Client client(conn);
   auto result = client.ExecutePartitionedDml(SqlStatement(sql_statement));
-  EXPECT_STATUS_OK(result);
+  ASSERT_STATUS_OK(result);
   EXPECT_EQ(7, result->row_count_lower_bound);
 }
 
@@ -339,7 +340,7 @@ TEST(ClientTest, CommitSuccess) {
 
   auto txn = MakeReadWriteTransaction();
   auto commit = client.Commit(txn, {});
-  EXPECT_STATUS_OK(commit);
+  ASSERT_STATUS_OK(commit);
   EXPECT_EQ(ts, commit->commit_timestamp);
 }
 
@@ -422,7 +423,7 @@ TEST(ClientTest, CommitMutatorSuccess) {
   };
 
   auto result = client.Commit(mutator);
-  EXPECT_STATUS_OK(result);
+  ASSERT_STATUS_OK(result);
   EXPECT_EQ(*timestamp, result->commit_timestamp);
 
   EXPECT_EQ("T", actual_read_params.table);
@@ -603,7 +604,7 @@ TEST(ClientTest, CommitMutatorRerunTransientFailures) {
 
   Client client(conn);
   auto result = client.Commit(mutator);
-  EXPECT_STATUS_OK(result);
+  ASSERT_STATUS_OK(result);
   EXPECT_EQ(*timestamp, result->commit_timestamp);
 }
 
@@ -671,7 +672,7 @@ TEST(ClientTest, CommitMutations) {
 
   Client client(conn);
   auto result = client.Commit({mutation});
-  EXPECT_STATUS_OK(result);
+  ASSERT_STATUS_OK(result);
   EXPECT_EQ(*timestamp, result->commit_timestamp);
 }
 
@@ -810,7 +811,7 @@ TEST(ClientTest, CommitMutatorWithTags) {
   };
   auto result = client.Commit(
       mutator, Options{}.set<TransactionTagOption>(transaction_tag));
-  EXPECT_STATUS_OK(result);
+  ASSERT_STATUS_OK(result);
   EXPECT_EQ(*timestamp, result->commit_timestamp);
 }
 
@@ -859,7 +860,7 @@ TEST(ClientTest, CommitMutatorSessionAffinity) {
       [](Transaction const&) { return Mutations{}; },
       LimitedErrorCountTransactionRerunPolicy(num_aborts).clone(),
       ExponentialBackoffPolicy(zero_duration, zero_duration, 2).clone());
-  EXPECT_STATUS_OK(result);
+  ASSERT_STATUS_OK(result);
   EXPECT_EQ(*timestamp, result->commit_timestamp);
 }
 
@@ -886,7 +887,7 @@ TEST(ClientTest, CommitMutatorSessionNotFound) {
 
   Client client(conn);
   auto result = client.Commit(mutator);
-  EXPECT_STATUS_OK(result);
+  ASSERT_STATUS_OK(result);
   EXPECT_EQ(*timestamp, result->commit_timestamp);
 }
 
@@ -915,7 +916,7 @@ TEST(ClientTest, CommitSessionNotFound) {
 
   Client client(conn);
   auto result = client.Commit(mutator);
-  EXPECT_STATUS_OK(result);
+  ASSERT_STATUS_OK(result);
   EXPECT_EQ(*timestamp, result->commit_timestamp);
 }
 
@@ -989,8 +990,8 @@ TEST(ClientTest, ProfileQuerySuccess) {
   };
   int row_number = 0;
   for (auto& row : StreamOf<RowType>(rows)) {
-    EXPECT_STATUS_OK(row);
-    EXPECT_EQ(*row, expected[row_number]);
+    ASSERT_LT(row_number, expected.size());
+    EXPECT_THAT(row, IsOkAndHolds(expected[row_number]));
     ++row_number;
   }
   EXPECT_EQ(row_number, expected.size());
@@ -1056,8 +1057,8 @@ TEST(ClientTest, ProfileQueryWithOptionsSuccess) {
   };
   int row_number = 0;
   for (auto& row : StreamOf<RowType>(rows)) {
-    EXPECT_STATUS_OK(row);
-    EXPECT_EQ(*row, expected[row_number]);
+    ASSERT_LT(row_number, expected.size());
+    EXPECT_THAT(row, IsOkAndHolds(expected[row_number]));
     ++row_number;
   }
   EXPECT_EQ(row_number, expected.size());

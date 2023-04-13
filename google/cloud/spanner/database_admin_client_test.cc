@@ -58,7 +58,7 @@ TEST(DatabaseAdminClientTest, CreateDatabase) {
   auto fut = client.CreateDatabase(dbase, {"-- NOT SQL for test"});
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto db = fut.get();
-  EXPECT_STATUS_OK(db);
+  ASSERT_STATUS_OK(db);
 
   EXPECT_EQ(dbase.FullName(), db->name());
   EXPECT_EQ(gsad::v1::Database::CREATING, db->state());
@@ -80,7 +80,7 @@ TEST(DatabaseAdminClientTest, GetDatabase) {
 
   DatabaseAdminClient client(std::move(mock));
   auto response = client.GetDatabase(dbase);
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
   EXPECT_EQ(gsad::v1::Database::READY, response->state());
   EXPECT_EQ(dbase.FullName(), response->name());
 }
@@ -102,9 +102,9 @@ TEST(DatabaseAdminClientTest, GetDatabaseDdl) {
 
   DatabaseAdminClient client(std::move(mock));
   auto response = client.GetDatabaseDdl(expected_name);
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
   ASSERT_EQ(1, response->statements_size());
-  ASSERT_EQ("CREATE DATABASE test-database", response->statements(0));
+  EXPECT_EQ("CREATE DATABASE test-database", response->statements(0));
 }
 
 /// @test Verify DatabaseAdminClient uses UpdateDatabase() correctly.
@@ -127,7 +127,7 @@ TEST(DatabaseAdminClientTest, UpdateDatabase) {
   auto fut = client.UpdateDatabase(dbase, {"-- test only: NOT SQL"});
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto db = fut.get();
-  EXPECT_STATUS_OK(db);
+  ASSERT_STATUS_OK(db);
 
   EXPECT_THAT(db->statements(), ElementsAre("-- test only: NOT SQL"));
 }
@@ -177,11 +177,11 @@ TEST(DatabaseAdminClientTest, GetIamPolicy) {
 
   DatabaseAdminClient client(std::move(mock));
   auto response = client.GetIamPolicy(expected_db);
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
   ASSERT_EQ(1, response->bindings().size());
-  ASSERT_EQ(expected_role, response->bindings().Get(0).role());
+  EXPECT_EQ(expected_role, response->bindings().Get(0).role());
   ASSERT_EQ(1, response->bindings().Get(0).members().size());
-  ASSERT_EQ(expected_member, response->bindings().Get(0).members().Get(0));
+  EXPECT_EQ(expected_member, response->bindings().Get(0).members().Get(0));
 }
 
 /// @test Verify DatabaseAdminClient uses SetIamPolicy() correctly.
@@ -336,8 +336,8 @@ TEST(DatabaseAdminClientTest, TestIamPermissions) {
           });
   DatabaseAdminClient client(std::move(mock));
   auto response = client.TestIamPermissions(expected_db, {expected_permission});
-  EXPECT_STATUS_OK(response);
-  EXPECT_EQ(1, response->permissions_size());
+  ASSERT_STATUS_OK(response);
+  ASSERT_EQ(1, response->permissions_size());
   EXPECT_EQ(expected_permission, response->permissions(0));
 }
 
@@ -393,7 +393,7 @@ TEST(DatabaseAdminClientTest, CreateBackup) {
   auto fut = client.CreateBackup(dbase, backup_id, expire_time, version_time);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto backup = fut.get();
-  EXPECT_STATUS_OK(backup);
+  ASSERT_STATUS_OK(backup);
   EXPECT_EQ(backup_name.FullName(), backup->name());
   EXPECT_EQ(gsad::v1::Backup::CREATING, backup->state());
 
@@ -403,7 +403,7 @@ TEST(DatabaseAdminClientTest, CreateBackup) {
       expire_time.get<std::chrono::system_clock::time_point>().value());
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   backup = fut.get();
-  EXPECT_STATUS_OK(backup);
+  ASSERT_STATUS_OK(backup);
   EXPECT_EQ(backup_name.FullName(), backup->name());
   EXPECT_EQ(gsad::v1::Backup::CREATING, backup->state());
 }
@@ -429,7 +429,7 @@ TEST(DatabaseAdminClientTest, RestoreDatabase) {
   auto fut = client.RestoreDatabase(dbase, backup);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto database = fut.get();
-  EXPECT_STATUS_OK(database);
+  ASSERT_STATUS_OK(database);
 
   EXPECT_EQ(dbase.FullName(), database->name());
   EXPECT_EQ(gsad::v1::Database::READY_OPTIMIZING, database->state());
@@ -458,7 +458,7 @@ TEST(DatabaseAdminClientTest, RestoreDatabaseOverload) {
   auto fut = client.RestoreDatabase(dbase, backup);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto database = fut.get();
-  EXPECT_STATUS_OK(database);
+  ASSERT_STATUS_OK(database);
 
   EXPECT_EQ(dbase.FullName(), database->name());
   EXPECT_EQ(gsad::v1::Database::READY_OPTIMIZING, database->state());
@@ -480,7 +480,7 @@ TEST(DatabaseAdminClientTest, GetBackup) {
 
   DatabaseAdminClient client(std::move(mock));
   auto response = client.GetBackup(backup);
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
   EXPECT_EQ(gsad::v1::Backup::READY, response->state());
   EXPECT_EQ(backup.FullName(), response->name());
 }
@@ -584,7 +584,7 @@ TEST(DatabaseAdminClientTest, UpdateBackupExpireTime) {
 
   DatabaseAdminClient client(std::move(mock));
   auto response = client.UpdateBackupExpireTime(backup, expire_time);
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
   EXPECT_EQ(gsad::v1::Backup::READY, response->state());
   EXPECT_EQ(backup.FullName(), response->name());
   EXPECT_THAT(expire_time, MakeTimestamp(response->expire_time()).value());
@@ -592,7 +592,7 @@ TEST(DatabaseAdminClientTest, UpdateBackupExpireTime) {
   // Exercise the old interface with a `time_point` expiration parameter.
   response = client.UpdateBackupExpireTime(
       backup, expire_time.get<std::chrono::system_clock::time_point>().value());
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
   EXPECT_EQ(gsad::v1::Backup::READY, response->state());
   EXPECT_EQ(backup.FullName(), response->name());
   EXPECT_THAT(
@@ -639,7 +639,7 @@ TEST(DatabaseAdminClientTest, UpdateBackupExpireTimeOverload) {
 
   DatabaseAdminClient client(std::move(mock));
   auto response = client.UpdateBackupExpireTime(backup, expire_time);
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
   EXPECT_EQ(gsad::v1::Backup::READY, response->state());
   EXPECT_EQ(backup_name.FullName(), response->name());
   EXPECT_THAT(expire_time, MakeTimestamp(response->expire_time()).value());
@@ -647,7 +647,7 @@ TEST(DatabaseAdminClientTest, UpdateBackupExpireTimeOverload) {
   // Exercise the old interface with a `time_point` expiration parameter.
   response = client.UpdateBackupExpireTime(
       backup, expire_time.get<std::chrono::system_clock::time_point>().value());
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
   EXPECT_EQ(gsad::v1::Backup::READY, response->state());
   EXPECT_EQ(backup_name.FullName(), response->name());
   EXPECT_THAT(
