@@ -24,6 +24,7 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::Eq;
 using ::testing::HasSubstr;
@@ -252,6 +253,307 @@ TEST(DetermineAndVerifyResponseTypeNameTest, ResponseFieldMissing) {
       DetermineAndVerifyResponseTypeName(method_json, resource, types);
   ASSERT_STATUS_OK(response);
   EXPECT_THAT(*response, IsEmpty());
+}
+
+TEST(SynthesizeRequestTypeTest, OperationResponseWithRefRequestField) {
+  auto constexpr kResourceJson = R"""({})""";
+  auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  auto constexpr kMethodJson = R"""({
+  "scopes": [
+    "https://www.googleapis.com/auth/cloud-platform"
+  ],
+  "path": "projects/{project}/zones/{zone}/myResources/{fooId}",
+  "httpMethod": "POST",
+  "parameters": {
+    "project": {
+      "type": "string"
+    },
+    "zone": {
+      "type": "string"
+    },
+    "fooId": {
+      "type": "string"
+    }
+  },
+  "response": {
+    "$ref": "Operation"
+  },
+  "request": {
+    "$ref": "Foo"
+  },
+  "parameterOrder": [
+    "project",
+    "zone",
+    "fooId"
+  ]
+})""";
+  auto method_json = nlohmann::json::parse(kMethodJson, nullptr, false);
+  ASSERT_TRUE(method_json.is_object());
+  auto constexpr kExpectedRequestTypeJson = R"""({
+"description":"Request message for Create.",
+"id":"CreateRequest",
+"method":"create",
+"properties":{
+  "fooId":{
+    "type":"string"
+  },
+  "foo_resource":{
+    "$ref":"Foo",
+    "description":"The Foo for this request."
+  },
+  "project":{
+    "operation_request_field":true,
+    "type":"string"
+  },
+  "zone":{
+    "operation_request_field":true,
+    "type":"string"
+  }
+},
+"request_resource_field_name":"foo_resource",
+"resource":"foos",
+"synthesized_request":true,
+"type":"object"
+})""";
+  auto const expected_request_type_json =
+      nlohmann::json::parse(kExpectedRequestTypeJson, nullptr, false);
+  ASSERT_TRUE(expected_request_type_json.is_object());
+  DiscoveryResource resource("foos", "", "", resource_json);
+  auto result =
+      SynthesizeRequestType(method_json, resource, "Operation", "create");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(result->json(), Eq(expected_request_type_json));
+}
+
+TEST(SynthesizeRequestTypeTest,
+     OperationResponseWithRefRequestFieldEndingInResource) {
+  auto constexpr kResourceJson = R"""({})""";
+  auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  auto constexpr kMethodJson = R"""({
+  "scopes": [
+    "https://www.googleapis.com/auth/cloud-platform"
+  ],
+  "path": "projects/{project}/zones/{zone}/myResources/{fooId}",
+  "httpMethod": "POST",
+  "parameters": {
+    "project": {
+      "type": "string"
+    },
+    "zone": {
+      "type": "string"
+    },
+    "fooId": {
+      "type": "string"
+    }
+  },
+  "response": {
+    "$ref": "Operation"
+  },
+  "request": {
+    "$ref": "FooResource"
+  },
+  "parameterOrder": [
+    "project",
+    "zone",
+    "fooId"
+  ]
+})""";
+  auto method_json = nlohmann::json::parse(kMethodJson, nullptr, false);
+  ASSERT_TRUE(method_json.is_object());
+  auto constexpr kExpectedRequestTypeJson = R"""({
+"description":"Request message for Create.",
+"id":"CreateRequest",
+"method":"create",
+"properties":{
+  "fooId":{
+    "type":"string"
+  },
+  "foo_resource":{
+    "$ref":"FooResource",
+    "description":"The FooResource for this request."
+  },
+  "project":{
+    "operation_request_field":true,
+    "type":"string"
+  },
+  "zone":{
+    "operation_request_field":true,
+    "type":"string"
+  }
+},
+"request_resource_field_name":"foo_resource",
+"resource":"foos",
+"synthesized_request":true,
+"type":"object"
+})""";
+  auto const expected_request_type_json =
+      nlohmann::json::parse(kExpectedRequestTypeJson, nullptr, false);
+  ASSERT_TRUE(expected_request_type_json.is_object());
+  DiscoveryResource resource("foos", "", "", resource_json);
+  auto result =
+      SynthesizeRequestType(method_json, resource, "Operation", "create");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(result->json(), Eq(expected_request_type_json));
+}
+
+TEST(SynthesizeRequestTypeTest, NonOperationWithoutRequestField) {
+  auto constexpr kResourceJson = R"""({})""";
+  auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  auto constexpr kMethodJson = R"""({
+  "scopes": [
+    "https://www.googleapis.com/auth/cloud-platform"
+  ],
+  "path": "projects/{project}/zones/{zone}/myResources/{fooId}",
+  "httpMethod": "GET",
+  "parameters": {
+    "project": {
+      "type": "string"
+    },
+    "zone": {
+      "type": "string"
+    },
+    "fooId": {
+      "type": "string"
+    }
+  },
+  "response": {
+    "$ref": "Foo"
+  },
+  "parameterOrder": [
+    "project",
+    "zone",
+    "fooId"
+  ]
+})""";
+  auto method_json = nlohmann::json::parse(kMethodJson, nullptr, false);
+  ASSERT_TRUE(method_json.is_object());
+  auto constexpr kExpectedRequestTypeJson = R"""({
+"description":"Request message for GetFoos.",
+"id":"GetFoosRequest",
+"method":"get",
+"properties":{
+  "fooId":{
+    "type":"string"
+  },
+  "project":{
+    "type":"string"
+  },
+  "zone":{
+    "type":"string"
+  }
+},
+"resource":"foos",
+"synthesized_request":true,
+"type":"object"
+})""";
+  auto const expected_request_type_json =
+      nlohmann::json::parse(kExpectedRequestTypeJson, nullptr, false);
+  ASSERT_TRUE(expected_request_type_json.is_object());
+  DiscoveryResource resource("foos", "", "", resource_json);
+  auto result = SynthesizeRequestType(method_json, resource, "Foo", "get");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(result->json(), Eq(expected_request_type_json));
+}
+
+TEST(SynthesizeRequestTypeTest, MethodJsonMissingParameters) {
+  auto constexpr kResourceJson = R"""({})""";
+  auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  auto constexpr kMethodJson = R"""({
+  "scopes": [
+    "https://www.googleapis.com/auth/cloud-platform"
+  ],
+  "path": "projects/{project}/zones/{zone}/myResources/{fooId}",
+  "httpMethod": "POST"
+})""";
+  auto method_json = nlohmann::json::parse(kMethodJson, nullptr, false);
+  ASSERT_TRUE(method_json.is_object());
+  DiscoveryResource resource("foos", "", "", resource_json);
+  auto result =
+      SynthesizeRequestType(method_json, resource, "Operation", "create");
+  EXPECT_THAT(
+      result,
+      StatusIs(StatusCode::kInternal,
+               HasSubstr("method_json does not contain parameters field")));
+  EXPECT_THAT(result.status().error_info().metadata(),
+              AllOf(Contains(Key("resource")), Contains(Key("method")),
+                    Contains(Key("json"))));
+}
+
+TEST(SynthesizeRequestTypeTest, OperationResponseMissingRefInRequest) {
+  auto constexpr kResourceJson = R"""({})""";
+  auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  auto constexpr kMethodJson = R"""({
+  "scopes": [
+    "https://www.googleapis.com/auth/cloud-platform"
+  ],
+  "path": "projects/{project}/zones/{zone}/myResources/{fooId}",
+  "httpMethod": "POST",
+  "parameters": {
+    "project": {
+      "type": "string"
+    },
+    "zone": {
+      "type": "string"
+    },
+    "fooId": {
+      "type": "string"
+    }
+  },
+  "response": {
+    "$ref": "Operation"
+  },
+  "request": {
+  },
+  "parameterOrder": [
+    "project",
+    "zone",
+    "fooId"
+  ]
+})""";
+  auto method_json = nlohmann::json::parse(kMethodJson, nullptr, false);
+  ASSERT_TRUE(method_json.is_object());
+  auto constexpr kExpectedRequestTypeJson = R"""({
+"description":"Request message for Create.",
+"id":"CreateRequest",
+"method":"create",
+"properties":{
+  "fooId":{
+    "type":"string"
+  },
+  "foo_resource":{
+    "$ref":"Foo",
+    "description":"The Foo for this request."
+  },
+  "project":{
+    "operation_request_field":true,
+    "type":"string"
+  },
+  "zone":{
+    "operation_request_field":true,
+    "type":"string"
+  }
+},
+"request_resource_field_name":"foo_resource",
+"resource":"foos",
+"synthesized_request":true,
+"type":"object"
+})""";
+  auto const expected_request_type_json =
+      nlohmann::json::parse(kExpectedRequestTypeJson, nullptr, false);
+  ASSERT_TRUE(expected_request_type_json.is_object());
+  DiscoveryResource resource("foos", "", "", resource_json);
+  auto result =
+      SynthesizeRequestType(method_json, resource, "Operation", "create");
+  EXPECT_THAT(
+      result,
+      StatusIs(
+          StatusCode::kInvalidArgument,
+          HasSubstr("resource foos has method Create with non $ref request")));
 }
 
 }  // namespace
