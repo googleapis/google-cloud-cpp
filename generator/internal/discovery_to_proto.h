@@ -26,12 +26,22 @@ namespace google {
 namespace cloud {
 namespace generator_internal {
 
+// Creates a DiscoveryTypeVertex for every schema object defined in the
+// Discovery Document.
 StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
     nlohmann::json const& discovery_doc);
 
+// Creates a DiscoveryResource for every resource defined in the Discovery
+// Document.
 std::map<std::string, DiscoveryResource> ExtractResources(
     nlohmann::json const& discovery_doc, std::string const& default_hostname,
     std::string const& base_path);
+
+// Determines the name of the response type for each method and verifies it
+// exists in the collection of DiscoveryTypeVertex objects.
+StatusOr<std::string> DetermineAndVerifyResponseTypeName(
+    nlohmann::json const& method_json, DiscoveryResource& resource,
+    std::map<std::string, DiscoveryTypeVertex>& types);
 
 Status GenerateProtosFromDiscoveryDoc(std::string const& url,
                                       std::string const& protobuf_proto_path,

@@ -25,6 +25,7 @@ namespace {
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
+using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Key;
@@ -193,6 +194,64 @@ TEST(ExtractResourcesTest, NonEmptyResources) {
   auto resources = ExtractResources(resource_json, "", "");
   EXPECT_THAT(resources,
               UnorderedElementsAre(Key("resource1"), Key("resource2")));
+}
+
+TEST(DetermineAndVerifyResponseTypeNameTest, ResponseWithRef) {
+  auto constexpr kResponseTypeJson = R"""({})""";
+  auto constexpr kMethodJson = R"""({
+  "response": {
+    "$ref": "Foo"
+  }
+})""";
+  auto response_type_json =
+      nlohmann::json::parse(kResponseTypeJson, nullptr, false);
+  ASSERT_TRUE(response_type_json.is_object());
+  auto method_json = nlohmann::json::parse(kMethodJson, nullptr, false);
+  ASSERT_TRUE(method_json.is_object());
+  DiscoveryResource resource;
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", response_type_json});
+  auto response =
+      DetermineAndVerifyResponseTypeName(method_json, resource, types);
+  ASSERT_STATUS_OK(response);
+  EXPECT_THAT(*response, Eq("Foo"));
+}
+
+TEST(DetermineAndVerifyResponseTypeNameTest, ResponseMissingRef) {
+  auto constexpr kResponseTypeJson = R"""({})""";
+  auto constexpr kMethodJson = R"""({
+  "response": {
+  }
+})""";
+  auto response_type_json =
+      nlohmann::json::parse(kResponseTypeJson, nullptr, false);
+  ASSERT_TRUE(response_type_json.is_object());
+  auto method_json = nlohmann::json::parse(kMethodJson, nullptr, false);
+  ASSERT_TRUE(method_json.is_object());
+  DiscoveryResource resource;
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", response_type_json});
+  auto response =
+      DetermineAndVerifyResponseTypeName(method_json, resource, types);
+  EXPECT_THAT(response, StatusIs(StatusCode::kInvalidArgument,
+                                 HasSubstr("Missing $ref field in response")));
+}
+
+TEST(DetermineAndVerifyResponseTypeNameTest, ResponseFieldMissing) {
+  auto constexpr kResponseTypeJson = R"""({})""";
+  auto constexpr kMethodJson = R"""({})""";
+  auto response_type_json =
+      nlohmann::json::parse(kResponseTypeJson, nullptr, false);
+  ASSERT_TRUE(response_type_json.is_object());
+  auto method_json = nlohmann::json::parse(kMethodJson, nullptr, false);
+  ASSERT_TRUE(method_json.is_object());
+  DiscoveryResource resource;
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", response_type_json});
+  auto response =
+      DetermineAndVerifyResponseTypeName(method_json, resource, types);
+  ASSERT_STATUS_OK(response);
+  EXPECT_THAT(*response, IsEmpty());
 }
 
 }  // namespace
