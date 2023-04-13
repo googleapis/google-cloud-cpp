@@ -26,7 +26,7 @@ namespace google {
 namespace cloud {
 namespace generator_internal {
 
-// Creates a DiscoveryTypeVertex for every schema object define in the
+// Creates a DiscoveryTypeVertex for every schema object defined in the
 // Discovery Document.
 StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
     nlohmann::json const& discovery_doc);
