@@ -15,6 +15,7 @@
 #include "generator/generator.h"
 #include "generator/internal/printer.h"
 #include "generator/testing/error_collectors.h"
+#include "generator/testing/fake_source_tree.h"
 #include "generator/testing/printer_mocks.h"
 #include "google/cloud/log.h"
 #include <google/protobuf/compiler/importer.h>
@@ -33,24 +34,6 @@ using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
 using ::testing::HasSubstr;
 using ::testing::Return;
-
-class StringSourceTree : public google::protobuf::compiler::SourceTree {
- public:
-  explicit StringSourceTree(std::map<std::string, std::string> files)
-      : files_(std::move(files)) {}
-
-  google::protobuf::io::ZeroCopyInputStream* Open(
-      std::string const& filename) override {
-    auto iter = files_.find(filename);
-    return iter == files_.end() ? nullptr
-                                : new google::protobuf::io::ArrayInputStream(
-                                      iter->second.data(),
-                                      static_cast<int>(iter->second.size()));
-  }
-
- private:
-  std::map<std::string, std::string> files_;
-};
 
 char const* const kSuccessServiceProto =
     "syntax = \"proto3\";\n"
@@ -77,7 +60,7 @@ class GeneratorTest : public ::testing::Test {
  private:
   FileDescriptorProto file_proto_;
   generator_testing::ErrorCollector collector_;
-  StringSourceTree source_tree_;
+  generator_testing::FakeSourceTree source_tree_;
   google::protobuf::SimpleDescriptorDatabase simple_db_;
   google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db_;
   google::protobuf::MergedDescriptorDatabase merged_db_;
