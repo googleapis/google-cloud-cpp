@@ -18,4 +18,5 @@
 
 opentelemetry_sdk_unit_tests = [
     "internal/recordable_test.cc",
+    "trace_exporter_test.cc",
 ]
