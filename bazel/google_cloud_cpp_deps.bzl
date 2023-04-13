@@ -210,11 +210,11 @@ def google_cloud_cpp_deps(name = None):
         http_archive,
         name = "io_opentelemetry_cpp",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/io_opentelemetry_cpp/v1.8.3.tar.gz",
-            "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.8.3.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/io_opentelemetry_cpp/v1.9.0.tar.gz",
+            "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.9.0.tar.gz",
         ],
-        sha256 = "b23d3c80d2e0012734ea343d2be69b2a7139ec5545453c503b13e629eb8fbe05",
-        strip_prefix = "opentelemetry-cpp-1.8.3",
+        sha256 = "0fdbefbdc2c154634728097e26de52a8210ed95cb032beb5f35da0a493cd5066",
+        strip_prefix = "opentelemetry-cpp-1.9.0",
     )
 
     # PugiXML, this is only used in the docfx internal tool.
