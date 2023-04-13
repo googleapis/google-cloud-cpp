@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/opentelemetry/internal/recordable.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 
 namespace google {
 namespace cloud {
@@ -32,42 +33,48 @@ class AttributeVisitor {
       : attributes_(attributes), key_(key), limit_(limit) {}
 
   void operator()(bool value) {
-    if (ShouldDrop()) return Drop();
-    proto().set_bool_value(value);
+    auto* proto = ProtoOrDrop();
+    if (!proto) return Drop();
+    proto->set_bool_value(value);
   }
-  void operator()(int32_t value) {
-    if (ShouldDrop()) return Drop();
-    proto().set_int_value(value);
+  void operator()(std::int32_t value) {
+    auto* proto = ProtoOrDrop();
+    if (!proto) return Drop();
+    proto->set_int_value(value);
   }
-  void operator()(uint32_t value) {
-    if (ShouldDrop()) return Drop();
-    proto().set_int_value(value);
+  void operator()(std::uint32_t value) {
+    auto* proto = ProtoOrDrop();
+    if (!proto) return Drop();
+    proto->set_int_value(value);
   }
-  void operator()(int64_t value) {
-    if (ShouldDrop()) return Drop();
-    proto().set_int_value(value);
+  void operator()(std::int64_t value) {
+    auto* proto = ProtoOrDrop();
+    if (!proto) return Drop();
+    proto->set_int_value(value);
   }
-  void operator()(uint64_t value) {
-    if (ShouldDrop()) return Drop();
-    proto().set_int_value(value);
+  void operator()(std::uint64_t value) {
+    auto* proto = ProtoOrDrop();
+    if (!proto) return Drop();
+    proto->set_int_value(value);
   }
   // The Cloud Trace proto does not accept floating point values, so we convert
   // them to strings.
   void operator()(double value) {
-    if (ShouldDrop()) return Drop();
-    std::ostringstream os;
-    os << value;
-    SetTruncatableString(*proto().mutable_string_value(), std::move(os).str(),
+    auto* proto = ProtoOrDrop();
+    if (!proto) return Drop();
+    SetTruncatableString(*proto->mutable_string_value(), absl::StrCat(value),
                          kAttributeValueStringLimit);
   }
   void operator()(char const* value) {
-    if (ShouldDrop()) return Drop();
-    SetTruncatableString(*proto().mutable_string_value(), value,
+    auto* proto = ProtoOrDrop();
+    if (!proto) return Drop();
+    SetTruncatableString(*proto->mutable_string_value(), value,
                          kAttributeValueStringLimit);
   }
   void operator()(opentelemetry::nostd::string_view value) {
-    if (ShouldDrop()) return Drop();
-    SetTruncatableString(*proto().mutable_string_value(), value,
+    auto* proto = ProtoOrDrop();
+    if (!proto) return Drop();
+    SetTruncatableString(*proto->mutable_string_value(), value,
                          kAttributeValueStringLimit);
   }
   // There is no mapping from a `span<T>` to the Cloud Trace proto. We just drop
@@ -78,27 +85,30 @@ class AttributeVisitor {
   }
 
  private:
-  // If true, we should drop the attribute. This can happen when a limit is hit,
-  // or when the attribute key length is too long.
-  bool ShouldDrop() const {
+  // Returns nullptr if we drop the attribute. Otherwise, returns an
+  // AttributeValue proto to set.
+  google::devtools::cloudtrace::v2::AttributeValue* ProtoOrDrop() {
     // We drop attributes whose keys are too long.
-    if (key_.size() > kAttributeKeyStringLimit) return true;
+    if (key_.size() > kAttributeKeyStringLimit) return nullptr;
 
     // We do not do any sampling. We just accept the first N attributes we are
     // given, and discard the rest. We may want to consider reservoir sampling
     // in the future. See: https://en.wikipedia.org/wiki/Reservoir_sampling
-    return attributes_.attribute_map().size() == limit_ &&
-           !attributes_.attribute_map().contains({key_.data(), key_.size()});
+    if (attributes_.attribute_map().size() < limit_) {
+      auto& map = *attributes_.mutable_attribute_map();
+      return &map[{key_.data(), key_.size()}];
+    }
+
+    // If the map is full, we can still overwrite existing keys.
+    auto& map = *attributes_.mutable_attribute_map();
+    auto it = map.find({key_.data(), key_.size()});
+    if (it == map.end()) return nullptr;
+    return &it->second;
   }
 
   void Drop() {
     attributes_.set_dropped_attributes_count(
         attributes_.dropped_attributes_count() + 1);
-  }
-
-  google::devtools::cloudtrace::v2::AttributeValue& proto() {
-    auto& map = *attributes_.mutable_attribute_map();
-    return map[{key_.data(), key_.size()}];
   }
 
   google::devtools::cloudtrace::v2::Span::Attributes& attributes_;
