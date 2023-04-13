@@ -27,7 +27,7 @@ using ::testing::Eq;
 class RestRequestTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    headers_["header1"] = {"value1"};
+    headers_["Header1"] = {"value1"};
     headers_["header2"] = {"value2a", "value2b"};
     parameters_.emplace_back("param1", "value1");
   }

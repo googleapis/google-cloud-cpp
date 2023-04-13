@@ -14,27 +14,42 @@
 
 #include "google/cloud/internal/rest_request.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/log.h"
 #include "absl/strings/strip.h"
-#include <cctype>
+#include <iterator>
 
 namespace google {
 namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
+RestRequest::HttpHeaders NormalizeHeaders(RestRequest::HttpHeaders headers) {
+  RestRequest::HttpHeaders result;
+  for (auto& kv : headers) {
+    auto& entry = result[absl::AsciiStrToLower(kv.first)];
+    entry.insert(entry.end(), std::make_move_iterator(kv.second.begin()),
+                 std::make_move_iterator(kv.second.end()));
+  }
+  return result;
+}
+
+}  // namespace
 
 RestRequest::RestRequest() = default;
 RestRequest::RestRequest(std::string path) : path_(std::move(path)) {}
 RestRequest::RestRequest(RestContext const& rest_context)
-    : headers_(rest_context.headers()) {}
+    : headers_(NormalizeHeaders(rest_context.headers())) {}
 RestRequest::RestRequest(std::string path, HttpHeaders headers)
-    : path_(std::move(path)), headers_(std::move(headers)) {}
+    : path_(std::move(path)), headers_(NormalizeHeaders(std::move(headers))) {}
 RestRequest::RestRequest(std::string path, HttpParameters parameters)
     : path_(std::move(path)), parameters_(std::move(parameters)) {}
 RestRequest::RestRequest(std::string path, HttpHeaders headers,
                          HttpParameters parameters)
     : path_(std::move(path)),
-      headers_(std::move(headers)),
+      headers_(NormalizeHeaders(std::move(headers))),
       parameters_(std::move(parameters)) {}
 
 RestRequest& RestRequest::SetPath(std::string path) & {
@@ -50,8 +65,7 @@ RestRequest& RestRequest::AppendPath(std::string path) & {
 }
 
 RestRequest& RestRequest::AddHeader(std::string header, std::string value) & {
-  std::transform(header.begin(), header.end(), header.begin(),
-                 [](unsigned char c) { return std::tolower(c); });
+  absl::AsciiStrToLower(&header);
   auto iter = headers_.find(header);
   if (iter == headers_.end()) {
     std::vector<std::string> v = {std::move(value)};
@@ -80,8 +94,7 @@ RestRequest& RestRequest::AddQueryParameter(
 }
 
 std::vector<std::string> RestRequest::GetHeader(std::string header) const {
-  std::transform(header.begin(), header.end(), header.begin(),
-                 [](unsigned char c) { return std::tolower(c); });
+  absl::AsciiStrToLower(&header);
   auto iter = headers_.find(header);
   if (iter == headers_.end()) {
     return {};
