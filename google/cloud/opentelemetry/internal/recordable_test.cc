@@ -130,7 +130,7 @@ TEST(AddAttribute, HandlesIntAttributes) {
   expected.set_int_value(42);
 
   std::vector<opentelemetry::common::AttributeValue> values = {
-      int32_t{42}, uint32_t{42}, int64_t{42}, uint64_t{42}};
+      std::int32_t{42}, std::uint32_t{42}, std::int64_t{42}, std::uint64_t{42}};
 
   for (auto const& value : values) {
     v2::Span::Attributes attributes;
@@ -186,13 +186,13 @@ TEST(AddAttribute, ConvertsDoubleAttributeToString) {
 TEST(AddAttribute, DropsCompositeAttributes) {
   std::vector<opentelemetry::common::AttributeValue> values = {
       MakeCompositeAttribute<bool>(),
-      MakeCompositeAttribute<int32_t>(),
-      MakeCompositeAttribute<int64_t>(),
-      MakeCompositeAttribute<uint32_t>(),
+      MakeCompositeAttribute<std::int32_t>(),
+      MakeCompositeAttribute<std::int64_t>(),
+      MakeCompositeAttribute<std::uint32_t>(),
       MakeCompositeAttribute<double>(),
       MakeCompositeAttribute<opentelemetry::nostd::string_view>(),
-      MakeCompositeAttribute<uint64_t>(),
-      MakeCompositeAttribute<uint8_t>()};
+      MakeCompositeAttribute<std::uint64_t>(),
+      MakeCompositeAttribute<std::uint8_t>()};
 
   for (auto const& value : values) {
     v2::Span::Attributes attributes;
