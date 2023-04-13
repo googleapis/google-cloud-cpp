@@ -15,6 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_TESTING_FAKE_SOURCE_TREE_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_TESTING_FAKE_SOURCE_TREE_H
 
+#include "google/cloud/internal/type_traits.h"
+#include "absl/strings/string_view.h"
 #include <google/protobuf/compiler/importer.h>
 #include <google/protobuf/io/zero_copy_stream.h>
 #include <map>
@@ -24,6 +26,18 @@ namespace google {
 namespace cloud {
 namespace generator_testing {
 
+template <typename T, typename AlwaysVoid = void>
+struct SourceTreeOpenArgType {
+  using type = std::string const&;
+};
+
+template <typename T>
+struct SourceTreeOpenArgType<
+    T, google::cloud::internal::void_t<decltype(std::declval<T&>().Open(
+           absl::string_view{}))>> {
+  using type = absl::string_view;
+};
+
 class FakeSourceTree : public google::protobuf::compiler::SourceTree {
  public:
   FakeSourceTree() = default;
@@ -31,8 +45,11 @@ class FakeSourceTree : public google::protobuf::compiler::SourceTree {
 
   void Insert(std::string const& filename, std::string contents);
 
+  using FilenameType = typename generator_testing::SourceTreeOpenArgType<
+      google::protobuf::compiler::SourceTree>::type;
+
   google::protobuf::io::ZeroCopyInputStream* Open(
-      std::string const& filename) override;
+      FilenameType filename) override;
 
  private:
   std::map<std::string, std::string> files_;

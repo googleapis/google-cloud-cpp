@@ -14,6 +14,7 @@
 
 #include "generator/internal/service_code_generator.h"
 #include "generator/testing/error_collectors.h"
+#include "generator/testing/fake_source_tree.h"
 #include "generator/testing/printer_mocks.h"
 #include "google/cloud/log.h"
 #include <google/protobuf/compiler/importer.h>
@@ -36,24 +37,6 @@ using ::google::protobuf::FileDescriptorProto;
 using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Return;
-
-class StringSourceTree : public google::protobuf::compiler::SourceTree {
- public:
-  explicit StringSourceTree(std::map<std::string, std::string> files)
-      : files_(std::move(files)) {}
-
-  google::protobuf::io::ZeroCopyInputStream* Open(
-      std::string const& filename) override {
-    auto iter = files_.find(filename);
-    return iter == files_.end() ? nullptr
-                                : new google::protobuf::io::ArrayInputStream(
-                                      iter->second.data(),
-                                      static_cast<int>(iter->second.size()));
-  }
-
- private:
-  std::map<std::string, std::string> files_;
-};
 
 class TestGenerator : public ServiceCodeGenerator {
  public:
@@ -379,7 +362,7 @@ class HasMessageWithMapFieldTest : public testing::Test {
  private:
   FileDescriptorProto file_proto_;
   generator_testing::ErrorCollector collector_;
-  StringSourceTree source_tree_;
+  generator_testing::FakeSourceTree source_tree_;
   google::protobuf::SimpleDescriptorDatabase simple_db_;
   google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db_;
   google::protobuf::MergedDescriptorDatabase merged_db_;
@@ -492,7 +475,7 @@ class MethodSignatureWellKnownProtobufTypeIncludesTest : public testing::Test {
  private:
   FileDescriptorProto file_proto_;
   generator_testing::ErrorCollector collector_;
-  StringSourceTree source_tree_;
+  generator_testing::FakeSourceTree source_tree_;
   google::protobuf::SimpleDescriptorDatabase simple_db_;
   google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db_;
   google::protobuf::MergedDescriptorDatabase merged_db_;
@@ -584,7 +567,7 @@ class StreamingReadTest : public testing::Test {
  private:
   FileDescriptorProto file_proto_;
   generator_testing::ErrorCollector collector_;
-  StringSourceTree source_tree_;
+  generator_testing::FakeSourceTree source_tree_;
   google::protobuf::SimpleDescriptorDatabase simple_db_;
   google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db_;
   google::protobuf::MergedDescriptorDatabase merged_db_;
@@ -660,8 +643,9 @@ service Service1 {
 }
 )""";
 
-  StringSourceTree source_tree(std::map<std::string, std::string>{
-      {"google/cloud/foo/streaming.proto", kBidirStreamingServiceProto}});
+  generator_testing::FakeSourceTree source_tree(
+      std::map<std::string, std::string>{
+          {"google/cloud/foo/streaming.proto", kBidirStreamingServiceProto}});
   google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db(
       &source_tree);
   google::protobuf::SimpleDescriptorDatabase simple_db;
@@ -738,8 +722,9 @@ service Service1 {
 }
 )""";
 
-  StringSourceTree source_tree(std::map<std::string, std::string>{
-      {"google/cloud/foo/streaming.proto", kBidirStreamingServiceProto}});
+  generator_testing::FakeSourceTree source_tree(
+      std::map<std::string, std::string>{
+          {"google/cloud/foo/streaming.proto", kBidirStreamingServiceProto}});
   google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db(
       &source_tree);
   google::protobuf::SimpleDescriptorDatabase simple_db;
@@ -840,11 +825,12 @@ service Service1 {
 }
 )""";
 
-  StringSourceTree source_tree(std::map<std::string, std::string>{
-      {"google/api/http.proto", kHttpProto},
-      {"google/api/routing.proto", kRoutingProto},
-      {"google/cloud/foo/explicit_routing_service.proto",
-       kExplicitRoutingServiceProto}});
+  generator_testing::FakeSourceTree source_tree(
+      std::map<std::string, std::string>{
+          {"google/api/http.proto", kHttpProto},
+          {"google/api/routing.proto", kRoutingProto},
+          {"google/cloud/foo/explicit_routing_service.proto",
+           kExplicitRoutingServiceProto}});
   google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db(
       &source_tree);
   google::protobuf::SimpleDescriptorDatabase simple_db;

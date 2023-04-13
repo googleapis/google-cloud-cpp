@@ -27,7 +27,7 @@ Status RestResponseToProto(google::protobuf::Message& destination,
   }
   auto json_response =
       rest_internal::ReadAll(std::move(rest_response).ExtractPayload());
-  if (!json_response.ok()) return json_response.status();
+  if (!json_response.ok()) return std::move(json_response).status();
   google::protobuf::util::JsonParseOptions parse_options;
   parse_options.ignore_unknown_fields = true;
   auto json_to_proto_status = google::protobuf::util::JsonStringToMessage(
@@ -47,11 +47,14 @@ Status RestResponseToProto(google::protobuf::Message& destination,
 
 Status ProtoRequestToJsonPayload(google::protobuf::Message const& request,
                                  std::string& json_payload) {
-  protobuf::util::Status proto_to_json_status =
+  auto proto_to_json_status =
       protobuf::util::MessageToJsonString(request, &json_payload);
   if (!proto_to_json_status.ok()) {
-    return Status{
-        StatusCode::kInternal, std::string{proto_to_json_status.message()}, {}};
+    return internal::InternalError(
+        std::string(proto_to_json_status.message()),
+        GCP_ERROR_INFO()
+            .WithReason("Failure converting proto request to HTTP")
+            .WithMetadata("message_type", request.GetTypeName()));
   }
   return {};
 }

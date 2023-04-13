@@ -26,8 +26,8 @@ void FakeSourceTree::Insert(std::string const& filename, std::string contents) {
 }
 
 google::protobuf::io::ZeroCopyInputStream* FakeSourceTree::Open(
-    std::string const& filename) {
-  auto iter = files_.find(filename);
+    FilenameType filename) {
+  auto iter = files_.find(std::string(filename));
   return iter == files_.end()
              ? nullptr
              : new google::protobuf::io::ArrayInputStream(
