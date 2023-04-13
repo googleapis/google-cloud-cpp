@@ -51,10 +51,9 @@ TEST(TracingHttpPayload, Success) {
 
   auto impl = MakeMockHttpPayloadSuccess(MockContents());
   RestRequest request("https://example.com/ignored");
-  auto request_span = MakeSpanHttp(request, "GET");
+  auto span = MakeSpanHttp(request, "GET");
 
-  auto span = MakeSpanHttpPayload(*request_span);
-  TracingHttpPayload payload(std::move(impl), span);
+  TracingHttpPayload payload(std::move(impl), std::move(span));
   std::vector<char> buffer(16);
   auto read = [&] { return payload.Read(absl::Span<char>(buffer)); };
   for (auto s = read(); s && s.value() != 0; s = read()) continue;
@@ -64,13 +63,14 @@ TEST(TracingHttpPayload, Success) {
     return AllOf(SpanNamed("Read"), SpanHasInstrumentationScope(),
                  SpanKindIsClient(),
                  SpanHasAttributes(
+                     SpanAttribute<std::int32_t>("gcloud.status_code", 0),
                      SpanAttribute<std::int64_t>("read.buffer.size", bs),
                      SpanAttribute<std::int64_t>("read.returned.size", rs)));
   };
   EXPECT_THAT(
       spans,
       UnorderedElementsAre(
-          AllOf(SpanNamed("HTTP/Response"), SpanHasInstrumentationScope(),
+          AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
                 SpanKindIsClient(),
                 SpanHasAttributes(SpanAttribute<std::string>(
                     sc::kNetTransport, sc::NetTransportValues::kIpTcp))),
@@ -83,15 +83,14 @@ TEST(TracingHttpPayload, Failure) {
   auto span_catcher = InstallSpanCatcher();
 
   RestRequest request("https://example.com/ignored");
-  auto request_span = MakeSpanHttp(request, "GET");
+  auto span = MakeSpanHttp(request, "GET");
 
   auto impl = std::make_unique<MockHttpPayload>();
   EXPECT_CALL(*impl, Read)
       .WillOnce(Return(16))
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
 
-  auto span = MakeSpanHttpPayload(*request_span);
-  TracingHttpPayload payload(std::move(impl), span);
+  TracingHttpPayload payload(std::move(impl), std::move(span));
   std::vector<char> buffer(16);
   auto status = payload.Read(absl::Span<char>(buffer.data(), buffer.size()));
   ASSERT_STATUS_OK(status);
@@ -104,18 +103,22 @@ TEST(TracingHttpPayload, Failure) {
     return AllOf(SpanNamed("Read"), SpanHasInstrumentationScope(),
                  SpanKindIsClient(),
                  SpanHasAttributes(
+                     SpanAttribute<std::int32_t>("gcloud.status_code", 0),
                      SpanAttribute<std::int64_t>("read.buffer.size", bs),
                      SpanAttribute<std::int64_t>("read.returned.size", rs)));
   };
-  auto make_read_error_matcher = [](auto bs) {
-    return AllOf(
-        SpanNamed("Read"), SpanHasInstrumentationScope(), SpanKindIsClient(),
-        SpanHasAttributes(SpanAttribute<std::int64_t>("read.buffer.size", bs)));
+  auto make_read_error_matcher = [](auto bs, StatusCode code) {
+    return AllOf(SpanNamed("Read"), SpanHasInstrumentationScope(),
+                 SpanKindIsClient(),
+                 SpanHasAttributes(
+                     SpanAttribute<std::int32_t>(
+                         "gcloud.status_code", static_cast<std::int32_t>(code)),
+                     SpanAttribute<std::int64_t>("read.buffer.size", bs)));
   };
   EXPECT_THAT(
       spans,
       UnorderedElementsAre(
-          AllOf(SpanNamed("HTTP/Response"), SpanHasInstrumentationScope(),
+          AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
                 SpanKindIsClient(),
                 SpanHasAttributes(
                     SpanAttribute<std::string>(sc::kNetTransport,
@@ -123,7 +126,8 @@ TEST(TracingHttpPayload, Failure) {
                     SpanAttribute<int>(
                         "gcloud.status_code",
                         static_cast<int>(StatusCode::kUnavailable)))),
-          make_read_success_matcher(16, 16), make_read_error_matcher(16)));
+          make_read_success_matcher(16, 16),
+          make_read_error_matcher(16, StatusCode::kUnavailable)));
 }
 
 }  // namespace

@@ -42,7 +42,7 @@ StatusOr<std::size_t> TracingHttpPayload::Read(absl::Span<char> buffer) {
     return internal::EndSpan(*span_, std::move(status));
   }
   span->SetAttribute("read.returned.size", static_cast<std::int64_t>(*status));
-  internal::EndSpan(*span, Status{});
+  internal::EndSpan(*span, status.status());
   if (*status != 0) return status;
   return internal::EndSpan(*span_, std::move(status));
 }

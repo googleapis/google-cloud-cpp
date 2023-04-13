@@ -76,26 +76,6 @@ TEST(RestOpentelemetry, MakeSpanHttp) {
                                          secret.substr(0, 32))))));
 }
 
-TEST(RestOpentelemetry, MakeSpanHttpPayload) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
-  auto span_catcher = InstallSpanCatcher();
-
-  RestRequest request("https://example.com/ignored");
-  auto request_span = MakeSpanHttp(request, "GET");
-
-  auto span = MakeSpanHttpPayload(*request_span);
-  request_span->End();
-  span->End();
-
-  auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(
-      spans,
-      Contains(AllOf(SpanHasInstrumentationScope(), SpanKindIsClient(),
-                     SpanNamed("HTTP/Response"),
-                     SpanHasAttributes(SpanAttribute<std::string>(
-                         sc::kNetTransport, sc::NetTransportValues::kIpTcp)))));
-}
-
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal

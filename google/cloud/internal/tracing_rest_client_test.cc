@@ -102,11 +102,6 @@ TEST(TracingRestClient, Delete) {
                         "http.response.header.x-test-header-1", "value1"),
                     SpanAttribute<std::string>(
                         "http.response.header.x-test-header-2", "value2"))),
-          // Response span
-          AllOf(SpanNamed("HTTP/Response"), SpanHasInstrumentationScope(),
-                SpanKindIsClient(),
-                SpanHasAttributes(SpanAttribute<std::string>(
-                    sc::kNetTransport, sc::NetTransportValues::kIpTcp))),
           // Read span on the HttpPayload
           SpanNamed("Read"), SpanNamed("Read")));
 }
