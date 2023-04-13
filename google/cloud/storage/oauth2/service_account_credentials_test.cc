@@ -36,6 +36,16 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace oauth2 {
+
+// Define a helper to test the specialization.
+struct ServiceAccountCredentialsTester {
+  static StatusOr<std::string> Header(
+      ServiceAccountCredentials<>& tested,
+      std::chrono::system_clock::time_point tp) {
+    return tested.AuthorizationHeaderForTesting(tp);
+  }
+};
+
 namespace {
 
 using ::google::cloud::internal::SignUsingSha256;
@@ -819,6 +829,33 @@ TEST_F(ServiceAccountCredentialsTest, UseOauth) {
         test.environment);
     EXPECT_EQ(test.expected, ServiceAccountUseOAuth(test.info));
   }
+}
+
+TEST_F(ServiceAccountCredentialsTest, CachingWithSelfSignedJwt) {
+  auto clear = ScopedEnvironment(
+      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", absl::nullopt);
+  auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
+  ASSERT_STATUS_OK(info);
+
+  ServiceAccountCredentials<> tested(*info);
+  auto tp = std::chrono::system_clock::now();
+  auto initial = ServiceAccountCredentialsTester::Header(tested, tp);
+  ASSERT_STATUS_OK(initial);
+
+  auto cached = ServiceAccountCredentialsTester::Header(
+      tested, tp + std::chrono::seconds(30));
+  ASSERT_STATUS_OK(cached);
+  EXPECT_THAT(*cached, *initial);
+
+  cached = ServiceAccountCredentialsTester::Header(
+      tested, tp + std::chrono::seconds(300));
+  ASSERT_STATUS_OK(cached);
+  EXPECT_THAT(*cached, *initial);
+
+  auto uncached = ServiceAccountCredentialsTester::Header(
+      tested, tp + std::chrono::hours(2));
+  ASSERT_STATUS_OK(uncached);
+  EXPECT_NE(*initial, *uncached);
 }
 
 }  // namespace
