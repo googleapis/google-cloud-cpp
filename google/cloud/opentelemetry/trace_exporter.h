@@ -15,17 +15,31 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPENTELEMETRY_TRACE_EXPORTER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPENTELEMETRY_TRACE_EXPORTER_H
 
-#include "google/cloud/version.h"
+#include "google/cloud/opentelemetry/internal/recordable.h"
+#include "google/cloud/trace/v2/trace_connection.h"
+#include "google/cloud/project.h"
+#include <opentelemetry/sdk/trace/exporter.h>
+#include <memory>
 
 namespace google {
 namespace cloud {
 namespace otel {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-// TODO(#11156) - Implement this thing.
+// Make an OpenTelemetry Trace Exporter for Google Cloud Trace.
+std::unique_ptr<opentelemetry::sdk::trace::SpanExporter> MakeTraceExporter(
+    Project project, Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel
+namespace otel_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+std::unique_ptr<opentelemetry::sdk::trace::SpanExporter> MakeTraceExporter(
+    Project project, std::shared_ptr<trace_v2::TraceServiceConnection> conn);
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace otel_internal
 }  // namespace cloud
 }  // namespace google
 
