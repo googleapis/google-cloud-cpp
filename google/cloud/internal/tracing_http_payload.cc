@@ -32,16 +32,17 @@ bool TracingHttpPayload::HasUnreadData() const {
 }
 
 StatusOr<std::size_t> TracingHttpPayload::Read(absl::Span<char> buffer) {
+  auto scope = internal::GetTracer(Options{})->WithActiveSpan(span_);
+  auto span = internal::MakeSpan("Read");
+  span->SetAttribute("read.buffer.size",
+                     static_cast<std::int64_t>(buffer.size()));
   auto status = impl_->Read(buffer);
   if (!status) {
-    span_->AddEvent(
-        "Read", {{"read.buffer.size", static_cast<std::int64_t>(buffer.size())},
-                 {"read.error", true}});
+    internal::EndSpan(*span, status.status());
     return internal::EndSpan(*span_, std::move(status));
   }
-  span_->AddEvent(
-      "Read", {{"read.buffer.size", static_cast<std::int64_t>(buffer.size())},
-               {"read.returned.size", static_cast<std::int64_t>(*status)}});
+  span->SetAttribute("read.returned.size", static_cast<std::int64_t>(*status));
+  internal::EndSpan(*span, Status{});
   if (*status != 0) return status;
   return internal::EndSpan(*span_, std::move(status));
 }

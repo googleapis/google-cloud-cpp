@@ -63,7 +63,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>
 MakeSpanHttpPayload(opentelemetry::trace::Span const& request_span) {
   namespace sc = opentelemetry::trace::SemanticConventions;
   opentelemetry::trace::StartSpanOptions options;
-  options.kind = opentelemetry::trace::SpanKind::kConsumer;
+  options.kind = opentelemetry::trace::SpanKind::kClient;
   return internal::GetTracer(internal::CurrentOptions())
       ->StartSpan(absl::StrCat("HTTP/Response"),
                   {{sc::kNetTransport, sc::NetTransportValues::kIpTcp}},
