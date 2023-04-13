@@ -129,6 +129,10 @@ the APIs in these libraries are stable, and are ready for production use.
 - [ConfidentialComputing API](/google/cloud/confidentialcomputing/README.md)
 - [Workstations API](/google/cloud/workstations/README.md)
 
+### [Service Control](/google/cloud/servicecontrol/README.md)
+
+The library has been expanded to include the v2 service.
+
 ### Other Changes
 
 **Bazel Testing**: starting with v2.10.0 we only test with Bazel >= 5.4.0. We
