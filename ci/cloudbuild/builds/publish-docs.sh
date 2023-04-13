@@ -55,8 +55,10 @@ fi
 # For PR and manual builds, publish to the staging site. For CI builds (release
 # and otherwise), publish to the public URL.
 bucket="test-docs-staging"
+docfx_bucket="docs-staging-v2-dev"
 if [[ "${TRIGGER_TYPE}" == "ci" ]]; then
   bucket="docs-staging"
+  # docfx_bucket="docs-staging-v2"
 fi
 
 export CC=clang
@@ -127,6 +129,27 @@ function upload_docs() {
     python3 -m docuploader upload . --staging-bucket "${bucket}"
 }
 
+function stage_docfx() {
+  local package="$1"
+  local docxfx_dir="$2"
+
+  if [[ ! -d "${docs_dir}" ]]; then
+    io::log_red "Directory not found: ${docs_dir}, skipping"
+    return 0
+  fi
+
+  io::log_h2 "Uploading docs: ${package}"
+  io::log "docs_dir=${docs_dir}"
+
+  env -C "${docs_dir}" "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
+    python3 -m docuploader create-metadata \
+    --name "${package}" \
+    --version "${version}" \
+    --language cpp
+  env -C "${docs_dir}" "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
+    python3 -m docuploader upload --staging-bucket "${docfx_bucket}" --destination-prefix docfx .
+}
+
 io::log_h2 "Publishing docs"
 io::log "version: ${version}"
 io::log "branch:  ${BRANCH_NAME}"
@@ -138,3 +161,10 @@ for feature in "${FEATURE_LIST[@]}"; do
   if [[ "${feature}" == "grafeas" ]]; then continue; fi
   upload_docs "google-cloud-${feature}" "cmake-out/google/cloud/${feature}/html"
 done
+
+io::log_h2 "Staging DocFX"
+io::log "version: ${version}"
+io::log "branch:  ${BRANCH_NAME}"
+io::log "bucket:  gs://${doccx_bucket}"
+
+upload_docfx "google-cloud-common" "cmake-out/google/cloud/docfx"
