@@ -56,8 +56,10 @@ fi
 # For PR and manual builds, publish to the staging site. For CI builds (release
 # and otherwise), publish to the public URL.
 bucket="test-docs-staging"
+docfx_bucket="docs-staging-v2-dev"
 if [[ "${TRIGGER_TYPE}" == "ci" ]]; then
   bucket="docs-staging"
+  docfx_bucket="docs-staging-v2"
 fi
 
 export CC=clang
@@ -125,6 +127,39 @@ function upload_docs() {
   env -C "${docs_dir}" "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
     python3 -m docuploader upload . --staging-bucket "${bucket}"
 }
+
+function stage_docfx() {
+  local package="$1"
+  local docfx_dir="$2"
+
+  if [[ ! -d "${docfx_dir}" ]]; then
+    io::log_red "Directory not found: ${docfx_dir}, skipping"
+    return 0
+  fi
+
+  io::log_h2 "Uploading docs: ${package}"
+  io::log "docfx_dir=${docfx_dir}"
+
+  env -C "${docfx_dir}" "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
+    python3 -m docuploader upload \
+    --staging-bucket "${docfx_bucket}" \
+    --destination-prefix docfx .
+}
+
+io::log_h2 "Publishing DocFX"
+io::log "branch:  ${BRANCH_NAME}"
+io::log "bucket:  gs://${docfx_bucket}"
+
+stage_docfx "google-cloud-common" "cmake-out/google/cloud/docfx"
+stage_docfx "google-cloud-kms" "cmake-out/google/cloud/kms/docfx"
+stage_docfx "google-cloud-secretmanager" "cmake-out/google/cloud/secretmanager/docfx"
+for feature in "${FEATURE_LIST[@]}"; do
+  if [[ "${feature}" == "experimental-storage-grpc" ]]; then continue; fi
+  if [[ "${feature}" == "grafeas" ]]; then continue; fi
+  # TODO(#.....) - publish more documents as we gain confidence
+  if [[ "${feature}" < "z" ]]; then continue; fi
+  upload_docfx "google-cloud-${feature}" "cmake-out/google/cloud/${feature}/docfx"
+done
 
 io::log_h2 "Publishing docs"
 io::log "version: ${version}"

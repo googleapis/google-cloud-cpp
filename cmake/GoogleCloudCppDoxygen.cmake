@@ -176,7 +176,7 @@ function (google_cloud_cpp_doxygen_targets_impl library)
             COMMAND
                 doxygen2docfx
                 "${CMAKE_CURRENT_BINARY_DIR}/xml/${library}.doxygen.xml"
-                "${library}" "${VERSION}")
+                "${library}" "${PROJECT_VERSION}")
         add_dependencies(all-docfx ${library}-docfx)
     endif ()
 endfunction ()
