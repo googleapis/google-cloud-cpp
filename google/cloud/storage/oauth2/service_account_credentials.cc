@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/make_jwt_assertion.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/oauth2_cached_credentials.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
 #include <nlohmann/json.hpp>
 #include <openssl/err.h>
@@ -122,12 +123,13 @@ ServiceAccountCredentials<storage::internal::CurlRequestBuilder,
                           std::chrono::system_clock>::
     ServiceAccountCredentials(ServiceAccountCredentialsInfo info,
                               ChannelOptions const& options)
-    : impl_(std::make_unique<oauth2_internal::ServiceAccountCredentials>(
-          internal::MapServiceAccountCredentialsInfo(std::move(info)),
-          Options{}.set<CARootsFilePathOption>(options.ssl_root_path()),
-          [](Options const& o) {
-            return rest_internal::MakeDefaultRestClient(std::string{}, o);
-          })) {}
+    : impl_(std::make_unique<oauth2_internal::CachedCredentials>(
+          std::make_unique<oauth2_internal::ServiceAccountCredentials>(
+              internal::MapServiceAccountCredentialsInfo(std::move(info)),
+              Options{}.set<CARootsFilePathOption>(options.ssl_root_path()),
+              [](Options const& o) {
+                return rest_internal::MakeDefaultRestClient(std::string{}, o);
+              }))) {}
 
 }  // namespace oauth2
 

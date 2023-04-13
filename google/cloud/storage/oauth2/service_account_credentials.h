@@ -243,7 +243,12 @@ class ServiceAccountCredentials<storage::internal::CurlRequestBuilder,
   std::string KeyId() const override { return impl_->KeyId(); }
 
  private:
-  std::unique_ptr<oauth2_internal::ServiceAccountCredentials> impl_;
+  friend struct ServiceAccountCredentialsTester;
+  StatusOr<std::string> AuthorizationHeaderForTesting(
+      std::chrono::system_clock::time_point tp) {
+    return oauth2_internal::AuthorizationHeaderJoined(*impl_, tp);
+  }
+  std::unique_ptr<oauth2_internal::Credentials> impl_;
 };
 
 /// @copydoc ServiceAccountCredentials
