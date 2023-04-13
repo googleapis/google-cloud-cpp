@@ -35,9 +35,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanHttp(
     RestRequest const& request, opentelemetry::nostd::string_view method);
 
-opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>
-MakeSpanHttpPayload(opentelemetry::trace::Span const& request_span);
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud

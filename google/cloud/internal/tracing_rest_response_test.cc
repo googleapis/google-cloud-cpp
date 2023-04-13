@@ -50,7 +50,7 @@ TEST(TracingRestResponseTest, Success) {
   auto span_catcher = InstallSpanCatcher();
 
   RestRequest request("https://example.com/ignored");
-  auto request_span = MakeSpanHttp(request, "GET");
+  auto span = MakeSpanHttp(request, "GET");
 
   auto impl = std::make_unique<MockRestResponse>();
   EXPECT_CALL(*impl, StatusCode).WillRepeatedly(Return(HttpStatusCode::kOk));
@@ -58,10 +58,7 @@ TEST(TracingRestResponseTest, Success) {
     return MakeMockHttpPayloadSuccess(MockContents());
   });
 
-  TracingRestResponse response(std::move(impl),
-                               MakeSpanHttpPayload(*request_span));
-  // End the request span to simulate the normal behavior.
-  request_span->End();
+  TracingRestResponse response(std::move(impl), std::move(span));
 
   auto payload = std::move(response).ExtractPayload();
   auto constexpr kBufferSize = 64;
@@ -78,15 +75,15 @@ TEST(TracingRestResponseTest, Success) {
     return AllOf(SpanNamed("Read"), SpanHasInstrumentationScope(),
                  SpanKindIsClient(),
                  SpanHasAttributes(
+                     SpanAttribute<std::int32_t>("gcloud.status_code", 0),
                      SpanAttribute<std::int64_t>("read.buffer.size", bs),
                      SpanAttribute<std::int64_t>("read.returned.size", rs)));
   };
   auto const content_size = static_cast<std::int64_t>(MockContents().size());
   EXPECT_THAT(
       spans, UnorderedElementsAre(
-                 SpanNamed("HTTP/GET"),
-                 AllOf(SpanHasInstrumentationScope(), SpanKindIsClient(),
-                       SpanNamed("HTTP/Response"),
+                 AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
+                       SpanKindIsClient(),
                        SpanHasAttributes(SpanAttribute<std::string>(
                            sc::kNetTransport, sc::NetTransportValues::kIpTcp))),
                  make_read_event_matcher(kBufferSize, content_size),
