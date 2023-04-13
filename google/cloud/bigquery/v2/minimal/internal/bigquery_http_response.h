@@ -28,7 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class BigQueryHttpResponse {
  public:
-  BigQueryHttpResponse();
+  BigQueryHttpResponse() = default;
+
   // Parses the RestResponse and builds an BigQueryHttpResponse.
   static StatusOr<BigQueryHttpResponse> BuildFromRestResponse(
       std::unique_ptr<rest_internal::RestResponse> rest_response);
@@ -37,7 +38,8 @@ class BigQueryHttpResponse {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 
-  rest_internal::HttpStatusCode http_status_code;
+  rest_internal::HttpStatusCode http_status_code{
+      rest_internal::HttpStatusCode::kOk};
   std::multimap<std::string, std::string> http_headers;
   std::string payload;
 };
