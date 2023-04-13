@@ -1185,6 +1185,10 @@ service Service0 {
         field: "foo"
         path_template: "projects/*/{routing_key=instances/*}/**"
       }
+      routing_parameters {
+        field: "foo"
+        path_template: "projects/*:{handles_colon=instances/*}:**"
+      }
     };
   }
 }
@@ -1195,9 +1199,12 @@ service Service0 {
     auto info = ParseExplicitRoutingHeader(method);
     EXPECT_THAT(
         info,
-        UnorderedElementsAre(Pair(
-            "routing_key",
-            ElementsAre(RP("foo", "projects/[^/]+/(instances/[^/]+)/.*")))));
+        UnorderedElementsAre(
+            Pair("routing_key",
+                 ElementsAre(RP("foo", "projects/[^/]+/(instances/[^/]+)/.*"))),
+            Pair("handles_colon",
+                 ElementsAre(
+                     RP("foo", "projects/[^:]+:(instances/[^:]+):.*")))));
   });
 }
 

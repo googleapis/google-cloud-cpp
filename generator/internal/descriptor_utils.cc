@@ -801,10 +801,10 @@ ExplicitRoutingInfo ParseExplicitRoutingHeader(
     // single capture group. For example:
     //
     // Input :
-    //   - path_template = "projects/*/{foo=instances/*/}/**"
+    //   - path_template = "projects/*/{foo=instances/*}:**"
     // Output:
     //   - param         = "foo"
-    //   - pattern       = "projects/[^/]+/(instances/[^/]+)/.*"
+    //   - pattern       = "projects/[^/]+/(instances/[^:]+):.*"
     static std::regex const kPatternRegex(R"((.*)\{(.*)=(.*)\}(.*))");
     std::smatch match;
     if (!std::regex_match(path_template, match, kPatternRegex)) {
@@ -814,7 +814,9 @@ ExplicitRoutingInfo ParseExplicitRoutingHeader(
     }
     auto pattern =
         absl::StrCat(match[1].str(), "(", match[3].str(), ")", match[4].str());
-    pattern = absl::StrReplaceAll(pattern, {{"**", ".*"}, {"*", "[^/]+"}});
+    pattern = absl::StrReplaceAll(
+        pattern,
+        {{"**", ".*"}, {"*):", "[^:]+):"}, {"*:", "[^:]+:"}, {"*", "[^/]+"}});
     info[match[2].str()].push_back({std::move(field_name), std::move(pattern)});
   }
   return info;
