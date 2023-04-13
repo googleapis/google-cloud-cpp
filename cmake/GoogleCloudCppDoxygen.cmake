@@ -15,6 +15,7 @@
 # ~~~
 
 find_package(Doxygen QUIET)
+find_program(XSLTPROC xsltproc)
 
 function (google_cloud_cpp_doxygen_deploy_version VAR)
     set(VERSION "${PROJECT_VERSION}")
@@ -157,6 +158,26 @@ function (google_cloud_cpp_doxygen_targets_impl library)
     # Extra dependencies needed by this subproject's docs target.
     if (opt_DEPENDS)
         add_dependencies(${library}-docs ${opt_DEPENDS})
+    endif ()
+
+    if (XSLTPROC AND TARGET doxygen2docfx)
+        # Create a target to compile the XML output into docfx format.
+        file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/docfx")
+        add_custom_target(
+            ${library}-docfx
+            DEPENDS ${library}-docs doxygen2docfx
+            WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/docfx"
+            COMMENT "Generate DoxFX YAML for ${library}"
+            COMMAND
+                ${XSLTPROC} -o
+                "${CMAKE_CURRENT_BINARY_DIR}/xml/${library}.doxygen.xml"
+                "${CMAKE_CURRENT_BINARY_DIR}/xml/combine.xslt"
+                "${CMAKE_CURRENT_BINARY_DIR}/xml/index.xml"
+            COMMAND
+                doxygen2docfx
+                "${CMAKE_CURRENT_BINARY_DIR}/xml/${library}.doxygen.xml"
+                "${library}" "${VERSION}")
+        add_dependencies(all-docfx ${library}-docfx)
     endif ()
 endfunction ()
 
