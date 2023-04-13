@@ -94,13 +94,12 @@ class AttributeVisitor {
     // We do not do any sampling. We just accept the first N attributes we are
     // given, and discard the rest. We may want to consider reservoir sampling
     // in the future. See: https://en.wikipedia.org/wiki/Reservoir_sampling
+    auto& map = *attributes_.mutable_attribute_map();
     if (attributes_.attribute_map().size() < limit_) {
-      auto& map = *attributes_.mutable_attribute_map();
       return &map[{key_.data(), key_.size()}];
     }
 
     // If the map is full, we can still overwrite existing keys.
-    auto& map = *attributes_.mutable_attribute_map();
     auto it = map.find({key_.data(), key_.size()});
     if (it == map.end()) return nullptr;
     return &it->second;
