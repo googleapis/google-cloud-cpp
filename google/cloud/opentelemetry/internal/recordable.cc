@@ -91,13 +91,11 @@ class AttributeVisitor {
     // We drop attributes whose keys are too long.
     if (key_.size() > kAttributeKeyStringLimit) return nullptr;
 
+    auto& map = *attributes_.mutable_attribute_map();
     // We do not do any sampling. We just accept the first N attributes we are
     // given, and discard the rest. We may want to consider reservoir sampling
     // in the future. See: https://en.wikipedia.org/wiki/Reservoir_sampling
-    auto& map = *attributes_.mutable_attribute_map();
-    if (attributes_.attribute_map().size() < limit_) {
-      return &map[{key_.data(), key_.size()}];
-    }
+    if (map.size() < limit_) return &map[{key_.data(), key_.size()}];
 
     // If the map is full, we can still overwrite existing keys.
     auto it = map.find({key_.data(), key_.size()});
