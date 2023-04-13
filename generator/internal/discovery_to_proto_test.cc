@@ -556,6 +556,242 @@ TEST(SynthesizeRequestTypeTest, OperationResponseMissingRefInRequest) {
           HasSubstr("resource foos has method Create with non $ref request")));
 }
 
+TEST(ProcessMethodRequestsAndResponsesTest, RequestWithOperationResponse) {
+  auto constexpr kResourceJson = R"""({
+  "methods": {
+    "create": {
+      "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform"
+      ],
+      "path": "projects/{project}/zones/{zone}/myResources/{fooId}",
+      "httpMethod": "POST",
+      "parameters": {
+        "project": {
+          "type": "string"
+        },
+        "zone": {
+          "type": "string"
+        },
+        "fooId": {
+          "type": "string"
+        }
+      },
+      "response": {
+        "$ref": "Operation"
+      },
+      "request": {
+        "$ref": "Foo"
+      },
+      "parameterOrder": [
+        "project",
+        "zone",
+        "fooId"
+      ]
+    }
+  }
+})""";
+  auto const resource_json =
+      nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  auto constexpr kOperationTypeJson = R"""({
+})""";
+  auto const operation_type_json =
+      nlohmann::json::parse(kOperationTypeJson, nullptr, false);
+  ASSERT_TRUE(operation_type_json.is_object());
+  std::map<std::string, DiscoveryResource> resources;
+  resources.emplace("foos", DiscoveryResource("foos", "", "", resource_json));
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Operation", DiscoveryTypeVertex("", operation_type_json));
+  auto result = ProcessMethodRequestsAndResponses(resources, types);
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(
+      types, UnorderedElementsAre(Key("Foos.CreateRequest"), Key("Operation")));
+}
+
+TEST(ProcessMethodRequestsAndResponsesTest, MethodWithEmptyRequest) {
+  auto constexpr kResourceJson = R"""({
+  "methods": {
+    "noop": {
+      "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform"
+      ],
+      "path": "projects/myResources",
+      "httpMethod": "POST"
+    }
+  }
+})""";
+  auto const resource_json =
+      nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  std::map<std::string, DiscoveryResource> resources;
+  resources.emplace("foos", DiscoveryResource("foos", "", "", resource_json));
+  std::map<std::string, DiscoveryTypeVertex> types;
+  auto result = ProcessMethodRequestsAndResponses(resources, types);
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(types, IsEmpty());
+}
+
+TEST(ProcessMethodRequestsAndResponsesTest, ResponseError) {
+  auto constexpr kResourceJson = R"""({
+  "methods": {
+    "create": {
+      "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform"
+      ],
+      "path": "projects/{project}/zones/{zone}/myResources/{fooId}",
+      "httpMethod": "POST",
+      "parameters": {
+        "project": {
+          "type": "string"
+        },
+        "zone": {
+          "type": "string"
+        },
+        "fooId": {
+          "type": "string"
+        }
+      },
+      "response": {
+      },
+      "request": {
+        "$ref": "Foo"
+      },
+      "parameterOrder": [
+        "project",
+        "zone",
+        "fooId"
+      ]
+    }
+  }
+})""";
+  auto const resource_json =
+      nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  auto constexpr kOperationTypeJson = R"""({
+})""";
+  auto const operation_type_json =
+      nlohmann::json::parse(kOperationTypeJson, nullptr, false);
+  ASSERT_TRUE(operation_type_json.is_object());
+  std::map<std::string, DiscoveryResource> resources;
+  resources.emplace("foos", DiscoveryResource("foos", "", "", resource_json));
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Operation", DiscoveryTypeVertex("", operation_type_json));
+  auto result = ProcessMethodRequestsAndResponses(resources, types);
+  EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("Missing $ref field in response")));
+  EXPECT_THAT(result.error_info().metadata(),
+              AllOf(Contains(Key("resource")), Contains(Key("method"))));
+}
+
+TEST(ProcessMethodRequestsAndResponsesTest, RequestError) {
+  auto constexpr kResourceJson = R"""({
+  "methods": {
+    "create": {
+      "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform"
+      ],
+      "path": "projects/{project}/zones/{zone}/myResources/{fooId}",
+      "httpMethod": "POST",
+      "parameters": {
+        "project": {
+          "type": "string"
+        },
+        "zone": {
+          "type": "string"
+        },
+        "fooId": {
+          "type": "string"
+        }
+      },
+      "response": {
+        "$ref": "Operation"
+      },
+      "request": {
+      },
+      "parameterOrder": [
+        "project",
+        "zone",
+        "fooId"
+      ]
+    }
+  }
+})""";
+  auto const resource_json =
+      nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  auto constexpr kOperationTypeJson = R"""({
+})""";
+  auto const operation_type_json =
+      nlohmann::json::parse(kOperationTypeJson, nullptr, false);
+  ASSERT_TRUE(operation_type_json.is_object());
+  std::map<std::string, DiscoveryResource> resources;
+  resources.emplace("foos", DiscoveryResource("foos", "", "", resource_json));
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Operation", DiscoveryTypeVertex("", operation_type_json));
+  auto result = ProcessMethodRequestsAndResponses(resources, types);
+  EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("with non $ref request")));
+}
+
+TEST(ProcessMethodRequestsAndResponsesTest, TypeInsertError) {
+  auto constexpr kResourceJson = R"""({
+  "methods": {
+    "create": {
+      "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform"
+      ],
+      "path": "projects/{project}/zones/{zone}/myResources/{fooId}",
+      "httpMethod": "POST",
+      "parameters": {
+        "project": {
+          "type": "string"
+        },
+        "zone": {
+          "type": "string"
+        },
+        "fooId": {
+          "type": "string"
+        }
+      },
+      "response": {
+        "$ref": "Operation"
+      },
+      "request": {
+        "$ref": "Foo"
+      },
+      "parameterOrder": [
+        "project",
+        "zone",
+        "fooId"
+      ]
+    }
+  }
+})""";
+  auto const resource_json =
+      nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  auto constexpr kOperationTypeJson = R"""({
+})""";
+  auto const operation_type_json =
+      nlohmann::json::parse(kOperationTypeJson, nullptr, false);
+  ASSERT_TRUE(operation_type_json.is_object());
+  auto constexpr kEmptyTypeJson = R"""({
+})""";
+  auto const empty_type_json =
+      nlohmann::json::parse(kEmptyTypeJson, nullptr, false);
+  ASSERT_TRUE(empty_type_json.is_object());
+  std::map<std::string, DiscoveryResource> resources;
+  resources.emplace("foos", DiscoveryResource("foos", "", "", resource_json));
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Operation",
+                DiscoveryTypeVertex("Operation", operation_type_json));
+  types.emplace("Foos.CreateRequest", DiscoveryTypeVertex("", empty_type_json));
+  auto result = ProcessMethodRequestsAndResponses(resources, types);
+  EXPECT_THAT(result,
+              StatusIs(StatusCode::kInternal,
+                       HasSubstr("Unable to insert type Foos.CreateRequest")));
+}
+
 }  // namespace
 }  // namespace generator_internal
 }  // namespace cloud

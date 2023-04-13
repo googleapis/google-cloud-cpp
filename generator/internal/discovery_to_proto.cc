@@ -218,6 +218,46 @@ StatusOr<DiscoveryTypeVertex> SynthesizeRequestType(
   return DiscoveryTypeVertex(id, synthesized_request);
 }
 
+Status ProcessMethodRequestsAndResponses(
+    std::map<std::string, DiscoveryResource>& resources,
+    std::map<std::string, DiscoveryTypeVertex>& types) {
+  for (auto& resource : resources) {
+    std::string resource_name = resource.first;
+    auto const& methods = resource.second.json().find("methods");
+    for (auto m = methods->begin(); m != methods->end(); ++m) {
+      auto response_type_name =
+          DetermineAndVerifyResponseTypeName(*m, resource.second, types);
+      if (!response_type_name) {
+        return Status(response_type_name.status().code(),
+                      response_type_name.status().message(),
+                      GCP_ERROR_INFO()
+                          .WithMetadata("resource", resource_name)
+                          .WithMetadata("method", m.key())
+                          .Build(response_type_name.status().code()));
+      }
+
+      if (m->contains("parameters")) {
+        auto request_type = SynthesizeRequestType(*m, resource.second,
+                                                  *response_type_name, m.key());
+        if (!request_type) return std::move(request_type).status();
+        // It is necessary to add the resource name to the map key to
+        // disambiguate methods that appear in more than one resource.
+        resource_name = CapitalizeFirstLetter(resource_name);
+        std::string id = request_type->name();
+        auto insert_result = types.insert(std::make_pair(
+            absl::StrCat(resource_name, ".", id), *std::move(request_type)));
+        if (!insert_result.second) {
+          return internal::InternalError(
+              absl::StrCat("Unable to insert type ", resource_name, ".", id));
+        }
+        resource.second.AddRequestType(id, &insert_result.first->second);
+      }
+    }
+  }
+
+  return {};
+}
+
 Status GenerateProtosFromDiscoveryDoc(std::string const& url,
                                       std::string const&, std::string const&,
                                       std::string const&) {
