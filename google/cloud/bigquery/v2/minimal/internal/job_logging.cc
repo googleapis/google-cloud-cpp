@@ -17,6 +17,7 @@
 #include "google/cloud/bigquery/v2/minimal/internal/job_logging.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/debug_string.h"
+#include "google/cloud/internal/debug_string_status.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/log.h"
@@ -36,22 +37,23 @@ Result JobLogWrapper(Functor&& functor, rest_internal::RestContext& context,
                      absl::string_view request_name,
                      absl::string_view response_name,
                      TracingOptions const& options) {
-  auto formatter = [](std::string* out, auto const& header) {
-    absl::StrAppend(out, "name=", header.first, ", value={",
-                    absl::StrJoin(header.second, "&"), "}");
+  auto formatter = [options](std::string* out, auto const& header) {
+    absl::StrAppend(
+        out, " { name: \"", header.first, "\" value: \"",
+        internal::DebugString(absl::StrJoin(header.second, "&"), options),
+        "\" } ");
   };
   GCP_LOG(DEBUG) << where << "() << "
-                 << request.DebugString(request_name, options) << ", Context={"
-                 << internal::DebugString(
-                        absl::StrJoin(context.headers(), ", ", formatter),
-                        options)
-                 << "}";
+                 << request.DebugString(request_name, options) << ", Context {"
+                 << absl::StrJoin(context.headers(), ", ", formatter) << " }";
 
   auto response = functor(context, request);
-  GCP_LOG(DEBUG) << where << "() >> status=" << response.status();
-
-  if (response.ok()) {
-    GCP_LOG(DEBUG) << ", " << response->DebugString(response_name, options);
+  if (!response) {
+    GCP_LOG(DEBUG) << where << "() >> status="
+                   << internal::DebugString(response.status(), options);
+  } else {
+    GCP_LOG(DEBUG) << where << "() >> response="
+                   << response->DebugString(response_name, options);
   }
 
   return response;
@@ -73,7 +75,9 @@ StatusOr<GetJobResponse> BigQueryJobLogging::GetJob(
              GetJobRequest const& request) {
         return child_->GetJob(rest_context, request);
       },
-      rest_context, request, __func__, "GetJobRequest", "GetJobResponse",
+      rest_context, request, __func__,
+      "google.cloud.bigquery.v2.minimal.internal.GetJobRequest",
+      "google.cloud.bigquery.v2.minimal.internal.GetJobResponse",
       tracing_options_);
 }
 
@@ -86,7 +90,9 @@ StatusOr<ListJobsResponse> BigQueryJobLogging::ListJobs(
              ListJobsRequest const& request) {
         return child_->ListJobs(rest_context, request);
       },
-      rest_context, request, __func__, "ListJobsRequest", "ListJobsResponse",
+      rest_context, request, __func__,
+      "google.cloud.bigquery.v2.minimal.internal.ListJobsRequest",
+      "google.cloud.bigquery.v2.minimal.internal.ListJobsResponse",
       tracing_options_);
 }
 
