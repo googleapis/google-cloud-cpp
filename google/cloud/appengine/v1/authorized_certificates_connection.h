@@ -26,7 +26,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/appengine/v1/appengine.grpc.pb.h>
+#include <google/appengine/v1/appengine.pb.h>
 #include <google/appengine/v1/operation.pb.h>
 #include <memory>
 

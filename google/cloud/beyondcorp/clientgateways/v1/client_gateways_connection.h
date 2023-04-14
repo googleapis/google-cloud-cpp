@@ -29,7 +29,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.grpc.pb.h>
+#include <google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 

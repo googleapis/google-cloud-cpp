@@ -25,7 +25,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/iam/credentials/v1/iamcredentials.grpc.pb.h>
+#include <google/iam/credentials/v1/iamcredentials.pb.h>
 #include <memory>
 
 namespace google {

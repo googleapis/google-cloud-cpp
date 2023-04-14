@@ -25,7 +25,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/servicedirectory/v1/lookup_service.grpc.pb.h>
+#include <google/cloud/servicedirectory/v1/lookup_service.pb.h>
 #include <memory>
 
 namespace google {

@@ -26,7 +26,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/scheduler/v1/cloudscheduler.grpc.pb.h>
+#include <google/cloud/scheduler/v1/cloudscheduler.pb.h>
 #include <memory>
 
 namespace google {

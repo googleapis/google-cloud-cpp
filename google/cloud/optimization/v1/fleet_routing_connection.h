@@ -27,7 +27,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/optimization/v1/fleet_routing.grpc.pb.h>
+#include <google/cloud/optimization/v1/fleet_routing.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 

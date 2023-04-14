@@ -28,7 +28,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/memcache/v1/cloud_memcache.grpc.pb.h>
+#include <google/cloud/memcache/v1/cloud_memcache.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 

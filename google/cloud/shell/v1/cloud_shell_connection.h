@@ -27,7 +27,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/shell/v1/cloudshell.grpc.pb.h>
+#include <google/cloud/shell/v1/cloudshell.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 

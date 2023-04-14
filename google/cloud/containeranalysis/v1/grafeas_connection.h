@@ -26,7 +26,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <grafeas/v1/grafeas.grpc.pb.h>
 #include <grafeas/v1/grafeas.pb.h>
 #include <memory>
 

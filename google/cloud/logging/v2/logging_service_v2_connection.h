@@ -28,7 +28,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/logging/v2/logging.grpc.pb.h>
+#include <google/logging/v2/logging.pb.h>
 #include <memory>
 
 namespace google {

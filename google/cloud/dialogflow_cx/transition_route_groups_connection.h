@@ -26,7 +26,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dialogflow/cx/v3/transition_route_group.grpc.pb.h>
+#include <google/cloud/dialogflow/cx/v3/transition_route_group.pb.h>
 #include <memory>
 #include <string>
 

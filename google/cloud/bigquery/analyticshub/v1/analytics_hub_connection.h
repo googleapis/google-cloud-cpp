@@ -26,7 +26,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/bigquery/analyticshub/v1/analyticshub.grpc.pb.h>
+#include <google/cloud/bigquery/analyticshub/v1/analyticshub.pb.h>
 #include <memory>
 
 namespace google {

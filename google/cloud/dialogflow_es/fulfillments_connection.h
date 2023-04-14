@@ -25,7 +25,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dialogflow/v2/fulfillment.grpc.pb.h>
+#include <google/cloud/dialogflow/v2/fulfillment.pb.h>
 #include <memory>
 #include <string>
 

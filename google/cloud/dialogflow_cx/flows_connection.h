@@ -28,7 +28,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dialogflow/cx/v3/flow.grpc.pb.h>
+#include <google/cloud/dialogflow/cx/v3/flow.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <google/protobuf/struct.pb.h>
 #include <memory>

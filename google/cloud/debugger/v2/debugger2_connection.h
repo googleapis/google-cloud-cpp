@@ -25,7 +25,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/devtools/clouddebugger/v2/debugger.grpc.pb.h>
+#include <google/devtools/clouddebugger/v2/debugger.pb.h>
 #include <memory>
 
 namespace google {

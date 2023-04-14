@@ -28,7 +28,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/datastream/v1/datastream.grpc.pb.h>
+#include <google/cloud/datastream/v1/datastream.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
