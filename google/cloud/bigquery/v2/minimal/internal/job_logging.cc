@@ -38,14 +38,15 @@ Result JobLogWrapper(Functor&& functor, rest_internal::RestContext& context,
                      absl::string_view response_name,
                      TracingOptions const& options) {
   auto formatter = [options](std::string* out, auto const& header) {
+    const auto* delim = options.single_line_mode() ? "&" : "\n";
     absl::StrAppend(
         out, " { name: \"", header.first, "\" value: \"",
-        internal::DebugString(absl::StrJoin(header.second, "&"), options),
-        "\" } ");
+        internal::DebugString(absl::StrJoin(header.second, delim), options),
+        "\" }");
   };
   GCP_LOG(DEBUG) << where << "() << "
                  << request.DebugString(request_name, options) << ", Context {"
-                 << absl::StrJoin(context.headers(), ", ", formatter) << " }";
+                 << absl::StrJoin(context.headers(), "", formatter) << " }";
 
   auto response = functor(context, request);
   if (!response) {
