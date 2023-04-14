@@ -48,6 +48,12 @@ StatusOr<DiscoveryTypeVertex> SynthesizeRequestType(
     nlohmann::json const& method_json, DiscoveryResource const& resource,
     std::string const& response_type_name, std::string method_name);
 
+// Iterate through all the methods in all the resources and invoke
+// DetermineAndVerifyResponseTypeName and SynthesizeRequestType as needed.
+Status ProcessMethodRequestsAndResponses(
+    std::map<std::string, DiscoveryResource>& resources,
+    std::map<std::string, DiscoveryTypeVertex>& types);
+
 Status GenerateProtosFromDiscoveryDoc(std::string const& url,
                                       std::string const& protobuf_proto_path,
                                       std::string const& googleapis_proto_path,
