@@ -119,7 +119,8 @@ foreach (fname ${opentelemetry_sdk_unit_tests})
     google_cloud_cpp_add_executable(target "opentelemetry" "${fname}")
     target_link_libraries(
         ${target}
-        PRIVATE google_cloud_cpp_testing google_cloud_cpp_testing_grpc
+        PRIVATE google_cloud_cpp_testing
+                google_cloud_cpp_testing_grpc
                 google-cloud-cpp::experimental-opentelemetry_sdk
                 google_cloud_cpp_trace_mocks
                 GTest::gmock_main

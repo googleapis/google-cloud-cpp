@@ -36,8 +36,8 @@ load(":opentelemetry_sdk_unit_tests.bzl", "opentelemetry_sdk_unit_tests")
     srcs = [test],
     deps = [
         ":google_cloud_cpp_opentelemetry_sdk",
+        "//:trace_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "//:trace_mocks",
     ],
 ) for test in opentelemetry_sdk_unit_tests]
