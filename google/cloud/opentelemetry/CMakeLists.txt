@@ -27,8 +27,10 @@ include(GoogleCloudCppDoxygen)
 google_cloud_cpp_doxygen_targets("opentelemetry_sdk" DEPENDS cloud-docs
                                  google-cloud-cpp::trace)
 
-add_library(google_cloud_cpp_opentelemetry_sdk # cmake-format: sort
-            internal/recordable.cc internal/recordable.h trace_exporter.h)
+add_library(
+    google_cloud_cpp_opentelemetry_sdk # cmake-format: sort
+    internal/recordable.cc internal/recordable.h trace_exporter.cc
+    trace_exporter.h)
 target_link_libraries(google_cloud_cpp_opentelemetry_sdk
                       PUBLIC google-cloud-cpp::trace opentelemetry-cpp::trace)
 google_cloud_cpp_add_common_options(google_cloud_cpp_opentelemetry_sdk)
@@ -102,8 +104,9 @@ if (NOT BUILD_TESTING)
     return()
 endif ()
 
-set(opentelemetry_sdk_unit_tests # cmake-format: sort
-                                 internal/recordable_test.cc)
+set(opentelemetry_sdk_unit_tests
+    # cmake-format: sort
+    internal/recordable_test.cc trace_exporter_test.cc)
 
 export_list_to_bazel("opentelemetry_sdk_unit_tests.bzl"
                      "opentelemetry_sdk_unit_tests" YEAR "2023")
@@ -116,9 +119,13 @@ foreach (fname ${opentelemetry_sdk_unit_tests})
     google_cloud_cpp_add_executable(target "opentelemetry" "${fname}")
     target_link_libraries(
         ${target}
-        PRIVATE google_cloud_cpp_testing google_cloud_cpp_testing_grpc
+        PRIVATE google_cloud_cpp_testing
+                google_cloud_cpp_testing_grpc
                 google-cloud-cpp::experimental-opentelemetry_sdk
-                GTest::gmock_main GTest::gmock GTest::gtest)
+                google_cloud_cpp_trace_mocks
+                GTest::gmock_main
+                GTest::gmock
+                GTest::gtest)
     google_cloud_cpp_add_common_options(${target})
 
     # With googletest it is relatively easy to exceed the default number of
