@@ -62,7 +62,7 @@ std::unique_ptr<opentelemetry::sdk::trace::SpanExporter> MakeTraceExporter(
     Project project, Options options) {
   // TODO(#11156) - We should filter out options that enable tracing. We should
   // not trace requests initiated by the underlying trace_v2 client.
-  return std::make_unique<otel::TraceExporter>(
+  return std::make_unique<TraceExporter>(
       std::move(project),
       trace_v2::MakeTraceServiceConnection(std::move(options)));
 }

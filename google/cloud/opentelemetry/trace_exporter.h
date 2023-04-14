@@ -18,6 +18,7 @@
 #include "google/cloud/opentelemetry/internal/recordable.h"
 #include "google/cloud/trace/v2/trace_connection.h"
 #include "google/cloud/project.h"
+#include "google/cloud/version.h"
 #include <opentelemetry/sdk/trace/exporter.h>
 #include <memory>
 
