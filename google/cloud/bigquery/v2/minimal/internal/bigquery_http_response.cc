@@ -15,6 +15,7 @@
 #include "google/cloud/bigquery/v2/minimal/internal/bigquery_http_response.h"
 #include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/rest_response.h"
 
 namespace google {
 namespace cloud {
