@@ -36,6 +36,7 @@ using ::testing::AllOf;
 using ::testing::AnyOf;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
+using ::testing::ResultOf;
 using ::testing::UnorderedElementsAreArray;
 
 absl::Time MakeTime(std::time_t sec, int nanos) {
@@ -157,9 +158,8 @@ TEST_F(DataTypeIntegrationTest, WriteReadFloat64NaN) {
       std::numeric_limits<double>::quiet_NaN(),
   };
   auto result = WriteReadData(*client_, data, "Float64Value");
-  ASSERT_STATUS_OK(result);
-  ASSERT_EQ(1, result->size());
-  EXPECT_TRUE(std::isnan(result->front()));
+  EXPECT_THAT(result, IsOkAndHolds(ElementsAre(ResultOf(
+                          [](double d) { return std::isnan(d); }, true))));
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadString) {
@@ -519,7 +519,7 @@ TEST_F(PgDataTypeIntegrationTest, InsertAndQueryWithJson) {
         if (!dml_result) return dml_result.status();
         return Mutations{};
       });
-  EXPECT_STATUS_OK(commit_result);
+  ASSERT_STATUS_OK(commit_result);
 
   auto rows =
       client_->ExecuteQuery(SqlStatement("SELECT Id, JsonValue FROM DataTypes"
@@ -542,7 +542,7 @@ TEST_F(DataTypeIntegrationTest, InsertAndQueryWithNumericKey) {
       Mutations{InsertOrUpdateMutationBuilder("NumericKey", {"Key"})
                     .EmplaceRow(key)
                     .Build()});
-  EXPECT_STATUS_OK(commit_result);
+  ASSERT_STATUS_OK(commit_result);
 
   auto rows = client.Read("NumericKey", KeySet::All(), {"Key"});
   using RowType = std::tuple<Numeric>;
@@ -750,7 +750,7 @@ TEST_F(DataTypeIntegrationTest, InsertAndQueryWithStruct) {
         if (!dml_result) return dml_result.status();
         return Mutations{};
       });
-  EXPECT_STATUS_OK(commit_result);
+  ASSERT_STATUS_OK(commit_result);
 
   auto rows = client_->ExecuteQuery(
       SqlStatement("SELECT ARRAY(SELECT STRUCT(StringValue, ArrayInt64Value)) "
@@ -760,8 +760,7 @@ TEST_F(DataTypeIntegrationTest, InsertAndQueryWithStruct) {
   ASSERT_STATUS_OK(row);
 
   auto const& v = std::get<0>(*row);
-  ASSERT_EQ(1, v.size());
-  EXPECT_EQ(data, v[0]);
+  EXPECT_THAT(v, ElementsAre(data));
 }
 
 }  // namespace

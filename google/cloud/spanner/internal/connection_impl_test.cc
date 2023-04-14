@@ -64,6 +64,7 @@ using ::google::cloud::spanner_testing::HasSessionAndTransaction;
 using ::google::cloud::spanner_testing::SessionNotFoundError;
 using ::google::cloud::spanner_testing::SessionNotFoundRpcError;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
@@ -72,17 +73,20 @@ using ::testing::AllOf;
 using ::testing::AtLeast;
 using ::testing::ByMove;
 using ::testing::DoAll;
+using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::InSequence;
 using ::testing::IsEmpty;
 using ::testing::NiceMock;
 using ::testing::Not;
+using ::testing::Pair;
 using ::testing::Property;
 using ::testing::Return;
 using ::testing::Sequence;
 using ::testing::SetArgPointee;
 using ::testing::StartsWith;
+using ::testing::UnorderedElementsAre;
 using ::testing::UnorderedPointwise;
 using ::testing::Unused;
 
@@ -452,19 +456,12 @@ TEST(ConnectionImplTest, ReadSuccess) {
        spanner::KeySet::All(),
        {"UserId", "UserName"},
        read_options});
+
   using RowType = std::tuple<std::int64_t, std::string>;
-  auto expected = std::vector<RowType>{
-      RowType(12, "Steve"),
-      RowType(42, "Ann"),
-  };
-  int row_number = 0;
-  for (auto& row : spanner::StreamOf<RowType>(rows)) {
-    ASSERT_STATUS_OK(row);
-    ASSERT_LT(row_number, expected.size());
-    EXPECT_EQ(*row, expected[row_number]);
-    ++row_number;
-  }
-  EXPECT_EQ(row_number, expected.size());
+  auto stream = spanner::StreamOf<RowType>(rows);
+  auto actual = std::vector<StatusOr<RowType>>{stream.begin(), stream.end()};
+  EXPECT_THAT(actual, ElementsAre(IsOkAndHolds(RowType(12, "Steve")),
+                                  IsOkAndHolds(RowType(42, "Ann"))));
 }
 
 TEST(ConnectionImplTest, ReadPermanentFailure) {
@@ -589,19 +586,12 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOneTransientFailure) {
       MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
   auto rows = conn->Read(
       {txn, "table", spanner::KeySet::All(), {"UserId", "UserName"}});
+
   using RowType = std::tuple<std::int64_t, std::string>;
-  auto expected = std::vector<RowType>{
-      RowType(12, "Steve"),
-      RowType(42, "Ann"),
-  };
-  int row_number = 0;
-  for (auto& row : spanner::StreamOf<RowType>(rows)) {
-    ASSERT_STATUS_OK(row);
-    ASSERT_LT(row_number, expected.size());
-    EXPECT_EQ(*row, expected[row_number]);
-    ++row_number;
-  }
-  EXPECT_EQ(row_number, expected.size());
+  auto stream = spanner::StreamOf<RowType>(rows);
+  auto actual = std::vector<StatusOr<RowType>>{stream.begin(), stream.end()};
+  EXPECT_THAT(actual, ElementsAre(IsOkAndHolds(RowType(12, "Steve")),
+                                  IsOkAndHolds(RowType(42, "Ann"))));
   EXPECT_THAT(txn, HasSessionAndTransaction("test-session-name", "ABCDEF00",
                                             false, ""));
 }
@@ -656,19 +646,12 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOnePermanentFailure) {
       MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
   auto rows = conn->Read(
       {txn, "table", spanner::KeySet::All(), {"UserId", "UserName"}});
+
   using RowType = std::tuple<std::int64_t, std::string>;
-  auto expected = std::vector<RowType>{
-      RowType(12, "Steve"),
-      RowType(42, "Ann"),
-  };
-  int row_number = 0;
-  for (auto& row : spanner::StreamOf<RowType>(rows)) {
-    ASSERT_STATUS_OK(row);
-    ASSERT_LT(row_number, expected.size());
-    EXPECT_EQ(*row, expected[row_number]);
-    ++row_number;
-  }
-  EXPECT_EQ(row_number, expected.size());
+  auto stream = spanner::StreamOf<RowType>(rows);
+  auto actual = std::vector<StatusOr<RowType>>{stream.begin(), stream.end()};
+  EXPECT_THAT(actual, ElementsAre(IsOkAndHolds(RowType(12, "Steve")),
+                                  IsOkAndHolds(RowType(42, "Ann"))));
   EXPECT_THAT(txn, HasSessionAndTransaction("test-session-name", "FEDCBA98",
                                             false, ""));
 }
@@ -792,20 +775,16 @@ TEST(ConnectionImplTest, ExecuteQueryReadSuccess) {
   auto rows = conn->ExecuteQuery(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
        spanner::SqlStatement("SELECT * FROM Table")});
+
   using RowType =
       std::tuple<std::int64_t, std::string, absl::optional<spanner::Numeric>>;
-  auto expected = std::vector<RowType>{
-      RowType(12, "Steve", absl::nullopt),
-      RowType(42, "Ann", spanner::MakeNumeric(12345678, -2).value()),
-  };
-  int row_number = 0;
-  for (auto& row : spanner::StreamOf<RowType>(rows)) {
-    ASSERT_STATUS_OK(row);
-    ASSERT_LT(row_number, expected.size());
-    EXPECT_EQ(*row, expected[row_number]);
-    ++row_number;
-  }
-  EXPECT_EQ(row_number, expected.size());
+  auto stream = spanner::StreamOf<RowType>(rows);
+  auto actual = std::vector<StatusOr<RowType>>{stream.begin(), stream.end()};
+  EXPECT_THAT(
+      actual,
+      ElementsAre(IsOkAndHolds(RowType(12, "Steve", absl::nullopt)),
+                  IsOkAndHolds(RowType(
+                      42, "Ann", spanner::MakeNumeric(12345678, -2).value()))));
 }
 
 TEST(ConnectionImplTest, ExecuteQueryPgNumericResult) {
@@ -840,21 +819,18 @@ TEST(ConnectionImplTest, ExecuteQueryPgNumericResult) {
   auto rows = conn->ExecuteQuery(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
        spanner::SqlStatement("SELECT * FROM Table")});
+
   using RowType =
       std::tuple<spanner::PgNumeric, absl::optional<spanner::PgNumeric>>;
-  auto expected = std::vector<RowType>{
-      RowType(spanner::MakePgNumeric(42).value(), absl::nullopt),
-      RowType(spanner::MakePgNumeric("NaN").value(),
-              spanner::MakePgNumeric(42, -2).value()),
-  };
-  int row_number = 0;
-  for (auto& row : spanner::StreamOf<RowType>(rows)) {
-    ASSERT_STATUS_OK(row);
-    ASSERT_LT(row_number, expected.size());
-    EXPECT_EQ(*row, expected[row_number]);
-    ++row_number;
-  }
-  EXPECT_EQ(row_number, expected.size());
+  auto stream = spanner::StreamOf<RowType>(rows);
+  auto actual = std::vector<StatusOr<RowType>>{stream.begin(), stream.end()};
+  EXPECT_THAT(
+      actual,
+      ElementsAre(
+          IsOkAndHolds(RowType(spanner::MakePgNumeric(42).value(),  //
+                               absl::nullopt)),
+          IsOkAndHolds(RowType(spanner::MakePgNumeric("NaN").value(),
+                               spanner::MakePgNumeric(42, -2).value()))));
 }
 
 TEST(ConnectionImplTest, ExecuteQueryJsonBResult) {
@@ -889,20 +865,16 @@ TEST(ConnectionImplTest, ExecuteQueryJsonBResult) {
   auto rows = conn->ExecuteQuery(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
        spanner::SqlStatement("SELECT * FROM Table")});
+
   using RowType = std::tuple<spanner::JsonB, absl::optional<spanner::JsonB>>;
-  auto expected = std::vector<RowType>{
-      RowType(spanner::JsonB("42"), absl::nullopt),
-      RowType(spanner::JsonB("[null, null]"),
-              spanner::JsonB(R"({"a": 1, "b": 2})")),
-  };
-  int row_number = 0;
-  for (auto& row : spanner::StreamOf<RowType>(rows)) {
-    ASSERT_STATUS_OK(row);
-    ASSERT_LT(row_number, expected.size());
-    EXPECT_EQ(*row, expected[row_number]);
-    ++row_number;
-  }
-  EXPECT_EQ(row_number, expected.size());
+  auto stream = spanner::StreamOf<RowType>(rows);
+  auto actual = std::vector<StatusOr<RowType>>{stream.begin(), stream.end()};
+  EXPECT_THAT(
+      actual,
+      ElementsAre(
+          IsOkAndHolds(RowType(spanner::JsonB("42"), absl::nullopt)),
+          IsOkAndHolds(RowType(spanner::JsonB("[null, null]"),
+                               spanner::JsonB(R"({"a": 1, "b": 2})")))));
 }
 
 TEST(ConnectionImplTest, ExecuteQueryNumericParameter) {
@@ -1474,19 +1446,12 @@ TEST(ConnectionImplTest, ProfileQuerySuccess) {
   auto result = conn->ProfileQuery(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
        spanner::SqlStatement("SELECT * FROM Table")});
+
   using RowType = std::tuple<std::int64_t, std::string>;
-  auto expected = std::vector<RowType>{
-      RowType(12, "Steve"),
-      RowType(42, "Ann"),
-  };
-  int row_number = 0;
-  for (auto& row : spanner::StreamOf<RowType>(result)) {
-    ASSERT_STATUS_OK(row);
-    ASSERT_LT(row_number, expected.size());
-    EXPECT_EQ(*row, expected[row_number]);
-    ++row_number;
-  }
-  EXPECT_EQ(row_number, expected.size());
+  auto stream = spanner::StreamOf<RowType>(result);
+  auto actual = std::vector<StatusOr<RowType>>{stream.begin(), stream.end()};
+  EXPECT_THAT(actual, ElementsAre(IsOkAndHolds(RowType(12, "Steve")),
+                                  IsOkAndHolds(RowType(42, "Ann"))));
 
   auto constexpr kTextExpectedPlan = R"pb(
     plan_nodes: { index: 42 }
@@ -1498,11 +1463,10 @@ TEST(ConnectionImplTest, ProfileQuerySuccess) {
   ASSERT_TRUE(plan);
   EXPECT_THAT(*plan, IsProtoEqual(expected_plan));
 
-  std::vector<std::pair<const std::string, std::string>> expected_stats;
-  expected_stats.emplace_back("elapsed_time", "42 secs");
   auto execution_stats = result.ExecutionStats();
   ASSERT_TRUE(execution_stats);
-  EXPECT_THAT(*execution_stats, UnorderedPointwise(Eq(), expected_stats));
+  EXPECT_THAT(*execution_stats,
+              UnorderedElementsAre(Pair("elapsed_time", "42 secs")));
 }
 
 TEST(ConnectionImplTest, ProfileQueryCreateSessionFailure) {
@@ -1612,11 +1576,10 @@ TEST(ConnectionImplTest, ProfileDmlDeleteSuccess) {
   ASSERT_TRUE(plan);
   EXPECT_THAT(*plan, IsProtoEqual(expected_plan));
 
-  std::vector<std::pair<const std::string, std::string>> expected_stats;
-  expected_stats.emplace_back("elapsed_time", "42 secs");
   auto execution_stats = result->ExecutionStats();
   ASSERT_TRUE(execution_stats);
-  EXPECT_THAT(*execution_stats, UnorderedPointwise(Eq(), expected_stats));
+  EXPECT_THAT(*execution_stats,
+              UnorderedElementsAre(Pair("elapsed_time", "42 secs")));
 }
 
 TEST(ConnectionImplTest, ProfileDmlDeletePermanentFailure) {

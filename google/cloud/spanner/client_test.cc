@@ -52,8 +52,10 @@ using ::testing::DoAll;
 using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::HasSubstr;
+using ::testing::Pair;
 using ::testing::Return;
 using ::testing::SaveArg;
+using ::testing::UnorderedElementsAre;
 
 TEST(ClientTest, CopyAndMove) {
   auto conn1 = std::make_shared<MockConnection>();
@@ -112,17 +114,10 @@ TEST(ClientTest, ReadSuccess) {
   auto rows = client.Read("table", std::move(keys), {"column1", "column2"});
 
   using RowType = std::tuple<std::string, std::int64_t>;
-  auto expected = std::vector<RowType>{
-      RowType("Steve", 12),
-      RowType("Ann", 42),
-  };
-  int row_number = 0;
-  for (auto& row : StreamOf<RowType>(rows)) {
-    ASSERT_LT(row_number, expected.size());
-    EXPECT_THAT(row, IsOkAndHolds(expected[row_number]));
-    ++row_number;
-  }
-  EXPECT_EQ(row_number, expected.size());
+  auto stream = StreamOf<RowType>(rows);
+  auto actual = std::vector<StatusOr<RowType>>{stream.begin(), stream.end()};
+  EXPECT_THAT(actual, ElementsAre(IsOkAndHolds(RowType("Steve", 12)),
+                                  IsOkAndHolds(RowType("Ann", 42))));
 }
 
 TEST(ClientTest, ReadFailure) {
@@ -199,17 +194,10 @@ TEST(ClientTest, ExecuteQuerySuccess) {
   auto rows = client.ExecuteQuery(SqlStatement("SELECT * FROM Table;"));
 
   using RowType = std::tuple<std::string, std::int64_t>;
-  auto expected = std::vector<RowType>{
-      RowType("Steve", 12),
-      RowType("Ann", 42),
-  };
-  int row_number = 0;
-  for (auto& row : StreamOf<RowType>(rows)) {
-    ASSERT_LT(row_number, expected.size());
-    EXPECT_THAT(row, IsOkAndHolds(expected[row_number]));
-    ++row_number;
-  }
-  EXPECT_EQ(row_number, expected.size());
+  auto stream = StreamOf<RowType>(rows);
+  auto actual = std::vector<StatusOr<RowType>>{stream.begin(), stream.end()};
+  EXPECT_THAT(actual, ElementsAre(IsOkAndHolds(RowType("Steve", 12)),
+                                  IsOkAndHolds(RowType("Ann", 42))));
 }
 
 TEST(ClientTest, ExecuteQueryFailure) {
@@ -985,25 +973,18 @@ TEST(ClientTest, ProfileQuerySuccess) {
   auto rows = client.ProfileQuery(SqlStatement("SELECT * FROM Table;"));
 
   using RowType = std::tuple<std::string, std::int64_t>;
-  auto expected = std::vector<RowType>{
-      RowType("Ann", 42),
-  };
-  int row_number = 0;
-  for (auto& row : StreamOf<RowType>(rows)) {
-    ASSERT_LT(row_number, expected.size());
-    EXPECT_THAT(row, IsOkAndHolds(expected[row_number]));
-    ++row_number;
-  }
-  EXPECT_EQ(row_number, expected.size());
+  auto stream = StreamOf<RowType>(rows);
+  auto actual = std::vector<StatusOr<RowType>>{stream.begin(), stream.end()};
+  EXPECT_THAT(actual, ElementsAre(IsOkAndHolds(RowType("Ann", 42))));
+
   auto actual_plan = rows.ExecutionPlan();
   ASSERT_TRUE(actual_plan);
   EXPECT_THAT(*actual_plan, IsProtoEqual(stats.query_plan()));
 
   auto actual_stats = rows.ExecutionStats();
   ASSERT_TRUE(actual_stats);
-  std::unordered_map<std::string, std::string> expected_stats{
-      {"elapsed_time", "42 secs"}};
-  EXPECT_EQ(expected_stats, *actual_stats);
+  EXPECT_THAT(*actual_stats,
+              UnorderedElementsAre(Pair("elapsed_time", "42 secs")));
 }
 
 TEST(ClientTest, ProfileQueryWithOptionsSuccess) {
@@ -1052,16 +1033,9 @@ TEST(ClientTest, ProfileQueryWithOptionsSuccess) {
       SqlStatement("SELECT * FROM Table;"));
 
   using RowType = std::tuple<std::string, std::int64_t>;
-  auto expected = std::vector<RowType>{
-      RowType("Ann", 42),
-  };
-  int row_number = 0;
-  for (auto& row : StreamOf<RowType>(rows)) {
-    ASSERT_LT(row_number, expected.size());
-    EXPECT_THAT(row, IsOkAndHolds(expected[row_number]));
-    ++row_number;
-  }
-  EXPECT_EQ(row_number, expected.size());
+  auto stream = StreamOf<RowType>(rows);
+  auto actual = std::vector<StatusOr<RowType>>{stream.begin(), stream.end()};
+  EXPECT_THAT(actual, ElementsAre(IsOkAndHolds(RowType("Ann", 42))));
 
   auto actual_plan = rows.ExecutionPlan();
   ASSERT_TRUE(actual_plan);
@@ -1069,9 +1043,8 @@ TEST(ClientTest, ProfileQueryWithOptionsSuccess) {
 
   auto actual_stats = rows.ExecutionStats();
   ASSERT_TRUE(actual_stats);
-  std::unordered_map<std::string, std::string> expected_stats{
-      {"elapsed_time", "42 secs"}};
-  EXPECT_EQ(expected_stats, *actual_stats);
+  EXPECT_THAT(*actual_stats,
+              UnorderedElementsAre(Pair("elapsed_time", "42 secs")));
 }
 
 struct StringOption {
