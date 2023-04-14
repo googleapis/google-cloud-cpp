@@ -36,6 +36,12 @@ class DiscoveryFile {
                 std::string package_name, std::string version,
                 std::vector<DiscoveryTypeVertex const*> types);
 
+  std::string const& file_path() const { return file_path_; }
+  std::string const& package_name() const { return package_name_; }
+  std::string resource_name() const {
+    return (resource_ ? resource_->name() : "");
+  }
+
   DiscoveryFile& AddImportPath(std::string import_path) {
     import_paths_.insert(std::move(import_path));
     return *this;

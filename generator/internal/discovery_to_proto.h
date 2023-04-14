@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DISCOVERY_TO_PROTO_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DISCOVERY_TO_PROTO_H
 
+#include "generator/internal/discovery_file.h"
 #include "generator/internal/discovery_resource.h"
 #include "generator/internal/discovery_type_vertex.h"
 #include "google/cloud/status_or.h"
@@ -53,6 +54,12 @@ StatusOr<DiscoveryTypeVertex> SynthesizeRequestType(
 Status ProcessMethodRequestsAndResponses(
     std::map<std::string, DiscoveryResource>& resources,
     std::map<std::string, DiscoveryTypeVertex>& types);
+
+// Creates a DiscoveryFile object for each DiscoveryResource in resources.
+std::vector<DiscoveryFile> CreateFilesFromResources(
+    std::map<std::string, DiscoveryResource> const& resources,
+    std::string const& product_name, std::string const& version,
+    std::string const& output_path);
 
 Status GenerateProtosFromDiscoveryDoc(std::string const& url,
                                       std::string const& protobuf_proto_path,
