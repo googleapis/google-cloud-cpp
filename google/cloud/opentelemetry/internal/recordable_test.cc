@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/opentelemetry/internal/recordable.h"
+#include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
@@ -220,6 +221,32 @@ TEST(Recordable, SetNameTruncates) {
   EXPECT_EQ(proto.display_name().truncated_byte_count(), 1);
 }
 
+TEST(Recordable, SetIdentity) {
+  opentelemetry::trace::TraceId const trace_id(
+      std::array<uint8_t const, opentelemetry::trace::TraceId::kSize>(
+          {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}));
+
+  opentelemetry::trace::SpanId const span_id(
+      std::array<uint8_t const, opentelemetry::trace::SpanId::kSize>(
+          {1, 1, 2, 2, 3, 3, 4, 4}));
+
+  opentelemetry::trace::SpanId const parent_span_id(
+      std::array<uint8_t const, opentelemetry::trace::SpanId::kSize>(
+          {5, 5, 6, 6, 7, 7, 8, 8}));
+
+  opentelemetry::trace::SpanContext span_context(trace_id, span_id, {}, false);
+
+  auto rec = Recordable(Project(kProjectId));
+  rec.SetIdentity(span_context, parent_span_id);
+  auto proto = std::move(rec).as_proto();
+
+  EXPECT_EQ(proto.name(),
+            "projects/test-project/traces/000102030405060708090a0b0c0d0e0f/"
+            "spans/0101020203030404");
+  EXPECT_EQ(proto.span_id(), "0101020203030404");
+  EXPECT_EQ(proto.parent_span_id(), "0505060607070808");
+}
+
 TEST(Recordable, SetAttribute) {
   v2::AttributeValue expected;
   expected.mutable_string_value()->set_value("value");
@@ -240,6 +267,29 @@ TEST(Recordable, SetAttributeRespectsLimit) {
   auto& attributes = *proto.mutable_attributes();
   EXPECT_THAT(attributes.attribute_map(), SizeIs(kSpanAttributeLimit));
   EXPECT_EQ(attributes.dropped_attributes_count(), 1);
+}
+
+TEST(Recordable, SetStartTime) {
+  auto expected = std::chrono::system_clock::now();
+
+  auto rec = Recordable(Project(kProjectId));
+  rec.SetStartTime(expected);
+  auto proto = std::move(rec).as_proto();
+  auto actual = internal::ToChronoTimePoint(proto.start_time());
+  EXPECT_EQ(actual, expected);
+}
+
+TEST(Recordable, SetDuration) {
+  auto start = std::chrono::system_clock::now();
+  auto duration = std::chrono::nanoseconds(12345);
+  auto expected = start + duration;
+
+  auto rec = Recordable(Project(kProjectId));
+  rec.SetStartTime(start);
+  rec.SetDuration(duration);
+  auto proto = std::move(rec).as_proto();
+  auto actual = internal::ToChronoTimePoint(proto.end_time());
+  EXPECT_EQ(actual, expected);
 }
 
 }  // namespace
