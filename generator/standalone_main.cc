@@ -295,6 +295,15 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
               IdempotencyOverride::Idempotency_Name(o.idempotency())));
     }
 
+    // Unless generate_grpc_transport has been explicitly set to false, treat it
+    // as having a default value of true.
+    if (service.has_generate_grpc_transport() &&
+        !service.generate_grpc_transport()) {
+      args.emplace_back("--cpp_codegen_opt=generate_grpc_transport=false");
+    } else {
+      args.emplace_back("--cpp_codegen_opt=generate_grpc_transport=true");
+    }
+
     GCP_LOG(INFO) << "Generating service code using: "
                   << absl::StrJoin(args, ";") << "\n";
 

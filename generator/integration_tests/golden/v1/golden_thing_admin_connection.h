@@ -21,7 +21,6 @@
 
 #include "generator/integration_tests/golden/v1/golden_thing_admin_connection_idempotency_policy.h"
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_retry_traits.h"
-#include "generator/integration_tests/golden/v1/internal/golden_thing_admin_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -29,6 +28,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <generator/integration_tests/backup.pb.h>
+#include <generator/integration_tests/test.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 

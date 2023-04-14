@@ -175,6 +175,11 @@ class ServiceCodeGenerator : public GeneratorInterface {
   bool HasGenerateRestTransport() const;
 
   /**
+   * Determines if gRPC transport is enabled for the service.
+   */
+  bool HasGenerateGrpcTransport() const;
+
+  /**
    * Determines if any of the method signatures has any Protocol Buffer
    * Well-Known Types per
    * https://developers.google.com/protocol-buffers/docs/reference/google.protobuf

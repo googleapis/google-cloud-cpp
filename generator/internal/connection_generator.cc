@@ -49,9 +49,10 @@ Status ConnectionGenerator::GenerateHeader() {
   // includes
   HeaderPrint("\n");
   HeaderLocalIncludes(
-      {vars("idempotency_policy_header_path"), vars("stub_header_path"),
-       vars("retry_traits_header_path"), "google/cloud/backoff_policy.h",
-       HasLongrunningMethod() ? "google/cloud/future.h" : "",
+      {vars("idempotency_policy_header_path"), vars("retry_traits_header_path"),
+       "google/cloud/backoff_policy.h",
+       HasLongrunningMethod() || HasAsyncMethod() ? "google/cloud/future.h"
+                                                  : "",
        "google/cloud/options.h",
        HasLongrunningMethod() ? "google/cloud/polling_policy.h" : "",
        "google/cloud/status_or.h",
@@ -64,7 +65,8 @@ Status ConnectionGenerator::GenerateHeader() {
        IsExperimental() ? "google/cloud/experimental_tag.h" : "",
        "google/cloud/version.h"});
   HeaderSystemIncludes(
-      {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
+      {vars("proto_grpc_header_path"), vars("additional_pb_header_paths"),
+       HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
        "memory"});
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
@@ -188,7 +190,8 @@ class $connection_class_name$ {
   // close abstract interface Connection base class
   HeaderPrint("};\n");
 
-  HeaderPrint(R"""(
+  if (HasGenerateGrpcTransport()) {
+    HeaderPrint(R"""(
 /**
  * A factory function to construct an object of type `$connection_class_name$`.
  *
@@ -207,26 +210,26 @@ class $connection_class_name$ {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *)""");
-  switch (endpoint_location_style) {
-    case ServiceConfiguration::LOCATION_DEPENDENT:
-    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
-      HeaderPrint(R"""(
+    switch (endpoint_location_style) {
+      case ServiceConfiguration::LOCATION_DEPENDENT:
+      case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+        HeaderPrint(R"""(
  * @param location Sets the prefix for the default `EndpointOption` value.)""");
-      break;
-    default:
-      break;
-  }
-  HeaderPrint(R"""(
+        break;
+      default:
+        break;
+    }
+    HeaderPrint(R"""(
  * @param options (optional) Configure the `$connection_class_name$` created by
  * this function.
  */
 std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
 )""");
-  HeaderPrint("    " + ConnectionFactoryFunctionArguments() + " = {});\n");
+    HeaderPrint("    " + ConnectionFactoryFunctionArguments() + " = {});\n");
 
-  switch (endpoint_location_style) {
-    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
-      HeaderPrint(R"""(
+    switch (endpoint_location_style) {
+      case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+        HeaderPrint(R"""(
 /**
  * A backwards-compatible version of the previous factory function.  Unless
  * the service also offers a global endpoint, the default value of the
@@ -237,9 +240,10 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
 std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
     Options options = {});
 )""");
-      break;
-    default:
-      break;
+        break;
+      default:
+        break;
+    }
   }
 
   HeaderCloseNamespaces();
@@ -262,8 +266,10 @@ Status ConnectionGenerator::GenerateCc() {
   CcPrint("\n");
   CcLocalIncludes(
       {vars("connection_header_path"), vars("options_header_path"),
-       vars("connection_impl_header_path"), vars("option_defaults_header_path"),
-       vars("tracing_connection_header_path"), vars("stub_factory_header_path"),
+       HasGenerateGrpcTransport() ? vars("connection_impl_header_path") : "",
+       vars("option_defaults_header_path"),
+       vars("tracing_connection_header_path"),
+       HasGenerateGrpcTransport() ? vars("stub_factory_header_path") : "",
        "google/cloud/background_threads.h", "google/cloud/common_options.h",
        "google/cloud/credentials.h", "google/cloud/grpc_options.h",
        HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : ""});
@@ -384,29 +390,30 @@ $connection_class_name$::Async$method_name$(
         __FILE__, __LINE__);
   }
 
-  auto endpoint_location_style = EndpointLocationStyle();
+  if (HasGenerateGrpcTransport()) {
+    auto endpoint_location_style = EndpointLocationStyle();
 
-  CcPrint(R"""(
+    CcPrint(R"""(
 std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
 )""");
-  CcPrint("    " + ConnectionFactoryFunctionArguments() + ") {");
-  CcPrint(R"""(
+    CcPrint("    " + ConnectionFactoryFunctionArguments() + ") {");
+    CcPrint(R"""(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
       UnifiedCredentialsOptionList,
       $service_name$PolicyOptionList>(options, __func__);
   options = $product_internal_namespace$::$service_name$DefaultOptions(
 )""");
-  CcPrint("      ");
-  switch (endpoint_location_style) {
-    case ServiceConfiguration::LOCATION_DEPENDENT:
-    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
-      CcPrint("location, ");
-      break;
-    default:
-      break;
-  }
-  CcPrint("std::move(options));");
-  CcPrint(R"""(
+    CcPrint("      ");
+    switch (endpoint_location_style) {
+      case ServiceConfiguration::LOCATION_DEPENDENT:
+      case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+        CcPrint("location, ");
+        break;
+      default:
+        break;
+    }
+    CcPrint("std::move(options));");
+    CcPrint(R"""(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = $product_internal_namespace$::CreateDefault$stub_class_name$(
     background->cq(), options);
@@ -416,17 +423,18 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
 }
 )""");
 
-  switch (endpoint_location_style) {
-    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
-      CcPrint(R"""(
+    switch (endpoint_location_style) {
+      case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+        CcPrint(R"""(
 std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
     Options options) {
   return Make$connection_class_name$(std::string{}, std::move(options));
 }
 )""");
-      break;
-    default:
-      break;
+        break;
+      default:
+        break;
+    }
   }
 
   CcCloseNamespaces();

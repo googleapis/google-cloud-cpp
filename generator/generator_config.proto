@@ -140,6 +140,10 @@ message ServiceConfiguration {
     Idempotency idempotency = 2;
   }
   repeated IdempotencyOverride idempotency_overrides = 21;
+
+  // This need not be explicitly set to true as the generator will check if the
+  // field has been set, and assign a value of true if not set.
+  optional bool generate_grpc_transport = 22;
 }
 
 message DiscoveryDocumentDefinedProduct {

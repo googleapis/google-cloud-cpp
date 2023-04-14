@@ -56,7 +56,7 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
     return google::cloud::golden_v1::GoldenKitchenSinkClient(
-        google::cloud::golden_v1::MakeGoldenKitchenSinkConnection(options));
+      google::cloud::golden_v1::MakeGoldenKitchenSinkConnection(options));
   }
   //! [with-service-account]
   (argv.at(0));

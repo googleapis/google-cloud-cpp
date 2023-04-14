@@ -65,8 +65,13 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
       "private.googleapis.com");
   auto client = google::cloud::$product_namespace$::$client_class_name$()""");
   if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{},");
-  HeaderPrint(R"""(
+  if (HasGenerateGrpcTransport()) {
+    HeaderPrint(R"""(
       google::cloud::$product_namespace$::Make$connection_class_name$()""");
+  } else {
+    HeaderPrint(R"""(
+      google::cloud::$product_namespace$::Make$connection_class_name$Rest()""");
+  }
   if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{},");
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
@@ -94,8 +99,13 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
             google::cloud::MakeServiceAccountCredentials(contents));
     return google::cloud::$product_namespace$::$client_class_name$()""");
   if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{},");
-  HeaderPrint(R"""(
-        google::cloud::$product_namespace$::Make$connection_class_name$()""");
+  if (HasGenerateGrpcTransport()) {
+    HeaderPrint(R"""(
+      google::cloud::$product_namespace$::Make$connection_class_name$()""");
+  } else {
+    HeaderPrint(R"""(
+      google::cloud::$product_namespace$::Make$connection_class_name$Rest()""");
+  }
   if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{},");
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
