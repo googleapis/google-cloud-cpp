@@ -222,7 +222,7 @@ Status ProcessMethodRequestsAndResponses(
     std::map<std::string, DiscoveryResource>& resources,
     std::map<std::string, DiscoveryTypeVertex>& types) {
   for (auto& resource : resources) {
-    std::string resource_name = resource.first;
+    std::string resource_name = CapitalizeFirstLetter(resource.first);
     auto const& methods = resource.second.json().find("methods");
     for (auto m = methods->begin(); m != methods->end(); ++m) {
       auto response_type_name =
@@ -231,7 +231,7 @@ Status ProcessMethodRequestsAndResponses(
         return Status(response_type_name.status().code(),
                       response_type_name.status().message(),
                       GCP_ERROR_INFO()
-                          .WithMetadata("resource", resource_name)
+                          .WithMetadata("resource", resource.first)
                           .WithMetadata("method", m.key())
                           .Build(response_type_name.status().code()));
       }
@@ -242,7 +242,6 @@ Status ProcessMethodRequestsAndResponses(
         if (!request_type) return std::move(request_type).status();
         // It is necessary to add the resource name to the map key to
         // disambiguate methods that appear in more than one resource.
-        resource_name = CapitalizeFirstLetter(resource_name);
         std::string id = request_type->name();
         auto insert_result = types.insert(std::make_pair(
             absl::StrCat(resource_name, ".", id), *std::move(request_type)));
