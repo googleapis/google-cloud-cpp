@@ -59,7 +59,7 @@ TEST(TracingHttpPayload, Success) {
   for (auto s = read(); s && s.value() != 0; s = read()) continue;
 
   auto spans = span_catcher->GetSpans();
-  auto make_read_event_matcher = [](auto bs, auto rs) {
+  auto make_read_matcher = [](auto bs, auto rs) {
     return AllOf(SpanNamed("Read"), SpanHasInstrumentationScope(),
                  SpanKindIsClient(),
                  SpanHasAttributes(
@@ -68,14 +68,13 @@ TEST(TracingHttpPayload, Success) {
                      SpanAttribute<std::int64_t>("read.returned.size", rs)));
   };
   EXPECT_THAT(
-      spans,
-      UnorderedElementsAre(
-          AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
-                SpanKindIsClient(),
-                SpanHasAttributes(SpanAttribute<std::string>(
-                    sc::kNetTransport, sc::NetTransportValues::kIpTcp))),
-          make_read_event_matcher(16, 16), make_read_event_matcher(16, 16),
-          make_read_event_matcher(16, 11), make_read_event_matcher(16, 0)));
+      spans, UnorderedElementsAre(
+                 AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
+                       SpanKindIsClient(),
+                       SpanHasAttributes(SpanAttribute<std::string>(
+                           sc::kNetTransport, sc::NetTransportValues::kIpTcp))),
+                 make_read_matcher(16, 16), make_read_matcher(16, 16),
+                 make_read_matcher(16, 11), make_read_matcher(16, 0)));
 }
 
 TEST(TracingHttpPayload, Failure) {
