@@ -20,12 +20,12 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_V1_TEXT_TO_SPEECH_CONNECTION_H
 
 #include "google/cloud/texttospeech/v1/internal/text_to_speech_retry_traits.h"
-#include "google/cloud/texttospeech/v1/internal/text_to_speech_stub.h"
 #include "google/cloud/texttospeech/v1/text_to_speech_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/cloud/texttospeech/v1/cloud_tts.grpc.pb.h>
 #include <memory>
 
 namespace google {

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_METRICSSCOPE_V1_METRICS_SCOPES_CONNECTION_H
 
 #include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_retry_traits.h"
-#include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_stub.h"
 #include "google/cloud/monitoring/metricsscope/v1/metrics_scopes_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -29,6 +28,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/monitoring/metricsscope/v1/metrics_scopes.grpc.pb.h>
 #include <memory>
 
 namespace google {

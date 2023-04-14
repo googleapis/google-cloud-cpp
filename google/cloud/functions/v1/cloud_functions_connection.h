@@ -21,7 +21,6 @@
 
 #include "google/cloud/functions/v1/cloud_functions_connection_idempotency_policy.h"
 #include "google/cloud/functions/v1/internal/cloud_functions_retry_traits.h"
-#include "google/cloud/functions/v1/internal/cloud_functions_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -29,6 +28,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/functions/v1/functions.grpc.pb.h>
+#include <google/cloud/functions/v1/operations.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 

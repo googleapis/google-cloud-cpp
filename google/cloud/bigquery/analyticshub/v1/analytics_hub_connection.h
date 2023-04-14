@@ -21,12 +21,12 @@
 
 #include "google/cloud/bigquery/analyticshub/v1/analytics_hub_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_retry_traits.h"
-#include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/bigquery/analyticshub/v1/analyticshub.grpc.pb.h>
 #include <memory>
 
 namespace google {

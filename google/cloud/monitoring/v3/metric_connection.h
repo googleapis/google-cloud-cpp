@@ -20,13 +20,14 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_METRIC_CONNECTION_H
 
 #include "google/cloud/monitoring/v3/internal/metric_retry_traits.h"
-#include "google/cloud/monitoring/v3/internal/metric_stub.h"
 #include "google/cloud/monitoring/v3/metric_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/monitoring/v3/metric_service.grpc.pb.h>
 #include <memory>
 
 namespace google {

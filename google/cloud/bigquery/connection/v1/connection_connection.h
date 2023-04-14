@@ -21,12 +21,12 @@
 
 #include "google/cloud/bigquery/connection/v1/connection_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/connection/v1/internal/connection_retry_traits.h"
-#include "google/cloud/bigquery/connection/v1/internal/connection_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/bigquery/connection/v1/connection.grpc.pb.h>
 #include <memory>
 
 namespace google {

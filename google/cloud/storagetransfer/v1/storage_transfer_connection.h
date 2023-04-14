@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGETRANSFER_V1_STORAGE_TRANSFER_CONNECTION_H
 
 #include "google/cloud/storagetransfer/v1/internal/storage_transfer_retry_traits.h"
-#include "google/cloud/storagetransfer/v1/internal/storage_transfer_stub.h"
 #include "google/cloud/storagetransfer/v1/storage_transfer_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,6 +29,7 @@
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/storagetransfer/v1/transfer.grpc.pb.h>
 #include <memory>
 
 namespace google {

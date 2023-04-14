@@ -21,12 +21,12 @@
 
 #include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_connection_idempotency_policy.h"
 #include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_retry_traits.h"
-#include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/osconfig/agentendpoint/v1/agentendpoint.grpc.pb.h>
 #include <memory>
 
 namespace google {

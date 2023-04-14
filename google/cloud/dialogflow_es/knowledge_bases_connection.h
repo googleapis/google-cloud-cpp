@@ -20,13 +20,13 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_KNOWLEDGE_BASES_CONNECTION_H
 
 #include "google/cloud/dialogflow_es/internal/knowledge_bases_retry_traits.h"
-#include "google/cloud/dialogflow_es/internal/knowledge_bases_stub.h"
 #include "google/cloud/dialogflow_es/knowledge_bases_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/dialogflow/v2/knowledge_base.grpc.pb.h>
 #include <memory>
 #include <string>
 

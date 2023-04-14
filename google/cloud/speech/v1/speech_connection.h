@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_SPEECH_CONNECTION_H
 
 #include "google/cloud/speech/v1/internal/speech_retry_traits.h"
-#include "google/cloud/speech/v1/internal/speech_stub.h"
 #include "google/cloud/speech/v1/speech_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -29,6 +28,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/cloud/speech/v1/cloud_speech.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 

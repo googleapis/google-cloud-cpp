@@ -20,13 +20,13 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_TRANSCODER_V1_TRANSCODER_CONNECTION_H
 
 #include "google/cloud/video/transcoder/v1/internal/transcoder_retry_traits.h"
-#include "google/cloud/video/transcoder/v1/internal/transcoder_stub.h"
 #include "google/cloud/video/transcoder/v1/transcoder_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/video/transcoder/v1/services.grpc.pb.h>
 #include <memory>
 
 namespace google {

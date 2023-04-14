@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEUSAGE_V1_SERVICE_USAGE_CONNECTION_H
 
 #include "google/cloud/serviceusage/v1/internal/service_usage_retry_traits.h"
-#include "google/cloud/serviceusage/v1/internal/service_usage_stub.h"
 #include "google/cloud/serviceusage/v1/service_usage_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -29,6 +28,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/api/serviceusage/v1/serviceusage.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 

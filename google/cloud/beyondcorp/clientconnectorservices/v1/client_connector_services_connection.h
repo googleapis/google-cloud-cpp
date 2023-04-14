@@ -22,7 +22,6 @@
 
 #include "google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_connection_idempotency_policy.h"
 #include "google/cloud/beyondcorp/clientconnectorservices/v1/internal/client_connector_services_retry_traits.h"
-#include "google/cloud/beyondcorp/clientconnectorservices/v1/internal/client_connector_services_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -30,6 +29,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 

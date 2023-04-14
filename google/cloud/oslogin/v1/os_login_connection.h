@@ -20,12 +20,12 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSLOGIN_V1_OS_LOGIN_CONNECTION_H
 
 #include "google/cloud/oslogin/v1/internal/os_login_retry_traits.h"
-#include "google/cloud/oslogin/v1/internal/os_login_stub.h"
 #include "google/cloud/oslogin/v1/os_login_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/cloud/oslogin/v1/oslogin.grpc.pb.h>
 #include <memory>
 
 namespace google {

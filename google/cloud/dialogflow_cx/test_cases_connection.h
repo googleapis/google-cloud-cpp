@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_TEST_CASES_CONNECTION_H
 
 #include "google/cloud/dialogflow_cx/internal/test_cases_retry_traits.h"
-#include "google/cloud/dialogflow_cx/internal/test_cases_stub.h"
 #include "google/cloud/dialogflow_cx/test_cases_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -29,6 +28,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/dialogflow/cx/v3/test_case.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>

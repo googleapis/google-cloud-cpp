@@ -21,13 +21,13 @@
 
 #include "google/cloud/vision/v1/image_annotator_connection_idempotency_policy.h"
 #include "google/cloud/vision/v1/internal/image_annotator_retry_traits.h"
-#include "google/cloud/vision/v1/internal/image_annotator_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/cloud/vision/v1/image_annotator.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_V1_REALMS_CONNECTION_H
 
 #include "google/cloud/gameservices/v1/internal/realms_retry_traits.h"
-#include "google/cloud/gameservices/v1/internal/realms_stub.h"
 #include "google/cloud/gameservices/v1/realms_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -29,6 +28,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/gaming/v1/realms_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 

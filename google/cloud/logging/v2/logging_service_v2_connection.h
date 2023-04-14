@@ -20,14 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_LOGGING_SERVICE_V2_CONNECTION_H
 
 #include "google/cloud/logging/v2/internal/logging_service_v2_retry_traits.h"
-#include "google/cloud/logging/v2/internal/logging_service_v2_stub.h"
 #include "google/cloud/logging/v2/logging_service_v2_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/logging/v2/logging.grpc.pb.h>
 #include <memory>
 
 namespace google {

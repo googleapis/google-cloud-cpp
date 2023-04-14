@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_JOB_CONTROLLER_CONNECTION_H
 
 #include "google/cloud/dataproc/v1/internal/job_controller_retry_traits.h"
-#include "google/cloud/dataproc/v1/internal/job_controller_stub.h"
 #include "google/cloud/dataproc/v1/job_controller_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -29,6 +28,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/dataproc/v1/jobs.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>

@@ -21,12 +21,12 @@
 
 #include "google/cloud/dialogflow_cx/intents_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_cx/internal/intents_retry_traits.h"
-#include "google/cloud/dialogflow_cx/internal/intents_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/dialogflow/cx/v3/intent.grpc.pb.h>
 #include <memory>
 #include <string>
 

@@ -21,7 +21,6 @@
 
 #include "google/cloud/spanner/admin/database_admin_connection_idempotency_policy.h"
 #include "google/cloud/spanner/admin/internal/database_admin_retry_traits.h"
-#include "google/cloud/spanner/admin/internal/database_admin_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -30,6 +29,7 @@
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
 #include <memory>
 
 namespace google {

@@ -20,12 +20,12 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_PROFILER_CONNECTION_H
 
 #include "google/cloud/profiler/v2/internal/profiler_retry_traits.h"
-#include "google/cloud/profiler/v2/internal/profiler_stub.h"
 #include "google/cloud/profiler/v2/profiler_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/devtools/cloudprofiler/v2/profiler.grpc.pb.h>
 #include <memory>
 
 namespace google {

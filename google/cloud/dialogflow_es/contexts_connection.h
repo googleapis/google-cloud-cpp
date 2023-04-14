@@ -21,12 +21,12 @@
 
 #include "google/cloud/dialogflow_es/contexts_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/internal/contexts_retry_traits.h"
-#include "google/cloud/dialogflow_es/internal/contexts_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/dialogflow/v2/context.grpc.pb.h>
 #include <memory>
 #include <string>
 

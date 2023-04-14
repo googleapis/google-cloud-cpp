@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_PRODUCT_SEARCH_CONNECTION_H
 
 #include "google/cloud/vision/v1/internal/product_search_retry_traits.h"
-#include "google/cloud/vision/v1/internal/product_search_stub.h"
 #include "google/cloud/vision/v1/product_search_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -29,6 +28,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/vision/v1/product_search_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
