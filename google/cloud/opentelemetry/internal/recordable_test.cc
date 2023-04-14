@@ -16,6 +16,7 @@
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/version.h"
+#include "absl/time/clock.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -270,25 +271,26 @@ TEST(Recordable, SetAttributeRespectsLimit) {
 }
 
 TEST(Recordable, SetStartTime) {
-  auto expected = std::chrono::system_clock::now();
+  auto start = std::chrono::system_clock::now();
+  auto expected = absl::FromChrono(start);
 
   auto rec = Recordable(Project(kProjectId));
-  rec.SetStartTime(expected);
+  rec.SetStartTime(start);
   auto proto = std::move(rec).as_proto();
-  auto actual = internal::ToChronoTimePoint(proto.start_time());
+  auto actual = internal::ToAbslTime(proto.start_time());
   EXPECT_EQ(actual, expected);
 }
 
 TEST(Recordable, SetDuration) {
   auto start = std::chrono::system_clock::now();
   auto duration = std::chrono::nanoseconds(12345);
-  auto expected = start + duration;
+  auto expected = absl::FromChrono(start) + absl::FromChrono(duration);
 
   auto rec = Recordable(Project(kProjectId));
   rec.SetStartTime(start);
   rec.SetDuration(duration);
   auto proto = std::move(rec).as_proto();
-  auto actual = internal::ToChronoTimePoint(proto.end_time());
+  auto actual = internal::ToAbslTime(proto.end_time());
   EXPECT_EQ(actual, expected);
 }
 

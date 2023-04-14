@@ -15,6 +15,7 @@
 #include "google/cloud/opentelemetry/internal/recordable.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/time_utils.h"
+#include "absl/time/time.h"
 
 namespace google {
 namespace cloud {
@@ -210,9 +211,9 @@ void Recordable::SetStartTime(
 }
 
 void Recordable::SetDuration(std::chrono::nanoseconds duration) noexcept {
-  auto const end_time =
-      internal::ToChronoTimePoint(span_.start_time()) + duration;
-  *span_.mutable_end_time() = internal::ToProtoTimestamp(end_time);
+  auto end_time =
+      internal::ToAbslTime(span_.start_time()) + absl::FromChrono(duration);
+  *span_.mutable_end_time() = internal::ToProtoTimestamp(std::move(end_time));
 }
 
 void Recordable::SetInstrumentationScope(
