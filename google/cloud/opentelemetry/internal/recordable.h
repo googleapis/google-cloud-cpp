@@ -74,7 +74,6 @@ void AddAttribute(
     opentelemetry::nostd::string_view key,
     opentelemetry::common::AttributeValue const& value, std::size_t limit);
 
-// TODO(#11156) - Implement this class.
 /**
  * Implements the OpenTelemetry Recordable specification.
  *
