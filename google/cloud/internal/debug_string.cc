@@ -48,6 +48,12 @@ DebugFormatter& DebugFormatter::Field(
 
 DebugFormatter& DebugFormatter::Field(
     absl::string_view field_name,
+    absl::optional<std::chrono::system_clock::time_point> value) {
+  return value ? Field(field_name, *value) : *this;
+}
+
+DebugFormatter& DebugFormatter::Field(
+    absl::string_view field_name,
     std::multimap<std::string, std::string> const& value) {
   for (auto const& e : value) {
     absl::StrAppend(&str_, Sep(), field_name, " {");

@@ -48,9 +48,13 @@ class DebugFormatter {
     return *this;
   }
 
+  // Specialized support for types without their own DebugString().
   DebugFormatter& Field(absl::string_view field_name, bool value);
   DebugFormatter& Field(absl::string_view field_name,
                         std::chrono::system_clock::time_point value);
+  DebugFormatter& Field(
+      absl::string_view field_name,
+      absl::optional<std::chrono::system_clock::time_point> value);
   DebugFormatter& Field(absl::string_view field_name,
                         std::multimap<std::string, std::string> const& value);
 
@@ -75,18 +79,6 @@ class DebugFormatter {
     for (auto const& e : value) {
       absl::StrAppend(&str_, e.DebugString(field_name, options_, indent_));
     }
-    return *this;
-  }
-
-  template <typename T>
-  DebugFormatter& QuotedField(absl::string_view field_name, T const& value) {
-    absl::StrAppend(&str_, Sep(), field_name, ": ", "\"", value, "\"");
-    return *this;
-  }
-
-  template <typename T>
-  DebugFormatter& QuotedField(T const& value) {
-    absl::StrAppend(&str_, Sep(), "\"", value, "\"");
     return *this;
   }
 
