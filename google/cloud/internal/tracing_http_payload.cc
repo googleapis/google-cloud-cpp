@@ -32,7 +32,7 @@ bool TracingHttpPayload::HasUnreadData() const {
 }
 
 StatusOr<std::size_t> TracingHttpPayload::Read(absl::Span<char> buffer) {
-  auto scope = internal::GetTracer(Options{})->WithActiveSpan(span_);
+  auto scope = opentelemetry::trace::Scope(span_);
   auto span = internal::MakeSpan("Read");
   span->SetAttribute("read.buffer.size",
                      static_cast<std::int64_t>(buffer.size()));
