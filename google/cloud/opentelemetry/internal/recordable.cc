@@ -13,15 +13,106 @@
 // limitations under the License.
 
 #include "google/cloud/opentelemetry/internal/recordable.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 
 namespace google {
 namespace cloud {
 namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
 // Taken from:
 // http://35.193.25.4/TensorFlow/models/research/syntaxnet/util/utf8/unilib_utf8_utils.h
 bool IsTrailByte(char x) { return static_cast<signed char>(x) < -0x40; }
+
+class AttributeVisitor {
+ public:
+  AttributeVisitor(
+      google::devtools::cloudtrace::v2::Span::Attributes& attributes,
+      opentelemetry::nostd::string_view key, std::size_t limit)
+      : attributes_(attributes), key_(key), limit_(limit) {}
+
+  void operator()(bool value) {
+    auto* proto = ProtoOrDrop();
+    if (!proto) return Drop();
+    proto->set_bool_value(value);
+  }
+  void operator()(std::int32_t value) {
+    auto* proto = ProtoOrDrop();
+    if (!proto) return Drop();
+    proto->set_int_value(value);
+  }
+  void operator()(std::uint32_t value) {
+    auto* proto = ProtoOrDrop();
+    if (!proto) return Drop();
+    proto->set_int_value(value);
+  }
+  void operator()(std::int64_t value) {
+    auto* proto = ProtoOrDrop();
+    if (!proto) return Drop();
+    proto->set_int_value(value);
+  }
+  void operator()(std::uint64_t value) {
+    auto* proto = ProtoOrDrop();
+    if (!proto) return Drop();
+    proto->set_int_value(value);
+  }
+  // The Cloud Trace proto does not accept floating point values, so we convert
+  // them to strings.
+  void operator()(double value) {
+    auto* proto = ProtoOrDrop();
+    if (!proto) return Drop();
+    SetTruncatableString(*proto->mutable_string_value(), absl::StrCat(value),
+                         kAttributeValueStringLimit);
+  }
+  void operator()(char const* value) {
+    auto* proto = ProtoOrDrop();
+    if (!proto) return Drop();
+    SetTruncatableString(*proto->mutable_string_value(), value,
+                         kAttributeValueStringLimit);
+  }
+  void operator()(opentelemetry::nostd::string_view value) {
+    auto* proto = ProtoOrDrop();
+    if (!proto) return Drop();
+    SetTruncatableString(*proto->mutable_string_value(), value,
+                         kAttributeValueStringLimit);
+  }
+  // There is no mapping from a `span<T>` to the Cloud Trace proto. We just drop
+  // these attributes.
+  template <typename T>
+  void operator()(opentelemetry::nostd::span<T>) {
+    Drop();
+  }
+
+ private:
+  // Returns nullptr if we drop the attribute. Otherwise, returns an
+  // AttributeValue proto to set.
+  google::devtools::cloudtrace::v2::AttributeValue* ProtoOrDrop() {
+    // We drop attributes whose keys are too long.
+    if (key_.size() > kAttributeKeyStringLimit) return nullptr;
+
+    auto& map = *attributes_.mutable_attribute_map();
+    // We do not do any sampling. We just accept the first N attributes we are
+    // given, and discard the rest. We may want to consider reservoir sampling
+    // in the future. See: https://en.wikipedia.org/wiki/Reservoir_sampling
+    if (map.size() < limit_) return &map[{key_.data(), key_.size()}];
+
+    // If the map is full, we can still overwrite existing keys.
+    auto it = map.find({key_.data(), key_.size()});
+    if (it == map.end()) return nullptr;
+    return &it->second;
+  }
+
+  void Drop() {
+    attributes_.set_dropped_attributes_count(
+        attributes_.dropped_attributes_count() + 1);
+  }
+
+  google::devtools::cloudtrace::v2::Span::Attributes& attributes_;
+  opentelemetry::nostd::string_view key_;
+  std::size_t limit_;
+};
+
 }  // namespace
 
 void SetTruncatableString(
@@ -45,6 +136,13 @@ void SetTruncatableString(
       static_cast<std::int32_t>(value.size() - truncation_pos));
 }
 
+void AddAttribute(
+    google::devtools::cloudtrace::v2::Span::Attributes& attributes,
+    opentelemetry::nostd::string_view key,
+    opentelemetry::common::AttributeValue const& value, std::size_t limit) {
+  absl::visit(AttributeVisitor{attributes, key, limit}, value);
+}
+
 google::devtools::cloudtrace::v2::Span&& Recordable::as_proto() && {
   return std::move(span_);
 }
@@ -54,8 +152,10 @@ void Recordable::SetIdentity(
     opentelemetry::trace::SpanId /*parent_span_id*/) noexcept {}
 
 void Recordable::SetAttribute(
-    opentelemetry::nostd::string_view /*key*/,
-    opentelemetry::common::AttributeValue const& /*value*/) noexcept {}
+    opentelemetry::nostd::string_view key,
+    opentelemetry::common::AttributeValue const& value) noexcept {
+  AddAttribute(*span_.mutable_attributes(), key, value, kSpanAttributeLimit);
+}
 
 void Recordable::AddEvent(
     opentelemetry::nostd::string_view /*name*/,
