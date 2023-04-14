@@ -283,7 +283,7 @@ TEST(InstanceAdminConnectionTest, DeleteInstanceSuccess) {
 
   auto conn = MakeLimitedRetryConnection(mock);
   auto status = conn->DeleteInstance({expected_name});
-  ASSERT_STATUS_OK(status);
+  EXPECT_STATUS_OK(status);
 }
 
 TEST(InstanceAdminConnectionTest, DeleteInstancePermanentFailure) {

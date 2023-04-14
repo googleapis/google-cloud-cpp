@@ -30,11 +30,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
 using ::testing::AnyOf;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
+using ::testing::ResultOf;
 using ::testing::UnorderedElementsAreArray;
 
 absl::Time MakeTime(std::time_t sec, int nanos) {
@@ -156,9 +158,8 @@ TEST_F(DataTypeIntegrationTest, WriteReadFloat64NaN) {
       std::numeric_limits<double>::quiet_NaN(),
   };
   auto result = WriteReadData(*client_, data, "Float64Value");
-  ASSERT_STATUS_OK(result);
-  EXPECT_EQ(1, result->size());
-  EXPECT_TRUE(std::isnan(result->front()));
+  EXPECT_THAT(result, IsOkAndHolds(ElementsAre(ResultOf(
+                          [](double d) { return std::isnan(d); }, true))));
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadString) {
@@ -170,8 +171,7 @@ TEST_F(DataTypeIntegrationTest, WriteReadString) {
       std::string(1024, 'x'),
   };
   auto result = WriteReadData(*client_, data, "StringValue");
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadBytes) {
@@ -189,8 +189,7 @@ TEST_F(DataTypeIntegrationTest, WriteReadBytes) {
       Bytes(blob),
   };
   auto result = WriteReadData(*client_, data, "BytesValue");
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadTimestamp) {
@@ -213,8 +212,7 @@ TEST_F(DataTypeIntegrationTest, WriteReadTimestamp) {
       *max,
   };
   auto result = WriteReadData(*client_, data, "TimestampValue");
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadDate) {
@@ -226,8 +224,7 @@ TEST_F(DataTypeIntegrationTest, WriteReadDate) {
       absl::CivilDay(9999, 12, 31),  //
   };
   auto result = WriteReadData(*client_, data, "DateValue");
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadJson) {
@@ -238,8 +235,7 @@ TEST_F(DataTypeIntegrationTest, WriteReadJson) {
       Json("true"),               //
   };
   auto result = WriteReadData(*client_, data, "JsonValue");
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
 TEST_F(PgDataTypeIntegrationTest, WriteReadJson) {
@@ -252,8 +248,7 @@ TEST_F(PgDataTypeIntegrationTest, WriteReadJson) {
       JsonB("true"),               //
   };
   auto result = WriteReadData(*client_, data, "JsonValue");
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadNumeric) {
@@ -272,8 +267,7 @@ TEST_F(DataTypeIntegrationTest, WriteReadNumeric) {
       *max,                                //
   };
   auto result = WriteReadData(*client_, data, "NumericValue");
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
 TEST_F(PgDataTypeIntegrationTest, WriteReadNumeric) {
@@ -295,8 +289,7 @@ TEST_F(PgDataTypeIntegrationTest, WriteReadNumeric) {
       *max,                                  //
   };
   auto result = WriteReadData(*client_, data, "NumericValue");
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadArrayBool) {
@@ -308,8 +301,7 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayBool) {
       std::vector<bool>{false, true},
   };
   auto result = WriteReadData(*client_, data, "ArrayBoolValue");
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadArrayInt64) {
@@ -319,8 +311,7 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayInt64) {
       std::vector<std::int64_t>{-1, 0, 1},
   };
   auto result = WriteReadData(*client_, data, "ArrayInt64Value");
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadArrayFloat64) {
@@ -330,8 +321,7 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayFloat64) {
       std::vector<double>{-0.5, 0.5, 1.5},
   };
   auto result = WriteReadData(*client_, data, "ArrayFloat64Value");
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadArrayString) {
@@ -341,8 +331,7 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayString) {
       std::vector<std::string>{"", "foo", "bar"},
   };
   auto result = WriteReadData(*client_, data, "ArrayStringValue");
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadArrayBytes) {
@@ -352,8 +341,7 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayBytes) {
       std::vector<Bytes>{Bytes(""), Bytes("foo"), Bytes("bar")},
   };
   auto result = WriteReadData(*client_, data, "ArrayBytesValue");
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadArrayTimestamp) {
@@ -367,8 +355,7 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayTimestamp) {
       },
   };
   auto result = WriteReadData(*client_, data, "ArrayTimestampValue");
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadArrayDate) {
@@ -382,8 +369,7 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayDate) {
       },
   };
   auto result = WriteReadData(*client_, data, "ArrayDateValue");
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadArrayJson) {
@@ -398,8 +384,7 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayJson) {
       },
   };
   auto result = WriteReadData(*client_, data, "ArrayJsonValue");
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
 TEST_F(PgDataTypeIntegrationTest, WriteReadArrayJson) {
@@ -416,8 +401,7 @@ TEST_F(PgDataTypeIntegrationTest, WriteReadArrayJson) {
       },
   };
   auto result = WriteReadData(*client_, data, "ArrayJsonValue");
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadArrayNumeric) {
@@ -431,8 +415,7 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayNumeric) {
       },
   };
   auto result = WriteReadData(*client_, data, "ArrayNumericValue");
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
 TEST_F(PgDataTypeIntegrationTest, WriteReadArrayNumeric) {
@@ -448,8 +431,7 @@ TEST_F(PgDataTypeIntegrationTest, WriteReadArrayNumeric) {
       },
   };
   auto result = WriteReadData(*client_, data, "ArrayNumericValue");
-  ASSERT_STATUS_OK(result);
-  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+  EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
 TEST_F(DataTypeIntegrationTest, JsonIndexAndPrimaryKey) {
@@ -778,8 +760,7 @@ TEST_F(DataTypeIntegrationTest, InsertAndQueryWithStruct) {
   ASSERT_STATUS_OK(row);
 
   auto const& v = std::get<0>(*row);
-  EXPECT_EQ(1, v.size());
-  EXPECT_EQ(data, v[0]);
+  EXPECT_THAT(v, ElementsAre(data));
 }
 
 }  // namespace

@@ -86,7 +86,7 @@ TEST(Bytes, Conversions) {
   std::vector<std::uint8_t> const v_plain(s_plain.begin(), s_plain.end());
 
   auto bytes = spanner_internal::BytesFromBase64(s_coded);
-  EXPECT_STATUS_OK(bytes) << s_coded;
+  ASSERT_STATUS_OK(bytes) << s_coded;
   EXPECT_EQ(s_coded, spanner_internal::BytesToBase64(*bytes));
   EXPECT_EQ(s_plain, bytes->get<std::string>());
   EXPECT_EQ(d_plain, bytes->get<std::deque<char>>());

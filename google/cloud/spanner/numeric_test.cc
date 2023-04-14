@@ -27,8 +27,10 @@ namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
+using ::testing::Not;
 
 auto constexpr kNumericIntMin =  // 1 - 10^Numeric::kIntPrecision
     absl::MakeInt128(-5421010863, 10560352017195204609U);
@@ -563,9 +565,9 @@ TEST(Numeric, PostgreSQL) {
 
   // Check some limits of representation and rounding.
   auto limit = "-" + std::string(131072, '9') + "." + std::string(16383, '9');
-  EXPECT_TRUE(MakePgNumeric(limit).ok());
+  EXPECT_THAT(MakePgNumeric(limit), IsOk());
   auto too_big = "-1" + std::string(131072, '0');
-  EXPECT_FALSE(MakePgNumeric(too_big).ok());
+  EXPECT_THAT(MakePgNumeric(too_big), Not(IsOk()));
   auto round_up = "0." + std::string(16383, '9') + "5";
   EXPECT_EQ("1", MakePgNumeric(round_up).value().ToString());
 

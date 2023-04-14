@@ -272,13 +272,13 @@ TEST_F(ClientIntegrationTest, Commit) {
           .EmplaceRow(102, "first-name-102", "last-name-102")
           .EmplaceRow(199, "first-name-199", "last-name-199");
   auto insert_result = client_->Commit(Mutations{isb.Build()});
-  EXPECT_STATUS_OK(insert_result);
+  ASSERT_STATUS_OK(insert_result);
   EXPECT_NE(Timestamp{}, insert_result->commit_timestamp);
 
   // Delete SingerId 102.
   auto delete_result = client_->Commit(
       Mutations{MakeDeleteMutation("Singers", KeySet().AddKey(MakeKey(102)))});
-  EXPECT_STATUS_OK(delete_result);
+  ASSERT_STATUS_OK(delete_result);
   EXPECT_LT(insert_result->commit_timestamp, delete_result->commit_timestamp);
 
   // Read SingerIds [100 ... 200).
@@ -336,7 +336,7 @@ TEST_F(ClientIntegrationTest, ExecuteQueryDml) {
 
         return Mutations{};
       });
-  ASSERT_STATUS_OK(commit_result);
+  EXPECT_STATUS_OK(commit_result);
 
   auto rows = client_->ExecuteQuery(
       SqlStatement("SELECT SingerId, FirstName, LastName FROM Singers", {}));
@@ -361,8 +361,8 @@ TEST_F(ClientIntegrationTest, QueryOptionsWork) {
       QueryOptions().set_optimizer_version("latest"));
   int row_count = 0;
   for (auto const& row : rows) {
-    ASSERT_STATUS_OK(row);
-    ++row_count;
+    EXPECT_STATUS_OK(row);
+    if (row) ++row_count;
   }
   EXPECT_EQ(2, row_count);
 
@@ -431,7 +431,7 @@ void CheckReadWithOptions(
         }
         return Mutations{std::move(insert).Build()};
       });
-  ASSERT_STATUS_OK(commit);
+  EXPECT_STATUS_OK(commit);
 
   auto rows = client.Read(options_generator(*commit), "Singers", KeySet::All(),
                           {"SingerId", "FirstName", "LastName"});
@@ -512,7 +512,7 @@ void CheckExecuteQueryWithSingleUseOptions(
         }
         return Mutations{std::move(insert).Build()};
       });
-  ASSERT_STATUS_OK(commit);
+  EXPECT_STATUS_OK(commit);
 
   auto rows = client.ExecuteQuery(
       options_generator(*commit),
@@ -705,14 +705,14 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDml) {
         return Mutations{};
       });
 
-  ASSERT_STATUS_OK(commit_result);
+  EXPECT_STATUS_OK(commit_result);
   ASSERT_STATUS_OK(batch_result);
-  ASSERT_STATUS_OK(batch_result->status);
+  EXPECT_STATUS_OK(batch_result->status);
   ASSERT_EQ(batch_result->stats.size(), 4);
-  ASSERT_EQ(batch_result->stats[0].row_count, 1);
-  ASSERT_EQ(batch_result->stats[1].row_count, 1);
-  ASSERT_EQ(batch_result->stats[2].row_count, 1);
-  ASSERT_EQ(batch_result->stats[3].row_count, 2);
+  EXPECT_EQ(batch_result->stats[0].row_count, 1);
+  EXPECT_EQ(batch_result->stats[1].row_count, 1);
+  EXPECT_EQ(batch_result->stats[2].row_count, 1);
+  EXPECT_EQ(batch_result->stats[3].row_count, 2);
 
   auto rows = client_->ExecuteQuery(SqlStatement(
       "SELECT SingerId, FirstName, LastName FROM Singers ORDER BY SingerId"));
@@ -731,12 +731,13 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDml) {
   for (auto const& row :
        StreamOf<std::tuple<std::int64_t, std::string, std::string>>(rows)) {
     ASSERT_STATUS_OK(row);
-    ASSERT_EQ(std::get<0>(*row), expected[counter].id);
-    ASSERT_EQ(std::get<1>(*row), expected[counter].fname);
-    ASSERT_EQ(std::get<2>(*row), expected[counter].lname);
+    ASSERT_LT(counter, expected.size());
+    EXPECT_EQ(std::get<0>(*row), expected[counter].id);
+    EXPECT_EQ(std::get<1>(*row), expected[counter].fname);
+    EXPECT_EQ(std::get<2>(*row), expected[counter].lname);
     ++counter;
   }
-  ASSERT_EQ(counter, expected.size());
+  EXPECT_EQ(counter, expected.size());
 }
 
 TEST_F(ClientIntegrationTest, ExecuteBatchDmlMany) {
@@ -774,20 +775,20 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDmlMany) {
         return Mutations{};
       });
 
-  ASSERT_STATUS_OK(commit_result);
+  EXPECT_STATUS_OK(commit_result);
 
   ASSERT_STATUS_OK(batch_result_left);
   EXPECT_EQ(batch_result_left->stats.size(), left.size());
   EXPECT_STATUS_OK(batch_result_left->status);
   for (auto const& stats : batch_result_left->stats) {
-    ASSERT_EQ(stats.row_count, 1);
+    EXPECT_EQ(stats.row_count, 1);
   }
 
   ASSERT_STATUS_OK(batch_result_right);
   EXPECT_EQ(batch_result_right->stats.size(), right.size());
   EXPECT_STATUS_OK(batch_result_right->status);
   for (auto const& stats : batch_result_right->stats) {
-    ASSERT_EQ(stats.row_count, 1);
+    EXPECT_EQ(stats.row_count, 1);
   }
 
   auto rows = client_->ExecuteQuery(SqlStatement(
@@ -800,13 +801,13 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDmlMany) {
     std::string const singer_id = std::to_string(counter);
     std::string const first_name = "Foo" + singer_id;
     std::string const last_name = "Bar" + singer_id;
-    ASSERT_EQ(std::get<0>(*row), counter);
-    ASSERT_EQ(std::get<1>(*row), first_name);
-    ASSERT_EQ(std::get<2>(*row), last_name);
+    EXPECT_EQ(std::get<0>(*row), counter);
+    EXPECT_EQ(std::get<1>(*row), first_name);
+    EXPECT_EQ(std::get<2>(*row), last_name);
     ++counter;
   }
 
-  ASSERT_EQ(counter, kBatchSize);
+  EXPECT_EQ(counter, kBatchSize);
 }
 
 TEST_F(ClientIntegrationTest, ExecuteBatchDmlFailure) {
@@ -831,12 +832,12 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDmlFailure) {
         return Mutations{};
       });
 
-  ASSERT_FALSE(commit_result.ok());
+  EXPECT_THAT(commit_result, Not(IsOk()));
   ASSERT_STATUS_OK(batch_result);
-  ASSERT_FALSE(batch_result->status.ok());
+  EXPECT_THAT(batch_result->status, Not(IsOk()));
   ASSERT_EQ(batch_result->stats.size(), 2);
-  ASSERT_EQ(batch_result->stats[0].row_count, 1);
-  ASSERT_EQ(batch_result->stats[1].row_count, 1);
+  EXPECT_EQ(batch_result->stats[0].row_count, 1);
+  EXPECT_EQ(batch_result->stats[1].row_count, 1);
 }
 
 TEST_F(ClientIntegrationTest, AnalyzeSql) {
@@ -860,16 +861,16 @@ TEST_F(ClientIntegrationTest, ProfileQuery) {
   auto rows = client_->ProfileQuery(std::move(txn), std::move(sql));
   // Consume all the rows to make the profile info available.
   for (auto const& row : rows) {
-    ASSERT_STATUS_OK(row);
+    EXPECT_STATUS_OK(row);
   }
 
   auto stats = rows.ExecutionStats();
-  EXPECT_TRUE(stats);
+  ASSERT_TRUE(stats);
   EXPECT_GT(stats->size(), 0);
 
   auto plan = rows.ExecutionPlan();
   if (!UsingEmulator() || plan) {
-    EXPECT_TRUE(plan);
+    ASSERT_TRUE(plan);
     EXPECT_GT(plan->plan_nodes_size(), 0);
   }
 }
@@ -887,17 +888,17 @@ TEST_F(ClientIntegrationTest, ProfileDml) {
         profile_result = std::move(*dml_profile);
         return Mutations{};
       });
-  ASSERT_STATUS_OK(commit_result);
+  EXPECT_STATUS_OK(commit_result);
 
   EXPECT_EQ(1, profile_result.RowsModified());
 
   auto stats = profile_result.ExecutionStats();
-  EXPECT_TRUE(stats);
+  ASSERT_TRUE(stats);
   EXPECT_GT(stats->size(), 0);
 
   auto plan = profile_result.ExecutionPlan();
   if (!UsingEmulator() || plan) {
-    EXPECT_TRUE(plan);
+    ASSERT_TRUE(plan);
     EXPECT_GT(plan->plan_nodes_size(), 0);
   }
 }

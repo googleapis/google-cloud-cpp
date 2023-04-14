@@ -215,26 +215,26 @@ TEST(RowStreamIterator, Basics) {
   auto it = RowStreamIterator(MakeRowStreamIteratorSource(rows));
   EXPECT_EQ(it, it);
   EXPECT_NE(it, end);
-  EXPECT_STATUS_OK(*it);
+  ASSERT_STATUS_OK(*it);
   EXPECT_EQ(rows[0], **it);
 
   ++it;
   EXPECT_EQ(it, it);
   EXPECT_NE(it, end);
-  EXPECT_STATUS_OK(*it);
+  ASSERT_STATUS_OK(*it);
   EXPECT_EQ(rows[1], **it);
 
   it++;
   EXPECT_EQ(it, it);
   EXPECT_NE(it, end);
-  EXPECT_STATUS_OK(*it);
+  ASSERT_STATUS_OK(*it);
   EXPECT_EQ(rows[2], **it);
 
   // Tests op*() const and op->() const
   auto const copy = it;
   EXPECT_EQ(copy, it);
   EXPECT_NE(copy, end);
-  EXPECT_STATUS_OK(*copy);
+  ASSERT_STATUS_OK(*copy);
   EXPECT_STATUS_OK(copy->status());
 
   ++it;
@@ -254,7 +254,7 @@ TEST(RowStreamIterator, OneRow) {
   rows.emplace_back(spanner_mocks::MakeRow(1, "foo", true));
   auto it = RowStreamIterator(MakeRowStreamIteratorSource(rows));
   EXPECT_NE(it, end);
-  EXPECT_STATUS_OK(*it);
+  ASSERT_STATUS_OK(*it);
   EXPECT_EQ(rows[0], **it);
 
   ++it;
@@ -270,13 +270,13 @@ TEST(RowStreamIterator, IterationError) {
   rows.emplace_back(spanner_mocks::MakeRow(2, "bar", true));
 
   auto it = RowStreamIterator(MakeRowStreamIteratorSource(rows));
-  EXPECT_NE(it, end);
+  ASSERT_NE(it, end);
   EXPECT_STATUS_OK(*it);
   EXPECT_EQ(rows[0], *it);
 
   ++it;
   EXPECT_EQ(it, it);
-  EXPECT_NE(it, end);
+  ASSERT_NE(it, end);
   EXPECT_FALSE(*it);
   EXPECT_THAT(*it, StatusIs(StatusCode::kUnknown, "some error"));
 
@@ -294,9 +294,9 @@ TEST(RowStreamIterator, ForLoop) {
   auto source = MakeRowStreamIteratorSource(rows);
   std::int64_t product = 1;
   for (RowStreamIterator it(source), end; it != end; ++it) {
-    EXPECT_STATUS_OK(*it);
+    ASSERT_STATUS_OK(*it);
     auto num = (*it)->get<std::int64_t>("num");
-    EXPECT_STATUS_OK(num);
+    ASSERT_STATUS_OK(num);
     product *= *num;
   }
   EXPECT_EQ(product, 30);
@@ -311,9 +311,9 @@ TEST(RowStreamIterator, RangeForLoop) {
   RowRange range(MakeRowStreamIteratorSource(rows));
   std::int64_t product = 1;
   for (auto const& row : range) {
-    EXPECT_STATUS_OK(row);
+    ASSERT_STATUS_OK(row);
     auto num = row->get<std::int64_t>("num");
-    EXPECT_STATUS_OK(num);
+    ASSERT_STATUS_OK(num);
     product *= *num;
   }
   EXPECT_EQ(product, 30);
@@ -330,17 +330,17 @@ TEST(RowStreamIterator, MovedFromValueOk) {
 
   EXPECT_NE(it, end);
   auto row = std::move(*it);
-  EXPECT_STATUS_OK(row);
+  ASSERT_STATUS_OK(row);
   auto val = row->get("num");
-  EXPECT_STATUS_OK(val);
+  ASSERT_STATUS_OK(val);
   EXPECT_EQ(Value(1), *val);
 
   ++it;
   EXPECT_NE(it, end);
   row = std::move(*it);
-  EXPECT_STATUS_OK(row);
+  ASSERT_STATUS_OK(row);
   val = row->get("num");
-  EXPECT_STATUS_OK(val);
+  ASSERT_STATUS_OK(val);
   EXPECT_EQ(Value(2), *val);
 
   ++it;
@@ -363,27 +363,27 @@ TEST(TupleStreamIterator, Basics) {
                           RowStreamIterator());
 
   EXPECT_EQ(it, it);
-  EXPECT_NE(it, end);
-  EXPECT_STATUS_OK(*it);
+  ASSERT_NE(it, end);
+  ASSERT_STATUS_OK(*it);
   EXPECT_EQ(std::make_tuple(1, "foo", true), **it);
 
   ++it;
   EXPECT_EQ(it, it);
-  EXPECT_NE(it, end);
-  EXPECT_STATUS_OK(*it);
+  ASSERT_NE(it, end);
+  ASSERT_STATUS_OK(*it);
   EXPECT_EQ(std::make_tuple(2, "bar", true), **it);
 
   ++it;
   EXPECT_EQ(it, it);
-  EXPECT_NE(it, end);
-  EXPECT_STATUS_OK(*it);
+  ASSERT_NE(it, end);
+  ASSERT_STATUS_OK(*it);
   EXPECT_EQ(std::make_tuple(3, "baz", true), **it);
 
   // Tests op*() const and op->() const
   auto const copy = it;
   EXPECT_EQ(copy, it);
-  EXPECT_NE(copy, end);
-  EXPECT_STATUS_OK(*copy);
+  ASSERT_NE(copy, end);
+  ASSERT_STATUS_OK(*copy);
   EXPECT_STATUS_OK(copy->status());
 
   ++it;
@@ -419,14 +419,14 @@ TEST(TupleStreamIterator, Error) {
                           RowStreamIterator());
 
   EXPECT_EQ(it, it);
-  EXPECT_NE(it, end);
-  EXPECT_STATUS_OK(*it);
+  ASSERT_NE(it, end);
+  ASSERT_STATUS_OK(*it);
   EXPECT_EQ(std::make_tuple(1, "foo", true), **it);
 
   ++it;
   EXPECT_EQ(it, it);
-  EXPECT_NE(it, end);
-  EXPECT_FALSE(it->ok());  // Error parsing the 2nd element
+  ASSERT_NE(it, end);
+  EXPECT_THAT(*it, Not(IsOk()));  // Error parsing the 2nd element
 
   ++it;  // Due to the previous error, jumps straight to "end"
   EXPECT_EQ(it, it);
@@ -446,13 +446,13 @@ TEST(TupleStreamIterator, MovedFromValueOk) {
 
   EXPECT_NE(it, end);
   auto tup = std::move(*it);
-  EXPECT_STATUS_OK(tup);
+  ASSERT_STATUS_OK(tup);
   EXPECT_EQ(1, std::get<0>(*tup));
 
   ++it;
-  EXPECT_NE(it, end);
+  ASSERT_NE(it, end);
   tup = std::move(*it);
-  EXPECT_STATUS_OK(tup);
+  ASSERT_STATUS_OK(tup);
   EXPECT_EQ(2, std::get<0>(*tup));
 
   ++it;
@@ -473,20 +473,20 @@ TEST(TupleStream, Basics) {
   EXPECT_EQ(end, end);
 
   EXPECT_EQ(it, it);
-  EXPECT_NE(it, end);
-  EXPECT_STATUS_OK(*it);
+  ASSERT_NE(it, end);
+  ASSERT_STATUS_OK(*it);
   EXPECT_EQ(std::make_tuple(1, "foo", true), **it);
 
   ++it;
   EXPECT_EQ(it, it);
-  EXPECT_NE(it, end);
-  EXPECT_STATUS_OK(*it);
+  ASSERT_NE(it, end);
+  ASSERT_STATUS_OK(*it);
   EXPECT_EQ(std::make_tuple(2, "bar", true), **it);
 
   ++it;
   EXPECT_EQ(it, it);
-  EXPECT_NE(it, end);
-  EXPECT_STATUS_OK(*it);
+  ASSERT_NE(it, end);
+  ASSERT_STATUS_OK(*it);
   EXPECT_EQ(std::make_tuple(3, "baz", true), **it);
 
   ++it;
@@ -504,7 +504,7 @@ TEST(TupleStream, RangeForLoop) {
   RowRange range(MakeRowStreamIteratorSource(rows));
   std::int64_t product = 1;
   for (auto const& row : StreamOf<RowType>(range)) {
-    EXPECT_STATUS_OK(row);
+    ASSERT_STATUS_OK(row);
     product *= std::get<0>(*row);
   }
   EXPECT_EQ(product, 30);
@@ -523,13 +523,13 @@ TEST(TupleStream, IterationError) {
 
   auto end = stream.end();
   auto it = stream.begin();
-  EXPECT_NE(it, end);
-  EXPECT_STATUS_OK(*it);
+  ASSERT_NE(it, end);
+  ASSERT_STATUS_OK(*it);
   EXPECT_EQ(std::make_tuple(1, "foo", true), **it);
 
   ++it;
   EXPECT_EQ(it, it);
-  EXPECT_NE(it, end);
+  ASSERT_NE(it, end);
   EXPECT_FALSE(*it);
   EXPECT_THAT(*it, StatusIs(StatusCode::kUnknown, "some error"));
 
@@ -560,7 +560,7 @@ TEST(GetSingularRow, BasicSingleRow) {
 
   RowRange range(MakeRowStreamIteratorSource(rows));
   auto row = GetSingularRow(range);
-  EXPECT_STATUS_OK(row);
+  ASSERT_STATUS_OK(row);
   EXPECT_EQ(1, *row->get<std::int64_t>(0));
 }
 
@@ -572,7 +572,7 @@ TEST(GetSingularRow, TupleStreamSingleRow) {
   auto tup_range = StreamOf<std::tuple<std::int64_t>>(row_range);
 
   auto row = GetSingularRow(tup_range);
-  EXPECT_STATUS_OK(row);
+  ASSERT_STATUS_OK(row);
   EXPECT_EQ(1, std::get<0>(*row));
 }
 

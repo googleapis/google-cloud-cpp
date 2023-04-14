@@ -34,6 +34,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
@@ -71,7 +72,7 @@ void TestBasicSemantics(T init) {
 
   Value const v{init};
 
-  EXPECT_STATUS_OK(v.get<T>());
+  ASSERT_STATUS_OK(v.get<T>());
   EXPECT_EQ(init, *v.get<T>());
 
   Value copy = v;
@@ -83,7 +84,7 @@ void TestBasicSemantics(T init) {
   Value const null = MakeNullValue<T>();
 
   EXPECT_THAT(null.get<T>(), Not(IsOk()));
-  EXPECT_STATUS_OK(null.get<absl::optional<T>>());
+  ASSERT_STATUS_OK(null.get<absl::optional<T>>());
   EXPECT_EQ(absl::optional<T>{}, *null.get<absl::optional<T>>());
 
   Value copy_null = null;
@@ -102,9 +103,9 @@ void TestBasicSemantics(T init) {
             google::protobuf::NullValue::NULL_VALUE);
 
   Value const not_null{absl::optional<T>(init)};
-  EXPECT_STATUS_OK(not_null.get<T>());
+  ASSERT_STATUS_OK(not_null.get<T>());
   EXPECT_EQ(init, *not_null.get<T>());
-  EXPECT_STATUS_OK(not_null.get<absl::optional<T>>());
+  ASSERT_STATUS_OK(not_null.get<absl::optional<T>>());
   EXPECT_EQ(init, **not_null.get<absl::optional<T>>());
 }
 
@@ -277,16 +278,16 @@ TEST(Value, RvalueGetString) {
   Value v(data);
 
   auto s = v.get<Type>();
-  EXPECT_STATUS_OK(s);
+  ASSERT_STATUS_OK(s);
   EXPECT_EQ(data, *s);
 
   s = std::move(v).get<Type>();
-  EXPECT_STATUS_OK(s);
+  ASSERT_STATUS_OK(s);
   EXPECT_EQ(data, *s);
 
   // NOLINTNEXTLINE(bugprone-use-after-move)
   s = v.get<Type>();
-  EXPECT_STATUS_OK(s);
+  ASSERT_STATUS_OK(s);
   EXPECT_EQ("", *s);
 }
 
@@ -302,16 +303,16 @@ TEST(Value, RvalueGetOptionalString) {
   Value v(data);
 
   auto s = v.get<Type>();
-  EXPECT_STATUS_OK(s);
+  ASSERT_STATUS_OK(s);
   EXPECT_EQ(*data, **s);
 
   s = std::move(v).get<Type>();
-  EXPECT_STATUS_OK(s);
+  ASSERT_STATUS_OK(s);
   EXPECT_EQ(*data, **s);
 
   // NOLINTNEXTLINE(bugprone-use-after-move)
   s = v.get<Type>();
-  EXPECT_STATUS_OK(s);
+  ASSERT_STATUS_OK(s);
   EXPECT_EQ("", **s);
 }
 
@@ -327,16 +328,16 @@ TEST(Value, RvalueGetVectorString) {
   Value v(data);
 
   auto s = v.get<Type>();
-  EXPECT_STATUS_OK(s);
+  ASSERT_STATUS_OK(s);
   EXPECT_EQ(data, *s);
 
   s = std::move(v).get<Type>();
-  EXPECT_STATUS_OK(s);
+  ASSERT_STATUS_OK(s);
   EXPECT_EQ(data, *s);
 
   // NOLINTNEXTLINE(bugprone-use-after-move)
   s = v.get<Type>();
-  EXPECT_STATUS_OK(s);
+  ASSERT_STATUS_OK(s);
   EXPECT_EQ(Type(data.size(), ""), *s);
 }
 
@@ -353,16 +354,16 @@ TEST(Value, RvalueGetStructString) {
   Value v(data);
 
   auto s = v.get<Type>();
-  EXPECT_STATUS_OK(s);
+  ASSERT_STATUS_OK(s);
   EXPECT_EQ(data, *s);
 
   s = std::move(v).get<Type>();
-  EXPECT_STATUS_OK(s);
+  ASSERT_STATUS_OK(s);
   EXPECT_EQ(data, *s);
 
   // NOLINTNEXTLINE(bugprone-use-after-move)
   s = v.get<Type>();
-  EXPECT_STATUS_OK(s);
+  ASSERT_STATUS_OK(s);
   EXPECT_EQ(Type({"name", ""}, ""), *s);
 }
 
@@ -448,7 +449,6 @@ TEST(Value, MixingTypes) {
   Value a(A{});
   EXPECT_STATUS_OK(a.get<A>());
   EXPECT_THAT(a.get<B>(), Not(IsOk()));
-  EXPECT_THAT(a.get<B>(), Not(IsOk()));
 
   Value null_a = MakeNullValue<A>();
   EXPECT_THAT(null_a.get<A>(), Not(IsOk()));
@@ -458,7 +458,6 @@ TEST(Value, MixingTypes) {
 
   Value b(B{});
   EXPECT_STATUS_OK(b.get<B>());
-  EXPECT_THAT(b.get<A>(), Not(IsOk()));
   EXPECT_THAT(b.get<A>(), Not(IsOk()));
 
   EXPECT_NE(b, a);
@@ -480,14 +479,14 @@ TEST(Value, SpannerArray) {
   ArrayInt64 const empty = {};
   Value const ve(empty);
   EXPECT_EQ(ve, ve);
-  EXPECT_STATUS_OK(ve.get<ArrayInt64>());
+  ASSERT_STATUS_OK(ve.get<ArrayInt64>());
   EXPECT_THAT(ve.get<ArrayDouble>(), Not(IsOk()));
   EXPECT_EQ(empty, *ve.get<ArrayInt64>());
 
   ArrayInt64 const ai = {1, 2, 3};
   Value const vi(ai);
   EXPECT_EQ(vi, vi);
-  EXPECT_STATUS_OK(vi.get<ArrayInt64>());
+  ASSERT_STATUS_OK(vi.get<ArrayInt64>());
   EXPECT_THAT(vi.get<ArrayDouble>(), Not(IsOk()));
   EXPECT_EQ(ai, *vi.get<ArrayInt64>());
 
@@ -496,7 +495,7 @@ TEST(Value, SpannerArray) {
   EXPECT_EQ(vd, vd);
   EXPECT_NE(vi, vd);
   EXPECT_THAT(vd.get<ArrayInt64>(), Not(IsOk()));
-  EXPECT_STATUS_OK(vd.get<ArrayDouble>());
+  ASSERT_STATUS_OK(vd.get<ArrayDouble>());
   EXPECT_EQ(ad, *vd.get<ArrayDouble>());
 
   Value const null_vi = MakeNullValue<ArrayInt64>();
@@ -527,30 +526,29 @@ TEST(Value, SpannerStruct) {
   auto tup1 = make_tuple(false, int64_t{123});
   using T1 = decltype(tup1);
   Value v1(tup1);
-  EXPECT_STATUS_OK(v1.get<T1>());
+  ASSERT_STATUS_OK(v1.get<T1>());
   EXPECT_EQ(tup1, *v1.get<T1>());
   EXPECT_EQ(v1, v1);
 
   // Verify we can extract tuple elements even if they're wrapped in a pair.
   auto const pair0 = v1.get<tuple<pair<string, bool>, int64_t>>();
-  EXPECT_STATUS_OK(pair0);
+  ASSERT_STATUS_OK(pair0);
   EXPECT_EQ(std::get<0>(tup1), std::get<0>(*pair0).second);
   EXPECT_EQ(std::get<1>(tup1), std::get<1>(*pair0));
   auto const pair1 = v1.get<tuple<bool, pair<string, int64_t>>>();
-  EXPECT_STATUS_OK(pair1);
+  ASSERT_STATUS_OK(pair1);
   EXPECT_EQ(std::get<0>(tup1), std::get<0>(*pair1));
   EXPECT_EQ(std::get<1>(tup1), std::get<1>(*pair1).second);
   auto const pair01 =
       v1.get<tuple<pair<string, bool>, pair<string, int64_t>>>();
-  EXPECT_STATUS_OK(pair01);
+  ASSERT_STATUS_OK(pair01);
   EXPECT_EQ(std::get<0>(tup1), std::get<0>(*pair01).second);
   EXPECT_EQ(std::get<1>(tup1), std::get<1>(*pair01).second);
 
   auto tup2 = make_tuple(false, make_pair(string("f2"), int64_t{123}));
   using T2 = decltype(tup2);
   Value v2(tup2);
-  EXPECT_STATUS_OK(v2.get<T2>());
-  EXPECT_EQ(tup2, *v2.get<T2>());
+  EXPECT_THAT(v2.get<T2>(), IsOkAndHolds(tup2));
   EXPECT_EQ(v2, v2);
   EXPECT_NE(v2, v1);
 
@@ -561,8 +559,7 @@ TEST(Value, SpannerStruct) {
   auto tup3 = make_tuple(false, make_pair(string("Other"), int64_t{123}));
   using T3 = decltype(tup3);
   Value v3(tup3);
-  EXPECT_STATUS_OK(v3.get<T3>());
-  EXPECT_EQ(tup3, *v3.get<T3>());
+  EXPECT_THAT(v3.get<T3>(), IsOkAndHolds(tup3));
   EXPECT_EQ(v3, v3);
   EXPECT_NE(v3, v2);
   EXPECT_NE(v3, v1);
@@ -593,8 +590,7 @@ TEST(Value, SpannerStruct) {
   EXPECT_THAT(v4.get<T2>(), Not(IsOk()));
   EXPECT_THAT(v4.get<T1>(), Not(IsOk()));
 
-  EXPECT_STATUS_OK(v4.get<T4>());
-  EXPECT_EQ(array_struct, *v4.get<T4>());
+  EXPECT_THAT(v4.get<T4>(), IsOkAndHolds(array_struct));
 
   auto empty = tuple<>{};
   using T5 = decltype(empty);
@@ -604,8 +600,7 @@ TEST(Value, SpannerStruct) {
   EXPECT_EQ(v5, v5);
   EXPECT_NE(v5, v4);
 
-  EXPECT_STATUS_OK(v5.get<T5>());
-  EXPECT_EQ(empty, *v5.get<T5>());
+  EXPECT_THAT(v5.get<T5>(), IsOkAndHolds(empty));
 
   auto deeply_nested = tuple<tuple<std::vector<absl::optional<bool>>>>{};
   using T6 = decltype(deeply_nested);
@@ -615,8 +610,7 @@ TEST(Value, SpannerStruct) {
   EXPECT_EQ(v6, v6);
   EXPECT_NE(v6, v5);
 
-  EXPECT_STATUS_OK(v6.get<T6>());
-  EXPECT_EQ(deeply_nested, *v6.get<T6>());
+  EXPECT_THAT(v6.get<T6>(), IsOkAndHolds(deeply_nested));
 }
 
 TEST(Value, SpannerStructWithNull) {
@@ -1120,8 +1114,7 @@ TEST(Value, CommitTimestamp) {
   EXPECT_THAT(tv.second, IsProtoEqual(pv));
 
   auto good = v.get<CommitTimestamp>();
-  EXPECT_STATUS_OK(good);
-  EXPECT_EQ(CommitTimestamp{}, *good);
+  EXPECT_THAT(good, IsOkAndHolds(CommitTimestamp{}));
 
   auto bad = v.get<Timestamp>();
   EXPECT_THAT(bad, Not(IsOk()));

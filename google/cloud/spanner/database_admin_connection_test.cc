@@ -219,8 +219,7 @@ TEST(DatabaseAdminConnectionTest, GetDatabase) {
   auto conn = CreateTestingConnection(std::move(mock));
   auto response =
       conn->GetDatabase({Database("project", "instance", "database")});
-  ASSERT_STATUS_OK(response);
-  EXPECT_THAT(*response, IsProtoEqual(expected_response));
+  EXPECT_THAT(response, IsOkAndHolds(IsProtoEqual(expected_response)));
 }
 
 /// @test Verify that permanent errors are reported immediately.
@@ -270,9 +269,9 @@ TEST(DatabaseAdminConnectionTest, GetDatabaseDdlSuccess) {
   auto conn = CreateTestingConnection(std::move(mock));
   auto response = conn->GetDatabaseDdl(
       {Database("test-project", "test-instance", "test-database")});
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
   ASSERT_EQ(1, response->statements_size());
-  ASSERT_EQ("CREATE DATABASE test-database", response->statements(0));
+  EXPECT_EQ("CREATE DATABASE test-database", response->statements(0));
 }
 
 /// @test Verify that permanent errors are reported immediately.
@@ -768,9 +767,9 @@ TEST(DatabaseAdminConnectionTest, GetIamPolicySuccess) {
       {Database("test-project", "test-instance", "test-database")});
   EXPECT_STATUS_OK(response);
   ASSERT_EQ(1, response->bindings().size());
-  ASSERT_EQ(expected_role, response->bindings().Get(0).role());
+  EXPECT_EQ(expected_role, response->bindings().Get(0).role());
   ASSERT_EQ(1, response->bindings().Get(0).members().size());
-  ASSERT_EQ(expected_member, response->bindings().Get(0).members().Get(0));
+  EXPECT_EQ(expected_member, response->bindings().Get(0).members().Get(0));
 }
 
 /// @test Verify that permanent errors are reported immediately.
@@ -837,7 +836,7 @@ TEST(DatabaseAdminConnectionTest, SetIamPolicySuccess) {
   auto response = conn->SetIamPolicy(
       {Database("test-project", "test-instance", "test-database"),
        expected_policy});
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
   expected_policy.set_etag("response-etag");
   EXPECT_THAT(*response, IsProtoEqual(expected_policy));
 }
@@ -911,9 +910,9 @@ TEST(DatabaseAdminConnectionTest, TestIamPermissionsSuccess) {
   auto response = conn->TestIamPermissions(
       {Database("test-project", "test-instance", "test-database"),
        {expected_permission}});
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
   ASSERT_EQ(1, response->permissions_size());
-  ASSERT_EQ(expected_permission, response->permissions(0));
+  EXPECT_EQ(expected_permission, response->permissions(0));
 }
 
 /// @test Verify that permanent errors are reported immediately.
@@ -1374,7 +1373,7 @@ TEST(DatabaseAdminConnectionTest, UpdateBackupSuccess) {
       Backup(Instance("test-project", "test-instance"), "test-backup")
           .FullName());
   auto response = conn->UpdateBackup({request});
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
   EXPECT_EQ(gsad::v1::Backup::READY, response->state());
   EXPECT_EQ(expected_name, response->name());
 }
