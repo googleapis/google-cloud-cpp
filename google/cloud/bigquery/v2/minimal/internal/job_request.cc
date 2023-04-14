@@ -28,8 +28,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
-auto const kDefaultTimepoint = std::chrono::system_clock::time_point{};
-
 std::string GetJobsEndpoint(Options const& opts) {
   std::string endpoint = opts.get<EndpointOption>();
 
@@ -88,13 +86,17 @@ std::string GetJobRequest::DebugString(absl::string_view name,
 std::string ListJobsRequest::DebugString(absl::string_view name,
                                          TracingOptions const& options,
                                          int indent) const {
-  return internal::DebugFormatter(name, options, indent)
-      .StringField("project_id", project_id_)
-      .Field("all_users", all_users_)
-      .Field("max_results", max_results_)
-      .Field("min_creation_time", min_creation_time_)
-      .Field("max_creation_time", max_creation_time_)
-      .StringField("page_token", page_token_)
+  auto formatter = internal::DebugFormatter(name, options, indent)
+                       .StringField("project_id", project_id_)
+                       .Field("all_users", all_users_)
+                       .Field("max_results", max_results_);
+  if (min_creation_time_) {
+    formatter.Field("min_creation_time", *min_creation_time_);
+  }
+  if (max_creation_time_) {
+    formatter.Field("max_creation_time", *max_creation_time_);
+  }
+  return formatter.StringField("page_token", page_token_)
       .SubMessage("projection", projection_)
       .SubMessage("state_filter", state_filter_)
       .StringField("parent_job_id", parent_job_id_)
@@ -118,14 +120,11 @@ std::string StateFilter::DebugString(absl::string_view name,
 }
 
 ListJobsRequest::ListJobsRequest(std::string project_id)
-    : project_id_(std::move(project_id)),
-      all_users_(false),
-      max_results_(0),
-      min_creation_time_(kDefaultTimepoint),
-      max_creation_time_(kDefaultTimepoint) {}
+    : project_id_(std::move(project_id)), all_users_(false), max_results_(0) {}
 
-StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r,
-                                                      Options const& opts) {
+StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r) {
+  auto const& opts = internal::CurrentOptions();
+
   rest_internal::RestRequest request;
   if (r.project_id().empty()) {
     return internal::InvalidArgumentError(
@@ -149,9 +148,11 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r,
   return request;
 }
 
-StatusOr<rest_internal::RestRequest> BuildRestRequest(ListJobsRequest const& r,
-                                                      Options const& opts) {
+StatusOr<rest_internal::RestRequest> BuildRestRequest(
+    ListJobsRequest const& r) {
   rest_internal::RestRequest request;
+  auto const& opts = internal::CurrentOptions();
+
   if (r.project_id().empty()) {
     return internal::InvalidArgumentError(
         "Invalid ListJobsRequest: Project Id is empty", GCP_ERROR_INFO());
@@ -169,13 +170,13 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(ListJobsRequest const& r,
   if (r.max_results() > 0) {
     request.AddQueryParameter("maxResults", std::to_string(r.max_results()));
   }
-  if (r.min_creation_time() != kDefaultTimepoint) {
+  if (r.min_creation_time()) {
     request.AddQueryParameter("minCreationTime",
-                              internal::FormatRfc3339(r.min_creation_time()));
+                              internal::FormatRfc3339(*r.min_creation_time()));
   }
-  if (r.max_creation_time() != kDefaultTimepoint) {
+  if (r.max_creation_time()) {
     request.AddQueryParameter("maxCreationTime",
-                              internal::FormatRfc3339(r.max_creation_time()));
+                              internal::FormatRfc3339(*r.max_creation_time()));
   }
 
   auto if_not_empty_add = [&](char const* key, auto const& v) {

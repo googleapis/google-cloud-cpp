@@ -32,12 +32,12 @@ std::shared_ptr<BigQueryJobRestStub> CreateDefaultBigQueryJobRestStub(
   if (!local_opts.has<UnifiedCredentialsOption>()) {
     local_opts.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
   }
+
   auto curl_rest_client = rest_internal::MakePooledRestClient(
       opts.get<EndpointOption>(), local_opts);
 
   std::shared_ptr<BigQueryJobRestStub> stub =
-      std::make_shared<DefaultBigQueryJobRestStub>(std::move(curl_rest_client),
-                                                   local_opts);
+      std::make_shared<DefaultBigQueryJobRestStub>(std::move(curl_rest_client));
 
   stub = std::make_shared<BigQueryJobMetadata>(std::move(stub));
 

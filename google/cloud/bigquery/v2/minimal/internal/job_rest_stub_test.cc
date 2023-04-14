@@ -83,10 +83,9 @@ TEST(BigQueryJobStubTest, GetJobSuccess) {
           std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));
 
   GetJobRequest job_request("p123", "j123");
-  Options opts;
-  opts.set<EndpointOption>("bigquery.googleapis.com");
+
   rest_internal::RestContext context;
-  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
+  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client));
 
   auto result = rest_stub.GetJob(context, std::move(job_request));
   ASSERT_STATUS_OK(result);
@@ -104,10 +103,10 @@ TEST(BigQueryJobStubTest, GetJobRestClientError) {
           Return(rest::AsStatus(HttpStatusCode::kInternalServerError, "")));
 
   GetJobRequest job_request("p123", "j123");
-  Options opts;
-  opts.set<EndpointOption>("bigquery.googleapis.com");
+
   rest_internal::RestContext context;
-  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
+  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client));
+
   auto response = rest_stub.GetJob(context, std::move(job_request));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
@@ -128,10 +127,10 @@ TEST(BigQueryJobStubTest, GetJobRestResponseError) {
           std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));
 
   GetJobRequest job_request("p123", "j123");
-  Options opts;
-  opts.set<EndpointOption>("bigquery.googleapis.com");
+
   rest_internal::RestContext context;
-  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
+  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client));
+
   auto response = rest_stub.GetJob(context, std::move(job_request));
   EXPECT_THAT(response, StatusIs(StatusCode::kInvalidArgument));
 }
@@ -172,10 +171,8 @@ TEST(BigQueryJobStubTest, ListJobsSuccess) {
 
   auto list_jobs_request = GetListJobsRequest();
 
-  Options opts;
-  opts.set<EndpointOption>("bigquery.googleapis.com");
   rest_internal::RestContext context;
-  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
+  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client));
 
   auto result = rest_stub.ListJobs(context, std::move(list_jobs_request));
   ASSERT_STATUS_OK(result);
@@ -189,10 +186,10 @@ TEST(BigQueryJobStubTest, ListJobsRestClientError) {
           Return(rest::AsStatus(HttpStatusCode::kInternalServerError, "")));
 
   auto list_jobs_request = GetListJobsRequest();
-  Options opts;
-  opts.set<EndpointOption>("bigquery.googleapis.com");
+
   rest_internal::RestContext context;
-  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
+  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client));
+
   auto response = rest_stub.ListJobs(context, std::move(list_jobs_request));
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
@@ -211,10 +208,9 @@ TEST(BigQueryJobStubTest, ListJobsRestResponseError) {
           std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));
 
   auto list_jobs_request = GetListJobsRequest();
-  Options opts;
-  opts.set<EndpointOption>("bigquery.googleapis.com");
+
   rest_internal::RestContext context;
-  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
+  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client));
 
   auto response = rest_stub.ListJobs(context, std::move(list_jobs_request));
 
