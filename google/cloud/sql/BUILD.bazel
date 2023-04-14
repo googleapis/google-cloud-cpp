@@ -43,6 +43,8 @@ cc_library(
     deps = [
         "//:common",
         "//:grpc_utils",
+        "//google/cloud:google_cloud_cpp_rest_internal",
+        "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
         "@com_google_googleapis//google/cloud/sql/v1:sql_cc_grpc",
     ],
 )
@@ -62,7 +64,7 @@ cc_library(
     srcs = [sample],
     tags = ["integration-test"],
     deps = [
-        "//:sql",
+        "//:experimental-sql",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
     ],
 ) for sample in glob([d + "samples/*.cc" for d in service_dirs])]

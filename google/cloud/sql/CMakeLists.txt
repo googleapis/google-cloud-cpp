@@ -65,7 +65,10 @@ target_include_directories(
            $<INSTALL_INTERFACE:include>)
 target_link_libraries(
     google_cloud_cpp_sql
-    PUBLIC google-cloud-cpp::grpc_utils google-cloud-cpp::common
+    PUBLIC google-cloud-cpp::grpc_utils
+           google-cloud-cpp::common
+           google-cloud-cpp::rest_internal
+           google-cloud-cpp::rest_protobuf_internal
            google-cloud-cpp::sql_protos)
 google_cloud_cpp_add_common_options(google_cloud_cpp_sql)
 set_target_properties(
@@ -116,11 +119,8 @@ if (BUILD_TESTING)
     google_cloud_cpp_add_common_options(sql_quickstart)
     add_test(
         NAME sql_quickstart
-        COMMAND
-            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:sql_quickstart> GOOGLE_CLOUD_PROJECT
-            # EDIT HERE
-    )
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:sql_quickstart> GOOGLE_CLOUD_PROJECT)
     set_tests_properties(sql_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
@@ -168,7 +168,9 @@ google_cloud_cpp_add_pkgconfig(
     sql
     "The Cloud SQL Admin API C++ Client Library"
     "Provides C++ APIs to use the Cloud SQL Admin API."
-    "google_cloud_cpp_grpc_utils"
+    "google_cloud_cpp_rest_internal"
+    " google_cloud_cpp_rest_protobuf_internal"
+    " google_cloud_cpp_grpc_utils"
     " google_cloud_cpp_common"
     " google_cloud_cpp_sql_protos")
 

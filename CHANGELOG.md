@@ -129,6 +129,10 @@ the APIs in these libraries are stable, and are ready for production use.
 - [ConfidentialComputing API](/google/cloud/confidentialcomputing/README.md)
 - [Workstations API](/google/cloud/workstations/README.md)
 
+The following experimental libraries are now available:
+
+- [Cloud SQL API](/google/cloud/sql/README.md)
+
 ### [Service Control](/google/cloud/servicecontrol/README.md)
 
 The library has been expanded to include the v2 service.

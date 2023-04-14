@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/sql/ EDIT HERE .h"
+#include "google/cloud/sql/v1/sql_instances_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -23,14 +23,17 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace sql = ::google::cloud::sql;
-  auto client = sql::Client(sql::MakeConnection());
+  namespace sql = ::google::cloud::sql_v1;
+  auto client =
+      sql::SqlInstancesServiceClient(google::cloud::ExperimentalTag{},
+                                     sql::MakeSqlInstancesServiceConnectionRest(
+                                         google::cloud::ExperimentalTag{}));
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
-  }
+  google::cloud::sql::v1::SqlInstancesListRequest request;
+  request.set_project(argv[1]);
+  auto r = client.List(request);
+  if (!r) throw std::move(r).status();
+  std::cout << r->DebugString() << "\n";
 
   return 0;
 } catch (google::cloud::Status const& status) {
