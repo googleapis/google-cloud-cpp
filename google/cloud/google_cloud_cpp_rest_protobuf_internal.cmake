@@ -48,26 +48,18 @@ add_library(google-cloud-cpp::rest_protobuf_internal ALIAS
 
 create_bazel_config(google_cloud_cpp_rest_protobuf_internal YEAR 2022)
 
-# Install the libraries and headers in the locations determined by
-# GNUInstallDirs
-install(
-    TARGETS
-    EXPORT rest_protobuf-targets
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development)
-
 # Export the CMake targets to make it easy to create configuration files.
 install(
-    EXPORT rest_protobuf-targets
+    EXPORT google_cloud_cpp_rest_protobuf_internal-targets
     DESTINATION
         "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_rest_protobuf_internal"
     COMPONENT google_cloud_cpp_development)
 
+# Install the libraries and headers in the locations determined by
+# GNUInstallDirs
 install(
     TARGETS google_cloud_cpp_rest_protobuf_internal
-    EXPORT rest_protobuf-targets
+    EXPORT google_cloud_cpp_rest_protobuf_internal-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
