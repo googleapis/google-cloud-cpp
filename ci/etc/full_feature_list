@@ -82,6 +82,7 @@ serviceusage
 shell
 spanner
 speech
+sql
 storage
 storagetransfer
 talent
