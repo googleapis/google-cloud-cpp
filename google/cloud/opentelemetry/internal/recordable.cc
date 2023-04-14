@@ -154,18 +154,16 @@ void Recordable::SetIdentity(
     opentelemetry::trace::SpanId parent_span_id) noexcept {
   std::array<char, 2 * opentelemetry::trace::TraceId::kSize> hex_trace_buf;
   span_context.trace_id().ToLowerBase16(hex_trace_buf);
-  std::string const hex_trace(hex_trace_buf.data(),
-                              2 * opentelemetry::trace::TraceId::kSize);
+  std::string const hex_trace(hex_trace_buf.data(), hex_trace_buf.size());
 
   std::array<char, 2 * opentelemetry::trace::SpanId::kSize> hex_span_buf;
   span_context.span_id().ToLowerBase16(hex_span_buf);
-  std::string const hex_span(hex_span_buf.data(),
-                             2 * opentelemetry::trace::SpanId::kSize);
+  std::string const hex_span(hex_span_buf.data(), hex_span_buf.size());
 
   std::array<char, 2 * opentelemetry::trace::SpanId::kSize> hex_parent_span_buf;
   parent_span_id.ToLowerBase16(hex_parent_span_buf);
   std::string const hex_parent_span(hex_parent_span_buf.data(),
-                                    2 * opentelemetry::trace::SpanId::kSize);
+                                    hex_parent_span_buf.size());
 
   span_.set_name(project_.FullName() + "/traces/" + hex_trace + "/spans/" +
                  hex_span);
@@ -207,7 +205,11 @@ void Recordable::SetResource(
 
 void Recordable::SetStartTime(
     opentelemetry::common::SystemTimestamp start_time) noexcept {
-  *span_.mutable_start_time() = internal::ToProtoTimestamp(start_time);
+  // std::chrono::system_clock may not have nanosecond resolution on some
+  // platforms, so we avoid using it for conversions between OpenTelemetry
+  // time and Protobuf time.
+  auto t = absl::FromUnixNanos(start_time.time_since_epoch().count());
+  *span_.mutable_start_time() = internal::ToProtoTimestamp(std::move(t));
 }
 
 void Recordable::SetDuration(std::chrono::nanoseconds duration) noexcept {
