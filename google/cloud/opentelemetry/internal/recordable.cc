@@ -14,6 +14,8 @@
 
 #include "google/cloud/opentelemetry/internal/recordable.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/time_utils.h"
+#include "absl/time/time.h"
 
 namespace google {
 namespace cloud {
@@ -148,8 +150,26 @@ google::devtools::cloudtrace::v2::Span&& Recordable::as_proto() && {
 }
 
 void Recordable::SetIdentity(
-    opentelemetry::trace::SpanContext const& /*span_context*/,
-    opentelemetry::trace::SpanId /*parent_span_id*/) noexcept {}
+    opentelemetry::trace::SpanContext const& span_context,
+    opentelemetry::trace::SpanId parent_span_id) noexcept {
+  std::array<char, 2 * opentelemetry::trace::TraceId::kSize> hex_trace_buf;
+  span_context.trace_id().ToLowerBase16(hex_trace_buf);
+  std::string const hex_trace(hex_trace_buf.data(), hex_trace_buf.size());
+
+  std::array<char, 2 * opentelemetry::trace::SpanId::kSize> hex_span_buf;
+  span_context.span_id().ToLowerBase16(hex_span_buf);
+  std::string const hex_span(hex_span_buf.data(), hex_span_buf.size());
+
+  std::array<char, 2 * opentelemetry::trace::SpanId::kSize> hex_parent_span_buf;
+  parent_span_id.ToLowerBase16(hex_parent_span_buf);
+  std::string const hex_parent_span(hex_parent_span_buf.data(),
+                                    hex_parent_span_buf.size());
+
+  span_.set_name(project_.FullName() + "/traces/" + hex_trace + "/spans/" +
+                 hex_span);
+  span_.set_span_id(hex_span);
+  span_.set_parent_span_id(hex_parent_span);
+}
 
 void Recordable::SetAttribute(
     opentelemetry::nostd::string_view key,
@@ -184,9 +204,19 @@ void Recordable::SetResource(
     opentelemetry::sdk::resource::Resource const& /*resource*/) noexcept {}
 
 void Recordable::SetStartTime(
-    opentelemetry::common::SystemTimestamp /*start_time*/) noexcept {}
+    opentelemetry::common::SystemTimestamp start_time) noexcept {
+  // std::chrono::system_clock may not have nanosecond resolution on some
+  // platforms, so we avoid using it for conversions between OpenTelemetry
+  // time and Protobuf time.
+  auto t = absl::FromUnixNanos(start_time.time_since_epoch().count());
+  *span_.mutable_start_time() = internal::ToProtoTimestamp(t);
+}
 
-void Recordable::SetDuration(std::chrono::nanoseconds /*duration*/) noexcept {}
+void Recordable::SetDuration(std::chrono::nanoseconds duration) noexcept {
+  auto end_time =
+      internal::ToAbslTime(span_.start_time()) + absl::FromChrono(duration);
+  *span_.mutable_end_time() = internal::ToProtoTimestamp(end_time);
+}
 
 void Recordable::SetInstrumentationScope(
     opentelemetry::sdk::instrumentationscope::InstrumentationScope const&
