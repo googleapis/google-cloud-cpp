@@ -33,8 +33,6 @@ std::shared_ptr<BigQueryJobRestStub> CreateDefaultBigQueryJobRestStub(
     local_opts.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
   }
 
-  internal::OptionsSpan span(local_opts);
-
   auto curl_rest_client = rest_internal::MakePooledRestClient(
       opts.get<EndpointOption>(), local_opts);
 
