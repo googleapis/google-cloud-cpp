@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_WAIT_FOR_CONSISTENCY_H
 
 #include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
+#include "google/cloud/completion_queue.h"
 
 namespace google {
 namespace cloud {

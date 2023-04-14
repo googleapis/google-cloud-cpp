@@ -21,7 +21,6 @@
 
 #include "google/cloud/baremetalsolution/v2/bare_metal_solution_connection_idempotency_policy.h"
 #include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_retry_traits.h"
-#include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -29,6 +28,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/baremetalsolution/v2/baremetalsolution.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 

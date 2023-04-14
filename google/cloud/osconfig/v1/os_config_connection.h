@@ -20,13 +20,13 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_V1_OS_CONFIG_CONNECTION_H
 
 #include "google/cloud/osconfig/v1/internal/os_config_retry_traits.h"
-#include "google/cloud/osconfig/v1/internal/os_config_stub.h"
 #include "google/cloud/osconfig/v1/os_config_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/osconfig/v1/osconfig_service.pb.h>
 #include <memory>
 
 namespace google {

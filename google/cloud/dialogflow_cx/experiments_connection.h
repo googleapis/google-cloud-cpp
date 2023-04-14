@@ -21,12 +21,12 @@
 
 #include "google/cloud/dialogflow_cx/experiments_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_cx/internal/experiments_retry_traits.h"
-#include "google/cloud/dialogflow_cx/internal/experiments_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/dialogflow/cx/v3/experiment.pb.h>
 #include <memory>
 #include <string>
 

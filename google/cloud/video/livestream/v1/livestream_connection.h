@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_V1_LIVESTREAM_CONNECTION_H
 
 #include "google/cloud/video/livestream/v1/internal/livestream_retry_traits.h"
-#include "google/cloud/video/livestream/v1/internal/livestream_stub.h"
 #include "google/cloud/video/livestream/v1/livestream_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -29,6 +28,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/video/livestream/v1/service.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 

@@ -21,7 +21,6 @@
 
 #include "google/cloud/batch/v1/batch_connection_idempotency_policy.h"
 #include "google/cloud/batch/v1/internal/batch_retry_traits.h"
-#include "google/cloud/batch/v1/internal/batch_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -29,6 +28,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/batch/v1/batch.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 

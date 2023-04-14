@@ -20,13 +20,13 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_KEY_MANAGEMENT_CONNECTION_H
 
 #include "google/cloud/kms/v1/internal/key_management_retry_traits.h"
-#include "google/cloud/kms/v1/internal/key_management_stub.h"
 #include "google/cloud/kms/v1/key_management_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/kms/v1/service.pb.h>
 #include <memory>
 
 namespace google {

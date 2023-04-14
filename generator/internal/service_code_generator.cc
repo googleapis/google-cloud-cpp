@@ -184,6 +184,13 @@ bool ServiceCodeGenerator::HasGenerateRestTransport() const {
          generate_rest_transport->second == "true";
 }
 
+bool ServiceCodeGenerator::HasGenerateGrpcTransport() const {
+  auto const generate_grpc_transport =
+      service_vars_.find("generate_grpc_transport");
+  return generate_grpc_transport != service_vars_.end() &&
+         generate_grpc_transport->second == "true";
+}
+
 std::vector<std::string>
 ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes() const {
   std::vector<std::string> include_paths;

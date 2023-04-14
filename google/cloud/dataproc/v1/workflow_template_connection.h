@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_WORKFLOW_TEMPLATE_CONNECTION_H
 
 #include "google/cloud/dataproc/v1/internal/workflow_template_retry_traits.h"
-#include "google/cloud/dataproc/v1/internal/workflow_template_stub.h"
 #include "google/cloud/dataproc/v1/workflow_template_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -29,6 +28,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/dataproc/v1/workflow_templates.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>

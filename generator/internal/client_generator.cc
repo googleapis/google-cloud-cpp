@@ -72,7 +72,8 @@ Status ClientGenerator::GenerateHeader() {
   // includes
   HeaderPrint("\n");
   HeaderLocalIncludes(
-      {vars("connection_header_path"),
+      {HasGenerateGrpcTransport() ? vars("connection_header_path")
+                                  : vars("connection_rest_header_path"),
        IsExperimental() ? "google/cloud/experimental_tag.h" : "",
        "google/cloud/future.h", "google/cloud/options.h",
        "google/cloud/polling_policy.h", "google/cloud/status_or.h",

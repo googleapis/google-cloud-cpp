@@ -21,12 +21,12 @@
 
 #include "google/cloud/iam/admin/v1/iam_connection_idempotency_policy.h"
 #include "google/cloud/iam/admin/v1/internal/iam_retry_traits.h"
-#include "google/cloud/iam/admin/v1/internal/iam_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/iam/admin/v1/iam.pb.h>
 #include <memory>
 
 namespace google {

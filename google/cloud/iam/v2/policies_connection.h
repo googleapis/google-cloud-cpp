@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V2_POLICIES_CONNECTION_H
 
 #include "google/cloud/iam/v2/internal/policies_retry_traits.h"
-#include "google/cloud/iam/v2/internal/policies_stub.h"
 #include "google/cloud/iam/v2/policies_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -29,6 +28,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/iam/v2/policy.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 

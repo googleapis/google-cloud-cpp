@@ -22,7 +22,6 @@
 
 #include "google/cloud/beyondcorp/clientgateways/v1/client_gateways_connection_idempotency_policy.h"
 #include "google/cloud/beyondcorp/clientgateways/v1/internal/client_gateways_retry_traits.h"
-#include "google/cloud/beyondcorp/clientgateways/v1/internal/client_gateways_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -30,6 +29,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 

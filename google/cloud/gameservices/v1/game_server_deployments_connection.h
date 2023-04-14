@@ -21,7 +21,6 @@
 
 #include "google/cloud/gameservices/v1/game_server_deployments_connection_idempotency_policy.h"
 #include "google/cloud/gameservices/v1/internal/game_server_deployments_retry_traits.h"
-#include "google/cloud/gameservices/v1/internal/game_server_deployments_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -29,6 +28,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/gaming/v1/game_server_deployments_service.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 

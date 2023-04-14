@@ -21,12 +21,13 @@
 
 #include "google/cloud/appengine/v1/authorized_domains_connection_idempotency_policy.h"
 #include "google/cloud/appengine/v1/internal/authorized_domains_retry_traits.h"
-#include "google/cloud/appengine/v1/internal/authorized_domains_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/appengine/v1/appengine.pb.h>
+#include <google/appengine/v1/operation.pb.h>
 #include <memory>
 
 namespace google {

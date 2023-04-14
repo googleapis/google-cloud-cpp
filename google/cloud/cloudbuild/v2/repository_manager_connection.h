@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V2_REPOSITORY_MANAGER_CONNECTION_H
 
 #include "google/cloud/cloudbuild/v2/internal/repository_manager_retry_traits.h"
-#include "google/cloud/cloudbuild/v2/internal/repository_manager_stub.h"
 #include "google/cloud/cloudbuild/v2/repository_manager_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
@@ -30,6 +29,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/devtools/cloudbuild/v2/cloudbuild.pb.h>
+#include <google/devtools/cloudbuild/v2/repositories.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 

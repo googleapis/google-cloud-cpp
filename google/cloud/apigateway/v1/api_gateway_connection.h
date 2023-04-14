@@ -21,7 +21,6 @@
 
 #include "google/cloud/apigateway/v1/api_gateway_connection_idempotency_policy.h"
 #include "google/cloud/apigateway/v1/internal/api_gateway_retry_traits.h"
-#include "google/cloud/apigateway/v1/internal/api_gateway_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -29,6 +28,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/apigateway/v1/apigateway_service.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 

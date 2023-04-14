@@ -49,9 +49,10 @@ Status ConnectionGenerator::GenerateHeader() {
   // includes
   HeaderPrint("\n");
   HeaderLocalIncludes(
-      {vars("idempotency_policy_header_path"), vars("stub_header_path"),
-       vars("retry_traits_header_path"), "google/cloud/backoff_policy.h",
-       HasLongrunningMethod() ? "google/cloud/future.h" : "",
+      {vars("idempotency_policy_header_path"), vars("retry_traits_header_path"),
+       "google/cloud/backoff_policy.h",
+       HasLongrunningMethod() || HasAsyncMethod() ? "google/cloud/future.h"
+                                                  : "",
        "google/cloud/options.h",
        HasLongrunningMethod() ? "google/cloud/polling_policy.h" : "",
        "google/cloud/status_or.h",
@@ -64,7 +65,8 @@ Status ConnectionGenerator::GenerateHeader() {
        IsExperimental() ? "google/cloud/experimental_tag.h" : "",
        "google/cloud/version.h"});
   HeaderSystemIncludes(
-      {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
+      {vars("proto_header_path"), vars("additional_pb_header_paths"),
+       HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
        "memory"});
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
@@ -188,58 +190,8 @@ class $connection_class_name$ {
   // close abstract interface Connection base class
   HeaderPrint("};\n");
 
-  HeaderPrint(R"""(
-/**
- * A factory function to construct an object of type `$connection_class_name$`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of $client_class_name$.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `$connection_class_name$`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::$product_namespace$::$service_name$PolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *)""");
-  switch (endpoint_location_style) {
-    case ServiceConfiguration::LOCATION_DEPENDENT:
-    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
-      HeaderPrint(R"""(
- * @param location Sets the prefix for the default `EndpointOption` value.)""");
-      break;
-    default:
-      break;
-  }
-  HeaderPrint(R"""(
- * @param options (optional) Configure the `$connection_class_name$` created by
- * this function.
- */
-std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
-)""");
-  HeaderPrint("    " + ConnectionFactoryFunctionArguments() + " = {});\n");
-
-  switch (endpoint_location_style) {
-    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
-      HeaderPrint(R"""(
-/**
- * A backwards-compatible version of the previous factory function.  Unless
- * the service also offers a global endpoint, the default value of the
- * `EndpointOption` may be useless, in which case it must be overridden.
- *
- * @deprecated Please use the `location` overload instead.
- */
-std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
-    Options options = {});
-)""");
-      break;
-    default:
-      break;
+  if (HasGenerateGrpcTransport()) {
+    EmitFactoryFunctionDeclaration(endpoint_location_style);
   }
 
   HeaderCloseNamespaces();
@@ -262,8 +214,10 @@ Status ConnectionGenerator::GenerateCc() {
   CcPrint("\n");
   CcLocalIncludes(
       {vars("connection_header_path"), vars("options_header_path"),
-       vars("connection_impl_header_path"), vars("option_defaults_header_path"),
-       vars("tracing_connection_header_path"), vars("stub_factory_header_path"),
+       HasGenerateGrpcTransport() ? vars("connection_impl_header_path") : "",
+       vars("option_defaults_header_path"),
+       vars("tracing_connection_header_path"),
+       HasGenerateGrpcTransport() ? vars("stub_factory_header_path") : "",
        "google/cloud/background_threads.h", "google/cloud/common_options.h",
        "google/cloud/credentials.h", "google/cloud/grpc_options.h",
        HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : ""});
@@ -384,8 +338,104 @@ $connection_class_name$::Async$method_name$(
         __FILE__, __LINE__);
   }
 
-  auto endpoint_location_style = EndpointLocationStyle();
+  if (HasGenerateGrpcTransport()) {
+    EmitFactoryFunctionDefinition(EndpointLocationStyle());
+  }
 
+  CcCloseNamespaces();
+
+  // TODO(#8234): This is a special case for backwards compatibility of the
+  //     streaming update function.
+  if (vars().at("service_name") == "BigQueryRead") {
+    CcOpenForwardingNamespaces();
+    CcPrint(R"""(
+void BigQueryReadReadRowsStreamingUpdater(
+    google::cloud::bigquery::storage::v1::ReadRowsResponse const& response,
+    google::cloud::bigquery::storage::v1::ReadRowsRequest& request) {
+  return bigquery_storage_v1_internal::BigQueryReadReadRowsStreamingUpdater(response,
+                                                                 request);
+}
+)""");
+    CcCloseNamespaces();
+  }
+
+  return {};
+}
+
+std::string ConnectionGenerator::ConnectionFactoryFunctionArguments() const {
+  std::string args;
+  if (IsExperimental()) args += "ExperimentalTag, ";
+  switch (EndpointLocationStyle()) {
+    case ServiceConfiguration::LOCATION_DEPENDENT:
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      args += "std::string const& location, ";
+      break;
+    default:
+      break;
+  }
+  args += "Options options";
+  return args;
+}
+
+void ConnectionGenerator::EmitFactoryFunctionDeclaration(
+    ServiceConfiguration::EndpointLocationStyle endpoint_location_style) {
+  HeaderPrint(R"""(
+/**
+ * A factory function to construct an object of type `$connection_class_name$`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of $client_class_name$.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `$connection_class_name$`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::$product_namespace$::$service_name$PolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *)""");
+  switch (endpoint_location_style) {
+    case ServiceConfiguration::LOCATION_DEPENDENT:
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      HeaderPrint(R"""(
+ * @param location Sets the prefix for the default `EndpointOption` value.)""");
+      break;
+    default:
+      break;
+  }
+  HeaderPrint(R"""(
+ * @param options (optional) Configure the `$connection_class_name$` created by
+ * this function.
+ */
+std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
+)""");
+  HeaderPrint("    " + ConnectionFactoryFunctionArguments() + " = {});\n");
+
+  switch (endpoint_location_style) {
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      HeaderPrint(R"""(
+/**
+ * A backwards-compatible version of the previous factory function.  Unless
+ * the service also offers a global endpoint, the default value of the
+ * `EndpointOption` may be useless, in which case it must be overridden.
+ *
+ * @deprecated Please use the `location` overload instead.
+ */
+std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
+    Options options = {});
+)""");
+      break;
+    default:
+      break;
+  }
+}
+
+void ConnectionGenerator::EmitFactoryFunctionDefinition(
+    ServiceConfiguration::EndpointLocationStyle endpoint_location_style) {
   CcPrint(R"""(
 std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
 )""");
@@ -428,40 +478,6 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
     default:
       break;
   }
-
-  CcCloseNamespaces();
-
-  // TODO(#8234): This is a special case for backwards compatibility of the
-  //     streaming update function.
-  if (vars().at("service_name") == "BigQueryRead") {
-    CcOpenForwardingNamespaces();
-    CcPrint(R"""(
-void BigQueryReadReadRowsStreamingUpdater(
-    google::cloud::bigquery::storage::v1::ReadRowsResponse const& response,
-    google::cloud::bigquery::storage::v1::ReadRowsRequest& request) {
-  return bigquery_storage_v1_internal::BigQueryReadReadRowsStreamingUpdater(response,
-                                                                 request);
-}
-)""");
-    CcCloseNamespaces();
-  }
-
-  return {};
-}
-
-std::string ConnectionGenerator::ConnectionFactoryFunctionArguments() const {
-  std::string args;
-  if (IsExperimental()) args += "ExperimentalTag, ";
-  switch (EndpointLocationStyle()) {
-    case ServiceConfiguration::LOCATION_DEPENDENT:
-    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
-      args += "std::string const& location, ";
-      break;
-    default:
-      break;
-  }
-  args += "Options options";
-  return args;
 }
 
 }  // namespace generator_internal

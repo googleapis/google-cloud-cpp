@@ -20,13 +20,13 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_UPTIME_CHECK_CONNECTION_H
 
 #include "google/cloud/monitoring/v3/internal/uptime_check_retry_traits.h"
-#include "google/cloud/monitoring/v3/internal/uptime_check_stub.h"
 #include "google/cloud/monitoring/v3/uptime_check_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/monitoring/v3/uptime_service.pb.h>
 #include <memory>
 
 namespace google {

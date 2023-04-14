@@ -20,13 +20,13 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECOMMENDER_V1_RECOMMENDER_CONNECTION_H
 
 #include "google/cloud/recommender/v1/internal/recommender_retry_traits.h"
-#include "google/cloud/recommender/v1/internal/recommender_stub.h"
 #include "google/cloud/recommender/v1/recommender_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/recommender/v1/recommender_service.pb.h>
 #include <memory>
 
 namespace google {

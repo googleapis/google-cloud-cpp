@@ -24,6 +24,7 @@ proto_library(
         "backup.proto",
         "common.proto",
         "test.proto",
+        "test2.proto",
     ],
     deps = [
         "@com_google_googleapis//google/api:annotations_proto",

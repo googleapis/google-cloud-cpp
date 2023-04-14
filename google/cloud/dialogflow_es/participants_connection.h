@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_PARTICIPANTS_CONNECTION_H
 
 #include "google/cloud/dialogflow_es/internal/participants_retry_traits.h"
-#include "google/cloud/dialogflow_es/internal/participants_stub.h"
 #include "google/cloud/dialogflow_es/participants_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
@@ -28,6 +27,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/dialogflow/v2/participant.pb.h>
 #include <memory>
 #include <string>
 

@@ -1158,6 +1158,12 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
   std::vector<std::unique_ptr<GeneratorInterface>> code_generators;
   VarsDictionary service_vars = CreateServiceVars(*service, vars);
   auto method_vars = CreateMethodVars(*service, service_vars);
+  bool const generate_grpc_transport = [&] {
+    auto iter = service_vars.find("generate_grpc_transport");
+    if (iter == service_vars.end()) return true;
+    return iter->second == "true";
+  }();
+
   auto const omit_client = service_vars.find("omit_client");
   if (omit_client == service_vars.end() || omit_client->second != "true") {
     code_generators.push_back(std::make_unique<ClientGenerator>(
@@ -1168,6 +1174,10 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
   auto const omit_connection = service_vars.find("omit_connection");
   if (omit_connection == service_vars.end() ||
       omit_connection->second != "true") {
+    if (generate_grpc_transport) {
+      code_generators.push_back(std::make_unique<ConnectionImplGenerator>(
+          service, service_vars, method_vars, context));
+    }
     code_generators.push_back(std::make_unique<ConnectionGenerator>(
         service, service_vars, method_vars, context));
     code_generators.push_back(std::make_unique<IdempotencyPolicyGenerator>(
@@ -1177,8 +1187,6 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     code_generators.push_back(std::make_unique<OptionDefaultsGenerator>(
         service, service_vars, method_vars, context));
     code_generators.push_back(std::make_unique<OptionsGenerator>(
-        service, service_vars, method_vars, context));
-    code_generators.push_back(std::make_unique<ConnectionImplGenerator>(
         service, service_vars, method_vars, context));
     if (service_vars.find("retry_status_code_expression") !=
         service_vars.end()) {
@@ -1191,8 +1199,10 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
   auto const omit_stub_factory = service_vars.find("omit_stub_factory");
   if (omit_stub_factory == service_vars.end() ||
       omit_stub_factory->second != "true") {
-    code_generators.push_back(std::make_unique<StubFactoryGenerator>(
-        service, service_vars, method_vars, context));
+    if (generate_grpc_transport) {
+      code_generators.push_back(std::make_unique<StubFactoryGenerator>(
+          service, service_vars, method_vars, context));
+    }
   }
   auto const forwarding_headers = service_vars.find("forwarding_product_path");
   if (forwarding_headers != service_vars.end() &&
@@ -1210,16 +1220,19 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     code_generators.push_back(std::make_unique<ForwardingOptionsGenerator>(
         service, service_vars, method_vars, context));
   }
-  code_generators.push_back(std::make_unique<AuthDecoratorGenerator>(
-      service, service_vars, method_vars, context));
-  code_generators.push_back(std::make_unique<LoggingDecoratorGenerator>(
-      service, service_vars, method_vars, context));
-  code_generators.push_back(std::make_unique<MetadataDecoratorGenerator>(
-      service, service_vars, method_vars, context));
-  code_generators.push_back(std::make_unique<TracingStubGenerator>(
-      service, service_vars, method_vars, context));
-  code_generators.push_back(std::make_unique<StubGenerator>(
-      service, service_vars, method_vars, context));
+
+  if (generate_grpc_transport) {
+    code_generators.push_back(std::make_unique<AuthDecoratorGenerator>(
+        service, service_vars, method_vars, context));
+    code_generators.push_back(std::make_unique<LoggingDecoratorGenerator>(
+        service, service_vars, method_vars, context));
+    code_generators.push_back(std::make_unique<MetadataDecoratorGenerator>(
+        service, service_vars, method_vars, context));
+    code_generators.push_back(std::make_unique<StubGenerator>(
+        service, service_vars, method_vars, context));
+    code_generators.push_back(std::make_unique<TracingStubGenerator>(
+        service, service_vars, method_vars, context));
+  }
 
   auto const generate_round_robin_generator =
       service_vars.find("generate_round_robin_decorator");

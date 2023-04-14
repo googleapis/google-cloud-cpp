@@ -50,3 +50,15 @@ service {
     {rpc_name: "GoldenKitchenSink.ListLogs", idempotency: NON_IDEMPOTENT}
   ]
 }
+
+service {
+  service_proto_path: "generator/integration_tests/test2.proto"
+  product_path: "generator/integration_tests/golden/v1"
+  initial_copyright_year: "2023"
+  generate_rest_transport: true
+  generate_grpc_transport: false
+  retryable_status_codes: [
+    "kUnavailable"
+  ]
+
+}

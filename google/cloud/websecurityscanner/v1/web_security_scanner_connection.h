@@ -20,13 +20,13 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBSECURITYSCANNER_V1_WEB_SECURITY_SCANNER_CONNECTION_H
 
 #include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_retry_traits.h"
-#include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_stub.h"
 #include "google/cloud/websecurityscanner/v1/web_security_scanner_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/websecurityscanner/v1/web_security_scanner.pb.h>
 #include <memory>
 
 namespace google {

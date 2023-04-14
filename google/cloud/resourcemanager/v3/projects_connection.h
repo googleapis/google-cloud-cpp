@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_PROJECTS_CONNECTION_H
 
 #include "google/cloud/resourcemanager/v3/internal/projects_retry_traits.h"
-#include "google/cloud/resourcemanager/v3/internal/projects_stub.h"
 #include "google/cloud/resourcemanager/v3/projects_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -29,6 +28,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/resourcemanager/v3/projects.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 

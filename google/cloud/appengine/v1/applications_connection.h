@@ -21,13 +21,14 @@
 
 #include "google/cloud/appengine/v1/applications_connection_idempotency_policy.h"
 #include "google/cloud/appengine/v1/internal/applications_retry_traits.h"
-#include "google/cloud/appengine/v1/internal/applications_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/appengine/v1/appengine.pb.h>
+#include <google/appengine/v1/operation.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 

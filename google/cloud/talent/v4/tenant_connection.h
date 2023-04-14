@@ -20,13 +20,13 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_TENANT_CONNECTION_H
 
 #include "google/cloud/talent/v4/internal/tenant_retry_traits.h"
-#include "google/cloud/talent/v4/internal/tenant_stub.h"
 #include "google/cloud/talent/v4/tenant_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/talent/v4/tenant_service.pb.h>
 #include <memory>
 
 namespace google {

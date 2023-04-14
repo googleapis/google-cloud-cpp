@@ -21,11 +21,11 @@
 
 #include "google/cloud/dialogflow_es/fulfillments_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/internal/fulfillments_retry_traits.h"
-#include "google/cloud/dialogflow_es/internal/fulfillments_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/cloud/dialogflow/v2/fulfillment.pb.h>
 #include <memory>
 #include <string>
 

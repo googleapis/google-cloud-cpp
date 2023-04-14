@@ -21,7 +21,6 @@
 
 #include "google/cloud/dataproc/v1/cluster_controller_connection_idempotency_policy.h"
 #include "google/cloud/dataproc/v1/internal/cluster_controller_retry_traits.h"
-#include "google/cloud/dataproc/v1/internal/cluster_controller_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -29,6 +28,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/dataproc/v1/clusters.pb.h>
+#include <google/cloud/dataproc/v1/operations.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>

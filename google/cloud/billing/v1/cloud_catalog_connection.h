@@ -21,12 +21,12 @@
 
 #include "google/cloud/billing/v1/cloud_catalog_connection_idempotency_policy.h"
 #include "google/cloud/billing/v1/internal/cloud_catalog_retry_traits.h"
-#include "google/cloud/billing/v1/internal/cloud_catalog_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/billing/v1/cloud_catalog.pb.h>
 #include <memory>
 
 namespace google {

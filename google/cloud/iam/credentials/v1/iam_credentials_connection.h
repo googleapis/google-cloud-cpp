@@ -21,11 +21,11 @@
 
 #include "google/cloud/iam/credentials/v1/iam_credentials_connection_idempotency_policy.h"
 #include "google/cloud/iam/credentials/v1/internal/iam_credentials_retry_traits.h"
-#include "google/cloud/iam/credentials/v1/internal/iam_credentials_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/iam/credentials/v1/iamcredentials.pb.h>
 #include <memory>
 
 namespace google {

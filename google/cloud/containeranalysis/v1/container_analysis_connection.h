@@ -21,11 +21,12 @@
 
 #include "google/cloud/containeranalysis/v1/container_analysis_connection_idempotency_policy.h"
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_retry_traits.h"
-#include "google/cloud/containeranalysis/v1/internal/container_analysis_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/devtools/containeranalysis/v1/containeranalysis.pb.h>
+#include <grafeas/v1/grafeas.pb.h>
 #include <memory>
 
 namespace google {

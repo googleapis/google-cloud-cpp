@@ -20,12 +20,12 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_V2_TRACE_CONNECTION_H
 
 #include "google/cloud/trace/v2/internal/trace_retry_traits.h"
-#include "google/cloud/trace/v2/internal/trace_stub.h"
 #include "google/cloud/trace/v2/trace_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/devtools/cloudtrace/v2/tracing.pb.h>
 #include <memory>
 
 namespace google {

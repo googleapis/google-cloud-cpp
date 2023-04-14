@@ -20,13 +20,13 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_METADATA_CONNECTION_H
 
 #include "google/cloud/dataplex/v1/internal/metadata_retry_traits.h"
-#include "google/cloud/dataplex/v1/internal/metadata_stub.h"
 #include "google/cloud/dataplex/v1/metadata_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/dataplex/v1/metadata.pb.h>
 #include <memory>
 
 namespace google {

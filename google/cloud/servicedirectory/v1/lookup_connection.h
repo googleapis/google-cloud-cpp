@@ -20,12 +20,12 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_LOOKUP_CONNECTION_H
 
 #include "google/cloud/servicedirectory/v1/internal/lookup_retry_traits.h"
-#include "google/cloud/servicedirectory/v1/internal/lookup_stub.h"
 #include "google/cloud/servicedirectory/v1/lookup_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/cloud/servicedirectory/v1/lookup_service.pb.h>
 #include <memory>
 
 namespace google {

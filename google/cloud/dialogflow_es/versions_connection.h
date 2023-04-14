@@ -20,13 +20,13 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_VERSIONS_CONNECTION_H
 
 #include "google/cloud/dialogflow_es/internal/versions_retry_traits.h"
-#include "google/cloud/dialogflow_es/internal/versions_stub.h"
 #include "google/cloud/dialogflow_es/versions_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/dialogflow/v2/version.pb.h>
 #include <memory>
 #include <string>
 

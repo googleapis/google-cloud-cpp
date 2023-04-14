@@ -20,12 +20,12 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_V1_POLICY_TAG_MANAGER_SERIALIZATION_CONNECTION_H
 
 #include "google/cloud/datacatalog/v1/internal/policy_tag_manager_serialization_retry_traits.h"
-#include "google/cloud/datacatalog/v1/internal/policy_tag_manager_serialization_stub.h"
 #include "google/cloud/datacatalog/v1/policy_tag_manager_serialization_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/cloud/datacatalog/v1/policytagmanagerserialization.pb.h>
 #include <memory>
 
 namespace google {

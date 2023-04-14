@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_V1_VERSIONS_CONNECTION_H
 
 #include "google/cloud/appengine/v1/internal/versions_retry_traits.h"
-#include "google/cloud/appengine/v1/internal/versions_stub.h"
 #include "google/cloud/appengine/v1/versions_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -29,6 +28,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/appengine/v1/appengine.pb.h>
+#include <google/appengine/v1/operation.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
