@@ -209,13 +209,13 @@ void Recordable::SetStartTime(
   // platforms, so we avoid using it for conversions between OpenTelemetry
   // time and Protobuf time.
   auto t = absl::FromUnixNanos(start_time.time_since_epoch().count());
-  *span_.mutable_start_time() = internal::ToProtoTimestamp(std::move(t));
+  *span_.mutable_start_time() = internal::ToProtoTimestamp(t);
 }
 
 void Recordable::SetDuration(std::chrono::nanoseconds duration) noexcept {
   auto end_time =
       internal::ToAbslTime(span_.start_time()) + absl::FromChrono(duration);
-  *span_.mutable_end_time() = internal::ToProtoTimestamp(std::move(end_time));
+  *span_.mutable_end_time() = internal::ToProtoTimestamp(end_time);
 }
 
 void Recordable::SetInstrumentationScope(
