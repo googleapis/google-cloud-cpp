@@ -89,8 +89,17 @@ TEST(DebugFormatter, Truncated) {
 }
 
 TEST(DebugFormatter, TimePoint) {
-  auto tp = std::chrono::system_clock::from_time_t(1681165293) +
-            std::chrono::microseconds(123456);
+  absl::optional<std::chrono::system_clock::time_point> tp =
+      std::chrono::system_clock::from_time_t(1681165293) +
+      std::chrono::microseconds(123456);
+  EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
+                .Field("field1", *tp)
+                .Build(),
+            R"(message_name {)"
+            R"( field1 {)"
+            R"( "2023-04-10T22:21:33.123456Z")"
+            R"( })"
+            R"( })");
   EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
                 .Field("field1", tp)
                 .Build(),
@@ -98,6 +107,12 @@ TEST(DebugFormatter, TimePoint) {
             R"( field1 {)"
             R"( "2023-04-10T22:21:33.123456Z")"
             R"( })"
+            R"( })");
+  tp = absl::nullopt;
+  EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
+                .Field("field1", tp)
+                .Build(),
+            R"(message_name {)"
             R"( })");
 }
 
