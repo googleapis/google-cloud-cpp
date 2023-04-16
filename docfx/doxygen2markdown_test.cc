@@ -633,6 +633,32 @@ for (StatusOr<int> const& v : sr) {
   EXPECT_EQ(kExpected, os.str());
 }
 
+TEST(Doxygen2Markdown, ParagraphVerbatim) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <para id='test-node'>
+          <verbatim>https://cloud.google.com/storage/docs/transcoding
+</verbatim>
+        </para>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"md(
+
+
+
+```
+https://cloud.google.com/storage/docs/transcoding
+
+```)md";
+
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfParagraph(os, {}, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
+}
+
 TEST(Doxygen2Markdown, ParagraphXrefSect) {
   auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">

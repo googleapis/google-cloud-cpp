@@ -133,6 +133,10 @@ bool AppendIfParagraph(std::ostream& os, MarkdownContext const& ctx,
 bool AppendIfProgramListing(std::ostream& os, MarkdownContext const& ctx,
                             pugi::xml_node const& node);
 
+/// Handle `verbatim` elements.
+bool AppendIfVerbatim(std::ostream& os, MarkdownContext const& ctx,
+                      pugi::xml_node const& node);
+
 /// Handle `codeline` elements.
 bool AppendIfCodeline(std::ostream& os, MarkdownContext const& ctx,
                       pugi::xml_node const& node);

@@ -448,7 +448,8 @@ bool AppendIfDocCmdGroup(std::ostream& os, MarkdownContext const& ctx,
   if (AppendIfDocTitleCmdGroup(os, ctx, node)) return true;
   // Unexpected: hruler, preformatted
   if (AppendIfProgramListing(os, ctx, node)) return true;
-  // Unexpected: verbatim, indexentry
+  // Unexpected: indexentry
+  if (AppendIfVerbatim(os, ctx, node)) return true;
   if (AppendIfOrderedList(os, ctx, node)) return true;
   if (AppendIfItemizedList(os, ctx, node)) return true;
   if (AppendIfSimpleSect(os, ctx, node)) return true;
@@ -505,6 +506,16 @@ bool AppendIfProgramListing(std::ostream& os, MarkdownContext const& ctx,
     UnknownChildType(__func__, child);
   }
   os << "\n" << ctx.paragraph_indent << "```";
+  return true;
+}
+
+// The type for `verbatim` is a simple string.
+bool AppendIfVerbatim(std::ostream& os, MarkdownContext const& ctx,
+                      pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "verbatim") return false;
+  os << ctx.paragraph_start << ctx.paragraph_indent << "```\n"
+     << ctx.paragraph_indent << node.child_value() << "\n"
+     << ctx.paragraph_indent << "```";
   return true;
 }
 
