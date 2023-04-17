@@ -39,6 +39,12 @@ std::size_t constexpr kAttributeKeyStringLimit = 128;
 // https://github.com/googleapis/googleapis/blob/4e8d3907aec680562c9243774c67adc6d713fe50/google/devtools/cloudtrace/v2/trace.proto#L50
 std::size_t constexpr kAttributeValueStringLimit = 256;
 
+// https://github.com/googleapis/googleapis/blob/6774ccbbc3f182f6ae3a32dca29e1da489ad8a8f/google/devtools/cloudtrace/v2/trace.proto#L165-L166
+std::size_t constexpr kSpanLinkAttributeLimit = 32;
+
+// https://github.com/googleapis/googleapis/blob/52180f8ba240022dd8ce756ee69fe5a3c429ad4d/google/devtools/cloudtrace/v2/trace.proto#L266
+std::size_t constexpr kSpanLinkLimit = 128;
+
 /**
  * Helper to set [TruncatableString] fields in a [Span] proto.
  *

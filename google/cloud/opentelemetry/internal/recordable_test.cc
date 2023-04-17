@@ -39,6 +39,27 @@ using ::testing::UnorderedElementsAre;
 
 auto constexpr kProjectId = "test-project";
 
+class KVIterable : public opentelemetry::common::KeyValueIterable {
+ public:
+  using Data = std::map<std::string, std::string>;
+
+  explicit KVIterable(Data data) : data_(std::move(data)) {}
+
+  bool ForEachKeyValue(opentelemetry::nostd::function_ref<
+                       bool(opentelemetry::nostd::string_view,
+                            opentelemetry::common::AttributeValue)>
+                           callback) const noexcept override {
+    return std::all_of(data_.begin(), data_.end(), [&](auto const& kv) {
+      return callback(kv.first, kv.second);
+    });
+  }
+
+  size_t size() const noexcept override { return data_.size(); }
+
+ private:
+  Data data_;
+};
+
 template <typename T>
 opentelemetry::nostd::span<T> MakeCompositeAttribute() {
   T v[]{T{}, T{}};
@@ -93,6 +114,22 @@ Matcher<v2::Span::Attributes const&> Attributes(
             return a.dropped_attributes_count();
           },
           Eq(dropped_attributes_count)));
+}
+
+Matcher<v2::Span::Link const&> Link(
+    Matcher<std::string const&> const& trace_id_matcher,
+    Matcher<std::string const&> const& span_id_matcher,
+    Matcher<v2::Span::Attributes const&> const& attributes_matcher) {
+  return AllOf(
+      ResultOf(
+          "trace_id", [](v2::Span::Link const& l) { return l.trace_id(); },
+          trace_id_matcher),
+      ResultOf(
+          "span_id", [](v2::Span::Link const& l) { return l.span_id(); },
+          span_id_matcher),
+      ResultOf(
+          "attributes", [](v2::Span::Link const& l) { return l.attributes(); },
+          attributes_matcher));
 }
 
 TEST(SetTruncatableString, LessThanLimit) {
@@ -230,6 +267,55 @@ TEST(AddAttribute, DropsCompositeAttributes) {
     EXPECT_THAT(attributes,
                 Attributes(IsEmpty(), /*dropped_attributes_count=*/1));
   }
+}
+
+TEST(Recordable, AddLink) {
+  opentelemetry::trace::TraceId const trace_id(
+      std::array<uint8_t const, opentelemetry::trace::TraceId::kSize>(
+          {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}));
+
+  opentelemetry::trace::SpanId const span_id(
+      std::array<uint8_t const, opentelemetry::trace::SpanId::kSize>(
+          {1, 1, 2, 2, 3, 3, 4, 4}));
+
+  opentelemetry::trace::SpanContext span_context(trace_id, span_id, {}, false);
+
+  auto rec = Recordable(Project(kProjectId));
+  rec.AddLink(span_context,
+              KVIterable({{"key1", "value1"}, {"key2", "value2"}}));
+  auto proto = std::move(rec).as_proto();
+  EXPECT_EQ(proto.links().dropped_links_count(), 0);
+  EXPECT_THAT(
+      proto.links().link(),
+      ElementsAre(Link("000102030405060708090a0b0c0d0e0f", "0101020203030404",
+                       Attributes(UnorderedElementsAre(
+                           Pair("key1", AttributeValue("value1")),
+                           Pair("key2", AttributeValue("value2")))))));
+}
+
+TEST(Recordable, DropsNewLinkAtLimit) {
+  auto rec = Recordable(Project(kProjectId));
+  for (std::size_t i = 0; i != kSpanLinkLimit + 1; ++i) {
+    rec.AddLink({false, false}, KVIterable({}));
+  }
+  auto proto = std::move(rec).as_proto();
+  EXPECT_EQ(proto.links().dropped_links_count(), 1);
+  EXPECT_THAT(proto.links().link(), SizeIs(kSpanLinkLimit));
+}
+
+TEST(Recordable, DropsNewLinkAttributeAtLimit) {
+  KVIterable::Data too_many_attributes;
+  for (std::size_t i = 0; i != kSpanLinkAttributeLimit + 1; ++i) {
+    too_many_attributes["key" + std::to_string(i)] = "value";
+  }
+
+  auto rec = Recordable(Project(kProjectId));
+  rec.AddLink({false, false}, KVIterable(std::move(too_many_attributes)));
+  auto proto = std::move(rec).as_proto();
+  EXPECT_THAT(proto.links().link(),
+              ElementsAre(Link(_, _,
+                               Attributes(SizeIs(kSpanLinkAttributeLimit),
+                                          /*dropped_attributes_count=*/1))));
 }
 
 TEST(Recordable, SetStatus) {
