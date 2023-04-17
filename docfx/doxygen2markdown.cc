@@ -457,7 +457,8 @@ bool AppendIfDocCmdGroup(std::ostream& os, MarkdownContext const& ctx,
   if (AppendIfVariableList(os, ctx, node)) return true;
   // Unexpected: table, header, dotfile, mscfile, diafile, toclist, language
   if (AppendIfXRefSect(os, ctx, node)) return true;
-  // Unexpected: copydoc, blockquote, parblock
+  // Unexpected: copydoc, blockquote
+  if (AppendIfParBlock(os, ctx, node)) return true;
   return false;
 }
 
@@ -516,6 +517,25 @@ bool AppendIfVerbatim(std::ostream& os, MarkdownContext const& ctx,
   os << ctx.paragraph_start << ctx.paragraph_indent << "```\n"
      << ctx.paragraph_indent << node.child_value() << "\n"
      << ctx.paragraph_indent << "```";
+  return true;
+}
+
+// The type for `parblock` is a sequence of paragraphs.
+//
+// clang-format off
+//   <xsd:complexType name="docParBlockType">
+//     <xsd:sequence>
+//       <xsd:element name="para" type="docParaType" minOccurs="0" maxOccurs="unbounded" />
+//     </xsd:sequence>
+//   </xsd:complexType>
+// clang-format on
+bool AppendIfParBlock(std::ostream& os, MarkdownContext const& ctx,
+                      pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "parblock") return false;
+  for (auto const& child : node) {
+    if (AppendIfParagraph(os, ctx, child)) continue;
+    UnknownChildType(__func__, child);
+  }
   return true;
 }
 
