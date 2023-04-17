@@ -131,7 +131,7 @@ the APIs in these libraries are stable, and are ready for production use.
 
 The following experimental libraries are now available:
 
-- [Cloud SQL API](/google/cloud/sql/README.md)
+- [Cloud SQL Admin API](/google/cloud/sql/README.md)
 
 ### [Service Control](/google/cloud/servicecontrol/README.md)
 
