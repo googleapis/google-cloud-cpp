@@ -30,6 +30,7 @@ using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Key;
+using ::testing::SizeIs;
 using ::testing::UnorderedElementsAre;
 
 TEST(ExtractTypesFromSchemaTest, Success) {
@@ -790,6 +791,62 @@ TEST(ProcessMethodRequestsAndResponsesTest, TypeInsertError) {
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInternal,
                        HasSubstr("Unable to insert type Foos.CreateRequest")));
+}
+
+TEST(CreateFilesFromResourcesTest, NonEmptyResources) {
+  auto constexpr kResourceJson = R"""({
+  "methods": {
+    "create": {
+      "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform"
+      ],
+      "path": "projects/{project}/zones/{zone}/myResources/{fooId}",
+      "httpMethod": "POST",
+      "parameters": {
+        "project": {
+          "type": "string"
+        },
+        "zone": {
+          "type": "string"
+        },
+        "fooId": {
+          "type": "string"
+        }
+      },
+      "response": {
+        "$ref": "Operation"
+      },
+      "request": {
+        "$ref": "Foo"
+      },
+      "parameterOrder": [
+        "project",
+        "zone",
+        "fooId"
+      ]
+    }
+  }
+})""";
+  auto const resource_json =
+      nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  std::map<std::string, DiscoveryResource> resources;
+  resources.emplace("foos", DiscoveryResource("foos", "", "", resource_json));
+  auto result =
+      CreateFilesFromResources(resources, "product_name", "version", "tmp");
+  ASSERT_THAT(result, SizeIs(1));
+  EXPECT_THAT(result.front().resource_name(), Eq("foos"));
+  EXPECT_THAT(result.front().file_path(),
+              Eq("tmp/google/cloud/product_name/foos/version/foos.proto"));
+  EXPECT_THAT(result.front().package_name(),
+              Eq("google.cloud.cpp.product_name.foos.version"));
+}
+
+TEST(CreateFilesFromResourcesTest, EmptyResources) {
+  std::map<std::string, DiscoveryResource> resources;
+  auto result =
+      CreateFilesFromResources(resources, "product_name", "version", "tmp");
+  EXPECT_THAT(result, IsEmpty());
 }
 
 }  // namespace

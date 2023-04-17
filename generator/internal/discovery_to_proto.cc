@@ -257,6 +257,23 @@ Status ProcessMethodRequestsAndResponses(
   return {};
 }
 
+std::vector<DiscoveryFile> CreateFilesFromResources(
+    std::map<std::string, DiscoveryResource> const& resources,
+    std::string const& product_name, std::string const& version,
+    std::string const& output_path) {
+  std::vector<DiscoveryFile> files;
+  files.reserve(resources.size());
+  for (auto const& r : resources) {
+    files.push_back(DiscoveryFile{
+        &r.second, r.second.FormatFilePath(product_name, version, output_path),
+        r.second.FormatPackageName(product_name, version), version,
+        r.second.GetRequestTypesList()}
+                        .AddImportPath("/google/cloud/$product_name$/$version$/"
+                                       "internal/common.proto"));
+  }
+  return files;
+}
+
 Status GenerateProtosFromDiscoveryDoc(std::string const& url,
                                       std::string const&, std::string const&,
                                       std::string const&) {
