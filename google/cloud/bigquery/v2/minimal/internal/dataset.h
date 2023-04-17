@@ -158,14 +158,14 @@ struct Dataset {
   bool published = false;
   bool is_case_insensitive = false;
 
-  std::chrono::milliseconds default_table_expiration_ms =
+  std::chrono::milliseconds default_table_expiration =
       std::chrono::milliseconds(0);
-  std::chrono::milliseconds default_partition_expiration_ms =
+  std::chrono::milliseconds default_partition_expiration =
       std::chrono::milliseconds(0);
   std::chrono::system_clock::time_point creation_time;
   std::chrono::system_clock::time_point last_modified_time;
   ;
-  std::chrono::hours max_time_travel_hours = std::chrono::hours(0);
+  std::chrono::hours max_time_travel = std::chrono::hours(0);
 
   std::map<std::string, std::string> labels;
   std::vector<Access> access;

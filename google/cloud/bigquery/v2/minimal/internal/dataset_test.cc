@@ -176,9 +176,9 @@ std::string MakeDatasetJsonText() {
     "creation_time":0,
     "dataset_reference":{"dataset_id":"d123","project_id":"p123"},
     "default_collation":"d-default-collation",
-    "default_partition_expiration_ms":0,
+    "default_partition_expiration":0,
     "default_rounding_mode":{"value":"ROUND_HALF_EVEN"},
-    "default_table_expiration_ms":0,
+    "default_table_expiration":0,
     "description":"d-description",
     "etag":"d-etag",
     "external_dataset_reference":{
@@ -204,7 +204,7 @@ std::string MakeDatasetJsonText() {
         "project_id":"p123"
     }},
     "location":"d-location",
-    "max_time_travel_hours":0,
+    "max_time_travel":0,
     "published":false,
     "self_link":"d-self-link",
     "storage_billing_model":{"value":"LOGICAL"},
