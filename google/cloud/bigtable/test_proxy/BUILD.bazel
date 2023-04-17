@@ -29,9 +29,9 @@ proto_library(
     name = "test_proxy_proto",
     srcs = ["test_proxy.proto"],
     deps = [
+        "@com_google_googleapis//google/api:client_proto",
         "@com_google_googleapis//google/bigtable/v2:bigtable_proto",
         "@com_google_protobuf//:duration_proto",
-        "@com_google_protobuf//:empty_proto",
         "@com_google_googleapis//google/rpc:status_proto",
     ],
 )
