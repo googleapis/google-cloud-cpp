@@ -90,11 +90,11 @@ void to_json(nlohmann::json& j, Dataset const& d) {
       {"is_case_insensitive", d.is_case_insensitive},
       {"default_table_expiration_ms",
        std::chrono::duration_cast<std::chrono::milliseconds>(
-           d.default_table_expiration_ms.time_since_epoch())
+           d.default_table_expiration_ms)
            .count()},
       {"default_partition_expiration_ms",
        std::chrono::duration_cast<std::chrono::milliseconds>(
-           d.default_partition_expiration_ms.time_since_epoch())
+           d.default_partition_expiration_ms)
            .count()},
       {"creation_time", std::chrono::duration_cast<std::chrono::milliseconds>(
                             d.creation_time.time_since_epoch())
@@ -103,9 +103,9 @@ void to_json(nlohmann::json& j, Dataset const& d) {
        std::chrono::duration_cast<std::chrono::milliseconds>(
            d.last_modified_time.time_since_epoch())
            .count()},
-      {"max_time_travel_hours", std::chrono::duration_cast<std::chrono::hours>(
-                                    d.max_time_travel_hours.time_since_epoch())
-                                    .count()},
+      {"max_time_travel_hours",
+       std::chrono::duration_cast<std::chrono::hours>(d.max_time_travel_hours)
+           .count()},
       {"labels", d.labels},
       {"access", d.access},
       {"tags", d.tags},
@@ -135,16 +135,12 @@ void from_json(nlohmann::json const& j, Dataset& d) {
   if (j.contains("default_table_expiration_ms")) {
     std::int64_t millis;
     j.at("default_table_expiration_ms").get_to(millis);
-    d.default_table_expiration_ms =
-        std::chrono::time_point<std::chrono::system_clock>(
-            std::chrono::milliseconds(millis));
+    d.default_table_expiration_ms = std::chrono::milliseconds(millis);
   }
   if (j.contains("default_partition_expiration_ms")) {
     std::int64_t millis;
     j.at("default_partition_expiration_ms").get_to(millis);
-    d.default_partition_expiration_ms =
-        std::chrono::time_point<std::chrono::system_clock>(
-            std::chrono::milliseconds(millis));
+    d.default_partition_expiration_ms = std::chrono::milliseconds(millis);
   }
   if (j.contains("creation_time")) {
     std::int64_t millis;
@@ -159,11 +155,9 @@ void from_json(nlohmann::json const& j, Dataset& d) {
         std::chrono::milliseconds(millis));
   }
   if (j.contains("max_time_travel_hours")) {
-    int hours;
+    std::int64_t hours;
     j.at("max_time_travel_hours").get_to(hours);
-    d.max_time_travel_hours =
-        std::chrono::time_point<std::chrono::system_clock>(
-            std::chrono::hours(hours));
+    d.max_time_travel_hours = std::chrono::hours(hours);
   }
   if (j.contains("labels")) j.at("labels").get_to(d.labels);
   if (j.contains("access")) j.at("access").get_to(d.access);

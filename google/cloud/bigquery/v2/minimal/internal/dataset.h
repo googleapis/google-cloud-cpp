@@ -30,9 +30,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 // NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT.
 using namespace nlohmann::literals;  // NOLINT
 
-auto const kDefaultTimepoint =
-    std::chrono::system_clock::time_point{std::chrono::milliseconds(0)};
-
 struct StorageBillingModel {
   static StorageBillingModel UnSpecified();
   static StorageBillingModel Logical();
@@ -98,8 +95,6 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DatasetAccessEntry, dataset,
                                                 target_types);
 
 struct Access {
-  bool operator==(Access const& other);
-
   std::string role;
   std::string user_by_email;
   std::string group_by_email;
@@ -163,14 +158,14 @@ struct Dataset {
   bool published = false;
   bool is_case_insensitive = false;
 
-  std::chrono::system_clock::time_point default_table_expiration_ms =
-      kDefaultTimepoint;
-  std::chrono::system_clock::time_point default_partition_expiration_ms =
-      kDefaultTimepoint;
-  std::chrono::system_clock::time_point creation_time = kDefaultTimepoint;
-  std::chrono::system_clock::time_point last_modified_time = kDefaultTimepoint;
-  std::chrono::system_clock::time_point max_time_travel_hours =
-      kDefaultTimepoint;
+  std::chrono::milliseconds default_table_expiration_ms =
+      std::chrono::milliseconds(0);
+  std::chrono::milliseconds default_partition_expiration_ms =
+      std::chrono::milliseconds(0);
+  std::chrono::system_clock::time_point creation_time;
+  std::chrono::system_clock::time_point last_modified_time;
+  ;
+  std::chrono::hours max_time_travel_hours = std::chrono::hours(0);
 
   std::map<std::string, std::string> labels;
   std::vector<Access> access;
