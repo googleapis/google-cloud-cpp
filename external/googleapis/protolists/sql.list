@@ -1,0 +1,11 @@
+@com_google_googleapis//google/cloud/sql/v1:cloud_sql_backup_runs.proto
+@com_google_googleapis//google/cloud/sql/v1:cloud_sql_connect.proto
+@com_google_googleapis//google/cloud/sql/v1:cloud_sql_databases.proto
+@com_google_googleapis//google/cloud/sql/v1:cloud_sql_flags.proto
+@com_google_googleapis//google/cloud/sql/v1:cloud_sql_instance_names.proto
+@com_google_googleapis//google/cloud/sql/v1:cloud_sql_instances.proto
+@com_google_googleapis//google/cloud/sql/v1:cloud_sql_operations.proto
+@com_google_googleapis//google/cloud/sql/v1:cloud_sql_resources.proto
+@com_google_googleapis//google/cloud/sql/v1:cloud_sql_ssl_certs.proto
+@com_google_googleapis//google/cloud/sql/v1:cloud_sql_tiers.proto
+@com_google_googleapis//google/cloud/sql/v1:cloud_sql_users.proto

@@ -25,7 +25,7 @@ set(GOOGLE_CLOUD_CPP_LEGACY_FEATURES
 
 set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES # cmake-format: sorted
     # This is WIP, it needs a number of hand-crafted APIs.
-    "pubsublite")
+    "pubsublite" "sql")
 
 set(GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES # cmake-format: sorted
     # Transitioned circa 2023-02-22
@@ -209,6 +209,7 @@ function (google_cloud_cpp_enable_cleanup)
     set(GOOGLE_CLOUD_CPP_ENABLE_REST OFF)
     if ((storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         OR (experimental-bigquery_rest IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        OR (sql IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         OR (generator IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
         set(GOOGLE_CLOUD_CPP_ENABLE_REST ON)
     endif ()

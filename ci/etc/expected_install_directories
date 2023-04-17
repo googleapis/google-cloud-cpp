@@ -534,6 +534,10 @@
 ./include/google/cloud/speech/v2
 ./include/google/cloud/speech/v2/internal
 ./include/google/cloud/speech/v2/mocks
+./include/google/cloud/sql
+./include/google/cloud/sql/v1
+./include/google/cloud/sql/v1/internal
+./include/google/cloud/sql/v1/mocks
 ./include/google/cloud/storage
 ./include/google/cloud/storage/internal
 ./include/google/cloud/storagetransfer
@@ -774,6 +778,7 @@
 ./lib64/cmake/google_cloud_cpp_shell
 ./lib64/cmake/google_cloud_cpp_spanner
 ./lib64/cmake/google_cloud_cpp_speech
+./lib64/cmake/google_cloud_cpp_sql
 ./lib64/cmake/google_cloud_cpp_storage
 ./lib64/cmake/google_cloud_cpp_storagetransfer
 ./lib64/cmake/google_cloud_cpp_talent
