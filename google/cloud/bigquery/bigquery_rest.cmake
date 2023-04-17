@@ -20,6 +20,8 @@ add_library(
     v2/minimal/internal/bigquery_http_response.h
     v2/minimal/internal/common_v2_resources.cc
     v2/minimal/internal/common_v2_resources.h
+    v2/minimal/internal/dataset.cc
+    v2/minimal/internal/dataset.h
     v2/minimal/internal/job.cc
     v2/minimal/internal/job.h
     v2/minimal/internal/job_client.cc
@@ -131,6 +133,7 @@ function (bigquery_rest_define_tests)
         # cmake-format: sort
         v2/minimal/internal/bigquery_http_response_test.cc
         v2/minimal/internal/common_v2_resources_test.cc
+        v2/minimal/internal/dataset_test.cc
         v2/minimal/internal/job_client_test.cc
         v2/minimal/internal/job_connection_test.cc
         v2/minimal/internal/job_idempotency_policy_test.cc
