@@ -41,6 +41,7 @@ class DiscoveryFile {
   std::string resource_name() const {
     return (resource_ ? resource_->name() : "");
   }
+  std::vector<DiscoveryTypeVertex const*> types() const { return types_; }
 
   DiscoveryFile& AddImportPath(std::string import_path) {
     import_paths_.insert(std::move(import_path));

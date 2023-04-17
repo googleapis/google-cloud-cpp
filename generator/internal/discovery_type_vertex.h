@@ -39,6 +39,8 @@ class DiscoveryTypeVertex {
   std::string const& name() const { return name_; }
   nlohmann::json const& json() const { return json_; }
 
+  bool IsSynthesizedRequestType() const;
+
   // Adds edge to this vertex for a type name that exists as a field in this
   // type.
   void AddNeedsTypeName(std::string type_name);
