@@ -202,8 +202,35 @@ void Recordable::AddEvent(
     opentelemetry::common::KeyValueIterable const& /*attributes*/) noexcept {}
 
 void Recordable::AddLink(
-    opentelemetry::trace::SpanContext const& /*span_context*/,
-    opentelemetry::common::KeyValueIterable const& /*attributes*/) noexcept {}
+    opentelemetry::trace::SpanContext const& span_context,
+    opentelemetry::common::KeyValueIterable const& attributes) noexcept {
+  // Accept the first N links. Drop the rest.
+  auto& links = *span_.mutable_links();
+  if (links.link().size() == kSpanLinkLimit) {
+    links.set_dropped_links_count(links.dropped_links_count() + 1);
+    return;
+  }
+
+  std::array<char, 2 * opentelemetry::trace::TraceId::kSize> hex_trace_buf;
+  span_context.trace_id().ToLowerBase16(hex_trace_buf);
+  std::string const hex_trace(hex_trace_buf.data(), hex_trace_buf.size());
+
+  std::array<char, 2 * opentelemetry::trace::SpanId::kSize> hex_span_buf;
+  span_context.span_id().ToLowerBase16(hex_span_buf);
+  std::string const hex_span(hex_span_buf.data(), hex_span_buf.size());
+
+  auto& link = *links.add_link();
+  link.set_span_id(hex_span);
+  link.set_trace_id(hex_trace);
+
+  auto& proto = *link.mutable_attributes();
+  attributes.ForEachKeyValue(
+      [&proto](opentelemetry::nostd::string_view key,
+               opentelemetry::common::AttributeValue value) {
+        AddAttribute(proto, key, value, kSpanLinkAttributeLimit);
+        return true;
+      });
+}
 
 void Recordable::SetStatus(
     opentelemetry::trace::StatusCode code,
