@@ -14,7 +14,6 @@
 
 #include "google/cloud/opentelemetry/internal/recordable.h"
 #include "google/cloud/internal/time_utils.h"
-#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/version.h"
 #include "absl/time/clock.h"
 #include <gmock/gmock.h>
@@ -26,11 +25,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 namespace v2 = ::google::devtools::cloudtrace::v2;
-using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::_;
+using ::testing::AllOf;
 using ::testing::ElementsAre;
+using ::testing::Eq;
 using ::testing::IsEmpty;
+using ::testing::Matcher;
 using ::testing::Pair;
+using ::testing::ResultOf;
 using ::testing::SizeIs;
 
 auto constexpr kProjectId = "test-project";
@@ -39,6 +41,56 @@ template <typename T>
 opentelemetry::nostd::span<T> MakeCompositeAttribute() {
   T v[]{T{}, T{}};
   return opentelemetry::nostd::span<T>(v);
+}
+
+Matcher<v2::AttributeValue const&> AttributeValue(bool value) {
+  return ResultOf(
+      "bool_value",
+      [](v2::AttributeValue const& av) { return av.bool_value(); }, Eq(value));
+}
+
+Matcher<v2::AttributeValue const&> AttributeValue(int value) {
+  return ResultOf(
+      "int_value", [](v2::AttributeValue const& av) { return av.int_value(); },
+      Eq(value));
+}
+
+Matcher<v2::AttributeValue const&> AttributeValue(
+    std::string const& value, int truncated_byte_count = 0) {
+  return AllOf(ResultOf(
+                   "string_value",
+                   [](v2::AttributeValue const& av) {
+                     return av.string_value().value();
+                   },
+                   Eq(value)),
+               ResultOf(
+                   "truncated_byte_count",
+                   [](v2::AttributeValue const& av) {
+                     return av.string_value().truncated_byte_count();
+                   },
+                   Eq(truncated_byte_count)));
+}
+
+Matcher<v2::AttributeValue const&> AttributeValue(
+    char const* value, int truncated_byte_count = 0) {
+  return AttributeValue(std::string{value}, truncated_byte_count);
+}
+
+Matcher<v2::Span::Attributes const&> Attributes(
+    Matcher<protobuf::Map<std::string, v2::AttributeValue> const&> const&
+        attribute_map_matcher,
+    int dropped_attributes_count = 0) {
+  return AllOf(
+      ResultOf(
+          "attribute_map",
+          [](v2::Span::Attributes const& a) { return a.attribute_map(); },
+          attribute_map_matcher),
+      ResultOf(
+          "dropped_attributes_count",
+          [](v2::Span::Attributes const& a) {
+            return a.dropped_attributes_count();
+          },
+          Eq(dropped_attributes_count)));
 }
 
 TEST(SetTruncatableString, LessThanLimit) {
@@ -79,83 +131,64 @@ TEST(SetTruncatableString, RespectsUnicodeSymbolBoundaries) {
 
 TEST(AddAttribute, DropsNewKeyAtLimit) {
   v2::Span::Attributes attributes;
-  AddAttribute(attributes, "accepted", "value", 1);
-  EXPECT_EQ(attributes.dropped_attributes_count(), 0);
-  EXPECT_THAT(attributes.attribute_map(), ElementsAre(Pair("accepted", _)));
+  AddAttribute(attributes, "accepted", "value", /*limit=*/1);
+  EXPECT_THAT(attributes, Attributes(ElementsAre(Pair("accepted", _))));
 
-  AddAttribute(attributes, "rejected", "value", 1);
-  EXPECT_EQ(attributes.dropped_attributes_count(), 1);
-  EXPECT_THAT(attributes.attribute_map(), ElementsAre(Pair("accepted", _)));
+  AddAttribute(attributes, "rejected", "value", /*limit=*/1);
+  EXPECT_THAT(attributes, Attributes(ElementsAre(Pair("accepted", _)),
+                                     /*dropped_attributes_count=*/1));
 }
 
 TEST(AddAttribute, AcceptsExistingKeyAtLimit) {
-  v2::AttributeValue expected_1;
-  *expected_1.mutable_string_value()->mutable_value() = "value1";
-  v2::AttributeValue expected_2;
-  *expected_2.mutable_string_value()->mutable_value() = "value2";
-
   v2::Span::Attributes attributes;
-  AddAttribute(attributes, "key", "value1", 1);
-  EXPECT_EQ(attributes.dropped_attributes_count(), 0);
-  EXPECT_THAT(attributes.attribute_map(),
-              ElementsAre(Pair("key", IsProtoEqual(expected_1))));
+  AddAttribute(attributes, "key", "value1", /*limit=*/1);
+  EXPECT_THAT(attributes,
+              Attributes(ElementsAre(Pair("key", AttributeValue("value1")))));
 
   // The map is full, but we should still be able to overwrite an existing key.
-  AddAttribute(attributes, "key", "value2", 1);
-  EXPECT_EQ(attributes.dropped_attributes_count(), 0);
-  EXPECT_THAT(attributes.attribute_map(),
-              ElementsAre(Pair("key", IsProtoEqual(expected_2))));
+  AddAttribute(attributes, "key", "value2", /*limit=*/1);
+  EXPECT_THAT(attributes,
+              Attributes(ElementsAre(Pair("key", AttributeValue("value2"))),
+                         /*dropped_attributes_count=*/0));
 }
 
 TEST(AddAttribute, DropsLongKey) {
   std::string const long_key(kAttributeKeyStringLimit + 1, 'A');
 
   v2::Span::Attributes attributes;
-  AddAttribute(attributes, long_key, "value", 32);
-  EXPECT_EQ(attributes.dropped_attributes_count(), 1);
-  EXPECT_THAT(attributes.attribute_map(), IsEmpty());
+  AddAttribute(attributes, long_key, "value", /*limit=*/32);
+  EXPECT_THAT(attributes,
+              Attributes(IsEmpty(), /*dropped_attributes_count=*/1));
 }
 
 TEST(AddAttribute, HandlesBoolAttribute) {
-  v2::AttributeValue expected;
-  expected.set_bool_value(true);
-
   v2::Span::Attributes attributes;
-  AddAttribute(attributes, "key", true, 32);
-  EXPECT_EQ(attributes.dropped_attributes_count(), 0);
-  EXPECT_THAT(attributes.attribute_map(),
-              ElementsAre(Pair("key", IsProtoEqual(expected))));
+  AddAttribute(attributes, "key", true, /*limit=*/32);
+  EXPECT_THAT(attributes,
+              Attributes(ElementsAre(Pair("key", AttributeValue(true)))));
 }
 
 TEST(AddAttribute, HandlesIntAttributes) {
-  v2::AttributeValue expected;
-  expected.set_int_value(42);
-
   std::vector<opentelemetry::common::AttributeValue> values = {
       std::int32_t{42}, std::uint32_t{42}, std::int64_t{42}, std::uint64_t{42}};
 
   for (auto const& value : values) {
     v2::Span::Attributes attributes;
-    AddAttribute(attributes, "key", value, 32);
-    EXPECT_EQ(attributes.dropped_attributes_count(), 0);
-    EXPECT_THAT(attributes.attribute_map(),
-                ElementsAre(Pair("key", IsProtoEqual(expected))));
+    AddAttribute(attributes, "key", value, /*limit=*/32);
+    EXPECT_THAT(attributes,
+                Attributes(ElementsAre(Pair("key", AttributeValue(42)))));
   }
 }
 
 TEST(AddAttribute, HandlesStringAttributes) {
-  v2::AttributeValue expected;
-  expected.mutable_string_value()->set_value("value");
-
   std::vector<opentelemetry::common::AttributeValue> values = {
       "value", opentelemetry::nostd::string_view{"value"}};
 
   for (auto const& value : values) {
     v2::Span::Attributes attributes;
-    AddAttribute(attributes, "key", value, 32);
-    EXPECT_EQ(attributes.dropped_attributes_count(), 0);
-    EXPECT_THAT(attributes.attribute_map(),
-                ElementsAre(Pair("key", IsProtoEqual(expected))));
+    AddAttribute(attributes, "key", value, /*limit=*/32);
+    EXPECT_THAT(attributes,
+                Attributes(ElementsAre(Pair("key", AttributeValue("value")))));
   }
 }
 
@@ -163,26 +196,19 @@ TEST(AddAttribute, TruncatesStringValue) {
   std::string const long_value(kAttributeValueStringLimit + 1, 'A');
   std::string const expected_value(kAttributeValueStringLimit, 'A');
 
-  v2::AttributeValue expected;
-  expected.mutable_string_value()->set_value(expected_value);
-  expected.mutable_string_value()->set_truncated_byte_count(1);
-
   v2::Span::Attributes attributes;
-  AddAttribute(attributes, "key", long_value, 32);
-  EXPECT_EQ(attributes.dropped_attributes_count(), 0);
-  EXPECT_THAT(attributes.attribute_map(),
-              ElementsAre(Pair("key", IsProtoEqual(expected))));
+  AddAttribute(attributes, "key", long_value, /*limit=*/32);
+  EXPECT_THAT(
+      attributes,
+      Attributes(ElementsAre(Pair(
+          "key", AttributeValue(expected_value, /*truncated_byte_count=*/1)))));
 }
 
 TEST(AddAttribute, ConvertsDoubleAttributeToString) {
-  v2::AttributeValue expected;
-  expected.mutable_string_value()->set_value("4.2");
-
   v2::Span::Attributes attributes;
-  AddAttribute(attributes, "key", 4.2, 32);
-  EXPECT_EQ(attributes.dropped_attributes_count(), 0);
-  EXPECT_THAT(attributes.attribute_map(),
-              ElementsAre(Pair("key", IsProtoEqual(expected))));
+  AddAttribute(attributes, "key", 4.2, /*limit=*/32);
+  EXPECT_THAT(attributes,
+              Attributes(ElementsAre(Pair("key", AttributeValue("4.2")))));
 }
 
 TEST(AddAttribute, DropsCompositeAttributes) {
@@ -198,9 +224,9 @@ TEST(AddAttribute, DropsCompositeAttributes) {
 
   for (auto const& value : values) {
     v2::Span::Attributes attributes;
-    AddAttribute(attributes, "key", value, 32);
-    EXPECT_EQ(attributes.dropped_attributes_count(), 1);
-    EXPECT_THAT(attributes.attribute_map(), IsEmpty());
+    AddAttribute(attributes, "key", value, /*limit=*/32);
+    EXPECT_THAT(attributes,
+                Attributes(IsEmpty(), /*dropped_attributes_count=*/1));
   }
 }
 
@@ -249,14 +275,11 @@ TEST(Recordable, SetIdentity) {
 }
 
 TEST(Recordable, SetAttribute) {
-  v2::AttributeValue expected;
-  expected.mutable_string_value()->set_value("value");
-
   auto rec = Recordable(Project(kProjectId));
   rec.SetAttribute("key", "value");
   auto proto = std::move(rec).as_proto();
-  EXPECT_THAT(proto.attributes().attribute_map(),
-              ElementsAre(Pair("key", IsProtoEqual(expected))));
+  EXPECT_THAT(proto.attributes(),
+              Attributes(ElementsAre(Pair("key", AttributeValue("value")))));
 }
 
 TEST(Recordable, SetAttributeRespectsLimit) {
@@ -265,9 +288,8 @@ TEST(Recordable, SetAttributeRespectsLimit) {
     rec.SetAttribute("key" + std::to_string(i), "value");
   }
   auto proto = std::move(rec).as_proto();
-  auto& attributes = *proto.mutable_attributes();
-  EXPECT_THAT(attributes.attribute_map(), SizeIs(kSpanAttributeLimit));
-  EXPECT_EQ(attributes.dropped_attributes_count(), 1);
+  EXPECT_THAT(proto.attributes(), Attributes(SizeIs(kSpanAttributeLimit),
+                                             /*dropped_attributes_count=*/1));
 }
 
 TEST(Recordable, SetStartTime) {
