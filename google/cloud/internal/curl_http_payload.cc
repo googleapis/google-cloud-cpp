@@ -31,7 +31,7 @@ StatusOr<std::size_t> CurlHttpPayload::Read(absl::Span<char> buffer) {
   return impl_->Read(buffer);
 }
 
-std::multimap<std::string, std::string> CurlHttpPayload::headers() const {
+std::multimap<std::string, std::string> CurlHttpPayload::DebugHeaders() const {
   return impl_->headers();
 }
 

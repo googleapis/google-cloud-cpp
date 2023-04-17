@@ -23,6 +23,7 @@
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/curl_rest_response.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
+#include "google/cloud/internal/tracing_rest_client.h"
 #include "google/cloud/internal/unified_rest_credentials.h"
 #include "absl/strings/match.h"
 #include "absl/strings/strip.h"
@@ -213,7 +214,7 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Put(
 std::unique_ptr<RestClient> MakeDefaultRestClient(std::string endpoint_address,
                                                   Options options) {
   auto factory = GetDefaultCurlHandleFactory(options);
-  return std::unique_ptr<RestClient>(new CurlRestClient(
+  return MakeTracingRestClient(std::make_unique<CurlRestClient>(
       std::move(endpoint_address), std::move(factory), std::move(options)));
 }
 
@@ -226,12 +227,12 @@ std::unique_ptr<RestClient> MakePooledRestClient(std::string endpoint_address,
 
   if (pool_size > 0) {
     auto pool = std::make_shared<PooledCurlHandleFactory>(pool_size, options);
-    return std::unique_ptr<RestClient>(new CurlRestClient(
+    return MakeTracingRestClient(std::make_unique<CurlRestClient>(
         std::move(endpoint_address), std::move(pool), std::move(options)));
   }
 
   auto pool = std::make_shared<DefaultCurlHandleFactory>(options);
-  return std::unique_ptr<RestClient>(new CurlRestClient(
+  return MakeTracingRestClient(std::make_unique<CurlRestClient>(
       std::move(endpoint_address), std::move(pool), std::move(options)));
 }
 

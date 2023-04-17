@@ -14,7 +14,6 @@
 
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/internal/curl_http_payload.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/rest_client.h"
@@ -36,7 +35,6 @@ using ::testing::Contains;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::Not;
-using ::testing::NotNull;
 using ::testing::Pair;
 
 class RestClientIntegrationTest : public ::testing::Test {
@@ -442,10 +440,7 @@ TEST_F(RestClientIntegrationTest, PeerPseudoHeader) {
     ASSERT_STATUS_OK(bytes);
     if (*bytes == 0) break;
   }
-  auto* payload_impl =
-      dynamic_cast<rest_internal::CurlHttpPayload*>(payload.get());
-  ASSERT_THAT(payload_impl, NotNull());
-  EXPECT_THAT(payload_impl->headers(), ContainsOnce(Pair(":curl-peer", _)));
+  EXPECT_THAT(payload->DebugHeaders(), ContainsOnce(Pair(":curl-peer", _)));
 }
 
 }  // namespace
