@@ -30,6 +30,7 @@ using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Key;
+using ::testing::SizeIs;
 using ::testing::UnorderedElementsAre;
 
 TEST(ExtractTypesFromSchemaTest, Success) {
@@ -833,7 +834,7 @@ TEST(CreateFilesFromResourcesTest, NonEmptyResources) {
   resources.emplace("foos", DiscoveryResource("foos", "", "", resource_json));
   auto result =
       CreateFilesFromResources(resources, "product_name", "version", "tmp");
-  ASSERT_THAT(result, Not(IsEmpty()));
+  ASSERT_THAT(result, SizeIs(1));
   EXPECT_THAT(result.front().resource_name(), Eq("foos"));
   EXPECT_THAT(result.front().file_path(),
               Eq("tmp/google/cloud/product_name/foos/version/foos.proto"));
