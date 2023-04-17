@@ -16,6 +16,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/time_utils.h"
 #include "absl/time/time.h"
+#include <google/rpc/code.pb.h>
 
 namespace google {
 namespace cloud {
@@ -115,6 +116,24 @@ class AttributeVisitor {
   std::size_t limit_;
 };
 
+google::devtools::cloudtrace::v2::Span::SpanKind MapSpanKind(
+    opentelemetry::trace::SpanKind span_kind) {
+  switch (span_kind) {
+    case opentelemetry::trace::SpanKind::kInternal:
+      return ::google::devtools::cloudtrace::v2::Span::INTERNAL;
+    case opentelemetry::trace::SpanKind::kServer:
+      return ::google::devtools::cloudtrace::v2::Span::SERVER;
+    case opentelemetry::trace::SpanKind::kClient:
+      return ::google::devtools::cloudtrace::v2::Span::CLIENT;
+    case opentelemetry::trace::SpanKind::kProducer:
+      return ::google::devtools::cloudtrace::v2::Span::PRODUCER;
+    case opentelemetry::trace::SpanKind::kConsumer:
+      return ::google::devtools::cloudtrace::v2::Span::CONSUMER;
+    default:
+      return ::google::devtools::cloudtrace::v2::Span::SPAN_KIND_UNSPECIFIED;
+  }
+}
+
 }  // namespace
 
 void SetTruncatableString(
@@ -187,8 +206,17 @@ void Recordable::AddLink(
     opentelemetry::common::KeyValueIterable const& /*attributes*/) noexcept {}
 
 void Recordable::SetStatus(
-    opentelemetry::trace::StatusCode /*code*/,
-    opentelemetry::nostd::string_view /*description*/) noexcept {}
+    opentelemetry::trace::StatusCode code,
+    opentelemetry::nostd::string_view description) noexcept {
+  if (code == opentelemetry::trace::StatusCode::kUnset) return;
+  auto& s = *span_.mutable_status();
+  if (code == opentelemetry::trace::StatusCode::kOk) {
+    s.set_code(google::rpc::Code::OK);
+    return;
+  }
+  s.set_code(google::rpc::Code::UNKNOWN);
+  *s.mutable_message() = std::string{description.data(), description.size()};
+}
 
 void Recordable::SetName(opentelemetry::nostd::string_view name) noexcept {
   // Note that the `name` field in the `Span` proto refers to the GCP resource
@@ -198,7 +226,9 @@ void Recordable::SetName(opentelemetry::nostd::string_view name) noexcept {
 }
 
 void Recordable::SetSpanKind(
-    opentelemetry::trace::SpanKind /*span_kind*/) noexcept {}
+    opentelemetry::trace::SpanKind span_kind) noexcept {
+  span_.set_span_kind(MapSpanKind(span_kind));
+}
 
 void Recordable::SetResource(
     opentelemetry::sdk::resource::Resource const& /*resource*/) noexcept {}
@@ -220,7 +250,12 @@ void Recordable::SetDuration(std::chrono::nanoseconds duration) noexcept {
 
 void Recordable::SetInstrumentationScope(
     opentelemetry::sdk::instrumentationscope::InstrumentationScope const&
-    /*instrumentation_scope*/) noexcept {}
+        instrumentation_scope) noexcept {
+  SetAttribute("otel.instrumentation_library.name",
+               instrumentation_scope.GetName());
+  SetAttribute("otel.instrumentation_library.version",
+               instrumentation_scope.GetVersion());
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel_internal

@@ -16,6 +16,7 @@
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/version.h"
 #include "absl/time/clock.h"
+#include <google/rpc/code.pb.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -34,6 +35,7 @@ using ::testing::Matcher;
 using ::testing::Pair;
 using ::testing::ResultOf;
 using ::testing::SizeIs;
+using ::testing::UnorderedElementsAre;
 
 auto constexpr kProjectId = "test-project";
 
@@ -230,6 +232,29 @@ TEST(AddAttribute, DropsCompositeAttributes) {
   }
 }
 
+TEST(Recordable, SetStatus) {
+  struct TestCase {
+    opentelemetry::trace::StatusCode code;
+    opentelemetry::nostd::string_view desc;
+    google::rpc::Code expected_code;
+    std::string expected_message;
+  };
+
+  for (auto const& test :
+       std::vector<TestCase>{{opentelemetry::trace::StatusCode::kUnset, "",
+                              google::rpc::Code::OK, ""},
+                             {opentelemetry::trace::StatusCode::kOk, "ignored",
+                              google::rpc::Code::OK, ""},
+                             {opentelemetry::trace::StatusCode::kError, "fail",
+                              google::rpc::Code::UNKNOWN, "fail"}}) {
+    auto rec = Recordable(Project(kProjectId));
+    rec.SetStatus(test.code, test.desc);
+    auto proto = std::move(rec).as_proto();
+    EXPECT_EQ(proto.status().code(), test.expected_code);
+    EXPECT_EQ(proto.status().message(), test.expected_message);
+  }
+}
+
 TEST(Recordable, SetName) {
   auto rec = Recordable(Project(kProjectId));
   rec.SetName("name");
@@ -246,6 +271,30 @@ TEST(Recordable, SetNameTruncates) {
   auto proto = std::move(rec).as_proto();
   EXPECT_EQ(proto.display_name().value(), expected);
   EXPECT_EQ(proto.display_name().truncated_byte_count(), 1);
+}
+
+TEST(Recordable, SetSpanKind) {
+  struct TestCase {
+    opentelemetry::trace::SpanKind input;
+    google::devtools::cloudtrace::v2::Span::SpanKind expected;
+  };
+
+  for (auto const& test : std::vector<TestCase>{
+           {opentelemetry::trace::SpanKind::kInternal,
+            google::devtools::cloudtrace::v2::Span::INTERNAL},
+           {opentelemetry::trace::SpanKind::kServer,
+            google::devtools::cloudtrace::v2::Span::SERVER},
+           {opentelemetry::trace::SpanKind::kClient,
+            google::devtools::cloudtrace::v2::Span::CLIENT},
+           {opentelemetry::trace::SpanKind::kProducer,
+            google::devtools::cloudtrace::v2::Span::PRODUCER},
+           {opentelemetry::trace::SpanKind::kConsumer,
+            google::devtools::cloudtrace::v2::Span::CONSUMER}}) {
+    auto rec = Recordable(Project(kProjectId));
+    rec.SetSpanKind(test.input);
+    auto proto = std::move(rec).as_proto();
+    EXPECT_EQ(proto.span_kind(), test.expected);
+  }
 }
 
 TEST(Recordable, SetIdentity) {
@@ -314,6 +363,22 @@ TEST(Recordable, SetDuration) {
   auto proto = std::move(rec).as_proto();
   auto actual = internal::ToAbslTime(proto.end_time());
   EXPECT_EQ(actual, expected);
+}
+
+TEST(Recordable, SetInstrumentationScope) {
+  auto scope =
+      opentelemetry::sdk::instrumentationscope::InstrumentationScope::Create(
+          "test-name", "test-version");
+
+  auto rec = Recordable(Project(kProjectId));
+  rec.SetInstrumentationScope(*scope);
+  auto proto = std::move(rec).as_proto();
+  EXPECT_THAT(proto.attributes(),
+              Attributes(UnorderedElementsAre(
+                  Pair("otel.instrumentation_library.name",
+                       AttributeValue("test-name")),
+                  Pair("otel.instrumentation_library.version",
+                       AttributeValue("test-version")))));
 }
 
 }  // namespace

@@ -25,6 +25,7 @@ cc_library(
     visibility = ["//:__pkg__"],
     deps = [
         "//:trace",
+        "@com_google_googleapis//google/rpc:code_cc_proto",
         "@io_opentelemetry_cpp//sdk/src/trace",
     ],
 )
