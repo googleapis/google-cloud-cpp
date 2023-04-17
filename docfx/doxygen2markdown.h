@@ -137,6 +137,10 @@ bool AppendIfProgramListing(std::ostream& os, MarkdownContext const& ctx,
 bool AppendIfVerbatim(std::ostream& os, MarkdownContext const& ctx,
                       pugi::xml_node const& node);
 
+/// Handle `<parblock>` elements.
+bool AppendIfParBlock(std::ostream& os, MarkdownContext const& ctx,
+                      pugi::xml_node const& node);
+
 /// Handle `codeline` elements.
 bool AppendIfCodeline(std::ostream& os, MarkdownContext const& ctx,
                       pugi::xml_node const& node);
