@@ -141,6 +141,18 @@ bool AppendIfVerbatim(std::ostream& os, MarkdownContext const& ctx,
 bool AppendIfParBlock(std::ostream& os, MarkdownContext const& ctx,
                       pugi::xml_node const& node);
 
+/// Handle `<table>` elements.
+bool AppendIfTable(std::ostream& os, MarkdownContext const& ctx,
+                   pugi::xml_node const& node);
+
+/// Handle `<row>` elements in a `<table>`.
+bool AppendIfTableRow(std::ostream& os, MarkdownContext const& ctx,
+                      pugi::xml_node const& node);
+
+/// Handle `<entry>` elements in a `<table>`.
+bool AppendIfTableEntry(std::ostream& os, MarkdownContext const& ctx,
+                        pugi::xml_node const& node);
+
 /// Handle `codeline` elements.
 bool AppendIfCodeline(std::ostream& os, MarkdownContext const& ctx,
                       pugi::xml_node const& node);

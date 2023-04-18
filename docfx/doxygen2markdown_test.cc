@@ -686,6 +686,46 @@ Second paragraph)md";
   EXPECT_EQ(kExpected, os.str());
 }
 
+TEST(Doxygen2Markdown, ParagraphTable) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <para id='test-node'>
+          <table rows="3" cols="2">
+            <row>
+              <entry thead="yes"><para>Environment Variable</para></entry>
+              <entry thead="yes"><para><ref refid="classgoogle_1_1cloud_1_1Options" kindref="compound" external="/workspace/cmake-out/google/cloud/cloud.tag">Options</ref> setting</para></entry>
+            </row>
+            <row>
+              <entry thead="no"><para><computeroutput>SPANNER_OPTIMIZER_VERSION</computeroutput></para></entry>
+              <entry thead="no"><para><computeroutput><ref refid="structgoogle_1_1cloud_1_1spanner_1_1QueryOptimizerVersionOption" kindref="compound">QueryOptimizerVersionOption</ref></computeroutput></para></entry>
+            </row>
+            <row>
+              <entry thead="no"><para><computeroutput>SPANNER_OPTIMIZER_STATISTICS_PACKAGE</computeroutput></para></entry>
+              <entry thead="no">
+                <para><computeroutput><ref refid="structgoogle_1_1cloud_1_1spanner_1_1QueryOptimizerStatisticsPackageOption" kindref="compound">QueryOptimizerStatisticsPackageOption</ref></computeroutput></para>
+                <para>With another paragraph</para>
+              </entry>
+            </row>
+          </table>
+        </para>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"md(
+
+
+| Environment Variable | [Options](/workspace/cmake-out/google/cloud/cloud.tag) setting |
+| ---- | ---- |
+| `SPANNER_OPTIMIZER_VERSION` | [`QueryOptimizerVersionOption`](xref:structgoogle_1_1cloud_1_1spanner_1_1QueryOptimizerVersionOption) |
+| `SPANNER_OPTIMIZER_STATISTICS_PACKAGE` | [`QueryOptimizerStatisticsPackageOption`](xref:structgoogle_1_1cloud_1_1spanner_1_1QueryOptimizerStatisticsPackageOption) With another paragraph |)md";
+
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfParagraph(os, {}, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
+}
+
 TEST(Doxygen2Markdown, ParagraphXrefSect) {
   auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
