@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -84,7 +84,6 @@ v2::Row ConvertRowToV2(Row const& row) {
 grpc::Status CbtTestProxy::CreateClient(
     ::grpc::ServerContext*, testpb::CreateClientRequest const* request,
     testpb::CreateClientResponse*) {
-  GCP_LOG(DEBUG) << "searching for: " << request->client_id();
   if (request->client_id().empty() || request->data_target().empty()) {
     return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT,
                         "both `client_id` and `data_target` must be provided.");
@@ -125,6 +124,8 @@ grpc::Status CbtTestProxy::CreateClient(
   return grpc::Status();
 }
 
+// C++ client doesn't support closing which will make the client not accept new
+// calls for operation. As such, CloseClient() is implemented as no-op.
 grpc::Status CbtTestProxy::CloseClient(
     ::grpc::ServerContext*, testpb::CloseClientRequest const* request,
     testpb::CloseClientResponse*) {
@@ -149,13 +150,11 @@ grpc::Status CbtTestProxy::RemoveClient(
 grpc::Status CbtTestProxy::ReadRow(::grpc::ServerContext*,
                                    testpb::ReadRowRequest const* request,
                                    testpb::RowResult* response) {
-  auto sor = GetTableFromRequest(request->client_id(), request->table_name());
-  if (!sor.ok()) return ToGrpcStatus(std::move(sor).status());
-  Table table = *std::move(sor);
+  auto table = GetTableFromRequest(request->client_id(), request->table_name());
+  if (!table.ok()) return ToGrpcStatus(std::move(table).status());
 
-  auto options = Options{}.set<AppProfileIdOption>("");
-  auto const row = table.ReadRow(request->row_key(), Filter(request->filter()), options);
-
+  auto const row =
+      table->ReadRow(request->row_key(), Filter(request->filter()));
   if (row.ok()) {
     if (row->first) {
       Row row_val = row->second;
@@ -171,10 +170,10 @@ grpc::Status CbtTestProxy::ReadRow(::grpc::ServerContext*,
 grpc::Status CbtTestProxy::ReadRows(::grpc::ServerContext*,
                                     testpb::ReadRowsRequest const* request,
                                     testpb::RowsResult* response) {
-  auto sor = GetTableFromRequest(request->client_id(),
-                                 request->request().table_name());
-  if (!sor.ok()) return ToGrpcStatus(std::move(sor).status());
-  Table table = *std::move(sor);
+  auto table = GetTableFromRequest(request->client_id(),
+                                   request->request().table_name());
+  if (!table.ok()) return ToGrpcStatus(std::move(table).status());
+
   RowSet row_set;
   for (RowKeyType const& row_key : request->request().rows().row_keys()) {
     row_set.Append(std::string(row_key));
@@ -185,8 +184,8 @@ grpc::Status CbtTestProxy::ReadRows(::grpc::ServerContext*,
   Filter const filter(request->request().filter());
   auto const rows_limit = request->request().rows_limit();
   RowReader reader =
-      rows_limit > 0 ? table.ReadRows(std::move(row_set), rows_limit, filter)
-                     : table.ReadRows(std::move(row_set), filter);
+      rows_limit > 0 ? table->ReadRows(std::move(row_set), rows_limit, filter)
+                     : table->ReadRows(std::move(row_set), filter);
 
   Status status;
   for (auto const& row : reader) {
@@ -214,13 +213,12 @@ grpc::Status CbtTestProxy::ReadRows(::grpc::ServerContext*,
 grpc::Status CbtTestProxy::MutateRow(::grpc::ServerContext*,
                                      testpb::MutateRowRequest const* request,
                                      testpb::MutateRowResult* response) {
-  auto sor = GetTableFromRequest(request->client_id(),
-                                 request->request().table_name());
-  if (!sor.ok()) return ToGrpcStatus(std::move(sor).status());
-  Table table = *std::move(sor);
-  SingleRowMutation mutation(request->request());
+  auto table = GetTableFromRequest(request->client_id(),
+                                   request->request().table_name());
+  if (!table.ok()) return ToGrpcStatus(std::move(table).status());
 
-  auto status = table.Apply(std::move(mutation));
+  SingleRowMutation mutation(request->request());
+  auto status = table->Apply(std::move(mutation));
   *response->mutable_status() = ToRpcStatus(status);
   return grpc::Status();
 }
@@ -228,17 +226,16 @@ grpc::Status CbtTestProxy::MutateRow(::grpc::ServerContext*,
 grpc::Status CbtTestProxy::BulkMutateRows(
     ::grpc::ServerContext*, testpb::MutateRowsRequest const* request,
     testpb::MutateRowsResult* response) {
-  auto sor = GetTableFromRequest(request->client_id(),
-                                 request->request().table_name());
-  if (!sor.ok()) return ToGrpcStatus(std::move(sor).status());
-  Table table = *std::move(sor);
+  auto table = GetTableFromRequest(request->client_id(),
+                                   request->request().table_name());
+  if (!table.ok()) return ToGrpcStatus(std::move(table).status());
 
   BulkMutation mutation;
   for (auto const& entry : request->request().entries()) {
     mutation.push_back(SingleRowMutation(entry));
   }
 
-  auto failed = table.BulkApply(std::move(mutation));
+  auto failed = table->BulkApply(std::move(mutation));
   for (auto const& failure : failed) {
     auto& entry = *response->add_entry();
     entry.set_index(failure.original_index());
@@ -250,10 +247,9 @@ grpc::Status CbtTestProxy::BulkMutateRows(
 grpc::Status CbtTestProxy::CheckAndMutateRow(
     ::grpc::ServerContext*, testpb::CheckAndMutateRowRequest const* request,
     testpb::CheckAndMutateRowResult* response) {
-  auto sor = GetTableFromRequest(request->client_id(),
-                                 request->request().table_name());
-  if (!sor.ok()) return ToGrpcStatus(std::move(sor).status());
-  Table table = *std::move(sor);
+  auto table = GetTableFromRequest(request->client_id(),
+                                   request->request().table_name());
+  if (!table.ok()) return ToGrpcStatus(std::move(table).status());
 
   std::string const& row_key = std::string(request->request().row_key());
   Filter filter(request->request().predicate_filter());
@@ -269,9 +265,9 @@ grpc::Status CbtTestProxy::CheckAndMutateRow(
     mutation.op = mutation_v2;
     false_mutations.push_back(mutation);
   }
-  auto branch = table.CheckAndMutateRow(row_key, std::move(filter),
-                                        std::move(true_mutations),
-                                        std::move(false_mutations));
+  auto branch = table->CheckAndMutateRow(row_key, std::move(filter),
+                                         std::move(true_mutations),
+                                         std::move(false_mutations));
 
   *response->mutable_status() = ToRpcStatus(branch.status());
   if (!branch) return grpc::Status();
@@ -284,12 +280,11 @@ grpc::Status CbtTestProxy::CheckAndMutateRow(
 grpc::Status CbtTestProxy::SampleRowKeys(
     ::grpc::ServerContext*, testpb::SampleRowKeysRequest const* request,
     testpb::SampleRowKeysResult* response) {
-  auto sor = GetTableFromRequest(request->client_id(),
-                                 request->request().table_name());
-  if (!sor.ok()) return ToGrpcStatus(std::move(sor).status());
-  Table table = *std::move(sor);
+  auto table = GetTableFromRequest(request->client_id(),
+                                   request->request().table_name());
+  if (!table.ok()) return ToGrpcStatus(std::move(table).status());
 
-  auto samples = table.SampleRows();
+  auto samples = table->SampleRows();
   *response->mutable_status() = ToRpcStatus(samples.status());
   if (!samples.ok()) return grpc::Status();
 
@@ -313,12 +308,11 @@ grpc::Status CbtTestProxy::ReadModifyWriteRow(
   if (request->request().rules().empty()) {
     GCP_LOG(ERROR) << "Failed to ReadModifyWriteRow.";
     return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT,
-                        "Incoming request has no rules.  Not supported.");
+                        "Incoming request has no rules. Not supported.");
   }
-  auto sor = GetTableFromRequest(request->client_id(),
-                                 request->request().table_name());
-  if (!sor.ok()) return ToGrpcStatus(std::move(sor).status());
-  Table table = *std::move(sor);
+  auto table = GetTableFromRequest(request->client_id(),
+                                   request->request().table_name());
+  if (!table.ok()) return ToGrpcStatus(std::move(table).status());
 
   std::vector<ReadModifyWriteRule> rules;
   for (auto const& rule : request->request().rules()) {
@@ -343,22 +337,22 @@ grpc::Status CbtTestProxy::ReadModifyWriteRow(
       // parameters. We are assuming that ReadModifyWriteRow wouldn't have too
       // many rules on a single row. Setting the max limit to 5 currently.
     case 1:
-      row = table.ReadModifyWriteRow(row_key, rules[0]);
+      row = table->ReadModifyWriteRow(row_key, rules[0]);
       break;
     case 2:
-      row = table.ReadModifyWriteRow(row_key, rules[0], rules[1]);
+      row = table->ReadModifyWriteRow(row_key, rules[0], rules[1]);
       break;
     case 3:
-      row = table.ReadModifyWriteRow(row_key, rules[0], rules[1], rules[2]);
+      row = table->ReadModifyWriteRow(row_key, rules[0], rules[1], rules[2]);
       break;
     case 4:
-      row = table.ReadModifyWriteRow(row_key, rules[0], rules[1], rules[2],
-                                     rules[3]);
+      row = table->ReadModifyWriteRow(row_key, rules[0], rules[1], rules[2],
+                                      rules[3]);
       break;
     default:
       // Assume maximum 5 rules sent to ReadModifyWriteRow.
-      row = table.ReadModifyWriteRow(row_key, rules[0], rules[1], rules[2],
-                                     rules[3], rules[4]);
+      row = table->ReadModifyWriteRow(row_key, rules[0], rules[1], rules[2],
+                                      rules[3], rules[4]);
       break;
   }
 

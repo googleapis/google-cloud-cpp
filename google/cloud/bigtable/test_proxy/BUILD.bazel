@@ -1,4 +1,4 @@
-# Copyright 2022 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ cc_grpc_library(
 # Client proxies for CBT.
 cc_library(
     name = "cbt_test_proxy",
-    testonly = 1,
+    testonly = True,
     srcs = ["cbt_test_proxy.cc"],
     hdrs = ["cbt_test_proxy.h"],
     deps = [
@@ -63,7 +63,7 @@ cc_library(
 
 cc_binary(
     name = "cbt_test_proxy_main",
-    testonly = 1,
+    testonly = True,
     srcs = ["cbt_test_proxy_main.cc"],
     deps = [":cbt_test_proxy"],
 )

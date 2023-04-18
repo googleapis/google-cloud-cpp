@@ -23,7 +23,7 @@ In this example, we use port 9999.
 
 ```sh
 cd google-cloud-cpp/google/cloud/bigtable/test_proxy
-bazel run :cbt_test_proxy_main -- 9999
+env GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes bazel run :cbt_test_proxy_main -- 9999
 ```
 
 ### Run the test cases
@@ -35,3 +35,8 @@ tests:
 cd cloud-bigtable-clients-test/tests
 go test -v -proxy_addr=:9999
 ```
+
+## Notes
+
+The CMake files are used to run sanitizers/linters on the code. For building
+and testing, Bazel is recommended (as shown above).
