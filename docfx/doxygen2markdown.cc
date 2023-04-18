@@ -14,6 +14,7 @@
 
 #include "docfx/doxygen2markdown.h"
 #include "docfx/doxygen_errors.h"
+#include <algorithm>
 #include <sstream>
 #include <unordered_set>
 
@@ -455,7 +456,8 @@ bool AppendIfDocCmdGroup(std::ostream& os, MarkdownContext const& ctx,
   if (AppendIfSimpleSect(os, ctx, node)) return true;
   // Unexpected: title
   if (AppendIfVariableList(os, ctx, node)) return true;
-  // Unexpected: table, header, dotfile, mscfile, diafile, toclist, language
+  if (AppendIfTable(os, ctx, node)) return true;
+  // Unexpected: header, dotfile, mscfile, diafile, toclist, language
   if (AppendIfXRefSect(os, ctx, node)) return true;
   // Unexpected: copydoc, blockquote
   if (AppendIfParBlock(os, ctx, node)) return true;
@@ -534,6 +536,102 @@ bool AppendIfParBlock(std::ostream& os, MarkdownContext const& ctx,
   if (std::string_view{node.name()} != "parblock") return false;
   for (auto const& child : node) {
     if (AppendIfParagraph(os, ctx, child)) continue;
+    UnknownChildType(__func__, child);
+  }
+  return true;
+}
+
+// The type for `table` is a sequence of rows, maybe with a caption.
+//
+// clang-format off
+//   <xsd:complexType name="docTableType">
+//     <xsd:sequence>
+//       <xsd:element name="caption" type="docCaptionType" minOccurs="0" maxOccurs="1" />
+//       <xsd:element name="row" type="docRowType" minOccurs="0" maxOccurs="unbounded" />
+//     </xsd:sequence>
+//     <xsd:attribute name="rows" type="xsd:integer" />
+//     <xsd:attribute name="cols" type="xsd:integer" />
+//     <xsd:attribute name="width" type="xsd:string" />
+//   </xsd:complexType>
+// clang-format on
+bool AppendIfTable(std::ostream& os, MarkdownContext const& ctx,
+                   pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "table") return false;
+  for (auto const& child : node) {
+    if (AppendIfTableRow(os, ctx, child)) continue;
+    UnknownChildType(__func__, child);
+  }
+  return true;
+}
+
+// The type for `row` is a sequence of `<entry>` elements.
+//
+// clang-format off
+//    <xsd:complexType name="docRowType">
+//      <xsd:sequence>
+//        <xsd:element name="entry" type="docEntryType" minOccurs="0" maxOccurs="unbounded" />
+//      </xsd:sequence>
+//    </xsd:complexType>
+// clang-format on
+bool AppendIfTableRow(std::ostream& os, MarkdownContext const& ctx,
+                      pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "row") return false;
+  os << "\n" << ctx.paragraph_indent;
+  auto nested = ctx;
+  nested.paragraph_indent = "";
+  nested.paragraph_start = "| ";
+  for (auto const& child : node) {
+    if (AppendIfTableEntry(os, nested, child)) {
+      nested.paragraph_start = " | ";
+      continue;
+    }
+    UnknownChildType(__func__, child);
+  }
+  os << " |";
+  // This may not work for tables with colspan, but it is good enough for the
+  // documents we have in `google-cloud-cpp`.
+  auto nheaders =
+      std::count_if(node.begin(), node.end(), [](auto const& child) {
+        return std::string_view{child.name()} == "entry" &&
+               std::string_view{child.attribute("thead").as_string()} == "yes";
+      });
+  if (nheaders != 0) {
+    os << "\n" << ctx.paragraph_indent;
+    for (; nheaders != 0; --nheaders) {
+      os << "| ---- ";
+    }
+    os << "|";
+  }
+  return true;
+}
+
+// The type for a `<entry>` element is a sequence of `<para>` elements, maybe
+// with some attributes. We will ignore most of the attributes for now.
+//
+// clang-format off
+//   <xsd:complexType name="docEntryType">
+//      <xsd:sequence>
+//        <xsd:element name="para" type="docParaType" minOccurs="0" maxOccurs="unbounded" />
+//      </xsd:sequence>
+//      <xsd:attribute name="thead" type="DoxBool" />
+//      <xsd:attribute name="colspan" type="xsd:integer" />
+//      <xsd:attribute name="rowspan" type="xsd:integer" />
+//      <xsd:attribute name="align" type="DoxAlign" />
+//      <xsd:attribute name="valign" type="DoxVerticalAlign" />
+//      <xsd:attribute name="width" type="xsd:string" />
+//      <xsd:attribute name="class" type="xsd:string" />
+//      <xsd:anyAttribute processContents="skip"/>
+//    </xsd:complexType>
+// clang-format on
+bool AppendIfTableEntry(std::ostream& os, MarkdownContext const& ctx,
+                        pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "entry") return false;
+  auto nested = ctx;
+  for (auto const& child : node) {
+    if (AppendIfParagraph(os, nested, child)) {
+      nested.paragraph_start = " ";
+      continue;
+    }
     UnknownChildType(__func__, child);
   }
   return true;
