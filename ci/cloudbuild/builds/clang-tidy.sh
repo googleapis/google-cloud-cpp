@@ -29,7 +29,6 @@ read -r ENABLED_FEATURES < <(features::always_build_cmake)
 # over them.
 ENABLED_FEATURES="${ENABLED_FEATURES},experimental-storage-grpc"
 ENABLED_FEATURES="${ENABLED_FEATURES},generator"
-ENABLED_FEATURES="${ENABLED_FEATURES},internal-docfx"
 readonly ENABLED_FEATURES
 
 mapfile -t cmake_args < <(cmake::common_args)
@@ -40,7 +39,8 @@ mapfile -t cmake_args < <(cmake::common_args)
 cmake "${cmake_args[@]}" \
   -DCMAKE_CXX_CLANG_TIDY=/usr/local/bin/clang-tidy-wrapper \
   -DCMAKE_CXX_STANDARD=14 \
-  -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
+  -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}" \
+  -DGOOGLE_CLOUD_CPP_INTERNAL_DOCFX=ON
 cmake --build cmake-out
 
 mapfile -t ctest_args < <(ctest::common_args)

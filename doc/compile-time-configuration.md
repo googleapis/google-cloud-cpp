@@ -34,7 +34,6 @@ A few features enable experimental functionality. We do not expect that
 customers will need to use these. If you have specific questions please start
 a [GitHub Discussion]. With that said:
 
-- `internal-docfx` enables an internal-only tool to generate documentation.
 - `generator` enables an internal-only tool to generate new libraries.
 - `experimental-storage-grpc` enables the GCS+gRPC plugin. Contact your account
   team if you want to use this feature or are interested in the GA timeline.

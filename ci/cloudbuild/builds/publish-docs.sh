@@ -27,8 +27,9 @@ version=""
 doc_args=(
   "-DCMAKE_BUILD_TYPE=Debug"
   "-DGOOGLE_CLOUD_CPP_GENERATE_DOXYGEN=ON"
+  "-DGOOGLE_CLOUD_CPP_INTERNAL_DOCFX=ON"
   "-DGOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV=ON"
-  "-DGOOGLE_CLOUD_CPP_ENABLE=internal-docfx,${ENABLED_FEATURES}"
+  "-DGOOGLE_CLOUD_CPP_ENABLE=${ENABLED_FEATURES}"
   "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON"
   "-DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON"
   "-DGOOGLE_CLOUD_CPP_DOXYGEN_CLANG_OPTIONS=-resource-dir=$(clang -print-resource-dir)"
@@ -67,9 +68,7 @@ cmake -GNinja "${doc_args[@]}" -S . -B cmake-out
 # fix this by avoiding parallelism with `-j 1`, or as we do here, we'll
 # pre-generate all the proto headers, then call doxygen.
 cmake --build cmake-out --target google-cloud-cpp-protos
-cmake --build cmake-out --target doxygen-docs
-# TODO(#11245) - enable once all the libraries work
-# cmake --build cmake-out --target all-docfx
+cmake --build cmake-out --target doxygen-docs all-docfx
 
 if [[ "${PROJECT_ID:-}" != "cloud-cpp-testing-resources" ]]; then
   io::log_h2 "Skipping upload of docs," \

@@ -167,7 +167,7 @@ function (google_cloud_cpp_doxygen_targets_impl library)
             ${library}-docfx
             DEPENDS ${library}-docs doxygen2docfx
             WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/docfx"
-            COMMENT "Generate DoxFX YAML for ${library}"
+            COMMENT "Generate DocFX YAML for ${library}"
             COMMAND
                 ${XSLTPROC} -o
                 "${CMAKE_CURRENT_BINARY_DIR}/xml/${library}.doxygen.xml"
