@@ -13,10 +13,8 @@
 // limitations under the License.
 
 #include "generator/internal/pagination.h"
-// #include "generator/internal/descriptor_utils.h"
 #include "google/cloud/log.h"
 #include "google/cloud/optional.h"
-// #include <google/longrunning/operations.pb.h>
 
 namespace google {
 namespace cloud {
