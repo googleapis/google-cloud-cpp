@@ -25,6 +25,7 @@
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_operations.pb.h>
 #include <memory>
@@ -67,8 +68,8 @@ class SqlOperationsServiceConnection {
   virtual StatusOr<google::cloud::sql::v1::Operation> Get(
       google::cloud::sql::v1::SqlOperationsGetRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::OperationsListResponse> List(
-      google::cloud::sql::v1::SqlOperationsListRequest const& request);
+  virtual StreamRange<google::cloud::sql::v1::Operation> List(
+      google::cloud::sql::v1::SqlOperationsListRequest request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

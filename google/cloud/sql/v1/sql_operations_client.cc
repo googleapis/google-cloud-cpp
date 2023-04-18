@@ -39,12 +39,10 @@ StatusOr<google::cloud::sql::v1::Operation> SqlOperationsServiceClient::Get(
   return connection_->Get(request);
 }
 
-StatusOr<google::cloud::sql::v1::OperationsListResponse>
-SqlOperationsServiceClient::List(
-    google::cloud::sql::v1::SqlOperationsListRequest const& request,
-    Options opts) {
+StreamRange<google::cloud::sql::v1::Operation> SqlOperationsServiceClient::List(
+    google::cloud::sql::v1::SqlOperationsListRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->List(request);
+  return connection_->List(std::move(request));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

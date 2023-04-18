@@ -43,8 +43,8 @@ class SqlOperationsServiceTracingConnection
   StatusOr<google::cloud::sql::v1::Operation> Get(
       google::cloud::sql::v1::SqlOperationsGetRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::OperationsListResponse> List(
-      google::cloud::sql::v1::SqlOperationsListRequest const& request) override;
+  StreamRange<google::cloud::sql::v1::Operation> List(
+      google::cloud::sql::v1::SqlOperationsListRequest request) override;
 
  private:
   std::shared_ptr<sql_v1::SqlOperationsServiceConnection> child_;

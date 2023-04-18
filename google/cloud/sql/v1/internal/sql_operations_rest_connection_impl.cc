@@ -20,6 +20,7 @@
 #include "google/cloud/sql/v1/internal/sql_operations_rest_stub_factory.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
 #include "google/cloud/rest_options.h"
 #include <memory>
@@ -50,16 +51,34 @@ SqlOperationsServiceRestConnectionImpl::Get(
       request, __func__);
 }
 
-StatusOr<google::cloud::sql::v1::OperationsListResponse>
+StreamRange<google::cloud::sql::v1::Operation>
 SqlOperationsServiceRestConnectionImpl::List(
-    google::cloud::sql::v1::SqlOperationsListRequest const& request) {
-  return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->List(request),
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::sql::v1::SqlOperationsListRequest const& request) {
-        return stub_->List(rest_context, request);
+    google::cloud::sql::v1::SqlOperationsListRequest request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry = std::shared_ptr<sql_v1::SqlOperationsServiceRetryPolicy const>(
+      retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->List(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::sql::v1::Operation>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::sql::v1::SqlOperationsListRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::sql::v1::SqlOperationsListRequest const&
+                       request) { return stub->List(rest_context, request); },
+            r, function_name);
       },
-      request, __func__);
+      [](google::cloud::sql::v1::OperationsListResponse r) {
+        std::vector<google::cloud::sql::v1::Operation> result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

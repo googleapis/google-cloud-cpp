@@ -24,6 +24,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/pagination_range.h"
 #include <memory>
 
 namespace google {
@@ -38,10 +39,12 @@ StatusOr<google::cloud::sql::v1::Operation> SqlOperationsServiceConnection::Get(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::sql::v1::OperationsListResponse>
+StreamRange<google::cloud::sql::v1::Operation>
 SqlOperationsServiceConnection::List(
-    google::cloud::sql::v1::SqlOperationsListRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+    google::cloud::sql::v1::
+        SqlOperationsListRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::sql::v1::Operation>>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

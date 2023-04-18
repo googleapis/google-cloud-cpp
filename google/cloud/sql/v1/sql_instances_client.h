@@ -282,15 +282,15 @@ class SqlInstancesServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::sql::v1::InstancesListResponse,google/cloud/sql/v1/cloud_sql_instances.proto#L603}
+  /// @googleapis_link{google::cloud::sql::v1::DatabaseInstance,google/cloud/sql/v1/cloud_sql_instances.proto#L693}
   ///
-  /// [google.cloud.sql.v1.InstancesListResponse]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L603}
+  /// [google.cloud.sql.v1.DatabaseInstance]:
+  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L693}
   /// [google.cloud.sql.v1.SqlInstancesListRequest]:
   /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L353}
   ///
-  StatusOr<google::cloud::sql::v1::InstancesListResponse> List(
-      google::cloud::sql::v1::SqlInstancesListRequest const& request,
+  StreamRange<google::cloud::sql::v1::DatabaseInstance> List(
+      google::cloud::sql::v1::SqlInstancesListRequest request,
       Options opts = {});
 
   ///

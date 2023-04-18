@@ -25,6 +25,7 @@
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/cloud/sql/v1/cloud_sql_instances.pb.h>
 #include <memory>
@@ -91,8 +92,8 @@ class SqlInstancesServiceConnection {
   virtual StatusOr<google::cloud::sql::v1::Operation> Insert(
       google::cloud::sql::v1::SqlInstancesInsertRequest const& request);
 
-  virtual StatusOr<google::cloud::sql::v1::InstancesListResponse> List(
-      google::cloud::sql::v1::SqlInstancesListRequest const& request);
+  virtual StreamRange<google::cloud::sql::v1::DatabaseInstance> List(
+      google::cloud::sql::v1::SqlInstancesListRequest request);
 
   virtual StatusOr<google::cloud::sql::v1::InstancesListServerCasResponse>
   ListServerCas(
