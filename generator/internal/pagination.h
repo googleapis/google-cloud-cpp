@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_PAGINATION_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_PAGINATION_H
 
+#include "generator/internal/printer.h"
 #include "google/cloud/optional.h"
 #include <google/protobuf/descriptor.h>
 #include <string>
@@ -32,14 +33,28 @@ namespace generator_internal {
 bool IsPaginated(google::protobuf::MethodDescriptor const& method);
 
 /**
- * If method meets pagination criteria, provides paginated field type and field
- * name.
+ * If method meets AIP-4233 pagination criteria, provides paginated field type
+ * and field name. Failing that, attempts to apply alternate pagination
+ * scheme sometimes found in services that only support REST transport.
  *
  * https://google.aip.dev/client-libraries/4233
  */
 google::cloud::optional<
     std::pair<std::string, google::protobuf::Descriptor const*>>
 DeterminePagination(google::protobuf::MethodDescriptor const& method);
+
+/**
+ * Inspects the provided method to determine if it supports pagination and
+ * assigns values to the following variables:
+ *   range_output_field_name
+ *   range_output_type
+ *   method_paginated_return_doxygen_link
+ * @param method
+ * @param method_vars
+ */
+void AssignPaginationMethodVars(
+    google::protobuf::MethodDescriptor const& method,
+    VarsDictionary& method_vars);
 
 }  // namespace generator_internal
 }  // namespace cloud

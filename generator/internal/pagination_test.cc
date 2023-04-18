@@ -27,7 +27,7 @@ using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
 
-TEST(PredicateUtilsTest, PaginationSuccess) {
+TEST(PredicateUtilsTest, PaginationAIP4233Success) {
   FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
@@ -72,7 +72,7 @@ TEST(PredicateUtilsTest, PaginationSuccess) {
   EXPECT_EQ(result->second->full_name(), "google.protobuf.Bar");
 }
 
-TEST(PredicateUtilsTest, PaginationNoPageSize) {
+TEST(PredicateUtilsTest, PaginationAIP4233NoPageSize) {
   FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
@@ -98,7 +98,7 @@ TEST(PredicateUtilsTest, PaginationNoPageSize) {
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
-TEST(PredicateUtilsTest, PaginationNoPageToken) {
+TEST(PredicateUtilsTest, PaginationAIP4233NoPageToken) {
   FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
@@ -127,7 +127,7 @@ TEST(PredicateUtilsTest, PaginationNoPageToken) {
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
-TEST(PredicateUtilsTest, PaginationNoNextPageToken) {
+TEST(PredicateUtilsTest, PaginationAIP4233NoNextPageToken) {
   FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
@@ -157,7 +157,7 @@ TEST(PredicateUtilsTest, PaginationNoNextPageToken) {
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
-TEST(PredicateUtilsTest, PaginationNoRepeatedMessageField) {
+TEST(PredicateUtilsTest, PaginationAIP4233NoRepeatedMessageField) {
   FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
@@ -196,7 +196,7 @@ TEST(PredicateUtilsTest, PaginationNoRepeatedMessageField) {
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
-TEST(PredicateUtilsDeathTest, PaginationRepeatedMessageOrderMismatch) {
+TEST(PredicateUtilsDeathTest, PaginationAIP4233RepeatedMessageOrderMismatch) {
   FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
@@ -246,7 +246,7 @@ TEST(PredicateUtilsDeathTest, PaginationRepeatedMessageOrderMismatch) {
       "Repeated field in paginated response must be first");
 }
 
-TEST(PredicateUtilsTest, PaginationExactlyOneRepatedStringResponse) {
+TEST(PredicateUtilsTest, PaginationAIP4233ExactlyOneRepatedStringResponse) {
   FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
@@ -288,6 +288,287 @@ TEST(PredicateUtilsTest, PaginationExactlyOneRepatedStringResponse) {
   EXPECT_TRUE(result.has_value());
   EXPECT_EQ(result->first, "repeated_field");
   EXPECT_EQ(result->second, nullptr);
+}
+
+TEST(PredicateUtilsTest, PaginationRestSuccess) {
+  FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type {
+      name: "Input"
+      field { name: "max_results" number: 1 type: TYPE_UINT32 }
+      field { name: "page_token" number: 2 type: TYPE_STRING }
+    }
+    message_type {
+      name: "Output"
+      field { name: "next_page_token" number: 1 type: TYPE_STRING }
+      field {
+        name: "items"
+        number: 2
+        label: LABEL_REPEATED
+        type: TYPE_MESSAGE
+        type_name: "google.protobuf.Bar"
+      }
+    }
+    service {
+      name: "Service"
+      method {
+        name: "Paginated"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  EXPECT_TRUE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
+  auto result =
+      DeterminePagination(*service_file_descriptor->service(0)->method(0));
+  EXPECT_TRUE(result.has_value());
+  EXPECT_EQ(result->first, "items");
+  EXPECT_EQ(result->second->full_name(), "google.protobuf.Bar");
+}
+
+TEST(PredicateUtilsTest, PaginationRestNoMaxResults) {
+  FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type {
+      name: "Input"
+      field { name: "page_token" number: 2 type: TYPE_STRING }
+    }
+    message_type {
+      name: "Output"
+      field { name: "next_page_token" number: 1 type: TYPE_STRING }
+      field {
+        name: "items"
+        number: 2
+        label: LABEL_REPEATED
+        type: TYPE_MESSAGE
+        type_name: "google.protobuf.Bar"
+      }
+    }
+    service {
+      name: "Service"
+      method {
+        name: "NoPageSize"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
+}
+
+TEST(PredicateUtilsTest, PaginationRestMaxResultsWrongType) {
+  FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type {
+      name: "Input"
+      field { name: "max_results" number: 1 type: TYPE_INT32 }
+      field { name: "page_token" number: 2 type: TYPE_STRING }
+    }
+    message_type {
+      name: "Output"
+      field { name: "next_page_token" number: 1 type: TYPE_STRING }
+      field {
+        name: "items"
+        number: 2
+        label: LABEL_REPEATED
+        type: TYPE_MESSAGE
+        type_name: "google.protobuf.Bar"
+      }
+    }
+    service {
+      name: "Service"
+      method {
+        name: "NoPageSize"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
+}
+
+TEST(PredicateUtilsTest, PaginationRestNoPageToken) {
+  FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type {
+      name: "Input"
+      field { name: "max_results" number: 1 type: TYPE_UINT32 }
+    }
+    message_type {
+      name: "Output"
+      field { name: "next_page_token" number: 1 type: TYPE_STRING }
+      field {
+        name: "items"
+        number: 2
+        label: LABEL_REPEATED
+        type: TYPE_MESSAGE
+        type_name: "google.protobuf.Bar"
+      }
+    }
+    service {
+      name: "Service"
+      method {
+        name: "NoPageSize"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
+}
+
+TEST(PredicateUtilsTest, PaginationRestNoNextPageToken) {
+  FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type {
+      name: "Input"
+      field { name: "max_results" number: 1 type: TYPE_UINT32 }
+      field { name: "page_token" number: 2 type: TYPE_STRING }
+    }
+    message_type {
+      name: "Output"
+      field {
+        name: "items"
+        number: 2
+        label: LABEL_REPEATED
+        type: TYPE_MESSAGE
+        type_name: "google.protobuf.Bar"
+      }
+    }
+    service {
+      name: "Service"
+      method {
+        name: "NoPageSize"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
+}
+
+TEST(PredicateUtilsTest, PaginationRestNoItems) {
+  FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type {
+      name: "Input"
+      field { name: "max_results" number: 1 type: TYPE_UINT32 }
+      field { name: "page_token" number: 2 type: TYPE_STRING }
+    }
+    message_type {
+      name: "Output"
+      field { name: "next_page_token" number: 1 type: TYPE_STRING }
+      field {
+        name: "bars"
+        number: 2
+        label: LABEL_REPEATED
+        type: TYPE_MESSAGE
+        type_name: "google.protobuf.Bar"
+      }
+    }
+    service {
+      name: "Service"
+      method {
+        name: "NoPageSize"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
+}
+
+TEST(PredicateUtilsTest, PaginationRestItemsNotRepeated) {
+  FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type {
+      name: "Input"
+      field { name: "max_results" number: 1 type: TYPE_UINT32 }
+      field { name: "page_token" number: 2 type: TYPE_STRING }
+    }
+    message_type {
+      name: "Output"
+      field { name: "next_page_token" number: 1 type: TYPE_STRING }
+      field {
+        name: "items"
+        number: 2
+        type: TYPE_MESSAGE
+        type_name: "google.protobuf.Bar"
+      }
+    }
+    service {
+      name: "Service"
+      method {
+        name: "NoPageSize"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
 }  // namespace
