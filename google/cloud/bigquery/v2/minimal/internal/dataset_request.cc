@@ -74,14 +74,6 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
   auto const& opts = internal::CurrentOptions();
 
   rest_internal::RestRequest request;
-  if (r.project_id().empty()) {
-    return internal::InvalidArgumentError(
-        "Invalid GetDatasetRequest: Project Id is empty", GCP_ERROR_INFO());
-  }
-  if (r.dataset_id().empty()) {
-    return internal::InvalidArgumentError(
-        "Invalid GetDatasetRequest: Dataset Id is empty", GCP_ERROR_INFO());
-  }
 
   std::string endpoint = GetDatasetsEndpoint(opts);
 
@@ -97,10 +89,6 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
   rest_internal::RestRequest request;
   auto const& opts = internal::CurrentOptions();
 
-  if (r.project_id().empty()) {
-    return internal::InvalidArgumentError(
-        "Invalid ListDatasetsRequest: Project Id is empty", GCP_ERROR_INFO());
-  }
   std::string endpoint = GetDatasetsEndpoint(opts);
 
   std::string path = absl::StrCat(endpoint, r.project_id(), "/datasets");
@@ -122,21 +110,6 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
   if_not_empty_add("filter", r.filter());
 
   return request;
-}
-
-std::ostream& operator<<(std::ostream& os, GetDatasetRequest const& request) {
-  os << "GetDatasetRequest{project_id=" << request.project_id()
-     << ", dataset_id=" << request.dataset_id();
-  return os << "}";
-}
-
-std::ostream& operator<<(std::ostream& os, ListDatasetsRequest const& request) {
-  std::string all = request.all_datasets() ? "true" : "false";
-  os << "ListDatasetsRequest{project_id=" << request.project_id()
-     << ", all=" << all << ", max_results=" << request.max_results()
-     << ", page_token=" << request.page_token()
-     << ", filter=" << request.filter();
-  return os << "}";
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

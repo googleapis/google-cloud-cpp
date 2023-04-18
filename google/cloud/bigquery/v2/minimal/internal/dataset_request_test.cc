@@ -25,9 +25,6 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ::google::cloud::testing_util::StatusIs;
-using ::testing::HasSubstr;
-
 TEST(GetDatasetRequestTest, Success) {
   GetDatasetRequest request("1", "2");
   Options opts;
@@ -73,28 +70,6 @@ TEST(GetDatasetRequestTest, DatasetEndpoints) {
   }
 }
 
-TEST(GetDatasetRequestTest, EmptyProjectId) {
-  GetDatasetRequest request("", "test-dataset-id");
-  Options opts;
-  opts.set<EndpointOption>("bigquery.googleapis.com");
-  internal::OptionsSpan span(opts);
-
-  auto rest_request = BuildRestRequest(request);
-  EXPECT_THAT(rest_request, StatusIs(StatusCode::kInvalidArgument,
-                                     HasSubstr("Project Id is empty")));
-}
-
-TEST(GetDatasetRequest, EmptyDatasetId) {
-  GetDatasetRequest request("test-project-id", "");
-  Options opts;
-  opts.set<EndpointOption>("bigquery.googleapis.com");
-  internal::OptionsSpan span(opts);
-
-  auto rest_request = BuildRestRequest(request);
-  EXPECT_THAT(rest_request, StatusIs(StatusCode::kInvalidArgument,
-                                     HasSubstr("Dataset Id is empty")));
-}
-
 TEST(ListDatasetsRequestTest, Success) {
   auto const* filter = "labels.filter1";
   auto const* page_token = "123";
@@ -120,17 +95,6 @@ TEST(ListDatasetsRequestTest, Success) {
   expected.AddQueryParameter("filter", filter);
 
   EXPECT_EQ(expected, *actual);
-}
-
-TEST(ListDatasetsRequestTest, EmptyProjectId) {
-  ListDatasetsRequest request("");
-  Options opts;
-  opts.set<EndpointOption>("bigquery.googleapis.com");
-  internal::OptionsSpan span(opts);
-
-  auto rest_request = BuildRestRequest(request);
-  EXPECT_THAT(rest_request, StatusIs(StatusCode::kInvalidArgument,
-                                     HasSubstr("Project Id is empty")));
 }
 
 TEST(GetDatasetRequest, DebugString) {
