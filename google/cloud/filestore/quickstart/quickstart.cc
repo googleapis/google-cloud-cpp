@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/filestore/cloud_filestore_manager_client.h"
+#include "google/cloud/filestore/v1/cloud_filestore_manager_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace filestore = ::google::cloud::filestore;
+  namespace filestore = ::google::cloud::filestore_v1;
   auto client = filestore::CloudFilestoreManagerClient(
       filestore::MakeCloudFilestoreManagerConnection());
 

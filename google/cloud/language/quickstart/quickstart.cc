@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/language/language_client.h"
+#include "google/cloud/language/v1/language_client.h"
 #include <iostream>
 
 auto constexpr kText = R"""(
@@ -27,12 +27,12 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace language = ::google::cloud::language;
+  namespace language = ::google::cloud::language_v1;
   auto client = language::LanguageServiceClient(
       language::MakeLanguageServiceConnection());
 
-  language::v1::Document document;
-  document.set_type(language::v1::Document::PLAIN_TEXT);
+  google::cloud::language::v1::Document document;
+  document.set_type(google::cloud::language::v1::Document::PLAIN_TEXT);
   document.set_content(kText);
   document.set_language("en-US");
 
@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) try {
   if (!response) throw std::move(response).status();
 
   for (auto const& entity : response->entities()) {
-    if (entity.type() != language::v1::Entity::NUMBER) continue;
+    if (entity.type() != google::cloud::language::v1::Entity::NUMBER) continue;
     std::cout << entity.DebugString() << "\n";
   }
 

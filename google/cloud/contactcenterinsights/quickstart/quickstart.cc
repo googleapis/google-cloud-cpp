@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/contactcenterinsights/contact_center_insights_client.h"
+#include "google/cloud/contactcenterinsights/v1/contact_center_insights_client.h"
 #include <google/protobuf/util/time_util.h>
 #include <iostream>
 
@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace ccai = ::google::cloud::contactcenterinsights;
+  namespace ccai = ::google::cloud::contactcenterinsights_v1;
   auto client = ccai::ContactCenterInsightsClient(
       ccai::MakeContactCenterInsightsConnection());
 

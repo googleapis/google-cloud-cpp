@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/servicecontrol/service_controller_client.h"
+#include "google/cloud/servicecontrol/v1/service_controller_client.h"
 #include "google/cloud/project.h"
 #include <google/protobuf/util/time_util.h>
 #include <iostream>
@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace servicecontrol = ::google::cloud::servicecontrol;
+  namespace servicecontrol = ::google::cloud::servicecontrol_v1;
   auto client = servicecontrol::ServiceControllerClient(
       servicecontrol::MakeServiceControllerConnection());
 

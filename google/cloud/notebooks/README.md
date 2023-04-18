@@ -21,7 +21,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/notebooks/managed_notebook_client.h"
+#include "google/cloud/notebooks/v1/managed_notebook_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace notebooks = ::google::cloud::notebooks;
+  namespace notebooks = ::google::cloud::notebooks_v1;
   auto client = notebooks::ManagedNotebookServiceClient(
       notebooks::MakeManagedNotebookServiceConnection());
 

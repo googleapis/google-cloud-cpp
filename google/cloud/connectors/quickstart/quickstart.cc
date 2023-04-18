@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/connectors/connectors_client.h"
+#include "google/cloud/connectors/v1/connectors_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace connectors = ::google::cloud::connectors;
+  namespace connectors = ::google::cloud::connectors_v1;
   auto client =
       connectors::ConnectorsClient(connectors::MakeConnectorsConnection());
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/policytroubleshooter/iam_checker_client.h"
+#include "google/cloud/policytroubleshooter/v1/iam_checker_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -23,11 +23,11 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace policytroubleshooter = ::google::cloud::policytroubleshooter;
+  namespace policytroubleshooter = ::google::cloud::policytroubleshooter_v1;
   auto client = policytroubleshooter::IamCheckerClient(
       policytroubleshooter::MakeIamCheckerConnection());
 
-  policytroubleshooter::v1::TroubleshootIamPolicyRequest request;
+  google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest request;
   auto& access_tuple = *request.mutable_access_tuple();
   access_tuple.set_principal(argv[1]);
   access_tuple.set_full_resource_name(argv[2]);

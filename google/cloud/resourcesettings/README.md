@@ -21,7 +21,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/resourcesettings/resource_settings_client.h"
+#include "google/cloud/resourcesettings/v1/resource_settings_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace resourcesettings = ::google::cloud::resourcesettings;
+  namespace resourcesettings = ::google::cloud::resourcesettings_v1;
   auto client = resourcesettings::ResourceSettingsServiceClient(
       resourcesettings::MakeResourceSettingsServiceConnection());
 

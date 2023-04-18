@@ -22,7 +22,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/privateca/certificate_authority_client.h"
+#include "google/cloud/privateca/v1/certificate_authority_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace privateca = ::google::cloud::privateca;
+  namespace privateca = ::google::cloud::privateca_v1;
   auto client = privateca::CertificateAuthorityServiceClient(
       privateca::MakeCertificateAuthorityServiceConnection());
 

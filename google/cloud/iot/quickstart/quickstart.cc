@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/iot/device_manager_client.h"
+#include "google/cloud/iot/v1/device_manager_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace iot = ::google::cloud::iot;
+  namespace iot = ::google::cloud::iot_v1;
   auto client = iot::DeviceManagerClient(iot::MakeDeviceManagerConnection());
 
   auto const project = google::cloud::Project(argv[1]);

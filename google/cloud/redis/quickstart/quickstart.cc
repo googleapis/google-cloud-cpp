@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/redis/cloud_redis_client.h"
+#include "google/cloud/redis/v1/cloud_redis_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace redis = ::google::cloud::redis;
+  namespace redis = ::google::cloud::redis_v1;
   auto client = redis::CloudRedisClient(redis::MakeCloudRedisConnection());
 
   auto const project_id = std::string(argv[1]);

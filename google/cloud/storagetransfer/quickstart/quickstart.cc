@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/storagetransfer/storage_transfer_client.h"
+#include "google/cloud/storagetransfer/v1/storage_transfer_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace storagetransfer = ::google::cloud::storagetransfer;
+  namespace storagetransfer = ::google::cloud::storagetransfer_v1;
   auto client = storagetransfer::StorageTransferServiceClient(
       storagetransfer::MakeStorageTransferServiceConnection());
 

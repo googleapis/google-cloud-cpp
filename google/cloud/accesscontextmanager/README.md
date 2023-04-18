@@ -20,7 +20,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/accesscontextmanager/access_context_manager_client.h"
+#include "google/cloud/accesscontextmanager/v1/access_context_manager_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace accesscontextmanager = ::google::cloud::accesscontextmanager;
+  namespace accesscontextmanager = ::google::cloud::accesscontextmanager_v1;
   auto client = accesscontextmanager::AccessContextManagerClient(
       accesscontextmanager::MakeAccessContextManagerConnection());
 

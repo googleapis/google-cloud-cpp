@@ -20,7 +20,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/datacatalog/data_catalog_client.h"
+#include "google/cloud/datacatalog/v1/data_catalog_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace datacatalog = ::google::cloud::datacatalog;
+  namespace datacatalog = ::google::cloud::datacatalog_v1;
   auto client =
       datacatalog::DataCatalogClient(datacatalog::MakeDataCatalogConnection());
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/networkconnectivity/hub_client.h"
+#include "google/cloud/networkconnectivity/v1/hub_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace networkconnectivity = ::google::cloud::networkconnectivity;
+  namespace networkconnectivity = ::google::cloud::networkconnectivity_v1;
   auto client = networkconnectivity::HubServiceClient(
       networkconnectivity::MakeHubServiceConnection());
 

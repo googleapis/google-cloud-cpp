@@ -23,7 +23,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/trace/trace_client.h"
+#include "google/cloud/trace/v2/trace_client.h"
 #include "google/cloud/project.h"
 #include <google/protobuf/util/time_util.h>
 #include <iostream>
@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace trace = ::google::cloud::trace;
+  namespace trace = ::google::cloud::trace_v2;
   namespace v2 = ::google::devtools::cloudtrace::v2;
   using ::google::protobuf::util::TimeUtil;
 

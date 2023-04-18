@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/vpcaccess/vpc_access_client.h"
+#include "google/cloud/vpcaccess/v1/vpc_access_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace vpcaccess = ::google::cloud::vpcaccess;
+  namespace vpcaccess = ::google::cloud::vpcaccess_v1;
   auto client = vpcaccess::VpcAccessServiceClient(
       vpcaccess::MakeVpcAccessServiceConnection());
 

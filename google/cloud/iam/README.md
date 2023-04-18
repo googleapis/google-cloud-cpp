@@ -19,7 +19,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/iam/iam_client.h"
+#include "google/cloud/iam/admin/v1/iam_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) try {
   }
 
   // Create a namespace alias to make the code easier to read.
-  namespace iam = ::google::cloud::iam;
+  namespace iam = ::google::cloud::iam_admin_v1;
   iam::IAMClient client(iam::MakeIAMConnection());
   auto const project = google::cloud::Project(argv[1]);
   std::cout << "Service Accounts for project: " << project.project_id() << "\n";

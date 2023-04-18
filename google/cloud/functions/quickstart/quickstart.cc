@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/functions/cloud_functions_client.h"
+#include "google/cloud/functions/v1/cloud_functions_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace functions = ::google::cloud::functions;
+  namespace functions = ::google::cloud::functions_v1;
   auto client = functions::CloudFunctionsServiceClient(
       functions::MakeCloudFunctionsServiceConnection());
 

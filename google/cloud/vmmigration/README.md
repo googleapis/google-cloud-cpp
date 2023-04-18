@@ -20,7 +20,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/vmmigration/vm_migration_client.h"
+#include "google/cloud/vmmigration/v1/vm_migration_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace vmmigration = ::google::cloud::vmmigration;
+  namespace vmmigration = ::google::cloud::vmmigration_v1;
   auto client =
       vmmigration::VmMigrationClient(vmmigration::MakeVmMigrationConnection());
 

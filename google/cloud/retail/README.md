@@ -21,7 +21,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/retail/catalog_client.h"
+#include "google/cloud/retail/v2/catalog_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace retail = ::google::cloud::retail;
+  namespace retail = ::google::cloud::retail_v2;
   auto client =
       retail::CatalogServiceClient(retail::MakeCatalogServiceConnection());
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/beyondcorp/app_connectors_client.h"
+#include "google/cloud/beyondcorp/appconnectors/v1/app_connectors_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,9 +22,9 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace beyondcorp = ::google::cloud::beyondcorp;
-  auto client = beyondcorp::AppConnectorsServiceClient(
-      beyondcorp::MakeAppConnectorsServiceConnection());
+  namespace appconnectors = ::google::cloud::beyondcorp_appconnectors_v1;
+  auto client = appconnectors::AppConnectorsServiceClient(
+      appconnectors::MakeAppConnectorsServiceConnection());
 
   auto const parent =
       std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
