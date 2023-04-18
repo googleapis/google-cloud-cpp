@@ -67,7 +67,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * accessor.
  *
  * Perhaps the most convenient way to access the `Values` in a row is through
- * the variety of "get" accessors. A user may access a column's `Value' by
+ * the variety of "get" accessors. A user may access a column's `Value` by
  * calling `get` with a `std::size_t` 0-indexed position, or a `std::string`
  * column name. Furthermore, callers may directly extract the native C++ type
  * by specifying the C++ type along with the column's position or name.
