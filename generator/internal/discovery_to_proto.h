@@ -61,6 +61,14 @@ std::vector<DiscoveryFile> CreateFilesFromResources(
     std::string const& product_name, std::string const& version,
     std::string const& output_path);
 
+// Creates a DiscoveryFile object for each resource and each group of
+// non-request types.
+std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
+    std::map<std::string, DiscoveryResource> const& resources,
+    std::map<std::string, DiscoveryTypeVertex> const& types,
+    std::string const& product_name, std::string const& version,
+    std::string const& output_path);
+
 Status GenerateProtosFromDiscoveryDoc(std::string const& url,
                                       std::string const& protobuf_proto_path,
                                       std::string const& googleapis_proto_path,

@@ -41,6 +41,10 @@ DiscoveryTypeVertex::DiscoveryTypeVertex() : json_("") {}
 DiscoveryTypeVertex::DiscoveryTypeVertex(std::string name, nlohmann::json json)
     : name_(std::move(name)), json_(std::move(json)) {}
 
+bool DiscoveryTypeVertex::IsSynthesizedRequestType() const {
+  return json_.value("synthesized_request", false);
+}
+
 void DiscoveryTypeVertex::AddNeedsTypeName(std::string type_name) {
   needs_.insert(std::move(type_name));
 }

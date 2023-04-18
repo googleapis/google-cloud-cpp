@@ -849,6 +849,75 @@ TEST(CreateFilesFromResourcesTest, EmptyResources) {
   EXPECT_THAT(result, IsEmpty());
 }
 
+TEST(AssignResourcesAndTypesToFilesTest,
+     TypesContainsBothSynthesizedAndNonsynthesizedTypes) {
+  auto constexpr kResourceJson = R"""({
+  "methods": {
+    "create": {
+      "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform"
+      ],
+      "path": "projects/{project}/zones/{zone}/myResources/{fooId}",
+      "httpMethod": "POST",
+      "parameters": {
+        "project": {
+          "type": "string"
+        },
+        "zone": {
+          "type": "string"
+        },
+        "fooId": {
+          "type": "string"
+        }
+      },
+      "response": {
+        "$ref": "Operation"
+      },
+      "request": {
+        "$ref": "Foo"
+      },
+      "parameterOrder": [
+        "project",
+        "zone",
+        "fooId"
+      ]
+    }
+  }
+})""";
+  auto const resource_json =
+      nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  std::map<std::string, DiscoveryResource> resources;
+  resources.emplace("foos", DiscoveryResource("foos", "", "", resource_json));
+  std::map<std::string, DiscoveryTypeVertex> types;
+  auto constexpr kSynthesizedTypeJson = R"""({
+"synthesized_request": true
+})""";
+  auto const synthesized_type_json =
+      nlohmann::json::parse(kSynthesizedTypeJson, nullptr, false);
+  ASSERT_TRUE(synthesized_type_json.is_object());
+  types.emplace("Foos.CreateRequest",
+                DiscoveryTypeVertex("CreateRequest", synthesized_type_json));
+  auto constexpr kOperationTypeJson = R"""({
+})""";
+  auto const operation_type_json =
+      nlohmann::json::parse(kOperationTypeJson, nullptr, false);
+  ASSERT_TRUE(operation_type_json.is_object());
+  types.emplace("Operation",
+                DiscoveryTypeVertex("Operation", operation_type_json));
+  auto result = AssignResourcesAndTypesToFiles(resources, types, "product_name",
+                                               "version", "output_path");
+  ASSERT_THAT(result.size(), Eq(2));
+  EXPECT_THAT(
+      result[0].file_path(),
+      Eq("output_path/google/cloud/product_name/foos/version/foos.proto"));
+  EXPECT_THAT(result[0].types(), IsEmpty());
+  EXPECT_THAT(result[1].file_path(), Eq("output_path/google/cloud/product_name/"
+                                        "version/internal/common.proto"));
+  ASSERT_THAT(result[1].types().size(), Eq(1));
+  EXPECT_THAT(result[1].types().front()->name(), Eq("Operation"));
+}
+
 }  // namespace
 }  // namespace generator_internal
 }  // namespace cloud

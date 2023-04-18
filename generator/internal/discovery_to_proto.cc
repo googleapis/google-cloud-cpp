@@ -274,6 +274,36 @@ std::vector<DiscoveryFile> CreateFilesFromResources(
   return files;
 }
 
+std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
+    std::map<std::string, DiscoveryResource> const& resources,
+    std::map<std::string, DiscoveryTypeVertex> const& types,
+    std::string const& product_name, std::string const& version,
+    std::string const& output_path) {
+  auto files =
+      CreateFilesFromResources(resources, product_name, version, output_path);
+
+  // TODO(#11190): For the first phase of implementation, we create one proto
+  // per resource and its request types. For the remainder of the types, we
+  // dump them all into one internal/common.proto file. This should be reworked
+  // to split the common types into multiple files and inject the corresponding
+  // import statements where needed.
+  std::vector<DiscoveryTypeVertex const*> common_types;
+  for (auto const& t : types) {
+    if (!t.second.IsSynthesizedRequestType()) {
+      common_types.push_back(&t.second);
+    }
+  }
+
+  files.emplace_back(
+      nullptr,
+      absl::StrCat(output_path,
+                   absl::StrFormat("/google/cloud/%s/%s/internal/common.proto",
+                                   product_name, version)),
+      absl::StrFormat("google.cloud.cpp.%s.%s", product_name, version), version,
+      std::move(common_types));
+  return files;
+}
+
 Status GenerateProtosFromDiscoveryDoc(std::string const& url,
                                       std::string const&, std::string const&,
                                       std::string const&) {
