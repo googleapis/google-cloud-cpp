@@ -222,7 +222,7 @@ void Recordable::AddLink(
   auto& proto = *link.mutable_attributes();
   attributes.ForEachKeyValue(
       [&proto](opentelemetry::nostd::string_view key,
-               opentelemetry::common::AttributeValue value) {
+               opentelemetry::common::AttributeValue const& value) {
         AddAttribute(proto, key, value, kSpanLinkAttributeLimit);
         return proto.attribute_map().size() != kSpanLinkAttributeLimit;
       });
