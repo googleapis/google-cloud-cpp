@@ -26,13 +26,6 @@ namespace cloud {
 namespace generator_internal {
 
 /**
- * Determines if the given method meets the criteria for pagination.
- *
- * https://google.aip.dev/client-libraries/4233
- */
-bool IsPaginated(google::protobuf::MethodDescriptor const& method);
-
-/**
  * Determines if the given method has either client-side streaming,
  * or server-side streaming, or both.
  */
@@ -88,16 +81,6 @@ bool HasRoutingHeader(google::protobuf::MethodDescriptor const& method);
  * supporting REST transport.
  */
 bool HasHttpAnnotation(google::protobuf::MethodDescriptor const& method);
-
-/**
- * If method meets pagination criteria, provides paginated field type and field
- * name.
- *
- * https://google.aip.dev/client-libraries/4233
- */
-google::cloud::optional<
-    std::pair<std::string, google::protobuf::Descriptor const*>>
-DeterminePagination(google::protobuf::MethodDescriptor const& method);
 
 /**
  * Returns true if all predicates return true.
