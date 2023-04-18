@@ -43,21 +43,24 @@ class KVIterable : public opentelemetry::common::KeyValueIterable {
  public:
   using Data = std::map<std::string, std::string>;
 
-  explicit KVIterable(Data data) : data_(std::move(data)) {}
+  explicit KVIterable(Data data, std::size_t* iteration_count = nullptr)
+      : data_(std::move(data)), iteration_count_(iteration_count) {}
 
   bool ForEachKeyValue(opentelemetry::nostd::function_ref<
                        bool(opentelemetry::nostd::string_view,
                             opentelemetry::common::AttributeValue)>
                            callback) const noexcept override {
     return std::all_of(data_.begin(), data_.end(), [&](auto const& kv) {
+      if (iteration_count_) ++(*iteration_count_);
       return callback(kv.first, kv.second);
     });
   }
 
-  size_t size() const noexcept override { return data_.size(); }
+  std::size_t size() const noexcept override { return data_.size(); }
 
  private:
   Data data_;
+  std::size_t* iteration_count_;
 };
 
 template <typename T>
@@ -280,9 +283,10 @@ TEST(Recordable, AddLink) {
 
   opentelemetry::trace::SpanContext span_context(trace_id, span_id, {}, false);
 
+  auto link_attributes = KVIterable({{"key1", "value1"}, {"key2", "value2"}});
+
   auto rec = Recordable(Project(kProjectId));
-  rec.AddLink(span_context,
-              KVIterable({{"key1", "value1"}, {"key2", "value2"}}));
+  rec.AddLink(span_context, link_attributes);
   auto proto = std::move(rec).as_proto();
   EXPECT_EQ(proto.links().dropped_links_count(), 0);
   EXPECT_THAT(
@@ -305,17 +309,22 @@ TEST(Recordable, DropsNewLinkAtLimit) {
 
 TEST(Recordable, DropsNewLinkAttributeAtLimit) {
   KVIterable::Data too_many_attributes;
-  for (std::size_t i = 0; i != kSpanLinkAttributeLimit + 1; ++i) {
+  for (std::size_t i = 0; i != kSpanLinkAttributeLimit + 10; ++i) {
     too_many_attributes["key" + std::to_string(i)] = "value";
   }
+  std::size_t iteration_count = 0;
+  auto link_attributes =
+      KVIterable(std::move(too_many_attributes), &iteration_count);
 
   auto rec = Recordable(Project(kProjectId));
-  rec.AddLink({false, false}, KVIterable(std::move(too_many_attributes)));
+  rec.AddLink({false, false}, std::move(link_attributes));
   auto proto = std::move(rec).as_proto();
   EXPECT_THAT(proto.links().link(),
               ElementsAre(Link(_, _,
                                Attributes(SizeIs(kSpanLinkAttributeLimit),
-                                          /*dropped_attributes_count=*/1))));
+                                          /*dropped_attributes_count=*/10))));
+  // Verify that we stop iterating as soon as possible.
+  EXPECT_EQ(iteration_count, kSpanLinkAttributeLimit);
 }
 
 TEST(Recordable, SetStatus) {
