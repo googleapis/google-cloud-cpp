@@ -97,8 +97,9 @@ TEST(DoxygenGroups, GroupsToc) {
   ASSERT_TRUE(doc.load_string(kXml));
   auto const actual = GroupsToc(doc);
 
-  EXPECT_THAT(actual, ElementsAre(FieldsAre("group__g1.yml", "group__g1"),
-                                  FieldsAre("group__g2.yml", "group__g2")));
+  EXPECT_THAT(actual,
+              ElementsAre(FieldsAre("group__g1", "Group 1", "group__g1.yml"),
+                          FieldsAre("group__g2", "Group 2", "group__g2.yml")));
 }
 
 }  // namespace
