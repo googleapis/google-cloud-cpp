@@ -182,7 +182,7 @@ time {
 #     https://github.com/cheshirekow/cmake_format
 printf "%-50s" "Running cmake-format:" >&2
 time {
-  git_files -z -- '**/CMakeLists.txt' '*.cmake' |
+  git_files -z -- 'CMakeLists.txt' '**/CMakeLists.txt' '*.cmake' |
     xargs -r -P "$(nproc)" -n 1 -0 cmake-format -i
 }
 

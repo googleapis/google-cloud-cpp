@@ -100,7 +100,10 @@ option(GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN "Generate Doxygen documentation" OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN)
 
 # Compile the DocFX tool.
-option(GOOGLE_CLOUD_CPP_INTERNAL_DOCFX "Compile the docfx tool. Only google-cloud-cpp developers are expected to use this flag." OFF)
+option(
+    GOOGLE_CLOUD_CPP_INTERNAL_DOCFX
+    "Compile the docfx tool. Only google-cloud-cpp developers are expected to use this flag."
+    OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_INTERNAL_DOCFX)
 
 # Generate docs with relative URLs matching with the directory structure on
@@ -114,9 +117,14 @@ option(GOOGLE_CLOUD_CPP_USE_MAIN_FOR_REFDOC_LINKS
        "Use main as the version part for refdoc relative links" OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_USE_MAIN_FOR_REFDOC_LINKS)
 
-option(GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND
-        "Enable the workarounds for [ctype = CORD] when using Protobuf < v23. More details at https://github.com/googleapis/google-cloud-cpp/blob/main/doc/ctype-cord-workaround.md"
-        OFF)
+option(
+    GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND
+    [==[Enable the workarounds for [ctype = CORD] when using Protobuf < v23.
+More details at
+
+https://github.com/googleapis/google-cloud-cpp/blob/main/doc/ctype-cord-workaround.md
+]==]
+    OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
 
 set(GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL
@@ -201,8 +209,8 @@ mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
 
 # Add any subdirectories configured in the application.
 if (GOOGLE_CLOUD_CPP_INTERNAL_DOCFX)
-    # `docfx/` must be included before any library directories. The tool is
-    # used to generate the library documentation.
+    # `docfx/` must be included before any library directories. The tool is used
+    # to generate the library documentation.
     add_subdirectory(docfx)
 endif ()
 add_subdirectory(google/cloud)
