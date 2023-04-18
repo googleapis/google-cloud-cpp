@@ -80,6 +80,8 @@ add_library(
     internal/option_defaults_generator.h
     internal/options_generator.cc
     internal/options_generator.h
+    internal/pagination.cc
+    internal/pagination.h
     internal/predicate_utils.cc
     internal/predicate_utils.h
     internal/printer.h
@@ -199,6 +201,7 @@ function (google_cloud_cpp_generator_define_tests)
         internal/discovery_type_vertex_test.cc
         internal/format_class_comments_test.cc
         internal/format_method_comments_test.cc
+        internal/pagination_test.cc
         internal/predicate_utils_test.cc
         internal/printer_test.cc
         internal/resolve_comment_references_test.cc
