@@ -14,19 +14,19 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
+#include "google/cloud/storage/testing/retry_http_request.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <chrono>
-#include <functional>
-#include <thread>
 
 namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
+using ::google::cloud::storage::testing::RetryHttpRequest;
 
 constexpr auto kJsonEnvVar = "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON";
 constexpr auto kP12EnvVar = "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12";
@@ -63,17 +63,6 @@ class KeyFileIntegrationTest
   std::string bucket_name_;
   std::string key_filename_;
   std::string service_account_;
-};
-
-StatusOr<internal::HttpResponse> RetryHttpRequest(
-    std::function<internal::CurlRequest()> const& factory) {
-  StatusOr<internal::HttpResponse> response;
-  for (int i = 0; i != 3; ++i) {
-    response = factory().MakeRequest({});
-    if (response) return response;
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-  }
-  return response;
 };
 
 TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadDefaultAccount) {

@@ -414,6 +414,8 @@ if (BUILD_TESTING)
         testing/random_names.h
         testing/remove_stale_buckets.cc
         testing/remove_stale_buckets.h
+        testing/retry_http_request.cc
+        testing/retry_http_request.h
         testing/retry_tests.h
         testing/storage_integration_test.cc
         testing/storage_integration_test.h

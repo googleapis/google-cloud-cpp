@@ -14,33 +14,23 @@
 
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/storage/testing/retry_http_request.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 #include <chrono>
-#include <functional>
-#include <thread>
 
 namespace google {
 namespace cloud {
 namespace storage {
 namespace {
 
+using ::google::cloud::storage::testing::RetryHttpRequest;
+
 class ServiceAccountCredentialsTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
-
-StatusOr<internal::HttpResponse> RetryHttpRequest(
-    std::function<internal::CurlRequest()> const& factory) {
-  StatusOr<internal::HttpResponse> response;
-  for (int i = 0; i != 3; ++i) {
-    response = factory().MakeRequest({});
-    if (response) return response;
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-  }
-  return response;
-}
 
 TEST_F(ServiceAccountCredentialsTest, UserInfoOAuth2) {
   auto filename = google::cloud::internal::GetEnv(
