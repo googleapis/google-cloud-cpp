@@ -212,6 +212,55 @@ std::string MakeDatasetJsonText() {
     "type":"d-type"})";
 }
 
+void AssertEquals(ListFormatDataset const& lhs, ListFormatDataset const& rhs) {
+  EXPECT_EQ(lhs.kind, rhs.kind);
+  EXPECT_EQ(lhs.id, rhs.id);
+  EXPECT_EQ(lhs.friendly_name, rhs.friendly_name);
+  EXPECT_EQ(lhs.type, rhs.type);
+  EXPECT_EQ(lhs.location, rhs.location);
+
+  ASSERT_THAT(lhs.labels, Not(IsEmpty()));
+  ASSERT_THAT(rhs.labels, Not(IsEmpty()));
+  EXPECT_EQ(lhs.labels.size(), rhs.labels.size());
+  EXPECT_EQ(lhs.labels.find("l1")->second, rhs.labels.find("l1")->second);
+  EXPECT_EQ(lhs.labels.find("l2")->second, rhs.labels.find("l2")->second);
+
+  EXPECT_EQ(lhs.dataset_reference.dataset_id, rhs.dataset_reference.dataset_id);
+  EXPECT_EQ(lhs.dataset_reference.project_id, rhs.dataset_reference.project_id);
+}
+
+std::string MakeListFormatDatasetJsonText() {
+  return R"({
+    "kind":"d-kind",
+    "id":"d-id",
+    "friendly_name":"d-friendly-name",
+    "location":"d-location",
+    "type":"DEFAULT",
+    "dataset_reference": {"project_id":"p123", "dataset_id":"d123"},
+    "labels":{"l1":"v1","l2":"v2"}
+})";
+}
+
+ListFormatDataset MakeListFormatDataset() {
+  std::map<std::string, std::string> labels;
+  labels.insert({"l1", "v1"});
+  labels.insert({"l2", "v2"});
+
+  auto dataset_ref = MakeDatasetReference("p123", "d123");
+
+  ListFormatDataset expected;
+  expected.kind = "d-kind";
+  expected.id = "d-id";
+  expected.friendly_name = "d-friendly-name";
+  expected.location = "d-location";
+  expected.type = "DEFAULT";
+  expected.location = "d-location";
+  expected.labels = labels;
+  expected.dataset_reference = dataset_ref;
+
+  return expected;
+}
+
 }  // namespace
 
 TEST(DatasetTest, DatasetToJson) {
@@ -235,6 +284,32 @@ TEST(DatasetTest, DatasetFromJson) {
   Dataset expected_dataset = MakeDataset();
 
   Dataset actual_dataset;
+  from_json(json, actual_dataset);
+
+  AssertEquals(expected_dataset, actual_dataset);
+}
+
+TEST(DatasetTest, ListFormatDatasetToJson) {
+  auto const text = MakeListFormatDatasetJsonText();
+  auto expected_json = nlohmann::json::parse(text, nullptr, false);
+  EXPECT_TRUE(expected_json.is_object());
+
+  auto input_dataset = MakeListFormatDataset();
+
+  nlohmann::json actual_json;
+  to_json(actual_json, input_dataset);
+
+  EXPECT_EQ(expected_json, actual_json);
+}
+
+TEST(DatasetTest, ListFormatDatasetFromJson) {
+  auto const text = MakeListFormatDatasetJsonText();
+  auto json = nlohmann::json::parse(text, nullptr, false);
+  EXPECT_TRUE(json.is_object());
+
+  auto expected_dataset = MakeListFormatDataset();
+
+  ListFormatDataset actual_dataset;
   from_json(json, actual_dataset);
 
   AssertEquals(expected_dataset, actual_dataset);

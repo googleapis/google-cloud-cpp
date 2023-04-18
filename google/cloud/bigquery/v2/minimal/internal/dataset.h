@@ -179,6 +179,20 @@ struct Dataset {
   StorageBillingModel storage_billing_model;
 };
 
+struct ListFormatDataset {
+  std::string kind;
+  std::string id;
+  std::string friendly_name;
+  std::string location;
+  std::string type;
+
+  DatasetReference dataset_reference;
+  std::map<std::string, std::string> labels;
+};
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ListFormatDataset, kind, id,
+                                                friendly_name, location, type,
+                                                dataset_reference, labels);
+
 void to_json(nlohmann::json& j, Dataset const& d);
 void from_json(nlohmann::json const& j, Dataset& d);
 
