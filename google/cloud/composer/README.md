@@ -20,7 +20,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/composer/environments_client.h"
+#include "google/cloud/composer/v1/environments_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace composer = ::google::cloud::composer;
+  namespace composer = ::google::cloud::composer_v1;
   auto client =
       composer::EnvironmentsClient(composer::MakeEnvironmentsConnection());
 

@@ -24,8 +24,8 @@ int main(int argc, char* argv[]) try {
   }
 
   // Create a namespace alias to make the code easier to read.
-  namespace iam_admin = ::google::cloud::iam_admin_v1;
-  iam_admin::IAMClient client(iam_admin::MakeIAMConnection());
+  namespace iam = ::google::cloud::iam_admin_v1;
+  iam::IAMClient client(iam::MakeIAMConnection());
   auto const project = google::cloud::Project(argv[1]);
   std::cout << "Service Accounts for project: " << project.project_id() << "\n";
   int count = 0;
