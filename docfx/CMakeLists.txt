@@ -27,7 +27,7 @@ find_package(pugixml CONFIG REQUIRED)
 find_package(yaml-cpp CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
 
-include(EnableWerror)
+include(GoogleCloudCppCommon)
 
 add_library(
     docfx # cmake-format: sort

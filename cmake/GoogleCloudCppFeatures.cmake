@@ -173,10 +173,6 @@ function (google_cloud_cpp_enable_deps)
     if (experimental-opentelemetry_sdk IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 trace)
     endif ()
-    # Building the documentation for each library depends on the docfx program.
-    if (internal-docfx IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 internal-docfx)
-    endif ()
     set(GOOGLE_CLOUD_CPP_ENABLE
         "${GOOGLE_CLOUD_CPP_ENABLE}"
         PARENT_SCOPE)
@@ -230,10 +226,7 @@ endfunction ()
 # additional samples that are enabled if needed.
 function (google_cloud_cpp_enable_features)
     foreach (feature ${GOOGLE_CLOUD_CPP_ENABLE})
-        if ("${feature}" STREQUAL "internal-docfx")
-            add_subdirectory(docfx)
-            continue()
-        elseif ("${feature}" STREQUAL "generator")
+        if ("${feature}" STREQUAL "generator")
             add_subdirectory(generator)
         elseif ("${feature}" STREQUAL "experimental-storage-grpc")
             if (NOT ("storage" IN_LIST GOOGLE_CLOUD_CPP_ENABLE))

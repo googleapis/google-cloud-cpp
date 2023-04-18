@@ -99,6 +99,10 @@ endif ()
 option(GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN "Generate Doxygen documentation" OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN)
 
+# Compile the DocFX tool.
+option(GOOGLE_CLOUD_CPP_INTERNAL_DOCFX "Compile the docfx tool. Only google-cloud-cpp developers are expected to use this flag." OFF)
+mark_as_advanced(GOOGLE_CLOUD_CPP_INTERNAL_DOCFX)
+
 # Generate docs with relative URLs matching with the directory structure on
 # googleapis.dev hosting.
 option(GOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV
@@ -196,6 +200,11 @@ cmake_dependent_option(
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
 
 # Add any subdirectories configured in the application.
+if (GOOGLE_CLOUD_CPP_INTERNAL_DOCFX)
+    # `docfx/` must be included before any library directories. The tool is
+    # used to generate the library documentation.
+    add_subdirectory(docfx)
+endif ()
 add_subdirectory(google/cloud)
 google_cloud_cpp_enable_features()
 
