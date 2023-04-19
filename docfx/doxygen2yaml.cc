@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "docfx/doxygen2yaml.h"
+#include "docfx/doxygen2children.h"
 #include "docfx/doxygen2markdown.h"
+#include "docfx/doxygen2references.h"
 #include "docfx/doxygen2syntax.h"
 #include "docfx/doxygen_errors.h"
 #include "docfx/public_docs.h"
@@ -129,9 +131,10 @@ std::vector<TocEntry> CompoundToc(Config const& cfg,
 
 std::string Compound2Yaml(Config const& cfg, pugi::xml_node const& node) {
   YAML::Emitter yaml;
-  StartDocFxYaml(yaml);
   YamlContext ctx;
   ctx.config = cfg;
+  yaml << YAML::BeginMap << YAML::Key << "items" << YAML::Value
+       << YAML::BeginSeq;
   (void)AppendIfEnum(yaml, ctx, node);
   (void)AppendIfTypedef(yaml, ctx, node);
   (void)AppendIfFriend(yaml, ctx, node);
@@ -140,16 +143,15 @@ std::string Compound2Yaml(Config const& cfg, pugi::xml_node const& node) {
   (void)AppendIfNamespace(yaml, ctx, node);
   (void)AppendIfClass(yaml, ctx, node);
   (void)AppendIfStruct(yaml, ctx, node);
+  yaml << YAML::EndSeq;
+
+  yaml << YAML::Key << "references" << YAML::Value
+       << ExtractReferences(ctx, node);
+  yaml << YAML::EndMap;
   return EndDocFxYaml(yaml);
 }
 
-void StartDocFxYaml(YAML::Emitter& yaml) {
-  yaml << YAML::BeginMap << YAML::Key << "items" << YAML::Value
-       << YAML::BeginSeq;
-}
-
 std::string EndDocFxYaml(YAML::Emitter& yaml) {
-  yaml << YAML::EndSeq << YAML::EndMap;
   auto result = std::string{"### YamlMime:UniversalReference\n"};
   result += yaml.c_str();
   result += "\n";
@@ -333,6 +335,10 @@ bool AppendIfNamespace(YAML::Emitter& yaml, YamlContext const& ctx,
   if (!summary.empty()) {
     yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
   }
+  auto const children = Children(ctx, node);
+  if (!children.empty()) {
+    yaml << YAML::Key << "children" << YAML::Value << children;
+  }
   yaml << YAML::EndMap;
   CompoundRecurse(yaml, NestedYamlContext(ctx, node), node);
   return true;
@@ -354,6 +360,10 @@ bool AppendIfClass(YAML::Emitter& yaml, YamlContext const& ctx,
   auto const summary = Summary(node);
   if (!summary.empty()) {
     yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
+  }
+  auto const children = Children(ctx, node);
+  if (!children.empty()) {
+    yaml << YAML::Key << "children" << YAML::Value << children;
   }
   yaml << YAML::EndMap;
   // TODO(#11233) - better handling for duplicate functions in Mock classes.
@@ -379,6 +389,10 @@ bool AppendIfStruct(YAML::Emitter& yaml, YamlContext const& ctx,
   auto const summary = Summary(node);
   if (!summary.empty()) {
     yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
+  }
+  auto const children = Children(ctx, node);
+  if (!children.empty()) {
+    yaml << YAML::Key << "children" << YAML::Value << children;
   }
   yaml << YAML::EndMap;
   CompoundRecurse(yaml, NestedYamlContext(ctx, node), node);
