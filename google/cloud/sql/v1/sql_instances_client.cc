@@ -98,12 +98,11 @@ StatusOr<google::cloud::sql::v1::Operation> SqlInstancesServiceClient::Insert(
   return connection_->Insert(request);
 }
 
-StatusOr<google::cloud::sql::v1::InstancesListResponse>
+StreamRange<google::cloud::sql::v1::DatabaseInstance>
 SqlInstancesServiceClient::List(
-    google::cloud::sql::v1::SqlInstancesListRequest const& request,
-    Options opts) {
+    google::cloud::sql::v1::SqlInstancesListRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->List(request);
+  return connection_->List(std::move(request));
 }
 
 StatusOr<google::cloud::sql::v1::InstancesListServerCasResponse>

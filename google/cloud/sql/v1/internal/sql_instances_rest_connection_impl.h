@@ -28,6 +28,7 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -82,8 +83,8 @@ class SqlInstancesServiceRestConnectionImpl
       google::cloud::sql::v1::SqlInstancesInsertRequest const& request)
       override;
 
-  StatusOr<google::cloud::sql::v1::InstancesListResponse> List(
-      google::cloud::sql::v1::SqlInstancesListRequest const& request) override;
+  StreamRange<google::cloud::sql::v1::DatabaseInstance> List(
+      google::cloud::sql::v1::SqlInstancesListRequest request) override;
 
   StatusOr<google::cloud::sql::v1::InstancesListServerCasResponse>
   ListServerCas(google::cloud::sql::v1::SqlInstancesListServerCasRequest const&

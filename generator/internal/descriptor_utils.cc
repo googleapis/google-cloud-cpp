@@ -1126,22 +1126,7 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
     method_vars["response_type"] =
         ProtoNameToCppName(method.output_type()->full_name());
     SetLongrunningOperationMethodVars(method, method_vars);
-    if (IsPaginated(method)) {
-      auto pagination_info = DeterminePagination(method);
-      method_vars["range_output_field_name"] = pagination_info->first;
-      // Add exception to AIP-4233 for response types that have exactly one
-      // repeated field that is of primitive type string.
-      method_vars["range_output_type"] =
-          pagination_info->second == nullptr
-              ? "std::string"
-              : ProtoNameToCppName(pagination_info->second->full_name());
-      if (pagination_info->second) {
-        method_vars["method_paginated_return_doxygen_link"] =
-            FormatDoxygenLink(*pagination_info->second);
-      } else {
-        method_vars["method_paginated_return_doxygen_link"] = "std::string";
-      }
-    }
+    AssignPaginationMethodVars(method, method_vars);
     SetMethodSignatureMethodVars(service, method, emitted_rpcs, omitted_rpcs,
                                  method_vars);
     auto parsed_http_info = ParseHttpExtension(method);

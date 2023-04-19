@@ -41,7 +41,7 @@ Idempotency SqlOperationsServiceConnectionIdempotencyPolicy::Get(
 }
 
 Idempotency SqlOperationsServiceConnectionIdempotencyPolicy::List(
-    google::cloud::sql::v1::SqlOperationsListRequest const&) {
+    google::cloud::sql::v1::SqlOperationsListRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

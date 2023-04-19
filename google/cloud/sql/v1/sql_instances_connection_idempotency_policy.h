@@ -66,7 +66,7 @@ class SqlInstancesServiceConnectionIdempotencyPolicy {
       google::cloud::sql::v1::SqlInstancesInsertRequest const& request);
 
   virtual google::cloud::Idempotency List(
-      google::cloud::sql::v1::SqlInstancesListRequest const& request);
+      google::cloud::sql::v1::SqlInstancesListRequest request);
 
   virtual google::cloud::Idempotency ListServerCas(
       google::cloud::sql::v1::SqlInstancesListServerCasRequest const& request);

@@ -74,8 +74,8 @@ class SqlInstancesServiceTracingConnection
       google::cloud::sql::v1::SqlInstancesInsertRequest const& request)
       override;
 
-  StatusOr<google::cloud::sql::v1::InstancesListResponse> List(
-      google::cloud::sql::v1::SqlInstancesListRequest const& request) override;
+  StreamRange<google::cloud::sql::v1::DatabaseInstance> List(
+      google::cloud::sql::v1::SqlInstancesListRequest request) override;
 
   StatusOr<google::cloud::sql::v1::InstancesListServerCasResponse>
   ListServerCas(google::cloud::sql::v1::SqlInstancesListServerCasRequest const&

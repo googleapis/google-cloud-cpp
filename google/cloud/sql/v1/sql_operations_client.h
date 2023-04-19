@@ -116,15 +116,15 @@ class SqlOperationsServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::sql::v1::OperationsListResponse,google/cloud/sql/v1/cloud_sql_operations.proto#L79}
+  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
   ///
-  /// [google.cloud.sql.v1.OperationsListResponse]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_operations.proto#L79}
+  /// [google.cloud.sql.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
   /// [google.cloud.sql.v1.SqlOperationsListRequest]:
   /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_operations.proto#L63}
   ///
-  StatusOr<google::cloud::sql::v1::OperationsListResponse> List(
-      google::cloud::sql::v1::SqlOperationsListRequest const& request,
+  StreamRange<google::cloud::sql::v1::Operation> List(
+      google::cloud::sql::v1::SqlOperationsListRequest request,
       Options opts = {});
 
  private:

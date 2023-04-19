@@ -18,6 +18,7 @@
 
 #include "google/cloud/sql/v1/internal/sql_operations_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -39,13 +40,15 @@ SqlOperationsServiceTracingConnection::Get(
   return internal::EndSpan(*span, child_->Get(request));
 }
 
-StatusOr<google::cloud::sql::v1::OperationsListResponse>
+StreamRange<google::cloud::sql::v1::Operation>
 SqlOperationsServiceTracingConnection::List(
-    google::cloud::sql::v1::SqlOperationsListRequest const& request) {
+    google::cloud::sql::v1::SqlOperationsListRequest request) {
   auto span =
       internal::MakeSpan("sql_v1::SqlOperationsServiceConnection::List");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->List(request));
+  auto sr = child_->List(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::sql::v1::Operation>(
+      std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

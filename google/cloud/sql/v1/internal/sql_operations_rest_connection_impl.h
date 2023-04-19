@@ -28,6 +28,7 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -51,8 +52,8 @@ class SqlOperationsServiceRestConnectionImpl
   StatusOr<google::cloud::sql::v1::Operation> Get(
       google::cloud::sql::v1::SqlOperationsGetRequest const& request) override;
 
-  StatusOr<google::cloud::sql::v1::OperationsListResponse> List(
-      google::cloud::sql::v1::SqlOperationsListRequest const& request) override;
+  StreamRange<google::cloud::sql::v1::Operation> List(
+      google::cloud::sql::v1::SqlOperationsListRequest request) override;
 
  private:
   std::unique_ptr<sql_v1::SqlOperationsServiceRetryPolicy> retry_policy() {

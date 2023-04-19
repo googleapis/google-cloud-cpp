@@ -81,7 +81,7 @@ Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::Insert(
 }
 
 Idempotency SqlInstancesServiceConnectionIdempotencyPolicy::List(
-    google::cloud::sql::v1::SqlInstancesListRequest const&) {
+    google::cloud::sql::v1::SqlInstancesListRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
