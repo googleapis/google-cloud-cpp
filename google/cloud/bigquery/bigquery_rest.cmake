@@ -26,6 +26,10 @@ add_library(
     v2/minimal/internal/dataset_request.h
     v2/minimal/internal/dataset_response.cc
     v2/minimal/internal/dataset_response.h
+    v2/minimal/internal/dataset_rest_stub.cc
+    v2/minimal/internal/dataset_rest_stub.h
+    v2/minimal/internal/dataset_rest_stub_factory.cc
+    v2/minimal/internal/dataset_rest_stub_factory.h
     v2/minimal/internal/job.cc
     v2/minimal/internal/job.h
     v2/minimal/internal/job_client.cc
@@ -51,7 +55,8 @@ add_library(
     v2/minimal/internal/job_rest_stub.h
     v2/minimal/internal/job_rest_stub_factory.cc
     v2/minimal/internal/job_rest_stub_factory.h
-    v2/minimal/internal/job_retry_policy.h)
+    v2/minimal/internal/job_retry_policy.h
+    v2/minimal/internal/rest_stub_utils.h)
 target_include_directories(
     google_cloud_cpp_bigquery_rest
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -139,6 +144,7 @@ function (bigquery_rest_define_tests)
         v2/minimal/internal/common_v2_resources_test.cc
         v2/minimal/internal/dataset_request_test.cc
         v2/minimal/internal/dataset_response_test.cc
+        v2/minimal/internal/dataset_rest_stub_test.cc
         v2/minimal/internal/dataset_test.cc
         v2/minimal/internal/job_client_test.cc
         v2/minimal/internal/job_connection_test.cc
