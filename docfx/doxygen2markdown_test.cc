@@ -472,6 +472,9 @@ TEST(Doxygen2Markdown, ParagraphSimpleContents) {
         <para id='test-005'><ref refid="test_id">The answer is 42.</ref></para>
         <para id='test-006'><ulink url="https://example.com/">The answer is 42.</ulink></para>
         <para id='test-007'><ndash/></para>
+        <para id='test-008'><ref refid="group__guac" kindref="compound">Authentication Components</ref></para>
+        <para id='test-009'><ref refid="classgoogle_1_1cloud_1_1Options" kindref="compound">google::cloud::Options</ref></para>
+        <para id='test-010'><ref refid="classgoogle_1_1cloud_1_1Options" kindref="compound">Options</ref></para>
     </doxygen>)xml";
 
   struct TestCase {
@@ -486,6 +489,10 @@ TEST(Doxygen2Markdown, ParagraphSimpleContents) {
       {"test-005", "\n\n[The answer is 42.](xref:test_id)"},
       {"test-006", "\n\n[The answer is 42.](https://example.com/)"},
       {"test-007", "\n\n&ndash;"},
+      {"test-008", "\n\n[Authentication Components](xref:group__guac)"},
+      {"test-009",
+       "\n\n[`google::cloud::Options`](xref:classgoogle_1_1cloud_1_1Options)"},
+      {"test-010", "\n\n[Options](xref:classgoogle_1_1cloud_1_1Options)"},
   };
 
   pugi::xml_document doc;
@@ -857,16 +864,16 @@ TEST(Doxygen2Markdown, VariableListSimple) {
     <doxygen version="1.9.1" xml:lang="en-US">
         <variablelist id='test-node'>
           <varlistentry><term>Class <ref refid="classgoogle_1_1cloud_1_1ConnectionOptions" kindref="compound">google::cloud::ConnectionOptions&lt; ConnectionTraits &gt;</ref>  </term></varlistentry>
-          <listitem><para>Use <ref refid="classgoogle_1_1cloud_1_1Options" kindref="compound">Options</ref> instead.</para></listitem>
+          <listitem><para>Use <computeroutput><ref refid="classgoogle_1_1cloud_1_1Options" kindref="compound">Options</ref></computeroutput> instead.</para></listitem>
           <varlistentry><term>Member <ref refid="test_only" kindref="member">TestClass::test</ref>(std::string prefix)</term></varlistentry>
           <listitem><para>Use <ref refid="test_ref" kindref="compound">Options</ref> instead.</para></listitem>
         </variablelist>
     </doxygen>)xml";
   auto constexpr kExpected = R"md(
-- Class [google::cloud::ConnectionOptions< ConnectionTraits >](xref:classgoogle_1_1cloud_1_1ConnectionOptions)
+- Class [`google::cloud::ConnectionOptions< ConnectionTraits >`](xref:classgoogle_1_1cloud_1_1ConnectionOptions)
 
-  Use [Options](xref:classgoogle_1_1cloud_1_1Options) instead.
-- Member [TestClass::test](xref:test_only)(std::string prefix)
+  Use [`Options`](xref:classgoogle_1_1cloud_1_1Options) instead.
+- Member [`TestClass::test`](xref:test_only)(std::string prefix)
 
   Use [Options](xref:test_ref) instead.)md";
 
