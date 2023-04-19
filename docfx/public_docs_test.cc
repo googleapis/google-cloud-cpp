@@ -32,6 +32,8 @@ TEST(PublicDocs, IncludeNoConfig) {
       <compounddef id="classstd_1_1array"></compounddef>
       <compounddef id="classgoogle_1_1cloud_1_1Options" prot="public">google::cloud::Options</compounddef>
       <compounddef id="classgoogle_1_1cloud_1_1Options_1_1DataHolder" prot="private"></compounddef>
+      <compounddef id="deprecated" kind="page"></compounddef>
+      <compounddef id="not-deprecated" kind="page"></compounddef>
     </doxygen>)xml";
   pugi::xml_document doc;
   doc.load_string(kXml);
@@ -51,6 +53,8 @@ TEST(PublicDocs, IncludeNoConfig) {
       {"classstd_1_1array", false},
       {"classgoogle_1_1cloud_1_1Options", true},
       {"classgoogle_1_1cloud_1_1Options_1_1DataHolder", false},
+      {"deprecated", false},
+      {"not-deprecated", true},
   };
 
   for (auto const& test : cases) {

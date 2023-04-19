@@ -16,6 +16,7 @@
 #include "docfx/config.h"
 #include "docfx/doxygen2markdown.h"
 #include "docfx/doxygen_errors.h"
+#include "docfx/public_docs.h"
 #include <algorithm>
 #include <iostream>
 #include <sstream>
@@ -118,16 +119,18 @@ std::string Page2Markdown(pugi::xml_node const& node) {
 
 std::vector<TocEntry> PagesToc(pugi::xml_document const& doc) {
   auto nodes = doc.select_nodes("//*[@kind='page']");
-  std::vector<TocEntry> result(nodes.size());
-  std::transform(nodes.begin(), nodes.end(), result.begin(), [](auto const& i) {
+  std::vector<TocEntry> result;
+  result.reserve(nodes.size());
+  for (auto const& i : nodes) {
     auto const& page = i.node();
+    if (!IncludeInPublicDocuments(page)) continue;
     auto const id = std::string_view{page.attribute("id").as_string()};
     std::ostringstream title;
     AppendTitle(title, MarkdownContext{}, page);
     auto filename =
         std::string(id == "indexpage" ? std::string_view{"index"} : id) + ".md";
-    return TocEntry{std::string{id}, title.str(), std::move(filename)};
-  });
+    result.push_back({std::string{id}, title.str(), std::move(filename)});
+  };
   std::sort(result.begin(), result.end(), [](auto const& a, auto const& b) {
     // If there is an `indexpage` element (aka `index.md`) it should be the
     // first entry.
