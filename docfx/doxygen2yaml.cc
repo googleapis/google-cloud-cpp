@@ -16,6 +16,7 @@
 #include "docfx/doxygen2markdown.h"
 #include "docfx/doxygen2syntax.h"
 #include "docfx/doxygen_errors.h"
+#include "docfx/public_docs.h"
 #include "docfx/yaml_emit.h"
 #include <algorithm>
 #include <sstream>
@@ -138,24 +139,6 @@ std::string Compound2Yaml(pugi::xml_node const& node) {
   (void)AppendIfClass(yaml, ctx, node);
   (void)AppendIfStruct(yaml, ctx, node);
   return EndDocFxYaml(yaml);
-}
-
-bool IncludeInPublicDocuments(pugi::xml_node const& node) {
-  // We do not generate documents for files and directories.
-  if (kind(node) == "file" || kind(node) == "dir") return false;
-  // Doxygen groups private attributes / functions in <sectiondef> elements of
-  // these kinds:
-  if (kind(node) == "private-attrib" || kind(node) == "private-func") {
-    return false;
-  }
-  // We do not generate documents for types in the C++ `std::` namespace:
-  auto const id = std::string_view{node.attribute("id").as_string()};
-  for (std::string_view prefix : {"namespacestd", "classstd", "structstd"}) {
-    if (id.substr(0, prefix.size()) == prefix) return false;
-  }
-  // We do not generate documentation for private members or sections.
-  auto const prot = std::string_view{node.attribute("prot").as_string()};
-  return prot != "private";
 }
 
 void StartDocFxYaml(YAML::Emitter& yaml) {

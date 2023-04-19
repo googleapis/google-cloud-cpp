@@ -23,14 +23,6 @@
 
 namespace docfx {
 
-// Determine if a node is part of the public documentation.
-//
-// Many nodes are not part of the public documentation, for example, private
-// member variables, private functions, or any names in the `*internal*`
-// namespaces. This helper allows us to short circuit the recursion over the
-// doxygen structure when an element is not needed for the public docs.
-bool IncludeInPublicDocuments(pugi::xml_node const& node);
-
 // Get the table of contents for `<compounddef>` nodes representing C++ types.
 std::vector<TocEntry> CompoundToc(pugi::xml_document const& doc);
 

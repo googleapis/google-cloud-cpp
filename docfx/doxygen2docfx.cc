@@ -18,6 +18,7 @@
 #include "docfx/doxygen_pages.h"
 #include "docfx/generate_metadata.h"
 #include "docfx/parse_arguments.h"
+#include "docfx/public_docs.h"
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
