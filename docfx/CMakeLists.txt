@@ -50,6 +50,8 @@ add_library(
     generate_metadata.h
     parse_arguments.cc
     parse_arguments.h
+    public_docs.cc
+    public_docs.h
     toc_entry.cc
     toc_entry.h
     yaml_context.h
@@ -85,7 +87,8 @@ set(unit_tests
     doxygen_groups_test.cc
     doxygen_pages_test.cc
     generate_metadata_test.cc
-    parse_arguments_test.cc)
+    parse_arguments_test.cc
+    public_docs_test.cc)
 
 # Export the list of unit tests to a .bzl file so we do not need to maintain the
 # list in two places.

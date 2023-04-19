@@ -27,6 +27,7 @@ docfx_hdrs = [
     "doxygen_pages.h",
     "generate_metadata.h",
     "parse_arguments.h",
+    "public_docs.h",
     "toc_entry.h",
     "yaml_context.h",
     "yaml_emit.h",
@@ -42,6 +43,7 @@ docfx_srcs = [
     "doxygen_pages.cc",
     "generate_metadata.cc",
     "parse_arguments.cc",
+    "public_docs.cc",
     "toc_entry.cc",
     "yaml_emit.cc",
 ]

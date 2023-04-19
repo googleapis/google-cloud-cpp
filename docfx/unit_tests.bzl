@@ -25,4 +25,5 @@ unit_tests = [
     "doxygen_pages_test.cc",
     "generate_metadata_test.cc",
     "parse_arguments_test.cc",
+    "public_docs_test.cc",
 ]
