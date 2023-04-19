@@ -22,6 +22,8 @@ google_cloud_cpp_bigquery_rest_hdrs = [
     "v2/minimal/internal/dataset.h",
     "v2/minimal/internal/dataset_request.h",
     "v2/minimal/internal/dataset_response.h",
+    "v2/minimal/internal/dataset_rest_stub.h",
+    "v2/minimal/internal/dataset_rest_stub_factory.h",
     "v2/minimal/internal/job.h",
     "v2/minimal/internal/job_client.h",
     "v2/minimal/internal/job_configuration.h",
@@ -36,6 +38,7 @@ google_cloud_cpp_bigquery_rest_hdrs = [
     "v2/minimal/internal/job_rest_stub.h",
     "v2/minimal/internal/job_rest_stub_factory.h",
     "v2/minimal/internal/job_retry_policy.h",
+    "v2/minimal/internal/rest_stub_utils.h",
 ]
 
 google_cloud_cpp_bigquery_rest_srcs = [
@@ -44,6 +47,8 @@ google_cloud_cpp_bigquery_rest_srcs = [
     "v2/minimal/internal/dataset.cc",
     "v2/minimal/internal/dataset_request.cc",
     "v2/minimal/internal/dataset_response.cc",
+    "v2/minimal/internal/dataset_rest_stub.cc",
+    "v2/minimal/internal/dataset_rest_stub_factory.cc",
     "v2/minimal/internal/job.cc",
     "v2/minimal/internal/job_client.cc",
     "v2/minimal/internal/job_connection.cc",
