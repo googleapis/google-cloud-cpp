@@ -317,12 +317,24 @@ bool AppendIfComputerOutput(std::ostream& os, MarkdownContext const& ctx,
 bool AppendIfRef(std::ostream& os, MarkdownContext const& ctx,
                  pugi::xml_node const& node) {
   if (std::string_view{node.name()} != "ref") return false;
-  os << "[";
+
+  std::ostringstream link;
   for (auto const child : node) {
-    if (AppendIfDocTitleCmdGroup(os, ctx, child)) continue;
+    if (AppendIfDocTitleCmdGroup(link, ctx, child)) continue;
     UnknownChildType(__func__, child);
   }
-  os << "]";
+  // C++ names that are fully qualified often contain markdown emoji's (e.g.
+  // `:cloud:`). We need to escape them as "computer output", but only if they
+  // are not escaped already.
+  auto ref = link.str();
+  if (  // NOLINTNEXTLINE(abseil-string-find-str-contains)
+      ref.find("::") != std::string::npos &&
+      // NOLINTNEXTLINE(abseil-string-find-str-contains)
+      ref.find('`') == std::string::npos) {
+    ref = "`" + ref + "`";
+  }
+
+  os << "[" << ref << "]";
   if (!std::string_view(node.attribute("external").as_string()).empty()) {
     os << "(" << node.attribute("external").as_string() << ")";
   } else {
