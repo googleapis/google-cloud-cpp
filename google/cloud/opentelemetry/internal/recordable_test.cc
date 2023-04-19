@@ -119,6 +119,38 @@ Matcher<v2::Span::Attributes const&> Attributes(
           Eq(dropped_attributes_count)));
 }
 
+Matcher<v2::Span::TimeEvent const&> TimeEvent(
+    Matcher<absl::Time> const& time_matcher,
+    Matcher<v2::Span::TimeEvent::Annotation const&> const& annotation_matcher) {
+  return AllOf(ResultOf(
+                   "time",
+                   [](v2::Span::TimeEvent const& e) {
+                     return internal::ToAbslTime(e.time());
+                   },
+                   time_matcher),
+               ResultOf(
+                   "annotation",
+                   [](v2::Span::TimeEvent const& e) { return e.annotation(); },
+                   annotation_matcher));
+}
+
+Matcher<v2::Span::TimeEvent::Annotation const&> Annotation(
+    std::string const& description,
+    Matcher<v2::Span::Attributes const&> const& attributes_matcher) {
+  return AllOf(ResultOf(
+                   "description",
+                   [](v2::Span::TimeEvent::Annotation const& a) {
+                     return a.description().value();
+                   },
+                   Eq(description)),
+               ResultOf(
+                   "attributes",
+                   [](v2::Span::TimeEvent::Annotation const& a) {
+                     return a.attributes();
+                   },
+                   attributes_matcher));
+}
+
 Matcher<v2::Span::Link const&> Link(
     Matcher<std::string const&> const& trace_id_matcher,
     Matcher<std::string const&> const& span_id_matcher,
@@ -272,6 +304,70 @@ TEST(AddAttribute, DropsCompositeAttributes) {
   }
 }
 
+TEST(Recordable, AddEvent) {
+  auto now = std::chrono::system_clock::now();
+  auto expected_time = absl::FromChrono(now);
+  auto event_attributes = KVIterable({{"key1", "value1"}, {"key2", "value2"}});
+
+  auto rec = Recordable(Project(kProjectId));
+  rec.AddEvent("test-event", now, event_attributes);
+  auto proto = std::move(rec).as_proto();
+  EXPECT_EQ(proto.time_events().dropped_annotations_count(), 0);
+  EXPECT_THAT(proto.time_events().time_event(),
+              ElementsAre(TimeEvent(
+                  expected_time,
+                  Annotation("test-event",
+                             Attributes(UnorderedElementsAre(
+                                 Pair("key1", AttributeValue("value1")),
+                                 Pair("key2", AttributeValue("value2"))))))));
+}
+
+TEST(Recordable, TruncatesEventName) {
+  std::string const name(kAnnotationDescriptionStringLimit + 1, 'A');
+  std::string const expected(kAnnotationDescriptionStringLimit, 'A');
+  auto now = std::chrono::system_clock::now();
+
+  auto rec = Recordable(Project(kProjectId));
+  rec.AddEvent(name, now, KVIterable({}));
+  auto proto = std::move(rec).as_proto();
+  EXPECT_THAT(proto.time_events().time_event(),
+              ElementsAre(TimeEvent(_, Annotation(expected, _))));
+}
+
+TEST(Recordable, DropsNewEventAtLimit) {
+  auto now = std::chrono::system_clock::now();
+
+  auto rec = Recordable(Project(kProjectId));
+  for (std::size_t i = 0; i != kSpanAnnotationLimit + 10; ++i) {
+    rec.AddEvent("event" + std::to_string(i), now, KVIterable({}));
+  }
+  auto proto = std::move(rec).as_proto();
+  EXPECT_EQ(proto.time_events().dropped_annotations_count(), 10);
+  EXPECT_THAT(proto.time_events().time_event(), SizeIs(kSpanAnnotationLimit));
+}
+
+TEST(Recordable, DropsNewEventAttributeAtLimit) {
+  auto now = std::chrono::system_clock::now();
+  KVIterable::Data too_many_attributes;
+  for (std::size_t i = 0; i != kAnnotationAttributeLimit + 10; ++i) {
+    too_many_attributes["key" + std::to_string(i)] = "value";
+  }
+  std::size_t iteration_count = 0;
+  auto event_attributes =
+      KVIterable(std::move(too_many_attributes), &iteration_count);
+
+  auto rec = Recordable(Project(kProjectId));
+  rec.AddEvent("test-event", now, event_attributes);
+  auto proto = std::move(rec).as_proto();
+  EXPECT_THAT(proto.time_events().time_event(),
+              ElementsAre(TimeEvent(
+                  _, Annotation("test-event",
+                                Attributes(SizeIs(kAnnotationAttributeLimit),
+                                           /*dropped_attributes_count=*/10)))));
+  // Verify that we stop iterating as soon as possible.
+  EXPECT_EQ(iteration_count, kAnnotationAttributeLimit);
+}
+
 TEST(Recordable, AddLink) {
   opentelemetry::trace::TraceId const trace_id(
       std::array<uint8_t const, opentelemetry::trace::TraceId::kSize>(
@@ -317,7 +413,7 @@ TEST(Recordable, DropsNewLinkAttributeAtLimit) {
       KVIterable(std::move(too_many_attributes), &iteration_count);
 
   auto rec = Recordable(Project(kProjectId));
-  rec.AddLink({false, false}, std::move(link_attributes));
+  rec.AddLink({false, false}, link_attributes);
   auto proto = std::move(rec).as_proto();
   EXPECT_THAT(proto.links().link(),
               ElementsAre(Link(_, _,

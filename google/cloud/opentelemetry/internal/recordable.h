@@ -45,6 +45,15 @@ std::size_t constexpr kSpanLinkAttributeLimit = 32;
 // https://github.com/googleapis/googleapis/blob/52180f8ba240022dd8ce756ee69fe5a3c429ad4d/google/devtools/cloudtrace/v2/trace.proto#L266
 std::size_t constexpr kSpanLinkLimit = 128;
 
+// https://github.com/googleapis/googleapis/blob/0d5dd6137743d4052122f530349c714b77b25ed3/google/devtools/cloudtrace/v2/trace.proto#L68-L69
+std::size_t constexpr kAnnotationDescriptionStringLimit = 256;
+
+// https://github.com/googleapis/googleapis/blob/0d5dd6137743d4052122f530349c714b77b25ed3/google/devtools/cloudtrace/v2/trace.proto#L72-L73
+std::size_t constexpr kAnnotationAttributeLimit = 4;
+
+// https://github.com/googleapis/googleapis/blob/0d5dd6137743d4052122f530349c714b77b25ed3/google/devtools/cloudtrace/v2/trace.proto#L262-L263
+std::size_t constexpr kSpanAnnotationLimit = 32;
+
 /**
  * Helper to set [TruncatableString] fields in a [Span] proto.
  *

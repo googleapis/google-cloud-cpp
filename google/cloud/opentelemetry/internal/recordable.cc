@@ -195,9 +195,34 @@ void Recordable::SetAttribute(
 }
 
 void Recordable::AddEvent(
-    opentelemetry::nostd::string_view /*name*/,
-    opentelemetry::common::SystemTimestamp /*timestamp*/,
-    opentelemetry::common::KeyValueIterable const& /*attributes*/) noexcept {}
+    opentelemetry::nostd::string_view name,
+    opentelemetry::common::SystemTimestamp timestamp,
+    opentelemetry::common::KeyValueIterable const& attributes) noexcept {
+  // Accept the first N events. Drop the rest.
+  auto& events = *span_.mutable_time_events();
+  if (events.time_event().size() == kSpanAnnotationLimit) {
+    events.set_dropped_annotations_count(1 +
+                                         events.dropped_annotations_count());
+    return;
+  }
+
+  auto& event = *events.add_time_event();
+  auto t = absl::FromUnixNanos(timestamp.time_since_epoch().count());
+  *event.mutable_time() = internal::ToProtoTimestamp(t);
+  // We assume this is an `Annotation` (which has arbitrary attributes) instead
+  // of a `MessageEvent`, which has specific attributes.
+  SetTruncatableString(*event.mutable_annotation()->mutable_description(), name,
+                       kAnnotationDescriptionStringLimit);
+  auto& proto = *event.mutable_annotation()->mutable_attributes();
+  attributes.ForEachKeyValue(
+      [&proto](opentelemetry::nostd::string_view key,
+               opentelemetry::common::AttributeValue const& value) {
+        AddAttribute(proto, key, value, kAnnotationAttributeLimit);
+        return proto.attribute_map().size() != kAnnotationAttributeLimit;
+      });
+  proto.set_dropped_attributes_count(
+      static_cast<int>(attributes.size() - proto.attribute_map().size()));
+}
 
 void Recordable::AddLink(
     opentelemetry::trace::SpanContext const& span_context,
