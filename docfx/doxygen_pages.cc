@@ -129,9 +129,10 @@ std::vector<TocEntry> PagesToc(pugi::xml_document const& doc) {
     return TocEntry{std::string{id}, title.str(), std::move(filename)};
   });
   std::sort(result.begin(), result.end(), [](auto const& a, auto const& b) {
-    // Make `index.md` (if present) the first entry.
-    if (a.uid == "indexpage") return true;
+    // If there is an `indexpage` element (aka `index.md`) it should be the
+    // first entry.
     if (b.uid == "indexpage") return false;
+    if (a.uid == "indexpage") return true;
     return a.uid < b.uid;
   });
   return result;
