@@ -39,12 +39,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * @code
  * auto sr = MakeStreamRange<T>({t1, t2});
- * for (StatusOr<int> const& v : sr) {
+ * for (StatusOr<T> const& t : sr) {
  *   // Yields t1 -> t2
  * }
  *
  * sr = MakeStreamRange<T>({t1, t2}, BadStatus());
- * for (StatusOr<int> const& v : sr) {
+ * for (StatusOr<T> const& t : sr) {
  *   // Yields t1 -> t2 -> BadStatus()
  * }
  * @endcode
