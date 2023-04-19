@@ -22,8 +22,9 @@ namespace docfx {
 
 /// An entry in table of contents
 struct TocEntry {
-  std::string filename;
+  std::string uid;
   std::string name;
+  std::string filename;
 };
 
 inline bool operator==(TocEntry const& lhs, TocEntry const& rhs) {

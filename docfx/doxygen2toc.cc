@@ -28,22 +28,31 @@ std::string Doxygen2Toc(Config const& config, pugi::xml_document const& doc) {
       << YAML::Key << "name" << YAML::Value << config.library  //
       << YAML::Key << "items" << YAML::Value                   //
       << YAML::BeginSeq;
-  for (auto const& [filename, name] : PagesToc(doc)) {
-    out << YAML::BeginMap                                  //
-        << YAML::Key << "name" << YAML::Value << name      //
-        << YAML::Key << "href" << YAML::Value << filename  //
+  auto pages = PagesToc(doc);
+  if (!pages.empty()) {
+    auto const& e = pages.front();
+    out << YAML::BeginMap                                    //
+        << YAML::Key << "name" << YAML::Value << e.name      //
+        << YAML::Key << "href" << YAML::Value << e.filename  //
+        << YAML::EndMap;
+    pages.erase(pages.begin());
+  }
+  for (auto const& e : CompoundToc(doc)) {
+    out << YAML::BeginMap                                //
+        << YAML::Key << "uid" << YAML::Value << e.uid    //
+        << YAML::Key << "name" << YAML::Value << e.name  //
         << YAML::EndMap;
   }
-  for (auto const& [filename, name] : GroupsToc(doc)) {
-    out << YAML::BeginMap                              //
-        << YAML::Key << "uid" << YAML::Value << name   //
-        << YAML::Key << "name" << YAML::Value << name  //
+  for (auto const& e : pages) {
+    out << YAML::BeginMap                                    //
+        << YAML::Key << "name" << YAML::Value << e.name      //
+        << YAML::Key << "href" << YAML::Value << e.filename  //
         << YAML::EndMap;
   }
-  for (auto const& [filename, name] : CompoundToc(doc)) {
-    out << YAML::BeginMap                              //
-        << YAML::Key << "uid" << YAML::Value << name   //
-        << YAML::Key << "name" << YAML::Value << name  //
+  for (auto const& e : GroupsToc(doc)) {
+    out << YAML::BeginMap                                //
+        << YAML::Key << "uid" << YAML::Value << e.uid    //
+        << YAML::Key << "name" << YAML::Value << e.name  //
         << YAML::EndMap;
   }
   out << YAML::EndSeq << YAML::EndMap;

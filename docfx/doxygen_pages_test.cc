@@ -112,7 +112,7 @@ TEST(DoxygenPages, PagesToc) {
         </compounddef>
         <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="indexpage" kind="page">
           <compoundname>index</compoundname>
-          <title>The Page Title: unused in this test</title>
+          <title>The Page Title</title>
           <briefdescription><para>Some brief description.</para>
           </briefdescription>
           <detaileddescription><para>More details about the index.</para></detaileddescription>
@@ -123,9 +123,11 @@ TEST(DoxygenPages, PagesToc) {
   ASSERT_TRUE(doc.load_string(kXml));
   auto const actual = PagesToc(doc);
 
-  EXPECT_THAT(actual, ElementsAre(FieldsAre("common-error-handling.md",
-                                            "common-error-handling"),
-                                  FieldsAre("indexpage.md", "README")));
+  // The order matters, we want `indexpage` to be the first page.
+  EXPECT_THAT(actual,
+              ElementsAre(FieldsAre("indexpage", "The Page Title", "index.md"),
+                          FieldsAre("common-error-handling", "Error Handling",
+                                    "common-error-handling.md")));
 }
 
 }  // namespace

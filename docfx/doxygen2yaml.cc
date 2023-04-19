@@ -17,6 +17,7 @@
 #include "docfx/doxygen2syntax.h"
 #include "docfx/doxygen_errors.h"
 #include "docfx/yaml_emit.h"
+#include <algorithm>
 #include <sstream>
 #include <string_view>
 
@@ -115,8 +116,12 @@ std::vector<TocEntry> CompoundToc(pugi::xml_document const& doc) {
     auto const& node = i.node();
     if (!IncludeInPublicDocuments(node)) continue;
     auto const id = std::string{node.attribute("id").as_string()};
-    result.push_back(TocEntry{id + ".yml", id});
+    auto const name =
+        std::string_view{node.child("compoundname").child_value()};
+    result.push_back(TocEntry{id, std::string(name), id + ".yml"});
   }
+  std::sort(result.begin(), result.end(),
+            [](auto const& a, auto const& b) { return a.name < b.name; });
   return result;
 }
 

@@ -30,7 +30,7 @@ TEST(Doxygen2Toc, Simple) {
         </compounddef>
         <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="indexpage" kind="page">
           <compoundname>index</compoundname>
-          <title>The Page Title: unused in this test</title>
+          <title>The Page Title</title>
           <briefdescription><para>Some brief description.</para>
           </briefdescription>
           <detaileddescription><para>More details about the index.</para></detaileddescription>
@@ -47,22 +47,23 @@ TEST(Doxygen2Toc, Simple) {
       </compounddef>
       <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="group__terminate" kind="group">
         <compoundname>terminate</compoundname>
+        <title>Terminate Group Title</title>
       </compounddef>
     </doxygen>)xml";
 
   auto constexpr kExpected = R"""(### YamlMime:TableOfContent
 name: common
 items:
-  - name: common-error-handling
-    href: common-error-handling.md
-  - name: README
-    href: indexpage.md
-  - uid: group__terminate
-    name: group__terminate
+  - name: The Page Title
+    href: index.md
   - uid: namespacegoogle
-    name: namespacegoogle
+    name: google
   - uid: namespacegoogle_1_1cloud
-    name: namespacegoogle_1_1cloud
+    name: google::cloud
+  - name: Error Handling
+    href: common-error-handling.md
+  - uid: group__terminate
+    name: Terminate Group Title
 )""";
 
   pugi::xml_document doc;

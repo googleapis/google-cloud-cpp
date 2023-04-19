@@ -38,7 +38,8 @@ int main(int argc, char* argv[]) try {
     auto const kind = std::string_view{node.attribute("kind").as_string()};
     auto const id = std::string{node.attribute("id").as_string()};
     if (kind == "page") {
-      std::ofstream(id + ".md") << docfx::Page2Markdown(node);
+      auto filename = (id == "indexpage" ? "index" : id) + ".md";
+      std::ofstream(filename) << docfx::Page2Markdown(node);
       continue;
     }
     if (kind == "group") {
