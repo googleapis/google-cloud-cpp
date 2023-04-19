@@ -52,8 +52,9 @@ TEST(GetDatasetResponseTest, EmptyPayload) {
   BigQueryHttpResponse http_response;
   auto const response =
       GetDatasetResponse::BuildFromHttpResponse(http_response);
-  EXPECT_THAT(response, StatusIs(StatusCode::kInternal,
-                                 HasSubstr("Empty payload in HTTP response")));
+  EXPECT_THAT(response,
+              StatusIs(StatusCode::kInternal,
+                       HasSubstr("Error parsing Json from response payload")));
 }
 
 TEST(GetDatasetResponseTest, InvalidJson) {
@@ -119,8 +120,9 @@ TEST(ListDatasetsResponseTest, EmptyPayload) {
   BigQueryHttpResponse http_response;
   auto const response =
       ListDatasetsResponse::BuildFromHttpResponse(http_response);
-  EXPECT_THAT(response, StatusIs(StatusCode::kInternal,
-                                 HasSubstr("Empty payload in HTTP response")));
+  EXPECT_THAT(response,
+              StatusIs(StatusCode::kInternal,
+                       HasSubstr("Error parsing Json from response payload")));
 }
 
 TEST(ListDatasetsResponseTest, InvalidJson) {

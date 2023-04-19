@@ -39,10 +39,6 @@ bool valid_datasets_list(nlohmann::json const& j) {
 }
 
 StatusOr<nlohmann::json> parse_json(std::string const& payload) {
-  if (payload.empty()) {
-    return internal::InternalError("Empty payload in HTTP response",
-                                   GCP_ERROR_INFO());
-  }
   // Build the dataset response object from Http response.
   auto json = nlohmann::json::parse(payload, nullptr, false);
   if (!json.is_object()) {
