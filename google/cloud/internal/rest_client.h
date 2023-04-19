@@ -56,12 +56,12 @@ std::unique_ptr<RestClient> MakePooledRestClient(std::string endpoint_address,
  * contains the HTTP status code, response headers, and an object to iterate
  * over the payload.
  *
- * Note that HTTP requests that fail with a HTTP status code, e.g. with
- * "404 - NOT FOUND" are considered a success, i.e., the returned `StatusOr<>`
- * will contain a value (and not an error). Callers can convert these HTTP
- * errors to a `Status` using @ref AsStatus(RestResponse&&). In some cases
- * (e.g. PUT requests for GCS resumable uploadS) a HTTP error is "normal", and
- * should be treated as a successful request.
+ * Note that HTTP requests that fail with an HTTP status code, e.g. with
+ * "404 - NOT FOUND", are considered a success. That is, the returned
+ * `StatusOr<>` will contain a value (and not an error). Callers can convert
+ * these HTTP errors to a `Status` using @ref AsStatus(RestResponse&&). In some
+ * cases (e.g. PUT requests for GCS resumable uploads) an HTTP error is
+ * "normal", and should be treated as a successful request.
  *
  * Each method consumes a `RestContext` parameter. Often the `request` parameter
  * is prepared once as part of a retry loop. The `RestContext` can be used to

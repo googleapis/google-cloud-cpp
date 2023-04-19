@@ -482,9 +482,9 @@ TEST_F(RestClientIntegrationTest, RestContextHeaders) {
   auto body = ReadAll(std::move(*response).ExtractPayload());
   ASSERT_STATUS_OK(body);
   auto parsed_response = nlohmann::json::parse(*body, nullptr, false);
-  ASSERT_TRUE(parsed_response.is_object());
+  ASSERT_TRUE(parsed_response.is_object()) << "body=" << *body;
   auto sent_headers = parsed_response.find("headers");
-  ASSERT_FALSE(sent_headers == parsed_response.end());
+  ASSERT_TRUE(sent_headers != parsed_response.end()) << "body=" << *body;
   EXPECT_EQ(sent_headers->value("X-Test-Header-1", ""), "header-value-1")
       << "body=" << *body;
   EXPECT_EQ(sent_headers->value("X-Test-Header-2", ""), "header-value-2")
