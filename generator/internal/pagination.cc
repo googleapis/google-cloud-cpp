@@ -93,7 +93,7 @@ DetermineAIP4233Pagination(MethodDescriptor const& method) {
 // do not adhere to aip-4233, but the intent is there. If we can make it work,
 // add pagination for any such methods.
 google::cloud::optional<std::pair<std::string, Descriptor const*>>
-DetermineRestPagination(MethodDescriptor const& method) {
+DetermineAlternatePagination(MethodDescriptor const& method) {
   Descriptor const* request_message = method.input_type();
   Descriptor const* response_message = method.output_type();
   if (!FieldExistsAndIsType(*request_message, "max_results",
@@ -118,7 +118,7 @@ google::cloud::optional<std::pair<std::string, Descriptor const*>>
 DeterminePagination(MethodDescriptor const& method) {
   auto result = DetermineAIP4233Pagination(method);
   if (result) return result;
-  return DetermineRestPagination(method);
+  return DetermineAlternatePagination(method);
 }
 
 bool IsPaginated(MethodDescriptor const& method) {

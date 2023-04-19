@@ -27,7 +27,7 @@ using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
 
-TEST(PredicateUtilsTest, PaginationAIP4233Success) {
+TEST(PaginationTest, PaginationAIP4233Success) {
   FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
@@ -72,7 +72,7 @@ TEST(PredicateUtilsTest, PaginationAIP4233Success) {
   EXPECT_EQ(result->second->full_name(), "google.protobuf.Bar");
 }
 
-TEST(PredicateUtilsTest, PaginationAIP4233NoPageSize) {
+TEST(PaginationTest, PaginationAIP4233NoPageSize) {
   FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
@@ -98,7 +98,7 @@ TEST(PredicateUtilsTest, PaginationAIP4233NoPageSize) {
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
-TEST(PredicateUtilsTest, PaginationAIP4233NoPageToken) {
+TEST(PaginationTest, PaginationAIP4233NoPageToken) {
   FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
@@ -127,7 +127,7 @@ TEST(PredicateUtilsTest, PaginationAIP4233NoPageToken) {
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
-TEST(PredicateUtilsTest, PaginationAIP4233NoNextPageToken) {
+TEST(PaginationTest, PaginationAIP4233NoNextPageToken) {
   FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
@@ -157,7 +157,7 @@ TEST(PredicateUtilsTest, PaginationAIP4233NoNextPageToken) {
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
-TEST(PredicateUtilsTest, PaginationAIP4233NoRepeatedMessageField) {
+TEST(PaginationTest, PaginationAIP4233NoRepeatedMessageField) {
   FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
@@ -246,7 +246,7 @@ TEST(PredicateUtilsDeathTest, PaginationAIP4233RepeatedMessageOrderMismatch) {
       "Repeated field in paginated response must be first");
 }
 
-TEST(PredicateUtilsTest, PaginationAIP4233ExactlyOneRepatedStringResponse) {
+TEST(PaginationTest, PaginationAIP4233ExactlyOneRepatedStringResponse) {
   FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
@@ -290,7 +290,7 @@ TEST(PredicateUtilsTest, PaginationAIP4233ExactlyOneRepatedStringResponse) {
   EXPECT_EQ(result->second, nullptr);
 }
 
-TEST(PredicateUtilsTest, PaginationRestSuccess) {
+TEST(PaginationTest, PaginationRestSuccess) {
   FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
@@ -335,7 +335,7 @@ TEST(PredicateUtilsTest, PaginationRestSuccess) {
   EXPECT_EQ(result->second->full_name(), "google.protobuf.Bar");
 }
 
-TEST(PredicateUtilsTest, PaginationRestNoMaxResults) {
+TEST(PaginationTest, PaginationRestNoMaxResults) {
   FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
@@ -374,7 +374,7 @@ TEST(PredicateUtilsTest, PaginationRestNoMaxResults) {
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
-TEST(PredicateUtilsTest, PaginationRestMaxResultsWrongType) {
+TEST(PaginationTest, PaginationRestMaxResultsWrongType) {
   FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
@@ -414,7 +414,7 @@ TEST(PredicateUtilsTest, PaginationRestMaxResultsWrongType) {
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
-TEST(PredicateUtilsTest, PaginationRestNoPageToken) {
+TEST(PaginationTest, PaginationRestNoPageToken) {
   FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
@@ -453,7 +453,7 @@ TEST(PredicateUtilsTest, PaginationRestNoPageToken) {
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
-TEST(PredicateUtilsTest, PaginationRestNoNextPageToken) {
+TEST(PaginationTest, PaginationRestNoNextPageToken) {
   FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
@@ -492,7 +492,7 @@ TEST(PredicateUtilsTest, PaginationRestNoNextPageToken) {
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
-TEST(PredicateUtilsTest, PaginationRestNoItems) {
+TEST(PaginationTest, PaginationRestNoItems) {
   FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
@@ -532,7 +532,7 @@ TEST(PredicateUtilsTest, PaginationRestNoItems) {
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
 }
 
-TEST(PredicateUtilsTest, PaginationRestItemsNotRepeated) {
+TEST(PaginationTest, PaginationRestItemsNotRepeated) {
   FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
