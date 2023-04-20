@@ -256,16 +256,12 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
 
   std::ostringstream os;
   os << where << "() - CURL error [" << e << "]=" << curl_easy_strerror(e);
-  // Map the CURLE* errors using the
-  // documentation on:
+  // Map the CURLE* errors using the documentation on:
   //   https://curl.haxx.se/libcurl/c/libcurl-errors.html
-  // The error codes are listed in the same
-  // order as shown on that page, so one can
-  // quickly find out how an error code is
-  // handled. All the error codes are listed,
-  // but those that do not appear in old
-  // libcurl versions are commented out and
-  // handled by the `default:` case.
+  // The error codes are listed in the same order as shown on that page, so
+  // one can quickly find out how an error code is handled. All the error codes
+  // are listed, but those that do not appear in old libcurl versions are
+  // commented out and handled by the `default:` case.
   StatusCode code;
   switch (e) {
     case CURLE_UNSUPPORTED_PROTOCOL:
@@ -281,8 +277,7 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
       code = StatusCode::kUnavailable;
       break;
 
-    // missing in some older libcurl
-    // versions:   CURLE_WEIRD_SERVER_REPLY
+    // missing in some older libcurl versions:   CURLE_WEIRD_SERVER_REPLY
     case CURLE_REMOTE_ACCESS_DENIED:
       code = StatusCode::kPermissionDenied;
       break;
@@ -318,10 +313,8 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
       break;
 
     case CURLE_RANGE_ERROR:
-      // This is defined as "the server does
-      // not *support or *accept* range
-      // requests", so it means something
-      // stronger than "your range value is
+      // This is defined as "the server does not *support or *accept* range
+      // requests", so it means something stronger than "your range value is
       // not valid".
       code = StatusCode::kUnimplemented;
       break;
@@ -404,14 +397,10 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
       break;
 
     case CURLE_AGAIN:
-      // This looks like a good candidate for
-      // kUnavailable, but it is only
-      // returned by curl_easy_{recv,send},
-      // and should not with the
-      // configuration we use for libcurl,
-      // and the recovery action is to call
-      // curl_easy_{recv,send} again, which
-      // is not how this return value is used
+      // This looks like a good candidate for kUnavailable, but it is only
+      // returned by curl_easy_{recv,send}, and should not with the
+      // configuration we use for libcurl, and the recovery action is to call
+      // curl_easy_{recv,send} again, which is not how this return value is used
       // (we restart the whole transfer).
       code = StatusCode::kUnknown;
       break;
@@ -427,33 +416,21 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
       break;
 
     // cSpell:disable
-    // missing in some older libcurl
-    // versions:   CURLE_HTTP_RETURNED_ERROR
-    // missing in some older libcurl
-    // versions:
-    // CURLE_NO_CONNECTION_AVAILABLE missing
-    // in some older libcurl versions:
-    // CURLE_SSL_PINNEDPUBKEYNOTMATCH missing
-    // in some older libcurl versions:
-    // CURLE_SSL_INVALIDCERTSTATUS missing in
-    // some older libcurl versions:
-    // CURLE_HTTP2_STREAM missing in some
-    // older libcurl versions:
-    // CURLE_RECURSIVE_API_CALL missing in
-    // some older libcurl versions:
-    // CURLE_AUTH_ERROR missing in some older
-    // libcurl versions:   CURLE_HTTP3
-    // missing in some older libcurl
-    // versions:   CURLE_QUIC_CONNECT_ERROR
+    // missing in some older libcurl versions:   CURLE_HTTP_RETURNED_ERROR
+    // missing in some older libcurl versions:   CURLE_NO_CONNECTION_AVAILABLE
+    // missing in some older libcurl versions:   CURLE_SSL_PINNEDPUBKEYNOTMATCH
+    // missing in some older libcurl versions:   CURLE_SSL_INVALIDCERTSTATUS
+    // missing in some older libcurl versions:   CURLE_HTTP2_STREAM
+    // missing in some older libcurl versions:   CURLE_RECURSIVE_API_CALL
+    // missing in some older libcurl versions:   CURLE_AUTH_ERROR
+    // missing in some older libcurl versions:   CURLE_HTTP3
+    // missing in some older libcurl versions:   CURLE_QUIC_CONNECT_ERROR
     // cSpell:enable
     default:
-      // As described above, there are about
-      // 100 error codes, some are explicitly
-      // marked as obsolete, some are not
-      // available in all libcurl versions.
-      // Use this `default:` case to treat
-      // all such errors as `kUnavailable`
-      // and they will be retried.
+      // As described above, there are about 100 error codes, some are
+      // explicitly marked as obsolete, some are not available in all libcurl
+      // versions. Use this `default:` case to treat all such errors as
+      // `kUnavailable` and they will be retried.
       code = StatusCode::kUnavailable;
       break;
   }
