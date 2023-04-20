@@ -2,8 +2,9 @@
 
 @mainpage Storage Insights API C++ Client Library
 
-An idiomatic C++ client library for the [Storage Insights API][cloud-service-docs], a service
-to <UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+An idiomatic C++ client library for the [Storage Insights API][cloud-service-docs],
+a service that creates and manages inventory reports to help you manage your
+object storage at scale.
 
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -127,7 +128,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/storageinsights
+[cloud-service-docs]: https://cloud.google.com/storage/docs/insights/inventory-reports
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->

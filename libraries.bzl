@@ -109,6 +109,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "spanner",
     "speech",
     "storage",
+    "storageinsights",
     "storagetransfer",
     "talent",
     "tasks",

@@ -13,8 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/storageinsights/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/storageinsights/v1/storage_insights_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -23,13 +22,15 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace storageinsights = ::google::cloud::storageinsights;
-  auto client = storageinsights::Client(storageinsights::MakeConnection());
+  namespace storageinsights = ::google::cloud::storageinsights_v1;
+  auto client = storageinsights::StorageInsightsClient(
+      storageinsights::MakeStorageInsightsConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto rc : client.ListReportConfigs(parent)) {
+    if (!rc) throw std::move(rc).status();
+    std::cout << rc->DebugString() << "\n";
   }
 
   return 0;

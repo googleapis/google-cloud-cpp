@@ -127,6 +127,7 @@ We are happy to announce the following GA libraries.  Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
 - [ConfidentialComputing API](/google/cloud/confidentialcomputing/README.md)
+- [Storage Insights API](/google/cloud/storageinsights/README.md)
 - [Workstations API](/google/cloud/workstations/README.md)
 
 The following experimental libraries are now available:
