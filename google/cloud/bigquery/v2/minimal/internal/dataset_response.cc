@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/dataset_response.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/make_status.h"
 
 namespace google {
@@ -97,6 +98,27 @@ StatusOr<ListDatasetsResponse> ListDatasetsResponse::BuildFromHttpResponse(
   }
 
   return result;
+}
+
+std::string GetDatasetResponse::DebugString(absl::string_view name,
+                                            TracingOptions const& options,
+                                            int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .SubMessage("dataset", dataset)
+      .SubMessage("http_response", http_response)
+      .Build();
+}
+
+std::string ListDatasetsResponse::DebugString(absl::string_view name,
+                                              TracingOptions const& options,
+                                              int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("kind", kind)
+      .StringField("etag", etag)
+      .StringField("next_page_token", next_page_token)
+      .Field("datasets", datasets)
+      .SubMessage("http_response", http_response)
+      .Build();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

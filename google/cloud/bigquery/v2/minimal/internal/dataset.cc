@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/dataset.h"
+#include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/format_time_point.h"
 
 namespace google {
@@ -172,6 +173,172 @@ void from_json(nlohmann::json const& j, Dataset& d) {
     j.at("default_rounding_mode").get_to(d.default_rounding_mode);
   if (j.contains("storage_billing_model"))
     j.at("storage_billing_model").get_to(d.storage_billing_model);
+}
+
+std::string DatasetReference::DebugString(absl::string_view name,
+                                          TracingOptions const& options,
+                                          int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("project_id", project_id)
+      .StringField("dataset_id", dataset_id)
+      .Build();
+}
+
+std::string TableReference::DebugString(absl::string_view name,
+                                        TracingOptions const& options,
+                                        int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("project_id", project_id)
+      .StringField("dataset_id", dataset_id)
+      .StringField("table_id", table_id)
+      .Build();
+}
+
+std::string LinkedDatasetSource::DebugString(absl::string_view name,
+                                             TracingOptions const& options,
+                                             int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .SubMessage("source_dataset", source_dataset)
+      .Build();
+}
+
+std::string RoutineReference::DebugString(absl::string_view name,
+                                          TracingOptions const& options,
+                                          int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("project_id", project_id)
+      .StringField("dataset_id", dataset_id)
+      .StringField("routine_id", routine_id)
+      .Build();
+}
+
+std::string TargetType::DebugString(absl::string_view name,
+                                    TracingOptions const& options,
+                                    int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("target_type_value", value)
+      .Build();
+}
+
+std::string StorageBillingModel::DebugString(absl::string_view name,
+                                             TracingOptions const& options,
+                                             int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("storage_billing_model_value", value)
+      .Build();
+}
+
+std::string TableFieldSchemaRoundingMode::DebugString(
+    absl::string_view name, TracingOptions const& options, int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("rounding_mode_value", value)
+      .Build();
+}
+
+std::string DatasetAccessEntry::DebugString(absl::string_view name,
+                                            TracingOptions const& options,
+                                            int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .SubMessage("dataset", dataset)
+      .Field("target_types", target_types)
+      .Build();
+}
+
+std::string Access::DebugString(absl::string_view name,
+                                TracingOptions const& options,
+                                int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("role", role)
+      .StringField("domain", domain)
+      .StringField("special_group", special_group)
+      .StringField("iam_member", iam_member)
+      .SubMessage("view", view)
+      .SubMessage("routine", routine)
+      .SubMessage("dataset", dataset)
+      .Build();
+}
+
+std::string HiveMetastoreConnectivity::DebugString(
+    absl::string_view name, TracingOptions const& options, int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("access_uri_type", access_uri_type)
+      .StringField("access_uri", access_uri)
+      .StringField("metadata_connection", metadata_connection)
+      .StringField("storage_connection", storage_connection)
+      .Build();
+}
+
+std::string HiveDatabaseReference::DebugString(absl::string_view name,
+                                               TracingOptions const& options,
+                                               int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("catalog_id", catalog_id)
+      .StringField("database", database)
+      .SubMessage("metadata_connectivity", metadata_connectivity)
+      .Build();
+}
+
+std::string ExternalDatasetReference::DebugString(absl::string_view name,
+                                                  TracingOptions const& options,
+                                                  int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .SubMessage("hive_database", hive_database)
+      .Build();
+}
+
+std::string GcpTag::DebugString(absl::string_view name,
+                                TracingOptions const& options,
+                                int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("tag_key", tag_key)
+      .StringField("tag_value", tag_value)
+      .Build();
+}
+
+std::string Dataset::DebugString(absl::string_view name,
+                                 TracingOptions const& options,
+                                 int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("kind", kind)
+      .StringField("etag", etag)
+      .StringField("id", id)
+      .StringField("self_link", self_link)
+      .StringField("friendly_name", friendly_name)
+      .StringField("description", description)
+      .StringField("type", type)
+      .StringField("location", location)
+      .StringField("default_collation", default_collation)
+      .Field("published", published)
+      .Field("is_case_insensitive", is_case_insensitive)
+      .Field("default_table_expiration", default_table_expiration.count())
+      .Field("default_partition_expiration",
+             default_partition_expiration.count())
+      .Field("creation_time", creation_time)
+      .Field("last_modified_time", last_modified_time)
+      .Field("max_time_travel", max_time_travel.count())
+      .Field("labels_keys", labels)
+      .Field("access", access)
+      .Field("tags", tags)
+      .SubMessage("dataset_reference", dataset_reference)
+      .SubMessage("linked_dataset_source", linked_dataset_source)
+      .SubMessage("external_dataset_reference", external_dataset_reference)
+      .SubMessage("default_rounding_mode", default_rounding_mode)
+      .SubMessage("storage_billing_model", storage_billing_model)
+      .Build();
+}
+
+std::string ListFormatDataset::DebugString(absl::string_view name,
+                                           TracingOptions const& options,
+                                           int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("kind", kind)
+      .StringField("id", id)
+      .StringField("friendly_name", friendly_name)
+      .StringField("type", type)
+      .StringField("location", location)
+      .Field("labels", labels)
+      .SubMessage("dataset_reference", dataset_reference)
+      .Build();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

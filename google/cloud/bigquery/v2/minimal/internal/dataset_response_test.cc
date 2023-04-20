@@ -22,6 +22,7 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::rest_internal::HttpStatusCode;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 
@@ -164,6 +165,293 @@ TEST(ListDatasetsResponseTest, InvalidListFormatDataset) {
   EXPECT_THAT(response,
               StatusIs(StatusCode::kInternal,
                        HasSubstr("Not a valid Json ListFormatDataset object")));
+}
+
+TEST(GetDatasetResponseTest, DebugString) {
+  BigQueryHttpResponse http_response;
+  http_response.http_status_code = HttpStatusCode::kOk;
+  http_response.http_headers.insert({{"header1", "value1"}});
+  http_response.payload =
+      R"({"kind": "d-kind",
+          "etag": "d-tag",
+          "id": "d-id",
+          "self_link": "d-selfLink",
+          "friendly_name": "d-friendly-name",
+          "dataset_reference": {"project_id": "p-id", "dataset_id": "d-id"}
+    })";
+  auto response = GetDatasetResponse::BuildFromHttpResponse(http_response);
+  ASSERT_STATUS_OK(response);
+
+  EXPECT_EQ(response->DebugString("GetDatasetResponse", TracingOptions{}),
+            R"(GetDatasetResponse {)"
+            R"( dataset {)"
+            R"( kind: "d-kind")"
+            R"( etag: "d-tag")"
+            R"( id: "d-id")"
+            R"( self_link: "d-selfLink")"
+            R"( friendly_name: "d-friendly-name")"
+            R"( description: "")"
+            R"( type: "")"
+            R"( location: "")"
+            R"( default_collation: "")"
+            R"( published: false)"
+            R"( is_case_insensitive: false)"
+            R"( default_table_expiration: 0)"
+            R"( default_partition_expiration: 0)"
+            R"( creation_time { "1970-01-01T00:00:00Z" })"
+            R"( last_modified_time { "1970-01-01T00:00:00Z" })"
+            R"( max_time_travel: 0)"
+            R"( dataset_reference {)"
+            R"( project_id: "p-id")"
+            R"( dataset_id: "d-id")"
+            R"( })"
+            R"( linked_dataset_source {)"
+            R"( source_dataset {)"
+            R"( project_id: "")"
+            R"( dataset_id: "")"
+            R"( } })"
+            R"( external_dataset_reference {)"
+            R"( hive_database {)"
+            R"( catalog_id: "")"
+            R"( database: "")"
+            R"( metadata_connectivity {)"
+            R"( access_uri_type: "")"
+            R"( access_uri: "")"
+            R"( metadata_connection: "")"
+            R"( storage_connection: "")"
+            R"( } } })"
+            R"( default_rounding_mode {)"
+            R"( rounding_mode_value: "")"
+            R"( })"
+            R"( storage_billing_model {)"
+            R"( storage_billing_model_value: "")"
+            R"( } })"
+            R"( http_response {)"
+            R"( status_code: 200)"
+            R"( http_headers {)"
+            R"( key: "header1")"
+            R"( value: "value1")"
+            R"( })"
+            R"( payload: REDACTED } })");
+
+  EXPECT_EQ(response->DebugString("GetDatasetResponse",
+                                  TracingOptions{}.SetOptions(
+                                      "truncate_string_field_longer_than=7")),
+            R"(GetDatasetResponse {)"
+            R"( dataset {)"
+            R"( kind: "d-kind")"
+            R"( etag: "d-tag")"
+            R"( id: "d-id")"
+            R"( self_link: "d-selfL...<truncated>...")"
+            R"( friendly_name: "d-frien...<truncated>...")"
+            R"( description: "")"
+            R"( type: "")"
+            R"( location: "")"
+            R"( default_collation: "")"
+            R"( published: false)"
+            R"( is_case_insensitive: false)"
+            R"( default_table_expiration: 0)"
+            R"( default_partition_expiration: 0)"
+            R"( creation_time { "1970-01-01T00:00:00Z" })"
+            R"( last_modified_time { "1970-01-01T00:00:00Z" })"
+            R"( max_time_travel: 0)"
+            R"( dataset_reference {)"
+            R"( project_id: "p-id")"
+            R"( dataset_id: "d-id")"
+            R"( })"
+            R"( linked_dataset_source {)"
+            R"( source_dataset {)"
+            R"( project_id: "")"
+            R"( dataset_id: "")"
+            R"( } })"
+            R"( external_dataset_reference {)"
+            R"( hive_database {)"
+            R"( catalog_id: "")"
+            R"( database: "")"
+            R"( metadata_connectivity {)"
+            R"( access_uri_type: "")"
+            R"( access_uri: "")"
+            R"( metadata_connection: "")"
+            R"( storage_connection: "")"
+            R"( } } })"
+            R"( default_rounding_mode {)"
+            R"( rounding_mode_value: "")"
+            R"( })"
+            R"( storage_billing_model {)"
+            R"( storage_billing_model_value: "")"
+            R"( } })"
+            R"( http_response {)"
+            R"( status_code: 200)"
+            R"( http_headers {)"
+            R"( key: "header1")"
+            R"( value: "value1")"
+            R"( })"
+            R"( payload: REDACTED } })");
+
+  EXPECT_EQ(
+      response->DebugString("GetDatasetResponse",
+                            TracingOptions{}.SetOptions("single_line_mode=F")),
+      R"(GetDatasetResponse {
+  dataset {
+    kind: "d-kind"
+    etag: "d-tag"
+    id: "d-id"
+    self_link: "d-selfLink"
+    friendly_name: "d-friendly-name"
+    description: ""
+    type: ""
+    location: ""
+    default_collation: ""
+    published: false
+    is_case_insensitive: false
+    default_table_expiration: 0
+    default_partition_expiration: 0
+    creation_time {
+      "1970-01-01T00:00:00Z"
+    }
+    last_modified_time {
+      "1970-01-01T00:00:00Z"
+    }
+    max_time_travel: 0
+    dataset_reference {
+      project_id: "p-id"
+      dataset_id: "d-id"
+    }
+    linked_dataset_source {
+      source_dataset {
+        project_id: ""
+        dataset_id: ""
+      }
+    }
+    external_dataset_reference {
+      hive_database {
+        catalog_id: ""
+        database: ""
+        metadata_connectivity {
+          access_uri_type: ""
+          access_uri: ""
+          metadata_connection: ""
+          storage_connection: ""
+        }
+      }
+    }
+    default_rounding_mode {
+      rounding_mode_value: ""
+    }
+    storage_billing_model {
+      storage_billing_model_value: ""
+    }
+  }
+  http_response {
+    status_code: 200
+    http_headers {
+      key: "header1"
+      value: "value1"
+    }
+    payload: REDACTED
+  }
+})");
+}
+
+TEST(ListDatasetsResponseTest, DebugString) {
+  BigQueryHttpResponse http_response;
+  http_response.http_status_code = HttpStatusCode::kOk;
+  http_response.http_headers.insert({{"header1", "value1"}});
+  http_response.payload =
+      R"({"etag": "tag-1",
+          "kind": "kind-1",
+          "next_page_token": "npt-123",
+          "datasets": [
+              {
+                "id": "1",
+                "kind": "kind-2",
+                "dataset_reference": {"project_id": "p123", "dataset_id": "d123"},
+
+                "friendly_name": "friendly-name",
+                "location": "loc",
+                "type": "DEFAULT"
+              }
+  ]})";
+  auto response = ListDatasetsResponse::BuildFromHttpResponse(http_response);
+  ASSERT_STATUS_OK(response);
+
+  EXPECT_EQ(response->DebugString("ListDatasetsResponse", TracingOptions{}),
+            R"(ListDatasetsResponse {)"
+            R"( kind: "kind-1")"
+            R"( etag: "tag-1")"
+            R"( next_page_token: "npt-123")"
+            R"( datasets {)"
+            R"( kind: "kind-2")"
+            R"( id: "1")"
+            R"( friendly_name: "friendly-name")"
+            R"( type: "DEFAULT")"
+            R"( location: "loc")"
+            R"( dataset_reference {)"
+            R"( project_id: "p123")"
+            R"( dataset_id: "d123")"
+            R"( } })"
+            R"( http_response {)"
+            R"( status_code: 200)"
+            R"( http_headers {)"
+            R"( key: "header1")"
+            R"( value: "value1")"
+            R"( })"
+            R"( payload: REDACTED)"
+            R"( } })");
+
+  EXPECT_EQ(response->DebugString("ListDatasetsResponse",
+                                  TracingOptions{}.SetOptions(
+                                      "truncate_string_field_longer_than=7")),
+            R"(ListDatasetsResponse {)"
+            R"( kind: "kind-1")"
+            R"( etag: "tag-1")"
+            R"( next_page_token: "npt-123")"
+            R"( datasets {)"
+            R"( kind: "kind-2")"
+            R"( id: "1")"
+            R"( friendly_name: "friendl...<truncated>...")"
+            R"( type: "DEFAULT")"
+            R"( location: "loc")"
+            R"( dataset_reference {)"
+            R"( project_id: "p123")"
+            R"( dataset_id: "d123")"
+            R"( } })"
+            R"( http_response {)"
+            R"( status_code: 200)"
+            R"( http_headers {)"
+            R"( key: "header1")"
+            R"( value: "value1")"
+            R"( })"
+            R"( payload: REDACTED)"
+            R"( } })");
+
+  EXPECT_EQ(
+      response->DebugString("ListJobsResponse",
+                            TracingOptions{}.SetOptions("single_line_mode=F")),
+      R"(ListJobsResponse {
+  kind: "kind-1"
+  etag: "tag-1"
+  next_page_token: "npt-123"
+  datasets {
+    kind: "kind-2"
+    id: "1"
+    friendly_name: "friendly-name"
+    type: "DEFAULT"
+    location: "loc"
+    dataset_reference {
+      project_id: "p123"
+      dataset_id: "d123"
+    }
+  }
+  http_response {
+    status_code: 200
+    http_headers {
+      key: "header1"
+      value: "value1"
+    }
+    payload: REDACTED
+  }
+})");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
