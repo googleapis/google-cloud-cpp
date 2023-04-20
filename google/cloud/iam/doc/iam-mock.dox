@@ -17,7 +17,7 @@ The example uses a number of aliases to save typing and improve readability:
 
 @snippet mock_iam.cc helper-aliases
 
-Create a mocking object for `google::cloud::iam::IAMConnection`:
+Create a mocking object for `google::cloud::iam_admin_v1::IAMConnection`:
 
 @snippet mock_iam.cc create-mock
 
@@ -27,7 +27,7 @@ write the rest of the code:
 @snippet mock_iam.cc setup-expectations
 
 With the expectations in place, create a
-`google::cloud::iam::IAMClient` object:
+`google::cloud::iam_admin_v1::IAMClient` object:
 
 @snippet mock_iam.cc create-client
 

@@ -14,16 +14,16 @@
 
 //! [all]
 //! [required-includes]
-#include "google/cloud/iam/iam_credentials_client.h"
-#include "google/cloud/iam/mocks/mock_iam_credentials_connection.h"
+#include "google/cloud/iam/credentials/v1/iam_credentials_client.h"
+#include "google/cloud/iam/credentials/v1/mocks/mock_iam_credentials_connection.h"
 #include <gmock/gmock.h>
 //! [required-includes]
 
 namespace {
 
 //! [helper-aliases]
-using ::google::cloud::iam_mocks::MockIAMCredentialsConnection;
-namespace iam = ::google::cloud::iam;
+using ::google::cloud::iam_credentials_v1_mocks::MockIAMCredentialsConnection;
+namespace iam = ::google::cloud::iam_credentials_v1;
 //! [helper-aliases]
 
 TEST(MockSignJwtExample, SignJwt) {
