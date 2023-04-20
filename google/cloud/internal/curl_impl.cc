@@ -322,35 +322,35 @@ std::string CurlImpl::LastClientIpAddress() const {
   return factory_->LastClientIpAddress();
 }
 
-Status CurlImpl::MakeRequest(HttpMethod method,
+Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
                              std::vector<absl::Span<char const>> request) {
   Status status;
   status = handle_.SetOption(CURLOPT_CUSTOMREQUEST, HttpMethodToName(method));
-  if (!status.ok()) return OnTransferError(std::move(status));
+  if (!status.ok()) return OnTransferError(context, std::move(status));
   status = handle_.SetOption(CURLOPT_UPLOAD, 0L);
-  if (!status.ok()) return OnTransferError(std::move(status));
+  if (!status.ok()) return OnTransferError(context, std::move(status));
   status =
       handle_.SetOption(CURLOPT_FOLLOWLOCATION, follow_location_ ? 1L : 0L);
-  if (!status.ok()) return OnTransferError(std::move(status));
+  if (!status.ok()) return OnTransferError(context, std::move(status));
 
   if (method == HttpMethod::kGet) {
     status = handle_.SetOption(CURLOPT_NOPROGRESS, 1L);
-    if (!status.ok()) return OnTransferError(std::move(status));
+    if (!status.ok()) return OnTransferError(context, std::move(status));
     if (download_stall_timeout_ != std::chrono::seconds::zero()) {
       // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* long
       auto const timeout = static_cast<long>(download_stall_timeout_.count());
       // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* long
       auto const limit = static_cast<long>(download_stall_minimum_rate_);
       status = handle_.SetOption(CURLOPT_CONNECTTIMEOUT, timeout);
-      if (!status.ok()) return OnTransferError(std::move(status));
+      if (!status.ok()) return OnTransferError(context, std::move(status));
       // Timeout if the request sends or receives less than 1 byte/second
       // (i.e.  effectively no bytes) for download_stall_timeout_.
       status = handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, limit);
-      if (!status.ok()) return OnTransferError(std::move(status));
+      if (!status.ok()) return OnTransferError(context, std::move(status));
       status = handle_.SetOption(CURLOPT_LOW_SPEED_TIME, timeout);
-      if (!status.ok()) return OnTransferError(std::move(status));
+      if (!status.ok()) return OnTransferError(context, std::move(status));
     }
-    return MakeRequestImpl();
+    return MakeRequestImpl(context);
   }
 
   if (transfer_stall_timeout_ != std::chrono::seconds::zero()) {
@@ -359,48 +359,48 @@ Status CurlImpl::MakeRequest(HttpMethod method,
     // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* long
     auto const limit = static_cast<long>(transfer_stall_minimum_rate_);
     status = handle_.SetOption(CURLOPT_CONNECTTIMEOUT, timeout);
-    if (!status.ok()) return OnTransferError(std::move(status));
+    if (!status.ok()) return OnTransferError(context, std::move(status));
     // Timeout if the request sends or receives less than 1 byte/second
     // (i.e.  effectively no bytes) for transfer_stall_timeout_.
     status = handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, limit);
-    if (!status.ok()) return OnTransferError(std::move(status));
+    if (!status.ok()) return OnTransferError(context, std::move(status));
     status = handle_.SetOption(CURLOPT_LOW_SPEED_TIME, timeout);
-    if (!status.ok()) return OnTransferError(std::move(status));
+    if (!status.ok()) return OnTransferError(context, std::move(status));
   }
 
   if (method == HttpMethod::kDelete || request.empty()) {
-    return MakeRequestImpl();
+    return MakeRequestImpl(context);
   }
 
   if (method == HttpMethod::kPost) {
     WriteVector writev{std::move(request)};
     curl_off_t const size = writev.size();
     status = handle_.SetOption(CURLOPT_POSTFIELDS, nullptr);
-    if (!status.ok()) return OnTransferError(std::move(status));
+    if (!status.ok()) return OnTransferError(context, std::move(status));
     status = handle_.SetOption(CURLOPT_POST, 1L);
-    if (!status.ok()) return OnTransferError(std::move(status));
+    if (!status.ok()) return OnTransferError(context, std::move(status));
     status = handle_.SetOption(CURLOPT_POSTFIELDSIZE_LARGE, size);
-    if (!status.ok()) return OnTransferError(std::move(status));
+    if (!status.ok()) return OnTransferError(context, std::move(status));
     status = handle_.SetOption(CURLOPT_READFUNCTION, &ReadFunction);
-    if (!status.ok()) return OnTransferError(std::move(status));
+    if (!status.ok()) return OnTransferError(context, std::move(status));
     status = handle_.SetOption(CURLOPT_READDATA, &writev);
-    if (!status.ok()) return OnTransferError(std::move(status));
+    if (!status.ok()) return OnTransferError(context, std::move(status));
     SetHeader("Expect:");
-    return MakeRequestImpl();
+    return MakeRequestImpl(context);
   }
 
   if (method == HttpMethod::kPut || method == HttpMethod::kPatch) {
     WriteVector writev{std::move(request)};
     curl_off_t const size = writev.size();
     status = handle_.SetOption(CURLOPT_READFUNCTION, &ReadFunction);
-    if (!status.ok()) return OnTransferError(std::move(status));
+    if (!status.ok()) return OnTransferError(context, std::move(status));
     status = handle_.SetOption(CURLOPT_READDATA, &writev);
-    if (!status.ok()) return OnTransferError(std::move(status));
+    if (!status.ok()) return OnTransferError(context, std::move(status));
     status = handle_.SetOption(CURLOPT_UPLOAD, 1L);
-    if (!status.ok()) return OnTransferError(std::move(status));
+    if (!status.ok()) return OnTransferError(context, std::move(status));
     status = handle_.SetOption(CURLOPT_INFILESIZE_LARGE, size);
-    if (!status.ok()) return OnTransferError(std::move(status));
-    return MakeRequestImpl();
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+    return MakeRequestImpl(context);
   }
 
   return internal::InvalidArgumentError(
@@ -415,7 +415,10 @@ StatusOr<std::size_t> CurlImpl::Read(absl::Span<char> output) {
   if (output.empty()) {
     return internal::InvalidArgumentError("Output buffer cannot be empty");
   }
-  return ReadImpl(std::move(output));
+  // This context is discarded.  Any interesting information was already
+  // captured when the request was started.
+  RestContext context;
+  return ReadImpl(context, std::move(output));
 }
 
 std::size_t CurlImpl::WriteCallback(absl::Span<char> response) {
@@ -483,24 +486,24 @@ std::size_t CurlImpl::HeaderCallback(absl::Span<char> response) {
                               response.size());
 }
 
-Status CurlImpl::MakeRequestImpl() {
+Status CurlImpl::MakeRequestImpl(RestContext& context) {
   TRACE_STATE() << ", url_=" << url_;
 
   Status status;
   status = handle_.SetOption(CURLOPT_URL, url_.c_str());
-  if (!status.ok()) return OnTransferError(std::move(status));
+  if (!status.ok()) return OnTransferError(context, std::move(status));
   status = handle_.SetOption(CURLOPT_HTTPHEADER, request_headers_.get());
-  if (!status.ok()) return OnTransferError(std::move(status));
+  if (!status.ok()) return OnTransferError(context, std::move(status));
   status = handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
-  if (!status.ok()) return OnTransferError(std::move(status));
+  if (!status.ok()) return OnTransferError(context, std::move(status));
   handle_.EnableLogging(logging_enabled_);
-  if (!status.ok()) return OnTransferError(std::move(status));
+  if (!status.ok()) return OnTransferError(context, std::move(status));
   handle_.SetSocketCallback(socket_options_);
-  if (!status.ok()) return OnTransferError(std::move(status));
+  if (!status.ok()) return OnTransferError(context, std::move(status));
   status = handle_.SetOption(CURLOPT_NOSIGNAL, 1);
-  if (!status.ok()) return OnTransferError(std::move(status));
+  if (!status.ok()) return OnTransferError(context, std::move(status));
   status = handle_.SetOption(CURLOPT_TCP_KEEPALIVE, 1L);
-  if (!status.ok()) return OnTransferError(std::move(status));
+  if (!status.ok()) return OnTransferError(context, (status));
 
   handle_.SetOptionUnchecked(CURLOPT_HTTP_VERSION,
                              VersionToCurlCode(http_version_));
@@ -520,10 +523,11 @@ Status CurlImpl::MakeRequestImpl() {
   // thus make available the status_code and headers. Any response data
   // should be put into the spill buffer, which makes them available for
   // subsequent calls to Read() after the headers have been extracted.
-  return ReadImpl({}).status();
+  return ReadImpl(context, {}).status();
 }
 
-StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
+StatusOr<std::size_t> CurlImpl::ReadImpl(RestContext& context,
+                                         absl::Span<char> output) {
   handle_.FlushDebug(__func__);
   avail_ = output;
   TRACE_STATE() << ", begin";
@@ -539,20 +543,20 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
 
   Status status;
   status = handle_.SetOption(CURLOPT_HEADERFUNCTION, &HeaderFunction);
-  if (!status.ok()) return OnTransferError(std::move(status));
+  if (!status.ok()) return OnTransferError(context, std::move(status));
   status = handle_.SetOption(CURLOPT_HEADERDATA, this);
-  if (!status.ok()) return OnTransferError(std::move(status));
+  if (!status.ok()) return OnTransferError(context, std::move(status));
   status = handle_.SetOption(CURLOPT_WRITEFUNCTION, &WriteFunction);
-  if (!status.ok()) return OnTransferError(std::move(status));
+  if (!status.ok()) return OnTransferError(context, std::move(status));
   status = handle_.SetOption(CURLOPT_WRITEDATA, this);
-  if (!status.ok()) return OnTransferError(std::move(status));
+  if (!status.ok()) return OnTransferError(context, std::move(status));
   handle_.FlushDebug(__func__);
 
   if (!curl_closed_ && paused_) {
     paused_ = false;
     status = handle_.EasyPause(CURLPAUSE_RECV_CONT);
     TRACE_STATE() << ", status=" << status;
-    if (!status.ok()) return OnTransferError(std::move(status));
+    if (!status.ok()) return OnTransferError(context, std::move(status));
   }
 
   if (avail_.empty()) {
@@ -567,8 +571,9 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
   }
 
   TRACE_STATE() << ", status=" << status;
-  if (!status.ok()) return OnTransferError(std::move(status));
+  if (!status.ok()) return OnTransferError(context, std::move(status));
 
+  handle_.CaptureMetadata(context);
   bytes_read = output.size() - avail_.size();
   if (curl_closed_) {
     OnTransferDone();
@@ -725,7 +730,8 @@ Status CurlImpl::WaitForHandles(int& repeats) {
   return {};
 }
 
-Status CurlImpl::OnTransferError(Status status) {
+Status CurlImpl::OnTransferError(RestContext& context, Status status) {
+  handle_.CaptureMetadata(context);
   // When there is a transfer error the handle is suspect. It could be pointing
   // to an invalid host, a host that is slow and trickling data, or otherwise
   // be in a bad state. Release the handle, but do not return it to the pool.

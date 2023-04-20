@@ -37,7 +37,7 @@ namespace {
 std::size_t constexpr kDefaultPooledCurlHandleFactorySize = 10;
 
 Status MakeRequestWithPayload(
-    CurlImpl::HttpMethod http_method, RestContext const& context,
+    CurlImpl::HttpMethod http_method, RestContext& context,
     RestRequest const& request, CurlImpl& impl,
     std::vector<absl::Span<char const>> const& payload) {
   // If no Content-Type is specified for the payload, default to
@@ -54,7 +54,7 @@ Status MakeRequestWithPayload(
     }
     encoded_payload = impl.MakeEscapedString(concatenated_payload);
     impl.SetHeader(absl::StrCat("Content-Length: ", encoded_payload.size()));
-    return impl.MakeRequest(http_method,
+    return impl.MakeRequest(http_method, context,
                             {{encoded_payload.data(), encoded_payload.size()}});
   }
 
@@ -64,7 +64,7 @@ Status MakeRequestWithPayload(
   }
 
   impl.SetHeader(absl::StrCat("Content-Length: ", content_length));
-  return impl.MakeRequest(http_method, payload);
+  return impl.MakeRequest(http_method, context, payload);
 }
 
 std::string FormatHostHeaderValue(absl::string_view hostname) {
@@ -142,7 +142,7 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Delete(
     RestContext& context, RestRequest const& request) {
   auto impl = CreateCurlImpl(context, request);
   if (!impl.ok()) return impl.status();
-  auto response = (*impl)->MakeRequest(CurlImpl::HttpMethod::kDelete);
+  auto response = (*impl)->MakeRequest(CurlImpl::HttpMethod::kDelete, context);
   if (!response.ok()) return response;
   return {std::unique_ptr<CurlRestResponse>(
       new CurlRestResponse(options_, std::move(*impl)))};
@@ -152,7 +152,7 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Get(
     RestContext& context, RestRequest const& request) {
   auto impl = CreateCurlImpl(context, request);
   if (!impl.ok()) return impl.status();
-  auto response = (*impl)->MakeRequest(CurlImpl::HttpMethod::kGet);
+  auto response = (*impl)->MakeRequest(CurlImpl::HttpMethod::kGet, context);
   if (!response.ok()) return response;
   return {std::unique_ptr<CurlRestResponse>(
       new CurlRestResponse(options_, std::move(*impl)))};
