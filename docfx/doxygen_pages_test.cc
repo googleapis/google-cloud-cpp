@@ -117,6 +117,13 @@ TEST(DoxygenPages, PagesToc) {
           </briefdescription>
           <detaileddescription><para>More details about the index.</para></detaileddescription>
         </compounddef>
+        <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="deprecated" kind="page">
+          <compoundname>deprecated</compoundname>
+          <title>Deprecated List</title>
+          <briefdescription><para>Some brief description.</para>
+          </briefdescription>
+          <detaileddescription><para>More details about the index.</para></detaileddescription>
+        </compounddef>
       </doxygen>)xml";
 
   pugi::xml_document doc;

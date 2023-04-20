@@ -36,6 +36,10 @@ bool IncludeInPublicDocuments(pugi::xml_node const& node) {
   for (std::string_view prefix : {"namespacestd", "classstd", "structstd"}) {
     if (id.substr(0, prefix.size()) == prefix) return false;
   }
+  // Doxygen generates a page listing all deprecated symbols. It does not seem
+  // to add enough value (each symbol already says if it is deprecated), and
+  // we need more work to render this correctly in the DocFX format.
+  if (kind(node) == "page" && id == "deprecated") return false;
   // We do not generate documentation for private members or sections.
   auto const prot = std::string_view{node.attribute("prot").as_string()};
   return prot != "private";
