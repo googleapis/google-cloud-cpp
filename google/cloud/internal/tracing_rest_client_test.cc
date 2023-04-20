@@ -107,6 +107,64 @@ TEST(TracingRestClient, Delete) {
           SpanNamed("Read"), SpanNamed("Read")));
 }
 
+TEST(TracingRestClient, HasScope) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  auto span_catcher = InstallSpanCatcher();
+
+  auto impl = std::make_unique<MockRestClient>();
+  EXPECT_CALL(*impl, Get).WillOnce([](RestContext&, RestRequest const&) {
+    // Inject an attribute to the current span, which should be the request
+    // span.
+    auto span = opentelemetry::trace::Tracer::GetCurrentSpan();
+    span->SetAttribute("test.attribute", "test.value");
+    auto response = std::make_unique<MockRestResponse>();
+    EXPECT_CALL(*response, StatusCode)
+        .WillRepeatedly(Return(HttpStatusCode::kOk));
+    EXPECT_CALL(*response, Headers).WillRepeatedly(Return(MockHeaders()));
+    EXPECT_CALL(std::move(*response), ExtractPayload).WillOnce([] {
+      return MakeMockHttpPayloadSuccess(MockContents());
+    });
+    return std::unique_ptr<RestResponse>(std::move(response));
+  });
+
+  auto constexpr kUrl = "https://storage.googleapis.com/storage/v1/b/my-bucket";
+  RestRequest request(kUrl);
+  request.AddHeader("x-test-header-3", "value3");
+
+  auto client = MakeTracingRestClient(std::move(impl));
+  rest_internal::RestContext context;
+  auto r = client->Get(context, request);
+  ASSERT_STATUS_OK(r);
+  auto response = *std::move(r);
+  ASSERT_THAT(response, NotNull());
+  EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
+  EXPECT_THAT(response->Headers(), ElementsAreArray(MockHeaders()));
+  auto contents = ReadAll(std::move(*response).ExtractPayload());
+  EXPECT_THAT(contents, IsOkAndHolds(MockContents()));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      UnorderedElementsAre(
+          // Request span
+          AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
+                SpanKindIsClient(),
+                SpanHasAttributes(
+                    SpanAttribute<std::string>(sc::kNetTransport,
+                                               sc::NetTransportValues::kIpTcp),
+                    SpanAttribute<std::string>(sc::kHttpMethod, "GET"),
+                    SpanAttribute<std::string>(sc::kHttpUrl, kUrl),
+                    SpanAttribute<std::string>("test.attribute", "test.value"),
+                    SpanAttribute<std::string>(
+                        "http.request.header.x-test-header-3", "value3"),
+                    SpanAttribute<std::string>(
+                        "http.response.header.x-test-header-1", "value1"),
+                    SpanAttribute<std::string>(
+                        "http.response.header.x-test-header-2", "value2"))),
+          // Read span on the HttpPayload
+          SpanNamed("Read"), SpanNamed("Read")));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal

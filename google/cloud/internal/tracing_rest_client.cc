@@ -58,12 +58,14 @@ TracingRestClient::TracingRestClient(std::unique_ptr<RestClient> impl)
 StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Delete(
     RestContext& context, RestRequest const& request) {
   auto span = MakeSpanHttp(request, "DELETE");
+  auto scope = opentelemetry::trace::Scope(span);
   return EndResponseSpan(std::move(span), impl_->Delete(context, request));
 }
 
 StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Get(
     RestContext& context, RestRequest const& request) {
   auto span = MakeSpanHttp(request, "GET");
+  auto scope = opentelemetry::trace::Scope(span);
   return EndResponseSpan(std::move(span), impl_->Get(context, request));
 }
 
@@ -71,6 +73,7 @@ StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Patch(
     RestContext& context, RestRequest const& request,
     std::vector<absl::Span<char const>> const& payload) {
   auto span = MakeSpanHttp(request, "POST");
+  auto scope = opentelemetry::trace::Scope(span);
   return EndResponseSpan(std::move(span),
                          impl_->Patch(context, request, payload));
 }
@@ -79,6 +82,7 @@ StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Post(
     RestContext& context, RestRequest const& request,
     std::vector<absl::Span<char const>> const& payload) {
   auto span = MakeSpanHttp(request, "POST");
+  auto scope = opentelemetry::trace::Scope(span);
   return EndResponseSpan(std::move(span),
                          impl_->Post(context, request, payload));
 }
@@ -87,6 +91,7 @@ StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Post(
     RestContext& context, RestRequest const& request,
     std::vector<std::pair<std::string, std::string>> const& form_data) {
   auto span = MakeSpanHttp(request, "PUT");
+  auto scope = opentelemetry::trace::Scope(span);
   return EndResponseSpan(std::move(span),
                          impl_->Post(context, request, form_data));
 }
@@ -95,6 +100,7 @@ StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Put(
     RestContext& context, RestRequest const& request,
     std::vector<absl::Span<char const>> const& payload) {
   auto span = MakeSpanHttp(request, "PUT");
+  auto scope = opentelemetry::trace::Scope(span);
   return EndResponseSpan(std::move(span),
                          impl_->Put(context, request, payload));
 }
