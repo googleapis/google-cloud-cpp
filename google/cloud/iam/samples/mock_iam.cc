@@ -14,16 +14,16 @@
 
 //! [all]
 //! [required-includes]
-#include "google/cloud/iam/iam_client.h"
-#include "google/cloud/iam/mocks/mock_iam_connection.h"
+#include "google/cloud/iam/admin/v1/iam_client.h"
+#include "google/cloud/iam/admin/v1/mocks/mock_iam_connection.h"
 #include <gmock/gmock.h>
 //! [required-includes]
 
 namespace {
 
 //! [helper-aliases]
-using ::google::cloud::iam_mocks::MockIAMConnection;
-namespace iam = ::google::cloud::iam;
+using ::google::cloud::iam_admin_v1_mocks::MockIAMConnection;
+namespace iam = ::google::cloud::iam_admin_v1;
 //! [helper-aliases]
 
 TEST(MockGetServiceAccountExample, GetServiceAccount) {
