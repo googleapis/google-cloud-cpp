@@ -59,7 +59,7 @@ TEST(TracingRestClient, Delete) {
   auto span_catcher = InstallSpanCatcher();
 
   auto impl = std::make_unique<MockRestClient>();
-  EXPECT_CALL(*impl, Delete).WillOnce([](RestRequest const&) {
+  EXPECT_CALL(*impl, Delete).WillOnce([](RestContext&, RestRequest const&) {
     auto response = std::make_unique<MockRestResponse>();
     EXPECT_CALL(*response, StatusCode)
         .WillRepeatedly(Return(HttpStatusCode::kOk));
@@ -75,7 +75,8 @@ TEST(TracingRestClient, Delete) {
   request.AddHeader("x-test-header-3", "value3");
 
   auto client = MakeTracingRestClient(std::move(impl));
-  auto r = client->Delete(request);
+  rest_internal::RestContext context;
+  auto r = client->Delete(context, request);
   ASSERT_STATUS_OK(r);
   auto response = *std::move(r);
   ASSERT_THAT(response, NotNull());

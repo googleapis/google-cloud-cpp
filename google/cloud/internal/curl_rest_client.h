@@ -52,26 +52,26 @@ class CurlRestClient : public RestClient {
   CurlRestClient& operator=(CurlRestClient&&) = default;
 
   StatusOr<std::unique_ptr<RestResponse>> Delete(
-      RestRequest const& request) override;
+      RestContext& context, RestRequest const& request) override;
   StatusOr<std::unique_ptr<RestResponse>> Get(
-      RestRequest const& request) override;
+      RestContext& context, RestRequest const& request) override;
   StatusOr<std::unique_ptr<RestResponse>> Patch(
-      RestRequest const& request,
+      RestContext& context, RestRequest const& request,
       std::vector<absl::Span<char const>> const& payload) override;
   StatusOr<std::unique_ptr<RestResponse>> Post(
-      RestRequest const& request,
+      RestContext& context, RestRequest const& request,
       std::vector<absl::Span<char const>> const& payload) override;
   StatusOr<std::unique_ptr<RestResponse>> Post(
-      RestRequest request,
+      RestContext& context, RestRequest const& request,
       std::vector<std::pair<std::string, std::string>> const& form_data)
       override;
   StatusOr<std::unique_ptr<RestResponse>> Put(
-      RestRequest const& request,
+      RestContext& context, RestRequest const& request,
       std::vector<absl::Span<char const>> const& payload) override;
 
  private:
   StatusOr<std::unique_ptr<CurlImpl>> CreateCurlImpl(
-      RestRequest const& request);
+      RestContext const& context, RestRequest const& request);
 
   std::string endpoint_address_;
   std::shared_ptr<CurlHandleFactory> handle_factory_;

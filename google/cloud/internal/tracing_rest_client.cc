@@ -56,43 +56,47 @@ TracingRestClient::TracingRestClient(std::unique_ptr<RestClient> impl)
     : impl_(std::move(impl)) {}
 
 StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Delete(
-    RestRequest const& request) {
+    RestContext& context, RestRequest const& request) {
   auto span = MakeSpanHttp(request, "DELETE");
-  return EndResponseSpan(std::move(span), impl_->Delete(request));
+  return EndResponseSpan(std::move(span), impl_->Delete(context, request));
 }
 
 StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Get(
-    RestRequest const& request) {
+    RestContext& context, RestRequest const& request) {
   auto span = MakeSpanHttp(request, "GET");
-  return EndResponseSpan(std::move(span), impl_->Get(request));
+  return EndResponseSpan(std::move(span), impl_->Get(context, request));
 }
 
 StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Patch(
-    RestRequest const& request,
+    RestContext& context, RestRequest const& request,
     std::vector<absl::Span<char const>> const& payload) {
   auto span = MakeSpanHttp(request, "POST");
-  return EndResponseSpan(std::move(span), impl_->Patch(request, payload));
+  return EndResponseSpan(std::move(span),
+                         impl_->Patch(context, request, payload));
 }
 
 StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Post(
-    RestRequest const& request,
+    RestContext& context, RestRequest const& request,
     std::vector<absl::Span<char const>> const& payload) {
   auto span = MakeSpanHttp(request, "POST");
-  return EndResponseSpan(std::move(span), impl_->Post(request, payload));
+  return EndResponseSpan(std::move(span),
+                         impl_->Post(context, request, payload));
 }
 
 StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Post(
-    RestRequest request,
+    RestContext& context, RestRequest const& request,
     std::vector<std::pair<std::string, std::string>> const& form_data) {
   auto span = MakeSpanHttp(request, "PUT");
-  return EndResponseSpan(std::move(span), impl_->Post(request, form_data));
+  return EndResponseSpan(std::move(span),
+                         impl_->Post(context, request, form_data));
 }
 
 StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Put(
-    RestRequest const& request,
+    RestContext& context, RestRequest const& request,
     std::vector<absl::Span<char const>> const& payload) {
   auto span = MakeSpanHttp(request, "PUT");
-  return EndResponseSpan(std::move(span), impl_->Put(request, payload));
+  return EndResponseSpan(std::move(span),
+                         impl_->Put(context, request, payload));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

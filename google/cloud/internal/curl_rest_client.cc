@@ -37,12 +37,14 @@ namespace {
 std::size_t constexpr kDefaultPooledCurlHandleFactorySize = 10;
 
 Status MakeRequestWithPayload(
-    CurlImpl::HttpMethod http_method, RestRequest const& request,
-    CurlImpl& impl, std::vector<absl::Span<char const>> const& payload) {
+    CurlImpl::HttpMethod http_method, RestContext const& context,
+    RestRequest const& request, CurlImpl& impl,
+    std::vector<absl::Span<char const>> const& payload) {
   // If no Content-Type is specified for the payload, default to
   // application/x-www-form-urlencoded and encode the payload accordingly before
   // making the request.
   auto content_type = request.GetHeader("Content-Type");
+  if (content_type.empty()) content_type = context.GetHeader("Content-Type");
   if (content_type.empty()) {
     std::string encoded_payload;
     impl.SetHeader("content-type: application/x-www-form-urlencoded");
@@ -106,7 +108,7 @@ CurlRestClient::CurlRestClient(std::string endpoint_address,
 }
 
 StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
-    RestRequest const& request) {
+    RestContext const& context, RestRequest const& request) {
   auto handle = CurlHandle::MakeFromPool(*handle_factory_);
   auto impl =
       std::make_unique<CurlImpl>(std::move(handle), handle_factory_, options_);
@@ -117,7 +119,7 @@ StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
   }
   impl->SetHeader(HostHeader(options_, endpoint_address_));
   impl->SetHeader(x_goog_api_client_header_);
-  impl->SetHeaders(request);
+  impl->SetHeaders(context, request);
   RestRequest::HttpParameters additional_parameters;
   // The UserIp option has been deprecated in favor of quotaUser. Only add the
   // parameter if the option has been set.
@@ -137,8 +139,8 @@ StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
 // 2 Access: CurlRestResponse constructor is private, CurlRestClient is a friend
 //           CreateCurlImpl relies heavily on member variables.
 StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Delete(
-    RestRequest const& request) {
-  auto impl = CreateCurlImpl(request);
+    RestContext& context, RestRequest const& request) {
+  auto impl = CreateCurlImpl(context, request);
   if (!impl.ok()) return impl.status();
   auto response = (*impl)->MakeRequest(CurlImpl::HttpMethod::kDelete);
   if (!response.ok()) return response;
@@ -147,8 +149,8 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Delete(
 }
 
 StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Get(
-    RestRequest const& request) {
-  auto impl = CreateCurlImpl(request);
+    RestContext& context, RestRequest const& request) {
+  auto impl = CreateCurlImpl(context, request);
   if (!impl.ok()) return impl.status();
   auto response = (*impl)->MakeRequest(CurlImpl::HttpMethod::kGet);
   if (!response.ok()) return response;
@@ -157,11 +159,23 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Get(
 }
 
 StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Patch(
-    RestRequest const& request,
+    RestContext& context, RestRequest const& request,
     std::vector<absl::Span<char const>> const& payload) {
-  auto impl = CreateCurlImpl(request);
+  auto impl = CreateCurlImpl(context, request);
   if (!impl.ok()) return impl.status();
   Status response = MakeRequestWithPayload(CurlImpl::HttpMethod::kPatch,
+                                           context, request, **impl, payload);
+  if (!response.ok()) return response;
+  return {std::unique_ptr<CurlRestResponse>(
+      new CurlRestResponse(options_, std::move(*impl)))};
+}
+
+StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Post(
+    RestContext& context, RestRequest const& request,
+    std::vector<absl::Span<char const>> const& payload) {
+  auto impl = CreateCurlImpl(context, request);
+  if (!impl.ok()) return impl.status();
+  Status response = MakeRequestWithPayload(CurlImpl::HttpMethod::kPost, context,
                                            request, **impl, payload);
   if (!response.ok()) return response;
   return {std::unique_ptr<CurlRestResponse>(
@@ -169,21 +183,10 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Patch(
 }
 
 StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Post(
-    RestRequest const& request,
-    std::vector<absl::Span<char const>> const& payload) {
-  auto impl = CreateCurlImpl(request);
-  if (!impl.ok()) return impl.status();
-  Status response = MakeRequestWithPayload(CurlImpl::HttpMethod::kPost, request,
-                                           **impl, payload);
-  if (!response.ok()) return response;
-  return {std::unique_ptr<CurlRestResponse>(
-      new CurlRestResponse(options_, std::move(*impl)))};
-}
-
-StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Post(
-    RestRequest request,
+    RestContext& context, RestRequest const& request,
     std::vector<std::pair<std::string, std::string>> const& form_data) {
-  auto impl = CreateCurlImpl(request);
+  context.AddHeader("content-type", "application/x-www-form-urlencoded");
+  auto impl = CreateCurlImpl(context, request);
   if (!impl.ok()) return impl.status();
   std::string form_payload = absl::StrJoin(
       form_data, "&",
@@ -191,21 +194,20 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Post(
         out->append(
             absl::StrCat(i.first, "=", (*impl)->MakeEscapedString(i.second)));
       });
-  request.AddHeader("content-type", "application/x-www-form-urlencoded");
-  Status response = MakeRequestWithPayload(CurlImpl::HttpMethod::kPost, request,
-                                           **impl, {form_payload});
+  Status response = MakeRequestWithPayload(CurlImpl::HttpMethod::kPost, context,
+                                           request, **impl, {form_payload});
   if (!response.ok()) return response;
   return {std::unique_ptr<CurlRestResponse>(
       new CurlRestResponse(options_, std::move(*impl)))};
 }
 
 StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Put(
-    RestRequest const& request,
+    RestContext& context, RestRequest const& request,
     std::vector<absl::Span<char const>> const& payload) {
-  auto impl = CreateCurlImpl(request);
+  auto impl = CreateCurlImpl(context, request);
   if (!impl.ok()) return impl.status();
-  Status response = MakeRequestWithPayload(CurlImpl::HttpMethod::kPut, request,
-                                           **impl, payload);
+  Status response = MakeRequestWithPayload(CurlImpl::HttpMethod::kPut, context,
+                                           request, **impl, payload);
   if (!response.ok()) return response;
   return {std::unique_ptr<CurlRestResponse>(
       new CurlRestResponse(options_, std::move(*impl)))};

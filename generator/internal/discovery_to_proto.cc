@@ -43,7 +43,8 @@ google::cloud::StatusOr<std::string> GetPage(std::string const& url) {
   auto client = rest::MakeDefaultRestClient(url_pieces.first + "com", {});
   rest::RestRequest request;
   request.SetPath(url_pieces.second);
-  auto response = client->Get(request);
+  rest_internal::RestContext context;
+  auto response = client->Get(context, request);
   if (!response) {
     return std::move(response).status();
   }

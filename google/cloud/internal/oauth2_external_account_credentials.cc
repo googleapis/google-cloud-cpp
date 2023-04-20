@@ -151,7 +151,8 @@ StatusOr<internal::AccessToken> ExternalAccountCredentials::GetToken(
           .AddHeader("content-type", "application/x-www-form-urlencoded");
 
   auto client = client_factory_(options_);
-  auto response = client->Post(request, form_data);
+  rest_internal::RestContext unused;
+  auto response = client->Post(unused, request, form_data);
   if (!response) return std::move(response).status();
   if (IsHttpError(**response)) return AsStatus(std::move(**response));
   auto payload = rest_internal::ReadAll(std::move(**response).ExtractPayload());
@@ -212,7 +213,8 @@ ExternalAccountCredentials::GetTokenImpersonation(
       {"lifetime", std::to_string(lifetime.count()) + "s"}};
 
   auto client = client_factory_(options_);
-  auto response = client->Post(request, {request_payload.dump()});
+  rest_internal::RestContext context;
+  auto response = client->Post(context, request, {request_payload.dump()});
   if (!response) return std::move(response).status();
   return ParseGenerateAccessTokenResponse(**response, ec);
 }

@@ -59,7 +59,8 @@ MinimalIamCredentialsRestStub::GenerateAccessToken(
   };
 
   auto client = client_factory_(options_);
-  auto response = client->Post(rest_request, {payload.dump()});
+  rest_internal::RestContext context;
+  auto response = client->Post(context, rest_request, {payload.dump()});
   if (!response) return std::move(response).status();
   return ParseGenerateAccessTokenResponse(
       **response,

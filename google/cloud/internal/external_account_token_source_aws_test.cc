@@ -179,7 +179,7 @@ TEST(ExternalAccountTokenSource, SourceImdsv2Failure) {
   EXPECT_CALL(client_factory, Call).WillOnce([] {
     auto mock = std::make_unique<MockRestClient>();
     auto expected_request = Property(&RestRequest::path, kTestImdsv2Url);
-    EXPECT_CALL(*mock, Put(expected_request, _))
+    EXPECT_CALL(*mock, Put(_, expected_request, _))
         .WillOnce(Return(ByMove(MakeMockResponseNotFound())));
     return mock;
   });
@@ -219,7 +219,7 @@ TEST(ExternalAccountTokenSource, SourceRegionFailure) {
   EXPECT_CALL(client_factory, Call).WillOnce([] {
     auto mock = std::make_unique<MockRestClient>();
     auto expected_request = Property(&RestRequest::path, kTestRegionUrl);
-    EXPECT_CALL(*mock, Get(expected_request))
+    EXPECT_CALL(*mock, Get(_, expected_request))
         .WillOnce(Return(ByMove(MakeMockResponseNotFound())));
     return mock;
   });
@@ -256,7 +256,7 @@ TEST(ExternalAccountTokenSource, SourceSecretsFailure) {
   EXPECT_CALL(client_factory, Call).WillOnce([] {
     auto mock = std::make_unique<MockRestClient>();
     auto expected_request = Property(&RestRequest::path, kTestMetadataUrl);
-    EXPECT_CALL(*mock, Get(expected_request))
+    EXPECT_CALL(*mock, Get(_, expected_request))
         .WillOnce(Return(ByMove(MakeMockResponseNotFound())));
     return mock;
   });
@@ -581,7 +581,7 @@ TEST(ExternalAccountTokenSource, FetchMetadataTokenV2) {
         Property(&RestRequest::path, kTestImdsv2Url),
         Property(&RestRequest::headers,
                  Contains(Pair(kMetadataTokenTtlHeader, Not(IsEmpty())))));
-    EXPECT_CALL(*mock, Put(expected_request, _))
+    EXPECT_CALL(*mock, Put(_, expected_request, _))
         .WillOnce(
             Return(ByMove(MakeMockResponseSuccess(kTestImdsv2SessionToken))));
     return mock;
@@ -637,7 +637,7 @@ TEST(ExternalAccountTokenSource, FetchRegionFromUrlV1) {
       .WillOnce([url = info.region_url]() {
         auto mock = std::make_unique<MockRestClient>();
         auto expected_request = Property(&RestRequest::path, url);
-        EXPECT_CALL(*mock, Get(expected_request))
+        EXPECT_CALL(*mock, Get(_, expected_request))
             .WillOnce(Return(ByMove(MakeMockResponseSuccess("test-only-1d"))));
         return mock;
       });
@@ -665,7 +665,7 @@ TEST(ExternalAccountTokenSource, FetchRegionFromUrlV2) {
                   Property(&RestRequest::headers,
                            Contains(Pair(kMetadataTokenHeader,
                                          Contains(kTestImdsv2SessionToken)))));
-        EXPECT_CALL(*mock, Get(expected_request))
+        EXPECT_CALL(*mock, Get(_, expected_request))
             .WillOnce(Return(ByMove(MakeMockResponseSuccess("test-only-1d"))));
         return mock;
       });
@@ -688,7 +688,7 @@ TEST(ExternalAccountTokenSource, FetchRegionFromUrlEmpty) {
       .WillOnce([url = info.region_url]() {
         auto mock = std::make_unique<MockRestClient>();
         auto expected_request = Property(&RestRequest::path, url);
-        EXPECT_CALL(*mock, Get(expected_request))
+        EXPECT_CALL(*mock, Get(_, expected_request))
             .WillOnce(Return(ByMove(MakeMockResponseSuccess(""))));
         return mock;
       });
@@ -755,7 +755,7 @@ TEST(ExternalAccountTokenSource, FetchSecretsFromUrlV1) {
   auto make_client = [](std::string const& url, std::string const& contents) {
     auto mock = std::make_unique<MockRestClient>();
     auto expected_request = Property(&RestRequest::path, url);
-    EXPECT_CALL(*mock, Get(expected_request))
+    EXPECT_CALL(*mock, Get(_, expected_request))
         .WillOnce(Return(ByMove(MakeMockResponseSuccess(contents))));
     return mock;
   };
@@ -798,7 +798,7 @@ TEST(ExternalAccountTokenSource, FetchSecretsFromUrlV2) {
               Property(&RestRequest::headers,
                        Contains(Pair(kMetadataTokenHeader,
                                      Contains(kTestImdsv2SessionToken)))));
-    EXPECT_CALL(*mock, Get(expected_request))
+    EXPECT_CALL(*mock, Get(_, expected_request))
         .WillOnce(Return(ByMove(MakeMockResponseSuccess(contents))));
     return mock;
   };

@@ -29,6 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::rest_internal::HttpStatusCode;
+using ::google::cloud::rest_internal::RestContext;
 using ::google::cloud::rest_internal::RestRequest;
 using ::google::cloud::rest_internal::RestResponse;
 using ::google::cloud::testing_util::IsOk;
@@ -36,6 +37,7 @@ using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::Contains;
@@ -97,7 +99,7 @@ TEST(ComputeEngineCredentialsTest,
             Return(ByMove(MakeMockHttpPayloadSuccess(svc_acct_info_resp))));
 
     auto mock = std::make_unique<MockRestClient>();
-    EXPECT_CALL(*mock, Get(expect_service_config(alias)))
+    EXPECT_CALL(*mock, Get(_, expect_service_config(alias)))
         .WillOnce(
             Return(ByMove(std::unique_ptr<RestResponse>(std::move(response)))));
     return mock;
@@ -111,7 +113,7 @@ TEST(ComputeEngineCredentialsTest,
         .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(token_info_resp))));
 
     auto mock = std::make_unique<MockRestClient>();
-    EXPECT_CALL(*mock, Get(expect_token(email)))
+    EXPECT_CALL(*mock, Get(_, expect_token(email)))
         .WillOnce(
             Return(ByMove(std::unique_ptr<RestResponse>(std::move(response)))));
     return mock;
@@ -245,7 +247,7 @@ TEST(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
 
   auto mock_metadata_client_get_error = [&]() {
     auto mock = std::make_unique<MockRestClient>();
-    EXPECT_CALL(*mock, Get(expect_service_config(alias))).WillOnce([]() {
+    EXPECT_CALL(*mock, Get(_, expect_service_config(alias))).WillOnce([]() {
       return Status{StatusCode::kAborted, "Fake Curl error"};
     });
     return mock;
@@ -253,7 +255,7 @@ TEST(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
 
   auto mock_metadata_client_response_error = [&]() {
     auto mock = std::make_unique<MockRestClient>();
-    EXPECT_CALL(*mock, Get(expect_service_config(alias))).WillOnce([] {
+    EXPECT_CALL(*mock, Get(_, expect_service_config(alias))).WillOnce([] {
       auto response = std::make_unique<MockRestResponse>();
       EXPECT_CALL(*response, StatusCode)
           .WillRepeatedly(Return(HttpStatusCode::kBadRequest));
@@ -294,8 +296,8 @@ TEST(ComputeEngineCredentialsTest, FailedRefresh) {
   // Fail the first call to RetrieveServiceAccountInfo immediately.
   auto metadata_aborted = [&]() {
     auto client = std::make_unique<MockRestClient>();
-    EXPECT_CALL(*client, Get(expect_service_config(alias)))
-        .WillOnce([&](RestRequest const&) {
+    EXPECT_CALL(*client, Get(_, expect_service_config(alias)))
+        .WillOnce([&](RestContext&, RestRequest const&) {
           return Status{StatusCode::kAborted, "Fake Curl error / info", {}};
         });
     return client;
@@ -303,8 +305,8 @@ TEST(ComputeEngineCredentialsTest, FailedRefresh) {
   // Then fail the token request immediately.
   auto token_aborted = [&]() {
     auto client = std::make_unique<MockRestClient>();
-    EXPECT_CALL(*client, Get(expect_token(alias)))
-        .WillOnce([&](RestRequest const&) {
+    EXPECT_CALL(*client, Get(_, expect_token(alias)))
+        .WillOnce([&](RestContext&, RestRequest const&) {
           return Status{StatusCode::kAborted, "Fake Curl error / token", {}};
         });
     return client;
@@ -320,7 +322,7 @@ TEST(ComputeEngineCredentialsTest, FailedRefresh) {
     });
 
     auto client = std::make_unique<MockRestClient>();
-    EXPECT_CALL(*client, Get(expect_service_config(alias)))
+    EXPECT_CALL(*client, Get(_, expect_service_config(alias)))
         .WillOnce(
             Return(ByMove(std::unique_ptr<RestResponse>(std::move(response)))));
     return client;
@@ -335,7 +337,7 @@ TEST(ComputeEngineCredentialsTest, FailedRefresh) {
     });
 
     auto client = std::make_unique<MockRestClient>();
-    EXPECT_CALL(*client, Get(expect_token(email)))
+    EXPECT_CALL(*client, Get(_, expect_token(email)))
         .WillOnce(
             Return(ByMove(std::unique_ptr<RestResponse>(std::move(response)))));
     return client;
@@ -350,7 +352,7 @@ TEST(ComputeEngineCredentialsTest, FailedRefresh) {
     });
 
     auto client = std::make_unique<MockRestClient>();
-    EXPECT_CALL(*client, Get(expect_token(email)))
+    EXPECT_CALL(*client, Get(_, expect_token(email)))
         .WillOnce(
             Return(ByMove(std::unique_ptr<RestResponse>(std::move(response)))));
     return client;
@@ -387,8 +389,8 @@ TEST(ComputeEngineCredentialsTest, AccountEmail) {
   })"""};
 
   auto client = std::make_unique<MockRestClient>();
-  EXPECT_CALL(*client, Get(expect_service_config(alias)))
-      .WillOnce([&](RestRequest const&) {
+  EXPECT_CALL(*client, Get(_, expect_service_config(alias)))
+      .WillOnce([&](RestContext&, RestRequest const&) {
         auto response = std::make_unique<MockRestResponse>();
         EXPECT_CALL(*response, StatusCode)
             .WillRepeatedly(Return(HttpStatusCode::kOk));

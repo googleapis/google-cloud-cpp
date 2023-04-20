@@ -46,6 +46,7 @@ using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
 using ::testing::A;
 using ::testing::AtMost;
 using ::testing::ByMove;
@@ -207,7 +208,7 @@ TEST(UnifiedRestCredentialsTest, AdcIsAuthorizedUser) {
         Pair("client_secret", "a-123456ABCDEF"),
         Pair("refresh_token", "1/THETOKEN"),
     }));
-    EXPECT_CALL(*client, Post(expected_request, expected_form_data))
+    EXPECT_CALL(*client, Post(_, expected_request, expected_form_data))
         .WillOnce(Return(
             Status{StatusCode::kPermissionDenied, "uh-oh - user refresh"}));
     return client;
@@ -242,7 +243,7 @@ TEST(UnifiedRestCredentialsTest, AdcIsComputeEngine) {
                               "default/")),
         Property(&RestRequest::headers,
                  Contains(Pair("metadata-flavor", Contains("Google")))));
-    EXPECT_CALL(*client, Get(expected_request))
+    EXPECT_CALL(*client, Get(_, expected_request))
         .WillOnce(Return(
             Status{StatusCode::kPermissionDenied, "uh-oh - GCE metadata"}));
     return client;
@@ -256,7 +257,7 @@ TEST(UnifiedRestCredentialsTest, AdcIsComputeEngine) {
                               "default/", "token")),
         Property(&RestRequest::headers,
                  Contains(Pair("metadata-flavor", Contains("Google")))));
-    EXPECT_CALL(*client, Get(expected_request))
+    EXPECT_CALL(*client, Get(_, expected_request))
         .WillOnce(
             Return(Status{StatusCode::kPermissionDenied, "uh-oh - GCE token"}));
     return client;
@@ -283,7 +284,7 @@ TEST(UnifiedRestCredentialsTest, AdcIsExternalAccount) {
   auto subject_token_client = [subject_url, subject_token] {
     auto expected_sts_request = Property(&RestRequest::path, subject_url);
     auto mock = std::make_unique<MockRestClient>();
-    EXPECT_CALL(*mock, Get(expected_sts_request))
+    EXPECT_CALL(*mock, Get(_, expected_sts_request))
         .WillOnce(Return(ByMove(MakeMockResponse(subject_token))));
     return mock;
   }();
@@ -297,7 +298,7 @@ TEST(UnifiedRestCredentialsTest, AdcIsExternalAccount) {
     auto expected_form_data = MatcherCast<FormDataType const&>(
         Contains(Pair("subject_token", subject_token)));
     auto mock = std::make_unique<MockRestClient>();
-    EXPECT_CALL(*mock, Post(expected_sts_request, expected_form_data))
+    EXPECT_CALL(*mock, Post(_, expected_sts_request, expected_form_data))
         .WillOnce(Return(
             Status{StatusCode::kPermissionDenied, "uh-oh - STS exchange"}));
     return mock;
@@ -364,7 +365,7 @@ TEST(UnifiedRestCredentialsTest, ImpersonateServiceAccount) {
                  Contains(Pair("authorization",
                                Contains("Bearer base-access-token")))));
     using PayloadType = std::vector<absl::Span<char const>>;
-    EXPECT_CALL(*client, Post(expected_request, A<PayloadType const&>()))
+    EXPECT_CALL(*client, Post(_, expected_request, A<PayloadType const&>()))
         .WillOnce(Return(Status{StatusCode::kPermissionDenied,
                                 "uh-oh - cannot impersonate"}));
     return client;
@@ -410,7 +411,7 @@ TEST(UnifiedRestCredentialsTest, ExternalAccount) {
   auto subject_token_client = [subject_url, subject_token] {
     auto expected_sts_request = Property(&RestRequest::path, subject_url);
     auto mock = std::make_unique<MockRestClient>();
-    EXPECT_CALL(*mock, Get(expected_sts_request))
+    EXPECT_CALL(*mock, Get(_, expected_sts_request))
         .WillOnce(Return(ByMove(MakeMockResponse(subject_token))));
     return mock;
   }();
@@ -424,7 +425,7 @@ TEST(UnifiedRestCredentialsTest, ExternalAccount) {
     auto expected_form_data = MatcherCast<FormDataType const&>(
         Contains(Pair("subject_token", subject_token)));
     auto mock = std::make_unique<MockRestClient>();
-    EXPECT_CALL(*mock, Post(expected_sts_request, expected_form_data))
+    EXPECT_CALL(*mock, Post(_, expected_sts_request, expected_form_data))
         .WillOnce(Return(
             Status{StatusCode::kPermissionDenied, "uh-oh - STS exchange"}));
     return mock;

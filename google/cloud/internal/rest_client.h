@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_CLIENT_H
 
+#include "google/cloud/internal/rest_context.h"
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/rest_request.h"
 #include "google/cloud/internal/rest_response.h"
@@ -42,26 +43,50 @@ std::unique_ptr<RestClient> MakeDefaultRestClient(std::string endpoint_address,
 std::unique_ptr<RestClient> MakePooledRestClient(std::string endpoint_address,
                                                  Options options);
 
-// Provides methods corresponding to HTTP verbs to make requests to RESTful
-// services.
+/**
+ * Provides methods corresponding to HTTP verbs to make HTTP requests.
+ *
+ * Concrete versions of this class make HTTP requests. While typically used with
+ * RESTful services, the interface and implementions can be used to make any
+ * HTTP requests.
+ *
+ * The headers, payload, and query parameters for the request are passed in as
+ * a `RestRequest` parameter.  The result is a
+ * `StatusOr<std::unique_ptr<RestResponse>>`. On success, the `RestResponse`
+ * contains the HTTP status code, response headers, and an object to iterate
+ * over the payload.
+ *
+ * Note that HTTP requests that fail with an HTTP status code, e.g. with
+ * "404 - NOT FOUND", are considered a success. That is, the returned
+ * `StatusOr<>` will contain a value (and not an error). Callers can convert
+ * these HTTP errors to a `Status` using @ref AsStatus(RestResponse&&). In some
+ * cases (e.g. PUT requests for GCS resumable uploads) an HTTP error is
+ * "normal", and should be treated as a successful request.
+ *
+ * Each method consumes a `RestContext` parameter. Often the `request` parameter
+ * is prepared once as part of a retry loop. The `RestContext` can be used to
+ * provide or change headers in retry, tracing, or other decorators. The
+ * `RestContext` also returns request metadata, such as the local and remote
+ * IP and port. Such metadata is useful for tracing and troubleshooting.
+ */
 class RestClient {
  public:
   virtual ~RestClient() = default;
   virtual StatusOr<std::unique_ptr<RestResponse>> Delete(
-      RestRequest const& request) = 0;
+      RestContext& context, RestRequest const& request) = 0;
   virtual StatusOr<std::unique_ptr<RestResponse>> Get(
-      RestRequest const& request) = 0;
+      RestContext& context, RestRequest const& request) = 0;
   virtual StatusOr<std::unique_ptr<RestResponse>> Patch(
-      RestRequest const& request,
+      RestContext& context, RestRequest const& request,
       std::vector<absl::Span<char const>> const& payload) = 0;
   virtual StatusOr<std::unique_ptr<RestResponse>> Post(
-      RestRequest const& request,
+      RestContext& context, RestRequest const& request,
       std::vector<absl::Span<char const>> const& payload) = 0;
   virtual StatusOr<std::unique_ptr<RestResponse>> Post(
-      RestRequest request,
+      RestContext& context, RestRequest const& request,
       std::vector<std::pair<std::string, std::string>> const& form_data) = 0;
   virtual StatusOr<std::unique_ptr<RestResponse>> Put(
-      RestRequest const& request,
+      RestContext& context, RestRequest const& request,
       std::vector<absl::Span<char const>> const& payload) = 0;
 };
 

@@ -34,6 +34,7 @@ using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::HasSubstr;
@@ -82,7 +83,7 @@ TEST_F(AuthorizedUserCredentialsTest, Simple) {
         Pair("client_secret", "a-123456ABCDEF"),
         Pair("refresh_token", "1/THETOKEN"),
     }));
-    EXPECT_CALL(*client, Post(expected_request, expected_form_data))
+    EXPECT_CALL(*client, Post(_, expected_request, expected_form_data))
         .WillOnce(
             Return(ByMove(std::unique_ptr<RestResponse>(std::move(response)))));
     return client;

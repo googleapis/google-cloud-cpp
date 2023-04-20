@@ -269,7 +269,11 @@ void CurlImpl::SetHeader(std::pair<std::string, std::string> const& header) {
   SetHeader(absl::StrCat(header.first, ": ", header.second));
 }
 
-void CurlImpl::SetHeaders(RestRequest const& request) {
+void CurlImpl::SetHeaders(RestContext const& context,
+                          RestRequest const& request) {
+  for (auto const& header : context.headers()) {
+    SetHeader(std::make_pair(header.first, absl::StrJoin(header.second, ",")));
+  }
   for (auto const& header : request.headers()) {
     SetHeader(std::make_pair(header.first, absl::StrJoin(header.second, ",")));
   }
