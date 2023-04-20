@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigquery/bigquery_read_client.h"
+#include "google/cloud/bigquery/storage/v1/bigquery_read_client.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/example_driver.h"
@@ -31,7 +31,7 @@ void ExampleStatusOr(std::vector<std::string> const& argv) {
         "example-status-or <project-id> <table-name>");
   }
   //! [example-status-or]
-  namespace bigquery = ::google::cloud::bigquery;
+  namespace bigquery = ::google::cloud::bigquery_storage_v1;
   [](std::string const& project_id, std::string const& table_name) {
     int max_stream_count = 1;
     google::cloud::bigquery::storage::v1::ReadSession read_session;
@@ -60,7 +60,7 @@ void CreateReadSession(std::vector<std::string> const& argv) {
         "create-read-session <project-id> <table-name>");
   }
   //! [bigquery-create-read-session]
-  namespace bigquery = ::google::cloud::bigquery;
+  namespace bigquery = ::google::cloud::bigquery_storage_v1;
   [](std::string const& project_id, std::string const& table_name) {
     bigquery::BigQueryReadClient client(bigquery::MakeBigQueryReadConnection());
     int max_stream_count = 1;
@@ -86,7 +86,7 @@ void ReadRows(std::vector<std::string> const& argv) {
         "read-rows <project-id> <table-name> [<row-restriction>]");
   }
   //! [bigquery-read-rows]
-  namespace bigquery = ::google::cloud::bigquery;
+  namespace bigquery = ::google::cloud::bigquery_storage_v1;
   [](std::string const& project_id, std::string const& table_name,
      std::string const& row_restriction) {
     bigquery::BigQueryReadClient client(bigquery::MakeBigQueryReadConnection());
@@ -119,7 +119,7 @@ void SplitReadStream(std::vector<std::string> const& argv) {
         "split-read-stream <project-id> <table-name> [<row-restriction>]");
   }
   //! [bigquery-split-read-stream]
-  namespace bigquery = ::google::cloud::bigquery;
+  namespace bigquery = ::google::cloud::bigquery_storage_v1;
   [](std::string const& project_id, std::string const& table_name,
      std::string const& row_restriction) {
     bigquery::BigQueryReadClient client(bigquery::MakeBigQueryReadConnection());

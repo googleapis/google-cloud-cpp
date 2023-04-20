@@ -14,16 +14,16 @@
 
 //! [all]
 //! [required-includes]
-#include "google/cloud/bigquery/bigquery_read_client.h"
-#include "google/cloud/bigquery/mocks/mock_bigquery_read_connection.h"
+#include "google/cloud/bigquery/storage/v1/bigquery_read_client.h"
+#include "google/cloud/bigquery/storage/v1/mocks/mock_bigquery_read_connection.h"
 #include <gmock/gmock.h>
 //! [required-includes]
 
 namespace {
 
 //! [helper-aliases]
-using ::google::cloud::bigquery_mocks::MockBigQueryReadConnection;
-namespace bigquery = ::google::cloud::bigquery;
+using ::google::cloud::bigquery_storage_v1_mocks::MockBigQueryReadConnection;
+namespace bigquery = ::google::cloud::bigquery_storage_v1;
 //! [helper-aliases]
 
 TEST(MockCreateReadSessionExample, CreateReadSession) {
