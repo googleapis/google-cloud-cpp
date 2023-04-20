@@ -17,6 +17,7 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 unit_tests = [
+    "doxygen2children_test.cc",
     "doxygen2markdown_test.cc",
     "doxygen2syntax_test.cc",
     "doxygen2toc_test.cc",
