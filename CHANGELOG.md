@@ -119,6 +119,12 @@ info, see [#7463] and [#5976].
 
 </details>
 
+## v2.9.1 - 2023-04
+
+### [Storage](/google/cloud/storage/README.md)
+
+- fix(storage): cache legacy credentials ([#11333](https://github.com/googleapis/google-cloud-cpp/pull/11333))
+
 ## v2.9.0 - 2023-04
 
 ### [Cloud Build](/google/cloud/cloudbuild/README.md)
