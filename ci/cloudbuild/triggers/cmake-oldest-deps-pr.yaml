@@ -3,9 +3,9 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.9.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: cmake-oldest-deps-pr
+name: v2-9-x-cmake-oldest-deps-pr
 substitutions:
   _BUILD_NAME: cmake-oldest-deps
   _DISTRO: ubuntu-focal

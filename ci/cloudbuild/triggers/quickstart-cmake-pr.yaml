@@ -3,9 +3,9 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.9.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: quickstart-cmake-pr
+name: v2-9-x-quickstart-cmake-pr
 substitutions:
   _BUILD_NAME: quickstart-cmake
   _DISTRO: ubuntu-focal
