@@ -3,8 +3,8 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-name: demo-debian-bullseye-ci
+    branch: v2.9.x
+name: v2-9-x-demo-debian-bullseye-ci
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-debian-bullseye

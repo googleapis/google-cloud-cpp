@@ -3,8 +3,8 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-name: noex-ci
+    branch: v2.9.x
+name: v2-9-x-noex-ci
 substitutions:
   _BUILD_NAME: noex
   _DISTRO: fedora-37-cmake

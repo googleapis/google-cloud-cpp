@@ -3,9 +3,9 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.9.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: demo-ubuntu-jammy-pr
+name: v2-9-x-demo-ubuntu-jammy-pr
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-ubuntu-jammy
