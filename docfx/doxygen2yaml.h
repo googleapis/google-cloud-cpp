@@ -24,11 +24,12 @@
 namespace docfx {
 
 // Get the table of contents for `<compounddef>` nodes representing C++ types.
-std::vector<TocEntry> CompoundToc(pugi::xml_document const& doc);
+std::vector<TocEntry> CompoundToc(Config const& cfg,
+                                  pugi::xml_document const& doc);
 
 // Generate the YAML file contents for `<compounddef>` nodes representing C++
 // types.
-std::string Compound2Yaml(pugi::xml_node const& node);
+std::string Compound2Yaml(Config const& cfg, pugi::xml_node const& node);
 
 // Initialize a YAML Emitter with the preamble elements required by DocFx.
 void StartDocFxYaml(YAML::Emitter& yaml);

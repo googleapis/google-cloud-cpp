@@ -18,7 +18,7 @@
 namespace docfx {
 namespace {
 
-TEST(PublicDocs, IncludeNoConfig) {
+TEST(PublicDocs, Basic) {
   auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
       <sectiondef id="id-1" kind="private-attrib"></sectiondef>
@@ -34,6 +34,8 @@ TEST(PublicDocs, IncludeNoConfig) {
       <compounddef id="classgoogle_1_1cloud_1_1Options_1_1DataHolder" prot="private"></compounddef>
       <compounddef id="deprecated" kind="page"></compounddef>
       <compounddef id="not-deprecated" kind="page"></compounddef>
+      <compounddef id="namespacegoogle" kind="namespace"></compounddef>
+      <compounddef id="namespacegoogle_1_1cloud" kind="namespace"></compounddef>
     </doxygen>)xml";
   pugi::xml_document doc;
   doc.load_string(kXml);
@@ -55,6 +57,8 @@ TEST(PublicDocs, IncludeNoConfig) {
       {"classgoogle_1_1cloud_1_1Options_1_1DataHolder", false},
       {"deprecated", false},
       {"not-deprecated", true},
+      {"namespacegoogle", false},
+      {"namespacegoogle_1_1cloud", false},
   };
 
   for (auto const& test : cases) {
@@ -62,7 +66,16 @@ TEST(PublicDocs, IncludeNoConfig) {
     auto const filter = "//*[@id='" + test.id + "']";
     auto selected = doc.select_node(filter.c_str());
     ASSERT_TRUE(selected);
-    EXPECT_EQ(test.expected, IncludeInPublicDocuments(selected.node()));
+    auto const cfg = Config{"unused", "kms", "unused"};
+    EXPECT_EQ(test.expected, IncludeInPublicDocuments(cfg, selected.node()));
+  }
+
+  for (auto const* filter :
+       {"//*[@id='namespacegoogle']", "//*[@id='namespacegoogle_1_1cloud']"}) {
+    auto selected = doc.select_node(filter);
+    ASSERT_TRUE(selected);
+    auto const cfg = Config{"unused", "cloud", "unused"};
+    EXPECT_TRUE(IncludeInPublicDocuments(cfg, selected.node()));
   }
 }
 
