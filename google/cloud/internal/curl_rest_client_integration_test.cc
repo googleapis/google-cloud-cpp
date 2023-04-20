@@ -22,7 +22,6 @@
 #include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/match.h"
-#include <curl/curl.h>
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 
@@ -508,8 +507,6 @@ TEST_F(RestClientIntegrationTest, CaptureMetadata) {
   auto response = *std::move(response_status);
   ASSERT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
 
-  // These should all be available after CURL >= 7.61.0
-#if CURL_AT_LEAST_VERSION(7, 61, 0)
   EXPECT_TRUE(context.local_ip_address());
   EXPECT_TRUE(context.local_port());
   EXPECT_TRUE(context.primary_ip_address());
@@ -529,7 +526,6 @@ TEST_F(RestClientIntegrationTest, CaptureMetadata) {
   } else {
     EXPECT_EQ(*context.appconnect_time(), std::chrono::microseconds(0));
   }
-#endif /* CURL_AT_LEAST_VERSION */
 
   auto body = ReadAll(std::move(*response).ExtractPayload());
   ASSERT_STATUS_OK(body);
