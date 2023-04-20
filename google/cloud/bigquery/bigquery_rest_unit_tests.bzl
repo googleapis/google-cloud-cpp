@@ -21,6 +21,7 @@ bigquery_rest_unit_tests = [
     "v2/minimal/internal/common_v2_resources_test.cc",
     "v2/minimal/internal/dataset_request_test.cc",
     "v2/minimal/internal/dataset_response_test.cc",
+    "v2/minimal/internal/dataset_rest_stub_test.cc",
     "v2/minimal/internal/dataset_test.cc",
     "v2/minimal/internal/job_client_test.cc",
     "v2/minimal/internal/job_connection_test.cc",

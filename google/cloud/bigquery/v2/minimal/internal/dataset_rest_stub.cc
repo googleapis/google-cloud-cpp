@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
+#include "google/cloud/bigquery/v2/minimal/internal/dataset_rest_stub.h"
 #include "google/cloud/bigquery/v2/minimal/internal/rest_stub_utils.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/make_status.h"
@@ -23,29 +23,30 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-BigQueryJobRestStub::~BigQueryJobRestStub() = default;
+DatasetRestStub::~DatasetRestStub() = default;
 
-StatusOr<GetJobResponse> DefaultBigQueryJobRestStub::GetJob(
-    rest_internal::RestContext& rest_context, GetJobRequest const& request) {
-  // Prepare the RestRequest from GetJobRequest.
-  auto rest_request = PrepareRestRequest<GetJobRequest>(rest_context, request);
+StatusOr<GetDatasetResponse> DefaultDatasetRestStub::GetDataset(
+    rest_internal::RestContext& rest_context,
+    GetDatasetRequest const& request) {
+  // Prepare the RestRequest from GetDatasetRequest.
+  auto rest_request =
+      PrepareRestRequest<GetDatasetRequest>(rest_context, request);
 
   // Call the rest stub and parse the RestResponse.
-  rest_internal::RestContext context;
-  return ParseFromRestResponse<GetJobResponse>(
-      rest_stub_->Get(context, std::move(*rest_request)));
+  return ParseFromRestResponse<GetDatasetResponse>(
+      rest_stub_->Get(rest_context, std::move(*rest_request)));
 }
 
-StatusOr<ListJobsResponse> DefaultBigQueryJobRestStub::ListJobs(
-    rest_internal::RestContext& rest_context, ListJobsRequest const& request) {
-  // Prepare the RestRequest from ListJobsRequest.
+StatusOr<ListDatasetsResponse> DefaultDatasetRestStub::ListDatasets(
+    rest_internal::RestContext& rest_context,
+    ListDatasetsRequest const& request) {
+  // Prepare the RestRequest from ListDatasetsRequest.
   auto rest_request =
-      PrepareRestRequest<ListJobsRequest>(rest_context, request);
+      PrepareRestRequest<ListDatasetsRequest>(rest_context, request);
 
   // Call the rest stub and parse the RestResponse.
-  rest_internal::RestContext context;
-  return ParseFromRestResponse<ListJobsResponse>(
-      rest_stub_->Get(context, std::move(*rest_request)));
+  return ParseFromRestResponse<ListDatasetsResponse>(
+      rest_stub_->Get(rest_context, std::move(*rest_request)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
