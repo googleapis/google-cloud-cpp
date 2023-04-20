@@ -63,7 +63,7 @@ bool IgnoreForRecurse(pugi::xml_node const& node) {
 void CompoundRecurse(YAML::Emitter& yaml, YamlContext const& ctx,
                      pugi::xml_node const& node) {
   for (auto const& child : node) {
-    if (!IncludeInPublicDocuments(child)) continue;
+    if (!IncludeInPublicDocuments(ctx.config, child)) continue;
     if (IgnoreForRecurse(child)) continue;
     if (AppendIfSectionDef(yaml, ctx, child)) continue;
     if (AppendIfNamespace(yaml, ctx, child)) continue;
@@ -108,14 +108,15 @@ std::string Summary(pugi::xml_node const& node) {
 
 }  // namespace
 
-std::vector<TocEntry> CompoundToc(pugi::xml_document const& doc) {
+std::vector<TocEntry> CompoundToc(Config const& cfg,
+                                  pugi::xml_document const& doc) {
   std::vector<TocEntry> result;
   // Insert only namespaces in the TOC. Other entities (functions, typedefs,
   // classes, structs) are always part of a namespace and will appear in the
   // references from them.
   for (auto const& i : doc.select_nodes("//compounddef[@kind='namespace']")) {
     auto const& node = i.node();
-    if (!IncludeInPublicDocuments(node)) continue;
+    if (!IncludeInPublicDocuments(cfg, node)) continue;
     auto const id = std::string{node.attribute("id").as_string()};
     auto const name =
         std::string_view{node.child("compoundname").child_value()};
@@ -126,10 +127,11 @@ std::vector<TocEntry> CompoundToc(pugi::xml_document const& doc) {
   return result;
 }
 
-std::string Compound2Yaml(pugi::xml_node const& node) {
+std::string Compound2Yaml(Config const& cfg, pugi::xml_node const& node) {
   YAML::Emitter yaml;
   StartDocFxYaml(yaml);
   YamlContext ctx;
+  ctx.config = cfg;
   (void)AppendIfEnum(yaml, ctx, node);
   (void)AppendIfTypedef(yaml, ctx, node);
   (void)AppendIfFriend(yaml, ctx, node);

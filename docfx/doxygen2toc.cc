@@ -28,7 +28,7 @@ std::string Doxygen2Toc(Config const& config, pugi::xml_document const& doc) {
       << YAML::Key << "name" << YAML::Value << config.library  //
       << YAML::Key << "items" << YAML::Value                   //
       << YAML::BeginSeq;
-  auto pages = PagesToc(doc);
+  auto pages = PagesToc(config, doc);
   if (!pages.empty()) {
     auto const& e = pages.front();
     out << YAML::BeginMap                                    //
@@ -37,7 +37,7 @@ std::string Doxygen2Toc(Config const& config, pugi::xml_document const& doc) {
         << YAML::EndMap;
     pages.erase(pages.begin());
   }
-  for (auto const& e : CompoundToc(doc)) {
+  for (auto const& e : CompoundToc(config, doc)) {
     out << YAML::BeginMap                                //
         << YAML::Key << "uid" << YAML::Value << e.uid    //
         << YAML::Key << "name" << YAML::Value << e.name  //

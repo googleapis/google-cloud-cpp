@@ -117,13 +117,14 @@ std::string Page2Markdown(pugi::xml_node const& node) {
   return std::move(os).str();
 }
 
-std::vector<TocEntry> PagesToc(pugi::xml_document const& doc) {
+std::vector<TocEntry> PagesToc(Config const& cfg,
+                               pugi::xml_document const& doc) {
   auto nodes = doc.select_nodes("//*[@kind='page']");
   std::vector<TocEntry> result;
   result.reserve(nodes.size());
   for (auto const& i : nodes) {
     auto const& page = i.node();
-    if (!IncludeInPublicDocuments(page)) continue;
+    if (!IncludeInPublicDocuments(cfg, page)) continue;
     auto const id = std::string_view{page.attribute("id").as_string()};
     std::ostringstream title;
     AppendTitle(title, MarkdownContext{}, page);

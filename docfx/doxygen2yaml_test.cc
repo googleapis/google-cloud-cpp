@@ -463,7 +463,7 @@ TEST(Doxygen2Yaml, CompoundToc) {
 
   pugi::xml_document doc;
   ASSERT_TRUE(doc.load_string(kDocXml));
-  auto const actual = CompoundToc(doc);
+  auto const actual = CompoundToc(Config{"unused", "cloud", ""}, doc);
 
   EXPECT_THAT(
       actual,

@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_DOCFX_YAML_CONTEXT_H
 #define GOOGLE_CLOUD_CPP_DOCFX_YAML_CONTEXT_H
 
+#include "docfx/config.h"
 #include <string>
 
 namespace docfx {
@@ -22,6 +23,7 @@ namespace docfx {
 struct YamlContext {
   std::string library_root = "google/cloud/";
   std::string parent_id;
+  Config config;
 };
 
 }  // namespace docfx

@@ -128,7 +128,7 @@ TEST(DoxygenPages, PagesToc) {
 
   pugi::xml_document doc;
   ASSERT_TRUE(doc.load_string(kXml));
-  auto const actual = PagesToc(doc);
+  auto const actual = PagesToc(Config{"unused", "cloud", "unused"}, doc);
 
   // The order matters, we want `indexpage` to be the first page.
   EXPECT_THAT(actual,

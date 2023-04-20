@@ -23,7 +23,7 @@ auto kind(pugi::xml_node const& node) {
 
 }  // namespace
 
-bool IncludeInPublicDocuments(pugi::xml_node const& node) {
+bool IncludeInPublicDocuments(Config const& cfg, pugi::xml_node const& node) {
   // We do not generate documents for files and directories.
   if (kind(node) == "file" || kind(node) == "dir") return false;
   // Doxygen groups private attributes / functions in <sectiondef> elements of
@@ -40,6 +40,12 @@ bool IncludeInPublicDocuments(pugi::xml_node const& node) {
   // to add enough value (each symbol already says if it is deprecated), and
   // we need more work to render this correctly in the DocFX format.
   if (kind(node) == "page" && id == "deprecated") return false;
+  // Unless this is the 'cloud' library, we do not generate the `google::` or
+  // `google::cloud::` namespaces.
+  if (cfg.library != "cloud" &&
+      (id == "namespacegoogle" || id == "namespacegoogle_1_1cloud")) {
+    return false;
+  }
   // We do not generate documentation for private members or sections.
   auto const prot = std::string_view{node.attribute("prot").as_string()};
   return prot != "private";
