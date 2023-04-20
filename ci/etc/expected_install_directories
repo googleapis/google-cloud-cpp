@@ -540,6 +540,10 @@
 ./include/google/cloud/sql/v1/mocks
 ./include/google/cloud/storage
 ./include/google/cloud/storage/internal
+./include/google/cloud/storageinsights
+./include/google/cloud/storageinsights/v1
+./include/google/cloud/storageinsights/v1/internal
+./include/google/cloud/storageinsights/v1/mocks
 ./include/google/cloud/storagetransfer
 ./include/google/cloud/storagetransfer/mocks
 ./include/google/cloud/storagetransfer/v1
@@ -780,6 +784,7 @@
 ./lib64/cmake/google_cloud_cpp_speech
 ./lib64/cmake/google_cloud_cpp_sql
 ./lib64/cmake/google_cloud_cpp_storage
+./lib64/cmake/google_cloud_cpp_storageinsights
 ./lib64/cmake/google_cloud_cpp_storagetransfer
 ./lib64/cmake/google_cloud_cpp_talent
 ./lib64/cmake/google_cloud_cpp_tasks
