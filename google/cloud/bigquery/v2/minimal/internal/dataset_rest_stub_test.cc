@@ -35,6 +35,7 @@ using ::google::cloud::testing_util::MockHttpPayload;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
 using ::testing::An;
 using ::testing::ByMove;
 using ::testing::Return;
@@ -67,7 +68,7 @@ TEST(DatasetStubTest, GetDatasetSuccess) {
       .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(payload))));
 
   auto mock_rest_client = std::make_unique<MockRestClient>();
-  EXPECT_CALL(*mock_rest_client, Get(An<rest::RestRequest const&>()))
+  EXPECT_CALL(*mock_rest_client, Get(_, An<rest::RestRequest const&>()))
       .WillOnce(Return(ByMove(
           std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));
 
@@ -86,7 +87,7 @@ TEST(DatasetStubTest, GetDatasetSuccess) {
 TEST(DatasetStubTest, GetDatasetRestClientError) {
   // Get() fails.
   auto mock_rest_client = std::make_unique<MockRestClient>();
-  EXPECT_CALL(*mock_rest_client, Get(An<rest::RestRequest const&>()))
+  EXPECT_CALL(*mock_rest_client, Get(_, An<rest::RestRequest const&>()))
       .WillOnce(
           Return(rest::AsStatus(HttpStatusCode::kInternalServerError, "")));
 
@@ -110,7 +111,7 @@ TEST(DatasetStubTest, GetDatasetRestResponseError) {
 
   // Get() is successful.
   auto mock_rest_client = std::make_unique<MockRestClient>();
-  EXPECT_CALL(*mock_rest_client, Get(An<rest::RestRequest const&>()))
+  EXPECT_CALL(*mock_rest_client, Get(_, An<rest::RestRequest const&>()))
       .WillOnce(Return(ByMove(
           std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));
 
@@ -149,7 +150,7 @@ TEST(DatasetStubTest, ListDatasetsSuccess) {
       .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(payload))));
 
   auto mock_rest_client = std::make_unique<MockRestClient>();
-  EXPECT_CALL(*mock_rest_client, Get(An<rest::RestRequest const&>()))
+  EXPECT_CALL(*mock_rest_client, Get(_, An<rest::RestRequest const&>()))
       .WillOnce(Return(ByMove(
           std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));
 
@@ -165,7 +166,7 @@ TEST(DatasetStubTest, ListDatasetsSuccess) {
 
 TEST(DatasetStubTest, ListDatasetsRestClientError) {
   auto mock_rest_client = std::make_unique<MockRestClient>();
-  EXPECT_CALL(*mock_rest_client, Get(An<rest::RestRequest const&>()))
+  EXPECT_CALL(*mock_rest_client, Get(_, An<rest::RestRequest const&>()))
       .WillOnce(
           Return(rest::AsStatus(HttpStatusCode::kInternalServerError, "")));
 
@@ -187,7 +188,7 @@ TEST(DatasetStubTest, ListDatasetsRestResponseError) {
       .WillOnce(Return(std::move(mock_payload)));
 
   auto mock_rest_client = std::make_unique<MockRestClient>();
-  EXPECT_CALL(*mock_rest_client, Get(An<rest::RestRequest const&>()))
+  EXPECT_CALL(*mock_rest_client, Get(_, An<rest::RestRequest const&>()))
       .WillOnce(Return(ByMove(
           std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));
 

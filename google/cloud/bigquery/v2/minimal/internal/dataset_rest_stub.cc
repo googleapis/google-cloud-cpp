@@ -34,7 +34,7 @@ StatusOr<GetDatasetResponse> DefaultDatasetRestStub::GetDataset(
 
   // Call the rest stub and parse the RestResponse.
   return ParseFromRestResponse<GetDatasetResponse>(
-      rest_stub_->Get(std::move(*rest_request)));
+      rest_stub_->Get(rest_context, std::move(*rest_request)));
 }
 
 StatusOr<ListDatasetsResponse> DefaultDatasetRestStub::ListDatasets(
@@ -46,7 +46,7 @@ StatusOr<ListDatasetsResponse> DefaultDatasetRestStub::ListDatasets(
 
   // Call the rest stub and parse the RestResponse.
   return ParseFromRestResponse<ListDatasetsResponse>(
-      rest_stub_->Get(std::move(*rest_request)));
+      rest_stub_->Get(rest_context, std::move(*rest_request)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
