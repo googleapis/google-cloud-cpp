@@ -32,6 +32,8 @@ include(GoogleCloudCppCommon)
 add_library(
     docfx # cmake-format: sort
     config.h
+    doxygen2children.cc
+    doxygen2children.h
     doxygen2markdown.cc
     doxygen2markdown.h
     doxygen2syntax.cc
@@ -80,6 +82,7 @@ endif ()
 
 set(unit_tests
     # cmake-format: sort
+    doxygen2children_test.cc
     doxygen2markdown_test.cc
     doxygen2syntax_test.cc
     doxygen2toc_test.cc
