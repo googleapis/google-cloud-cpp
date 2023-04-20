@@ -4,7 +4,7 @@
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//      https://www.apache.org/licenses/LICENSE-2.0
+//      https://www.apache.org/licenses/LICENSE2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -60,29 +60,29 @@ GcpTag MakeGcpTag(std::string key, std::string value) {
 }
 
 Dataset MakeDataset() {
-  std::map<std::string, std::string> labels;
+  std::multimap<std::string, std::string> labels;
   labels.insert({"l1", "v1"});
   labels.insert({"l2", "v2"});
 
   auto dataset_ref = MakeDatasetReference("p123", "d123");
 
   std::vector<Access> access;
-  access.push_back(MakeAccess("access-role", "p123", "d123", "t123", "r123",
+  access.push_back(MakeAccess("accessrole", "p123", "d123", "t123", "r123",
                               TargetType::Views()));
 
   std::vector<GcpTag> tags;
   tags.push_back(MakeGcpTag("t1", "t2"));
 
   Dataset expected;
-  expected.kind = "d-kind";
-  expected.etag = "d-etag";
-  expected.id = "d-id";
-  expected.self_link = "d-self-link";
-  expected.friendly_name = "d-friendly-name";
-  expected.description = "d-description";
-  expected.type = "d-type";
-  expected.location = "d-location";
-  expected.default_collation = "d-default-collation";
+  expected.kind = "dkind";
+  expected.etag = "detag";
+  expected.id = "did";
+  expected.self_link = "dselflink";
+  expected.friendly_name = "dfriendlyname";
+  expected.description = "ddescription";
+  expected.type = "dtype";
+  expected.location = "dlocation";
+  expected.default_collation = "ddefaultcollation";
   expected.published = false;
   expected.is_case_insensitive = true;
   expected.labels = labels;
@@ -167,7 +167,7 @@ std::string MakeDatasetJsonText() {
          "target_types":[{"value":"VIEWS"}]},
          "domain":"","group_by_email":"",
          "iam_member":"",
-         "role":"access-role",
+         "role":"accessrole",
          "routine":{"dataset_id":"d123","project_id":"p123","routine_id":"r123"},
          "special_group":"",
          "user_by_email":"",
@@ -175,12 +175,12 @@ std::string MakeDatasetJsonText() {
     }],
     "creation_time":0,
     "dataset_reference":{"dataset_id":"d123","project_id":"p123"},
-    "default_collation":"d-default-collation",
+    "default_collation":"ddefaultcollation",
     "default_partition_expiration":0,
     "default_rounding_mode":{"value":"ROUND_HALF_EVEN"},
     "default_table_expiration":0,
-    "description":"d-description",
-    "etag":"d-etag",
+    "description":"ddescription",
+    "etag":"detag",
     "external_dataset_reference":{
         "hive_database":{
             "catalog_id":"c1",
@@ -193,23 +193,23 @@ std::string MakeDatasetJsonText() {
             }
        }
     },
-    "friendly_name":"d-friendly-name",
-    "id":"d-id",
+    "friendly_name":"dfriendlyname",
+    "id":"did",
     "is_case_insensitive":true,
-    "kind":"d-kind",
+    "kind":"dkind",
     "labels":{"l1":"v1","l2":"v2"},
     "last_modified_time":0,
     "linked_dataset_source":{"source_dataset":{
         "dataset_id":"d123",
         "project_id":"p123"
     }},
-    "location":"d-location",
+    "location":"dlocation",
     "max_time_travel":0,
     "published":false,
-    "self_link":"d-self-link",
+    "self_link":"dselflink",
     "storage_billing_model":{"value":"LOGICAL"},
     "tags":[{"tag_key":"t1","tag_value":"t2"}],
-    "type":"d-type"})";
+    "type":"dtype"})";
 }
 
 void AssertEquals(ListFormatDataset const& lhs, ListFormatDataset const& rhs) {
@@ -231,10 +231,10 @@ void AssertEquals(ListFormatDataset const& lhs, ListFormatDataset const& rhs) {
 
 std::string MakeListFormatDatasetJsonText() {
   return R"({
-    "kind":"d-kind",
-    "id":"d-id",
-    "friendly_name":"d-friendly-name",
-    "location":"d-location",
+    "kind":"dkind",
+    "id":"did",
+    "friendly_name":"dfriendlyname",
+    "location":"dlocation",
     "type":"DEFAULT",
     "dataset_reference": {"project_id":"p123", "dataset_id":"d123"},
     "labels":{"l1":"v1","l2":"v2"}
@@ -242,19 +242,19 @@ std::string MakeListFormatDatasetJsonText() {
 }
 
 ListFormatDataset MakeListFormatDataset() {
-  std::map<std::string, std::string> labels;
+  std::multimap<std::string, std::string> labels;
   labels.insert({"l1", "v1"});
   labels.insert({"l2", "v2"});
 
   auto dataset_ref = MakeDatasetReference("p123", "d123");
 
   ListFormatDataset expected;
-  expected.kind = "d-kind";
-  expected.id = "d-id";
-  expected.friendly_name = "d-friendly-name";
-  expected.location = "d-location";
+  expected.kind = "dkind";
+  expected.id = "did";
+  expected.friendly_name = "dfriendlyname";
+  expected.location = "dlocation";
   expected.type = "DEFAULT";
-  expected.location = "d-location";
+  expected.location = "dlocation";
   expected.labels = labels;
   expected.dataset_reference = dataset_ref;
 
@@ -313,6 +313,254 @@ TEST(DatasetTest, ListFormatDatasetFromJson) {
   from_json(json, actual_dataset);
 
   AssertEquals(expected_dataset, actual_dataset);
+}
+
+TEST(DatasetTest, DatasetDebugString) {
+  Dataset dataset = MakeDataset();
+
+  EXPECT_EQ(
+      dataset.DebugString("Dataset", TracingOptions{}),
+      R"(Dataset {)"
+      R"( kind: "dkind")"
+      R"( etag: "detag")"
+      R"( id: "did")"
+      R"( self_link: "dselflink")"
+      R"( friendly_name: "dfriendlyname")"
+      R"( description: "ddescription")"
+      R"( type: "dtype")"
+      R"( location: "dlocation")"
+      R"( default_collation: "ddefaultcollation")"
+      R"( published: false)"
+      R"( is_case_insensitive: true)"
+      R"( default_table_expiration: 0)"
+      R"( default_partition_expiration: 0)"
+      R"( creation_time { "1970-01-01T00:00:00Z" })"
+      R"( last_modified_time { "1970-01-01T00:00:00Z" })"
+      R"( max_time_travel: 0)"
+      R"( labels_keys { key: "l1" value: "v1" })"
+      R"( labels_keys { key: "l2" value: "v2" })"
+      R"( access { role: "accessrole")"
+      R"( domain: "")"
+      R"( special_group: "")"
+      R"( iam_member: "")"
+      R"( view { project_id: "p123" dataset_id: "d123" table_id: "t123" })"
+      R"( routine { project_id: "p123" dataset_id: "d123" routine_id: "r123" })"
+      R"( dataset { dataset { project_id: "p123" dataset_id: "d123" })"
+      R"( target_types { target_type_value: "VIEWS" })"
+      R"( } })"
+      R"( tags { tag_key: "t1" tag_value: "t2" })"
+      R"( dataset_reference { project_id: "p123" dataset_id: "d123" })"
+      R"( linked_dataset_source {)"
+      R"( source_dataset { project_id: "p123" dataset_id: "d123" })"
+      R"( })"
+      R"( external_dataset_reference {)"
+      R"( hive_database {)"
+      R"( catalog_id: "c1")"
+      R"( database: "d1")"
+      R"( metadata_connectivity {)"
+      R"( access_uri_type: "")"
+      R"( access_uri: "")"
+      R"( metadata_connection: "")"
+      R"( storage_connection: "")"
+      R"( } } })"
+      R"( default_rounding_mode {)"
+      R"( rounding_mode_value: "ROUND_HALF_EVEN")"
+      R"( })"
+      R"( storage_billing_model { storage_billing_model_value: "LOGICAL" } })");
+
+  EXPECT_EQ(
+      dataset.DebugString(
+          "Dataset",
+          TracingOptions{}.SetOptions("truncate_string_field_longer_than=7")),
+      R"(Dataset {)"
+      R"( kind: "dkind")"
+      R"( etag: "detag")"
+      R"( id: "did")"
+      R"( self_link: "dselfli...<truncated>...")"
+      R"( friendly_name: "dfriend...<truncated>...")"
+      R"( description: "ddescri...<truncated>...")"
+      R"( type: "dtype")"
+      R"( location: "dlocati...<truncated>...")"
+      R"( default_collation: "ddefaul...<truncated>...")"
+      R"( published: false)"
+      R"( is_case_insensitive: true)"
+      R"( default_table_expiration: 0)"
+      R"( default_partition_expiration: 0)"
+      R"( creation_time { "1970-01-01T00:00:00Z" })"
+      R"( last_modified_time { "1970-01-01T00:00:00Z" })"
+      R"( max_time_travel: 0)"
+      R"( labels_keys { key: "l1" value: "v1" })"
+      R"( labels_keys { key: "l2" value: "v2" })"
+      R"( access { role: "accessr...<truncated>...")"
+      R"( domain: "")"
+      R"( special_group: "")"
+      R"( iam_member: "")"
+      R"( view { project_id: "p123" dataset_id: "d123" table_id: "t123" })"
+      R"( routine { project_id: "p123" dataset_id: "d123" routine_id: "r123" })"
+      R"( dataset { dataset { project_id: "p123" dataset_id: "d123" })"
+      R"( target_types { target_type_value: "VIEWS" })"
+      R"( } })"
+      R"( tags { tag_key: "t1" tag_value: "t2" })"
+      R"( dataset_reference { project_id: "p123" dataset_id: "d123" })"
+      R"( linked_dataset_source {)"
+      R"( source_dataset { project_id: "p123" dataset_id: "d123" })"
+      R"( })"
+      R"( external_dataset_reference {)"
+      R"( hive_database {)"
+      R"( catalog_id: "c1")"
+      R"( database: "d1")"
+      R"( metadata_connectivity {)"
+      R"( access_uri_type: "")"
+      R"( access_uri: "")"
+      R"( metadata_connection: "")"
+      R"( storage_connection: "")"
+      R"( } } })"
+      R"( default_rounding_mode {)"
+      R"( rounding_mode_value: "ROUND_H...<truncated>...")"
+      R"( })"
+      R"( storage_billing_model { storage_billing_model_value: "LOGICAL" } })");
+
+  EXPECT_EQ(dataset.DebugString(
+                "Dataset", TracingOptions{}.SetOptions("single_line_mode=F")),
+            R"(Dataset {
+  kind: "dkind"
+  etag: "detag"
+  id: "did"
+  self_link: "dselflink"
+  friendly_name: "dfriendlyname"
+  description: "ddescription"
+  type: "dtype"
+  location: "dlocation"
+  default_collation: "ddefaultcollation"
+  published: false
+  is_case_insensitive: true
+  default_table_expiration: 0
+  default_partition_expiration: 0
+  creation_time {
+    "1970-01-01T00:00:00Z"
+  }
+  last_modified_time {
+    "1970-01-01T00:00:00Z"
+  }
+  max_time_travel: 0
+  labels_keys {
+    key: "l1"
+    value: "v1"
+  }
+  labels_keys {
+    key: "l2"
+    value: "v2"
+  }
+  access {
+    role: "accessrole"
+    domain: ""
+    special_group: ""
+    iam_member: ""
+    view {
+      project_id: "p123"
+      dataset_id: "d123"
+      table_id: "t123"
+    }
+    routine {
+      project_id: "p123"
+      dataset_id: "d123"
+      routine_id: "r123"
+    }
+    dataset {
+      dataset {
+        project_id: "p123"
+        dataset_id: "d123"
+      }
+      target_types {
+        target_type_value: "VIEWS"
+      }
+    }
+  }
+  tags {
+    tag_key: "t1"
+    tag_value: "t2"
+  }
+  dataset_reference {
+    project_id: "p123"
+    dataset_id: "d123"
+  }
+  linked_dataset_source {
+    source_dataset {
+      project_id: "p123"
+      dataset_id: "d123"
+    }
+  }
+  external_dataset_reference {
+    hive_database {
+      catalog_id: "c1"
+      database: "d1"
+      metadata_connectivity {
+        access_uri_type: ""
+        access_uri: ""
+        metadata_connection: ""
+        storage_connection: ""
+      }
+    }
+  }
+  default_rounding_mode {
+    rounding_mode_value: "ROUND_HALF_EVEN"
+  }
+  storage_billing_model {
+    storage_billing_model_value: "LOGICAL"
+  }
+})");
+}
+
+TEST(DatasetTest, ListFormatDatasetDebugString) {
+  auto dataset = MakeListFormatDataset();
+
+  EXPECT_EQ(
+      dataset.DebugString("Dataset", TracingOptions{}),
+      R"(Dataset {)"
+      R"( kind: "dkind")"
+      R"( id: "did")"
+      R"( friendly_name: "dfriendlyname")"
+      R"( type: "DEFAULT")"
+      R"( location: "dlocation")"
+      R"( labels { key: "l1" value: "v1" })"
+      R"( labels { key: "l2" value: "v2" })"
+      R"( dataset_reference { project_id: "p123" dataset_id: "d123" } })");
+
+  EXPECT_EQ(
+      dataset.DebugString(
+          "Dataset",
+          TracingOptions{}.SetOptions("truncate_string_field_longer_than=7")),
+      R"(Dataset {)"
+      R"( kind: "dkind")"
+      R"( id: "did")"
+      R"( friendly_name: "dfriend...<truncated>...")"
+      R"( type: "DEFAULT")"
+      R"( location: "dlocati...<truncated>...")"
+      R"( labels { key: "l1" value: "v1" })"
+      R"( labels { key: "l2" value: "v2" })"
+      R"( dataset_reference { project_id: "p123" dataset_id: "d123" } })");
+
+  EXPECT_EQ(dataset.DebugString(
+                "Dataset", TracingOptions{}.SetOptions("single_line_mode=F")),
+            R"(Dataset {
+  kind: "dkind"
+  id: "did"
+  friendly_name: "dfriendlyname"
+  type: "DEFAULT"
+  location: "dlocation"
+  labels {
+    key: "l1"
+    value: "v1"
+  }
+  labels {
+    key: "l2"
+    value: "v2"
+  }
+  dataset_reference {
+    project_id: "p123"
+    dataset_id: "d123"
+  }
+})");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

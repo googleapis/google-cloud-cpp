@@ -35,6 +35,10 @@ class GetDatasetResponse {
   static StatusOr<GetDatasetResponse> BuildFromHttpResponse(
       BigQueryHttpResponse const& http_response);
 
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
+
   Dataset dataset;
   BigQueryHttpResponse http_response;
 };
@@ -46,6 +50,10 @@ class ListDatasetsResponse {
   // Builds ListDatasetsResponse from HttpResponse.
   static StatusOr<ListDatasetsResponse> BuildFromHttpResponse(
       BigQueryHttpResponse const& http_response);
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 
   std::vector<ListFormatDataset> datasets;
   std::string next_page_token;

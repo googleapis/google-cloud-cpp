@@ -15,7 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_DATASET_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_DATASET_H
 
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include "absl/strings/string_view.h"
 #include <nlohmann/json.hpp>
 #include <chrono>
 #include <memory>
@@ -36,6 +38,10 @@ struct StorageBillingModel {
   static StorageBillingModel Physical();
 
   std::string value;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(StorageBillingModel, value);
 
@@ -45,6 +51,10 @@ struct TargetType {
   static TargetType Routines();
 
   std::string value;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TargetType, value);
 
@@ -54,6 +64,10 @@ struct TableFieldSchemaRoundingMode {
   static TableFieldSchemaRoundingMode RoundHalfEven();
 
   std::string value;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TableFieldSchemaRoundingMode,
                                                 value);
@@ -61,12 +75,20 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TableFieldSchemaRoundingMode,
 struct DatasetReference {
   std::string dataset_id;
   std::string project_id;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DatasetReference, dataset_id,
                                                 project_id);
 
 struct LinkedDatasetSource {
   DatasetReference source_dataset;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(LinkedDatasetSource,
                                                 source_dataset);
@@ -75,6 +97,10 @@ struct TableReference {
   std::string project_id;
   std::string dataset_id;
   std::string table_id;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TableReference, dataset_id,
                                                 project_id, table_id);
@@ -83,6 +109,10 @@ struct RoutineReference {
   std::string project_id;
   std::string dataset_id;
   std::string routine_id;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(RoutineReference, dataset_id,
                                                 project_id, routine_id);
@@ -90,6 +120,10 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(RoutineReference, dataset_id,
 struct DatasetAccessEntry {
   DatasetReference dataset;
   std::vector<TargetType> target_types;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DatasetAccessEntry, dataset,
                                                 target_types);
@@ -105,6 +139,10 @@ struct Access {
   TableReference view;
   RoutineReference routine;
   DatasetAccessEntry dataset;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Access, role, user_by_email,
                                                 group_by_email, domain,
@@ -116,6 +154,10 @@ struct HiveMetastoreConnectivity {
   std::string access_uri;
   std::string metadata_connection;
   std::string storage_connection;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(HiveMetastoreConnectivity,
                                                 access_uri_type, access_uri,
@@ -127,6 +169,10 @@ struct HiveDatabaseReference {
   std::string database;
 
   HiveMetastoreConnectivity metadata_connectivity;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(HiveDatabaseReference,
                                                 catalog_id, database,
@@ -134,6 +180,10 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(HiveDatabaseReference,
 
 struct ExternalDatasetReference {
   HiveDatabaseReference hive_database;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ExternalDatasetReference,
                                                 hive_database);
@@ -141,6 +191,10 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ExternalDatasetReference,
 struct GcpTag {
   std::string tag_key;
   std::string tag_value;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(GcpTag, tag_key, tag_value);
 
@@ -167,7 +221,7 @@ struct Dataset {
   ;
   std::chrono::hours max_time_travel = std::chrono::hours(0);
 
-  std::map<std::string, std::string> labels;
+  std::multimap<std::string, std::string> labels;
   std::vector<Access> access;
   std::vector<GcpTag> tags;
 
@@ -177,6 +231,10 @@ struct Dataset {
   TableFieldSchemaRoundingMode default_rounding_mode;
 
   StorageBillingModel storage_billing_model;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 
 struct ListFormatDataset {
@@ -187,7 +245,11 @@ struct ListFormatDataset {
   std::string type;
 
   DatasetReference dataset_reference;
-  std::map<std::string, std::string> labels;
+  std::multimap<std::string, std::string> labels;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ListFormatDataset, kind, id,
                                                 friendly_name, location, type,
