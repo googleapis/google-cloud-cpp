@@ -1803,6 +1803,14 @@ service {
   ]
 }
 
+# Storage Insights
+service {
+  service_proto_path: "google/cloud/storageinsights/v1/storageinsights.proto"
+  product_path: "google/cloud/storageinsights/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Storage Transfer Service
 service {
   service_proto_path: "google/storagetransfer/v1/transfer.proto"
