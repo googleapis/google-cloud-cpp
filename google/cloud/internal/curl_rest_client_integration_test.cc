@@ -18,8 +18,10 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/log.h"
+#include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/match.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 
@@ -489,6 +491,46 @@ TEST_F(RestClientIntegrationTest, RestContextHeaders) {
       << "body=" << *body;
   EXPECT_EQ(sent_headers->value("X-Test-Header-2", ""), "header-value-2")
       << "body=" << *body;
+}
+
+TEST_F(RestClientIntegrationTest, CaptureMetadata) {
+  auto client = MakeDefaultRestClient(url_, {});
+  RestRequest request;
+  request.SetPath("anything");
+  rest_internal::RestContext context;
+  auto response_status = RetryRestRequest([&] {
+    context.AddHeader({"x-test-header-1", "header-value-1"});
+    context.AddHeader({"x-test-header-2", "header-value-2"});
+    return client->Get(context, request);
+  });
+  ASSERT_STATUS_OK(response_status);
+  auto response = *std::move(response_status);
+  ASSERT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
+
+  EXPECT_TRUE(context.local_ip_address());
+  EXPECT_TRUE(context.local_port());
+  EXPECT_TRUE(context.primary_ip_address());
+  EXPECT_TRUE(context.primary_port());
+
+  ASSERT_TRUE(context.namelookup_time());
+  ASSERT_TRUE(context.connect_time());
+  ASSERT_TRUE(context.appconnect_time());
+  // Times are relative from the start of the request, the should be increasing:
+  // namelookup <= connect <= appconnect
+  EXPECT_GE(*context.connect_time(), *context.namelookup_time());
+  // For HTTPS connections we expect appconnect_time to be >= connect_time. For
+  // HTTP connections we expect it to be 0 (there is no SSL negotiation to
+  // perform).  A EXPECT_THAT() here would not be very readable.
+  if (absl::StartsWith(url_, "https://")) {
+    EXPECT_GE(*context.appconnect_time(), *context.connect_time());
+  } else {
+    EXPECT_EQ(*context.appconnect_time(), std::chrono::microseconds(0));
+  }
+
+  auto body = ReadAll(std::move(*response).ExtractPayload());
+  ASSERT_STATUS_OK(body);
+  auto parsed_response = nlohmann::json::parse(*body, nullptr, false);
+  ASSERT_TRUE(parsed_response.is_object()) << "body=" << *body;
 }
 
 }  // namespace

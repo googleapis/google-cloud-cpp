@@ -15,6 +15,7 @@
 #include "google/cloud/internal/curl_handle.h"
 #include "google/cloud/internal/binary_data_as_debug_string.h"
 #include "google/cloud/internal/curl_handle_factory.h"
+#include "google/cloud/internal/rest_context.h"
 #include "google/cloud/internal/strerror.h"
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
@@ -168,6 +169,63 @@ std::string CurlHandle::GetPeer() {
   auto e = curl_easy_getinfo(handle_.get(), CURLINFO_PRIMARY_IP, &ip);
   if (e == CURLE_OK && ip != nullptr) return ip;
   return std::string{"[error-fetching-peer]"};
+}
+
+void CurlHandle::CaptureMetadata(RestContext& context) {
+  char* ip = nullptr;
+  long port = 0;  // NOLINT(google-runtime-int) - curl requires `long`
+
+  auto e = curl_easy_getinfo(handle_.get(), CURLINFO_LOCAL_IP, &ip);
+  context.reset_local_ip_address();
+  if (e == CURLE_OK && ip != nullptr) context.set_local_ip_address(ip);
+
+  e = curl_easy_getinfo(handle_.get(), CURLINFO_LOCAL_PORT, &port);
+  context.reset_local_port();
+  if (e == CURLE_OK) context.set_local_port(static_cast<std::int32_t>(port));
+
+  ip = nullptr;
+  e = curl_easy_getinfo(handle_.get(), CURLINFO_PRIMARY_IP, &ip);
+  context.reset_primary_ip_address();
+  if (e == CURLE_OK && ip != nullptr) context.set_primary_ip_address(ip);
+
+  e = curl_easy_getinfo(handle_.get(), CURLINFO_PRIMARY_PORT, &port);
+  context.reset_primary_port();
+  if (e == CURLE_OK) context.set_primary_port(static_cast<std::int32_t>(port));
+
+#if CURL_AT_LEAST_VERSION(7, 61, 0)
+  curl_off_t us;
+  // Sometimes the durations returned here are 0us. That is useful information,
+  // as it represents things like "no DNS lookup performed (used the cache)", or
+  // "no connection time, reused an existing connection".
+  e = curl_easy_getinfo(handle_.get(), CURLINFO_NAMELOOKUP_TIME_T, &us);
+  context.reset_namelookup_time();
+  if (e == CURLE_OK) context.set_namelookup_time(std::chrono::microseconds(us));
+
+  e = curl_easy_getinfo(handle_.get(), CURLINFO_CONNECT_TIME_T, &us);
+  context.reset_connect_time();
+  if (e == CURLE_OK) context.set_connect_time(std::chrono::microseconds(us));
+
+  e = curl_easy_getinfo(handle_.get(), CURLINFO_APPCONNECT_TIME_T, &us);
+  context.reset_appconnect_time();
+  if (e == CURLE_OK) context.set_appconnect_time(std::chrono::microseconds(us));
+#else
+  double seconds;
+  e = curl_easy_getinfo(handle_.get(), CURLINFO_NAMELOOKUP_TIME, &seconds);
+  context.reset_namelookup_time();
+  auto us = [](double s) {
+    return std::chrono::duration_cast<std::chrono::microseconds>(
+        std::chrono::duration<double, std::ratio<1> >(s));
+  };
+  if (e == CURLE_OK) context.set_namelookup_time(us(seconds));
+
+  e = curl_easy_getinfo(handle_.get(), CURLINFO_CONNECT_TIME, &seconds);
+  context.reset_connect_time();
+  if (e == CURLE_OK) context.set_connect_time(us(seconds));
+
+  e = curl_easy_getinfo(handle_.get(), CURLINFO_APPCONNECT_TIME, &seconds);
+  context.reset_appconnect_time();
+  if (e == CURLE_OK) context.set_appconnect_time(us(seconds));
+#endif  //
 }
 
 void CurlHandle::EnableLogging(bool enabled) {

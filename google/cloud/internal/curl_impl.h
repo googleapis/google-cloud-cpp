@@ -95,7 +95,7 @@ class CurlImpl {
     return received_headers_;
   }
 
-  Status MakeRequest(HttpMethod method,
+  Status MakeRequest(HttpMethod method, RestContext& context,
                      std::vector<absl::Span<char const>> request = {});
 
   bool HasUnreadData() const;
@@ -106,8 +106,8 @@ class CurlImpl {
   std::size_t HeaderCallback(absl::Span<char> response);
 
  private:
-  Status MakeRequestImpl();
-  StatusOr<std::size_t> ReadImpl(absl::Span<char> output);
+  Status MakeRequestImpl(RestContext& context);
+  StatusOr<std::size_t> ReadImpl(RestContext& context, absl::Span<char> output);
 
   // Cleanup the CURL handles, leaving them ready for reuse.
   void CleanupHandles();
@@ -118,7 +118,7 @@ class CurlImpl {
   // Wait until the underlying data can perform work.
   Status WaitForHandles(int& repeats);
 
-  Status OnTransferError(Status status);
+  Status OnTransferError(RestContext& context, Status status);
   void OnTransferDone();
 
   std::shared_ptr<CurlHandleFactory> factory_;
