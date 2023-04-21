@@ -91,9 +91,14 @@ using SpannerPolicyOptionList =
                SpannerPollingPolicyOption>;
 
 /**
- * Option for `google::cloud::Options` to, when present and false, suppress
- * adding headers to distinguish requests served by the leader v/s non-leader
- * region.
+ * Control "route to leader region" headers.
+ *
+ * Unless this option is present and `false` the client library will send
+ * headers that route the request to the leader region.
+ *
+ * @see https://cloud.google.com/spanner/docs/instance-configurations
+ * for more information on multi-regional spanner instances and the role of
+ * leader regions.
  *
  * @ingroup spanner-options
  */
