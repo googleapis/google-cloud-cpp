@@ -206,7 +206,12 @@ int DefaultGrpcNumChannels(std::string const& endpoint) {
 
 Options DefaultOptionsGrpc(Options options) {
   using ::google::cloud::internal::GetEnv;
-
+  // Experiments show that gRPC gets better upload throughput when the upload
+  // buffer is larger than 32MiB.
+  auto constexpr kDefaultGrpcUploadBufferSize = 32 * 1024 * 1024L;
+  options = google::cloud::internal::MergeOptions(
+      std::move(options), Options{}.set<storage::UploadBufferSizeOption>(
+                              kDefaultGrpcUploadBufferSize));
   options =
       storage::internal::DefaultOptionsWithCredentials(std::move(options));
   if (!options.has<UnifiedCredentialsOption>() &&
@@ -222,17 +227,17 @@ Options DefaultOptionsGrpc(Options options) {
     // (sometimes called "anonymous") credentials, which disable SSL.
     options.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
   }
-  if (!options.has<EndpointOption>()) {
-    options.set<EndpointOption>("storage.googleapis.com");
-  }
-  if (!options.has<AuthorityOption>()) {
-    options.set<AuthorityOption>("storage.googleapis.com");
-  }
-  if (!options.has<GrpcNumChannelsOption>()) {
-    options.set<GrpcNumChannelsOption>(
-        DefaultGrpcNumChannels(options.get<EndpointOption>()));
-  }
-  return options;
+
+  options = google::cloud::internal::MergeOptions(
+      std::move(options), Options{}
+                              .set<EndpointOption>("storage.googleapis.com")
+                              .set<AuthorityOption>("storage.googleapis.com"));
+  // We can only compute this once the endpoint is known, so take an additional
+  // step.
+  auto const num_channels =
+      DefaultGrpcNumChannels(options.get<EndpointOption>());
+  return google::cloud::internal::MergeOptions(
+      std::move(options), Options{}.set<GrpcNumChannelsOption>(num_channels));
 }
 
 std::shared_ptr<GrpcClient> GrpcClient::Create(Options opts) {
