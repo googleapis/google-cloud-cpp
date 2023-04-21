@@ -83,7 +83,7 @@ StatusOr<QueryPartition> DeserializeQueryPartition(
  * Instances of `QueryPartition` are created by `Client::PartitionQuery`. Once
  * created, `QueryPartition` objects can be serialized, transmitted to separate
  * processes, and used to read data in parallel using `Client::ExecuteQuery`.
- * If `data_boost` is set, those requests will be executed via Spanner
+ * If `data_boost` is set, those requests will be executed via Spanner-
  * independent compute resources.
  */
 class QueryPartition {

@@ -59,7 +59,7 @@ struct PartitionOptions {
    * Use "data boost" in the returned partitions.
    *
    * If true, the requests from the subsequent partitioned `Client::Read()`
-   * and `Client::ExecuteQuery()` requests will be executed via Spanner
+   * and `Client::ExecuteQuery()` requests will be executed via Spanner-
    * independent compute resources.
    */
   bool data_boost = false;

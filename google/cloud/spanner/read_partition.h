@@ -84,7 +84,7 @@ StatusOr<ReadPartition> DeserializeReadPartition(
  * Instances of `ReadPartition` are created by `Client::PartitionRead`.
  * Once created, `ReadPartition` objects can be serialized, transmitted to
  * separate processes, and used to read data in parallel using `Client::Read`.
- * If `data_boost` is set, those requests will be executed via Spanner
+ * If `data_boost` is set, those requests will be executed via Spanner-
  * independent compute resources.
  */
 class ReadPartition {

@@ -644,8 +644,8 @@ class Client {
   StatusOr<PartitionedDmlResult> ExecutePartitionedDml(SqlStatement statement,
                                                        Options opts = {});
 
-  /// @name Backwards compatibility for ClientOptions.
   ///@{
+  /// @name Backwards compatibility for ClientOptions.
   explicit Client(std::shared_ptr<Connection> conn, ClientOptions const& opts)
       : Client(std::move(conn), Options(opts)) {}
   explicit Client(std::shared_ptr<Connection> conn,
