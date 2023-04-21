@@ -75,7 +75,7 @@ https://cloud.google.com/docs/authentication/production
 1. Run the example, changing the placeholder(s) to appropriate values:
 
    ```bash
-   bazel run :quickstart -- [...]
+   bazel run :quickstart -- [PROJECT_ID] [LOCATION_ID]
    ```
 
 ## Using with CMake
@@ -112,7 +112,7 @@ https://cloud.google.com/docs/authentication/production
 1. Run the example, changing the placeholder(s) to appropriate values:
 
    ```bash
-   .build/quickstart [...]
+   .build/quickstart [PROJECT_ID] [LOCATION_ID]
    ```
 
 ## Platform Specific Notes
