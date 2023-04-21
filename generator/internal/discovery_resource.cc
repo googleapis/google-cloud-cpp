@@ -29,9 +29,11 @@ namespace generator_internal {
 
 DiscoveryResource::DiscoveryResource() : json_("") {}
 
-DiscoveryResource::DiscoveryResource(std::string name, std::string default_host,
+DiscoveryResource::DiscoveryResource(std::string name, std::string package_name,
+                                     std::string default_host,
                                      std::string base_path, nlohmann::json json)
     : name_(std::move(name)),
+      package_name_(std::move(package_name)),
       default_host_(std::move(default_host)),
       base_path_(std::move(base_path)),
       json_(std::move(json)) {}
@@ -39,6 +41,11 @@ DiscoveryResource::DiscoveryResource(std::string name, std::string default_host,
 void DiscoveryResource::AddRequestType(std::string name,
                                        DiscoveryTypeVertex const* type) {
   request_types_.insert(std::make_pair(std::move(name), type));
+}
+
+void DiscoveryResource::AddResponseType(std::string name,
+                                        DiscoveryTypeVertex const* type) {
+  response_types_.insert(std::make_pair(std::move(name), type));
 }
 
 std::vector<DiscoveryTypeVertex const*> DiscoveryResource::GetRequestTypesList()
@@ -149,14 +156,6 @@ StatusOr<std::string> DiscoveryResource::FormatOAuthScopes() const {
                       "\";\n");
 }
 
-std::string DiscoveryResource::FormatPackageName(
-    std::string const& product_name, std::string const& version) const {
-  return absl::StrJoin(
-      std::make_tuple(std::string("google.cloud.cpp"), product_name,
-                      CamelCaseToSnakeCase(name_), version),
-      ".");
-}
-
 std::string DiscoveryResource::FormatFilePath(
     std::string const& product_name, std::string const& version,
     std::string const& output_path) const {
@@ -216,8 +215,17 @@ StatusOr<std::string> DiscoveryResource::JsonToProtobufService() const {
     if (response != method_json.end()) {
       std::string ref = response->value("$ref", "");
       if (!ref.empty()) {
-        response_type_name =
-            absl::StrCat("google.cloud.cpp.$product_name$.$version$.", ref);
+        auto const& response = response_types_.find(ref);
+        if (response == response_types_.end()) {
+          return internal::InvalidArgumentError(absl::StrFormat(
+              "Cannot find response_type_name=%s in type_map", ref));
+        }
+        if (response->second->package_name() != package_name_) {
+          response_type_name = absl::StrCat(response->second->package_name(),
+                                            ".", response->second->name());
+        } else {
+          response_type_name = response->second->name();
+        }
       }
     }
 

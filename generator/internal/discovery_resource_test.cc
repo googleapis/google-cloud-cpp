@@ -60,7 +60,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsGetRegion) {
   ASSERT_TRUE(method_json.is_object());
   auto type_json = nlohmann::json::parse(kTypeJson, nullptr, false);
   ASSERT_TRUE(type_json.is_object());
-  DiscoveryResource r("myTests", "", "base/path", method_json);
+  DiscoveryResource r("myTests", "", "", "base/path", method_json);
   DiscoveryTypeVertex t("myType", "", type_json);
   auto options = r.FormatRpcOptions(method_json, &t);
   ASSERT_STATUS_OK(options);
@@ -94,7 +94,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsPatchZone) {
   ASSERT_TRUE(method_json.is_object());
   auto type_json = nlohmann::json::parse(kTypeJson, nullptr, false);
   ASSERT_TRUE(type_json.is_object());
-  DiscoveryResource r("myTests", "", "base/path", method_json);
+  DiscoveryResource r("myTests", "", "", "base/path", method_json);
   DiscoveryTypeVertex t("myType", "", type_json);
   auto options = r.FormatRpcOptions(method_json, &t);
   ASSERT_STATUS_OK(options);
@@ -128,7 +128,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsPutRegion) {
   ASSERT_TRUE(method_json.is_object());
   auto type_json = nlohmann::json::parse(kTypeJson, nullptr, false);
   ASSERT_TRUE(type_json.is_object());
-  DiscoveryResource r("myTests", "", "base/path", method_json);
+  DiscoveryResource r("myTests", "", "", "base/path", method_json);
   DiscoveryTypeVertex t("myType", "", type_json);
   auto options = r.FormatRpcOptions(method_json, &t);
   ASSERT_STATUS_OK(options);
@@ -155,7 +155,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsPostGlobal) {
   ASSERT_TRUE(method_json.is_object());
   auto type_json = nlohmann::json::parse(kTypeJson, nullptr, false);
   ASSERT_TRUE(type_json.is_object());
-  DiscoveryResource r("myTests", "", "base/path", method_json);
+  DiscoveryResource r("myTests", "", "", "base/path", method_json);
   DiscoveryTypeVertex t("myType", "", type_json);
   auto options = r.FormatRpcOptions(method_json, &t);
   ASSERT_STATUS_OK(options);
@@ -186,7 +186,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsPostGlobalOperationResponse) {
   ASSERT_TRUE(method_json.is_object());
   auto type_json = nlohmann::json::parse(kTypeJson, nullptr, false);
   ASSERT_TRUE(type_json.is_object());
-  DiscoveryResource r("myTests", "", "base/path", method_json);
+  DiscoveryResource r("myTests", "", "", "base/path", method_json);
   DiscoveryTypeVertex t("myType", "", type_json);
   auto options = r.FormatRpcOptions(method_json, &t);
   ASSERT_STATUS_OK(options);
@@ -207,7 +207,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsGetNoParams) {
   ASSERT_TRUE(method_json.is_object());
   auto type_json = nlohmann::json::parse(kTypeJson, nullptr, false);
   ASSERT_TRUE(type_json.is_object());
-  DiscoveryResource r("myTests", "", "base/path", method_json);
+  DiscoveryResource r("myTests", "", "", "base/path", method_json);
   DiscoveryTypeVertex t("myType", "", type_json);
   auto options = r.FormatRpcOptions(method_json, &t);
   ASSERT_STATUS_OK(options);
@@ -233,7 +233,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsGetNoParamsOperation) {
   ASSERT_TRUE(method_json.is_object());
   auto type_json = nlohmann::json::parse(kTypeJson, nullptr, false);
   ASSERT_TRUE(type_json.is_object());
-  DiscoveryResource r("myTests", "", "base/path", method_json);
+  DiscoveryResource r("myTests", "", "", "base/path", method_json);
   DiscoveryTypeVertex t("myType", "", type_json);
   auto options = r.FormatRpcOptions(method_json, &t);
   ASSERT_STATUS_OK(options);
@@ -249,7 +249,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsMissingPath) {
   ASSERT_TRUE(method_json.is_object());
   auto type_json = nlohmann::json::parse(kTypeJson, nullptr, false);
   ASSERT_TRUE(type_json.is_object());
-  DiscoveryResource r("myTests", "", "base/path", method_json);
+  DiscoveryResource r("myTests", "", "", "base/path", method_json);
   DiscoveryTypeVertex t("myType", "", type_json);
   auto options = r.FormatRpcOptions(method_json, &t);
   EXPECT_THAT(
@@ -267,7 +267,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsMissingHttpMethod) {
   ASSERT_TRUE(method_json.is_object());
   auto type_json = nlohmann::json::parse(kTypeJson, nullptr, false);
   ASSERT_TRUE(type_json.is_object());
-  DiscoveryResource r("myTests", "", "base/path", method_json);
+  DiscoveryResource r("myTests", "", "", "base/path", method_json);
   DiscoveryTypeVertex t("myType", "", type_json);
   auto options = r.FormatRpcOptions(method_json, &t);
   EXPECT_THAT(
@@ -298,7 +298,7 @@ TEST(DiscoveryResourceTest, FormatOAuthScopesPresent) {
 )""";
   auto json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  DiscoveryResource r("myTests", "", "", json);
+  DiscoveryResource r("myTests", "", "", "", json);
   auto scopes = r.FormatOAuthScopes();
   ASSERT_STATUS_OK(scopes);
   EXPECT_THAT(*scopes, Eq(kExpectedProto));
@@ -315,7 +315,7 @@ TEST(DiscoveryResourceTest, FormatOAuthScopesZeroScopes) {
 })""";
   auto json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  DiscoveryResource r("myTests", "", "", json);
+  DiscoveryResource r("myTests", "", "", "", json);
   auto scopes = r.FormatOAuthScopes();
   EXPECT_THAT(
       scopes,
@@ -332,7 +332,7 @@ TEST(DiscoveryResourceTest, FormatOAuthScopesNotPresent) {
 })""";
   auto json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  DiscoveryResource r("myTests", "", "", json);
+  DiscoveryResource r("myTests", "", "", "", json);
   auto scopes = r.FormatOAuthScopes();
   EXPECT_THAT(
       scopes,
@@ -340,20 +340,11 @@ TEST(DiscoveryResourceTest, FormatOAuthScopesNotPresent) {
                HasSubstr("No OAuth scopes found for service: myTests.")));
 }
 
-TEST(DiscoveryResourceTest, FormatPackageName) {
-  auto constexpr kResourceJson = R"""({})""";
-  auto json = nlohmann::json::parse(kResourceJson, nullptr, false);
-  ASSERT_TRUE(json.is_object());
-  DiscoveryResource r("myTests", "", "", json);
-  EXPECT_THAT(r.FormatPackageName("product", "v2"),
-              Eq("google.cloud.cpp.product.my_tests.v2"));
-}
-
 TEST(DiscoveryResourceTest, FormatFilePath) {
   auto constexpr kResourceJson = R"""({})""";
   auto json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  DiscoveryResource r("myTests", "", "", json);
+  DiscoveryResource r("myTests", "", "", "", json);
   EXPECT_THAT(r.FormatFilePath("product", "v2", "/tmp"),
               Eq("/tmp/google/cloud/product/my_tests/v2/my_tests.proto"));
 }
@@ -362,7 +353,7 @@ TEST(DiscoveryResourceTest, FormatMethodName) {
   auto constexpr kResourceJson = R"""({})""";
   auto json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  DiscoveryResource r("myTests", "", "", json);
+  DiscoveryResource r("myTests", "", "", "", json);
   EXPECT_THAT(r.FormatMethodName("aggregatedList"),
               Eq("AggregatedListMyTests"));
   EXPECT_THAT(r.FormatMethodName("delete"), Eq("DeleteMyTests"));
@@ -375,6 +366,7 @@ TEST(DiscoveryResourceTest, FormatMethodName) {
 }
 
 TEST(DiscoveryResourceTest, JsonToProtobufService) {
+  auto constexpr kOperationTypeJson = R"""({})""";
   auto constexpr kGetRequestTypeJson = R"""({})""";
   auto constexpr kDoFooRequestTypeJson = R"""({
   "request_resource_field_name": "my_foo_resource"
@@ -429,7 +421,7 @@ service MyResources {
   option (google.api.oauth_scopes) =
     "https://www.googleapis.com/auth/cloud-platform";
 
-  rpc DoFoo(DoFooRequest) returns (google.cloud.cpp.$product_name$.$version$.Operation) {
+  rpc DoFoo(DoFooRequest) returns (other.package.Operation) {
     option (google.api.http) = {
       post: "base/path/projects/{project}/zones/{zone}/myResources/{foo_id}/doFoo"
       body: "my_foo_resource"
@@ -449,18 +441,25 @@ service MyResources {
 )""";
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
+  auto operation_type_json =
+      nlohmann::json::parse(kOperationTypeJson, nullptr, false);
+  ASSERT_TRUE(operation_type_json.is_object());
   auto get_request_type_json =
       nlohmann::json::parse(kGetRequestTypeJson, nullptr, false);
   ASSERT_TRUE(get_request_type_json.is_object());
   auto do_foo_request_type_json =
       nlohmann::json::parse(kDoFooRequestTypeJson, nullptr, false);
   ASSERT_TRUE(do_foo_request_type_json.is_object());
-  DiscoveryResource r("myResources", "https://my.endpoint.com", "base/path",
-                      resource_json);
-  DiscoveryTypeVertex t("GetMyResourcesRequest", "", get_request_type_json);
-  DiscoveryTypeVertex t2("DoFooRequest", "", do_foo_request_type_json);
+  DiscoveryResource r("myResources", "this.package", "https://my.endpoint.com",
+                      "base/path", resource_json);
+  DiscoveryTypeVertex t("GetMyResourcesRequest", "this.package",
+                        get_request_type_json);
+  DiscoveryTypeVertex t2("DoFooRequest", "this.package",
+                         do_foo_request_type_json);
   r.AddRequestType("GetMyResourcesRequest", &t);
   r.AddRequestType("DoFooRequest", &t2);
+  DiscoveryTypeVertex t3("Operation", "other.package", operation_type_json);
+  r.AddResponseType("Operation", &t3);
   auto emitted_proto = r.JsonToProtobufService();
   ASSERT_STATUS_OK(emitted_proto);
   EXPECT_THAT(*emitted_proto, Eq(kExpectedProto));
@@ -486,9 +485,10 @@ TEST(DiscoveryResourceTest, JsonToProtobufServiceMissingOAuthScopes) {
   auto get_request_type_json =
       nlohmann::json::parse(kGetRequestTypeJson, nullptr, false);
   ASSERT_TRUE(get_request_type_json.is_object());
-  DiscoveryResource r("myResources", "https://my.endpoint.com", "base/path",
-                      resource_json);
-  DiscoveryTypeVertex t("GetMyResourcesRequest", "", get_request_type_json);
+  DiscoveryResource r("myResources", "this.package", "https://my.endpoint.com",
+                      "base/path", resource_json);
+  DiscoveryTypeVertex t("GetMyResourcesRequest", "this.package",
+                        get_request_type_json);
   r.AddRequestType("GetMyResourcesRequest", &t);
   auto emitted_proto = r.JsonToProtobufService();
   EXPECT_THAT(
@@ -524,8 +524,8 @@ TEST(DiscoveryResourceTest, JsonToProtobufServiceMissingRequestType) {
 })""";
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
-  DiscoveryResource r("myResources", "https://my.endpoint.com", "base/path",
-                      resource_json);
+  DiscoveryResource r("myResources", "this.package", "https://my.endpoint.com",
+                      "base/path", resource_json);
   auto emitted_proto = r.JsonToProtobufService();
   EXPECT_THAT(
       emitted_proto,
@@ -563,8 +563,8 @@ service MyResources {
 )""";
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
-  DiscoveryResource r("myResources", "https://my.endpoint.com", "base/path",
-                      resource_json);
+  DiscoveryResource r("myResources", "this.package", "https://my.endpoint.com",
+                      "base/path", resource_json);
   auto emitted_proto = r.JsonToProtobufService();
   ASSERT_STATUS_OK(emitted_proto);
   EXPECT_THAT(*emitted_proto, Eq(kExpectedProto));
@@ -592,9 +592,10 @@ TEST(DiscoveryResourceTest, JsonToProtobufServiceErrorFormattingRpcOptions) {
   auto get_request_type_json =
       nlohmann::json::parse(kGetRequestTypeJson, nullptr, false);
   ASSERT_TRUE(get_request_type_json.is_object());
-  DiscoveryResource r("myResources", "https://my.endpoint.com", "base/path",
-                      resource_json);
-  DiscoveryTypeVertex t("GetMyResourcesRequest", "", get_request_type_json);
+  DiscoveryResource r("myResources", "this.package", "https://my.endpoint.com",
+                      "base/path", resource_json);
+  DiscoveryTypeVertex t("GetMyResourcesRequest", "this.package",
+                        get_request_type_json);
   r.AddRequestType("GetMyResourcesRequest", &t);
   auto emitted_proto = r.JsonToProtobufService();
   EXPECT_THAT(

@@ -38,6 +38,7 @@ namespace {
 namespace rest = google::cloud::rest_internal;
 
 auto constexpr kCommonPackageNameFormat = "google.cloud.cpp.%s.%s";
+auto constexpr kResourcePackageNameFormat = "google.cloud.cpp.%s.%s.%s";
 
 google::cloud::StatusOr<std::string> GetPage(std::string const& url) {
   std::pair<std::string, std::string> url_pieces =
@@ -138,8 +139,13 @@ std::map<std::string, DiscoveryResource> ExtractResources(
     std::string resource_name = r.key();
     resources.emplace(
         resource_name,
-        DiscoveryResource{resource_name, document_properties.default_hostname,
-                          document_properties.base_path, r.value()});
+        DiscoveryResource{
+            resource_name,
+            absl::StrFormat(kResourcePackageNameFormat,
+                            document_properties.product_name, resource_name,
+                            document_properties.version),
+            document_properties.default_hostname, document_properties.base_path,
+            r.value()});
   }
   return resources;
 }
@@ -227,7 +233,7 @@ StatusOr<DiscoveryTypeVertex> SynthesizeRequestType(
                            std::string((method_json["request"]["$ref"])));
   }
 
-  return DiscoveryTypeVertex(id, "", synthesized_request);
+  return DiscoveryTypeVertex(id, resource.package_name(), synthesized_request);
 }
 
 Status ProcessMethodRequestsAndResponses(
@@ -280,9 +286,8 @@ std::vector<DiscoveryFile> CreateFilesFromResources(
         &r.second,
         r.second.FormatFilePath(document_properties.product_name,
                                 document_properties.version, output_path),
-        r.second.FormatPackageName(document_properties.product_name,
-                                   document_properties.version),
-        document_properties.version, r.second.GetRequestTypesList()}
+        r.second.package_name(), document_properties.version,
+        r.second.GetRequestTypesList()}
                         .AddImportPath("/google/cloud/$product_name$/$version$/"
                                        "internal/common.proto"));
   }

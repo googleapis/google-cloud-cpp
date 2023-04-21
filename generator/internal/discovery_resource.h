@@ -26,13 +26,17 @@ namespace generator_internal {
 class DiscoveryResource {
  public:
   DiscoveryResource();
-  DiscoveryResource(std::string name, std::string default_host,
-                    std::string base_path, nlohmann::json json);
+  DiscoveryResource(std::string name, std::string package_name,
+                    std::string default_host, std::string base_path,
+                    nlohmann::json json);
 
   std::string const& name() const { return name_; }
+  std::string const& package_name() const { return package_name_; }
   nlohmann::json const& json() const { return json_; }
 
   void AddRequestType(std::string name, DiscoveryTypeVertex const* type);
+
+  void AddResponseType(std::string name, DiscoveryTypeVertex const* type);
 
   std::vector<DiscoveryTypeVertex const*> GetRequestTypesList() const;
 
@@ -52,11 +56,6 @@ class DiscoveryResource {
   // a service level google.api.oauth_scopes option.
   StatusOr<std::string> FormatOAuthScopes() const;
 
-  // Package names for service proto definitions are created in the format:
-  // "google.cloud.cpp.${product_name}.${resource_name}.${version}"
-  std::string FormatPackageName(std::string const& product_name,
-                                std::string const& version) const;
-
   // File paths for service protos are formatted thusly:
   // "${output_path}/google/cloud/${product_name}/${resource_name}/${version}/${resource_name}.proto"
   std::string FormatFilePath(std::string const& product_name,
@@ -71,10 +70,12 @@ class DiscoveryResource {
 
  private:
   std::string name_;
+  std::string package_name_;
   std::string default_host_;
   std::string base_path_;
   nlohmann::json json_;
   std::map<std::string, DiscoveryTypeVertex const*> request_types_;
+  std::map<std::string, DiscoveryTypeVertex const*> response_types_;
 };
 
 }  // namespace generator_internal
