@@ -29,17 +29,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Propagate trace context for an outbound HTTP request.
  *
- * The trace context is added as metadata in the `ClientContext`. By
+ * The trace context is added as metadata in the `RestContext`. By
  * injecting the trace context, we can potentially pick up a client side span
  * from within Google's servers.
  *
  * The format of the metadata is determined by the `TextMapPropagator` used for
- * the given call. Circa 2023-01, Google expects an `X-Cloud-Trace-Context`
+ * the given call. Circa 2023-04, Google expects an `traceparent`
  * [header].
  *
  * @see https://opentelemetry.io/docs/concepts/instrumenting-library/#injecting-context
  *
- * [header]: https://cloud.google.com/trace/docs/setup#force-trace
+ * [header]: https://www.w3.org/TR/trace-context/#traceparent-header
  */
 void InjectTraceContext(RestContext& context, Options const& options);
 
