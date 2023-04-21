@@ -216,8 +216,8 @@ TEST(TracingRestClient, WithTraceparent) {
         AllOf(Contains(Pair("x-cloud-trace-context", _)),
               Contains(Pair("traceparent", _))));
   };
-  auto disambiguate_overload =
-      ::testing::An<std::vector<absl::Span<char const>> const&>();
+  using PostPayloadType = std::vector<absl::Span<char const>>;
+  auto disambiguate_overload = ::testing::An<PostPayloadType const&>();
   EXPECT_CALL(*impl, Post(expected_headers_matcher(), _, disambiguate_overload))
       .WillOnce([](auto&, auto const&, auto const&) {
         auto response = std::make_unique<MockRestResponse>();
@@ -235,8 +235,7 @@ TEST(TracingRestClient, WithTraceparent) {
 
   auto client = MakeTracingRestClient(std::move(impl));
   rest_internal::RestContext context;
-  auto r =
-      client->Post(context, request, std::vector<absl::Span<char const>>{});
+  auto r = client->Post(context, request, PostPayloadType{});
   ASSERT_STATUS_OK(r);
   auto response = *std::move(r);
   ASSERT_THAT(response, NotNull());
@@ -248,6 +247,65 @@ TEST(TracingRestClient, WithTraceparent) {
   EXPECT_THAT(spans,
               UnorderedElementsAre(SpanNamed("HTTP/POST"), SpanNamed("Read"),
                                    SpanNamed("Read")));
+}
+
+TEST(TracingRestClient, WithRestContextDetails) {
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
+  auto span_catcher = InstallSpanCatcher();
+
+  auto impl = std::make_unique<MockRestClient>();
+  using PostPayloadType = std::vector<std::pair<std::string, std::string>>;
+  auto disambiguate_overload = ::testing::An<PostPayloadType const&>();
+  EXPECT_CALL(*impl, Post(_, _, disambiguate_overload))
+      .WillOnce([](RestContext& context, auto const&, auto const&) {
+        context.set_namelookup_time(std::chrono::microseconds(12345));
+        context.set_connect_time(std::chrono::microseconds(23456));
+        context.set_appconnect_time(std::chrono::microseconds(34567));
+        context.set_local_ip_address("127.0.0.1");
+        context.set_local_port(32000);
+        context.set_primary_ip_address("192.168.1.1");
+        context.set_primary_port(443);
+        auto response = std::make_unique<MockRestResponse>();
+        EXPECT_CALL(*response, StatusCode)
+            .WillRepeatedly(Return(HttpStatusCode::kOk));
+        EXPECT_CALL(*response, Headers).Times(AtLeast(1));
+        EXPECT_CALL(std::move(*response), ExtractPayload).WillOnce([] {
+          return MakeMockHttpPayloadSuccess(MockContents());
+        });
+        return std::unique_ptr<RestResponse>(std::move(response));
+      });
+
+  auto constexpr kUrl = "https://storage.googleapis.com/storage/v1/b/my-bucket";
+  RestRequest request(kUrl);
+
+  auto client = MakeTracingRestClient(std::move(impl));
+  rest_internal::RestContext context;
+  auto r = client->Post(context, request, PostPayloadType{});
+  ASSERT_STATUS_OK(r);
+  auto response = *std::move(r);
+  ASSERT_THAT(response, NotNull());
+  EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
+  auto contents = ReadAll(std::move(*response).ExtractPayload());
+  EXPECT_THAT(contents, IsOkAndHolds(MockContents()));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      UnorderedElementsAre(
+          AllOf(SpanNamed("HTTP/POST"),
+                SpanHasAttributes(
+                    SpanAttribute<std::string>(sc::kNetTransport,
+                                               sc::NetTransportValues::kIpTcp),
+                    SpanAttribute<std::string>(sc::kHttpMethod, "POST"),
+                    SpanAttribute<std::string>(sc::kHttpUrl, kUrl),
+                    SpanAttribute<std::int64_t>("curl.namelookup_time", 12345),
+                    SpanAttribute<std::int64_t>("curl.connect_time", 23456),
+                    SpanAttribute<std::int64_t>("curl.appconnect_time", 34567),
+                    SpanAttribute<std::string>(sc::kNetPeerName, "192.168.1.1"),
+                    SpanAttribute<std::int32_t>(sc::kNetPeerPort, 443),
+                    SpanAttribute<std::string>(sc::kNetHostName, "127.0.0.1"),
+                    SpanAttribute<std::int32_t>(sc::kNetHostPort, 32000))),
+          SpanNamed("Read"), SpanNamed("Read")));
 }
 
 }  // namespace
