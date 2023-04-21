@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/grpc_plugin.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -119,6 +120,12 @@ TEST_F(GrpcClientTest, DefaultOptionsGrpcEndpointNoEnv) {
       EXPECT_EQ(actual.get<EndpointOption>(), expected);
     }
   }
+}
+
+TEST_F(GrpcClientTest, DefaultOptionsUploadBuffer) {
+  auto const actual =
+      DefaultOptionsGrpc(Options{}).get<storage::UploadBufferSizeOption>();
+  EXPECT_GE(actual, 32 * 1024 * 1024L);
 }
 
 TEST_F(GrpcClientTest, QueryResumableUpload) {
