@@ -79,7 +79,7 @@ StatusOr<nlohmann::json> GetDiscoveryDoc(std::string const& url) {
 }  // namespace
 
 StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
-    nlohmann::json const& discovery_doc) {
+    DiscoveryDocumentProperties const&, nlohmann::json const& discovery_doc) {
   std::map<std::string, DiscoveryTypeVertex> types;
   if (!discovery_doc.contains("schemas")) {
     return internal::InvalidArgumentError(
@@ -121,14 +121,17 @@ StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
 }
 
 std::map<std::string, DiscoveryResource> ExtractResources(
-    nlohmann::json const& discovery_doc, std::string const& default_hostname,
-    std::string const& base_path) {
+    DiscoveryDocumentProperties const& document_properties,
+    nlohmann::json const& discovery_doc) {
   if (!discovery_doc.contains("resources")) return {};
   std::map<std::string, DiscoveryResource> resources;
   auto const& resources_json = discovery_doc.find("resources");
   for (auto r = resources_json->begin(); r != resources_json->end(); ++r) {
-    resources.emplace(r.key(), DiscoveryResource{r.key(), default_hostname,
-                                                 base_path, r.value()});
+    std::string resource_name = r.key();
+    resources.emplace(
+        resource_name,
+        DiscoveryResource{resource_name, document_properties.default_hostname,
+                          document_properties.base_path, r.value()});
   }
   return resources;
 }
@@ -260,15 +263,18 @@ Status ProcessMethodRequestsAndResponses(
 
 std::vector<DiscoveryFile> CreateFilesFromResources(
     std::map<std::string, DiscoveryResource> const& resources,
-    std::string const& product_name, std::string const& version,
+    DiscoveryDocumentProperties const& document_properties,
     std::string const& output_path) {
   std::vector<DiscoveryFile> files;
   files.reserve(resources.size());
   for (auto const& r : resources) {
     files.push_back(DiscoveryFile{
-        &r.second, r.second.FormatFilePath(product_name, version, output_path),
-        r.second.FormatPackageName(product_name, version), version,
-        r.second.GetRequestTypesList()}
+        &r.second,
+        r.second.FormatFilePath(document_properties.product_name,
+                                document_properties.version, output_path),
+        r.second.FormatPackageName(document_properties.product_name,
+                                   document_properties.version),
+        document_properties.version, r.second.GetRequestTypesList()}
                         .AddImportPath("/google/cloud/$product_name$/$version$/"
                                        "internal/common.proto"));
   }
@@ -278,10 +284,10 @@ std::vector<DiscoveryFile> CreateFilesFromResources(
 std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
     std::map<std::string, DiscoveryResource> const& resources,
     std::map<std::string, DiscoveryTypeVertex> const& types,
-    std::string const& product_name, std::string const& version,
+    DiscoveryDocumentProperties const& document_properties,
     std::string const& output_path) {
   auto files =
-      CreateFilesFromResources(resources, product_name, version, output_path);
+      CreateFilesFromResources(resources, document_properties, output_path);
 
   // TODO(#11190): For the first phase of implementation, we create one proto
   // per resource and its request types. For the remainder of the types, we
@@ -299,9 +305,12 @@ std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
       nullptr,
       absl::StrCat(output_path,
                    absl::StrFormat("/google/cloud/%s/%s/internal/common.proto",
-                                   product_name, version)),
-      absl::StrFormat("google.cloud.cpp.%s.%s", product_name, version), version,
-      std::move(common_types));
+                                   document_properties.product_name,
+                                   document_properties.version)),
+      absl::StrFormat("google.cloud.cpp.%s.%s",
+                      document_properties.product_name,
+                      document_properties.version),
+      document_properties.version, std::move(common_types));
   return files;
 }
 

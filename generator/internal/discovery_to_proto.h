@@ -27,16 +27,24 @@ namespace google {
 namespace cloud {
 namespace generator_internal {
 
+struct DiscoveryDocumentProperties {
+  std::string base_path;
+  std::string default_hostname;
+  std::string product_name;
+  std::string version;
+};
+
 // Creates a DiscoveryTypeVertex for every schema object defined in the
 // Discovery Document.
 StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
+    DiscoveryDocumentProperties const& document_properties,
     nlohmann::json const& discovery_doc);
 
 // Creates a DiscoveryResource for every resource defined in the Discovery
 // Document.
 std::map<std::string, DiscoveryResource> ExtractResources(
-    nlohmann::json const& discovery_doc, std::string const& default_hostname,
-    std::string const& base_path);
+    DiscoveryDocumentProperties const& document_properties,
+    nlohmann::json const& discovery_doc);
 
 // Determines the name of the response type for each method and verifies it
 // exists in the collection of DiscoveryTypeVertex objects.
@@ -58,7 +66,7 @@ Status ProcessMethodRequestsAndResponses(
 // Creates a DiscoveryFile object for each DiscoveryResource in resources.
 std::vector<DiscoveryFile> CreateFilesFromResources(
     std::map<std::string, DiscoveryResource> const& resources,
-    std::string const& product_name, std::string const& version,
+    DiscoveryDocumentProperties const& document_properties,
     std::string const& output_path);
 
 // Creates a DiscoveryFile object for each resource and each group of
@@ -66,7 +74,7 @@ std::vector<DiscoveryFile> CreateFilesFromResources(
 std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
     std::map<std::string, DiscoveryResource> const& resources,
     std::map<std::string, DiscoveryTypeVertex> const& types,
-    std::string const& product_name, std::string const& version,
+    DiscoveryDocumentProperties const& document_properties,
     std::string const& output_path);
 
 Status GenerateProtosFromDiscoveryDoc(std::string const& url,
