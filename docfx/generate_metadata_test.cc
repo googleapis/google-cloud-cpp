@@ -28,6 +28,20 @@ TEST(GenerateMetadata, Basic) {
       {"language", "cpp"},
       {"name", "test-only-library"},
       {"version", "test-only-version"},
+      {"xrefs", {"devsite://cpp/common"}},
+  };
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(GenerateMetadata, Common) {
+  auto const config =
+      Config{"test-only-input-filename", "cloud", "test-only-version"};
+  auto const generated = GenerateMetadata(config);
+  auto const actual = nlohmann::json::parse(generated);
+  auto const expected = nlohmann::json{
+      {"language", "cpp"},
+      {"name", "common"},
+      {"version", "test-only-version"},
   };
   EXPECT_EQ(expected, actual);
 }

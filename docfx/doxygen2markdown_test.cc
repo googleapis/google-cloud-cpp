@@ -380,12 +380,13 @@ TEST(Doxygen2Markdown, RefExternal) {
   pugi::xml_document doc;
   doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
-        <ref id="test-node" external="https://example.com">Reference Text</ref>
+        <ref id="test-node" external="/workspace/google/cloud/cloud.tag" refid="classgoogle_1_1cloud_1_1StatusOr">Reference Text</ref>
     </doxygen>)xml");
   auto selected = doc.select_node("//*[@id='test-node']");
   std::ostringstream os;
   ASSERT_TRUE(AppendIfRef(os, {}, selected.node()));
-  EXPECT_EQ("[Reference Text](https://example.com)", os.str());
+  EXPECT_EQ("[Reference Text](xref:classgoogle_1_1cloud_1_1StatusOr)",
+            os.str());
 }
 
 TEST(Doxygen2Markdown, RefInternal) {
@@ -720,7 +721,7 @@ TEST(Doxygen2Markdown, ParagraphTable) {
   auto constexpr kExpected = R"md(
 
 
-| Environment Variable | [Options](/workspace/cmake-out/google/cloud/cloud.tag) setting |
+| Environment Variable | [Options](xref:classgoogle_1_1cloud_1_1Options) setting |
 | ---- | ---- |
 | `SPANNER_OPTIMIZER_VERSION` | [`QueryOptimizerVersionOption`](xref:structgoogle_1_1cloud_1_1spanner_1_1QueryOptimizerVersionOption) |
 | `SPANNER_OPTIMIZER_STATISTICS_PACKAGE` | [`QueryOptimizerStatisticsPackageOption`](xref:structgoogle_1_1cloud_1_1spanner_1_1QueryOptimizerStatisticsPackageOption) With another paragraph |)md";

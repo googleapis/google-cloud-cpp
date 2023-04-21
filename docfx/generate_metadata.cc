@@ -18,11 +18,14 @@
 namespace docfx {
 
 std::string GenerateMetadata(docfx::Config const& config) {
-  auto const json = nlohmann::json{
+  auto json = nlohmann::json{
       {"language", "cpp"},
       {"version", config.version},
-      {"name", config.library},
+      {"name", config.library == "cloud" ? "common" : config.library},
   };
+  if (config.library != "cloud") {
+    json["xrefs"] = std::vector<std::string>{"devsite://cpp/common"};
+  }
   return json.dump(4) + "\n";
 }
 
