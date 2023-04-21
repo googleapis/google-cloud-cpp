@@ -56,6 +56,7 @@ add_library(
     v2/minimal/internal/job_rest_stub_factory.cc
     v2/minimal/internal/job_rest_stub_factory.h
     v2/minimal/internal/job_retry_policy.h
+    v2/minimal/internal/log_wrapper.h
     v2/minimal/internal/rest_stub_utils.h)
 target_include_directories(
     google_cloud_cpp_bigquery_rest
