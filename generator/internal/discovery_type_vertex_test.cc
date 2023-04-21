@@ -135,6 +135,7 @@ struct DetermineTypesSuccess {
   std::string expected_name;
   bool expected_properties_is_null;
   bool expected_is_map;
+  bool expected_compare_package_name;
 };
 
 class DiscoveryTypeVertexSuccessTest
@@ -151,43 +152,48 @@ TEST_P(DiscoveryTypeVertexSuccessTest, DetermineTypesAndSynthesisSuccess) {
   EXPECT_THAT((result->properties == nullptr),
               Eq(GetParam().expected_properties_is_null));
   EXPECT_THAT(result->is_map, Eq(GetParam().expected_is_map));
+  EXPECT_THAT(result->compare_package_name,
+              Eq(GetParam().expected_compare_package_name));
 }
 
 INSTANTIATE_TEST_SUITE_P(
     DetermineTypesSuccess, DiscoveryTypeVertexSuccessTest,
     testing::Values(
-        DetermineTypesSuccess{R"""({"$ref":"Foo"})""", "Foo", true, false},
-        DetermineTypesSuccess{R"""({"type":"string"})""", "string", true,
+        DetermineTypesSuccess{R"""({"$ref":"Foo"})""", "Foo", true, false,
+                              true},
+        DetermineTypesSuccess{R"""({"type":"string"})""", "string", true, false,
                               false},
-        DetermineTypesSuccess{R"""({"type":"boolean"})""", "bool", true, false},
-        DetermineTypesSuccess{R"""({"type":"integer"})""", "int32", true,
+        DetermineTypesSuccess{R"""({"type":"boolean"})""", "bool", true, false,
+                              false},
+        DetermineTypesSuccess{R"""({"type":"integer"})""", "int32", true, false,
                               false},
         DetermineTypesSuccess{R"""({"type":"integer","format":"uint8"})""",
-                              "uint8", true, false},
-        DetermineTypesSuccess{R"""({"type":"number"})""", "float", true, false},
+                              "uint8", true, false, false},
+        DetermineTypesSuccess{R"""({"type":"number"})""", "float", true, false,
+                              false},
         DetermineTypesSuccess{R"""({"type":"number","format":"double"})""",
-                              "double", true, false},
-        DetermineTypesSuccess{R"""({"type":"integer"})""", "int32", true,
+                              "double", true, false, false},
+        DetermineTypesSuccess{R"""({"type":"integer"})""", "int32", true, false,
                               false},
         DetermineTypesSuccess{R"""({"type":"array","items":{"$ref":"Foo"}})""",
-                              "Foo", true, false},
+                              "Foo", true, false, true},
         DetermineTypesSuccess{
             R"""({"type":"array","items":{"type":"string"}})""", "string", true,
-            false},
+            false, false},
         DetermineTypesSuccess{
             R"""({"type":"array","items":{"type":"object", "properties":{}}})""",
-            "TestFieldItem", false, false},
+            "TestFieldItem", false, false, false},
         DetermineTypesSuccess{R"""({"type":"object","properties":{}})""",
-                              "TestField", false, false},
+                              "TestField", false, false, false},
         DetermineTypesSuccess{
             R"""({"type":"object","additionalProperties":{"$ref":"Foo"}})""",
-            "Foo", true, true},
+            "Foo", true, true, true},
         DetermineTypesSuccess{
             R"""({"type":"object","additionalProperties":{"type":"string"}})""",
-            "string", true, true},
+            "string", true, true, false},
         DetermineTypesSuccess{
             R"""({"type":"object","additionalProperties":{"type":"object", "properties":{}}})""",
-            "TestFieldItem", false, true}));
+            "TestFieldItem", false, true, false}));
 
 struct DetermineTypesError {
   std::string json;
@@ -314,9 +320,10 @@ TEST(DiscoveryTypeVertexTest, JsonToProtobufScalarTypes) {
 
   auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  DiscoveryTypeVertex t("TestSchema", json);
-
-  auto result = t.JsonToProtobufMessage();
+  DiscoveryTypeVertex t("TestSchema", "test.package", json);
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}});
+  auto result = t.JsonToProtobufMessage(types, "test.package");
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(*result, Eq(kExpectedProto));
 }
@@ -379,9 +386,10 @@ TEST(DiscoveryTypeVertexTest, JsonToProtobufMapType) {
 
   auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  DiscoveryTypeVertex t("TestSchema", json);
-
-  auto result = t.JsonToProtobufMessage();
+  DiscoveryTypeVertex t("TestSchema", "test.package", json);
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}});
+  auto result = t.JsonToProtobufMessage(types, "test.package");
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(*result, Eq(kExpectedProto));
 }
@@ -504,14 +512,15 @@ TEST(DiscoveryTypeVertexTest, JsonToProtobufArrayTypes) {
 
   auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  DiscoveryTypeVertex t("TestSchema", json);
-
-  auto result = t.JsonToProtobufMessage();
+  DiscoveryTypeVertex t("TestSchema", "test.package", json);
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}});
+  auto result = t.JsonToProtobufMessage(types, "test.package");
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(*result, Eq(kExpectedProto));
 }
 
-TEST(DiscoveryTypeVertex, JsonToProtobufMessageNoDescription) {
+TEST(DiscoveryTypeVertexTest, JsonToProtobufMessageNoDescription) {
   auto constexpr kSchemaJson = R"""(
 {
   "type": "object",
@@ -594,7 +603,7 @@ TEST(DiscoveryTypeVertex, JsonToProtobufMessageNoDescription) {
     optional string nested_field1 = 1;
 
     // Description for nestedField2.
-    optional Bar nested_field2 = 2;
+    optional other.package.Bar nested_field2 = 2;
   }
 
   // Description for nestedTypeField.
@@ -607,14 +616,16 @@ TEST(DiscoveryTypeVertex, JsonToProtobufMessageNoDescription) {
 
   auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  DiscoveryTypeVertex t("TestSchema", json);
-
-  auto result = t.JsonToProtobufMessage();
+  DiscoveryTypeVertex t("TestSchema", "test.package", json);
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}});
+  types.emplace("Bar", DiscoveryTypeVertex{"Bar", "other.package", {}});
+  auto result = t.JsonToProtobufMessage(types, "test.package");
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(*result, Eq(kExpectedProto));
 }
 
-TEST(DiscoveryTypeVertex, JsonToProtobufMessageWithDescription) {
+TEST(DiscoveryTypeVertexTest, JsonToProtobufMessageWithDescription) {
   auto constexpr kSchemaJson = R"""(
 {
   "description": "Description of the message.",
@@ -638,9 +649,10 @@ message TestSchema {
 
   auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  DiscoveryTypeVertex t("TestSchema", json);
-
-  auto result = t.JsonToProtobufMessage();
+  DiscoveryTypeVertex t("TestSchema", "test.package", json);
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "test.package", {}});
+  auto result = t.JsonToProtobufMessage(types, "test.package");
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(*result, Eq(kExpectedProto));
 }

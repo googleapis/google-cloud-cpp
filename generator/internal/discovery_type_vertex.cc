@@ -38,8 +38,12 @@ absl::optional<std::string> CheckForScalarType(nlohmann::json const& j) {
 
 DiscoveryTypeVertex::DiscoveryTypeVertex() : json_("") {}
 
-DiscoveryTypeVertex::DiscoveryTypeVertex(std::string name, nlohmann::json json)
-    : name_(std::move(name)), json_(std::move(json)) {}
+DiscoveryTypeVertex::DiscoveryTypeVertex(std::string name,
+                                         std::string package_name,
+                                         nlohmann::json json)
+    : name_(std::move(name)),
+      package_name_(std::move(package_name)),
+      json_(std::move(json)) {}
 
 bool DiscoveryTypeVertex::IsSynthesizedRequestType() const {
   return json_.value("synthesized_request", false);
@@ -70,8 +74,10 @@ StatusOr<DiscoveryTypeVertex::TypeInfo>
 DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
                                                std::string const& field_name) {
   nlohmann::json const* properties_for_synthesis = nullptr;
+  bool compare_package_name = false;
   if (v.contains("$ref"))
-    return TypeInfo{std::string(v["$ref"]), properties_for_synthesis, false};
+    return TypeInfo{std::string(v["$ref"]), true, properties_for_synthesis,
+                    false};
   if (!v.contains("type")) {
     return internal::InvalidArgumentError(
         absl::StrFormat("field: %s has neither $ref nor type.", field_name));
@@ -80,7 +86,8 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
   std::string type = v["type"];
   auto scalar_type = CheckForScalarType(v);
   if (scalar_type) {
-    return TypeInfo{*scalar_type, properties_for_synthesis, false};
+    return TypeInfo{*scalar_type, compare_package_name,
+                    properties_for_synthesis, false};
   }
 
   if (type == "object" &&
@@ -94,7 +101,7 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
   if (type == "object" && v.contains("properties")) {
     // Synthesize nested type for this struct.
     type = CapitalizeFirstLetter(field_name);
-    return TypeInfo{type, &v, false};
+    return TypeInfo{type, compare_package_name, &v, false};
   }
 
   if (type == "object" && v.contains("additionalProperties")) {
@@ -102,6 +109,7 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
     auto const& additional_properties = v["additionalProperties"];
     if (additional_properties.contains("$ref")) {
       type = std::string(additional_properties["$ref"]);
+      compare_package_name = true;
     } else if (additional_properties.contains("type")) {
       std::string map_type = additional_properties["type"];
       scalar_type = CheckForScalarType(additional_properties);
@@ -120,7 +128,7 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
       return internal::InvalidArgumentError(absl::StrFormat(
           "field: %s is a map with neither $ref nor type.", field_name));
     }
-    return TypeInfo{type, properties_for_synthesis, true};
+    return TypeInfo{type, compare_package_name, properties_for_synthesis, true};
   }
 
   if (type == "array") {
@@ -131,6 +139,7 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
     auto const& items = v["items"];
     if (items.contains("$ref")) {
       type = items["$ref"];
+      compare_package_name = true;
     } else if (items.contains("type")) {
       type = items["type"];
       scalar_type = CheckForScalarType(items);
@@ -139,7 +148,7 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
       } else if (type == "object" && items.contains("properties")) {
         // Synthesize a nested type for this array.
         type = CapitalizeFirstLetter(field_name + "Item");
-        return TypeInfo{type, &items, false};
+        return TypeInfo{type, compare_package_name, &items, false};
       } else {
         return internal::InvalidArgumentError(absl::StrFormat(
             "field: %s unknown type: %s for array field.", field_name, type));
@@ -149,7 +158,8 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
           "field: %s is array with items having neither $ref nor type.",
           field_name));
     }
-    return TypeInfo{type, properties_for_synthesis, false};
+    return TypeInfo{type, compare_package_name, properties_for_synthesis,
+                    false};
   }
 
   return internal::InvalidArgumentError(
@@ -159,13 +169,15 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
 auto constexpr kMaxRecursionDepth = 32;
 // NOLINTNEXTLINE(misc-no-recursion)
 StatusOr<std::string> DiscoveryTypeVertex::FormatMessage(
-    std::string const& name, nlohmann::json const& json,
-    int indent_level) const {
+    std::map<std::string, DiscoveryTypeVertex> const& types,
+    std::string const& name, std::string const& file_package_name,
+    nlohmann::json const& json, int indent_level) const {
   if (indent_level > kMaxRecursionDepth) {
     GCP_LOG(FATAL) << __func__ << " exceeded kMaxRecursionDepth";
   }
   std::string indent(indent_level * 2, ' ');
-  auto lines = FormatProperties(name, json, indent_level + 1);
+  auto lines =
+      FormatProperties(types, name, file_package_name, json, indent_level + 1);
   if (!lines) return std::move(lines).status();
   return absl::StrCat(indent, absl::StrFormat("message %s {\n", name),
                       absl::StrJoin(*lines, "\n\n"), "\n", indent, "}");
@@ -173,8 +185,9 @@ StatusOr<std::string> DiscoveryTypeVertex::FormatMessage(
 
 // NOLINTNEXTLINE(misc-no-recursion)
 StatusOr<std::vector<std::string>> DiscoveryTypeVertex::FormatProperties(
-    std::string const& message_name, nlohmann::json const& json,
-    int indent_level) const {
+    std::map<std::string, DiscoveryTypeVertex> const& types,
+    std::string const& message_name, std::string const& file_package_name,
+    nlohmann::json const& json, int indent_level) const {
   if (indent_level > kMaxRecursionDepth) {
     GCP_LOG(FATAL) << __func__ << " exceeded kMaxRecursionDepth";
   }
@@ -188,10 +201,11 @@ StatusOr<std::vector<std::string>> DiscoveryTypeVertex::FormatProperties(
     auto type_and_synthesize = DetermineTypeAndSynthesis(v, field_name);
     if (!type_and_synthesize) return std::move(type_and_synthesize).status();
 
-    std::string type = type_and_synthesize->name;
+    std::string type_name = type_and_synthesize->name;
     if (type_and_synthesize->properties) {
       auto result =
-          FormatMessage(type, *type_and_synthesize->properties, indent_level);
+          FormatMessage(types, type_name, file_package_name,
+                        *type_and_synthesize->properties, indent_level);
       if (!result) return std::move(result).status();
       text.push_back(*std::move(result));
     }
@@ -221,15 +235,26 @@ StatusOr<std::vector<std::string>> DiscoveryTypeVertex::FormatProperties(
 
     field_name = CamelCaseToSnakeCase(field_name);
     auto field_number_status =
-        GetFieldNumber(message_name, field_name, type, field_number);
+        GetFieldNumber(message_name, field_name, type_name, field_number);
     if (!field_number_status) return std::move(field_number_status).status();
     field_number = *std::move(field_number_status);
-    if (type_and_synthesize->is_map) {
-      type = absl::StrFormat("map<string, %s>", type);
+    if (type_and_synthesize->compare_package_name) {
+      auto iter = types.find(type_and_synthesize->name);
+      if (iter == types.end()) {
+        return internal::InvalidArgumentError(absl::StrFormat(
+            "unable to find type=%s", type_and_synthesize->name));
+      }
+      if (iter->second.package_name() != package_name_) {
+        type_name = absl::StrCat(iter->second.package_name(), ".", type_name);
+      }
     }
-    text.push_back(absl::StrFormat(
-        "%s%s%s%s %s = %d%s;", description, indent, DetermineIntroducer(v),
-        type, field_name, field_number, FormatFieldOptions(field_name, v)));
+    if (type_and_synthesize->is_map) {
+      type_name = absl::StrFormat("map<string, %s>", type_name);
+    }
+    text.push_back(absl::StrFormat("%s%s%s%s %s = %d%s;", description, indent,
+                                   DetermineIntroducer(v), type_name,
+                                   field_name, field_number,
+                                   FormatFieldOptions(field_name, v)));
     ++field_number;
   }
 
@@ -270,7 +295,9 @@ StatusOr<int> DiscoveryTypeVertex::GetFieldNumber(std::string const&,
   return field_number;
 }
 
-StatusOr<std::string> DiscoveryTypeVertex::JsonToProtobufMessage() const {
+StatusOr<std::string> DiscoveryTypeVertex::JsonToProtobufMessage(
+    std::map<std::string, DiscoveryTypeVertex> const& types,
+    std::string const& file_package_name) const {
   int indent_level = 0;
   std::string proto;
   if (json_.contains("description")) {
@@ -279,7 +306,8 @@ StatusOr<std::string> DiscoveryTypeVertex::JsonToProtobufMessage() const {
         FormatCommentBlock(std::string(json_["description"]), indent_level),
         "\n");
   }
-  auto message = FormatMessage(name_, json_, indent_level);
+  auto message =
+      FormatMessage(types, name_, file_package_name, json_, indent_level);
   if (!message) return std::move(message).status();
   absl::StrAppend(&proto, *message, "\n");
   return proto;
