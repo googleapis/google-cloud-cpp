@@ -459,6 +459,8 @@ class BasicExperiment : public Experiment {
   }
 
  protected:
+  // Note that by bypassing the Client layer we are not instantiating
+  // an `OptionsSpan`, so `CurrentOptions()` will be empty if called.
   virtual std::vector<RowCpuSample> ViaStub(
       Config const& config, int thread_count, int channel_count,
       spanner::Database const& database,

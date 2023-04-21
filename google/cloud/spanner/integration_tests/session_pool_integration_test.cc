@@ -32,6 +32,7 @@ struct SessionPoolFriendForTest {
                            std::shared_ptr<SpannerStub> const& stub,
                            std::map<std::string, std::string> const& labels,
                            std::string const& role, int num_sessions) {
+    internal::OptionsSpan span(session_pool->opts_);
     return session_pool->AsyncBatchCreateSessions(cq, stub, labels, role,
                                                   num_sessions);
   }
@@ -39,12 +40,14 @@ struct SessionPoolFriendForTest {
   static future<Status> AsyncDeleteSession(
       std::shared_ptr<SessionPool> const& session_pool, CompletionQueue& cq,
       std::shared_ptr<SpannerStub> const& stub, std::string session_name) {
+    internal::OptionsSpan span(session_pool->opts_);
     return session_pool->AsyncDeleteSession(cq, stub, std::move(session_name));
   }
 
   static future<StatusOr<google::spanner::v1::ResultSet>> AsyncRefreshSession(
       std::shared_ptr<SessionPool> const& session_pool, CompletionQueue& cq,
       std::shared_ptr<SpannerStub> const& stub, std::string session_name) {
+    internal::OptionsSpan span(session_pool->opts_);
     return session_pool->AsyncRefreshSession(cq, stub, std::move(session_name));
   }
 };

@@ -91,6 +91,22 @@ using SpannerPolicyOptionList =
                SpannerPollingPolicyOption>;
 
 /**
+ * Control "route to leader region" headers.
+ *
+ * Unless this option is present and `false` the client library will send
+ * headers that route the request to the leader region.
+ *
+ * @see https://cloud.google.com/spanner/docs/instance-configurations
+ * for more information on multi-regional spanner instances and the role of
+ * leader regions.
+ *
+ * @ingroup spanner-options
+ */
+struct RouteToLeaderOption {
+  using Type = bool;
+};
+
+/**
  * Option for `google::cloud::Options` to set the database role used for
  * session creation.
  *
@@ -181,23 +197,11 @@ struct SessionPoolLabelsOption {
 /**
  * List of all SessionPool options. Pass to `spanner::MakeConnection()`.
  */
-using SessionPoolOptionList =
-    OptionList<SessionCreatorRoleOption, SessionPoolMinSessionsOption,
-               SessionPoolMaxSessionsPerChannelOption,
-               SessionPoolMaxIdleSessionsOption,
-               SessionPoolActionOnExhaustionOption,
-               SessionPoolKeepAliveIntervalOption, SessionPoolLabelsOption>;
-
-/**
- * Option for `google::cloud::Options` to, when present and false, suppress
- * adding headers to distinguish requests served by the leader v/s non-leader
- * region.
- *
- * @ingroup spanner-options
- */
-struct RouteToLeaderOption {
-  using Type = bool;
-};
+using SessionPoolOptionList = OptionList<
+    RouteToLeaderOption, SessionCreatorRoleOption, SessionPoolMinSessionsOption,
+    SessionPoolMaxSessionsPerChannelOption, SessionPoolMaxIdleSessionsOption,
+    SessionPoolActionOnExhaustionOption, SessionPoolKeepAliveIntervalOption,
+    SessionPoolLabelsOption>;
 
 /**
  * Option for `google::cloud::Options` to set the optimizer version used in an
