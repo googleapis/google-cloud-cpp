@@ -52,7 +52,7 @@ TEST(ExtractTypesFromSchemaTest, Success) {
   auto parsed_json =
       nlohmann::json::parse(kDiscoveryDocWithCorrectSchema, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
-  auto types = ExtractTypesFromSchema(parsed_json);
+  auto types = ExtractTypesFromSchema({}, parsed_json);
   ASSERT_THAT(types, IsOk());
   EXPECT_THAT(*types, UnorderedElementsAre(Key("Foo"), Key("Bar")));
 }
@@ -66,7 +66,7 @@ TEST(ExtractTypesFromSchemaTest, MissingSchema) {
   auto parsed_json =
       nlohmann::json::parse(kDiscoveryDocMissingSchema, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
-  auto types = ExtractTypesFromSchema(parsed_json);
+  auto types = ExtractTypesFromSchema({}, parsed_json);
   EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument,
                               HasSubstr("does not contain schemas element")));
 }
@@ -90,7 +90,7 @@ TEST(ExtractTypesFromSchemaTest, SchemaIdMissing) {
   auto parsed_json =
       nlohmann::json::parse(kDiscoveryDocSchemaIdMissing, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
-  auto types = ExtractTypesFromSchema(parsed_json);
+  auto types = ExtractTypesFromSchema({}, parsed_json);
   EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument,
                               HasSubstr("schema without id")));
   auto const log_lines = log.ExtractLines();
@@ -119,7 +119,7 @@ TEST(ExtractTypesFromSchemaTest, SchemaIdEmpty) {
   auto parsed_json =
       nlohmann::json::parse(kDiscoveryDocSchemaIdEmpty, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
-  auto types = ExtractTypesFromSchema(parsed_json);
+  auto types = ExtractTypesFromSchema({}, parsed_json);
   EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument,
                               HasSubstr("schema without id")));
   auto const log_lines = log.ExtractLines();
@@ -143,7 +143,7 @@ TEST(ExtractTypesFromSchemaTest, SchemaMissingType) {
   auto parsed_json =
       nlohmann::json::parse(kDiscoveryDocWithMissingType, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
-  auto types = ExtractTypesFromSchema(parsed_json);
+  auto types = ExtractTypesFromSchema({}, parsed_json);
   EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument,
                               HasSubstr("contains non object schema")));
   auto const log_lines = log.ExtractLines();
@@ -168,7 +168,7 @@ TEST(ExtractTypesFromSchemaTest, SchemaNonObject) {
   auto parsed_json =
       nlohmann::json::parse(kDiscoveryDocWithNonObjectSchema, nullptr, false);
   ASSERT_TRUE(parsed_json.is_object());
-  auto types = ExtractTypesFromSchema(parsed_json);
+  auto types = ExtractTypesFromSchema({}, parsed_json);
   EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument,
                               HasSubstr("contains non object schema")));
   auto const log_lines = log.ExtractLines();
@@ -178,7 +178,7 @@ TEST(ExtractTypesFromSchemaTest, SchemaNonObject) {
 }
 
 TEST(ExtractResourcesTest, EmptyResources) {
-  auto resources = ExtractResources({}, {}, {});
+  auto resources = ExtractResources({}, {});
   EXPECT_THAT(resources, IsEmpty());
 }
 
@@ -193,7 +193,7 @@ TEST(ExtractResourcesTest, NonEmptyResources) {
 })""";
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
-  auto resources = ExtractResources(resource_json, "", "");
+  auto resources = ExtractResources({}, resource_json);
   EXPECT_THAT(resources,
               UnorderedElementsAre(Key("resource1"), Key("resource2")));
 }
@@ -832,8 +832,8 @@ TEST(CreateFilesFromResourcesTest, NonEmptyResources) {
   ASSERT_TRUE(resource_json.is_object());
   std::map<std::string, DiscoveryResource> resources;
   resources.emplace("foos", DiscoveryResource("foos", "", "", resource_json));
-  auto result =
-      CreateFilesFromResources(resources, "product_name", "version", "tmp");
+  DiscoveryDocumentProperties props{"", "", "product_name", "version"};
+  auto result = CreateFilesFromResources(resources, props, "tmp");
   ASSERT_THAT(result, SizeIs(1));
   EXPECT_THAT(result.front().resource_name(), Eq("foos"));
   EXPECT_THAT(result.front().file_path(),
@@ -844,8 +844,8 @@ TEST(CreateFilesFromResourcesTest, NonEmptyResources) {
 
 TEST(CreateFilesFromResourcesTest, EmptyResources) {
   std::map<std::string, DiscoveryResource> resources;
-  auto result =
-      CreateFilesFromResources(resources, "product_name", "version", "tmp");
+  DiscoveryDocumentProperties props{"", "", "product_name", "version"};
+  auto result = CreateFilesFromResources(resources, props, "tmp");
   EXPECT_THAT(result, IsEmpty());
 }
 
@@ -905,8 +905,9 @@ TEST(AssignResourcesAndTypesToFilesTest,
   ASSERT_TRUE(operation_type_json.is_object());
   types.emplace("Operation",
                 DiscoveryTypeVertex("Operation", operation_type_json));
-  auto result = AssignResourcesAndTypesToFiles(resources, types, "product_name",
-                                               "version", "output_path");
+  DiscoveryDocumentProperties props{"", "", "product_name", "version"};
+  auto result =
+      AssignResourcesAndTypesToFiles(resources, types, props, "output_path");
   ASSERT_THAT(result.size(), Eq(2));
   EXPECT_THAT(
       result[0].file_path(),
