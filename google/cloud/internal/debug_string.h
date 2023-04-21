@@ -19,6 +19,7 @@
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include "absl/strings/string_view.h"
+#include "absl/time/time.h"
 #include "absl/types/optional.h"
 #include <chrono>
 #include <map>
@@ -56,11 +57,25 @@ class DebugFormatter {
       absl::string_view field_name,
       absl::optional<std::chrono::system_clock::time_point> value);
   DebugFormatter& Field(absl::string_view field_name,
+                        std::map<std::string, std::string> const& value);
+  DebugFormatter& Field(absl::string_view field_name,
                         std::multimap<std::string, std::string> const& value);
 
   template <typename T>
   DebugFormatter& Field(absl::string_view field_name, T const& value) {
     absl::StrAppend(&str_, Sep(), field_name, ": ", value);
+    return *this;
+  }
+
+  template <class Rep, class Period = std::ratio<1>>
+  DebugFormatter& Field(absl::string_view field_name,
+                        std::chrono::duration<Rep, Period> value) {
+    absl::StrAppend(&str_, Sep(), field_name, " {");
+    ++indent_;
+    absl::StrAppend(&str_, Sep(), "\"",
+                    absl::FormatDuration(absl::FromChrono(value)), "\"");
+    --indent_;
+    absl::StrAppend(&str_, Sep(), "}");
     return *this;
   }
 

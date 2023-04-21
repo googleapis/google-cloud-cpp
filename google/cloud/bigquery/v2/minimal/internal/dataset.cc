@@ -249,6 +249,8 @@ std::string Access::DebugString(absl::string_view name,
                                 int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .StringField("role", role)
+      .StringField("user_by_email", user_by_email)
+      .StringField("group_by_email", group_by_email)
       .StringField("domain", domain)
       .StringField("special_group", special_group)
       .StringField("iam_member", iam_member)
@@ -310,13 +312,12 @@ std::string Dataset::DebugString(absl::string_view name,
       .StringField("default_collation", default_collation)
       .Field("published", published)
       .Field("is_case_insensitive", is_case_insensitive)
-      .Field("default_table_expiration", default_table_expiration.count())
-      .Field("default_partition_expiration",
-             default_partition_expiration.count())
+      .Field("default_table_expiration", default_table_expiration)
+      .Field("default_partition_expiration", default_partition_expiration)
       .Field("creation_time", creation_time)
       .Field("last_modified_time", last_modified_time)
-      .Field("max_time_travel", max_time_travel.count())
-      .Field("labels_keys", labels)
+      .Field("max_time_travel", max_time_travel)
+      .Field("labels", labels)
       .Field("access", access)
       .Field("tags", tags)
       .SubMessage("dataset_reference", dataset_reference)
@@ -334,10 +335,10 @@ std::string ListFormatDataset::DebugString(absl::string_view name,
       .StringField("kind", kind)
       .StringField("id", id)
       .StringField("friendly_name", friendly_name)
-      .StringField("type", type)
       .StringField("location", location)
-      .Field("labels", labels)
+      .StringField("type", type)
       .SubMessage("dataset_reference", dataset_reference)
+      .Field("labels", labels)
       .Build();
 }
 

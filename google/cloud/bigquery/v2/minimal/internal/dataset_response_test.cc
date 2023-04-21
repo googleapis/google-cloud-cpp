@@ -196,11 +196,11 @@ TEST(GetDatasetResponseTest, DebugString) {
             R"( default_collation: "")"
             R"( published: false)"
             R"( is_case_insensitive: false)"
-            R"( default_table_expiration: 0)"
-            R"( default_partition_expiration: 0)"
+            R"( default_table_expiration { "0" })"
+            R"( default_partition_expiration { "0" })"
             R"( creation_time { "1970-01-01T00:00:00Z" })"
             R"( last_modified_time { "1970-01-01T00:00:00Z" })"
-            R"( max_time_travel: 0)"
+            R"( max_time_travel { "0" })"
             R"( dataset_reference {)"
             R"( project_id: "p-id")"
             R"( dataset_id: "d-id")"
@@ -209,7 +209,8 @@ TEST(GetDatasetResponseTest, DebugString) {
             R"( source_dataset {)"
             R"( project_id: "")"
             R"( dataset_id: "")"
-            R"( } })"
+            R"( })"
+            R"( })"
             R"( external_dataset_reference {)"
             R"( hive_database {)"
             R"( catalog_id: "")"
@@ -219,20 +220,24 @@ TEST(GetDatasetResponseTest, DebugString) {
             R"( access_uri: "")"
             R"( metadata_connection: "")"
             R"( storage_connection: "")"
-            R"( } } })"
+            R"( })"
+            R"( })"
+            R"( })"
             R"( default_rounding_mode {)"
             R"( rounding_mode_value: "")"
             R"( })"
             R"( storage_billing_model {)"
             R"( storage_billing_model_value: "")"
-            R"( } })"
+            R"( })"
+            R"( })"
             R"( http_response {)"
             R"( status_code: 200)"
             R"( http_headers {)"
             R"( key: "header1")"
             R"( value: "value1")"
             R"( })"
-            R"( payload: REDACTED } })");
+            R"( payload: REDACTED })"
+            R"( })");
 
   EXPECT_EQ(response->DebugString("GetDatasetResponse",
                                   TracingOptions{}.SetOptions(
@@ -250,11 +255,11 @@ TEST(GetDatasetResponseTest, DebugString) {
             R"( default_collation: "")"
             R"( published: false)"
             R"( is_case_insensitive: false)"
-            R"( default_table_expiration: 0)"
-            R"( default_partition_expiration: 0)"
+            R"( default_table_expiration { "0" })"
+            R"( default_partition_expiration { "0" })"
             R"( creation_time { "1970-01-01T00:00:00Z" })"
             R"( last_modified_time { "1970-01-01T00:00:00Z" })"
-            R"( max_time_travel: 0)"
+            R"( max_time_travel { "0" })"
             R"( dataset_reference {)"
             R"( project_id: "p-id")"
             R"( dataset_id: "d-id")"
@@ -263,7 +268,8 @@ TEST(GetDatasetResponseTest, DebugString) {
             R"( source_dataset {)"
             R"( project_id: "")"
             R"( dataset_id: "")"
-            R"( } })"
+            R"( })"
+            R"( })"
             R"( external_dataset_reference {)"
             R"( hive_database {)"
             R"( catalog_id: "")"
@@ -273,20 +279,24 @@ TEST(GetDatasetResponseTest, DebugString) {
             R"( access_uri: "")"
             R"( metadata_connection: "")"
             R"( storage_connection: "")"
-            R"( } } })"
+            R"( })"
+            R"( })"
+            R"( })"
             R"( default_rounding_mode {)"
             R"( rounding_mode_value: "")"
             R"( })"
             R"( storage_billing_model {)"
             R"( storage_billing_model_value: "")"
-            R"( } })"
+            R"( })"
+            R"( })"
             R"( http_response {)"
             R"( status_code: 200)"
             R"( http_headers {)"
             R"( key: "header1")"
             R"( value: "value1")"
             R"( })"
-            R"( payload: REDACTED } })");
+            R"( payload: REDACTED })"
+            R"( })");
 
   EXPECT_EQ(
       response->DebugString("GetDatasetResponse",
@@ -304,15 +314,21 @@ TEST(GetDatasetResponseTest, DebugString) {
     default_collation: ""
     published: false
     is_case_insensitive: false
-    default_table_expiration: 0
-    default_partition_expiration: 0
+    default_table_expiration {
+      "0"
+    }
+    default_partition_expiration {
+      "0"
+    }
     creation_time {
       "1970-01-01T00:00:00Z"
     }
     last_modified_time {
       "1970-01-01T00:00:00Z"
     }
-    max_time_travel: 0
+    max_time_travel {
+      "0"
+    }
     dataset_reference {
       project_id: "p-id"
       dataset_id: "d-id"
@@ -384,12 +400,13 @@ TEST(ListDatasetsResponseTest, DebugString) {
             R"( kind: "kind-2")"
             R"( id: "1")"
             R"( friendly_name: "friendly-name")"
-            R"( type: "DEFAULT")"
             R"( location: "loc")"
+            R"( type: "DEFAULT")"
             R"( dataset_reference {)"
             R"( project_id: "p123")"
             R"( dataset_id: "d123")"
-            R"( } })"
+            R"( })"
+            R"( })"
             R"( http_response {)"
             R"( status_code: 200)"
             R"( http_headers {)"
@@ -397,7 +414,8 @@ TEST(ListDatasetsResponseTest, DebugString) {
             R"( value: "value1")"
             R"( })"
             R"( payload: REDACTED)"
-            R"( } })");
+            R"( })"
+            R"( })");
 
   EXPECT_EQ(response->DebugString("ListDatasetsResponse",
                                   TracingOptions{}.SetOptions(
@@ -410,12 +428,13 @@ TEST(ListDatasetsResponseTest, DebugString) {
             R"( kind: "kind-2")"
             R"( id: "1")"
             R"( friendly_name: "friendl...<truncated>...")"
-            R"( type: "DEFAULT")"
             R"( location: "loc")"
+            R"( type: "DEFAULT")"
             R"( dataset_reference {)"
             R"( project_id: "p123")"
             R"( dataset_id: "d123")"
-            R"( } })"
+            R"( })"
+            R"( })"
             R"( http_response {)"
             R"( status_code: 200)"
             R"( http_headers {)"
@@ -423,7 +442,8 @@ TEST(ListDatasetsResponseTest, DebugString) {
             R"( value: "value1")"
             R"( })"
             R"( payload: REDACTED)"
-            R"( } })");
+            R"( })"
+            R"( })");
 
   EXPECT_EQ(
       response->DebugString("ListJobsResponse",
@@ -436,8 +456,8 @@ TEST(ListDatasetsResponseTest, DebugString) {
     kind: "kind-2"
     id: "1"
     friendly_name: "friendly-name"
-    type: "DEFAULT"
     location: "loc"
+    type: "DEFAULT"
     dataset_reference {
       project_id: "p123"
       dataset_id: "d123"

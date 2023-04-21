@@ -60,7 +60,7 @@ GcpTag MakeGcpTag(std::string key, std::string value) {
 }
 
 Dataset MakeDataset() {
-  std::multimap<std::string, std::string> labels;
+  std::map<std::string, std::string> labels;
   labels.insert({"l1", "v1"});
   labels.insert({"l2", "v2"});
 
@@ -242,7 +242,7 @@ std::string MakeListFormatDatasetJsonText() {
 }
 
 ListFormatDataset MakeListFormatDataset() {
-  std::multimap<std::string, std::string> labels;
+  std::map<std::string, std::string> labels;
   labels.insert({"l1", "v1"});
   labels.insert({"l2", "v2"});
 
@@ -332,14 +332,17 @@ TEST(DatasetTest, DatasetDebugString) {
       R"( default_collation: "ddefaultcollation")"
       R"( published: false)"
       R"( is_case_insensitive: true)"
-      R"( default_table_expiration: 0)"
-      R"( default_partition_expiration: 0)"
+      R"( default_table_expiration { "0" })"
+      R"( default_partition_expiration { "0" })"
       R"( creation_time { "1970-01-01T00:00:00Z" })"
       R"( last_modified_time { "1970-01-01T00:00:00Z" })"
-      R"( max_time_travel: 0)"
-      R"( labels_keys { key: "l1" value: "v1" })"
-      R"( labels_keys { key: "l2" value: "v2" })"
-      R"( access { role: "accessrole")"
+      R"( max_time_travel { "0" })"
+      R"( labels { key: "l1" value: "v1" })"
+      R"( labels { key: "l2" value: "v2" })"
+      R"( access {)"
+      R"( role: "accessrole")"
+      R"( user_by_email: "")"
+      R"( group_by_email: "")"
       R"( domain: "")"
       R"( special_group: "")"
       R"( iam_member: "")"
@@ -347,7 +350,8 @@ TEST(DatasetTest, DatasetDebugString) {
       R"( routine { project_id: "p123" dataset_id: "d123" routine_id: "r123" })"
       R"( dataset { dataset { project_id: "p123" dataset_id: "d123" })"
       R"( target_types { target_type_value: "VIEWS" })"
-      R"( } })"
+      R"( })"
+      R"( })"
       R"( tags { tag_key: "t1" tag_value: "t2" })"
       R"( dataset_reference { project_id: "p123" dataset_id: "d123" })"
       R"( linked_dataset_source {)"
@@ -362,11 +366,14 @@ TEST(DatasetTest, DatasetDebugString) {
       R"( access_uri: "")"
       R"( metadata_connection: "")"
       R"( storage_connection: "")"
-      R"( } } })"
+      R"( })"
+      R"( })"
+      R"( })"
       R"( default_rounding_mode {)"
       R"( rounding_mode_value: "ROUND_HALF_EVEN")"
       R"( })"
-      R"( storage_billing_model { storage_billing_model_value: "LOGICAL" } })");
+      R"( storage_billing_model { storage_billing_model_value: "LOGICAL" })"
+      R"( })");
 
   EXPECT_EQ(
       dataset.DebugString(
@@ -384,14 +391,17 @@ TEST(DatasetTest, DatasetDebugString) {
       R"( default_collation: "ddefaul...<truncated>...")"
       R"( published: false)"
       R"( is_case_insensitive: true)"
-      R"( default_table_expiration: 0)"
-      R"( default_partition_expiration: 0)"
+      R"( default_table_expiration { "0" })"
+      R"( default_partition_expiration { "0" })"
       R"( creation_time { "1970-01-01T00:00:00Z" })"
       R"( last_modified_time { "1970-01-01T00:00:00Z" })"
-      R"( max_time_travel: 0)"
-      R"( labels_keys { key: "l1" value: "v1" })"
-      R"( labels_keys { key: "l2" value: "v2" })"
-      R"( access { role: "accessr...<truncated>...")"
+      R"( max_time_travel { "0" })"
+      R"( labels { key: "l1" value: "v1" })"
+      R"( labels { key: "l2" value: "v2" })"
+      R"( access {)"
+      R"( role: "accessr...<truncated>...")"
+      R"( user_by_email: "")"
+      R"( group_by_email: "")"
       R"( domain: "")"
       R"( special_group: "")"
       R"( iam_member: "")"
@@ -399,7 +409,8 @@ TEST(DatasetTest, DatasetDebugString) {
       R"( routine { project_id: "p123" dataset_id: "d123" routine_id: "r123" })"
       R"( dataset { dataset { project_id: "p123" dataset_id: "d123" })"
       R"( target_types { target_type_value: "VIEWS" })"
-      R"( } })"
+      R"( })"
+      R"( })"
       R"( tags { tag_key: "t1" tag_value: "t2" })"
       R"( dataset_reference { project_id: "p123" dataset_id: "d123" })"
       R"( linked_dataset_source {)"
@@ -414,11 +425,14 @@ TEST(DatasetTest, DatasetDebugString) {
       R"( access_uri: "")"
       R"( metadata_connection: "")"
       R"( storage_connection: "")"
-      R"( } } })"
+      R"( })"
+      R"( })"
+      R"( })"
       R"( default_rounding_mode {)"
       R"( rounding_mode_value: "ROUND_H...<truncated>...")"
       R"( })"
-      R"( storage_billing_model { storage_billing_model_value: "LOGICAL" } })");
+      R"( storage_billing_model { storage_billing_model_value: "LOGICAL" })"
+      R"( })");
 
   EXPECT_EQ(dataset.DebugString(
                 "Dataset", TracingOptions{}.SetOptions("single_line_mode=F")),
@@ -434,25 +448,33 @@ TEST(DatasetTest, DatasetDebugString) {
   default_collation: "ddefaultcollation"
   published: false
   is_case_insensitive: true
-  default_table_expiration: 0
-  default_partition_expiration: 0
+  default_table_expiration {
+    "0"
+  }
+  default_partition_expiration {
+    "0"
+  }
   creation_time {
     "1970-01-01T00:00:00Z"
   }
   last_modified_time {
     "1970-01-01T00:00:00Z"
   }
-  max_time_travel: 0
-  labels_keys {
+  max_time_travel {
+    "0"
+  }
+  labels {
     key: "l1"
     value: "v1"
   }
-  labels_keys {
+  labels {
     key: "l2"
     value: "v2"
   }
   access {
     role: "accessrole"
+    user_by_email: ""
+    group_by_email: ""
     domain: ""
     special_group: ""
     iam_member: ""
@@ -514,31 +536,31 @@ TEST(DatasetTest, DatasetDebugString) {
 TEST(DatasetTest, ListFormatDatasetDebugString) {
   auto dataset = MakeListFormatDataset();
 
-  EXPECT_EQ(
-      dataset.DebugString("Dataset", TracingOptions{}),
-      R"(Dataset {)"
-      R"( kind: "dkind")"
-      R"( id: "did")"
-      R"( friendly_name: "dfriendlyname")"
-      R"( type: "DEFAULT")"
-      R"( location: "dlocation")"
-      R"( labels { key: "l1" value: "v1" })"
-      R"( labels { key: "l2" value: "v2" })"
-      R"( dataset_reference { project_id: "p123" dataset_id: "d123" } })");
+  EXPECT_EQ(dataset.DebugString("Dataset", TracingOptions{}),
+            R"(Dataset {)"
+            R"( kind: "dkind")"
+            R"( id: "did")"
+            R"( friendly_name: "dfriendlyname")"
+            R"( location: "dlocation")"
+            R"( type: "DEFAULT")"
+            R"( dataset_reference { project_id: "p123" dataset_id: "d123" })"
+            R"( labels { key: "l1" value: "v1" })"
+            R"( labels { key: "l2" value: "v2" })"
+            R"( })");
 
-  EXPECT_EQ(
-      dataset.DebugString(
-          "Dataset",
-          TracingOptions{}.SetOptions("truncate_string_field_longer_than=7")),
-      R"(Dataset {)"
-      R"( kind: "dkind")"
-      R"( id: "did")"
-      R"( friendly_name: "dfriend...<truncated>...")"
-      R"( type: "DEFAULT")"
-      R"( location: "dlocati...<truncated>...")"
-      R"( labels { key: "l1" value: "v1" })"
-      R"( labels { key: "l2" value: "v2" })"
-      R"( dataset_reference { project_id: "p123" dataset_id: "d123" } })");
+  EXPECT_EQ(dataset.DebugString("Dataset",
+                                TracingOptions{}.SetOptions(
+                                    "truncate_string_field_longer_than=7")),
+            R"(Dataset {)"
+            R"( kind: "dkind")"
+            R"( id: "did")"
+            R"( friendly_name: "dfriend...<truncated>...")"
+            R"( location: "dlocati...<truncated>...")"
+            R"( type: "DEFAULT")"
+            R"( dataset_reference { project_id: "p123" dataset_id: "d123" })"
+            R"( labels { key: "l1" value: "v1" })"
+            R"( labels { key: "l2" value: "v2" })"
+            R"( })");
 
   EXPECT_EQ(dataset.DebugString(
                 "Dataset", TracingOptions{}.SetOptions("single_line_mode=F")),
@@ -546,8 +568,12 @@ TEST(DatasetTest, ListFormatDatasetDebugString) {
   kind: "dkind"
   id: "did"
   friendly_name: "dfriendlyname"
-  type: "DEFAULT"
   location: "dlocation"
+  type: "DEFAULT"
+  dataset_reference {
+    project_id: "p123"
+    dataset_id: "d123"
+  }
   labels {
     key: "l1"
     value: "v1"
@@ -555,10 +581,6 @@ TEST(DatasetTest, ListFormatDatasetDebugString) {
   labels {
     key: "l2"
     value: "v2"
-  }
-  dataset_reference {
-    project_id: "p123"
-    dataset_id: "d123"
   }
 })");
 }
