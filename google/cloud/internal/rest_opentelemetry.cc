@@ -17,6 +17,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/opentelemetry_options.h"
+#include "google/cloud/internal/rest_context.h"
 #include "google/cloud/options.h"
 #include "absl/strings/match.h"
 #include <opentelemetry/context/propagation/global_propagator.h>
@@ -30,6 +31,42 @@ namespace google {
 namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+/**
+ * A [carrier] for RestClient.
+ *
+ * [carrier]:
+ * https://opentelemetry.io/docs/reference/specification/context/api-propagators/#carrier
+ */
+class RestClientCarrier
+    : public opentelemetry::context::propagation::TextMapCarrier {
+ public:
+  explicit RestClientCarrier(RestContext& context) : context_(context) {}
+
+  // Unneeded by clients.
+  opentelemetry::nostd::string_view Get(
+      opentelemetry::nostd::string_view) const noexcept override {
+    return "";
+  }
+
+  void Set(opentelemetry::nostd::string_view key,
+           opentelemetry::nostd::string_view value) noexcept override {
+    context_.AddHeader({key.data(), key.size()}, {value.data(), value.size()});
+  }
+
+ private:
+  RestContext& context_;
+};
+
+}  // namespace
+
+void InjectTraceContext(RestContext& context, Options const& options) {
+  auto propagator = internal::GetTextMapPropagator(options);
+  auto current = opentelemetry::context::RuntimeContext::GetCurrent();
+  RestClientCarrier carrier(context);
+  propagator->Inject(carrier, current);
+}
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanHttp(
     RestRequest const& request, opentelemetry::nostd::string_view method) {
