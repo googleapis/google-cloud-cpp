@@ -16,12 +16,12 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-load(":google_cloud_cpp_opentelemetry_sdk.bzl", "google_cloud_cpp_opentelemetry_sdk_hdrs", "google_cloud_cpp_opentelemetry_sdk_srcs")
+load(":google_cloud_cpp_opentelemetry.bzl", "google_cloud_cpp_opentelemetry_hdrs", "google_cloud_cpp_opentelemetry_srcs")
 
 cc_library(
-    name = "google_cloud_cpp_opentelemetry_sdk",
-    srcs = google_cloud_cpp_opentelemetry_sdk_srcs,
-    hdrs = google_cloud_cpp_opentelemetry_sdk_hdrs,
+    name = "google_cloud_cpp_opentelemetry",
+    srcs = google_cloud_cpp_opentelemetry_srcs,
+    hdrs = google_cloud_cpp_opentelemetry_hdrs,
     visibility = ["//:__pkg__"],
     deps = [
         "//:trace",
@@ -30,15 +30,15 @@ cc_library(
     ],
 )
 
-load(":opentelemetry_sdk_unit_tests.bzl", "opentelemetry_sdk_unit_tests")
+load(":opentelemetry_unit_tests.bzl", "opentelemetry_unit_tests")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
-        ":google_cloud_cpp_opentelemetry_sdk",
+        ":google_cloud_cpp_opentelemetry",
         "//:trace_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
     ],
-) for test in opentelemetry_sdk_unit_tests]
+) for test in opentelemetry_unit_tests]

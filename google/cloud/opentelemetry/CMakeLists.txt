@@ -24,41 +24,40 @@ set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "otel_internal")
 set(DOXYGEN_EXAMPLE_PATH "")
 
 include(GoogleCloudCppDoxygen)
-google_cloud_cpp_doxygen_targets("opentelemetry_sdk" DEPENDS cloud-docs
+google_cloud_cpp_doxygen_targets("opentelemetry" DEPENDS cloud-docs
                                  google-cloud-cpp::trace)
 
 add_library(
-    google_cloud_cpp_opentelemetry_sdk # cmake-format: sort
+    google_cloud_cpp_opentelemetry # cmake-format: sort
     internal/recordable.cc internal/recordable.h trace_exporter.cc
     trace_exporter.h)
-target_link_libraries(google_cloud_cpp_opentelemetry_sdk
+target_link_libraries(google_cloud_cpp_opentelemetry
                       PUBLIC google-cloud-cpp::trace opentelemetry-cpp::trace)
-google_cloud_cpp_add_common_options(google_cloud_cpp_opentelemetry_sdk)
+google_cloud_cpp_add_common_options(google_cloud_cpp_opentelemetry)
 target_include_directories(
-    google_cloud_cpp_opentelemetry_sdk
+    google_cloud_cpp_opentelemetry
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
            $<INSTALL_INTERFACE:include>)
-target_compile_options(google_cloud_cpp_opentelemetry_sdk
+target_compile_options(google_cloud_cpp_opentelemetry
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 set_target_properties(
-    google_cloud_cpp_opentelemetry_sdk
-    PROPERTIES EXPORT_NAME "google-cloud-cpp::experimental-opentelemetry_sdk"
+    google_cloud_cpp_opentelemetry
+    PROPERTIES EXPORT_NAME "google-cloud-cpp::experimental-opentelemetry"
                VERSION ${PROJECT_VERSION}
                SOVERSION ${PROJECT_VERSION_MAJOR})
-add_library(google-cloud-cpp::experimental-opentelemetry_sdk ALIAS
-            google_cloud_cpp_opentelemetry_sdk)
-create_bazel_config(google_cloud_cpp_opentelemetry_sdk YEAR 2023)
+add_library(google-cloud-cpp::experimental-opentelemetry ALIAS
+            google_cloud_cpp_opentelemetry)
+create_bazel_config(google_cloud_cpp_opentelemetry YEAR 2023)
 
 # Export the CMake targets to make it easy to create configuration files.
 install(
-    EXPORT google_cloud_cpp_opentelemetry_sdk-targets
-    DESTINATION
-        "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_opentelemetry_sdk"
+    EXPORT google_cloud_cpp_opentelemetry-targets
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_opentelemetry"
     COMPONENT google_cloud_cpp_development)
 
 install(
-    TARGETS google_cloud_cpp_opentelemetry_sdk
-    EXPORT google_cloud_cpp_opentelemetry_sdk-targets
+    TARGETS google_cloud_cpp_opentelemetry
+    EXPORT google_cloud_cpp_opentelemetry-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -69,59 +68,57 @@ install(
 # With CMake-3.12 and higher we could avoid this separate command (and the
 # duplication).
 install(
-    TARGETS google_cloud_cpp_opentelemetry_sdk
+    TARGETS google_cloud_cpp_opentelemetry
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development
             NAMELINK_ONLY
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development)
 
-google_cloud_cpp_install_headers(google_cloud_cpp_opentelemetry_sdk
+google_cloud_cpp_install_headers(google_cloud_cpp_opentelemetry
                                  include/google/cloud/opentelemetry)
 
 google_cloud_cpp_add_pkgconfig(
-    opentelemetry_sdk "OpenTelemetry Exporters for Google Cloud"
+    opentelemetry "OpenTelemetry Exporters for Google Cloud"
     "Provides exporters for sending telemetry to Google Cloud services."
     "google_cloud_cpp_trace")
 
 # Create and install the CMake configuration files.
-configure_file("config.cmake.in"
-               "google_cloud_cpp_opentelemetry_sdk-config.cmake" @ONLY)
+configure_file("config.cmake.in" "google_cloud_cpp_opentelemetry-config.cmake"
+               @ONLY)
 write_basic_package_version_file(
-    "google_cloud_cpp_opentelemetry_sdk-config-version.cmake"
+    "google_cloud_cpp_opentelemetry-config-version.cmake"
     VERSION ${PROJECT_VERSION}
     COMPATIBILITY ExactVersion)
 
 install(
     FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_opentelemetry_sdk-config.cmake"
-        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_opentelemetry_sdk-config-version.cmake"
-    DESTINATION
-        "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_opentelemetry_sdk"
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_opentelemetry-config.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_opentelemetry-config-version.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_opentelemetry"
     COMPONENT google_cloud_cpp_development)
 
 if (NOT BUILD_TESTING)
     return()
 endif ()
 
-set(opentelemetry_sdk_unit_tests
-    # cmake-format: sort
-    internal/recordable_test.cc trace_exporter_test.cc)
+set(opentelemetry_unit_tests # cmake-format: sort
+                             internal/recordable_test.cc trace_exporter_test.cc)
 
-export_list_to_bazel("opentelemetry_sdk_unit_tests.bzl"
-                     "opentelemetry_sdk_unit_tests" YEAR "2023")
+export_list_to_bazel("opentelemetry_unit_tests.bzl" "opentelemetry_unit_tests"
+                     YEAR "2023")
 
 # Create a custom target so we can say "build all the tests"
-add_custom_target(opentelemetry_sdk-tests)
+add_custom_target(opentelemetry-tests)
 
 # Generate a target for each unit test.
-foreach (fname ${opentelemetry_sdk_unit_tests})
+foreach (fname ${opentelemetry_unit_tests})
     google_cloud_cpp_add_executable(target "opentelemetry" "${fname}")
     target_link_libraries(
         ${target}
         PRIVATE google_cloud_cpp_testing
                 google_cloud_cpp_testing_grpc
-                google-cloud-cpp::experimental-opentelemetry_sdk
+                google-cloud-cpp::experimental-opentelemetry
                 google_cloud_cpp_trace_mocks
                 GTest::gmock_main
                 GTest::gmock
@@ -135,5 +132,5 @@ foreach (fname ${opentelemetry_sdk_unit_tests})
         target_compile_options(${target} PRIVATE "/bigobj")
     endif ()
     add_test(NAME ${target} COMMAND ${target})
-    add_dependencies(opentelemetry_sdk-tests ${target})
+    add_dependencies(opentelemetry-tests ${target})
 endforeach ()
