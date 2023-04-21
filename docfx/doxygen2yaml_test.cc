@@ -472,7 +472,14 @@ TEST(Doxygen2Yaml, CompoundToc) {
                            "namespacegoogle_1_1cloud.yml"}));
 }
 
-TEST(Doxygen2Yaml, StartAndEnd) {
+void TestPre(YAML::Emitter& yaml) {
+  yaml << YAML::BeginMap << YAML::Key << "items" << YAML::Value
+       << YAML::BeginSeq;
+}
+
+void TestPost(YAML::Emitter& yaml) { yaml << YAML::EndSeq << YAML::EndMap; }
+
+TEST(Doxygen2Yaml, End) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - 1
@@ -482,9 +489,10 @@ items:
 
   pugi::xml_document doc;
   YAML::Emitter yaml;
-  StartDocFxYaml(yaml);
+  TestPre(yaml);
   YamlContext ctx;
   yaml << 1 << 2 << 3;
+  TestPost(yaml);
   auto const actual = EndDocFxYaml(yaml);
   EXPECT_EQ(actual, kExpected);
 }
@@ -512,11 +520,11 @@ items:
       "1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa']");
   ASSERT_TRUE(selected);
   YAML::Emitter yaml;
-  StartDocFxYaml(yaml);
+  TestPre(yaml);
   YamlContext ctx;
   ctx.parent_id = "namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c";
   ASSERT_TRUE(AppendIfEnumValue(yaml, ctx, selected.node()));
-
+  TestPost(yaml);
   auto const actual = EndDocFxYaml(yaml);
   EXPECT_EQ(actual, kExpected);
 }
@@ -605,11 +613,12 @@ items:
       "namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c"
       "']");
   ASSERT_TRUE(selected);
-  YAML::Emitter yaml;
-  StartDocFxYaml(yaml);
   YamlContext ctx;
   ctx.parent_id = "test-only-parent-id";
+  YAML::Emitter yaml;
+  TestPre(yaml);
   ASSERT_TRUE(AppendIfEnum(yaml, ctx, selected.node()));
+  TestPost(yaml);
   auto const actual = EndDocFxYaml(yaml);
   EXPECT_EQ(actual, kExpected);
 }
@@ -677,10 +686,11 @@ items:
       "']");
   ASSERT_TRUE(selected);
   YAML::Emitter yaml;
-  StartDocFxYaml(yaml);
+  TestPre(yaml);
   YamlContext ctx;
   ctx.parent_id = "test-only-parent-id";
   ASSERT_TRUE(AppendIfTypedef(yaml, ctx, selected.node()));
+  TestPost(yaml);
   auto const actual = EndDocFxYaml(yaml);
   EXPECT_EQ(actual, kExpected);
 }
@@ -752,10 +762,11 @@ items:
       "']");
   ASSERT_TRUE(selected);
   YAML::Emitter yaml;
-  StartDocFxYaml(yaml);
+  TestPre(yaml);
   YamlContext ctx;
   ctx.parent_id = "test-only-parent-id";
   ASSERT_TRUE(AppendIfFriend(yaml, ctx, selected.node()));
+  TestPost(yaml);
   auto const actual = EndDocFxYaml(yaml);
   EXPECT_EQ(actual, kExpected);
 }
@@ -794,10 +805,11 @@ items:
       "']");
   ASSERT_TRUE(selected);
   YAML::Emitter yaml;
-  StartDocFxYaml(yaml);
+  TestPre(yaml);
   YamlContext ctx;
   ctx.parent_id = "test-only-parent-id";
   ASSERT_TRUE(AppendIfVariable(yaml, ctx, selected.node()));
+  TestPost(yaml);
   auto const actual = EndDocFxYaml(yaml);
   EXPECT_EQ(actual, kExpected);
 }
@@ -852,10 +864,11 @@ items:
       "1a760d68ec606a03ab8cc80eea8bd965b3']");
   ASSERT_TRUE(selected);
   YAML::Emitter yaml;
-  StartDocFxYaml(yaml);
+  TestPre(yaml);
   YamlContext ctx;
   ctx.parent_id = "test-only-parent-id";
   ASSERT_TRUE(AppendIfFunction(yaml, ctx, selected.node()));
+  TestPost(yaml);
   auto const actual = EndDocFxYaml(yaml);
   EXPECT_EQ(actual, kExpected);
 }
@@ -892,10 +905,11 @@ items:
   auto selected = doc.select_node("//sectiondef[@kind='public-type']");
   ASSERT_TRUE(selected);
   YAML::Emitter yaml;
-  StartDocFxYaml(yaml);
+  TestPre(yaml);
   YamlContext ctx;
   ctx.parent_id = "test-only-parent-id";
   ASSERT_TRUE(AppendIfSectionDef(yaml, ctx, selected.node()));
+  TestPost(yaml);
   auto const actual = EndDocFxYaml(yaml);
   EXPECT_EQ(actual, kExpected);
 }
@@ -936,10 +950,11 @@ items:
       doc.select_node("//*[@id='namespacegoogle_1_1cloud_1_1mocks']");
   ASSERT_TRUE(selected);
   YAML::Emitter yaml;
-  StartDocFxYaml(yaml);
+  TestPre(yaml);
   YamlContext ctx;
   ctx.parent_id = "test-only-parent-id";
   ASSERT_TRUE(AppendIfNamespace(yaml, ctx, selected.node()));
+  TestPost(yaml);
   auto const actual = EndDocFxYaml(yaml);
   EXPECT_EQ(actual, kExpected);
 }
@@ -968,6 +983,9 @@ items:
           path: google/cloud/status.h
     summary: |
       A runtime error that wraps a [`google::cloud::Status`](xref:classgoogle_1_1cloud_1_1Status).
+    children:
+      - classgoogle_1_1cloud_1_1RuntimeStatusError_1aac6b78160cce6468696ce77eb1276a95
+      - classgoogle_1_1cloud_1_1RuntimeStatusError_1ac30dbdb272a62aee4eb8f9bf45966c7e
   - uid: classgoogle_1_1cloud_1_1RuntimeStatusError_1aac6b78160cce6468696ce77eb1276a95
     name: RuntimeStatusError
     fullName: |
@@ -1026,10 +1044,11 @@ items:
       doc.select_node("//*[@id='classgoogle_1_1cloud_1_1RuntimeStatusError']");
   ASSERT_TRUE(selected);
   YAML::Emitter yaml;
-  StartDocFxYaml(yaml);
+  TestPre(yaml);
   YamlContext ctx;
   ctx.parent_id = "test-only-parent-id";
   ASSERT_TRUE(AppendIfClass(yaml, ctx, selected.node()));
+  TestPost(yaml);
   auto const actual = EndDocFxYaml(yaml);
   EXPECT_EQ(actual, kExpected);
 }
@@ -1058,6 +1077,14 @@ items:
           path: google/cloud/log.h
     summary: |
       Represents a single log message.
+    children:
+      - structgoogle_1_1cloud_1_1LogRecord_1a830f8xx5fe86e1581dddbbb2cd922cbc
+      - structgoogle_1_1cloud_1_1LogRecord_1a8a04caf649e69b55404abf2d3b72d4a6
+      - structgoogle_1_1cloud_1_1LogRecord_1a46bc9a3adab542be80be9671d2ff82e6
+      - structgoogle_1_1cloud_1_1LogRecord_1a29f2cf2bafa97addc548c26xx48a4fe0
+      - structgoogle_1_1cloud_1_1LogRecord_1a9acea199684809e231263a486559f834
+      - structgoogle_1_1cloud_1_1LogRecord_1a949e7b4cb62d085ee13b107e63f83152
+      - structgoogle_1_1cloud_1_1LogRecord_1a95652739567b944a4ffbbb6d31b3f2e0
   - uid: structgoogle_1_1cloud_1_1LogRecord_1a830f8xx5fe86e1581dddbbb2cd922cbc
     name: |
       severity
@@ -1213,10 +1240,11 @@ items:
       doc.select_node("//*[@id='structgoogle_1_1cloud_1_1LogRecord']");
   ASSERT_TRUE(selected);
   YAML::Emitter yaml;
-  StartDocFxYaml(yaml);
+  TestPre(yaml);
   YamlContext ctx;
   ctx.parent_id = "test-only-parent-id";
   ASSERT_TRUE(AppendIfStruct(yaml, ctx, selected.node()));
+  TestPost(yaml);
   auto const actual = EndDocFxYaml(yaml);
   EXPECT_EQ(actual, kExpected);
 }

@@ -31,9 +31,6 @@ std::vector<TocEntry> CompoundToc(Config const& cfg,
 // types.
 std::string Compound2Yaml(Config const& cfg, pugi::xml_node const& node);
 
-// Initialize a YAML Emitter with the preamble elements required by DocFx.
-void StartDocFxYaml(YAML::Emitter& yaml);
-
 // Close the preamble elements required by DocFx and return the file contents.
 std::string EndDocFxYaml(YAML::Emitter& yaml);
 
