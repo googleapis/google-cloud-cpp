@@ -37,6 +37,8 @@ namespace {
 
 namespace rest = google::cloud::rest_internal;
 
+auto constexpr kCommonPackageNameFormat = "google.cloud.cpp.%s.%s";
+
 google::cloud::StatusOr<std::string> GetPage(std::string const& url) {
   std::pair<std::string, std::string> url_pieces =
       absl::StrSplit(url, absl::ByString("com/"));
@@ -79,7 +81,8 @@ StatusOr<nlohmann::json> GetDiscoveryDoc(std::string const& url) {
 }  // namespace
 
 StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
-    DiscoveryDocumentProperties const&, nlohmann::json const& discovery_doc) {
+    DiscoveryDocumentProperties const& document_properties,
+    nlohmann::json const& discovery_doc) {
   std::map<std::string, DiscoveryTypeVertex> types;
   if (!discovery_doc.contains("schemas")) {
     return internal::InvalidArgumentError(
@@ -104,7 +107,12 @@ StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
       schemas_all_type_object = false;
       continue;
     }
-    types.emplace(id, DiscoveryTypeVertex{id, s});
+    types.emplace(id, DiscoveryTypeVertex{
+                          id,
+                          absl::StrFormat(kCommonPackageNameFormat,
+                                          document_properties.product_name,
+                                          document_properties.version),
+                          s});
   }
 
   if (!schemas_all_have_id) {
@@ -219,7 +227,7 @@ StatusOr<DiscoveryTypeVertex> SynthesizeRequestType(
                            std::string((method_json["request"]["$ref"])));
   }
 
-  return DiscoveryTypeVertex(id, synthesized_request);
+  return DiscoveryTypeVertex(id, "", synthesized_request);
 }
 
 Status ProcessMethodRequestsAndResponses(
@@ -307,7 +315,7 @@ std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
                    absl::StrFormat("/google/cloud/%s/%s/internal/common.proto",
                                    document_properties.product_name,
                                    document_properties.version)),
-      absl::StrFormat("google.cloud.cpp.%s.%s",
+      absl::StrFormat(kCommonPackageNameFormat,
                       document_properties.product_name,
                       document_properties.version),
       document_properties.version, std::move(common_types));

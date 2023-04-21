@@ -212,7 +212,7 @@ TEST(DetermineAndVerifyResponseTypeNameTest, ResponseWithRef) {
   ASSERT_TRUE(method_json.is_object());
   DiscoveryResource resource;
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Foo", DiscoveryTypeVertex{"Foo", response_type_json});
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "", response_type_json});
   auto response =
       DetermineAndVerifyResponseTypeName(method_json, resource, types);
   ASSERT_STATUS_OK(response);
@@ -232,7 +232,7 @@ TEST(DetermineAndVerifyResponseTypeNameTest, ResponseMissingRef) {
   ASSERT_TRUE(method_json.is_object());
   DiscoveryResource resource;
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Foo", DiscoveryTypeVertex{"Foo", response_type_json});
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "", response_type_json});
   auto response =
       DetermineAndVerifyResponseTypeName(method_json, resource, types);
   EXPECT_THAT(response, StatusIs(StatusCode::kInvalidArgument,
@@ -249,7 +249,7 @@ TEST(DetermineAndVerifyResponseTypeNameTest, ResponseFieldMissing) {
   ASSERT_TRUE(method_json.is_object());
   DiscoveryResource resource;
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Foo", DiscoveryTypeVertex{"Foo", response_type_json});
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "", response_type_json});
   auto response =
       DetermineAndVerifyResponseTypeName(method_json, resource, types);
   ASSERT_STATUS_OK(response);
@@ -602,7 +602,7 @@ TEST(ProcessMethodRequestsAndResponsesTest, RequestWithOperationResponse) {
   std::map<std::string, DiscoveryResource> resources;
   resources.emplace("foos", DiscoveryResource("foos", "", "", resource_json));
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Operation", DiscoveryTypeVertex("", operation_type_json));
+  types.emplace("Operation", DiscoveryTypeVertex("", "", operation_type_json));
   auto result = ProcessMethodRequestsAndResponses(resources, types);
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(
@@ -676,7 +676,7 @@ TEST(ProcessMethodRequestsAndResponsesTest, ResponseError) {
   std::map<std::string, DiscoveryResource> resources;
   resources.emplace("foos", DiscoveryResource("foos", "", "", resource_json));
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Operation", DiscoveryTypeVertex("", operation_type_json));
+  types.emplace("Operation", DiscoveryTypeVertex("", "", operation_type_json));
   auto result = ProcessMethodRequestsAndResponses(resources, types);
   EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("Missing $ref field in response")));
@@ -728,7 +728,7 @@ TEST(ProcessMethodRequestsAndResponsesTest, RequestError) {
   std::map<std::string, DiscoveryResource> resources;
   resources.emplace("foos", DiscoveryResource("foos", "", "", resource_json));
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Operation", DiscoveryTypeVertex("", operation_type_json));
+  types.emplace("Operation", DiscoveryTypeVertex("", "", operation_type_json));
   auto result = ProcessMethodRequestsAndResponses(resources, types);
   EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("with non $ref request")));
@@ -785,8 +785,9 @@ TEST(ProcessMethodRequestsAndResponsesTest, TypeInsertError) {
   resources.emplace("foos", DiscoveryResource("foos", "", "", resource_json));
   std::map<std::string, DiscoveryTypeVertex> types;
   types.emplace("Operation",
-                DiscoveryTypeVertex("Operation", operation_type_json));
-  types.emplace("Foos.CreateRequest", DiscoveryTypeVertex("", empty_type_json));
+                DiscoveryTypeVertex("Operation", "", operation_type_json));
+  types.emplace("Foos.CreateRequest",
+                DiscoveryTypeVertex("", "", empty_type_json));
   auto result = ProcessMethodRequestsAndResponses(resources, types);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInternal,
@@ -896,15 +897,16 @@ TEST(AssignResourcesAndTypesToFilesTest,
   auto const synthesized_type_json =
       nlohmann::json::parse(kSynthesizedTypeJson, nullptr, false);
   ASSERT_TRUE(synthesized_type_json.is_object());
-  types.emplace("Foos.CreateRequest",
-                DiscoveryTypeVertex("CreateRequest", synthesized_type_json));
+  types.emplace(
+      "Foos.CreateRequest",
+      DiscoveryTypeVertex("CreateRequest", "", synthesized_type_json));
   auto constexpr kOperationTypeJson = R"""({
 })""";
   auto const operation_type_json =
       nlohmann::json::parse(kOperationTypeJson, nullptr, false);
   ASSERT_TRUE(operation_type_json.is_object());
   types.emplace("Operation",
-                DiscoveryTypeVertex("Operation", operation_type_json));
+                DiscoveryTypeVertex("Operation", "", operation_type_json));
   DiscoveryDocumentProperties props{"", "", "product_name", "version"};
   auto result =
       AssignResourcesAndTypesToFiles(resources, types, props, "output_path");

@@ -34,9 +34,11 @@ namespace generator_internal {
 class DiscoveryTypeVertex {
  public:
   DiscoveryTypeVertex();
-  DiscoveryTypeVertex(std::string name, nlohmann::json json);
+  DiscoveryTypeVertex(std::string name, std::string package_name,
+                      nlohmann::json json);
 
   std::string const& name() const { return name_; }
+  std::string const& package_name() const { return package_name_; }
   nlohmann::json const& json() const { return json_; }
 
   bool IsSynthesizedRequestType() const;
@@ -55,6 +57,7 @@ class DiscoveryTypeVertex {
 
   struct TypeInfo {
     std::string name;
+    bool compare_package_name;
     // Non-owning pointer to the properties JSON block of the type to be
     // synthesized.
     nlohmann::json const* properties;
@@ -69,12 +72,15 @@ class DiscoveryTypeVertex {
 
   // Formats the properties of the json into proto message fields.
   StatusOr<std::vector<std::string>> FormatProperties(
-      std::string const& message_name, nlohmann::json const& json,
-      int indent_level) const;
+      std::map<std::string, DiscoveryTypeVertex> const& types,
+      std::string const& message_name, std::string const& file_package_name,
+      nlohmann::json const& json, int indent_level) const;
 
-  StatusOr<std::string> FormatMessage(std::string const& name,
-                                      nlohmann::json const& json,
-                                      int indent_level) const;
+  StatusOr<std::string> FormatMessage(
+      std::map<std::string, DiscoveryTypeVertex> const& types,
+      std::string const& name, std::string const& package_name,
+
+      nlohmann::json const& json, int indent_level) const;
 
   // Formats any field options as indicated by the field_json.
   static std::string FormatFieldOptions(std::string const& field_name,
@@ -87,12 +93,20 @@ class DiscoveryTypeVertex {
                                       int field_number);
 
   // Emits the protobuf message definition for this type.
-  StatusOr<std::string> JsonToProtobufMessage() const;
+  StatusOr<std::string> JsonToProtobufMessage(
+      std::map<std::string, DiscoveryTypeVertex> const& types,
+      std::string const& file_package_name) const;
+
+  // TODO(#11353): remove this overload
+  StatusOr<std::string> JsonToProtobufMessage() const {
+    return JsonToProtobufMessage({}, {});
+  }
 
   std::string DebugString() const;
 
  private:
   std::string name_;
+  std::string package_name_;
   nlohmann::json json_;
   std::set<std::string> needs_;
   std::set<std::string> needed_by_;
