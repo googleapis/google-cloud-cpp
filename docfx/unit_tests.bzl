@@ -19,6 +19,7 @@
 unit_tests = [
     "doxygen2children_test.cc",
     "doxygen2markdown_test.cc",
+    "doxygen2references_test.cc",
     "doxygen2syntax_test.cc",
     "doxygen2toc_test.cc",
     "doxygen2yaml_test.cc",
