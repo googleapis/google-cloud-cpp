@@ -207,7 +207,7 @@ int DefaultGrpcNumChannels(std::string const& endpoint) {
 Options DefaultOptionsGrpc(Options options) {
   using ::google::cloud::internal::GetEnv;
   // Experiments show that gRPC gets better upload throughput when the upload
-  // buffer is larger than 32MiB.
+  // buffer is at least 32MiB.
   auto constexpr kDefaultGrpcUploadBufferSize = 32 * 1024 * 1024L;
   options = google::cloud::internal::MergeOptions(
       std::move(options), Options{}.set<storage::UploadBufferSizeOption>(
