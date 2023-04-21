@@ -16,4 +16,4 @@ include(CMakeFindDependencyMacro)
 find_dependency(google_cloud_cpp_trace)
 find_dependency(opentelemetry-cpp)
 
-include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_opentelemetry_sdk-targets.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_opentelemetry-targets.cmake")

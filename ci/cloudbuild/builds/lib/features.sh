@@ -28,7 +28,6 @@ function features::always_build() {
     # These have hand-crafted code, therefore we always want to build them.
     bigtable
     experimental-bigquery_rest
-    experimental-opentelemetry_sdk
     spanner
     storage
     pubsub
@@ -38,7 +37,8 @@ function features::always_build() {
     bigquery
     iam
     logging
-    # By default, build the library with OpenTelemetry in our CI.
+    # Build our code with OpenTelemetry. This feature includes both the client
+    # library instrumentation, and the GCP exporters.
     experimental-opentelemetry
   )
   printf "%s\n" "${list[@]}" | sort -u
@@ -60,10 +60,10 @@ function features::libraries() {
 function features::list_full() {
   local feature_list
   mapfile -t feature_list < <(features::libraries)
-  feature_list+=(experimental-opentelemetry experimental-opentelemetry_sdk experimental-storage-grpc grafeas)
+  feature_list+=(experimental-opentelemetry experimental-storage-grpc grafeas)
   printf "%s\n" "${feature_list[@]}" | sort -u
 }
 
 function features::list_full_cmake() {
-  echo "__ga_libraries__,__experimental_libraries__,experimental-storage-grpc,experimental-opentelemetry,experimental-opentelemetry_sdk,experimental-bigquery_rest"
+  echo "__ga_libraries__,__experimental_libraries__,experimental-storage-grpc,experimental-opentelemetry,experimental-bigquery_rest"
 }
