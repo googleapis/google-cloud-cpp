@@ -38,6 +38,7 @@ google_cloud_cpp_bigquery_rest_hdrs = [
     "v2/minimal/internal/job_rest_stub.h",
     "v2/minimal/internal/job_rest_stub_factory.h",
     "v2/minimal/internal/job_retry_policy.h",
+    "v2/minimal/internal/log_wrapper.h",
     "v2/minimal/internal/rest_stub_utils.h",
 ]
 
