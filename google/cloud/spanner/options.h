@@ -304,7 +304,7 @@ struct PartitionsMaximumOption {
  * partitions returned from `Client::PartitionRead()` or `PartitionQuery()`.
  *
  * If true, the requests from the subsequent partitioned `Client::Read()`
- * and `Client::ExecuteQuery()` requests will be executed via Spanner
+ * and `Client::ExecuteQuery()` requests will be executed via Spanner-
  * independent compute resources.
  *
  * @ingroup spanner-options
