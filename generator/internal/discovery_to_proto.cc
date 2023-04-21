@@ -79,8 +79,7 @@ StatusOr<nlohmann::json> GetDiscoveryDoc(std::string const& url) {
 }  // namespace
 
 StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
-    DiscoveryDocumentProperties const& document_properties,
-    nlohmann::json const& discovery_doc) {
+    DiscoveryDocumentProperties const&, nlohmann::json const& discovery_doc) {
   std::map<std::string, DiscoveryTypeVertex> types;
   if (!discovery_doc.contains("schemas")) {
     return internal::InvalidArgumentError(
