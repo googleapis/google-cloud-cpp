@@ -218,10 +218,9 @@ struct Dataset {
       std::chrono::milliseconds(0);
   std::chrono::system_clock::time_point creation_time;
   std::chrono::system_clock::time_point last_modified_time;
-  ;
   std::chrono::hours max_time_travel = std::chrono::hours(0);
 
-  std::multimap<std::string, std::string> labels;
+  std::map<std::string, std::string> labels;
   std::vector<Access> access;
   std::vector<GcpTag> tags;
 
@@ -245,7 +244,7 @@ struct ListFormatDataset {
   std::string type;
 
   DatasetReference dataset_reference;
-  std::multimap<std::string, std::string> labels;
+  std::map<std::string, std::string> labels;
 
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},

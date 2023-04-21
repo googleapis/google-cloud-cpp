@@ -15,6 +15,8 @@
 #include "google/cloud/internal/debug_string.h"
 #include "absl/strings/string_view.h"
 #include <gmock/gmock.h>
+#include <chrono>
+#include <map>
 #include <string>
 
 namespace google {
@@ -116,8 +118,20 @@ TEST(DebugFormatter, TimePoint) {
             R"( })");
 }
 
-TEST(DebugFormatter, Multimap) {
-  std::multimap<std::string, std::string> m = {{"k1", "v1"}, {"k2", "v2"}};
+TEST(DebugFormatter, Duration) {
+  auto d = std::chrono::microseconds(123456);
+  EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
+                .Field("field1", d)
+                .Build(),
+            R"(message_name {)"
+            R"( field1 {)"
+            R"( "123.456ms")"
+            R"( })"
+            R"( })");
+}
+
+TEST(DebugFormatter, Map) {
+  std::map<std::string, std::string> m = {{"k1", "v1"}, {"k2", "v2"}};
   EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
                 .Field("field1", m)
                 .Build(),
@@ -128,6 +142,29 @@ TEST(DebugFormatter, Multimap) {
             R"( })"
             R"( field1 {)"
             R"( key: "k2")"
+            R"( value: "v2")"
+            R"( })"
+            R"( })");
+  m.clear();
+  EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
+                .Field("field1", m)
+                .Build(),
+            R"(message_name {)"
+            R"( })");
+}
+
+TEST(DebugFormatter, Multimap) {
+  std::multimap<std::string, std::string> m = {{"k1", "v1"}, {"k1", "v2"}};
+  EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
+                .Field("field1", m)
+                .Build(),
+            R"(message_name {)"
+            R"( field1 {)"
+            R"( key: "k1")"
+            R"( value: "v1")"
+            R"( })"
+            R"( field1 {)"
+            R"( key: "k1")"
             R"( value: "v2")"
             R"( })"
             R"( })");
