@@ -17,6 +17,7 @@
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/rest_request.h"
+#include "google/cloud/options.h"
 #include <opentelemetry/nostd/shared_ptr.h>
 #include <opentelemetry/trace/span.h>
 
@@ -24,6 +25,23 @@ namespace google {
 namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+/**
+ * Propagate trace context for an outbound HTTP request.
+ *
+ * The trace context is added as metadata in the `RestContext`. By
+ * injecting the trace context, we can potentially pick up a client side span
+ * from within Google's servers.
+ *
+ * The format of the metadata is determined by the `TextMapPropagator` used for
+ * the given call. Circa 2023-04, Google expects an `traceparent`
+ * [header].
+ *
+ * @see https://opentelemetry.io/docs/concepts/instrumenting-library/#injecting-context
+ *
+ * [header]: https://www.w3.org/TR/trace-context/#traceparent-header
+ */
+void InjectTraceContext(RestContext& context, Options const& options);
 
 /**
  * Make a span, setting attributes related to HTTP.
