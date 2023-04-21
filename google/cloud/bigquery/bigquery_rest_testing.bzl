@@ -18,6 +18,7 @@
 
 bigquery_rest_testing_hdrs = [
     "v2/minimal/testing/mock_log_backend.h",
+    "v2/minimal/testing/mock_dataset_rest_stub.h",
     "v2/minimal/testing/mock_job_rest_stub.h",
 ]
 
