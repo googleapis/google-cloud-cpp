@@ -12,9 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Implementation of internal interface for Bigquery V2 Job resource.
-
 #include "google/cloud/bigquery/v2/minimal/internal/dataset_rest_stub_factory.h"
+#include "google/cloud/bigquery/v2/minimal/internal/dataset_metadata.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
@@ -37,7 +36,10 @@ std::shared_ptr<DatasetRestStub> CreateDefaultDatasetRestStub(
   std::shared_ptr<DatasetRestStub> stub =
       std::make_shared<DefaultDatasetRestStub>(std::move(curl_rest_client));
 
-  // Yet to be implemented: Metadata and Logging client creation for the stub.
+  stub = std::make_shared<DatasetMetadata>(std::move(stub));
+
+  // Yet to be implemented: Logging client creation for the stub.
+
   return stub;
 }
 
