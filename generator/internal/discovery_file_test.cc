@@ -132,7 +132,7 @@ auto constexpr kGetRequestTypeJson = R"""({
 })""";
 
 TEST(DiscoveryFile, FormatFileWithImport) {
-  // TODO(sdhart): enable this when package PRs are finished.
+  // TODO(#11353): enable this when package PRs are finished.
   GTEST_SKIP();
   auto constexpr kExpectedProto = R"""(// Copyright 2023 Google LLC
 //
@@ -229,7 +229,7 @@ message GetMyResourcesRequest {
 }
 
 TEST(DiscoveryFile, FormatFileWithoutImports) {
-  // TODO(sdhart): enable this when package PRs are finished.
+  // TODO(#11353): enable this when package PRs are finished.
   GTEST_SKIP();
   auto constexpr kExpectedProto = R"""(// Copyright 2023 Google LLC
 //
@@ -323,7 +323,7 @@ message GetMyResourcesRequest {
 }
 
 TEST(DiscoveryFile, FormatFileNoResource) {
-  // TODO(sdhart): enable this when package PRs are finished.
+  // TODO(#11353): enable this when package PRs are finished.
   GTEST_SKIP();
   auto constexpr kExpectedProto = R"""(// Copyright 2023 Google LLC
 //
@@ -497,7 +497,7 @@ TEST(DiscoveryFile, FormatFileResourceScopeError) {
 }
 
 TEST(DiscoveryFile, FormatFileTypeMissingError) {
-  // TODO(sdhart): enable this when package PRs are finished.
+  // TODO(#11353): enable this when package PRs are finished.
   GTEST_SKIP();
   auto constexpr kDoFooRequestMissingTypeJson = R"""({
   "type": "object",

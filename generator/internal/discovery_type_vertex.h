@@ -97,6 +97,7 @@ class DiscoveryTypeVertex {
       std::map<std::string, DiscoveryTypeVertex> const& types,
       std::string const& file_package_name) const;
 
+  // TODO(#11353): remove this overload
   StatusOr<std::string> JsonToProtobufMessage() const {
     return JsonToProtobufMessage({}, {});
   }
