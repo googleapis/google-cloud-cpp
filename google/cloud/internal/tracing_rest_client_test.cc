@@ -167,9 +167,6 @@ TEST(TracingRestClient, HasCloudTraceContext) {
   };
   EXPECT_CALL(*impl, Patch(expected_headers_matcher(), _, _))
       .WillOnce([](auto&, auto const&, auto const&) {
-        // Inject an attribute to the current span, which should be the request
-        // span.
-        auto span = opentelemetry::trace::Tracer::GetCurrentSpan();
         auto response = std::make_unique<MockRestResponse>();
         EXPECT_CALL(*response, StatusCode)
             .WillRepeatedly(Return(HttpStatusCode::kOk));
@@ -223,9 +220,6 @@ TEST(TracingRestClient, WithTraceparent) {
       ::testing::An<std::vector<absl::Span<char const>> const&>();
   EXPECT_CALL(*impl, Post(expected_headers_matcher(), _, disambiguate_overload))
       .WillOnce([](auto&, auto const&, auto const&) {
-        // Inject an attribute to the current span, which should be the request
-        // span.
-        auto span = opentelemetry::trace::Tracer::GetCurrentSpan();
         auto response = std::make_unique<MockRestResponse>();
         EXPECT_CALL(*response, StatusCode)
             .WillRepeatedly(Return(HttpStatusCode::kOk));

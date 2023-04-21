@@ -31,9 +31,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
-// We always inject the CloudTraceContext, these requests are going to GCP where
-// the X-Cloud-Trace-Context header can connect the request with the internal
-// tracing service.
+// We always inject the CloudTraceContext. Typically, these requests are going
+// to GCP where the X-Cloud-Trace-Context header can connect the request with
+// the internal tracing service.
 void InjectCloudTraceContext(RestContext& ctx,
                              opentelemetry::trace::Span const& span) {
   auto context = span.GetContext();
