@@ -71,7 +71,7 @@ std::shared_ptr<GrpcClient> CreateTestClient(
   return GrpcClient::CreateMock(std::move(stub), TestOptions());
 }
 
-TEST_F(GrpcClientTest, DefaultOptionsGrpcChannelCount) {
+TEST(DefaultOptionsGrpc, DefaultOptionsGrpcChannelCount) {
   using ::google::cloud::GrpcNumChannelsOption;
   struct TestCase {
     std::string endpoint;
@@ -98,7 +98,7 @@ TEST_F(GrpcClientTest, DefaultOptionsGrpcChannelCount) {
   }
 }
 
-TEST_F(GrpcClientTest, DefaultOptionsGrpcEndpointNoEnv) {
+TEST(DefaultOptionsGrpc, DefaultOptionsGrpcEndpointNoEnv) {
   auto expected = std::string("storage.googleapis.com");
   auto alternatives = [](std::string const& value) {
     return std::vector<absl::optional<std::string>>{absl::nullopt, value};
@@ -122,10 +122,16 @@ TEST_F(GrpcClientTest, DefaultOptionsGrpcEndpointNoEnv) {
   }
 }
 
-TEST_F(GrpcClientTest, DefaultOptionsUploadBuffer) {
-  auto const actual =
+TEST(DefaultOptionsGrpc, DefaultOptionsUploadBuffer) {
+  auto const with_defaults =
       DefaultOptionsGrpc(Options{}).get<storage::UploadBufferSizeOption>();
-  EXPECT_GE(actual, 32 * 1024 * 1024L);
+  EXPECT_GE(with_defaults, 32 * 1024 * 1024L);
+
+  auto const with_override =
+      DefaultOptionsGrpc(
+          Options{}.set<storage::UploadBufferSizeOption>(256 * 1024))
+          .get<storage::UploadBufferSizeOption>();
+  EXPECT_EQ(with_override, 256 * 1024L);
 }
 
 TEST_F(GrpcClientTest, QueryResumableUpload) {
