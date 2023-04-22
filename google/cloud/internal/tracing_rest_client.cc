@@ -13,6 +13,26 @@
 // limitations under the License.
 
 #include "google/cloud/internal/tracing_rest_client.h"
+
+#ifndef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+namespace google {
+namespace cloud {
+namespace rest_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+std::unique_ptr<RestClient> MakeTracingRestClient(
+    std::unique_ptr<RestClient> client) {
+  return client;
+}
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace rest_internal
+}  // namespace cloud
+}  // namespace google
+
+#else
+
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/rest_opentelemetry.h"
@@ -28,8 +48,6 @@ namespace google {
 namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace {
 
@@ -200,18 +218,14 @@ StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Put(
                          impl_->Put(context, request, payload));
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
 std::unique_ptr<RestClient> MakeTracingRestClient(
     std::unique_ptr<RestClient> client) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_unique<TracingRestClient>(std::move(client));
-#else
-  return client;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
