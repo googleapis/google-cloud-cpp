@@ -29,8 +29,8 @@ google_cloud_cpp_doxygen_targets("opentelemetry" DEPENDS cloud-docs
 
 add_library(
     google_cloud_cpp_opentelemetry # cmake-format: sort
-    internal/recordable.cc internal/recordable.h trace_exporter.cc
-    trace_exporter.h)
+    configure_basic_tracing.cc configure_basic_tracing.h internal/recordable.cc
+    internal/recordable.h trace_exporter.cc trace_exporter.h)
 target_link_libraries(google_cloud_cpp_opentelemetry
                       PUBLIC google-cloud-cpp::trace opentelemetry-cpp::trace)
 google_cloud_cpp_add_common_options(google_cloud_cpp_opentelemetry)
