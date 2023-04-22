@@ -13,26 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/tracing_rest_client.h"
-
-#ifndef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-namespace google {
-namespace cloud {
-namespace rest_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::unique_ptr<RestClient> MakeTracingRestClient(
-    std::unique_ptr<RestClient> client) {
-  return client;
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace rest_internal
-}  // namespace cloud
-}  // namespace google
-
-#else
-
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/rest_opentelemetry.h"
@@ -78,9 +59,10 @@ void InjectCloudTraceContext(RestContext& ctx,
 
 }  // namespace
 
-void ExtractAttributes(RestContext const& context,
-                       StatusOr<std::unique_ptr<RestResponse>> const& value,
-                       opentelemetry::trace::Span& span) {
+void ExtractAttributes(
+    RestContext const& context,
+    StatusOr<std::unique_ptr<RestResponse>> const& request_result,
+    opentelemetry::trace::Span& span) {
   namespace sc = opentelemetry::trace::SemanticConventions;
   if (context.primary_ip_address() && context.primary_port()) {
     span.SetAttribute(sc::kNetPeerName, *context.primary_ip_address());
@@ -93,19 +75,23 @@ void ExtractAttributes(RestContext const& context,
   }
 
   if (context.namelookup_time()) {
-    span.SetAttribute("curl.namelookup_time",
-                      context.namelookup_time()->count());
+    span.SetAttribute(
+        "curl.namelookup_time",
+        static_cast<std::int64_t>(context.namelookup_time()->count()));
   }
   if (context.connect_time()) {
-    span.SetAttribute("curl.connect_time", context.connect_time()->count());
+    span.SetAttribute(
+        "curl.connect_time",
+        static_cast<std::int64_t>(context.connect_time()->count()));
   }
   if (context.appconnect_time()) {
-    span.SetAttribute("curl.appconnect_time",
-                      context.appconnect_time()->count());
+    span.SetAttribute(
+        "curl.appconnect_time",
+        static_cast<std::int64_t>(context.appconnect_time()->count()));
   }
 
-  if (!value) return;
-  auto const& response = *value;
+  if (!request_result) return;
+  auto const& response = *request_result;
   if (!response) return;
   for (auto const& kv : context.headers()) {
     auto const name = "http.request.header." + kv.first;
@@ -221,6 +207,23 @@ StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Put(
 std::unique_ptr<RestClient> MakeTracingRestClient(
     std::unique_ptr<RestClient> client) {
   return std::make_unique<TracingRestClient>(std::move(client));
+}
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace rest_internal
+}  // namespace cloud
+}  // namespace google
+
+#else
+
+namespace google {
+namespace cloud {
+namespace rest_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+std::unique_ptr<RestClient> MakeTracingRestClient(
+    std::unique_ptr<RestClient> client) {
+  return client;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
