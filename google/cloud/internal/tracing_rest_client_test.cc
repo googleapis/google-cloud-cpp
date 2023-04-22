@@ -21,6 +21,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/context/propagation/global_propagator.h>
+#include <opentelemetry/trace/propagation/http_trace_context.h>
 #include <opentelemetry/trace/semantic_conventions.h>
 
 namespace google {
@@ -39,11 +40,15 @@ using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
+using ::testing::_;
 using ::testing::AllOf;
 using ::testing::AtLeast;
+using ::testing::Contains;
 using ::testing::ElementsAreArray;
 using ::testing::Eq;
 using ::testing::NotNull;
+using ::testing::Pair;
+using ::testing::ResultOf;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
 
@@ -148,6 +153,101 @@ TEST(TracingRestClient, HasScope) {
                         SpanHasAttributes(SpanAttribute<std::string>(
                             "test.attribute", "test.value"))),
                   SpanNamed("Read"), SpanNamed("Read")));
+}
+
+TEST(TracingRestClient, HasCloudTraceContext) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto impl = std::make_unique<MockRestClient>();
+  auto expected_headers_matcher = [] {
+    return ResultOf(
+        "headers have x-cloud-trace-context",
+        [](RestContext const& c) { return c.headers(); },
+        Contains(Pair("x-cloud-trace-context", _)));
+  };
+  EXPECT_CALL(*impl, Patch(expected_headers_matcher(), _, _))
+      .WillOnce([](auto&, auto const&, auto const&) {
+        auto response = std::make_unique<MockRestResponse>();
+        EXPECT_CALL(*response, StatusCode)
+            .WillRepeatedly(Return(HttpStatusCode::kOk));
+        EXPECT_CALL(*response, Headers).Times(AtLeast(1));
+        EXPECT_CALL(std::move(*response), ExtractPayload).WillOnce([] {
+          return MakeMockHttpPayloadSuccess(MockContents());
+        });
+        return std::unique_ptr<RestResponse>(std::move(response));
+      });
+
+  auto constexpr kUrl = "https://storage.googleapis.com/storage/v1/b/my-bucket";
+  RestRequest request(kUrl);
+
+  auto client = MakeTracingRestClient(std::move(impl));
+  rest_internal::RestContext context;
+  auto r = client->Patch(context, request, {});
+  ASSERT_STATUS_OK(r);
+  auto response = *std::move(r);
+  ASSERT_THAT(response, NotNull());
+  EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
+  auto contents = ReadAll(std::move(*response).ExtractPayload());
+  EXPECT_THAT(contents, IsOkAndHolds(MockContents()));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans,
+              UnorderedElementsAre(SpanNamed("HTTP/PATCH"), SpanNamed("Read"),
+                                   SpanNamed("Read")));
+}
+
+TEST(TracingRestClient, WithTraceparent) {
+  auto span_catcher = InstallSpanCatcher();
+
+  // Set the global propagator.
+  auto propagator =
+      std::make_shared<opentelemetry::trace::propagation::HttpTraceContext>();
+  opentelemetry::context::propagation::GlobalTextMapPropagator::
+      SetGlobalPropagator(
+          opentelemetry::nostd::shared_ptr<
+              opentelemetry::context::propagation::TextMapPropagator>(
+              propagator));
+
+  auto impl = std::make_unique<MockRestClient>();
+  auto expected_headers_matcher = [] {
+    return ResultOf(
+        "headers have x-cloud-trace-context",
+        [](RestContext const& c) { return c.headers(); },
+        AllOf(Contains(Pair("x-cloud-trace-context", _)),
+              Contains(Pair("traceparent", _))));
+  };
+  auto disambiguate_overload =
+      ::testing::An<std::vector<absl::Span<char const>> const&>();
+  EXPECT_CALL(*impl, Post(expected_headers_matcher(), _, disambiguate_overload))
+      .WillOnce([](auto&, auto const&, auto const&) {
+        auto response = std::make_unique<MockRestResponse>();
+        EXPECT_CALL(*response, StatusCode)
+            .WillRepeatedly(Return(HttpStatusCode::kOk));
+        EXPECT_CALL(*response, Headers).Times(AtLeast(1));
+        EXPECT_CALL(std::move(*response), ExtractPayload).WillOnce([] {
+          return MakeMockHttpPayloadSuccess(MockContents());
+        });
+        return std::unique_ptr<RestResponse>(std::move(response));
+      });
+
+  auto constexpr kUrl = "https://storage.googleapis.com/storage/v1/b/my-bucket";
+  RestRequest request(kUrl);
+
+  auto client = MakeTracingRestClient(std::move(impl));
+  rest_internal::RestContext context;
+  auto r =
+      client->Post(context, request, std::vector<absl::Span<char const>>{});
+  ASSERT_STATUS_OK(r);
+  auto response = *std::move(r);
+  ASSERT_THAT(response, NotNull());
+  EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
+  auto contents = ReadAll(std::move(*response).ExtractPayload());
+  EXPECT_THAT(contents, IsOkAndHolds(MockContents()));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans,
+              UnorderedElementsAre(SpanNamed("HTTP/POST"), SpanNamed("Read"),
+                                   SpanNamed("Read")));
 }
 
 }  // namespace
