@@ -30,7 +30,7 @@ class BasicTracingConfiguration {
   virtual ~BasicTracingConfiguration() = default;
 };
 
-// TODO(#....) - complete the documentation on how to link this library.
+// TODO(#11360) - reference the quickstart when discussing program linking.
 /**
  * Configure the application for basic request tracing.
  *
