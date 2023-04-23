@@ -29,21 +29,23 @@ class BasicTracingConfigurationImpl : public BasicTracingConfiguration {
  public:
   explicit BasicTracingConfigurationImpl(
       std::shared_ptr<opentelemetry::sdk::trace::TracerProvider> provider)
-      : provider_(std::move(provider)) {
+      : provider_(std::move(provider)),
+        previous_(opentelemetry::trace::Provider::GetTracerProvider()) {
     opentelemetry::trace::Provider::SetTracerProvider(
         opentelemetry::nostd::shared_ptr<opentelemetry::trace::TracerProvider>(
             provider_));
   }
+
   ~BasicTracingConfigurationImpl() override {
     if (provider_) provider_->ForceFlush(std::chrono::microseconds(1000));
-    // Clear the global tracer provider.
-    opentelemetry::trace::Provider::SetTracerProvider(
-        opentelemetry::nostd::shared_ptr<
-            opentelemetry::trace::TracerProvider>());
+    // Reset the global tracer provider.
+    opentelemetry::trace::Provider::SetTracerProvider(std::move(previous_));
   }
 
  private:
   std::shared_ptr<opentelemetry::sdk::trace::TracerProvider> provider_;
+  opentelemetry::nostd::shared_ptr<opentelemetry::trace::TracerProvider>
+      previous_;
 };
 
 }  // namespace
