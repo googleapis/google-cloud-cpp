@@ -38,22 +38,35 @@ class BasicTracingConfiguration {
  * `google-cloud-cpp` libraries use [OpenTelemetry] to provide telemetry into
  * their operation at runtime.
  *
+ * You do not need to add OpenTelemetry instrumentation to your code. The C++
+ * client libraries are already instrumented and all sampled RPCs will be sent
+ * to Cloud Trace. However, you may want to add instrumentation if multiple
+ * RPCs are performed as part of a single logical "operation" in your
+ * application.
+ *
+ * OpenTelemetry traces, including those reported by the C++ client libraries
+ * start as soon as this function returns. Tracing stops when the object
+ * returned by this function is deleted.
+ *
  * OpenTelemetry is very configurable, supporting different sampling rates and
  * filters, multiple "exporters" to send the collected data to different
  * services, and multiple mechanisms to chain requests as they move from one
- * program to the next.
+ * program to the next. We do not expect this function will meet the needs of
+ * all applications. However, some applications will want a basic configuration
+ * that works with Gooogle Cloud Trace.
  *
- * We anticipate that some applications will want a basic configuration that
- * works with Gooogle Cloud Trace. Use this function to create such
- * configuration.
+ * This function uses the [OpenTelemetry C++ API] to change the global trace
+ * provider (`opentelemetry::trace::Provider::#SetTraceProvider()`). Do not use
+ * this function if your application needs fine control over OpenTelemetry
+ * settings.
  *
  * @note If you are using CMake as your build system, OpenTelemetry is not
  *     enabled by default in `google-cloud-cpp`. Please consult the build
  *     documentation to enable the additional libraries.
  *
+ * @par Usage Example
+ * @parblock
  * Change your build scripts to also the library that provides this function.
- * With CMake that is `google-cloud-cpp::experimental-opentelemetry`, with Bazel
- * that is `//:TBD`.
  *
  * Change your application to call this function once, for example in `main()`
  * as follows:
@@ -71,16 +84,9 @@ class BasicTracingConfiguration {
  * }
  * @endcode
  *
- * Where `[TRACING PROECT]` is the project id where you want to store the
+ * Where `[TRACING PROJECT]` is the project id where you want to store the
  * traces.
- *
- * Tracing stops when the object returned by this function goes out of scope.
- *
- * You do not need to add OpenTelemetry instrumentation to your code, the C++
- * client libraries are already instrumented and all sampled RPCs will be sent
- * to Cloud Trace. However, you may want to add instrumentation if multiple
- * RPCs are performed as part of a single logical "operation" in your
- * application.
+ * @endparblock
  *
  * @par Permissions
  * @parblock
@@ -105,7 +111,7 @@ class BasicTracingConfiguration {
  * By default this function configures the application to trace all requests.
  * This is useful for troubleshooting, but it is excessive if you want to enable
  * tracing by default and use the results to gather latency statistics. To
- * reduce the sampling rate use @ref `BasicTracingRateOption`. If desired,
+ * reduce the sampling rate use `@ref BasicTracingRateOption`. If desired,
  * you can use an environment variable (or any other configuration source)
  * to initialize its value.
  *
@@ -123,14 +129,15 @@ class BasicTracingConfiguration {
  *
  * @param project the project to send the traces to.
  * @param options how to configure the traces. The configuration parameters
- *     include @ref `BasicTracingRateOption`,
- *     @ref `google::cloud::UnifiedCredentialsOption`.
+ *     include `@ref BasicTracingRateOption`,
+ *     `@ref google::cloud::UnifiedCredentialsOption`.
  *
  * @see https://cloud.google.com/trace/docs/iam for more information about IAM
  *     permissions for Cloud Trace.
  *
  * [Cloud Trace]: https://cloud.google.com/trace
  * [OpenTelemetry]: https://opentelemetry.io
+ * [OpenTelemetry C++ API]: https://opentelemetry-cpp.readthedocs.io/en/latest/
  * [Application Default Credentials]:
  * https://cloud.google.com/docs/authentication#adc
  */
@@ -140,7 +147,7 @@ std::unique_ptr<BasicTracingConfiguration> ConfigureBasicTracing(
 /**
  * Configure the tracing rate for basic tracing.
  *
- * @see @ref `ConfigureBasicTracing` for more information.
+ * @see `@ref ConfigureBasicTracing()` for more information.
  */
 struct BasicTracingRateOption {
   using Type = double;
