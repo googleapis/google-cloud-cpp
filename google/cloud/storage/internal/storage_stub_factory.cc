@@ -18,8 +18,10 @@
 #include "google/cloud/storage/internal/storage_logging_decorator.h"
 #include "google/cloud/storage/internal/storage_metadata_decorator.h"
 #include "google/cloud/storage/internal/storage_round_robin.h"
+#include "google/cloud/storage/internal/storage_tracing_stub.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/log.h"
 #include <grpcpp/grpcpp.h>
@@ -86,6 +88,9 @@ std::shared_ptr<StorageStub> CreateDecoratedStubs(
     stub = std::make_shared<StorageLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeStorageTracingStub(std::move(stub));
   }
   return stub;
 }
