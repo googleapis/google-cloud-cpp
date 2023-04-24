@@ -19,6 +19,7 @@
 #include "google/cloud/internal/rest_opentelemetry.h"
 #include "google/cloud/internal/tracing_http_payload.h"
 #include "google/cloud/internal/tracing_rest_response.h"
+#include "absl/functional/function_ref.h"
 #include "absl/strings/match.h"
 #include "absl/strings/numbers.h"
 #include <opentelemetry/trace/semantic_conventions.h>
@@ -57,69 +58,6 @@ void InjectCloudTraceContext(RestContext& ctx,
                    value, ";o=1"));
 }
 
-}  // namespace
-
-void ExtractAttributes(
-    RestContext const& context,
-    StatusOr<std::unique_ptr<RestResponse>> const& request_result,
-    opentelemetry::trace::Span& span) {
-  namespace sc = opentelemetry::trace::SemanticConventions;
-  if (context.primary_ip_address() && context.primary_port()) {
-    span.SetAttribute(sc::kNetPeerName, *context.primary_ip_address());
-    span.SetAttribute(sc::kNetPeerPort, *context.primary_port());
-  }
-
-  if (context.local_ip_address() && context.local_port()) {
-    span.SetAttribute(sc::kNetHostName, *context.local_ip_address());
-    span.SetAttribute(sc::kNetHostPort, *context.local_port());
-  }
-
-  if (context.namelookup_time()) {
-    span.SetAttribute(
-        "curl.namelookup_time",
-        static_cast<std::int64_t>(context.namelookup_time()->count()));
-  }
-  if (context.connect_time()) {
-    span.SetAttribute(
-        "curl.connect_time",
-        static_cast<std::int64_t>(context.connect_time()->count()));
-  }
-  if (context.appconnect_time()) {
-    span.SetAttribute(
-        "curl.appconnect_time",
-        static_cast<std::int64_t>(context.appconnect_time()->count()));
-  }
-
-  if (!request_result) return;
-  auto const& response = *request_result;
-  if (!response) return;
-  for (auto const& kv : context.headers()) {
-    auto const name = "http.request.header." + kv.first;
-    if (kv.second.empty()) {
-      span.SetAttribute(name, "");
-      continue;
-    }
-    if (absl::EqualsIgnoreCase(kv.first, "authorization")) {
-      span.SetAttribute(name, kv.second.front().substr(0, 32));
-      continue;
-    }
-    span.SetAttribute(name, kv.second.front());
-  }
-
-  // There are only 32 attributes available per span, and excess attributes are
-  // discarded. First add the `x-*` headers. They tend to have more important
-  // information.
-  for (auto const& kv : response->Headers()) {
-    if (!absl::StartsWith(kv.first, "x-")) continue;
-    span.SetAttribute("http.response.header." + kv.first, kv.second);
-  }
-  // Then add all other headers.
-  for (auto const& kv : response->Headers()) {
-    if (absl::StartsWith(kv.first, "x-")) continue;
-    span.SetAttribute("http.response.header." + kv.first, kv.second);
-  }
-}
-
 /**
  * Extracts information from @p value, and adds it to a span.
  *
@@ -130,78 +68,150 @@ void ExtractAttributes(
  */
 StatusOr<std::unique_ptr<RestResponse>> EndResponseSpan(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
-    RestContext& context, StatusOr<std::unique_ptr<RestResponse>> value) {
-  if (!value) return internal::EndSpan(*span, std::move(value));
-  ExtractAttributes(context, value, *span);
+    RestContext& context,
+    StatusOr<std::unique_ptr<RestResponse>> request_result) {
+  namespace sc = opentelemetry::trace::SemanticConventions;
+  if (context.primary_ip_address() && context.primary_port()) {
+    span->SetAttribute(sc::kNetPeerName, *context.primary_ip_address());
+    span->SetAttribute(sc::kNetPeerPort, *context.primary_port());
+  }
+
+  if (context.local_ip_address() && context.local_port()) {
+    span->SetAttribute(sc::kNetHostName, *context.local_ip_address());
+    span->SetAttribute(sc::kNetHostPort, *context.local_port());
+  }
+  for (auto const& kv : context.headers()) {
+    auto const name = "http.request.header." + kv.first;
+    if (kv.second.empty()) {
+      span->SetAttribute(name, "");
+      continue;
+    }
+    if (absl::EqualsIgnoreCase(kv.first, "authorization")) {
+      span->SetAttribute(name, kv.second.front().substr(0, 32));
+      continue;
+    }
+    span->SetAttribute(name, kv.second.front());
+  }
+  if (!request_result || !(*request_result)) {
+    return internal::EndSpan(*span, std::move(request_result));
+  }
+  auto const& response = *request_result;
+
+  // There are only 32 attributes available per span, and excess attributes are
+  // discarded. First add the `x-*` headers. They tend to have more important
+  // information.
+  for (auto const& kv : response->Headers()) {
+    if (!absl::StartsWith(kv.first, "x-")) continue;
+    span->SetAttribute("http.response.header." + kv.first, kv.second);
+  }
+  // Then add all other headers.
+  for (auto const& kv : response->Headers()) {
+    if (absl::StartsWith(kv.first, "x-")) continue;
+    span->SetAttribute("http.response.header." + kv.first, kv.second);
+  }
   return std::unique_ptr<RestResponse>(std::make_unique<TracingRestResponse>(
-      *std::move(value), std::move(span)));
+      *std::move(request_result), std::move(span)));
 }
+
+opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> HttpStart(
+    std::chrono::system_clock::time_point start, Options const& options) {
+  opentelemetry::trace::StartSpanOptions span_options;
+  span_options.kind = opentelemetry::trace::SpanKind::kClient;
+  span_options.start_system_time = start;
+  return internal::GetTracer(options)->StartSpan("SendRequest", span_options);
+}
+
+StatusOr<std::unique_ptr<RestResponse>> EndStartSpan(
+    opentelemetry::trace::Span& span,
+    std::chrono::system_clock::time_point start, RestContext& context,
+    StatusOr<std::unique_ptr<RestResponse>> request_result) {
+  if (context.namelookup_time()) {
+    span.AddEvent("curl.namelookup", start + *context.namelookup_time());
+  }
+  if (context.connect_time()) {
+    span.AddEvent("curl.connected", start + *context.connect_time());
+    span.SetAttribute("gcloud-cpp.cached_connection",
+                      *context.connect_time() == std::chrono::microseconds(0));
+  }
+  if (context.appconnect_time()) {
+    span.AddEvent("curl.ssl.handshake", start + *context.appconnect_time());
+  }
+  return internal::EndSpan(span, std::move(request_result));
+}
+
+StatusOr<std::unique_ptr<RestResponse>> WrappedRequest(
+    RestContext& context, RestRequest const& request,
+    opentelemetry::nostd::string_view method,
+    absl::FunctionRef<StatusOr<std::unique_ptr<RestResponse>>(
+        RestContext&, RestRequest const&)>
+        make_request) {
+  auto span = MakeSpanHttp(request, method);
+  auto scope = opentelemetry::trace::Scope(span);
+  auto const& options = internal::CurrentOptions();
+  InjectTraceContext(context, options);
+  InjectCloudTraceContext(context, *span);
+  auto start = std::chrono::system_clock::now();
+  auto start_span = HttpStart(start, options);
+  auto response =
+      EndStartSpan(*start_span, start, context, make_request(context, request));
+  return EndResponseSpan(std::move(span), context, std::move(response));
+}
+
+}  // namespace
 
 TracingRestClient::TracingRestClient(std::unique_ptr<RestClient> impl)
     : impl_(std::move(impl)) {}
 
 StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Delete(
     RestContext& context, RestRequest const& request) {
-  auto span = MakeSpanHttp(request, "DELETE");
-  auto scope = opentelemetry::trace::Scope(span);
-  InjectTraceContext(context, internal::CurrentOptions());
-  InjectCloudTraceContext(context, *span);
-  return EndResponseSpan(std::move(span), context,
-                         impl_->Delete(context, request));
+  return WrappedRequest(context, request, "DELETE",
+                        [this](auto& context, auto const& request) {
+                          return impl_->Delete(context, request);
+                        });
 }
 
 StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Get(
     RestContext& context, RestRequest const& request) {
-  auto span = MakeSpanHttp(request, "GET");
-  auto scope = opentelemetry::trace::Scope(span);
-  InjectTraceContext(context, internal::CurrentOptions());
-  InjectCloudTraceContext(context, *span);
-  return EndResponseSpan(std::move(span), context,
-                         impl_->Get(context, request));
+  return WrappedRequest(context, request, "GET",
+                        [this](auto& context, auto const& request) {
+                          return impl_->Get(context, request);
+                        });
 }
 
 StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Patch(
     RestContext& context, RestRequest const& request,
     std::vector<absl::Span<char const>> const& payload) {
-  auto span = MakeSpanHttp(request, "PATCH");
-  auto scope = opentelemetry::trace::Scope(span);
-  InjectTraceContext(context, internal::CurrentOptions());
-  InjectCloudTraceContext(context, *span);
-  return EndResponseSpan(std::move(span), context,
-                         impl_->Patch(context, request, payload));
+  return WrappedRequest(context, request, "PATCH",
+                        [this, &payload](auto& context, auto const& request) {
+                          return impl_->Patch(context, request, payload);
+                        });
 }
 
 StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Post(
     RestContext& context, RestRequest const& request,
     std::vector<absl::Span<char const>> const& payload) {
-  auto span = MakeSpanHttp(request, "POST");
-  auto scope = opentelemetry::trace::Scope(span);
-  InjectTraceContext(context, internal::CurrentOptions());
-  InjectCloudTraceContext(context, *span);
-  return EndResponseSpan(std::move(span), context,
-                         impl_->Post(context, request, payload));
+  return WrappedRequest(context, request, "POST",
+                        [this, &payload](auto& context, auto const& request) {
+                          return impl_->Post(context, request, payload);
+                        });
 }
 
 StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Post(
     RestContext& context, RestRequest const& request,
     std::vector<std::pair<std::string, std::string>> const& form_data) {
-  auto span = MakeSpanHttp(request, "POST");
-  auto scope = opentelemetry::trace::Scope(span);
-  InjectTraceContext(context, internal::CurrentOptions());
-  InjectCloudTraceContext(context, *span);
-  return EndResponseSpan(std::move(span), context,
-                         impl_->Post(context, request, form_data));
+  return WrappedRequest(context, request, "POST",
+                        [this, &form_data](auto& context, auto const& request) {
+                          return impl_->Post(context, request, form_data);
+                        });
 }
 
 StatusOr<std::unique_ptr<RestResponse>> TracingRestClient::Put(
     RestContext& context, RestRequest const& request,
     std::vector<absl::Span<char const>> const& payload) {
-  auto span = MakeSpanHttp(request, "PUT");
-  auto scope = opentelemetry::trace::Scope(span);
-  InjectTraceContext(context, internal::CurrentOptions());
-  InjectCloudTraceContext(context, *span);
-  return EndResponseSpan(std::move(span), context,
-                         impl_->Put(context, request, payload));
+  return WrappedRequest(context, request, "PUT",
+                        [this, &payload](auto& context, auto const& request) {
+                          return impl_->Put(context, request, payload);
+                        });
 }
 
 std::unique_ptr<RestClient> MakeTracingRestClient(
