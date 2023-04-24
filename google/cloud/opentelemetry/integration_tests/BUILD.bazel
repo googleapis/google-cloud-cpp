@@ -16,29 +16,17 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-load(":google_cloud_cpp_opentelemetry.bzl", "google_cloud_cpp_opentelemetry_hdrs", "google_cloud_cpp_opentelemetry_srcs")
-
-cc_library(
-    name = "google_cloud_cpp_opentelemetry",
-    srcs = google_cloud_cpp_opentelemetry_srcs,
-    hdrs = google_cloud_cpp_opentelemetry_hdrs,
-    visibility = ["//:__subpackages__"],
-    deps = [
-        "//:trace",
-        "@com_google_googleapis//google/rpc:code_cc_proto",
-        "@io_opentelemetry_cpp//sdk/src/trace",
-    ],
-)
-
-load(":opentelemetry_unit_tests.bzl", "opentelemetry_unit_tests")
+load(":tests.bzl", "opentelemetry_integration_tests")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
+    timeout = "long",
     srcs = [test],
+    tags = ["integration-test"],
     deps = [
-        ":google_cloud_cpp_opentelemetry",
-        "//:trace_mocks",
+        "//google/cloud/opentelemetry:google_cloud_cpp_opentelemetry",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "@com_google_googletest//:gtest_main",
     ],
-) for test in opentelemetry_unit_tests]
+) for test in opentelemetry_integration_tests]
