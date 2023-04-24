@@ -32,8 +32,6 @@ namespace otel {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::testing::AllOf;
-using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Not;
 
