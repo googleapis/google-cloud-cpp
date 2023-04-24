@@ -70,6 +70,8 @@ TEST(TraceExporter, Basic) {
   // ListTracesRequest, which can filter on span names.
   google::devtools::cloudtrace::v1::ListTracesRequest req;
   req.set_project_id(project_id);
+  // The filter "+root:<NAME>" means: list traces that contain spans whose name
+  // exactly matches "<NAME>".
   req.set_filter("+root:" + name);
 
   // Implement a retry loop to wait for the traces to propagate in Cloud Trace.

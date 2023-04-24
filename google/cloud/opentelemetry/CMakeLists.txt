@@ -102,6 +102,8 @@ if (NOT BUILD_TESTING)
     return()
 endif ()
 
+add_subdirectory(integration_tests)
+
 set(opentelemetry_unit_tests # cmake-format: sort
                              internal/recordable_test.cc trace_exporter_test.cc)
 
