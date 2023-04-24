@@ -163,6 +163,8 @@ function integration::bazel_with_emulators() {
     "google/cloud/pubsublite/..."
     # Unified Rest Credentials test
     "google/cloud:internal_unified_rest_credentials_integration_test"
+    # The OpenTelemetry integration tests are limited by quota
+    "google/cloud/opentelemetry/integration_tests/..."
   )
 
   production_tests_tag_filters="integration-test"

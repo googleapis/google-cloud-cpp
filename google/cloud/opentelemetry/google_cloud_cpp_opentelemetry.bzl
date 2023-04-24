@@ -17,11 +17,13 @@
 """Automatically generated source lists for google_cloud_cpp_opentelemetry - DO NOT EDIT."""
 
 google_cloud_cpp_opentelemetry_hdrs = [
+    "configure_basic_tracing.h",
     "internal/recordable.h",
     "trace_exporter.h",
 ]
 
 google_cloud_cpp_opentelemetry_srcs = [
+    "configure_basic_tracing.cc",
     "internal/recordable.cc",
     "trace_exporter.cc",
 ]
