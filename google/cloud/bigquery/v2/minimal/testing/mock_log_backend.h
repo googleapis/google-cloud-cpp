@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_TESTING_MOCK_JOB_LOG_BACKEND_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_TESTING_MOCK_JOB_LOG_BACKEND_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_TESTING_MOCK_LOG_BACKEND_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_TESTING_MOCK_LOG_BACKEND_H
 
 #include "google/cloud/log.h"
 #include <gmock/gmock.h>
@@ -23,7 +23,7 @@ namespace cloud {
 namespace bigquery_v2_minimal_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class MockJobLogBackend : public google::cloud::LogBackend {
+class MockLogBackend : public google::cloud::LogBackend {
  public:
   void Process(LogRecord const& lr) override { ProcessWithOwnership(lr); }
 
@@ -36,4 +36,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_TESTING_MOCK_JOB_LOG_BACKEND_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_TESTING_MOCK_LOG_BACKEND_H
