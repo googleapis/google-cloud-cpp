@@ -35,8 +35,8 @@ class BasicTracingConfiguration {
  * Configure the application for basic request tracing.
  *
  * This function configures basic request tracing to [Cloud Trace]. The
- * `google-cloud-cpp` libraries use [OpenTelemetry] to provide telemetry into
- * their operation at runtime.
+ * `google-cloud-cpp` libraries use [OpenTelemetry] to provide observability
+ * into their operation at runtime.
  *
  * You do not need to add OpenTelemetry instrumentation to your code. The C++
  * client libraries are already instrumented and all sampled RPCs will be sent
@@ -66,7 +66,8 @@ class BasicTracingConfiguration {
  *
  * @par Usage Example
  * @parblock
- * Change your build scripts to also the library that provides this function.
+ * Change your build scripts to also build and link the library that provides
+ * this function.
  *
  * Change your application to call this function once, for example in `main()`
  * as follows:
