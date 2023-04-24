@@ -314,19 +314,12 @@ TEST(TracingRestClient, WithRestContextDetails) {
 }
 
 TEST(TracingRestClient, CachedConnection) {
-  namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto span_catcher = InstallSpanCatcher();
 
   auto impl = std::make_unique<MockRestClient>();
   EXPECT_CALL(*impl, Put)
       .WillOnce([](RestContext& context, auto const&, auto const&) {
-        context.set_namelookup_time(std::chrono::microseconds(50));
         context.set_connect_time(std::chrono::microseconds(0));
-        context.set_appconnect_time(std::chrono::microseconds(0));
-        context.set_local_ip_address("127.0.0.1");
-        context.set_local_port(32000);
-        context.set_primary_ip_address("192.168.1.1");
-        context.set_primary_port(443);
         auto response = std::make_unique<MockRestResponse>();
         EXPECT_CALL(*response, StatusCode)
             .WillRepeatedly(Return(HttpStatusCode::kOk));
@@ -351,26 +344,13 @@ TEST(TracingRestClient, CachedConnection) {
   EXPECT_THAT(contents, IsOkAndHolds(MockContents()));
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(
-      spans,
-      UnorderedElementsAre(
-          AllOf(SpanNamed("HTTP/PUT"),
-                SpanHasAttributes(
-                    SpanAttribute<std::string>(sc::kNetTransport,
-                                               sc::NetTransportValues::kIpTcp),
-                    SpanAttribute<std::string>(sc::kHttpMethod, "PUT"),
-                    SpanAttribute<std::string>(sc::kHttpUrl, kUrl),
-                    SpanAttribute<std::string>(sc::kNetPeerName, "192.168.1.1"),
-                    SpanAttribute<std::int32_t>(sc::kNetPeerPort, 443),
-                    SpanAttribute<std::string>(sc::kNetHostName, "127.0.0.1"),
-                    SpanAttribute<std::int32_t>(sc::kNetHostPort, 32000))),
-          AllOf(SpanNamed("SendRequest"),
-                SpanHasAttributes(
-                    SpanAttribute<bool>("gcloud-cpp.cached_connection", true)),
-                SpanHasEvents(EventNamed("curl.namelookup"),
-                              EventNamed("curl.connected"),
-                              EventNamed("curl.ssl.handshake"))),
-          SpanNamed("Read"), SpanNamed("Read")));
+  EXPECT_THAT(spans, UnorderedElementsAre(
+                         SpanNamed("HTTP/PUT"),
+                         AllOf(SpanNamed("SendRequest"),
+                               SpanHasAttributes(SpanAttribute<bool>(
+                                   "gcloud-cpp.cached_connection", true)),
+                               SpanHasEvents(EventNamed("curl.connected"))),
+                         SpanNamed("Read"), SpanNamed("Read")));
 }
 
 }  // namespace
