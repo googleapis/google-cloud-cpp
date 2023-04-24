@@ -120,7 +120,7 @@ function (bigquery_rest_define_tests)
     target_sources(
         bigquery_rest_testing
         INTERFACE
-            ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/mock_job_log_backend.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/mock_log_backend.h
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/mock_job_rest_stub.h)
     target_link_libraries(
         bigquery_rest_testing

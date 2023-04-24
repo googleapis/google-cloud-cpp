@@ -14,8 +14,8 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_logging.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
-#include "google/cloud/bigquery/v2/minimal/testing/mock_job_log_backend.h"
 #include "google/cloud/bigquery/v2/minimal/testing/mock_job_rest_stub.h"
+#include "google/cloud/bigquery/v2/minimal/testing/mock_log_backend.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -40,7 +40,7 @@ class JobLoggingClientTest : public ::testing::Test {
  protected:
   void SetUp() override {
     log_backend_ =
-        std::make_shared<bigquery_v2_minimal_testing::MockJobLogBackend>();
+        std::make_shared<bigquery_v2_minimal_testing::MockLogBackend>();
     log_backend_id_ =
         google::cloud::LogSink::Instance().AddBackend(log_backend_);
   }
@@ -50,7 +50,7 @@ class JobLoggingClientTest : public ::testing::Test {
     log_backend_.reset();
   }
 
-  std::shared_ptr<bigquery_v2_minimal_testing::MockJobLogBackend> log_backend_ =
+  std::shared_ptr<bigquery_v2_minimal_testing::MockLogBackend> log_backend_ =
       nullptr;
   long log_backend_id_ = 0;  // NOLINT(google-runtime-int)
 };
