@@ -438,6 +438,7 @@ if (BUILD_TESTING)
     add_subdirectory(admin/integration_tests)
     add_subdirectory(admin/samples)
     add_subdirectory(benchmarks)
+    add_subdirectory(test_proxy)
     add_subdirectory(tests)
 endif ()
 

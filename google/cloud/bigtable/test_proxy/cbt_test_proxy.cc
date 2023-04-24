@@ -126,9 +126,9 @@ grpc::Status CbtTestProxy::CreateClient(
 
 // C++ client doesn't support closing which will make the client not accept new
 // calls for operation. As such, CloseClient() is implemented as no-op.
-grpc::Status CbtTestProxy::CloseClient(
-    ::grpc::ServerContext*, testpb::CloseClientRequest const* request,
-    testpb::CloseClientResponse*) {
+grpc::Status CbtTestProxy::CloseClient(::grpc::ServerContext*,
+                                       testpb::CloseClientRequest const*,
+                                       testpb::CloseClientResponse*) {
   return grpc::Status();
 }
 
