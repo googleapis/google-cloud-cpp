@@ -100,7 +100,7 @@ TEST(TraceExporter, Basic) {
   req.set_trace_id(TraceId(span->GetContext()));
 
   // Implement a retry loop to wait for the traces to propagate in Cloud Trace.
-  for (auto backoff : {5, 10, 20, 0}) {
+  for (auto backoff : {10, 60, 120, 120, 0}) {
     ASSERT_NE(backoff, 0) << "Trace did not show up in Cloud Trace";
     // Because we are limited by quota, start with a backoff.
     std::this_thread::sleep_for(std::chrono::seconds(backoff));
