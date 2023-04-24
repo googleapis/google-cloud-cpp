@@ -25,7 +25,7 @@ set(opentelemetry_integration_tests # cmake-format: sort
 
 # Export the list of unit tests to a .bzl file so we do not need to maintain the
 # list in two places.
-export_list_to_bazel("tests.bzl" "tests" YEAR "2023")
+export_list_to_bazel("tests.bzl" "opentelemetry_integration_tests" YEAR "2023")
 
 # Create a custom target so we can say "build all the tests"
 add_custom_target(opentelemetry-integration-tests)
