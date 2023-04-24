@@ -184,6 +184,8 @@ add_library(
     internal/sign_blob_requests.h
     internal/signed_url_requests.cc
     internal/signed_url_requests.h
+    internal/tracing_client.cc
+    internal/tracing_client.h
     internal/tuple_filter.h
     internal/unified_rest_credentials.cc
     internal/unified_rest_credentials.h
@@ -508,6 +510,7 @@ if (BUILD_TESTING)
         internal/service_account_requests_test.cc
         internal/sign_blob_requests_test.cc
         internal/signed_url_requests_test.cc
+        internal/tracing_client_test.cc
         internal/tuple_filter_test.cc
         internal/unified_rest_credentials_test.cc
         internal/xml_node_test.cc
