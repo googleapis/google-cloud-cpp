@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "docfx/doxygen2references.h"
+#include "docfx/testing/inputs.h"
 #include <gmock/gmock.h>
 
 namespace docfx {
@@ -210,6 +211,35 @@ TEST(Doxygen2ReferencesTest, Enum) {
                     "1a7d65fd569564712b7cfe652613f30d9cae75d33"
                     "e94f2dc4028d4d67bdaab75190",
                     "kNonIdempotent")));
+}
+
+TEST(Doxygen2ReferencesTest, MockedFunctions) {
+  pugi::xml_document doc;
+  doc.load_string(docfx_testing::MockClass().c_str());
+  auto const filter = "//*[@id='" + docfx_testing::MockClassId() + "']";
+  auto const selected = doc.select_node(filter.c_str());
+  ASSERT_TRUE(selected);
+
+  YamlContext parent;
+  parent.config.library = "kms";
+  auto const references = ExtractReferences(parent, selected.node());
+  EXPECT_THAT(
+      references,
+      UnorderedElementsAre(
+          Reference("classgoogle_1_1cloud_1_1kms__inventory__v1__mocks_1_"
+                    "1MockKeyDashboardServiceConnection",
+                    "google::cloud::kms_inventory_v1_mocks::"
+                    "MockKeyDashboardServiceConnection"),
+          Reference("classgoogle_1_1cloud_1_1kms__inventory__v1__mocks_1_"
+                    "1MockKeyDashboardServiceConnection_"
+                    "1a2bf84b7b96702bc1622f0e6c9f0babc4",
+                    "google::cloud::kms_inventory_v1_mocks::"
+                    "MockKeyDashboardServiceConnection::options"),
+          Reference("classgoogle_1_1cloud_1_1kms__inventory__v1__mocks_1_"
+                    "1MockKeyDashboardServiceConnection_"
+                    "1a789db998d71abf9016b64832d0c7a99e",
+                    "google::cloud::kms_inventory_v1_mocks::"
+                    "MockKeyDashboardServiceConnection::ListCryptoKeys")));
 }
 
 }  // namespace

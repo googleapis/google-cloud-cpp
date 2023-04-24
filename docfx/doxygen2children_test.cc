@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "docfx/doxygen2children.h"
+#include "docfx/testing/inputs.h"
 #include <gmock/gmock.h>
 
 namespace docfx {
@@ -189,6 +190,25 @@ TEST(Doxygen2ChildrenTest, Enum) {
           "namespacegoogle_1_1cloud_"
           "1a7d65fd569564712b7cfe652613f30d9cae75d33e94f2dc4028d4d67bdaab7519"
           "0"));
+}
+
+TEST(Doxygen2ChildrenTest, MockedFunctions) {
+  pugi::xml_document doc;
+  doc.load_string(docfx_testing::MockClass().c_str());
+  auto const filter = "//*[@id='" + docfx_testing::MockClassId() + "']";
+  auto selected = doc.select_node(filter.c_str());
+  ASSERT_TRUE(selected);
+
+  YamlContext parent;
+  parent.config.library = "kms";
+  auto const children = Children(parent, selected.node());
+  EXPECT_THAT(children, UnorderedElementsAre(
+                            "classgoogle_1_1cloud_1_1kms__inventory__v1__"
+                            "mocks_1_1MockKeyDashboardServiceConnection_"
+                            "1a2bf84b7b96702bc1622f0e6c9f0babc4",
+                            "classgoogle_1_1cloud_1_1kms__inventory__v1__"
+                            "mocks_1_1MockKeyDashboardServiceConnection_"
+                            "1a789db998d71abf9016b64832d0c7a99e"));
 }
 
 }  // namespace

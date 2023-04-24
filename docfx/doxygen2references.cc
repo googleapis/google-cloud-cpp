@@ -63,17 +63,31 @@ std::list<Reference> ExtractReferences(YamlContext const& ctx,
   }
   if (name == "sectiondef") return RecurseReferences(ctx, node);
   if (name == "compounddef") {
+    auto nested = NestedYamlContext(ctx, node);
     auto const uid = std::string_view{node.attribute("id").as_string()};
-    auto recurse = RecurseReferences(ctx, node);
+    auto recurse = RecurseReferences(nested, node);
     recurse.emplace_front(uid, node.child_value("compoundname"));
     return recurse;
   }
   if (name == "memberdef") {
-    auto const uid = std::string_view{node.attribute("id").as_string()};
-    auto const name =
-        std::string_view{node.child("qualifiedname").child_value()};
+    auto const uid = std::string{node.attribute("id").as_string()};
+    if (ctx.mocked_ids.count(uid) != 0) return {};
+    auto const name = [&] {
+      auto qname = std::string_view{node.child("qualifiedname").child_value()};
+      auto it = ctx.mocked_functions_by_id.find(uid);
+      if (it == ctx.mocked_functions_by_id.end()) {
+        return std::string{qname};
+      }
+      auto const p = qname.find("::MOCK_METHOD");
+      if (p == std::string_view::npos) {
+        throw std::invalid_argument(
+            "Mocked functions should contain ::MOCK_METHOD. uid=" + uid);
+      }
+      return std::string{qname.substr(0, p)} + "::" + it->second;
+    }();
+
     auto recurse = RecurseReferences(ctx, node);
-    recurse.emplace_front(uid, name);
+    recurse.emplace_front(std::move(uid), name);
     return recurse;
   }
   return RecurseReferences(ctx, node);
