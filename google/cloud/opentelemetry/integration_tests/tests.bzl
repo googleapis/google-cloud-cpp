@@ -17,5 +17,6 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 opentelemetry_integration_tests = [
+    "configure_basic_tracing_integration_test.cc",
     "trace_exporter_integration_test.cc",
 ]
