@@ -30,6 +30,7 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
@@ -37,6 +38,7 @@ using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::SpanAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
+using ::google::cloud::testing_util::SpanHasEvents;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
@@ -109,8 +111,7 @@ TEST(TracingRestClient, Delete) {
                         "http.response.header.x-test-header-1", "value1"),
                     SpanAttribute<std::string>(
                         "http.response.header.x-test-header-2", "value2"))),
-          // Read span on the HttpPayload
-          SpanNamed("Read"), SpanNamed("Read")));
+          SpanNamed("SendRequest"), SpanNamed("Read"), SpanNamed("Read")));
 }
 
 TEST(TracingRestClient, HasScope) {
@@ -146,13 +147,14 @@ TEST(TracingRestClient, HasScope) {
   EXPECT_THAT(contents, IsOkAndHolds(MockContents()));
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans,
-              UnorderedElementsAre(
-                  AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
-                        SpanKindIsClient(),
-                        SpanHasAttributes(SpanAttribute<std::string>(
-                            "test.attribute", "test.value"))),
-                  SpanNamed("Read"), SpanNamed("Read")));
+  EXPECT_THAT(
+      spans,
+      UnorderedElementsAre(
+          AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
+                SpanKindIsClient(),
+                SpanHasAttributes(SpanAttribute<std::string>("test.attribute",
+                                                             "test.value"))),
+          SpanNamed("SendRequest"), SpanNamed("Read"), SpanNamed("Read")));
 }
 
 TEST(TracingRestClient, HasCloudTraceContext) {
@@ -191,9 +193,9 @@ TEST(TracingRestClient, HasCloudTraceContext) {
   EXPECT_THAT(contents, IsOkAndHolds(MockContents()));
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans,
-              UnorderedElementsAre(SpanNamed("HTTP/PATCH"), SpanNamed("Read"),
-                                   SpanNamed("Read")));
+  EXPECT_THAT(spans, UnorderedElementsAre(
+                         SpanNamed("HTTP/PATCH"), SpanNamed("SendRequest"),
+                         SpanNamed("Read"), SpanNamed("Read")));
 }
 
 TEST(TracingRestClient, WithTraceparent) {
@@ -244,9 +246,9 @@ TEST(TracingRestClient, WithTraceparent) {
   EXPECT_THAT(contents, IsOkAndHolds(MockContents()));
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans,
-              UnorderedElementsAre(SpanNamed("HTTP/POST"), SpanNamed("Read"),
-                                   SpanNamed("Read")));
+  EXPECT_THAT(spans, UnorderedElementsAre(
+                         SpanNamed("HTTP/POST"), SpanNamed("SendRequest"),
+                         SpanNamed("Read"), SpanNamed("Read")));
 }
 
 TEST(TracingRestClient, WithRestContextDetails) {
@@ -298,14 +300,57 @@ TEST(TracingRestClient, WithRestContextDetails) {
                                                sc::NetTransportValues::kIpTcp),
                     SpanAttribute<std::string>(sc::kHttpMethod, "POST"),
                     SpanAttribute<std::string>(sc::kHttpUrl, kUrl),
-                    SpanAttribute<std::int64_t>("curl.namelookup_time", 12345),
-                    SpanAttribute<std::int64_t>("curl.connect_time", 23456),
-                    SpanAttribute<std::int64_t>("curl.appconnect_time", 34567),
                     SpanAttribute<std::string>(sc::kNetPeerName, "192.168.1.1"),
                     SpanAttribute<std::int32_t>(sc::kNetPeerPort, 443),
                     SpanAttribute<std::string>(sc::kNetHostName, "127.0.0.1"),
                     SpanAttribute<std::int32_t>(sc::kNetHostPort, 32000))),
+          AllOf(SpanNamed("SendRequest"),
+                SpanHasAttributes(
+                    SpanAttribute<bool>("gcloud-cpp.cached_connection", false)),
+                SpanHasEvents(EventNamed("curl.namelookup"),
+                              EventNamed("curl.connected"),
+                              EventNamed("curl.ssl.handshake"))),
           SpanNamed("Read"), SpanNamed("Read")));
+}
+
+TEST(TracingRestClient, CachedConnection) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto impl = std::make_unique<MockRestClient>();
+  EXPECT_CALL(*impl, Put)
+      .WillOnce([](RestContext& context, auto const&, auto const&) {
+        context.set_connect_time(std::chrono::microseconds(0));
+        auto response = std::make_unique<MockRestResponse>();
+        EXPECT_CALL(*response, StatusCode)
+            .WillRepeatedly(Return(HttpStatusCode::kOk));
+        EXPECT_CALL(*response, Headers).Times(AtLeast(1));
+        EXPECT_CALL(std::move(*response), ExtractPayload).WillOnce([] {
+          return MakeMockHttpPayloadSuccess(MockContents());
+        });
+        return std::unique_ptr<RestResponse>(std::move(response));
+      });
+
+  auto constexpr kUrl = "https://storage.googleapis.com/storage/v1/b/my-bucket";
+  RestRequest request(kUrl);
+
+  auto client = MakeTracingRestClient(std::move(impl));
+  rest_internal::RestContext context;
+  auto r = client->Put(context, request, {});
+  ASSERT_STATUS_OK(r);
+  auto response = *std::move(r);
+  ASSERT_THAT(response, NotNull());
+  EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
+  auto contents = ReadAll(std::move(*response).ExtractPayload());
+  EXPECT_THAT(contents, IsOkAndHolds(MockContents()));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, UnorderedElementsAre(
+                         SpanNamed("HTTP/PUT"),
+                         AllOf(SpanNamed("SendRequest"),
+                               SpanHasAttributes(SpanAttribute<bool>(
+                                   "gcloud-cpp.cached_connection", true)),
+                               SpanHasEvents(EventNamed("curl.connected"))),
+                         SpanNamed("Read"), SpanNamed("Read")));
 }
 
 }  // namespace
