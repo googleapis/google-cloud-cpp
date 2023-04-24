@@ -193,9 +193,9 @@ TEST(TracingRestClient, HasCloudTraceContext) {
   EXPECT_THAT(contents, IsOkAndHolds(MockContents()));
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(
-      spans, UnorderedElementsAre(SpanNamed("HTTP/PATCH"), SpanNamed("Read"),
-                                  SpanNamed("SendRequest"), SpanNamed("Read")));
+  EXPECT_THAT(spans, UnorderedElementsAre(
+                         SpanNamed("HTTP/PATCH"), SpanNamed("SendRequest"),
+                         SpanNamed("Read"), SpanNamed("Read")));
 }
 
 TEST(TracingRestClient, WithTraceparent) {
