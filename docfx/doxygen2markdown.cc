@@ -334,15 +334,11 @@ bool AppendIfRef(std::ostream& os, MarkdownContext const& ctx,
     ref = "`" + ref + "`";
   }
 
-  os << "[" << ref << "]";
-  if (!std::string_view(node.attribute("external").as_string()).empty()) {
-    os << "(" << node.attribute("external").as_string() << ")";
-  } else {
-    // DocFX YAML supports `xref:` as the syntax to cross link other documents
-    // generated from the same DoxFX YAML source:
-    //    https://dotnet.github.io/docfx/tutorial/links_and_cross_references.html#using-cross-reference
-    os << "(xref:" << node.attribute("refid").as_string() << ")";
-  }
+  // DocFX YAML supports `xref:` as the syntax to cross link other documents
+  // generated from the same DoxFX YAML source:
+  //    https://dotnet.github.io/docfx/tutorial/links_and_cross_references.html#using-cross-reference
+  os << "[" << ref << "]"
+     << "(xref:" << node.attribute("refid").as_string() << ")";
   return true;
 }
 
