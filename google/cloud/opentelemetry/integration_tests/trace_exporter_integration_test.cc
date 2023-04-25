@@ -100,16 +100,16 @@ TEST(TraceExporter, Basic) {
   req.set_trace_id(TraceId(span->GetContext()));
 
   // Implement a retry loop to wait for the traces to propagate in Cloud Trace.
-  for (auto backoff : {10, 60, 120, 120, 0}) {
-    ASSERT_NE(backoff, 0) << "Trace did not show up in Cloud Trace";
+  StatusOr<google::devtools::cloudtrace::v1::Trace> trace;
+  for (auto backoff : {10, 60, 120, 120}) {
     // Because we are limited by quota, start with a backoff.
     std::this_thread::sleep_for(std::chrono::seconds(backoff));
-    auto trace = trace_client.GetTrace(req);
-    if (trace.ok()) {
-      EXPECT_THAT(trace->spans(), ElementsAre(TraceSpan(name)));
-      break;
-    }
+
+    trace = trace_client.GetTrace(req);
+    if (trace.ok()) break;
   }
+  ASSERT_STATUS_OK(trace) << "Trace did not show up in Cloud Trace";
+  EXPECT_THAT(trace->spans(), ElementsAre(TraceSpan(name)));
 }
 
 }  // namespace
