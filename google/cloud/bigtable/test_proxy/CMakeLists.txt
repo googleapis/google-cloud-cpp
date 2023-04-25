@@ -21,8 +21,8 @@ google_cloud_cpp_grpcpp_library(
     PROTO_PATH_DIRECTORIES
     ${PROTO_INCLUDE_DIR}
     ${PROJECT_SOURCE_DIR}
-    ${PROJECT_SOURCE_DIR}/google/cloud/bigtable/test_proxy
-    ${PROJECT_BINARY_DIR}/external/googleapis/src/googleapis_download)
+    ${PROJECT_BINARY_DIR}/external/googleapis/src/googleapis_download
+    ${PROJECT_SOURCE_DIR}/google/cloud/bigtable/test_proxy)
 target_link_libraries(
     google_cloud_cpp_bigtable_test_proxy_protos
     PUBLIC google-cloud-cpp::api_client_protos
@@ -31,10 +31,7 @@ target_link_libraries(
 set_target_properties(google_cloud_cpp_bigtable_test_proxy_protos
                       PROPERTIES CXX_CLANG_TIDY "")
 
-add_library(
-    cbt_test_proxy
-    cbt_test_proxy.cc
-    cbt_test_proxy.h)
+add_library(cbt_test_proxy cbt_test_proxy.cc cbt_test_proxy.h)
 target_link_libraries(
     cbt_test_proxy
     google_cloud_cpp_bigtable_test_proxy_protos
@@ -46,7 +43,8 @@ target_link_libraries(
     gRPC::grpc
     protobuf::libprotobuf)
 
-google_cloud_cpp_add_executable(target "bigtable_test_proxy" "cbt_test_proxy_main.cc")
+google_cloud_cpp_add_executable(target "bigtable_test_proxy"
+	                        "cbt_test_proxy_main.cc")
 target_link_libraries(
     ${target}
     PRIVATE cbt_test_proxy

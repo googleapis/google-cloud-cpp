@@ -15,8 +15,8 @@
 // Runs the CloudBigtableTestProxy as a server.
 
 #include "google/cloud/bigtable/test_proxy/cbt_test_proxy.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/log.h"
-#include "absl/strings/str_cat.h"
 #include <grpcpp/server_builder.h>
 #include <string>
 

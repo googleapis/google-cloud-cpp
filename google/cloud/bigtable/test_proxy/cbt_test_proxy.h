@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TEST_PROXY_CBT_TEST_PROXY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TEST_PROXY_CBT_TEST_PROXY_H
 
-#include "google/cloud/bigtable/test_proxy/test_proxy.grpc.pb.h"
 #include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/bigtable/table.h"
+#include "google/cloud/bigtable/test_proxy/test_proxy.grpc.pb.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>

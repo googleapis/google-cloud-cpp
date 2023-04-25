@@ -17,9 +17,9 @@
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/table.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status.h"
-#include "absl/strings/str_cat.h"
 #include "absl/time/time.h"
 #include <google/protobuf/util/time_util.h>
 #include <chrono>
@@ -160,7 +160,7 @@ grpc::Status CbtTestProxy::ReadRow(::grpc::ServerContext*,
       Row row_val = row->second;
       *response->mutable_row() = ConvertRowToV2(row_val);
     } else {
-      GCP_LOG(ERROR) << "Received empty row: " << request->row_key();
+      GCP_LOG(INFO) << "Received empty row: " << request->row_key();
     }
   }
   *response->mutable_status() = ToRpcStatus(row.status());
