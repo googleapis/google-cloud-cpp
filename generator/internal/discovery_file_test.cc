@@ -211,7 +211,7 @@ message GetMyResourcesRequest {
   auto get_request_type_json =
       nlohmann::json::parse(kGetRequestTypeJson, nullptr, false);
   ASSERT_TRUE(get_request_type_json.is_object());
-  DiscoveryResource r("myResources", "https://default.host", "my/service",
+  DiscoveryResource r("myResources", "", "https://default.host", "my/service",
                       resource_json);
   DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "",
                                           do_foo_request_type_json);
@@ -306,7 +306,7 @@ message GetMyResourcesRequest {
   auto get_request_type_json =
       nlohmann::json::parse(kGetRequestTypeJson, nullptr, false);
   ASSERT_TRUE(get_request_type_json.is_object());
-  DiscoveryResource r("myResources", "https://default.host", "my/service",
+  DiscoveryResource r("myResources", "", "https://default.host", "my/service",
                       resource_json);
   DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "",
                                           do_foo_request_type_json);
@@ -432,7 +432,7 @@ service MyResources {
 )""";
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
-  DiscoveryResource r("myResources", "https://default.host", "my/service",
+  DiscoveryResource r("myResources", "", "https://default.host", "my/service",
                       resource_json);
   DiscoveryFile f(&r, "my_path", "my.package.name", "v1",
                   r.GetRequestTypesList());
@@ -479,7 +479,7 @@ TEST(DiscoveryFile, FormatFileResourceScopeError) {
   auto get_request_type_json =
       nlohmann::json::parse(kGetRequestTypeJson, nullptr, false);
   ASSERT_TRUE(get_request_type_json.is_object());
-  DiscoveryResource r("myResources", "https://default.host", "my/service",
+  DiscoveryResource r("myResources", "", "https://default.host", "my/service",
                       resource_json);
   DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "",
                                           do_foo_request_type_json);
@@ -528,7 +528,7 @@ TEST(DiscoveryFile, FormatFileTypeMissingError) {
   auto get_request_type_json =
       nlohmann::json::parse(kGetRequestTypeJson, nullptr, false);
   ASSERT_TRUE(get_request_type_json.is_object());
-  DiscoveryResource r("myResources", "https://default.host", "my/service",
+  DiscoveryResource r("myResources", "", "https://default.host", "my/service",
                       resource_json);
   DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "",
                                           do_foo_request_type_json);

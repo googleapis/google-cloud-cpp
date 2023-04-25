@@ -320,7 +320,7 @@ TEST(SynthesizeRequestTypeTest, OperationResponseWithRefRequestField) {
   auto const expected_request_type_json =
       nlohmann::json::parse(kExpectedRequestTypeJson, nullptr, false);
   ASSERT_TRUE(expected_request_type_json.is_object());
-  DiscoveryResource resource("foos", "", "", resource_json);
+  DiscoveryResource resource("foos", "", "", "", resource_json);
   auto result =
       SynthesizeRequestType(method_json, resource, "Operation", "create");
   ASSERT_STATUS_OK(result);
@@ -392,7 +392,7 @@ TEST(SynthesizeRequestTypeTest,
   auto const expected_request_type_json =
       nlohmann::json::parse(kExpectedRequestTypeJson, nullptr, false);
   ASSERT_TRUE(expected_request_type_json.is_object());
-  DiscoveryResource resource("foos", "", "", resource_json);
+  DiscoveryResource resource("foos", "", "", "", resource_json);
   auto result =
       SynthesizeRequestType(method_json, resource, "Operation", "create");
   ASSERT_STATUS_OK(result);
@@ -453,7 +453,7 @@ TEST(SynthesizeRequestTypeTest, NonOperationWithoutRequestField) {
   auto const expected_request_type_json =
       nlohmann::json::parse(kExpectedRequestTypeJson, nullptr, false);
   ASSERT_TRUE(expected_request_type_json.is_object());
-  DiscoveryResource resource("foos", "", "", resource_json);
+  DiscoveryResource resource("foos", "", "", "", resource_json);
   auto result = SynthesizeRequestType(method_json, resource, "Foo", "get");
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(result->json(), Eq(expected_request_type_json));
@@ -472,7 +472,7 @@ TEST(SynthesizeRequestTypeTest, MethodJsonMissingParameters) {
 })""";
   auto method_json = nlohmann::json::parse(kMethodJson, nullptr, false);
   ASSERT_TRUE(method_json.is_object());
-  DiscoveryResource resource("foos", "", "", resource_json);
+  DiscoveryResource resource("foos", "", "", "", resource_json);
   auto result =
       SynthesizeRequestType(method_json, resource, "Operation", "create");
   EXPECT_THAT(
@@ -547,7 +547,7 @@ TEST(SynthesizeRequestTypeTest, OperationResponseMissingRefInRequest) {
   auto const expected_request_type_json =
       nlohmann::json::parse(kExpectedRequestTypeJson, nullptr, false);
   ASSERT_TRUE(expected_request_type_json.is_object());
-  DiscoveryResource resource("foos", "", "", resource_json);
+  DiscoveryResource resource("foos", "", "", "", resource_json);
   auto result =
       SynthesizeRequestType(method_json, resource, "Operation", "create");
   EXPECT_THAT(
@@ -600,7 +600,8 @@ TEST(ProcessMethodRequestsAndResponsesTest, RequestWithOperationResponse) {
       nlohmann::json::parse(kOperationTypeJson, nullptr, false);
   ASSERT_TRUE(operation_type_json.is_object());
   std::map<std::string, DiscoveryResource> resources;
-  resources.emplace("foos", DiscoveryResource("foos", "", "", resource_json));
+  resources.emplace("foos",
+                    DiscoveryResource("foos", "", "", "", resource_json));
   std::map<std::string, DiscoveryTypeVertex> types;
   types.emplace("Operation", DiscoveryTypeVertex("", "", operation_type_json));
   auto result = ProcessMethodRequestsAndResponses(resources, types);
@@ -625,7 +626,8 @@ TEST(ProcessMethodRequestsAndResponsesTest, MethodWithEmptyRequest) {
       nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
   std::map<std::string, DiscoveryResource> resources;
-  resources.emplace("foos", DiscoveryResource("foos", "", "", resource_json));
+  resources.emplace("foos",
+                    DiscoveryResource("foos", "", "", "", resource_json));
   std::map<std::string, DiscoveryTypeVertex> types;
   auto result = ProcessMethodRequestsAndResponses(resources, types);
   ASSERT_STATUS_OK(result);
@@ -674,7 +676,8 @@ TEST(ProcessMethodRequestsAndResponsesTest, ResponseError) {
       nlohmann::json::parse(kOperationTypeJson, nullptr, false);
   ASSERT_TRUE(operation_type_json.is_object());
   std::map<std::string, DiscoveryResource> resources;
-  resources.emplace("foos", DiscoveryResource("foos", "", "", resource_json));
+  resources.emplace("foos",
+                    DiscoveryResource("foos", "", "", "", resource_json));
   std::map<std::string, DiscoveryTypeVertex> types;
   types.emplace("Operation", DiscoveryTypeVertex("", "", operation_type_json));
   auto result = ProcessMethodRequestsAndResponses(resources, types);
@@ -726,7 +729,8 @@ TEST(ProcessMethodRequestsAndResponsesTest, RequestError) {
       nlohmann::json::parse(kOperationTypeJson, nullptr, false);
   ASSERT_TRUE(operation_type_json.is_object());
   std::map<std::string, DiscoveryResource> resources;
-  resources.emplace("foos", DiscoveryResource("foos", "", "", resource_json));
+  resources.emplace("foos",
+                    DiscoveryResource("foos", "", "", "", resource_json));
   std::map<std::string, DiscoveryTypeVertex> types;
   types.emplace("Operation", DiscoveryTypeVertex("", "", operation_type_json));
   auto result = ProcessMethodRequestsAndResponses(resources, types);
@@ -782,7 +786,8 @@ TEST(ProcessMethodRequestsAndResponsesTest, TypeInsertError) {
       nlohmann::json::parse(kEmptyTypeJson, nullptr, false);
   ASSERT_TRUE(empty_type_json.is_object());
   std::map<std::string, DiscoveryResource> resources;
-  resources.emplace("foos", DiscoveryResource("foos", "", "", resource_json));
+  resources.emplace("foos",
+                    DiscoveryResource("foos", "", "", "", resource_json));
   std::map<std::string, DiscoveryTypeVertex> types;
   types.emplace("Operation",
                 DiscoveryTypeVertex("Operation", "", operation_type_json));
@@ -832,7 +837,10 @@ TEST(CreateFilesFromResourcesTest, NonEmptyResources) {
       nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
   std::map<std::string, DiscoveryResource> resources;
-  resources.emplace("foos", DiscoveryResource("foos", "", "", resource_json));
+  resources.emplace(
+      "foos",
+      DiscoveryResource("foos", "google.cloud.cpp.product_name.foos.version",
+                        "", "", resource_json));
   DiscoveryDocumentProperties props{"", "", "product_name", "version"};
   auto result = CreateFilesFromResources(resources, props, "tmp");
   ASSERT_THAT(result, SizeIs(1));
@@ -889,7 +897,8 @@ TEST(AssignResourcesAndTypesToFilesTest,
       nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
   std::map<std::string, DiscoveryResource> resources;
-  resources.emplace("foos", DiscoveryResource("foos", "", "", resource_json));
+  resources.emplace("foos",
+                    DiscoveryResource("foos", "", "", "", resource_json));
   std::map<std::string, DiscoveryTypeVertex> types;
   auto constexpr kSynthesizedTypeJson = R"""({
 "synthesized_request": true
