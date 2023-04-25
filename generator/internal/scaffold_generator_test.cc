@@ -286,6 +286,25 @@ TEST_F(ScaffoldGenerator, DoxygenOptionsPage) {
 )"""));
 }
 
+TEST_F(ScaffoldGenerator, DoxygenEnvironmentPage) {
+  auto const vars = ScaffoldVars(path(), service(), false);
+  std::ostringstream os;
+  GenerateDoxygenEnvironmentPage(os, vars);
+  auto const actual = std::move(os).str();
+  EXPECT_THAT(actual, AllOf(HasSubstr(R"""(
+@page test-env Environment Variables
+)"""),
+                            HasSubstr(R"""(
+@section test-env-logging Logging
+)"""),
+                            HasSubstr(R"""(
+@section test-env-endpoint Endpoint Overrides
+)"""),
+                            HasSubstr(R"""(
+@section test-env-project Setting the Default Project
+)""")));
+}
+
 TEST_F(ScaffoldGenerator, QuickstartReadme) {
   auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
