@@ -74,8 +74,8 @@ std::list<Reference> ExtractReferences(YamlContext const& ctx,
     if (ctx.mocked_ids.count(uid) != 0) return {};
     auto const name = [&] {
       auto qname = std::string_view{node.child("qualifiedname").child_value()};
-      auto it = ctx.mocked_functions_by_id.find(uid);
-      if (it == ctx.mocked_functions_by_id.end()) {
+      auto it = ctx.mocking_functions_by_id.find(uid);
+      if (it == ctx.mocking_functions_by_id.end()) {
         return std::string{qname};
       }
       auto const p = qname.find("::MOCK_METHOD");

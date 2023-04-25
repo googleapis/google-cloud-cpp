@@ -27,12 +27,12 @@ struct YamlContext {
   std::string library_root = "google/cloud/";
   std::string parent_id;
   Config config;
-  // Mocked function names, indexed by function name.
-  std::unordered_map<std::string, std::string> mocked_functions;
-  // Mocked functions, indexed by id.
+  // Mocking functions (the MOCK_METHOD() elements), indexed by function name.
+  std::unordered_map<std::string, std::string> mocking_functions;
+  // Mocking functions (the MOCK_METHOD() elements), indexed by their id.
+  std::unordered_map<std::string, std::string> mocking_functions_by_id;
+  // Mocked functions, indexed by id of the inherited function being mocked.
   std::unordered_set<std::string> mocked_ids;
-  // Mocked functions, indexed by id.
-  std::unordered_map<std::string, std::string> mocked_functions_by_id;
 };
 
 /// Creates a new context to recurse over @p node

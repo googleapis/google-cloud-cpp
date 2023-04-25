@@ -34,7 +34,7 @@ TEST(YamlContextTest, MockedFunctions) {
   parent.config.library = "kms";
   auto const actual = NestedYamlContext(parent, selected.node());
   EXPECT_THAT(
-      actual.mocked_functions,
+      actual.mocking_functions,
       UnorderedElementsAre(Pair("options",
                                 "classgoogle_1_1cloud_1_1kms__inventory__v1__"
                                 "mocks_1_1MockKeyDashboardServiceConnection_"
@@ -44,14 +44,7 @@ TEST(YamlContextTest, MockedFunctions) {
                                 "mocks_1_1MockKeyDashboardServiceConnection_"
                                 "1a789db998d71abf9016b64832d0c7a99e")));
   EXPECT_THAT(
-      actual.mocked_ids,
-      UnorderedElementsAre(
-          "classgoogle_1_1cloud_1_1kms__inventory__v1_1_"
-          "1KeyDashboardServiceConnection_1a922ac7ae75f6939947a07d843e863845",
-          "classgoogle_1_1cloud_1_1kms__inventory__v1_1_"
-          "1KeyDashboardServiceConnection_1a2518e5014c3adbc16e83281bd2a596a8"));
-  EXPECT_THAT(
-      actual.mocked_functions_by_id,
+      actual.mocking_functions_by_id,
       UnorderedElementsAre(Pair("classgoogle_1_1cloud_1_1kms__inventory__v1__"
                                 "mocks_1_1MockKeyDashboardServiceConnection_"
                                 "1a2bf84b7b96702bc1622f0e6c9f0babc4",
@@ -60,6 +53,13 @@ TEST(YamlContextTest, MockedFunctions) {
                                 "mocks_1_1MockKeyDashboardServiceConnection_"
                                 "1a789db998d71abf9016b64832d0c7a99e",
                                 "ListCryptoKeys")));
+  EXPECT_THAT(
+      actual.mocked_ids,
+      UnorderedElementsAre(
+          "classgoogle_1_1cloud_1_1kms__inventory__v1_1_"
+          "1KeyDashboardServiceConnection_1a922ac7ae75f6939947a07d843e863845",
+          "classgoogle_1_1cloud_1_1kms__inventory__v1_1_"
+          "1KeyDashboardServiceConnection_1a2518e5014c3adbc16e83281bd2a596a8"));
 }
 
 }  // namespace

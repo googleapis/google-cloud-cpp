@@ -283,8 +283,8 @@ bool AppendIfFunction(YAML::Emitter& yaml, YamlContext const& ctx,
   auto const name = std::string{node.child("name").child_value()};
   if (name == "MOCK_METHOD") return true;
 
-  auto const it = ctx.mocked_functions.find(name);
-  auto const is_mocked = it != ctx.mocked_functions.end();
+  auto const it = ctx.mocking_functions.find(name);
+  auto const is_mocked = it != ctx.mocking_functions.end();
   auto const id = is_mocked ? std::string{it->second}
                             : std::string{node.attribute("id").as_string()};
   auto const qualified_name =

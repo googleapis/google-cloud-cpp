@@ -21,14 +21,22 @@ namespace docfx {
 namespace {
 
 // We need to build a little data structure to deal with mocks. The member
-// functions of a mock appear twice. First Doxygen thinks there is a
-// MOCK_METHOD()
-std::unordered_map<std::string, std::string> MockedFunctions(
+// functions of a mock appear twice.
+// 1. Doxygen thinks there is a function called MOCK_METHOD(), this is the
+//    function referenced from other classes or documents.  It has an `id` that
+//    connects it to the mock class (as in `class...MockFoo_${method_hash}`).
+// 2. Doxygen also creates an entry for the inherited (mocked) function. This
+//    has the arguments, return type and so on, but its id duplicates the
+//    id of the function in the base class.
+//
+// What we do is use the information from the inherited function (from 2) and
+// give it the `uid` from the `MOCK_METHOD()` (from 1).
+std::unordered_map<std::string, std::string> MockingFunctions(
     Config const& config, pugi::xml_node const& node) {
   std::unordered_map<std::string, std::string> mocked;
   for (auto const& child : node.children("sectiondef")) {
     if (!IncludeInPublicDocuments(config, node)) continue;
-    auto more = MockedFunctions(config, child);
+    auto more = MockingFunctions(config, child);
     mocked.insert(more.begin(), more.end());
   }
   for (auto const& child : node.children("memberdef")) {
@@ -81,12 +89,12 @@ YamlContext NestedYamlContext(YamlContext const& ctx,
   auto const id = std::string{node.attribute("id").as_string()};
   auto nested = ctx;
   nested.parent_id = id;
-  nested.mocked_functions = MockedFunctions(ctx.config, node);
-  nested.mocked_ids = MockedIds(nested.mocked_functions, ctx.config, node);
-  nested.mocked_functions_by_id.clear();
-  for (auto const& [name, uid] : nested.mocked_functions) {
-    nested.mocked_functions_by_id[uid] = name;
+  nested.mocking_functions = MockingFunctions(ctx.config, node);
+  nested.mocking_functions_by_id.clear();
+  for (auto const& [name, uid] : nested.mocking_functions) {
+    nested.mocking_functions_by_id[uid] = name;
   }
+  nested.mocked_ids = MockedIds(nested.mocking_functions, ctx.config, node);
   return nested;
 }
 
