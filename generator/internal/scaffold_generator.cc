@@ -165,6 +165,7 @@ void GenerateScaffold(
       {"BUILD.bazel", GenerateBuild},
       {"CMakeLists.txt", GenerateCMakeLists},
       {"doc/main.dox", GenerateDoxygenMainPage},
+      {"doc/environment-variables.dox", GenerateDoxygenEnvironmentPage},
       {"doc/options.dox", GenerateDoxygenOptionsPage},
       {"quickstart/README.md", GenerateQuickstartReadme},
       {"quickstart/quickstart.cc", GenerateQuickstartSkeleton},
@@ -582,29 +583,6 @@ which should give you a taste of the $title$ C++ client library API.
 
 @snippet quickstart.cc all
 
-## Environment Variables
-
-<!-- inject-endpoint-env-vars-start -->
-<!-- inject-endpoint-env-vars-end -->
-
-- `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
-  calls. The library injects an additional Stub decorator that prints each gRPC
-  request and response.  Unless you have configured your own logging backend,
-  you should also set `GOOGLE_CLOUD_CPP_ENABLE_CLOG` to produce any output on
-  the program's console.
-
-- `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc-streams` turns on tracing for streaming
-  gRPC calls. This can produce a lot of output, so use with caution!
-
-- `GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...` modifies the behavior of gRPC tracing,
-  including whether messages will be output on multiple lines, or whether
-  string/bytes fields will be truncated.
-
-- `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` turns on logging in the library. Basically
-  the library always "logs" but the logging infrastructure has no backend to
-  actually print anything until the application sets a backend or it sets this
-  environment variable.
-
 ## Error Handling
 
 [status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
@@ -670,6 +648,58 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 // <!-- inject-endpoint-pages-end -->
+)""";
+  google::protobuf::io::OstreamOutputStream output(&os);
+  google::protobuf::io::Printer printer(&output, '$');
+  printer.Print(variables, kText);
+}
+
+void GenerateDoxygenEnvironmentPage(
+    std::ostream& os, std::map<std::string, std::string> const& variables) {
+  auto constexpr kText = R"""(/*!
+
+@page $library$-env Environment Variables
+
+A number of environment variables can be used to configure the behavior of
+the library. There are also functions to configure this behavior in code. The
+environment variables are convenient when troubleshooting problems.
+
+@section $library$-env-endpoint Endpoint Overrides
+<!-- inject-endpoint-env-vars-start -->
+<!-- inject-endpoint-env-vars-end -->
+
+@see google::cloud::EndpointOption
+
+@section $library$-env-logging Logging
+
+`GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc`: turns on tracing for most gRPC
+calls. The library injects an additional Stub decorator that prints each gRPC
+request and response.  Unless you have configured your own logging backend,
+you should also set `GOOGLE_CLOUD_CPP_ENABLE_CLOG` to produce any output on
+the program's console.
+
+@see google::cloud::TracingComponentsOption
+
+`GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...`: modifies the behavior of gRPC tracing,
+including whether messages will be output on multiple lines, or whether
+string/bytes fields will be truncated.
+
+@see google::cloud::TracingOptionsOption
+
+`GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes`: turns on logging in the library, basically
+the library always "logs" but the logging infrastructure has no backend to
+actually print anything until the application sets a backend or they set this
+environment variable.
+
+@see google::cloud::LogBackend
+@see google::cloud::LogSink
+
+@section $library$-env-project Setting the Default Project
+
+`GOOGLE_CLOUD_PROJECT=...`: is used in examples and integration tests to
+configure the GCP project. This has no effect in the library.
+
+*/
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');

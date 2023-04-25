@@ -6,11 +6,18 @@ A number of environment variables can be used to configure the behavior of
 the library.  There are also functions to configure this behavior in code. The
 environment variables are convenient when troubleshooting problems.
 
+@section pubsub-env-endpoint Endpoint Overrides
+
+`PUBSUB_EMULATOR_HOST=host:port`: tells the library to connect to the
+specified emulator rather than the default endpoint. Intended for testing only.
+
+@see google::cloud::EndpointOption
+
 @section pubsub-env-logging Logging
 
 `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc`: turns on tracing for most gRPC
 calls. The library injects an additional Stub decorator that prints each gRPC
-request and response.  Unless you have configured you own logging backend,
+request and response.  Unless you have configured your own logging backend,
 you should also set `GOOGLE_CLOUD_CPP_ENABLE_CLOG` to produce any output on
 the program's console.
 
@@ -29,13 +36,6 @@ environment variable.
 
 @see google::cloud::LogBackend
 @see google::cloud::LogSink
-
-@section pubsub-env-endpoint Endpoint Overrides
-
-`PUBSUB_EMULATOR_HOST=host:port`: tells the library to connect to the
-specified emulator rather than the default endpoint. Intended for testing only.
-
-@see google::cloud::EndpointOption
 
 @section pubsub-env-project Setting the Default Project
 
