@@ -222,8 +222,9 @@ message GetMyResourcesRequest {
       "GetMyResourcesRequest", "my.package.name", get_request_type_json);
   r.AddRequestType("DoFooRequest", &do_foo_request_type);
   r.AddRequestType("GetMyResourcesRequest", &get_request_type);
-  DiscoveryTypeVertex t3("Operation", "other.package", operation_type_json);
-  r.AddResponseType("Operation", &t3);
+  DiscoveryTypeVertex operation_type("Operation", "other.package",
+                                     operation_type_json);
+  r.AddResponseType("Operation", &operation_type);
   DiscoveryFile f(&r, "my_path", "my.package.name", "v1",
                   r.GetRequestTypesList());
   f.AddImportPath("path/to/import.proto");
@@ -322,8 +323,9 @@ message GetMyResourcesRequest {
       "GetMyResourcesRequest", "my.package.name", get_request_type_json);
   r.AddRequestType("DoFooRequest", &do_foo_request_type);
   r.AddRequestType("GetMyResourcesRequest", &get_request_type);
-  DiscoveryTypeVertex t3("Operation", "other.package", operation_type_json);
-  r.AddResponseType("Operation", &t3);
+  DiscoveryTypeVertex operation_type("Operation", "other.package",
+                                     operation_type_json);
+  r.AddResponseType("Operation", &operation_type);
   DiscoveryFile f(&r, "my_path", "my.package.name", "v1",
                   r.GetRequestTypesList());
   std::map<std::string, DiscoveryTypeVertex> types;
@@ -553,8 +555,9 @@ TEST(DiscoveryFile, FormatFileTypeMissingError) {
                                        get_request_type_json);
   r.AddRequestType("DoFooRequest", &do_foo_request_type);
   r.AddRequestType("GetMyResourcesRequest", &get_request_type);
-  DiscoveryTypeVertex t3("Operation", "other.package", operation_type_json);
-  r.AddResponseType("Operation", &t3);
+  DiscoveryTypeVertex operation_type("Operation", "other.package",
+                                     operation_type_json);
+  r.AddResponseType("Operation", &operation_type);
 
   DiscoveryFile f(&r, "my_path", "my.package.name", "v1",
                   r.GetRequestTypesList());
