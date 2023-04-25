@@ -15,7 +15,6 @@
 #include "generator/internal/discovery_file.h"
 #include "generator/internal/codegen_utils.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
-#include "google/cloud/internal/make_status.h"
 #include "absl/strings/str_format.h"
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
@@ -98,17 +97,14 @@ package $package_name$;
 
 Status DiscoveryFile::WriteFile(
     std::string const& product_name,
-    std::map<std::string, DiscoveryTypeVertex> const* types) const {
-  if (types == nullptr) {
-    return internal::InternalError("types is nullptr");
-  }
+    std::map<std::string, DiscoveryTypeVertex> const& types) const {
   std::string version_dir_path = file_path_.substr(0, file_path_.rfind('/'));
   std::string service_dir_path =
       version_dir_path.substr(0, version_dir_path.rfind('/'));
   MakeDirectory(service_dir_path);
   MakeDirectory(version_dir_path);
   std::ofstream os(file_path_);
-  return FormatFile(product_name, *types, os);
+  return FormatFile(product_name, types, os);
 }
 
 }  // namespace generator_internal

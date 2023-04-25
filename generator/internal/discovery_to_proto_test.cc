@@ -213,10 +213,9 @@ TEST(DetermineAndVerifyResponseTypeNameTest, ResponseWithRef) {
   DiscoveryResource resource;
   std::map<std::string, DiscoveryTypeVertex> types;
   types.emplace("Foo", DiscoveryTypeVertex{"Foo", "", response_type_json});
-  auto response =
-      DetermineAndVerifyResponseTypeName(method_json, resource, types);
+  auto response = DetermineAndVerifyResponseType(method_json, resource, types);
   ASSERT_STATUS_OK(response);
-  EXPECT_THAT(*response, Eq("Foo"));
+  EXPECT_THAT((*response)->name(), Eq("Foo"));
 }
 
 TEST(DetermineAndVerifyResponseTypeNameTest, ResponseMissingRef) {
@@ -233,8 +232,7 @@ TEST(DetermineAndVerifyResponseTypeNameTest, ResponseMissingRef) {
   DiscoveryResource resource;
   std::map<std::string, DiscoveryTypeVertex> types;
   types.emplace("Foo", DiscoveryTypeVertex{"Foo", "", response_type_json});
-  auto response =
-      DetermineAndVerifyResponseTypeName(method_json, resource, types);
+  auto response = DetermineAndVerifyResponseType(method_json, resource, types);
   EXPECT_THAT(response, StatusIs(StatusCode::kInvalidArgument,
                                  HasSubstr("Missing $ref field in response")));
 }
@@ -250,10 +248,9 @@ TEST(DetermineAndVerifyResponseTypeNameTest, ResponseFieldMissing) {
   DiscoveryResource resource;
   std::map<std::string, DiscoveryTypeVertex> types;
   types.emplace("Foo", DiscoveryTypeVertex{"Foo", "", response_type_json});
-  auto response =
-      DetermineAndVerifyResponseTypeName(method_json, resource, types);
+  auto response = DetermineAndVerifyResponseType(method_json, resource, types);
   ASSERT_STATUS_OK(response);
-  EXPECT_THAT(*response, IsEmpty());
+  EXPECT_THAT(*response, Eq(nullptr));
 }
 
 TEST(SynthesizeRequestTypeTest, OperationResponseWithRefRequestField) {
