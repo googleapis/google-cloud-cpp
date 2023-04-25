@@ -90,6 +90,13 @@ std::string Summary(pugi::xml_node const& node) {
     AppendIfBriefDescription(os, ctx, brief);
     ctx = MarkdownContext{};
   }
+  return std::move(os).str();
+}
+
+std::string Conceptual(pugi::xml_node const& node) {
+  std::ostringstream os;
+  MarkdownContext ctx;
+  ctx.paragraph_start = "";
   auto description = node.child("description");
   if (!description.empty()) {
     AppendDescriptionType(os, ctx, description);
@@ -98,6 +105,18 @@ std::string Summary(pugi::xml_node const& node) {
   auto detailed = node.child("detaileddescription");
   if (!detailed.empty()) AppendIfDetailedDescription(os, ctx, detailed);
   return std::move(os).str();
+}
+
+void AppendDescription(YAML::Emitter& yaml, pugi::xml_node const& node) {
+  auto const summary = Summary(node);
+  if (!summary.empty()) {
+    yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
+  }
+  auto const conceptual = Conceptual(node);
+  if (!conceptual.empty()) {
+    yaml << YAML::Key << "conceptual" << YAML::Value << YAML::Literal
+         << conceptual;
+  }
 }
 
 }  // namespace
@@ -155,7 +174,6 @@ bool AppendIfEnumValue(YAML::Emitter& yaml, YamlContext const& ctx,
   if (std::string_view{node.name()} != "enumvalue") return false;
   auto const id = std::string_view{node.attribute("id").as_string()};
   auto const name = std::string_view{node.child("name").child_value()};
-  auto const summary = Summary(node);
 
   yaml << YAML::BeginMap                                               //
        << YAML::Key << "uid" << YAML::Value << id                      //
@@ -164,9 +182,7 @@ bool AppendIfEnumValue(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "parent" << YAML::Value << ctx.parent_id        //
        << YAML::Key << "type" << YAML::Value << "enumvalue"            //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;
-  if (!summary.empty()) {
-    yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
-  }
+  AppendDescription(yaml, node);
   yaml << YAML::EndMap;
   return true;
 }
@@ -189,10 +205,7 @@ bool AppendIfEnum(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "type" << YAML::Value << "enum"                      //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendEnumSyntax(yaml, ctx, node);
-  auto const summary = Summary(node);
-  if (!summary.empty()) {
-    yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
-  }
+  AppendDescription(yaml, node);
   yaml << YAML::EndMap;
   auto nested = ctx;
   nested.parent_id = id;
@@ -219,10 +232,7 @@ bool AppendIfTypedef(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "type" << YAML::Value << "typedef"                   //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendTypedefSyntax(yaml, ctx, node);
-  auto const summary = Summary(node);
-  if (!summary.empty()) {
-    yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
-  }
+  AppendDescription(yaml, node);
   yaml << YAML::EndMap;
   return true;
 }
@@ -244,10 +254,7 @@ bool AppendIfFriend(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "type" << YAML::Value << "friend"                    //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendFriendSyntax(yaml, ctx, node);
-  auto const summary = Summary(node);
-  if (!summary.empty()) {
-    yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
-  }
+  AppendDescription(yaml, node);
   yaml << YAML::EndMap;
   return true;
 }
@@ -269,10 +276,7 @@ bool AppendIfVariable(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "type" << YAML::Value << "variable"                  //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendVariableSyntax(yaml, ctx, node);
-  auto const summary = Summary(node);
-  if (!summary.empty()) {
-    yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
-  }
+  AppendDescription(yaml, node);
   yaml << YAML::EndMap;
   return true;
 }
@@ -300,18 +304,21 @@ bool AppendIfFunction(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "type" << YAML::Value << "function"                  //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendFunctionSyntax(yaml, ctx, node);
+  auto const summary = Summary(node);
+  if (!summary.empty()) {
+    yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
+  }
+  auto const conceptual = Conceptual(node);
   auto constexpr kMockedSummary =
       R"md(This function is implemented using [gMock]'s `MOCK_METHOD()`.
 Consult the gMock documentation to use this mock in your tests.
 
 [gMock]: https://google.github.io/googletest)md";
-  auto const summary = Summary(node);
-  if (!summary.empty() || is_mocked) {
-    auto const full_summary =
-        summary.empty() ? std::string(kMockedSummary)
-                        : (summary + "\n\n" + std::string{kMockedSummary});
-    yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal
-         << full_summary;
+  if (!conceptual.empty() || is_mocked) {
+    auto const full = conceptual.empty()
+                          ? std::string(kMockedSummary)
+                          : (conceptual + "\n\n" + std::string{kMockedSummary});
+    yaml << YAML::Key << "conceptual" << YAML::Value << YAML::Literal << full;
   }
   yaml << YAML::EndMap;
   return true;
@@ -337,10 +344,7 @@ bool AppendIfNamespace(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "type" << YAML::Value << "namespace"                 //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendNamespaceSyntax(yaml, ctx, node);
-  auto const summary = Summary(node);
-  if (!summary.empty()) {
-    yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
-  }
+  AppendDescription(yaml, node);
   auto const children = Children(ctx, node);
   if (!children.empty()) {
     yaml << YAML::Key << "children" << YAML::Value << children;
@@ -363,10 +367,7 @@ bool AppendIfClass(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "type" << YAML::Value << "class"                     //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendClassSyntax(yaml, ctx, node);
-  auto const summary = Summary(node);
-  if (!summary.empty()) {
-    yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
-  }
+  AppendDescription(yaml, node);
   auto const children = Children(ctx, node);
   if (!children.empty()) {
     yaml << YAML::Key << "children" << YAML::Value << children;
@@ -389,10 +390,7 @@ bool AppendIfStruct(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "type" << YAML::Value << "struct"                    //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendStructSyntax(yaml, ctx, node);
-  auto const summary = Summary(node);
-  if (!summary.empty()) {
-    yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
-  }
+  AppendDescription(yaml, node);
   auto const children = Children(ctx, node);
   if (!children.empty()) {
     yaml << YAML::Key << "children" << YAML::Value << children;

@@ -182,16 +182,20 @@ bool AppendIfXRefSect(std::ostream& os, MarkdownContext const& ctx,
 // clang-format on
 void AppendDescriptionType(std::ostream& os, MarkdownContext const& ctx,
                            pugi::xml_node const& node) {
+  auto nested = ctx;
+  bool first_paragraph = true;
   for (auto const& child : node) {
+    if (!first_paragraph) nested.paragraph_start = "\n\n";
+    first_paragraph = false;
     // Unexpected: title, internal -> we do not use this...
-    if (AppendIfParagraph(os, ctx, child)) continue;
-    if (AppendIfSect1(os, ctx, child)) continue;
+    if (AppendIfParagraph(os, nested, child)) continue;
+    if (AppendIfSect1(os, nested, child)) continue;
     // While the XML schema does not allow for `sect2`, `sect3`, or `sect4`
     // elements, in practice Doxygen does generate them. And we use them in at
     // least one page.
-    if (AppendIfSect2(os, ctx, child)) continue;
-    if (AppendIfSect3(os, ctx, child)) continue;
-    if (AppendIfSect4(os, ctx, child)) continue;
+    if (AppendIfSect2(os, nested, child)) continue;
+    if (AppendIfSect3(os, nested, child)) continue;
+    if (AppendIfSect4(os, nested, child)) continue;
     UnknownChildType(__func__, child);
   }
 }
