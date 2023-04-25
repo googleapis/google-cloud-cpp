@@ -244,7 +244,7 @@ void AppendFunctionSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
        << FunctionSyntaxContent(node);
   auto const rettype = LinkedTextType(node.child("type"));
   if (!rettype.empty()) {
-    yaml << YAML::Key << "returns" << YAML::Value   //
+    yaml << YAML::Key << "return" << YAML::Value    //
          << YAML::BeginMap                          //
          << YAML::Key << "var_type" << YAML::Value  //
          << YAML::Literal << rettype                //

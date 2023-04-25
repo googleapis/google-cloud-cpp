@@ -733,7 +733,7 @@ TEST(Doxygen2Syntax, Function) {
     google::cloud::CompletionQueue::MakeRelativeTimer (
         std::chrono::duration< Rep, Period > duration
       )
-  returns:
+  return:
     var_type: |
       future< StatusOr< std::chrono::system_clock::time_point > >
   parameters:
