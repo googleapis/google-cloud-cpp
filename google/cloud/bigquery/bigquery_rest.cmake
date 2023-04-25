@@ -22,6 +22,8 @@ add_library(
     v2/minimal/internal/common_v2_resources.h
     v2/minimal/internal/dataset.cc
     v2/minimal/internal/dataset.h
+    v2/minimal/internal/dataset_idempotency_policy.cc
+    v2/minimal/internal/dataset_idempotency_policy.h
     v2/minimal/internal/dataset_metadata.cc
     v2/minimal/internal/dataset_metadata.h
     v2/minimal/internal/dataset_request.cc
@@ -32,6 +34,7 @@ add_library(
     v2/minimal/internal/dataset_rest_stub.h
     v2/minimal/internal/dataset_rest_stub_factory.cc
     v2/minimal/internal/dataset_rest_stub_factory.h
+    v2/minimal/internal/dataset_retry_policy.h
     v2/minimal/internal/job.cc
     v2/minimal/internal/job.h
     v2/minimal/internal/job_client.cc
@@ -146,6 +149,7 @@ function (bigquery_rest_define_tests)
         # cmake-format: sort
         v2/minimal/internal/bigquery_http_response_test.cc
         v2/minimal/internal/common_v2_resources_test.cc
+        v2/minimal/internal/dataset_idempotency_policy_test.cc
         v2/minimal/internal/dataset_metadata_test.cc
         v2/minimal/internal/dataset_request_test.cc
         v2/minimal/internal/dataset_response_test.cc
