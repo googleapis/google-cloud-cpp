@@ -183,8 +183,9 @@ grpc::Status CbtTestProxy::ReadRows(::grpc::ServerContext*,
   }
   Filter const filter(request->request().filter());
   auto const rows_limit = request->request().rows_limit();
-  RowReader reader = table->ReadRows(std::move(row_set),
-                                     std::max(int64_t(0), rows_limit), filter);
+  RowReader reader =
+      table->ReadRows(std::move(row_set),
+                      std::max(static_cast<int64_t>(0), rows_limit), filter);
 
   Status status;
   for (auto const& row : reader) {
@@ -200,7 +201,7 @@ grpc::Status CbtTestProxy::ReadRows(::grpc::ServerContext*,
         response->row_size() >= request->cancel_after_rows()) {
       reader.Cancel();
       GCP_LOG(INFO) << "Canceling ReadRows() to respect cancel_after_rows="
-                     << request->cancel_after_rows();
+                    << request->cancel_after_rows();
       break;
     }
   }
