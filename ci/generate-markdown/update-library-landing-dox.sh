@@ -29,6 +29,7 @@ readonly LIBRARY=$1
 
 readonly LIB="google/cloud/${LIBRARY}"
 readonly MAIN_DOX="google/cloud/${LIBRARY}/doc/main.dox"
+readonly ENVIRONMENT_DOX="google/cloud/${LIBRARY}/doc/environment-variables.dox"
 if [[ ! -r "${MAIN_DOX}" ]]; then
   exit 0
 fi
@@ -57,7 +58,7 @@ while IFS= read -r -d $'\0' option_defaults_cc; do
   env_vars[$(printf '%s\\\n' "${env_var[@]}")]=""
 done < <(git ls-files -z -- "${LIB}/*_option_defaults.cc")
 mapfile -d '' sorted_env_vars < <(printf '%s\0' "${!env_vars[@]}" | sort -z)
-sed -i -f - "${MAIN_DOX}" <<EOT
+sed -i -f - "${ENVIRONMENT_DOX}" <<EOT
 /${inject_start}/,/${inject_end}/c \\
 ${inject_start}\\
 $(printf '%s\n' "${sorted_env_vars[@]}")
