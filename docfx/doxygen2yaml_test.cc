@@ -854,6 +854,11 @@ items:
       Create a timer that fires after the `duration`.
 
       A longer description here.
+
+      This function is implemented using [gMock]'s `MOCK_METHOD()`.
+      Consult the gMock documentation to use this mock in your tests.
+
+      [gMock]: https://google.github.io/googletest
 )yml";
 
   pugi::xml_document doc;

@@ -81,14 +81,6 @@ void CompoundRecurse(YAML::Emitter& yaml, YamlContext const& ctx,
   }
 }
 
-YamlContext NestedYamlContext(YamlContext const& ctx,
-                              pugi::xml_node const& node) {
-  auto const id = std::string{node.attribute("id").as_string()};
-  auto nested = ctx;
-  nested.parent_id = id;
-  return nested;
-}
-
 std::string Summary(pugi::xml_node const& node) {
   std::ostringstream os;
   MarkdownContext ctx;
@@ -288,10 +280,15 @@ bool AppendIfVariable(YAML::Emitter& yaml, YamlContext const& ctx,
 bool AppendIfFunction(YAML::Emitter& yaml, YamlContext const& ctx,
                       pugi::xml_node const& node) {
   if (kind(node) != "function") return false;
-  auto const id = std::string_view{node.attribute("id").as_string()};
+  auto const name = std::string{node.child("name").child_value()};
+  if (name == "MOCK_METHOD") return true;
+
+  auto const it = ctx.mocking_functions.find(name);
+  auto const is_mocked = it != ctx.mocking_functions.end();
+  auto const id = is_mocked ? std::string{it->second}
+                            : std::string{node.attribute("id").as_string()};
   auto const qualified_name =
       std::string_view{node.child("qualifiedname").child_value()};
-  auto const name = std::string_view{node.child("name").child_value()};
 
   yaml << YAML::BeginMap                                                    //
        << YAML::Key << "uid" << YAML::Value << id                           //
@@ -303,9 +300,18 @@ bool AppendIfFunction(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "type" << YAML::Value << "function"                  //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendFunctionSyntax(yaml, ctx, node);
+  auto constexpr kMockedSummary =
+      R"md(This function is implemented using [gMock]'s `MOCK_METHOD()`.
+Consult the gMock documentation to use this mock in your tests.
+
+[gMock]: https://google.github.io/googletest)md";
   auto const summary = Summary(node);
-  if (!summary.empty()) {
-    yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
+  if (!summary.empty() || is_mocked) {
+    auto const full_summary =
+        summary.empty() ? std::string(kMockedSummary)
+                        : (summary + "\n\n" + std::string{kMockedSummary});
+    yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal
+         << full_summary;
   }
   yaml << YAML::EndMap;
   return true;
@@ -366,10 +372,7 @@ bool AppendIfClass(YAML::Emitter& yaml, YamlContext const& ctx,
     yaml << YAML::Key << "children" << YAML::Value << children;
   }
   yaml << YAML::EndMap;
-  // TODO(#11233) - better handling for duplicate functions in Mock classes.
-  if (name.find("::Mock") == std::string_view::npos) {  // NOLINT
-    CompoundRecurse(yaml, NestedYamlContext(ctx, node), node);
-  }
+  CompoundRecurse(yaml, NestedYamlContext(ctx, node), node);
   return true;
 }
 

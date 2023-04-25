@@ -16,7 +16,10 @@
 #define GOOGLE_CLOUD_CPP_DOCFX_YAML_CONTEXT_H
 
 #include "docfx/config.h"
+#include <pugixml.hpp>
 #include <string>
+#include <unordered_map>
+#include <unordered_set>
 
 namespace docfx {
 
@@ -24,7 +27,17 @@ struct YamlContext {
   std::string library_root = "google/cloud/";
   std::string parent_id;
   Config config;
+  // Mocking functions (the `MOCK_METHOD()` elements), indexed by function name.
+  std::unordered_map<std::string, std::string> mocking_functions;
+  // Mocking functions (the `MOCK_METHOD()` elements), indexed by their id.
+  std::unordered_map<std::string, std::string> mocking_functions_by_id;
+  // The id of inherited functions mocked via `MOCK_METHOD()`.
+  std::unordered_set<std::string> mocked_ids;
 };
+
+/// Creates a new context to recurse over @p node
+YamlContext NestedYamlContext(YamlContext const& ctx,
+                              pugi::xml_node const& node);
 
 }  // namespace docfx
 

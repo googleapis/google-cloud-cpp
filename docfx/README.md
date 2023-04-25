@@ -17,8 +17,7 @@ in the [How-to Guide](/doc/contributor/howto-guide-setup-environment.md).
 
 ```
 cd google-cloud-cpp
-DOCKER_NETWORK=host ci/cloudbuild/build.sh -t publish-docs-pr
-xsltproc build-out/fedora-37-cmake-publish-docs/cmake-out/google/cloud/xml/{combine.xslt,index.xml} >../common.doxygen.xml
+ci/cloudbuild/build.sh -t publish-docs-pr
 ```
 
 ### Clone Google's tools to process DocFX
@@ -40,9 +39,10 @@ git clone https://github.com/microsoft/vcpkg.git $HOME/vcpkg
 ```
 cd google-cloud-cpp
 cmake -S . -B .build -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
+PUBLISH=$PWD/build-out/fedora-37-cmake-publish-docs/cmake-out/google/cloud
 cmake --build .build/ --target docfx/all \
   && rm -f $HOME/doc-pipeline/testdata/cpp/* \
-  && env -C $HOME/doc-pipeline/testdata/cpp $PWD/.build/docfx/doxygen2docfx $HOME/common.doxygen.xml common 2.9.0
+  && env -C $HOME/doc-pipeline/testdata/cpp $PWD/.build/docfx/doxygen2docfx $PUBLISH/xml/cloud.doxygen.xml cloud 2.9.0
 ```
 
 ### Run the DocFX pipeline over the generated files
@@ -65,27 +65,23 @@ less $HOME/doc-pipeline/site/namespacegoogle.html
 less $HOME/doc-pipeline/site/indexpage.html
 ```
 
-### Testing with one or all Libraries
+### Testing a library other than the common library
 
-This is a bit slow, but runs all the libraries through the docfx tool. First
-prepare the workspace for the `publish-docs` build:
-
-```
-ci/cloudbuild/build.sh -t publish-docs-pr
-```
-
-Then invoke the docfx tool in one library, for example:
+Run the previous steps and then:
 
 ```
-ci/cloudbuild/build.sh -t publish-docs-pr  --docker-shell
-# Run this inside the docker shell
-cmake --build cmake-out --target storage-docfx
+cp $HOME/doc-pipeline/site/xrefmap.yml build-out
+cmake --build .build/ --target docfx/all \
+  && rm -f $HOME/doc-pipeline/testdata/cpp/* \
+  && env -C $HOME/doc-pipeline/testdata/cpp $PWD/.build/docfx/doxygen2docfx $PUBLISH/secretmanager/xml/secretmanager.doxygen.xml secretmanager 2.9.0
+sed '1,2d' build-out/xrefmap.yml >>$HOME/doc-pipeline/testdata/cpp/toc.yml
+sed -i '6d' $HOME/doc-pipeline/testdata/cpp/docs.metadata.json
 ```
 
-Or to generate the documents for all libraries:
-
 ```
-ci/cloudbuild/build.sh -t publish-docs-pr  --docker-shell
-# Run this inside the docker shell
-cmake --build cmake-out --target all-docfx
+env -C $HOME/doc-pipeline \
+    INPUT=testdata/cpp \
+    TRAMPOLINE_BUILD_FILE=./generate.sh \
+    TRAMPOLINE_IMAGE=gcr.io/cloud-devrel-kokoro-resources/docfx \
+    TRAMPOLINE_DOCKERFILE=docfx/Dockerfile ci/trampoline_v2.sh
 ```

@@ -49,5 +49,6 @@ docfx_srcs = [
     "parse_arguments.cc",
     "public_docs.cc",
     "toc_entry.cc",
+    "yaml_context.cc",
     "yaml_emit.cc",
 ]
