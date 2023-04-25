@@ -558,7 +558,7 @@ items:
           path: google/cloud/idempotency.h
     summary: |
       Whether a request is [idempotent](https://en.wikipedia.org/wiki/Idempotence).
-
+    conceptual: |
       When a RPC fails with a retryable error, the
       `google-cloud-cpp` client libraries automatically
       retry the RPC **if** the RPC is
@@ -672,7 +672,7 @@ items:
           path: google/cloud/grpc_options.h
     summary: |
       A short description of the thing.
-
+    conceptual: |
       The rarely used `<description>` would go here.
 
       A longer description would go here.
@@ -750,7 +750,7 @@ items:
           path: google/cloud/status.h
     summary: |
       A short description of the thing.
-
+    conceptual: |
       A longer description would go here.
 )yml";
 
@@ -852,7 +852,7 @@ items:
           path: google/cloud/completion_queue.h
     summary: |
       Create a timer that fires after the `duration`.
-
+    conceptual: |
       A longer description here.
 
       This function is implemented using [gMock]'s `MOCK_METHOD()`.
@@ -942,7 +942,7 @@ items:
           path: google/cloud/mocks/mock_stream_range.h
     summary: |
       Contains helpers for testing the Google Cloud C++ Client Libraries.
-
+    conceptual: |
       The symbols defined in this namespace are part of
       `google-cloud-cpp`'s public API. Application
       developers may use them when mocking the client libraries in their own
