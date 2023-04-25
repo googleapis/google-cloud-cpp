@@ -15,6 +15,7 @@
 #include "generator/internal/discovery_file.h"
 #include "generator/internal/codegen_utils.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/make_status.h"
 #include "absl/strings/str_format.h"
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
@@ -50,8 +51,10 @@ DiscoveryFile::DiscoveryFile(DiscoveryResource const* resource,
       version_(std::move(version)),
       types_(std::move(types)) {}
 
-Status DiscoveryFile::FormatFile(std::string const& product_name,
-                                 std::ostream& output_stream) const {
+Status DiscoveryFile::FormatFile(
+    std::string const& product_name,
+    std::map<std::string, DiscoveryTypeVertex> const& types,
+    std::ostream& output_stream) const {
   std::map<std::string, std::string> const vars = {
       {"copyright_year", CurrentCopyrightYear()},
       {"package_name", package_name_},
@@ -84,7 +87,7 @@ package $package_name$;
   }
 
   for (auto const& t : types_) {
-    auto message = t->JsonToProtobufMessage();
+    auto message = t->JsonToProtobufMessage(types, package_name_);
     if (!message) return std::move(message).status();
     printer.Print("\n");
     printer.Print(vars, std::move(message)->c_str());
@@ -93,14 +96,19 @@ package $package_name$;
   return {};
 }
 
-Status DiscoveryFile::WriteFile(std::string const& product_name) const {
+Status DiscoveryFile::WriteFile(
+    std::string const& product_name,
+    std::map<std::string, DiscoveryTypeVertex> const* types) const {
+  if (types == nullptr) {
+    return internal::InternalError("types is nullptr");
+  }
   std::string version_dir_path = file_path_.substr(0, file_path_.rfind('/'));
   std::string service_dir_path =
       version_dir_path.substr(0, version_dir_path.rfind('/'));
   MakeDirectory(service_dir_path);
   MakeDirectory(version_dir_path);
   std::ofstream os(file_path_);
-  return FormatFile(product_name, os);
+  return FormatFile(product_name, *types, os);
 }
 
 }  // namespace generator_internal

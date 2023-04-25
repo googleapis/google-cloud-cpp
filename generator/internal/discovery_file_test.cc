@@ -131,9 +131,9 @@ auto constexpr kGetRequestTypeJson = R"""({
   }
 })""";
 
+auto constexpr kOperationTypeJson = R"""({})""";
+
 TEST(DiscoveryFile, FormatFileWithImport) {
-  // TODO(#11353): enable this when package PRs are finished.
-  GTEST_SKIP();
   auto constexpr kExpectedProto = R"""(// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -161,7 +161,7 @@ service MyResources {
   option (google.api.oauth_scopes) =
     "https://www.googleapis.com/auth/cloud-platform";
 
-  rpc DoFoo(DoFooRequest) returns (google.cloud.cpp.my_product.v1.Operation) {
+  rpc DoFoo(DoFooRequest) returns (other.package.Operation) {
     option (google.api.http) = {
       post: "my/service/projects/{project}/zones/{zone}/myResources/{foo_id}/doFoo"
       body: "my_foo_resource"
@@ -205,32 +205,38 @@ message GetMyResourcesRequest {
 )""";
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
+  auto operation_type_json =
+      nlohmann::json::parse(kOperationTypeJson, nullptr, false);
+  ASSERT_TRUE(operation_type_json.is_object());
   auto do_foo_request_type_json =
       nlohmann::json::parse(kDoFooRequestTypeJson, nullptr, false);
   ASSERT_TRUE(do_foo_request_type_json.is_object());
   auto get_request_type_json =
       nlohmann::json::parse(kGetRequestTypeJson, nullptr, false);
   ASSERT_TRUE(get_request_type_json.is_object());
-  DiscoveryResource r("myResources", "", "https://default.host", "my/service",
-                      resource_json);
-  DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "",
+  DiscoveryResource r("myResources", "my.package.name", "https://default.host",
+                      "my/service", resource_json);
+  DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "my.package.name",
                                           do_foo_request_type_json);
-  DiscoveryTypeVertex get_request_type("GetMyResourcesRequest", "",
-                                       get_request_type_json);
+  DiscoveryTypeVertex get_request_type(
+      "GetMyResourcesRequest", "my.package.name", get_request_type_json);
   r.AddRequestType("DoFooRequest", &do_foo_request_type);
   r.AddRequestType("GetMyResourcesRequest", &get_request_type);
+  DiscoveryTypeVertex operation_type("Operation", "other.package",
+                                     operation_type_json);
+  r.AddResponseType("Operation", &operation_type);
   DiscoveryFile f(&r, "my_path", "my.package.name", "v1",
                   r.GetRequestTypesList());
   f.AddImportPath("path/to/import.proto");
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
   std::stringstream os;
-  auto result = f.FormatFile("my_product", os);
+  auto result = f.FormatFile("my_product", types, os);
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(os.str(), Eq(kExpectedProto));
 }
 
 TEST(DiscoveryFile, FormatFileWithoutImports) {
-  // TODO(#11353): enable this when package PRs are finished.
-  GTEST_SKIP();
   auto constexpr kExpectedProto = R"""(// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -256,7 +262,7 @@ service MyResources {
   option (google.api.oauth_scopes) =
     "https://www.googleapis.com/auth/cloud-platform";
 
-  rpc DoFoo(DoFooRequest) returns (google.cloud.cpp.my_product.v1.Operation) {
+  rpc DoFoo(DoFooRequest) returns (other.package.Operation) {
     option (google.api.http) = {
       post: "my/service/projects/{project}/zones/{zone}/myResources/{foo_id}/doFoo"
       body: "my_foo_resource"
@@ -300,31 +306,37 @@ message GetMyResourcesRequest {
 )""";
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
+  auto operation_type_json =
+      nlohmann::json::parse(kOperationTypeJson, nullptr, false);
+  ASSERT_TRUE(operation_type_json.is_object());
   auto do_foo_request_type_json =
       nlohmann::json::parse(kDoFooRequestTypeJson, nullptr, false);
   ASSERT_TRUE(do_foo_request_type_json.is_object());
   auto get_request_type_json =
       nlohmann::json::parse(kGetRequestTypeJson, nullptr, false);
   ASSERT_TRUE(get_request_type_json.is_object());
-  DiscoveryResource r("myResources", "", "https://default.host", "my/service",
-                      resource_json);
-  DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "",
+  DiscoveryResource r("myResources", "my.package.name", "https://default.host",
+                      "my/service", resource_json);
+  DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "my.package.name",
                                           do_foo_request_type_json);
-  DiscoveryTypeVertex get_request_type("GetMyResourcesRequest", "",
-                                       get_request_type_json);
+  DiscoveryTypeVertex get_request_type(
+      "GetMyResourcesRequest", "my.package.name", get_request_type_json);
   r.AddRequestType("DoFooRequest", &do_foo_request_type);
   r.AddRequestType("GetMyResourcesRequest", &get_request_type);
+  DiscoveryTypeVertex operation_type("Operation", "other.package",
+                                     operation_type_json);
+  r.AddResponseType("Operation", &operation_type);
   DiscoveryFile f(&r, "my_path", "my.package.name", "v1",
                   r.GetRequestTypesList());
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
   std::stringstream os;
-  auto result = f.FormatFile("my_product", os);
+  auto result = f.FormatFile("my_product", types, os);
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(os.str(), Eq(kExpectedProto));
 }
 
 TEST(DiscoveryFile, FormatFileNoResource) {
-  // TODO(#11353): enable this when package PRs are finished.
-  GTEST_SKIP();
   auto constexpr kExpectedProto = R"""(// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -373,14 +385,16 @@ message GetMyResourcesRequest {
   auto get_request_type_json =
       nlohmann::json::parse(kGetRequestTypeJson, nullptr, false);
   ASSERT_TRUE(get_request_type_json.is_object());
-  DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "",
+  DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "my.package.name",
                                           do_foo_request_type_json);
   DiscoveryTypeVertex get_request_type("GetMyResourcesRequest", "",
                                        get_request_type_json);
   DiscoveryFile f(nullptr, "my_path", "my.package.name", "v1",
                   {&do_foo_request_type, &get_request_type});
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
   std::stringstream os;
-  auto result = f.FormatFile("my_product", os);
+  auto result = f.FormatFile("my_product", types, os);
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(os.str(), Eq(kExpectedProto));
 }
@@ -436,8 +450,10 @@ service MyResources {
                       resource_json);
   DiscoveryFile f(&r, "my_path", "my.package.name", "v1",
                   r.GetRequestTypesList());
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
   std::stringstream os;
-  auto result = f.FormatFile("my_product", os);
+  auto result = f.FormatFile("my_product", types, os);
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(os.str(), Eq(kExpectedProto));
 }
@@ -490,15 +506,15 @@ TEST(DiscoveryFile, FormatFileResourceScopeError) {
   DiscoveryFile f(&r, "my_path", "my.package.name", "v1",
                   r.GetRequestTypesList());
   f.AddImportPath("path/to/import.proto");
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
   std::stringstream os;
-  auto result = f.FormatFile("my_product", os);
+  auto result = f.FormatFile("my_product", types, os);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInvalidArgument, HasSubstr("scope")));
 }
 
 TEST(DiscoveryFile, FormatFileTypeMissingError) {
-  // TODO(#11353): enable this when package PRs are finished.
-  GTEST_SKIP();
   auto constexpr kDoFooRequestMissingTypeJson = R"""({
   "type": "object",
   "id": "DoFooRequest",
@@ -522,6 +538,9 @@ TEST(DiscoveryFile, FormatFileTypeMissingError) {
 })""";
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
+  auto operation_type_json =
+      nlohmann::json::parse(kOperationTypeJson, nullptr, false);
+  ASSERT_TRUE(operation_type_json.is_object());
   auto do_foo_request_type_json =
       nlohmann::json::parse(kDoFooRequestMissingTypeJson, nullptr, false);
   ASSERT_TRUE(do_foo_request_type_json.is_object());
@@ -536,12 +555,17 @@ TEST(DiscoveryFile, FormatFileTypeMissingError) {
                                        get_request_type_json);
   r.AddRequestType("DoFooRequest", &do_foo_request_type);
   r.AddRequestType("GetMyResourcesRequest", &get_request_type);
+  DiscoveryTypeVertex operation_type("Operation", "other.package",
+                                     operation_type_json);
+  r.AddResponseType("Operation", &operation_type);
 
   DiscoveryFile f(&r, "my_path", "my.package.name", "v1",
                   r.GetRequestTypesList());
   f.AddImportPath("path/to/import.proto");
+  std::map<std::string, DiscoveryTypeVertex> types;
+  types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
   std::stringstream os;
-  auto result = f.FormatFile("my_product", os);
+  auto result = f.FormatFile("my_product", types, os);
   EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("neither $ref nor type")));
 }
