@@ -123,6 +123,7 @@ if (BUILD_TESTING)
                 $<TARGET_FILE:sql_quickstart> GOOGLE_CLOUD_PROJECT)
     set_tests_properties(sql_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
+    add_subdirectory(integration_tests)
 endif ()
 
 # Get the destination directories based on the GNU recommendations.
