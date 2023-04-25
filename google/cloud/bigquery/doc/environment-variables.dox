@@ -62,7 +62,7 @@ the program's console.
 
 @see google::cloud::TracingComponentsOption
 
-`GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...\`: modifies the behavior of gRPC tracing,
+`GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...`: modifies the behavior of gRPC tracing,
 including whether messages will be output on multiple lines, or whether
 string/bytes fields will be truncated.
 
