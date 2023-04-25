@@ -51,7 +51,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * Alternatively, you may call the `StatusOr::value()` member function,
  * which is defined to: (1) throw an exception if there is no `T` value, or (2)
  * crash the program if exceptions are disabled. It is never UB to call
- * `.value()`.
+ * `value()`.
  *
  * @code
  * StatusOr<Foo> foo = FetchFoo();
@@ -99,7 +99,7 @@ class StatusOr final {
   using value_type = T;
 
   /**
-   * Initializes with an error status (UNKNOWN).
+   * Initializes with an error status (`StatusCode::kUnknown`).
    */
   StatusOr() : StatusOr(MakeDefaultStatus()) {}
 
@@ -178,7 +178,10 @@ class StatusOr final {
   // NOLINTNEXTLINE(google-explicit-constructor)
   StatusOr(T const& rhs) : value_(rhs) {}
 
+  /// Returns `true` when `this` holds a value.
   bool ok() const { return status_.ok(); }
+
+  /// Returns `true` when `this` holds a value.
   explicit operator bool() const { return status_.ok(); }
 
   ///@{

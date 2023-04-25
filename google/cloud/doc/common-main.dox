@@ -22,14 +22,28 @@ Client Libraries. Including:
   values are stored asynchronously). They satisfy the API for `std::future` and
   `std::promise`, and add support for callbacks and cancellation.
 
-@warning The symbols in the `google::cloud::internal` namespace are
-implementation details and subject to change and/or removal without notice.
+@warning
+@parblock
+Some namespaces are reserved for implementation details and are subject to
+change without notice. Do not use any symbols in these namespaces as your
+application may break when trying to use future versions of the library.
 
-@warning The symbols in the `google::cloud::testing_util` namespace are
-implementation details and subject to change and/or removal without notice.
+These namespaces include:
+
+- Any namespace with `internal` in its name, including `google::cloud::internal`
+  and `google::cloud::rest_internal`.
+- Any namespace with `testing` in its name, including
+  `google::cloud::testing_util`.
+@endparblock
 
 ## More information
 
 - @ref common-error-handling for more details about how the libraries report
   run-time errors and how you can handle them.
+- @ref options for information about configuring the client libraries at
+  runtime.
+- @ref guac for more details about how to configure authentication in the client
+  libraries.
+- @ref logging for information about enabling logging to the console in the
+  client libraries.
 */
