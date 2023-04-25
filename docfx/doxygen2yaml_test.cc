@@ -835,7 +835,7 @@ items:
         google::cloud::CompletionQueue::MakeRelativeTimer (
             std::chrono::duration< Rep, Period > duration
           )
-      returns:
+      return:
         var_type: |
           future< StatusOr< std::chrono::system_clock::time_point > >
       parameters:
@@ -1025,7 +1025,7 @@ items:
       contents: |
         Status const &
         google::cloud::RuntimeStatusError::status ()
-      returns:
+      return:
         var_type: |
           Status const &
       source:
