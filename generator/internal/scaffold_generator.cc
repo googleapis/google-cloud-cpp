@@ -661,11 +661,10 @@ void GenerateDoxygenEnvironmentPage(
 @page $library$-env Environment Variables
 
 A number of environment variables can be used to configure the behavior of
-the library.  There are also functions to configure this behavior in code. The
+the library. There are also functions to configure this behavior in code. The
 environment variables are convenient when troubleshooting problems.
 
 @section $library$-env-endpoint Endpoint Overrides
-
 <!-- inject-endpoint-env-vars-start -->
 <!-- inject-endpoint-env-vars-end -->
 
@@ -673,25 +672,27 @@ environment variables are convenient when troubleshooting problems.
 
 @section $library$-env-logging Logging
 
-- `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
-  calls. The library injects an additional Stub decorator that prints each gRPC
-  request and response.  Unless you have configured your own logging backend,
-  you should also set `GOOGLE_CLOUD_CPP_ENABLE_CLOG` to produce any output on
-  the program's console.
+`GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc`: turns on tracing for most gRPC
+calls. The library injects an additional Stub decorator that prints each gRPC
+request and response.  Unless you have configured you own logging backend,
+you should also set `GOOGLE_CLOUD_CPP_ENABLE_CLOG` to produce any output on
+the program's console.
 
-- `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc-streams` turns on tracing for streaming
-  gRPC calls. This can produce a lot of output, so use with caution!
+@see google::cloud::TracingComponentsOption
 
-- `GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...` modifies the behavior of gRPC tracing,
-  including whether messages will be output on multiple lines, or whether
-  string/bytes fields will be truncated.
+`GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...`: modifies the behavior of gRPC tracing,
+including whether messages will be output on multiple lines, or whether
+string/bytes fields will be truncated.
 
-- `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` turns on logging in the library. Basically
-  the library always "logs" but the logging infrastructure has no backend to
-  actually print anything until the application sets a backend or it sets this
-  environment variable.
+@see google::cloud::TracingOptionsOption
 
-@see google::cloud::EndpointOption
+`GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes`: turns on logging in the library, basically
+the library always "logs" but the logging infrastructure has no backend to
+actually print anything until the application sets a backend or they set this
+environment variable.
+
+@see google::cloud::LogBackend
+@see google::cloud::LogSink
 
 @section $library$-env-project Setting the Default Project
 
