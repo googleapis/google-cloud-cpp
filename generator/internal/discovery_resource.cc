@@ -29,6 +29,8 @@ namespace generator_internal {
 
 DiscoveryResource::DiscoveryResource() : json_("") {}
 
+// TODO(#11377): remove default_host and base_path as member variables and pass
+// DiscoveryDocumentProperties as an argument to JsonToProtobufService.
 DiscoveryResource::DiscoveryResource(std::string name, std::string package_name,
                                      std::string default_host,
                                      std::string base_path, nlohmann::json json)
