@@ -38,34 +38,6 @@ which should give you a taste of the Cloud Filestore API C++ client library API.
 
 @snippet quickstart.cc all
 
-## Environment Variables
-
-<!-- inject-endpoint-env-vars-start -->
-
-- `GOOGLE_CLOUD_CPP_CLOUD_FILESTORE_MANAGER_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "file.googleapis.com")
-  used by `MakeCloudFilestoreManagerConnection()`.
-
-<!-- inject-endpoint-env-vars-end -->
-
-- `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
-  calls. The library injects an additional Stub decorator that prints each gRPC
-  request and response.  Unless you have configured your own logging backend,
-  you should also set `GOOGLE_CLOUD_CPP_ENABLE_CLOG` to produce any output on
-  the program's console.
-
-- `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc-streams` turns on tracing for streaming
-  gRPC calls. This can produce a lot of output, so use with caution!
-
-- `GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...` modifies the behavior of gRPC tracing,
-  including whether messages will be output on multiple lines, or whether
-  string/bytes fields will be truncated.
-
-- `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` turns on logging in the library. Basically
-  the library always "logs" but the logging infrastructure has no backend to
-  actually print anything until the application sets a backend or it sets this
-  environment variable.
-
 ## Error Handling
 
 [status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h

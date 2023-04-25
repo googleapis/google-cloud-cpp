@@ -50,49 +50,6 @@ the Cloud IAM C++ client library API.
 @snippet quickstart.cc all
 @endparblock
 
-## Environment Variables
-
-There are several environment variables that can be set to configure certain
-behaviors in the library.
-
-<!-- inject-endpoint-env-vars-start -->
-
-- `GOOGLE_CLOUD_CPP_IAM_CREDENTIALS_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "iamcredentials.googleapis.com")
-  used by `MakeIAMCredentialsConnection()`.
-
-- `GOOGLE_CLOUD_CPP_IAM_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "iam.googleapis.com")
-  used by `MakeIAMConnection()`.
-
-- `GOOGLE_CLOUD_CPP_IAM_POLICY_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "iam-meta-api.googleapis.com")
-  used by `MakeIAMPolicyConnection()`.
-
-- `GOOGLE_CLOUD_CPP_POLICIES_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "iam.googleapis.com")
-  used by `MakePoliciesConnection()`.
-
-<!-- inject-endpoint-env-vars-end -->
-
-- `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
-  calls. The library injects an additional Stub decorator that prints each gRPC
-  request and response.  Unless you have configured you own logging backend,
-  you should also set `GOOGLE_CLOUD_CPP_ENABLE_CLOG` to produce any output on
-  the program's console.
-
-- `GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...` modifies the behavior of gRPC tracing,
-  including whether messages will be output on multiple lines, or whether
-  string/bytes fields will be truncated.
-
-- `GOOGLE_CLOUD_PROJECT=...` is used in examples and integration tests to
-  configure the GCP project.
-
-- `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` turns on logging in the library, basically
-  the library always "logs" but the logging infrastructure has no backend to
-  actually print anything until the application sets a backend or they set this
-  environment variable.
-
 ## Error Handling
 
 This library never throws exceptions to signal errors. In general, the library
