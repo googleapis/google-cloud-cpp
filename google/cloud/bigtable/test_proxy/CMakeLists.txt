@@ -44,7 +44,7 @@ target_link_libraries(
     protobuf::libprotobuf)
 
 google_cloud_cpp_add_executable(target "bigtable_test_proxy"
-	                        "cbt_test_proxy_main.cc")
+                                "cbt_test_proxy_main.cc")
 target_link_libraries(
     ${target}
     PRIVATE cbt_test_proxy
