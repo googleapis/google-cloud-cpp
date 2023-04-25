@@ -31,8 +31,12 @@ namespace otel {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::testing::ElementsAre;
+using ::testing::Eq;
 using ::testing::IsEmpty;
+using ::testing::Matcher;
 using ::testing::Not;
+using ::testing::ResultOf;
 
 // Installs a TracerProvider that:
 // - uses the given exporter
@@ -48,43 +52,64 @@ void InstallExporter(
   opentelemetry::trace::Provider::SetTracerProvider(provider);
 }
 
+std::string TraceId(opentelemetry::trace::SpanContext const& span_context) {
+  std::array<char, 2 * opentelemetry::trace::TraceId::kSize> trace_id;
+  span_context.trace_id().ToLowerBase16(trace_id);
+  return std::string{trace_id.data(), trace_id.size()};
+}
+
+Matcher<google::devtools::cloudtrace::v1::TraceSpan const&> TraceSpan(
+    std::string const& name) {
+  return ResultOf(
+      "name",
+      [](google::devtools::cloudtrace::v1::TraceSpan const& s) {
+        return s.name();
+      },
+      Eq(name));
+}
+
 TEST(TraceExporter, Basic) {
   auto project_id = internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_THAT(project_id, Not(IsEmpty()));
+
   auto project = Project(project_id);
   auto exporter = MakeTraceExporter(project);
   InstallExporter(std::move(exporter));
+
   auto provider = opentelemetry::trace::Provider::GetTracerProvider();
   auto tracer = provider->GetTracer("gcloud-cpp");
 
   // Create a test span, which should get exported to Cloud Trace.
-  auto const name = "span-" + std::to_string(absl::GetCurrentTimeNanos());
+  auto generator = google::cloud::internal::MakeDefaultPRNG();
+  auto const name =
+      "span-" + google::cloud::internal::Sample(generator, 32, "0123456789");
+
   auto span = tracer->StartSpan(name);
-  std::this_thread::sleep_for(std::chrono::milliseconds(2));
+  opentelemetry::trace::StartSpanOptions options;
+  options.kind = opentelemetry::trace::SpanKind::kClient;
+  auto const elapsed = std::chrono::milliseconds(20);
+  options.start_steady_time = std::chrono::steady_clock::now() - elapsed;
+  options.start_system_time = std::chrono::system_clock::now() - elapsed;
   span->End();
 
   auto trace_client =
       trace_v1::TraceServiceClient(trace_v1::MakeTraceServiceConnection());
 
-  // A GetTraceRequest can only look up traces by trace ID. So we use a
-  // ListTracesRequest, which can filter on span names.
-  google::devtools::cloudtrace::v1::ListTracesRequest req;
+  google::devtools::cloudtrace::v1::GetTraceRequest req;
   req.set_project_id(project_id);
-  // The filter "+root:<NAME>" means: list traces that contain spans whose name
-  // exactly matches "<NAME>".
-  req.set_filter("+root:" + name);
+  req.set_trace_id(TraceId(span->GetContext()));
 
   // Implement a retry loop to wait for the traces to propagate in Cloud Trace.
-  for (auto backoff : {1, 2, 4, 8, 16, 32, 0}) {
-    ASSERT_NE(backoff, 0) << "Trace did not show up in Cloud Trace";
-    auto traces = trace_client.ListTraces(req);
-    auto trace = traces.begin();
-    if (trace != traces.end()) {
-      ASSERT_STATUS_OK(*trace);
-      break;
-    }
+  StatusOr<google::devtools::cloudtrace::v1::Trace> trace;
+  for (auto backoff : {10, 60, 120, 120}) {
+    // Because we are limited by quota, start with a backoff.
     std::this_thread::sleep_for(std::chrono::seconds(backoff));
+
+    trace = trace_client.GetTrace(req);
+    if (trace.ok()) break;
   }
+  ASSERT_STATUS_OK(trace) << "Trace did not show up in Cloud Trace";
+  EXPECT_THAT(trace->spans(), ElementsAre(TraceSpan(name)));
 }
 
 }  // namespace
