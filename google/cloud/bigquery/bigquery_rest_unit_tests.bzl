@@ -22,6 +22,7 @@ bigquery_rest_unit_tests = [
     "v2/minimal/internal/dataset_idempotency_policy_test.cc",
     "v2/minimal/internal/dataset_logging_test.cc",
     "v2/minimal/internal/dataset_metadata_test.cc",
+    "v2/minimal/internal/dataset_options_test.cc",
     "v2/minimal/internal/dataset_request_test.cc",
     "v2/minimal/internal/dataset_response_test.cc",
     "v2/minimal/internal/dataset_rest_stub_test.cc",

@@ -28,6 +28,8 @@ add_library(
     v2/minimal/internal/dataset_logging.h
     v2/minimal/internal/dataset_metadata.cc
     v2/minimal/internal/dataset_metadata.h
+    v2/minimal/internal/dataset_options.cc
+    v2/minimal/internal/dataset_options.h
     v2/minimal/internal/dataset_request.cc
     v2/minimal/internal/dataset_request.h
     v2/minimal/internal/dataset_response.cc
@@ -154,6 +156,7 @@ function (bigquery_rest_define_tests)
         v2/minimal/internal/dataset_idempotency_policy_test.cc
         v2/minimal/internal/dataset_logging_test.cc
         v2/minimal/internal/dataset_metadata_test.cc
+        v2/minimal/internal/dataset_options_test.cc
         v2/minimal/internal/dataset_request_test.cc
         v2/minimal/internal/dataset_response_test.cc
         v2/minimal/internal/dataset_rest_stub_test.cc
