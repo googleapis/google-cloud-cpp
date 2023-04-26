@@ -23,12 +23,14 @@ namespace generator_internal {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
+using ::testing::IsNull;
 using ::testing::Key;
 using ::testing::SizeIs;
 using ::testing::UnorderedElementsAre;
@@ -213,10 +215,9 @@ TEST(DetermineAndVerifyResponseTypeNameTest, ResponseWithRef) {
   DiscoveryResource resource;
   std::map<std::string, DiscoveryTypeVertex> types;
   types.emplace("Foo", DiscoveryTypeVertex{"Foo", "", response_type_json});
-  auto response =
-      DetermineAndVerifyResponseTypeName(method_json, resource, types);
+  auto response = DetermineAndVerifyResponseType(method_json, resource, types);
   ASSERT_STATUS_OK(response);
-  EXPECT_THAT(*response, Eq("Foo"));
+  EXPECT_THAT((*response)->name(), Eq("Foo"));
 }
 
 TEST(DetermineAndVerifyResponseTypeNameTest, ResponseMissingRef) {
@@ -233,8 +234,7 @@ TEST(DetermineAndVerifyResponseTypeNameTest, ResponseMissingRef) {
   DiscoveryResource resource;
   std::map<std::string, DiscoveryTypeVertex> types;
   types.emplace("Foo", DiscoveryTypeVertex{"Foo", "", response_type_json});
-  auto response =
-      DetermineAndVerifyResponseTypeName(method_json, resource, types);
+  auto response = DetermineAndVerifyResponseType(method_json, resource, types);
   EXPECT_THAT(response, StatusIs(StatusCode::kInvalidArgument,
                                  HasSubstr("Missing $ref field in response")));
 }
@@ -250,10 +250,8 @@ TEST(DetermineAndVerifyResponseTypeNameTest, ResponseFieldMissing) {
   DiscoveryResource resource;
   std::map<std::string, DiscoveryTypeVertex> types;
   types.emplace("Foo", DiscoveryTypeVertex{"Foo", "", response_type_json});
-  auto response =
-      DetermineAndVerifyResponseTypeName(method_json, resource, types);
-  ASSERT_STATUS_OK(response);
-  EXPECT_THAT(*response, IsEmpty());
+  auto response = DetermineAndVerifyResponseType(method_json, resource, types);
+  EXPECT_THAT(response, IsOkAndHolds(IsNull()));
 }
 
 TEST(SynthesizeRequestTypeTest, OperationResponseWithRefRequestField) {
@@ -603,11 +601,14 @@ TEST(ProcessMethodRequestsAndResponsesTest, RequestWithOperationResponse) {
   resources.emplace("foos",
                     DiscoveryResource("foos", "", "", "", resource_json));
   std::map<std::string, DiscoveryTypeVertex> types;
-  types.emplace("Operation", DiscoveryTypeVertex("", "", operation_type_json));
+  types.emplace("Operation",
+                DiscoveryTypeVertex("Operation", "", operation_type_json));
   auto result = ProcessMethodRequestsAndResponses(resources, types);
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(
       types, UnorderedElementsAre(Key("Foos.CreateRequest"), Key("Operation")));
+  EXPECT_THAT(resources.begin()->second.response_types(),
+              UnorderedElementsAre(Key("Operation")));
 }
 
 TEST(ProcessMethodRequestsAndResponsesTest, MethodWithEmptyRequest) {

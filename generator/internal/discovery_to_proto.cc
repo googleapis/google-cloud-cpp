@@ -152,10 +152,11 @@ std::map<std::string, DiscoveryResource> ExtractResources(
 
 // The DiscoveryResource& parameter will be used later to help determine what
 // protobuf files need to be imported to provide the response message.
-StatusOr<std::string> DetermineAndVerifyResponseTypeName(
+StatusOr<DiscoveryTypeVertex const*> DetermineAndVerifyResponseType(
     nlohmann::json const& method_json, DiscoveryResource&,
     std::map<std::string, DiscoveryTypeVertex>& types) {
   std::string response_type_name;
+  DiscoveryTypeVertex const* response_type = nullptr;
   auto const& response_iter = method_json.find("response");
   if (response_iter != method_json.end()) {
     auto const& ref_iter = response_iter->find("$ref");
@@ -163,13 +164,14 @@ StatusOr<std::string> DetermineAndVerifyResponseTypeName(
       return internal::InvalidArgumentError("Missing $ref field in response");
     }
     response_type_name = *ref_iter;
-    auto const& response_type = types.find(response_type_name);
-    if (response_type == types.end()) {
+    auto const& iter = types.find(response_type_name);
+    if (iter == types.end()) {
       return internal::InvalidArgumentError(absl::StrFormat(
           "Response name=%s not found in types", response_type_name));
     }
+    response_type = &iter->second;
   }
-  return response_type_name;
+  return response_type;
 }
 
 StatusOr<DiscoveryTypeVertex> SynthesizeRequestType(
@@ -243,20 +245,26 @@ Status ProcessMethodRequestsAndResponses(
     std::string resource_name = CapitalizeFirstLetter(resource.first);
     auto const& methods = resource.second.json().find("methods");
     for (auto m = methods->begin(); m != methods->end(); ++m) {
-      auto response_type_name =
-          DetermineAndVerifyResponseTypeName(*m, resource.second, types);
-      if (!response_type_name) {
-        return Status(response_type_name.status().code(),
-                      response_type_name.status().message(),
+      auto response_type =
+          DetermineAndVerifyResponseType(*m, resource.second, types);
+      if (!response_type) {
+        return Status(response_type.status().code(),
+                      response_type.status().message(),
                       GCP_ERROR_INFO()
                           .WithMetadata("resource", resource.first)
                           .WithMetadata("method", m.key())
-                          .Build(response_type_name.status().code()));
+                          .Build(response_type.status().code()));
+      }
+      std::string response_type_name;
+      if (*response_type != nullptr) {
+        response_type_name = (*response_type)->name();
+        DiscoveryTypeVertex const* node = *response_type;
+        resource.second.AddResponseType(response_type_name, node);
       }
 
       if (m->contains("parameters")) {
         auto request_type = SynthesizeRequestType(*m, resource.second,
-                                                  *response_type_name, m.key());
+                                                  response_type_name, m.key());
         if (!request_type) return std::move(request_type).status();
         // It is necessary to add the resource name to the map key to
         // disambiguate methods that appear in more than one resource.
@@ -288,7 +296,7 @@ std::vector<DiscoveryFile> CreateFilesFromResources(
                                 document_properties.version, output_path),
         r.second.package_name(), document_properties.version,
         r.second.GetRequestTypesList()}
-                        .AddImportPath("/google/cloud/$product_name$/$version$/"
+                        .AddImportPath("google/cloud/$product_name$/$version$/"
                                        "internal/common.proto"));
   }
   return files;

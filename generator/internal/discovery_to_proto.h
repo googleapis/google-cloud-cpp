@@ -48,7 +48,7 @@ std::map<std::string, DiscoveryResource> ExtractResources(
 
 // Determines the name of the response type for each method and verifies it
 // exists in the collection of DiscoveryTypeVertex objects.
-StatusOr<std::string> DetermineAndVerifyResponseTypeName(
+StatusOr<DiscoveryTypeVertex const*> DetermineAndVerifyResponseType(
     nlohmann::json const& method_json, DiscoveryResource& resource,
     std::map<std::string, DiscoveryTypeVertex>& types);
 

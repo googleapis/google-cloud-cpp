@@ -56,7 +56,7 @@ class DiscoveryFile {
   // Creates necessary directories and writes the file to disk.
   Status WriteFile(
       std::string const& product_name,
-      std::map<std::string, DiscoveryTypeVertex> const* types) const;
+      std::map<std::string, DiscoveryTypeVertex> const& types) const;
 
  private:
   DiscoveryResource const* resource_;
