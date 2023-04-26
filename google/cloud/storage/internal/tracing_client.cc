@@ -32,6 +32,7 @@ Options TracingClient::options() const { return impl_->options(); }
 
 StatusOr<storage::internal::ListBucketsResponse> TracingClient::ListBuckets(
     storage::internal::ListBucketsRequest const& request) {
+  // TODO(#11395) - use a internal::MakeTracedStreamRange in storage::Client
   auto span = internal::MakeSpan("storage::Client::ListBuckets");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, impl_->ListBuckets(request));
@@ -127,12 +128,13 @@ TracingClient::ReadObject(
     storage::internal::ReadObjectRangeRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::ReadObject");
   auto scope = opentelemetry::trace::Scope(span);
-  // TODO(#.....) - add a wrapper for ReadObjectSource.
+  // TODO(#11393) - add a wrapper for ReadObjectSource.
   return internal::EndSpan(*span, impl_->ReadObject(request));
 }
 
 StatusOr<storage::internal::ListObjectsResponse> TracingClient::ListObjects(
     storage::internal::ListObjectsRequest const& request) {
+  // TODO(#11395) - use a internal::MakeTracedStreamRange in storage::Client
   auto span = internal::MakeSpan("storage::Client::ListObjects");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, impl_->ListObjects(request));
@@ -176,7 +178,9 @@ StatusOr<storage::internal::RewriteObjectResponse> TracingClient::RewriteObject(
 StatusOr<storage::internal::CreateResumableUploadResponse>
 TracingClient::CreateResumableUpload(
     storage::internal::ResumableUploadRequest const& request) {
-  auto span = internal::MakeSpan("storage::RawClient::CreateResumableUpload");
+  // TODO(#11394) - add a wrapper for WriteObject().
+  auto span =
+      internal::MakeSpan("storage::Client::WriteObject/CreateResumableUpload");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, impl_->CreateResumableUpload(request));
 }
@@ -184,7 +188,9 @@ TracingClient::CreateResumableUpload(
 StatusOr<storage::internal::QueryResumableUploadResponse>
 TracingClient::QueryResumableUpload(
     storage::internal::QueryResumableUploadRequest const& request) {
-  auto span = internal::MakeSpan("storage::RawClient::QueryResumableUpload");
+  // TODO(#11394) - add a wrapper for WriteObject().
+  auto span =
+      internal::MakeSpan("storage::Client::WriteObject/QueryResumableUpload");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, impl_->QueryResumableUpload(request));
 }
@@ -199,13 +205,15 @@ StatusOr<storage::internal::EmptyResponse> TracingClient::DeleteResumableUpload(
 StatusOr<storage::internal::QueryResumableUploadResponse>
 TracingClient::UploadChunk(
     storage::internal::UploadChunkRequest const& request) {
-  auto span = internal::MakeSpan("storage::RawClient::UploadChunk");
+  // TODO(#11394) - add a wrapper for WriteObject().
+  auto span = internal::MakeSpan("storage::Client::WriteObject/UploadChunk");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, impl_->UploadChunk(request));
 }
 
 StatusOr<storage::internal::ListBucketAclResponse> TracingClient::ListBucketAcl(
     storage::internal::ListBucketAclRequest const& request) {
+  // TODO(#11395) - use a internal::MakeTracedStreamRange in storage::Client
   auto span = internal::MakeSpan("storage::Client::ListBucketAcl");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, impl_->ListBucketAcl(request));
@@ -248,6 +256,7 @@ StatusOr<storage::BucketAccessControl> TracingClient::PatchBucketAcl(
 
 StatusOr<storage::internal::ListObjectAclResponse> TracingClient::ListObjectAcl(
     storage::internal::ListObjectAclRequest const& request) {
+  // TODO(#11395) - use a internal::MakeTracedStreamRange in storage::Client
   auto span = internal::MakeSpan("storage::Client::ListObjectAcl");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, impl_->ListObjectAcl(request));
@@ -291,6 +300,7 @@ StatusOr<storage::ObjectAccessControl> TracingClient::PatchObjectAcl(
 StatusOr<storage::internal::ListDefaultObjectAclResponse>
 TracingClient::ListDefaultObjectAcl(
     storage::internal::ListDefaultObjectAclRequest const& request) {
+  // TODO(#11395) - use a internal::MakeTracedStreamRange in storage::Client
   auto span = internal::MakeSpan("storage::Client::ListDefaultObjectAcl");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, impl_->ListDefaultObjectAcl(request));
@@ -341,6 +351,7 @@ StatusOr<storage::ServiceAccount> TracingClient::GetServiceAccount(
 
 StatusOr<storage::internal::ListHmacKeysResponse> TracingClient::ListHmacKeys(
     storage::internal::ListHmacKeysRequest const& request) {
+  // TODO(#11395) - use a internal::MakeTracedStreamRange in storage::Client
   auto span = internal::MakeSpan("storage::Client::ListHmacKeys");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, impl_->ListHmacKeys(request));
@@ -384,6 +395,7 @@ StatusOr<storage::internal::SignBlobResponse> TracingClient::SignBlob(
 StatusOr<storage::internal::ListNotificationsResponse>
 TracingClient::ListNotifications(
     storage::internal::ListNotificationsRequest const& request) {
+  // TODO(#11395) - use a internal::MakeTracedStreamRange in storage::Client
   auto span = internal::MakeSpan("storage::Client::ListNotifications");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, impl_->ListNotifications(request));

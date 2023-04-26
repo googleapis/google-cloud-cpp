@@ -505,13 +505,14 @@ TEST(TracingClientTest, CreateResumableUpload) {
   auto const code = PermanentError().code();
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
-  EXPECT_THAT(span_catcher->GetSpans(),
-              ElementsAre(AllOf(
-                  SpanNamed("storage::RawClient::CreateResumableUpload"),
-                  SpanHasInstrumentationScope(), SpanKindIsClient(),
-                  SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(SpanAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(
+          AllOf(SpanNamed("storage::Client::WriteObject/CreateResumableUpload"),
+                SpanHasInstrumentationScope(), SpanKindIsClient(),
+                SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
+                SpanHasAttributes(SpanAttribute<int>(
+                    "gcloud.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, QueryResumableUpload) {
@@ -527,13 +528,14 @@ TEST(TracingClientTest, QueryResumableUpload) {
   auto const code = PermanentError().code();
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
-  EXPECT_THAT(span_catcher->GetSpans(),
-              ElementsAre(AllOf(
-                  SpanNamed("storage::RawClient::QueryResumableUpload"),
-                  SpanHasInstrumentationScope(), SpanKindIsClient(),
-                  SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(SpanAttribute<int>(
-                      "gcloud.status_code", static_cast<int>(code))))));
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(
+          AllOf(SpanNamed("storage::Client::WriteObject/QueryResumableUpload"),
+                SpanHasInstrumentationScope(), SpanKindIsClient(),
+                SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
+                SpanHasAttributes(SpanAttribute<int>(
+                    "gcloud.status_code", static_cast<int>(code))))));
 }
 
 TEST(TracingClientTest, DeleteResumableUpload) {
@@ -572,7 +574,7 @@ TEST(TracingClientTest, UploadChunk) {
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
               ElementsAre(AllOf(
-                  SpanNamed("storage::RawClient::UploadChunk"),
+                  SpanNamed("storage::Client::WriteObject/UploadChunk"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(SpanAttribute<int>(
