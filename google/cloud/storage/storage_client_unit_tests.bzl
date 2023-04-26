@@ -82,6 +82,7 @@ storage_client_unit_tests = [
     "internal/service_account_requests_test.cc",
     "internal/sign_blob_requests_test.cc",
     "internal/signed_url_requests_test.cc",
+    "internal/tracing_client_test.cc",
     "internal/tuple_filter_test.cc",
     "internal/unified_rest_credentials_test.cc",
     "internal/xml_node_test.cc",
