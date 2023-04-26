@@ -138,6 +138,12 @@ The following experimental libraries are now available:
 
 The library has been expanded to include the v2 service.
 
+### [Bigquery](/google/cloud/bigquery/README.md)
+
+* Removed bigquery/v2/model*. There are no plans to implement gRPC endpoints for
+  this service. Therefore the generated code will never be usable and never has
+  been.
+
 ### Other Changes
 
 **Bazel Testing**: starting with v2.10.0 we only test with Bazel >= 5.4.0. We

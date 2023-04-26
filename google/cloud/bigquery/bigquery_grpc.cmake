@@ -24,8 +24,7 @@ set(service_dirs
     "datatransfer/v1/"
     "migration/v2/"
     "reservation/v1/"
-    "storage/v1/"
-    "v2/")
+    "storage/v1/")
 foreach (dir IN LISTS service_dirs)
     string(REPLACE "/" "_" ns "${dir}")
     list(APPEND source_globs "${dir}*.h" "${dir}*.cc" "${dir}internal/*")
