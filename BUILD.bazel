@@ -134,8 +134,15 @@ cc_library(
     ],
 )
 
-bool_flag(
+cc_library(
     name = "experimental-opentelemetry",
+    deps = [
+        "//google/cloud/opentelemetry:google_cloud_cpp_opentelemetry",
+    ],
+)
+
+bool_flag(
+    name = "enable-experimental-opentelemetry",
     build_setting_default = False,
     visibility = ["//:__subpackages__"],
 )
