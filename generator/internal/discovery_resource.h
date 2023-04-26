@@ -38,9 +38,16 @@ class DiscoveryResource {
     return response_types_;
   }
 
+  bool RequiresEmptyImport() const { return has_empty_request_or_response_; }
+  bool RequiresLROImport() const {
+    return response_types_.find("Operation") != response_types_.end();
+  }
+
   void AddRequestType(std::string name, DiscoveryTypeVertex const* type);
+  void AddEmptyRequestType() { has_empty_request_or_response_ = true; }
 
   void AddResponseType(std::string name, DiscoveryTypeVertex const* type);
+  void AddEmptyResponseType() { has_empty_request_or_response_ = true; }
 
   std::vector<DiscoveryTypeVertex const*> GetRequestTypesList() const;
 
@@ -76,6 +83,7 @@ class DiscoveryResource {
  private:
   std::string name_;
   std::string package_name_;
+  bool has_empty_request_or_response_;
   nlohmann::json json_;
   std::map<std::string, DiscoveryTypeVertex const*> request_types_;
   std::map<std::string, DiscoveryTypeVertex const*> response_types_;
