@@ -495,7 +495,6 @@ TEST(Doxygen2Markdown, ParagraphSimpleContents) {
       {"test-009",
        "\n\n[`google::cloud::Options`](xref:classgoogle_1_1cloud_1_1Options)"},
       {"test-010", "\n\n[Options](xref:classgoogle_1_1cloud_1_1Options)"},
-      {"test-010", "\n\n[Options](xref:classgoogle_1_1cloud_1_1Options)"},
       {"test-011", "\n\nabc123"},
   };
 
