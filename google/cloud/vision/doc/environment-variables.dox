@@ -3,11 +3,10 @@
 @page vision-env Environment Variables
 
 A number of environment variables can be used to configure the behavior of
-the library.  There are also functions to configure this behavior in code. The
+the library. There are also functions to configure this behavior in code. The
 environment variables are convenient when troubleshooting problems.
 
 @section vision-env-endpoint Endpoint Overrides
-
 
 <!-- inject-endpoint-env-vars-start -->
 
@@ -21,7 +20,9 @@ environment variables are convenient when troubleshooting problems.
 
 <!-- inject-endpoint-env-vars-end -->
 
-@section vision-logging Logging
+@see google::cloud::EndpointOption
+
+@section vision-env-logging Logging
 
 `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc`: turns on tracing for most gRPC
 calls. The library injects an additional Stub decorator that prints each gRPC
