@@ -761,6 +761,38 @@ Use [`Options`](xref:classgoogle_1_1cloud_1_1Options) and [`EndpointOption`](xre
   EXPECT_EQ(kExpected, os.str());
 }
 
+TEST(Doxygen2Markdown, ParagraphLinebreak) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+    <para id='tested-node'>Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have <ulink url="https://cloud.google.com/dlp/docs/specifying-location">specified a processing location</ulink>:<itemizedlist>
+        <listitem><para>Projects scope, location specified:<linebreak/>
+        <computeroutput>projects/</computeroutput><emphasis>PROJECT_ID</emphasis><computeroutput>/locations/</computeroutput><emphasis>LOCATION_ID</emphasis></para>
+        </listitem><listitem><para>Projects scope, no location specified (defaults to global):<linebreak/>
+        <computeroutput>projects/</computeroutput><emphasis>PROJECT_ID</emphasis></para>
+        </listitem><listitem><para>Organizations scope, location specified:<linebreak/>
+        <computeroutput>organizations/</computeroutput><emphasis>ORG_ID</emphasis><computeroutput>/locations/</computeroutput><emphasis>LOCATION_ID</emphasis></para>
+        </listitem><listitem><para>Organizations scope, no location specified (defaults to global):<linebreak/>
+        <computeroutput>organizations/</computeroutput><emphasis>ORG_ID</emphasis>
+        </listitem>
+      </itemizedlist>
+    </para>
+  )xml";
+  auto constexpr kExpected = R"md(
+
+Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location):
+- Projects scope, location specified:<br>`projects/`*PROJECT_ID*`/locations/`*LOCATION_ID*
+- Projects scope, no location specified (defaults to global):<br>`projects/`*PROJECT_ID*
+- Organizations scope, location specified:<br>`organizations/`*ORG_ID*`/locations/`*LOCATION_ID*
+- Organizations scope, no location specified (defaults to global):<br>`organizations/`*ORG_ID*)md";
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//*[@id='tested-node']");
+  ASSERT_TRUE(selected);
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfParagraph(os, {}, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
+}
+
 TEST(Doxygen2Markdown, ItemizedListSimple) {
   pugi::xml_document doc;
   doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
