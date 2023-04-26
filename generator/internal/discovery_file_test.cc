@@ -214,8 +214,7 @@ message GetMyResourcesRequest {
   auto get_request_type_json =
       nlohmann::json::parse(kGetRequestTypeJson, nullptr, false);
   ASSERT_TRUE(get_request_type_json.is_object());
-  DiscoveryResource r("myResources", "my.package.name", "https://default.host",
-                      "my/service", resource_json);
+  DiscoveryResource r("myResources", "my.package.name", resource_json);
   DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "my.package.name",
                                           do_foo_request_type_json);
   DiscoveryTypeVertex get_request_type(
@@ -225,13 +224,14 @@ message GetMyResourcesRequest {
   DiscoveryTypeVertex operation_type("Operation", "other.package",
                                      operation_type_json);
   r.AddResponseType("Operation", &operation_type);
-  DiscoveryFile f(&r, "my_path", "my.package.name", "v1",
-                  r.GetRequestTypesList());
+  DiscoveryFile f(&r, "my_path", "my.package.name", r.GetRequestTypesList());
   f.AddImportPath("path/to/import.proto");
   std::map<std::string, DiscoveryTypeVertex> types;
   types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
   std::stringstream os;
-  auto result = f.FormatFile("my_product", types, os);
+  DiscoveryDocumentProperties document_properties{
+      "my/service", "https://default.host", "my_product", "v1"};
+  auto result = f.FormatFile(document_properties, types, os);
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(os.str(), Eq(kExpectedProto));
 }
@@ -315,8 +315,7 @@ message GetMyResourcesRequest {
   auto get_request_type_json =
       nlohmann::json::parse(kGetRequestTypeJson, nullptr, false);
   ASSERT_TRUE(get_request_type_json.is_object());
-  DiscoveryResource r("myResources", "my.package.name", "https://default.host",
-                      "my/service", resource_json);
+  DiscoveryResource r("myResources", "my.package.name", resource_json);
   DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "my.package.name",
                                           do_foo_request_type_json);
   DiscoveryTypeVertex get_request_type(
@@ -326,12 +325,13 @@ message GetMyResourcesRequest {
   DiscoveryTypeVertex operation_type("Operation", "other.package",
                                      operation_type_json);
   r.AddResponseType("Operation", &operation_type);
-  DiscoveryFile f(&r, "my_path", "my.package.name", "v1",
-                  r.GetRequestTypesList());
+  DiscoveryFile f(&r, "my_path", "my.package.name", r.GetRequestTypesList());
   std::map<std::string, DiscoveryTypeVertex> types;
   types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
   std::stringstream os;
-  auto result = f.FormatFile("my_product", types, os);
+  DiscoveryDocumentProperties document_properties{
+      "my/service", "https://default.host", "my_product", "v1"};
+  auto result = f.FormatFile(document_properties, types, os);
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(os.str(), Eq(kExpectedProto));
 }
@@ -389,12 +389,13 @@ message GetMyResourcesRequest {
                                           do_foo_request_type_json);
   DiscoveryTypeVertex get_request_type("GetMyResourcesRequest", "",
                                        get_request_type_json);
-  DiscoveryFile f(nullptr, "my_path", "my.package.name", "v1",
+  DiscoveryFile f(nullptr, "my_path", "my.package.name",
                   {&do_foo_request_type, &get_request_type});
   std::map<std::string, DiscoveryTypeVertex> types;
   types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
   std::stringstream os;
-  auto result = f.FormatFile("my_product", types, os);
+  DiscoveryDocumentProperties document_properties{"", "", "my_product", "v1"};
+  auto result = f.FormatFile(document_properties, types, os);
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(os.str(), Eq(kExpectedProto));
 }
@@ -446,14 +447,14 @@ service MyResources {
 )""";
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
-  DiscoveryResource r("myResources", "", "https://default.host", "my/service",
-                      resource_json);
-  DiscoveryFile f(&r, "my_path", "my.package.name", "v1",
-                  r.GetRequestTypesList());
+  DiscoveryResource r("myResources", "", resource_json);
+  DiscoveryFile f(&r, "my_path", "my.package.name", r.GetRequestTypesList());
   std::map<std::string, DiscoveryTypeVertex> types;
   types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
   std::stringstream os;
-  auto result = f.FormatFile("my_product", types, os);
+  DiscoveryDocumentProperties document_properties{
+      "my/service", "https://default.host", "my_product", "v1"};
+  auto result = f.FormatFile(document_properties, types, os);
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(os.str(), Eq(kExpectedProto));
 }
@@ -495,21 +496,20 @@ TEST(DiscoveryFile, FormatFileResourceScopeError) {
   auto get_request_type_json =
       nlohmann::json::parse(kGetRequestTypeJson, nullptr, false);
   ASSERT_TRUE(get_request_type_json.is_object());
-  DiscoveryResource r("myResources", "", "https://default.host", "my/service",
-                      resource_json);
+  DiscoveryResource r("myResources", "", resource_json);
   DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "",
                                           do_foo_request_type_json);
   DiscoveryTypeVertex get_request_type("GetMyResourcesRequest", "",
                                        get_request_type_json);
   r.AddRequestType("DoFooRequest", &do_foo_request_type);
   r.AddRequestType("GetMyResourcesRequest", &get_request_type);
-  DiscoveryFile f(&r, "my_path", "my.package.name", "v1",
-                  r.GetRequestTypesList());
+  DiscoveryFile f(&r, "my_path", "my.package.name", r.GetRequestTypesList());
   f.AddImportPath("path/to/import.proto");
   std::map<std::string, DiscoveryTypeVertex> types;
   types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
   std::stringstream os;
-  auto result = f.FormatFile("my_product", types, os);
+  DiscoveryDocumentProperties document_properties{"", "", "my_product", "v1"};
+  auto result = f.FormatFile(document_properties, types, os);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInvalidArgument, HasSubstr("scope")));
 }
@@ -547,8 +547,7 @@ TEST(DiscoveryFile, FormatFileTypeMissingError) {
   auto get_request_type_json =
       nlohmann::json::parse(kGetRequestTypeJson, nullptr, false);
   ASSERT_TRUE(get_request_type_json.is_object());
-  DiscoveryResource r("myResources", "", "https://default.host", "my/service",
-                      resource_json);
+  DiscoveryResource r("myResources", "", resource_json);
   DiscoveryTypeVertex do_foo_request_type("DoFooRequest", "",
                                           do_foo_request_type_json);
   DiscoveryTypeVertex get_request_type("GetMyResourcesRequest", "",
@@ -559,13 +558,13 @@ TEST(DiscoveryFile, FormatFileTypeMissingError) {
                                      operation_type_json);
   r.AddResponseType("Operation", &operation_type);
 
-  DiscoveryFile f(&r, "my_path", "my.package.name", "v1",
-                  r.GetRequestTypesList());
+  DiscoveryFile f(&r, "my_path", "my.package.name", r.GetRequestTypesList());
   f.AddImportPath("path/to/import.proto");
   std::map<std::string, DiscoveryTypeVertex> types;
   types.emplace("Foo", DiscoveryTypeVertex{"Foo", "my.package.name", {}});
   std::stringstream os;
-  auto result = f.FormatFile("my_product", types, os);
+  DiscoveryDocumentProperties document_properties{"", "", "my_product", "v1"};
+  auto result = f.FormatFile(document_properties, types, os);
   EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("neither $ref nor type")));
 }

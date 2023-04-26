@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DISCOVERY_RESOURCE_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DISCOVERY_RESOURCE_H
 
+#include "generator/internal/discovery_document.h"
 #include "generator/internal/discovery_type_vertex.h"
 #include <nlohmann/json.hpp>
 #include <string>
@@ -27,7 +28,6 @@ class DiscoveryResource {
  public:
   DiscoveryResource();
   DiscoveryResource(std::string name, std::string package_name,
-                    std::string default_host, std::string base_path,
                     nlohmann::json json);
 
   std::string const& name() const { return name_; }
@@ -52,9 +52,9 @@ class DiscoveryResource {
 
   // Examines the method JSON to determine the google.api.http,
   // google.api.method_signature, and google.cloud.operation_service options.
-  StatusOr<std::string> FormatRpcOptions(
-      nlohmann::json const& method_json,
-      DiscoveryTypeVertex const* request_type) const;
+  static StatusOr<std::string> FormatRpcOptions(
+      nlohmann::json const& method_json, std::string const& base_path,
+      DiscoveryTypeVertex const* request_type);
 
   // Summarize all the scopes found in the resource methods for inclusion as
   // a service level google.api.oauth_scopes option.
@@ -70,13 +70,12 @@ class DiscoveryResource {
   // are concatenated with the resource name.
   std::string FormatMethodName(std::string method_name) const;
 
-  StatusOr<std::string> JsonToProtobufService() const;
+  StatusOr<std::string> JsonToProtobufService(
+      DiscoveryDocumentProperties const& document_properties) const;
 
  private:
   std::string name_;
   std::string package_name_;
-  std::string default_host_;
-  std::string base_path_;
   nlohmann::json json_;
   std::map<std::string, DiscoveryTypeVertex const*> request_types_;
   std::map<std::string, DiscoveryTypeVertex const*> response_types_;

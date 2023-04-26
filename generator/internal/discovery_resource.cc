@@ -32,12 +32,9 @@ DiscoveryResource::DiscoveryResource() : json_("") {}
 // TODO(#11377): remove default_host and base_path as member variables and pass
 // DiscoveryDocumentProperties as an argument to JsonToProtobufService.
 DiscoveryResource::DiscoveryResource(std::string name, std::string package_name,
-                                     std::string default_host,
-                                     std::string base_path, nlohmann::json json)
+                                     nlohmann::json json)
     : name_(std::move(name)),
       package_name_(std::move(package_name)),
-      default_host_(std::move(default_host)),
-      base_path_(std::move(base_path)),
       json_(std::move(json)) {}
 
 void DiscoveryResource::AddRequestType(std::string name,
@@ -78,8 +75,8 @@ std::string DiscoveryResource::FormatUrlPath(std::string const& path) {
 }
 
 StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
-    nlohmann::json const& method_json,
-    DiscoveryTypeVertex const* request_type) const {
+    nlohmann::json const& method_json, std::string const& base_path,
+    DiscoveryTypeVertex const* request_type) {
   std::vector<std::string> rpc_options;
   std::string verb = absl::AsciiStrToLower(method_json.value("httpMethod", ""));
   std::string path = method_json.value("path", "");
@@ -94,7 +91,7 @@ StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
       "    option (google.api.http) = {\n"
       "      %s: \"%s\"\n",
       verb,
-      absl::StrCat(absl::StripSuffix(base_path_, "/"), "/",
+      absl::StrCat(absl::StripSuffix(base_path, "/"), "/",
                    FormatUrlPath(path)));
   std::string request_resource_field_name;
   if (request_type && (verb == "post" || verb == "patch" || verb == "put")) {
@@ -179,15 +176,17 @@ std::string DiscoveryResource::FormatMethodName(std::string method_name) const {
   return method_name;
 }
 
-StatusOr<std::string> DiscoveryResource::JsonToProtobufService() const {
+StatusOr<std::string> DiscoveryResource::JsonToProtobufService(
+    DiscoveryDocumentProperties const& document_properties) const {
   std::vector<std::string> service_text;
   auto constexpr kServiceComments =
       R"""(Service for the %s resource. https://cloud.google.com/$product_name$/docs/reference/rest/$version$/%s
 )""";
   service_text.push_back(
       absl::StrFormat("service %s {", CapitalizeFirstLetter(name_)));
-  service_text.push_back(absl::StrFormat(
-      "  option (google.api.default_host) = \"%s\";", default_host_));
+  service_text.push_back(
+      absl::StrFormat("  option (google.api.default_host) = \"%s\";",
+                      document_properties.default_hostname));
   auto scopes = FormatOAuthScopes();
   if (!scopes) return std::move(scopes).status();
   service_text.push_back(
@@ -238,7 +237,8 @@ StatusOr<std::string> DiscoveryResource::JsonToProtobufService() const {
     rpc_text.push_back(absl::StrFormat("  rpc %s(%s) returns (%s) {",
                                        method_name, request_type_name,
                                        response_type_name));
-    auto rpc_options = FormatRpcOptions(method_json, request_type);
+    auto rpc_options = FormatRpcOptions(
+        method_json, document_properties.base_path, request_type);
     if (!rpc_options) return std::move(rpc_options).status();
     rpc_text.push_back(*std::move(rpc_options));
     rpc_text.emplace_back("  }");

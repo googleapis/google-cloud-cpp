@@ -42,23 +42,21 @@ void MakeDirectory(std::string const& path) {
 
 DiscoveryFile::DiscoveryFile(DiscoveryResource const* resource,
                              std::string file_path, std::string package_name,
-                             std::string version,
                              std::vector<DiscoveryTypeVertex const*> types)
     : resource_(resource),
       file_path_(std::move(file_path)),
       package_name_(std::move(package_name)),
-      version_(std::move(version)),
       types_(std::move(types)) {}
 
 Status DiscoveryFile::FormatFile(
-    std::string const& product_name,
+    DiscoveryDocumentProperties const& document_properties,
     std::map<std::string, DiscoveryTypeVertex> const& types,
     std::ostream& output_stream) const {
   std::map<std::string, std::string> const vars = {
       {"copyright_year", CurrentCopyrightYear()},
       {"package_name", package_name_},
-      {"version", version_},
-      {"product_name", product_name},
+      {"version", document_properties.version},
+      {"product_name", document_properties.product_name},
       {"resource_name", (resource_ ? resource_->name() : "")}};
   google::protobuf::io::OstreamOutputStream output(&output_stream);
   google::protobuf::io::Printer printer(&output, '$');
@@ -78,7 +76,8 @@ package $package_name$;
 
   if (resource_) {
     printer.Print("\n");
-    auto service_definition = resource_->JsonToProtobufService();
+    auto service_definition =
+        resource_->JsonToProtobufService(document_properties);
     if (!service_definition) {
       return std::move(service_definition).status();
     }
@@ -96,7 +95,7 @@ package $package_name$;
 }
 
 Status DiscoveryFile::WriteFile(
-    std::string const& product_name,
+    DiscoveryDocumentProperties const& document_properties,
     std::map<std::string, DiscoveryTypeVertex> const& types) const {
   std::string version_dir_path = file_path_.substr(0, file_path_.rfind('/'));
   std::string service_dir_path =
@@ -104,7 +103,7 @@ Status DiscoveryFile::WriteFile(
   MakeDirectory(service_dir_path);
   MakeDirectory(version_dir_path);
   std::ofstream os(file_path_);
-  return FormatFile(product_name, types, os);
+  return FormatFile(document_properties, types, os);
 }
 
 }  // namespace generator_internal
