@@ -23,6 +23,9 @@ std::string MockClass();
 std::string MockClassId();
 std::string MockedFunctionId();
 
+std::string FunctionXml();
+std::string FunctionXmlId();
+
 }  // namespace docfx_testing
 
 #endif  // GOOGLE_CLOUD_CPP_DOCFX_TESTING_INPUTS_H

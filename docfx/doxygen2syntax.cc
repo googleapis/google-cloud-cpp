@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "docfx/doxygen2syntax.h"
+#include "docfx/doxygen2markdown.h"
 #include "docfx/doxygen_errors.h"
 #include "docfx/yaml_emit.h"
 
@@ -81,6 +82,21 @@ std::string LinkedTextType(pugi::xml_node const& node) {
   return std::move(os).str();
 }
 
+std::string HtmlEscape(std::string_view text) {
+  std::string clean;
+  clean.reserve(text.size());
+  for (auto c : text) {
+    if (c == '<') {
+      clean += "&lt;";
+    } else if (c == '>') {
+      clean += "&gt;";
+    } else {
+      clean += c;
+    }
+  }
+  return clean;
+}
+
 void TemplateParamListSyntaxContent(std::ostream& os,
                                     pugi::xml_node const& node) {
   auto templateparamlist = node.child("templateparamlist");
@@ -99,6 +115,94 @@ void TemplateParamListSyntaxContent(std::ostream& os,
     sep = std::string_view{",\n    "};
   }
   os << ">\n";
+}
+
+std::string ReturnDescription(YamlContext const& /*ctx*/,
+                              pugi::xml_node const& node) {
+  // The return description, if present, is in a `<simplesect>` node that is
+  // part of the *function* description.
+  auto selected = node.select_node(".//simplesect[@kind='return']");
+  if (!selected) return {};
+  std::ostringstream os;
+  MarkdownContext mdctx;
+  mdctx.paragraph_start = "";
+  AppendDescriptionType(os, mdctx, selected.node());
+  return std::move(os).str();
+}
+
+// We need to search the parameters in the `<parameterlist>` element. The type
+// of this element is defined as below. Note that this is basically a sequence
+// of "parameter items". The "parameter items" contain the description, and
+// may contain a *list* of parameter names.
+//
+// clang-format off
+//   <xsd:complexType name="docParamListType">
+//     <xsd:sequence>
+//       <xsd:element name="parameteritem" type="docParamListItem" minOccurs="0" maxOccurs="unbounded" />
+//     </xsd:sequence>
+//     <xsd:attribute name="kind" type="DoxParamListKind" />
+//   </xsd:complexType>
+//   <xsd:complexType name="docParamListItem">
+//     <xsd:sequence>
+//       <xsd:element name="parameternamelist" type="docParamNameList" minOccurs="0" maxOccurs="unbounded" />
+//       <xsd:element name="parameterdescription" type="descriptionType" />
+//     </xsd:sequence>
+//   </xsd:complexType>
+//   <xsd:complexType name="docParamNameList">
+//     <xsd:sequence>
+//       <xsd:element name="parametertype" type="docParamType" minOccurs="0" maxOccurs="unbounded" />
+//       <xsd:element name="parametername" type="docParamName" minOccurs="0" maxOccurs="unbounded" />
+//     </xsd:sequence>
+//   </xsd:complexType>
+// clang-format on
+bool ParameterItemMatchesName(std::string_view parameter_name,
+                              pugi::xml_node const& item) {
+  for (auto const& list : item.children("parameternamelist")) {
+    for (auto const& name : list.children("parametername")) {
+      if (std::string_view{name.child_value()} == parameter_name) return true;
+    }
+  }
+  return false;
+}
+
+std::string ParameterDescription(YamlContext const& /*ctx*/,
+                                 pugi::xml_node const& node,
+                                 std::string_view parameter_name) {
+  // The parameter descriptions, if present, is in a `<simplesect>` node that is
+  // part of the *function* description.
+  auto selected = node.select_node(".//parameterlist[@kind='param']");
+  if (!selected) return {};
+  for (auto const& item : selected.node()) {
+    if (!ParameterItemMatchesName(parameter_name, item)) continue;
+    std::ostringstream os;
+    MarkdownContext mdctx;
+    mdctx.paragraph_start = "";
+    AppendDescriptionType(os, mdctx, item.child("parameterdescription"));
+    return std::move(os).str();
+  }
+  return {};
+}
+
+std::string TemplateParameterDescription(YamlContext const& /*ctx*/,
+                                         pugi::xml_node const& node,
+                                         std::string_view type) {
+  auto const prefix = std::string_view{"typename "};
+  if (type.substr(0, prefix.size()) == prefix) {
+    type = type.substr(prefix.size());
+  }
+  // The parameter descriptions, if present, is in a `<simplesect>` node that is
+  // part of the *function* description.
+  auto selected = node.select_node(".//parameterlist[@kind='templateparam']");
+  if (!selected) return {};
+  for (auto const& item : selected.node()) {
+    if (!ParameterItemMatchesName(type, item)) continue;
+    std::ostringstream os;
+    MarkdownContext mdctx;
+    mdctx.paragraph_start = "";
+    AppendDescriptionType(os, mdctx, item.child("parameterdescription"));
+    return std::move(os).str();
+  }
+  return {};
 }
 
 }  // namespace
@@ -242,25 +346,50 @@ void AppendFunctionSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::BeginMap                                           //
        << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
        << FunctionSyntaxContent(node);
-  auto const rettype = LinkedTextType(node.child("type"));
+  auto const rettype = HtmlEscape(LinkedTextType(node.child("type")));
   if (!rettype.empty()) {
-    yaml << YAML::Key << "return" << YAML::Value    //
-         << YAML::BeginMap                          //
+    yaml << YAML::Key << "returns" << YAML::Value   //
+         << YAML::BeginSeq << YAML::BeginMap        //
          << YAML::Key << "var_type" << YAML::Value  //
-         << YAML::Literal << rettype                //
-         << YAML::EndMap;
+         << YAML::DoubleQuoted << rettype;
+    auto description = ReturnDescription(ctx, node);
+    if (!description.empty()) {
+      yaml << YAML::Key << "description" << YAML::Value << YAML::Literal
+           << description;
+    }
+    yaml << YAML::EndMap << YAML::EndSeq;
   }
   auto params = node.select_nodes("param");
-  if (!params.empty()) {
+  auto tparams = node.child("templateparamlist").children("param");
+  if (!params.empty() || !tparams.empty()) {
     yaml << YAML::Key << "parameters" << YAML::Value  //
          << YAML::BeginSeq;
     for (auto const& i : params) {
       auto declname = std::string{i.node().child("declname").child_value()};
-      yaml << YAML::BeginMap                                           //
-           << YAML::Key << "id" << YAML::Value << declname             //
-           << YAML::Key << "var_type" << YAML::Value                   //
-           << YAML::Literal << LinkedTextType(i.node().child("type"))  //
-           << YAML::EndMap;
+      yaml << YAML::BeginMap                                //
+           << YAML::Key << "id" << YAML::Value << declname  //
+           << YAML::Key << "var_type" << YAML::Value        //
+           << YAML::DoubleQuoted
+           << HtmlEscape(LinkedTextType(i.node().child("type")));
+      auto description = ParameterDescription(ctx, node, declname);
+      if (!description.empty()) {
+        yaml << YAML::Key << "description" << YAML::Value << YAML::Literal
+             << description;
+      }
+      yaml << YAML::EndMap;
+    }
+    // Generate the template parameters as normal parameters, there does not
+    // seem to be other ways to define them.
+    for (auto const& i : tparams) {
+      auto type = std::string{i.child("type").child_value()};
+      yaml << YAML::BeginMap  //
+           << YAML::Key << "id" << YAML::Value << type;
+      auto description = TemplateParameterDescription(ctx, node, type);
+      if (!description.empty()) {
+        yaml << YAML::Key << "description" << YAML::Value << YAML::Literal
+             << description;
+      }
+      yaml << YAML::EndMap;
     }
     yaml << YAML::EndSeq;
   }
