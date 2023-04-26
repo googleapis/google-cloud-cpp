@@ -21,6 +21,7 @@ namespace docfx_testing {
 
 std::string MockClass();
 std::string MockClassId();
+std::string MockedFunctionId();
 
 }  // namespace docfx_testing
 

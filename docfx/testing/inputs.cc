@@ -159,4 +159,9 @@ std::string MockClassId() {
          "MockKeyDashboardServiceConnection";
 }
 
+std::string MockedFunctionId() {
+  return "classgoogle_1_1cloud_1_1kms__inventory__v1_1_1"
+         "KeyDashboardServiceConnection_1a2518e5014c3adbc16e83281bd2a596a8";
+}
+
 }  // namespace docfx_testing

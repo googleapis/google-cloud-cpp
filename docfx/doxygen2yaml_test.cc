@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "docfx/doxygen2yaml.h"
+#include "docfx/testing/inputs.h"
 #include "docfx/yaml_context.h"
 #include <gmock/gmock.h>
 
@@ -854,11 +855,6 @@ items:
       Create a timer that fires after the `duration`.
     conceptual: |
       A longer description here.
-
-      This function is implemented using [gMock]'s `MOCK_METHOD()`.
-      Consult the gMock documentation to use this mock in your tests.
-
-      [gMock]: https://google.github.io/googletest
 )yml";
 
   pugi::xml_document doc;
@@ -872,6 +868,65 @@ items:
   TestPre(yaml);
   YamlContext ctx;
   ctx.parent_id = "test-only-parent-id";
+  ASSERT_TRUE(AppendIfFunction(yaml, ctx, selected.node()));
+  TestPost(yaml);
+  auto const actual = EndDocFxYaml(yaml);
+  EXPECT_EQ(actual, kExpected);
+}
+
+TEST(Doxygen2Yaml, MockedFunction) {
+  auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
+items:
+  - uid: classgoogle_1_1cloud_1_1kms__inventory__v1__mocks_1_1MockKeyDashboardServiceConnection_1a789db998d71abf9016b64832d0c7a99e
+    name: ListCryptoKeys
+    fullName: |
+      google::cloud::kms_inventory_v1::KeyDashboardServiceConnection::ListCryptoKeys
+    id: classgoogle_1_1cloud_1_1kms__inventory__v1__mocks_1_1MockKeyDashboardServiceConnection_1a789db998d71abf9016b64832d0c7a99e
+    parent: classgoogle_1_1cloud_1_1kms__inventory__v1__mocks_1_1MockKeyDashboardServiceConnection
+    type: function
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        StreamRange< google::cloud::kms::v1::CryptoKey >
+        google::cloud::kms_inventory_v1::KeyDashboardServiceConnection::ListCryptoKeys (
+            google::cloud::kms::inventory::v1::ListCryptoKeysRequest request
+          )
+      return:
+        var_type: |
+          StreamRange< google::cloud::kms::v1::CryptoKey >
+      parameters:
+        - id: request
+          var_type: |
+            google::cloud::kms::inventory::v1::ListCryptoKeysRequest
+      source:
+        id: ListCryptoKeys
+        path: google/cloud/inventory/v1/key_dashboard_connection.h
+        startLine: 67
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/inventory/v1/key_dashboard_connection.h
+    conceptual: |
+      This function is implemented using [gMock]'s `MOCK_METHOD()`.
+      Consult the gMock documentation to use this mock in your tests.
+
+      [gMock]: https://google.github.io/googletest
+)yml";
+
+  pugi::xml_document doc;
+  doc.load_string(docfx_testing::MockClass().c_str());
+  auto const class_filter =
+      std::string{"//*[@id='" + docfx_testing::MockClassId() + "']"};
+  auto parent = doc.select_node(class_filter.c_str());
+  ASSERT_TRUE(parent);
+  auto const function_filter =
+      std::string{"//*[@id='" + docfx_testing::MockedFunctionId() + "']"};
+  auto selected = doc.select_node(function_filter.c_str());
+  ASSERT_TRUE(selected);
+  auto const ctx = NestedYamlContext(YamlContext{}, parent.node());
+  YAML::Emitter yaml;
+  TestPre(yaml);
   ASSERT_TRUE(AppendIfFunction(yaml, ctx, selected.node()));
   TestPost(yaml);
   auto const actual = EndDocFxYaml(yaml);
