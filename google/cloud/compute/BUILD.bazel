@@ -279,6 +279,9 @@ cc_library(
     name = sample.replace("/", "_").replace(".cc", ""),
     srcs = [sample],
     tags = ["integration-test"],
+    copts = [
+        "-I$(BINDIR)",
+    ],
     deps = [
         "//:experimental-compute",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
