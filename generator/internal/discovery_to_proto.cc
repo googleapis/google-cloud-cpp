@@ -144,7 +144,6 @@ std::map<std::string, DiscoveryResource> ExtractResources(
             absl::StrFormat(kResourcePackageNameFormat,
                             document_properties.product_name, resource_name,
                             document_properties.version),
-            document_properties.default_hostname, document_properties.base_path,
             r.value()});
   }
   return resources;
@@ -294,8 +293,7 @@ std::vector<DiscoveryFile> CreateFilesFromResources(
         &r.second,
         r.second.FormatFilePath(document_properties.product_name,
                                 document_properties.version, output_path),
-        r.second.package_name(), document_properties.version,
-        r.second.GetRequestTypesList()}
+        r.second.package_name(), r.second.GetRequestTypesList()}
                         .AddImportPath("google/cloud/$product_name$/$version$/"
                                        "internal/common.proto"));
   }
@@ -331,7 +329,7 @@ std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
       absl::StrFormat(kCommonPackageNameFormat,
                       document_properties.product_name,
                       document_properties.version),
-      document_properties.version, std::move(common_types));
+      std::move(common_types));
   return files;
 }
 

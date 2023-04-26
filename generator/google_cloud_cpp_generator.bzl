@@ -26,6 +26,7 @@ google_cloud_cpp_generator_hdrs = [
     "internal/connection_impl_rest_generator.h",
     "internal/connection_rest_generator.h",
     "internal/descriptor_utils.h",
+    "internal/discovery_document.h",
     "internal/discovery_file.h",
     "internal/discovery_resource.h",
     "internal/discovery_to_proto.h",

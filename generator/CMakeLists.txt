@@ -41,6 +41,7 @@ add_library(
     internal/connection_rest_generator.h
     internal/descriptor_utils.cc
     internal/descriptor_utils.h
+    internal/discovery_document.h
     internal/discovery_file.cc
     internal/discovery_file.h
     internal/discovery_resource.cc

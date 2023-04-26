@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DISCOVERY_FILE_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DISCOVERY_FILE_H
 
+#include "generator/internal/discovery_document.h"
 #include "generator/internal/discovery_resource.h"
 #include "generator/internal/discovery_type_vertex.h"
 #include "google/cloud/status.h"
@@ -33,7 +34,7 @@ class DiscoveryFile {
 
   // Set resources == nullptr to indicate the file only contains messages.
   DiscoveryFile(DiscoveryResource const* resource, std::string file_path,
-                std::string package_name, std::string version,
+                std::string package_name,
                 std::vector<DiscoveryTypeVertex const*> types);
 
   std::string const& file_path() const { return file_path_; }
@@ -49,20 +50,19 @@ class DiscoveryFile {
   }
 
   // Writes the file to output_stream.
-  Status FormatFile(std::string const& product_name,
+  Status FormatFile(DiscoveryDocumentProperties const& document_properties,
                     std::map<std::string, DiscoveryTypeVertex> const& types,
                     std::ostream& output_stream) const;
 
   // Creates necessary directories and writes the file to disk.
   Status WriteFile(
-      std::string const& product_name,
+      DiscoveryDocumentProperties const& document_properties,
       std::map<std::string, DiscoveryTypeVertex> const& types) const;
 
  private:
   DiscoveryResource const* resource_;
   std::string file_path_;
   std::string package_name_;
-  std::string version_;
   std::set<std::string> import_paths_;
   std::vector<DiscoveryTypeVertex const*> types_;
 };

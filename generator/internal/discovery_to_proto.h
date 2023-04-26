@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DISCOVERY_TO_PROTO_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DISCOVERY_TO_PROTO_H
 
+#include "generator/internal/discovery_document.h"
 #include "generator/internal/discovery_file.h"
 #include "generator/internal/discovery_resource.h"
 #include "generator/internal/discovery_type_vertex.h"
@@ -26,13 +27,6 @@
 namespace google {
 namespace cloud {
 namespace generator_internal {
-
-struct DiscoveryDocumentProperties {
-  std::string base_path;
-  std::string default_hostname;
-  std::string product_name;
-  std::string version;
-};
 
 // Creates a DiscoveryTypeVertex for every schema object defined in the
 // Discovery Document.
