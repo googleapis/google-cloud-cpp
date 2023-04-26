@@ -25,6 +25,35 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 
+TEST(DiscoveryResourceTest, HasEmptyRequest) {
+  auto constexpr kResourceJson = R"""({})""";
+  auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  DiscoveryResource r("myTests", "", resource_json);
+  EXPECT_FALSE(r.RequiresEmptyImport());
+  r.AddEmptyRequestType();
+  EXPECT_TRUE(r.RequiresEmptyImport());
+}
+
+TEST(DiscoveryResourceTest, HasEmptyResponse) {
+  auto constexpr kResourceJson = R"""({})""";
+  auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  DiscoveryResource r("myTests", "", resource_json);
+  EXPECT_FALSE(r.RequiresEmptyImport());
+  r.AddEmptyResponseType();
+  EXPECT_TRUE(r.RequiresEmptyImport());
+}
+
+TEST(DiscoveryResourceTest, RequiresLROImport) {
+  auto constexpr kResourceJson = R"""({})""";
+  auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  DiscoveryResource r("myTests", "", resource_json);
+  r.AddResponseType("Operation", nullptr);
+  EXPECT_TRUE(r.RequiresLROImport());
+}
+
 TEST(DiscoveryResourceTest, FormatUrlPath) {
   EXPECT_THAT(DiscoveryResource::FormatUrlPath("base/path/test"),
               Eq("base/path/test"));

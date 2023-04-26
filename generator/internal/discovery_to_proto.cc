@@ -259,6 +259,8 @@ Status ProcessMethodRequestsAndResponses(
         response_type_name = (*response_type)->name();
         DiscoveryTypeVertex const* node = *response_type;
         resource.second.AddResponseType(response_type_name, node);
+      } else {
+        resource.second.AddEmptyResponseType();
       }
 
       if (m->contains("parameters")) {
@@ -275,6 +277,8 @@ Status ProcessMethodRequestsAndResponses(
               absl::StrCat("Unable to insert type ", resource_name, ".", id));
         }
         resource.second.AddRequestType(id, &insert_result.first->second);
+      } else {
+        resource.second.AddEmptyRequestType();
       }
     }
   }
@@ -289,13 +293,26 @@ std::vector<DiscoveryFile> CreateFilesFromResources(
   std::vector<DiscoveryFile> files;
   files.reserve(resources.size());
   for (auto const& r : resources) {
-    files.push_back(DiscoveryFile{
+    DiscoveryFile f{
         &r.second,
         r.second.FormatFilePath(document_properties.product_name,
                                 document_properties.version, output_path),
-        r.second.package_name(), r.second.GetRequestTypesList()}
-                        .AddImportPath("google/cloud/$product_name$/$version$/"
-                                       "internal/common.proto"));
+        r.second.package_name(), r.second.GetRequestTypesList()};
+    f.AddImportPath("google/api/annotations.proto")
+        .AddImportPath("google/api/client.proto")
+        .AddImportPath("google/api/field_behavior.proto")
+        .AddImportPath(
+            "google/cloud/$product_name$/$version$/"
+            "internal/common.proto");
+
+    if (r.second.RequiresEmptyImport()) {
+      f.AddImportPath("google/protobuf/empty.proto");
+    }
+    if (r.second.RequiresLROImport()) {
+      f.AddImportPath("google/cloud/extended_operations.proto");
+    }
+
+    files.push_back(std::move(f));
   }
   return files;
 }

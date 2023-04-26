@@ -35,6 +35,7 @@ DiscoveryResource::DiscoveryResource(std::string name, std::string package_name,
                                      nlohmann::json json)
     : name_(std::move(name)),
       package_name_(std::move(package_name)),
+      has_empty_request_or_response_(false),
       json_(std::move(json)) {}
 
 void DiscoveryResource::AddRequestType(std::string name,
