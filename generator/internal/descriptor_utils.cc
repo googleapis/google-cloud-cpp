@@ -641,6 +641,12 @@ ParameterCommentSubstitution substitutions[] = {
     // From resourcemanager/v3.
     {R"""(`displayName=\\"Test String\\"`)""",
      R"""(`displayName="Test String"`))"""},
+
+    // Doxygen gets confused by single quotes in code spans:
+    //    https://www.doxygen.nl/manual/markdown.html#mddox_code_spans
+    // The workaround is to double quote these:
+    {R"""(`{instance} = '-'`)""", R"""(``{instance} = '-'``)"""},
+    {R"""(`{cluster} = '-'`)""", R"""(``{cluster} = '-'``)"""},
 };
 
 std::string FormatApiMethodSignatureParameters(

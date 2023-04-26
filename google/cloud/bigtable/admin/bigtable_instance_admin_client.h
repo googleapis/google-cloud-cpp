@@ -425,7 +425,7 @@ class BigtableInstanceAdminClient {
   /// @param parent  Required. The unique name of the instance for which a list
   /// of clusters is requested.
   ///  Values are of the form `projects/{project}/instances/{instance}`.
-  ///  Use `{instance} = '-'` to list Clusters for all Instances in a project,
+  ///  Use ``{instance} = '-'`` to list Clusters for all Instances in a project,
   ///  e.g., `projects/myproject/instances/-`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -663,7 +663,7 @@ class BigtableInstanceAdminClient {
   /// of app profiles is
   ///  requested. Values are of the form
   ///  `projects/{project}/instances/{instance}`.
-  ///  Use `{instance} = '-'` to list AppProfiles for all Instances in a
+  ///  Use ``{instance} = '-'`` to list AppProfiles for all Instances in a
   ///  project, e.g., `projects/myproject/instances/-`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
