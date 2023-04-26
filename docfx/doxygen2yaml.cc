@@ -308,16 +308,19 @@ bool AppendIfFunction(YAML::Emitter& yaml, YamlContext const& ctx,
   if (!summary.empty()) {
     yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
   }
-  auto const conceptual = Conceptual(node);
-  auto constexpr kMockedSummary =
-      R"md(This function is implemented using [gMock]'s `MOCK_METHOD()`.
+  auto conceptual = Conceptual(node);
+  if (!conceptual.empty() || is_mocked) {
+    auto constexpr kMockedSummary =
+        R"md(This function is implemented using [gMock]'s `MOCK_METHOD()`.
 Consult the gMock documentation to use this mock in your tests.
 
 [gMock]: https://google.github.io/googletest)md";
-  if (!conceptual.empty() || is_mocked) {
-    auto const full = conceptual.empty()
-                          ? std::string(kMockedSummary)
-                          : (conceptual + "\n\n" + std::string{kMockedSummary});
+    auto const full = [&]() mutable {
+      if (!is_mocked) return conceptual;
+      return conceptual.empty()
+                 ? std::string(kMockedSummary)
+                 : (conceptual + "\n\n" + std::string{kMockedSummary});
+    }();
     yaml << YAML::Key << "conceptual" << YAML::Value << YAML::Literal << full;
   }
   yaml << YAML::EndMap;
