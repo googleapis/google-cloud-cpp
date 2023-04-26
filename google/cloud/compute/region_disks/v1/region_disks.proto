@@ -1,0 +1,510 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package google.cloud.cpp.compute.regionDisks.v1;
+
+import "google/api/annotations.proto";
+import "google/api/client.proto";
+import "google/api/field_behavior.proto";
+import "google/cloud/compute/v1/internal/common.proto";
+import "google/cloud/extended_operations.proto";
+
+// Service for the regionDisks resource.
+// https://cloud.google.com/compute/docs/reference/rest/v1/regionDisks
+service RegionDisks {
+  option (google.api.default_host) = "compute.googleapis.com";
+  option (google.api.oauth_scopes) =
+    "https://www.googleapis.com/auth/cloud-platform,"
+    "https://www.googleapis.com/auth/compute,"
+    "https://www.googleapis.com/auth/compute.readonly";
+
+  // Adds existing resource policies to a regional disk. You can only add one
+  // policy which will be applied to this disk for scheduling snapshot creation.
+  rpc AddResourcePolicies(AddResourcePoliciesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project}/regions/{region}/disks/{disk}/addResourcePolicies"
+      body: "region_disks_add_resource_policies_request_resource"
+    };
+    option (google.api.method_signature) = "project,region,disk,region_disks_add_resource_policies_request_resource";
+    option (google.cloud.operation_service) = "RegionOperations";
+  }
+
+  // Creates a snapshot of a specified persistent disk. For regular snapshot
+  // creation, consider using snapshots.insert instead, as that method supports
+  // more features, such as creating snapshots in a project different from the
+  // source disk project.
+  rpc CreateSnapshot(CreateSnapshotRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project}/regions/{region}/disks/{disk}/createSnapshot"
+      body: "snapshot_resource"
+    };
+    option (google.api.method_signature) = "project,region,disk,snapshot_resource";
+    option (google.cloud.operation_service) = "RegionOperations";
+  }
+
+  // Deletes the specified regional persistent disk. Deleting a regional disk
+  // removes all the replicas of its data permanently and is irreversible.
+  // However, deleting a disk does not delete any snapshots previously made from
+  // the disk. You must separately delete snapshots.
+  rpc DeleteRegionDisks(DeleteRegionDisksRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      delete: "/compute/v1/projects/{project}/regions/{region}/disks/{disk}"
+    };
+    option (google.api.method_signature) = "project,region,disk";
+    option (google.cloud.operation_service) = "RegionOperations";
+  }
+
+  // Returns a specified regional persistent disk.
+  rpc GetRegionDisks(GetRegionDisksRequest) returns (google.cloud.cpp.compute.v1.Disk) {
+    option (google.api.http) = {
+      get: "/compute/v1/projects/{project}/regions/{region}/disks/{disk}"
+    };
+    option (google.api.method_signature) = "project,region,disk";
+  }
+
+  // Gets the access control policy for a resource. May be empty if no such
+  // policy or resource exists.
+  rpc GetIamPolicy(GetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+    option (google.api.http) = {
+      get: "/compute/v1/projects/{project}/regions/{region}/disks/{resource}/getIamPolicy"
+    };
+    option (google.api.method_signature) = "project,region,resource";
+  }
+
+  // Creates a persistent regional disk in the specified project using the data
+  // included in the request.
+  rpc InsertRegionDisks(InsertRegionDisksRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project}/regions/{region}/disks"
+      body: "disk_resource"
+    };
+    option (google.api.method_signature) = "project,region,disk_resource";
+    option (google.cloud.operation_service) = "RegionOperations";
+  }
+
+  // Retrieves the list of persistent disks contained within the specified
+  // region.
+  rpc ListRegionDisks(ListRegionDisksRequest) returns (google.cloud.cpp.compute.v1.DiskList) {
+    option (google.api.http) = {
+      get: "/compute/v1/projects/{project}/regions/{region}/disks"
+    };
+    option (google.api.method_signature) = "project,region";
+  }
+
+  // Removes resource policies from a regional disk.
+  rpc RemoveResourcePolicies(RemoveResourcePoliciesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project}/regions/{region}/disks/{disk}/removeResourcePolicies"
+      body: "region_disks_remove_resource_policies_request_resource"
+    };
+    option (google.api.method_signature) = "project,region,disk,region_disks_remove_resource_policies_request_resource";
+    option (google.cloud.operation_service) = "RegionOperations";
+  }
+
+  // Resizes the specified regional persistent disk.
+  rpc Resize(ResizeRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project}/regions/{region}/disks/{disk}/resize"
+      body: "region_disks_resize_request_resource"
+    };
+    option (google.api.method_signature) = "project,region,disk,region_disks_resize_request_resource";
+    option (google.cloud.operation_service) = "RegionOperations";
+  }
+
+  // Sets the access control policy on the specified resource. Replaces any
+  // existing policy.
+  rpc SetIamPolicy(SetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project}/regions/{region}/disks/{resource}/setIamPolicy"
+      body: "region_set_policy_request_resource"
+    };
+    option (google.api.method_signature) = "project,region,resource,region_set_policy_request_resource";
+  }
+
+  // Sets the labels on the target regional disk.
+  rpc SetLabels(SetLabelsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project}/regions/{region}/disks/{resource}/setLabels"
+      body: "region_set_labels_request_resource"
+    };
+    option (google.api.method_signature) = "project,region,resource,region_set_labels_request_resource";
+    option (google.cloud.operation_service) = "RegionOperations";
+  }
+
+  // Returns permissions that a caller has on the specified resource.
+  rpc TestIamPermissions(TestIamPermissionsRequest) returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project}/regions/{region}/disks/{resource}/testIamPermissions"
+      body: "test_permissions_request_resource"
+    };
+    option (google.api.method_signature) = "project,region,resource,test_permissions_request_resource";
+  }
+
+  // Update the specified disk with the data included in the request. Update is
+  // performed only on selected fields included as part of update-mask. Only the
+  // following fields can be modified: user_license.
+  rpc UpdateRegionDisks(UpdateRegionDisksRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      patch: "/compute/v1/projects/{project}/regions/{region}/disks/{disk}"
+      body: "disk_resource"
+    };
+    option (google.api.method_signature) = "project,region,disk,disk_resource";
+    option (google.cloud.operation_service) = "RegionOperations";
+  }
+}
+
+// Request message for AddResourcePolicies.
+message AddResourcePoliciesRequest {
+  // The disk name for this request.
+  string disk = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Project ID for this request.
+  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+
+  // The name of the region for this request.
+  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+
+  // The RegionDisksAddResourcePoliciesRequest for this request.
+  optional google.cloud.cpp.compute.v1.RegionDisksAddResourcePoliciesRequest region_disks_add_resource_policies_request_resource = 4;
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 5;
+}
+
+// Request message for CreateSnapshot.
+message CreateSnapshotRequest {
+  // Name of the regional persistent disk to snapshot.
+  string disk = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Project ID for this request.
+  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+
+  // Name of the region for this request.
+  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 4;
+
+  // The Snapshot for this request.
+  optional google.cloud.cpp.compute.v1.Snapshot snapshot_resource = 5;
+}
+
+// Request message for DeleteRegionDisks.
+message DeleteRegionDisksRequest {
+  // Name of the regional persistent disk to delete.
+  string disk = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Project ID for this request.
+  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+
+  // Name of the region for this request.
+  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 4;
+}
+
+// Request message for GetIamPolicy.
+message GetIamPolicyRequest {
+  // Requested IAM Policy version.
+  optional int32 options_requested_policy_version = 1;
+
+  // Project ID for this request.
+  string project = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The name of the region for this request.
+  string region = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // Name or id of the resource for this request.
+  string resource = 4 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request message for GetRegionDisks.
+message GetRegionDisksRequest {
+  // Name of the regional persistent disk to return.
+  string disk = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Project ID for this request.
+  string project = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Name of the region for this request.
+  string region = 3 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request message for InsertRegionDisks.
+message InsertRegionDisksRequest {
+  // The Disk for this request.
+  optional google.cloud.cpp.compute.v1.Disk disk_resource = 1;
+
+  // Project ID for this request.
+  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+
+  // Name of the region for this request.
+  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 4;
+
+  // Source image to restore onto a disk. This field is optional.
+  optional string source_image = 5;
+}
+
+// Request message for ListRegionDisks.
+message ListRegionDisksRequest {
+  // A filter expression that filters resources listed in the response. Most
+  // Compute resources support two types of filter expressions: expressions that
+  // support regular expressions and expressions that follow API improvement
+  // proposal AIP-160. If you want to use AIP-160, your expression must specify
+  // the field name, an operator, and the value that you want to use for
+  // filtering. The value must be a string, a number, or a boolean. The operator
+  // must be either `=`, `!=`, `>`, `<`, `<=`, `>=` or `:`. For example, if you
+  // are filtering Compute Engine instances, you can exclude instances named
+  // `example-instance` by specifying `name != example-instance`. The `:`
+  // operator can be used with string fields to match substrings. For non-string
+  // fields it is equivalent to the `=` operator. The `:*` comparison can be
+  // used to test whether a key has been defined. For example, to find all
+  // objects with `owner` label use: ``` labels.owner:* ``` You can also filter
+  // nested fields. For example, you could specify `scheduling.automaticRestart
+  // = false` to include instances only if they are not scheduled for automatic
+  // restarts. You can use filtering on nested fields to filter based on
+  // resource labels. To filter on multiple expressions, provide each separate
+  // expression within parentheses. For example: ```
+  // (scheduling.automaticRestart = true) (cpuPlatform = "Intel Skylake") ``` By
+  // default, each expression is an `AND` expression. However, you can include
+  // `AND` and `OR` expressions explicitly. For example: ``` (cpuPlatform =
+  // "Intel Skylake") OR (cpuPlatform = "Intel Broadwell") AND
+  // (scheduling.automaticRestart = true) ``` If you want to use a regular
+  // expression, use the `eq` (equal) or `ne` (not equal) operator against a
+  // single un-parenthesized expression with or without quotes or against
+  // multiple parenthesized expressions. Examples: `fieldname eq unquoted
+  // literal` `fieldname eq 'single quoted literal'` `fieldname eq "double
+  // quoted literal"` `(fieldname1 eq literal) (fieldname2 ne "literal")` The
+  // literal value is interpreted as a regular expression using Google RE2
+  // library syntax. The literal value must match the entire field. For example,
+  // to filter for instances that do not end with name "instance", you would use
+  // `name ne .*instance`.
+  optional string filter = 1;
+
+  // The maximum number of results per page that should be returned. If the
+  // number of available results is larger than `maxResults`, Compute Engine
+  // returns a `nextPageToken` that can be used to get the next page of results
+  // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
+  // (Default: `500`)
+  optional uint32 max_results = 2;
+
+  // Sorts list results by a certain order. By default, results are returned in
+  // alphanumerical order based on the resource name. You can also sort results
+  // in descending order based on the creation timestamp using
+  // `orderBy="creationTimestamp desc"`. This sorts results based on the
+  // `creationTimestamp` field in reverse chronological order (newest result
+  // first). Use this to sort resources like operations so that the newest
+  // operation is returned first. Currently, only sorting by `name` or
+  // `creationTimestamp desc` is supported.
+  optional string order_by = 3;
+
+  // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
+  // returned by a previous list request to get the next page of results.
+  optional string page_token = 4;
+
+  // Project ID for this request.
+  string project = 5 [(google.api.field_behavior) = REQUIRED];
+
+  // Name of the region for this request.
+  string region = 6 [(google.api.field_behavior) = REQUIRED];
+
+  // Opt-in for partial success behavior which provides partial results in case
+  // of failure. The default value is false.
+  optional bool return_partial_success = 7;
+}
+
+// Request message for RemoveResourcePolicies.
+message RemoveResourcePoliciesRequest {
+  // The disk name for this request.
+  string disk = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Project ID for this request.
+  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+
+  // The name of the region for this request.
+  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+
+  // The RegionDisksRemoveResourcePoliciesRequest for this request.
+  optional google.cloud.cpp.compute.v1.RegionDisksRemoveResourcePoliciesRequest region_disks_remove_resource_policies_request_resource = 4;
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 5;
+}
+
+// Request message for Resize.
+message ResizeRequest {
+  // Name of the regional persistent disk.
+  string disk = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The project ID for this request.
+  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+
+  // Name of the region for this request.
+  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+
+  // The RegionDisksResizeRequest for this request.
+  optional google.cloud.cpp.compute.v1.RegionDisksResizeRequest region_disks_resize_request_resource = 4;
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 5;
+}
+
+// Request message for SetIamPolicy.
+message SetIamPolicyRequest {
+  // Project ID for this request.
+  string project = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The name of the region for this request.
+  string region = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The RegionSetPolicyRequest for this request.
+  optional google.cloud.cpp.compute.v1.RegionSetPolicyRequest region_set_policy_request_resource = 3;
+
+  // Name or id of the resource for this request.
+  string resource = 4 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request message for SetLabels.
+message SetLabelsRequest {
+  // Project ID for this request.
+  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+
+  // The region for this request.
+  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+
+  // The RegionSetLabelsRequest for this request.
+  optional google.cloud.cpp.compute.v1.RegionSetLabelsRequest region_set_labels_request_resource = 3;
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 4;
+
+  // Name or id of the resource for this request.
+  string resource = 5 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request message for TestIamPermissions.
+message TestIamPermissionsRequest {
+  // Project ID for this request.
+  string project = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The name of the region for this request.
+  string region = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Name or id of the resource for this request.
+  string resource = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // The TestPermissionsRequest for this request.
+  optional google.cloud.cpp.compute.v1.TestPermissionsRequest test_permissions_request_resource = 4;
+}
+
+// Request message for UpdateRegionDisks.
+message UpdateRegionDisksRequest {
+  // The disk name for this request.
+  string disk = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The Disk for this request.
+  optional google.cloud.cpp.compute.v1.Disk disk_resource = 2;
+
+  optional string paths = 3;
+
+  // Project ID for this request.
+  string project = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+
+  // The name of the region for this request.
+  string region = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 6;
+
+  // update_mask indicates fields to be updated as part of this request.
+  optional string update_mask = 7;
+}
