@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/discovery_to_proto.h"
+#include "generator/generator_config.pb.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/discovery_resource.h"
 #include "generator/internal/discovery_type_vertex.h"
@@ -379,6 +380,26 @@ std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
   return files;
 }
 
+void EmitConfigTextProto(
+    std::map<std::string, DiscoveryResource> const& resources) {
+  for (auto const& r : resources) {
+    google::cloud::cpp::generator::ServiceConfiguration s;
+    s.set_service_proto_path(
+        absl::StrFormat("google/cloud/compute/%s/v1/%s.proto",
+                        CamelCaseToSnakeCase(r.second.name()),
+                        CamelCaseToSnakeCase(r.second.name())));
+    s.set_product_path(absl::StrFormat("google/cloud/compute/%s/v1",
+                                       CamelCaseToSnakeCase(r.second.name())));
+    s.set_initial_copyright_year("2023");
+    *s.add_retryable_status_codes() = "kUnavailable";
+    s.set_generate_grpc_transport(false);
+    s.set_generate_rest_transport(true);
+    s.set_experimental(true);
+
+    std::cout << absl::StrFormat("rest_service {\n%s}\n", s.DebugString());
+  }
+}
+
 StatusOr<std::string> DefaultHostFromRootUrl(nlohmann::json const& json) {
   std::string root_url = json.value("rootUrl", "");
   if (root_url.empty()) return root_url;
@@ -450,6 +471,8 @@ Status GenerateProtosFromDiscoveryDoc(nlohmann::json const& discovery_doc,
     return internal::InvalidArgumentError(
         "No resources found in Discovery Document.");
   }
+
+  EmitConfigTextProto(resources);
 
   std::cerr << "num_resources: " << resources.size() << "\n";
 
