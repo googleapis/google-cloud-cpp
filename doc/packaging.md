@@ -377,7 +377,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/refs/tags/v23.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -411,7 +411,7 @@ Cloud Platform proto files. We manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.55.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -542,7 +542,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/refs/tags/v23.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -562,7 +562,7 @@ Cloud Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.55.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -692,7 +692,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/refs/tags/v23.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -731,7 +731,7 @@ Cloud Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.55.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -860,7 +860,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/refs/tags/v23.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -897,7 +897,7 @@ Cloud Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.55.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1059,7 +1059,7 @@ Google Cloud. We need to build from source:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/refs/tags/v23.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1096,7 +1096,7 @@ Finally, we build gRPC from source:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.55.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1226,7 +1226,7 @@ Google Cloud. We need to build from source:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/refs/tags/v23.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1263,7 +1263,7 @@ Finally, we build gRPC from source:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.55.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1379,7 +1379,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/refs/tags/v23.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1418,7 +1418,7 @@ Cloud Platform proto files. We manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.55.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1580,7 +1580,7 @@ install Protobuf (and any downstream packages) from source.
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/refs/tags/v23.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1621,7 +1621,7 @@ manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.55.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=17 \
@@ -1793,7 +1793,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/refs/tags/v23.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1827,7 +1827,7 @@ Cloud Platform proto files. We manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -fsSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.55.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \

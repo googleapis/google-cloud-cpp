@@ -142,7 +142,7 @@ RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/protobuf
-RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/refs/tags/v23.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -169,7 +169,7 @@ RUN curl -fsSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
 
 WORKDIR /var/tmp/build/grpc
 RUN dnf makecache && dnf install -y c-ares-devel
-RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.55.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -179,6 +179,7 @@ RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
       -DgRPC_ABSL_PROVIDER=package \
       -DgRPC_CARES_PROVIDER=package \
       -DgRPC_PROTOBUF_PROVIDER=package \
+      -DgRPC_PROTOBUF_PACKAGE_TYPE=CONFIG \
       -DgRPC_RE2_PROVIDER=package \
       -DgRPC_SSL_PROVIDER=package \
       -DgRPC_ZLIB_PROVIDER=package \
