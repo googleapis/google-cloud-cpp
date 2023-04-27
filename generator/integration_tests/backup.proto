@@ -51,16 +51,17 @@ message Backup {
     READY = 2;
   }
 
-  // Required for the [CreateBackup][google.test.admin.database.v1.DatabaseAdmin.CreateBackup] operation.
-  // Name of the database from which this backup was
-  // created. This needs to be in the same instance as the backup.
-  // Values are of the form
+  // Required for the
+  // [CreateBackup][google.test.admin.database.v1.DatabaseAdmin.CreateBackup]
+  // operation. Name of the database from which this backup was created. This
+  // needs to be in the same instance as the backup. Values are of the form
   // `projects/<project>/instances/<instance>/databases/<database>`.
-  string database = 2 [(google.api.resource_reference) = {
-                         type: "test.googleapis.com/Database"
-                       }];
+  string database = 2 [
+    (google.api.resource_reference) = { type: "test.googleapis.com/Database" }
+  ];
 
-  // Required for the [CreateBackup][google.test.admin.database.v1.DatabaseAdmin.CreateBackup]
+  // Required for the
+  // [CreateBackup][google.test.admin.database.v1.DatabaseAdmin.CreateBackup]
   // operation. The expiration time of the backup, with microseconds
   // granularity that must be at least 6 hours and at most 366 days
   // from the time the CreateBackup request is processed. Once the `expire_time`
@@ -68,8 +69,11 @@ message Backup {
   // Test to free the resources used by the backup.
   google.protobuf.Timestamp expire_time = 3;
 
-  // Output only for the [CreateBackup][google.test.admin.database.v1.DatabaseAdmin.CreateBackup] operation.
-  // Required for the [UpdateBackup][google.test.admin.database.v1.DatabaseAdmin.UpdateBackup] operation.
+  // Output only for the
+  // [CreateBackup][google.test.admin.database.v1.DatabaseAdmin.CreateBackup]
+  // operation. Required for the
+  // [UpdateBackup][google.test.admin.database.v1.DatabaseAdmin.UpdateBackup]
+  // operation.
   //
   // A globally unique identifier for the backup which cannot be
   // changed. Values are of the form
@@ -86,8 +90,10 @@ message Backup {
   // Output only. The backup will contain an externally consistent
   // copy of the database at the timestamp specified by
   // `create_time`. `create_time` is approximately the time the
-  // [CreateBackup][google.test.admin.database.v1.DatabaseAdmin.CreateBackup] request is received.
-  google.protobuf.Timestamp create_time = 4 [(google.api.field_behavior) = OUTPUT_ONLY];
+  // [CreateBackup][google.test.admin.database.v1.DatabaseAdmin.CreateBackup]
+  // request is received.
+  google.protobuf.Timestamp create_time = 4
+      [(google.api.field_behavior) = OUTPUT_ONLY];
 
   // Output only. Size of the backup in bytes.
   int64 size_bytes = 5 [(google.api.field_behavior) = OUTPUT_ONLY];
@@ -102,10 +108,12 @@ message Backup {
   // any referencing database prevents the backup from being deleted. When a
   // restored database from the backup enters the `READY` state, the reference
   // to the backup is removed.
-  repeated string referencing_databases = 7 [(google.api.field_behavior) = OUTPUT_ONLY];
+  repeated string referencing_databases = 7
+      [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
-// The request for [CreateBackup][google.test.admin.database.v1.DatabaseAdmin.CreateBackup].
+// The request for
+// [CreateBackup][google.test.admin.database.v1.DatabaseAdmin.CreateBackup].
 message CreateBackupRequest {
   // Required. The name of the instance in which the backup will be
   // created. This must be the same instance that contains the database the
@@ -115,9 +123,7 @@ message CreateBackupRequest {
   // `projects/<project>/instances/<instance>`.
   string parent = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {
-      type: "test.googleapis.com/Instance"
-    }
+    (google.api.resource_reference) = { type: "test.googleapis.com/Instance" }
   ];
 
   // Required. The id of the backup to be created. The `backup_id` appended to
@@ -139,7 +145,8 @@ message CreateBackupMetadata {
   string database = 2;
 
   // The progress of the
-  // [CreateBackup][google.test.admin.database.v1.DatabaseAdmin.CreateBackup] operation.
+  // [CreateBackup][google.test.admin.database.v1.DatabaseAdmin.CreateBackup]
+  // operation.
   OperationProgress progress = 3;
 
   // The time at which cancellation of this operation was received.
@@ -151,12 +158,14 @@ message CreateBackupMetadata {
   // other methods to check whether the cancellation succeeded or whether the
   // operation completed despite cancellation. On successful cancellation,
   // the operation is not deleted; instead, it becomes an operation with
-  // an [Operation.error][] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  // corresponding to `Code.CANCELLED`.
+  // an [Operation.error][] value with a
+  // [google.rpc.Status.code][google.rpc.Status.code] of 1, corresponding to
+  // `Code.CANCELLED`.
   google.protobuf.Timestamp cancel_time = 4;
 }
 
-// The request for [UpdateBackup][google.test.admin.database.v1.DatabaseAdmin.UpdateBackup].
+// The request for
+// [UpdateBackup][google.test.admin.database.v1.DatabaseAdmin.UpdateBackup].
 message UpdateBackupRequest {
   // Required. The backup to update. `backup.name`, and the fields to be updated
   // as specified by `update_mask` are required. Other fields are ignored.
@@ -169,44 +178,42 @@ message UpdateBackupRequest {
   // resource, not to the request message. The field mask must always be
   // specified; this prevents any future fields from being erased accidentally
   // by clients that do not know about them.
-  google.protobuf.FieldMask update_mask = 2 [(google.api.field_behavior) = REQUIRED];
+  google.protobuf.FieldMask update_mask = 2
+      [(google.api.field_behavior) = REQUIRED];
 }
 
-// The request for [GetBackup][google.test.admin.database.v1.DatabaseAdmin.GetBackup].
+// The request for
+// [GetBackup][google.test.admin.database.v1.DatabaseAdmin.GetBackup].
 message GetBackupRequest {
   // Required. Name of the backup.
   // Values are of the form
   // `projects/<project>/instances/<instance>/backups/<backup>`.
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {
-      type: "test.googleapis.com/Backup"
-    }
+    (google.api.resource_reference) = { type: "test.googleapis.com/Backup" }
   ];
 }
 
-// The request for [DeleteBackup][google.test.admin.database.v1.DatabaseAdmin.DeleteBackup].
+// The request for
+// [DeleteBackup][google.test.admin.database.v1.DatabaseAdmin.DeleteBackup].
 message DeleteBackupRequest {
   // Required. Name of the backup to delete.
   // Values are of the form
   // `projects/<project>/instances/<instance>/backups/<backup>`.
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {
-      type: "test.googleapis.com/Backup"
-    }
+    (google.api.resource_reference) = { type: "test.googleapis.com/Backup" }
   ];
 }
 
-// The request for [ListBackups][google.test.admin.database.v1.DatabaseAdmin.ListBackups].
+// The request for
+// [ListBackups][google.test.admin.database.v1.DatabaseAdmin.ListBackups].
 message ListBackupsRequest {
   // Required. The instance to list backups from.  Values are of the
   // form `projects/<project>/instances/<instance>`.
   string parent = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {
-      type: "test.googleapis.com/Instance"
-    }
+    (google.api.resource_reference) = { type: "test.googleapis.com/Instance" }
   ];
 
   // An expression that filters the list of returned backups.
@@ -217,7 +224,8 @@ message ListBackupsRequest {
   // must be one of: `<`, `>`, `<=`, `>=`, `!=`, `=`, or `:`.
   // Colon `:` is the contains operator. Filter rules are not case sensitive.
   //
-  // The following fields in the [Backup][google.test.admin.database.v1.Backup] are eligible for filtering:
+  // The following fields in the [Backup][google.test.admin.database.v1.Backup]
+  // are eligible for filtering:
   //
   //   * `name`
   //   * `database`
@@ -250,21 +258,23 @@ message ListBackupsRequest {
   int32 page_size = 3;
 
   // If non-empty, `page_token` should contain a
-  // [next_page_token][google.test.admin.database.v1.ListBackupsResponse.next_page_token] from a
-  // previous [ListBackupsResponse][google.test.admin.database.v1.ListBackupsResponse] to the same `parent` and with the same
-  // `filter`.
+  // [next_page_token][google.test.admin.database.v1.ListBackupsResponse.next_page_token]
+  // from a previous
+  // [ListBackupsResponse][google.test.admin.database.v1.ListBackupsResponse] to
+  // the same `parent` and with the same `filter`.
   string page_token = 4;
 }
 
-// The response for [ListBackups][google.test.admin.database.v1.DatabaseAdmin.ListBackups].
+// The response for
+// [ListBackups][google.test.admin.database.v1.DatabaseAdmin.ListBackups].
 message ListBackupsResponse {
   // The list of matching backups. Backups returned are ordered by `create_time`
   // in descending order, starting from the most recent `create_time`.
   repeated Backup backups = 1;
 
   // `next_page_token` can be sent in a subsequent
-  // [ListBackups][google.test.admin.database.v1.DatabaseAdmin.ListBackups] call to fetch more
-  // of the matching backups.
+  // [ListBackups][google.test.admin.database.v1.DatabaseAdmin.ListBackups] call
+  // to fetch more of the matching backups.
   string next_page_token = 2;
 }
 
@@ -275,9 +285,7 @@ message ListBackupOperationsRequest {
   // the form `projects/<project>/instances/<instance>`.
   string parent = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {
-      type: "test.googleapis.com/Instance"
-    }
+    (google.api.resource_reference) = { type: "test.googleapis.com/Instance" }
   ];
 
   // An expression that filters the list of returned backup operations.
@@ -294,7 +302,9 @@ message ListBackupOperationsRequest {
   //   * `name` - The name of the long-running operation
   //   * `done` - False if the operation is in progress, else true.
   //   * `metadata.@type` - the type of metadata. For example, the type string
-  //      for [CreateBackupMetadata][google.test.admin.database.v1.CreateBackupMetadata] is
+  //      for
+  //      [CreateBackupMetadata][google.test.admin.database.v1.CreateBackupMetadata]
+  //      is
   //      `type.googleapis.com/google.test.admin.database.v1.CreateBackupMetadata`.
   //   * `metadata.<field_name>` - any field in metadata.value.
   //   * `error` - Error associated with the long-running operation.
@@ -314,7 +324,8 @@ message ListBackupOperationsRequest {
   //     `(metadata.name:howl) AND` <br/>
   //     `(metadata.progress.start_time < \"2018-03-28T14:50:00Z\") AND` <br/>
   //     `(error:*)` - Returns operations where:
-  //     * The operation's metadata type is [CreateBackupMetadata][google.test.admin.database.v1.CreateBackupMetadata].
+  //     * The operation's metadata type is
+  //     [CreateBackupMetadata][google.test.admin.database.v1.CreateBackupMetadata].
   //     * The backup name contains the string "howl".
   //     * The operation started before 2018-03-28T14:50:00Z.
   //     * The operation resulted in an error.
@@ -326,8 +337,9 @@ message ListBackupOperationsRequest {
 
   // If non-empty, `page_token` should contain a
   // [next_page_token][google.test.admin.database.v1.ListBackupOperationsResponse.next_page_token]
-  // from a previous [ListBackupOperationsResponse][google.test.admin.database.v1.ListBackupOperationsResponse] to the
-  // same `parent` and with the same `filter`.
+  // from a previous
+  // [ListBackupOperationsResponse][google.test.admin.database.v1.ListBackupOperationsResponse]
+  // to the same `parent` and with the same `filter`.
   string page_token = 4;
 }
 
@@ -338,11 +350,11 @@ message ListBackupOperationsResponse {
   // operations][google.longrunning.Operation]. Each operation's name will be
   // prefixed by the backup's name and the operation's
   // [metadata][google.longrunning.Operation.metadata] will be of type
-  // [CreateBackupMetadata][google.test.admin.database.v1.CreateBackupMetadata]. Operations returned include those that are
-  // pending or have completed/failed/canceled within the last 7 days.
-  // Operations returned are ordered by
-  // `operation.metadata.value.progress.start_time` in descending order starting
-  // from the most recently started operation.
+  // [CreateBackupMetadata][google.test.admin.database.v1.CreateBackupMetadata].
+  // Operations returned include those that are pending or have
+  // completed/failed/canceled within the last 7 days. Operations returned are
+  // ordered by `operation.metadata.value.progress.start_time` in descending
+  // order starting from the most recently started operation.
   repeated google.longrunning.Operation operations = 1;
 
   // `next_page_token` can be sent in a subsequent

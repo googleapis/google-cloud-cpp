@@ -49,14 +49,15 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
   # TODO(#5821): The generator should run clang-format on its output files itself
   # so we don't need this extra step.
   io::log_h2 "Formatting generated code"
-  git ls-files -z -- '*.h' '*.cc' |
+  git ls-files -z -- '*.h' '*.cc' '*.proto' |
     xargs -P "$(nproc)" -n 1 -0 clang-format -i
 else
   io::log_red "Only formatting generated golden code."
   git ls-files -z -- 'generator/integration_tests/golden/internal/*.h' \
     'generator/integration_tests/golden/v1/*.h' \
     'generator/integration_tests/golden/v1/internal/*.cc' \
-    'generator/integration_tests/golden/v1/*.cc' |
+    'generator/integration_tests/golden/v1/*.cc' \
+    'generator/integration_tests/*.proto' |
     xargs -P "$(nproc)" -n 1 -0 clang-format -i
 fi
 

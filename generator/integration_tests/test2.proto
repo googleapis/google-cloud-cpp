@@ -23,7 +23,8 @@ import "google/protobuf/empty.proto";
 // Service to test services that do not support gRPC transport.
 service GoldenRestOnly {
   option (google.api.default_host) = "goldenrestonly.googleapis.com";
-  option (google.api.oauth_scopes) = "https://www.googleapis.com/auth/cloud-platform";
+  option (google.api.oauth_scopes) =
+      "https://www.googleapis.com/auth/cloud-platform";
 
   // Does nothing.
   rpc Noop(google.protobuf.Empty) returns (google.protobuf.Empty) {

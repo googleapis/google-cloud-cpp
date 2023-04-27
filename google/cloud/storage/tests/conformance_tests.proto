@@ -96,8 +96,8 @@ message PolicyOutput {
 
     E.1: PolicyInput.fields must be prepended to form expectedDecodedPolicy
     for consistent result across languages. Ordering doesn't matter to the
-    service but the decision is made to make it easier to conform implementations
-    in implementation.
+    service but the decision is made to make it easier to conform
+    implementations in implementation.
 
     Example:
 
