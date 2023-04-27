@@ -647,6 +647,8 @@ ParameterCommentSubstitution substitutions[] = {
     // The workaround is to double quote these:
     {R"""(`{instance} = '-'`)""", R"""(``{instance} = '-'``)"""},
     {R"""(`{cluster} = '-'`)""", R"""(``{cluster} = '-'``)"""},
+    {R"""(`projects/<Project ID or '-'>`)""",
+     R"""(``projects/<Project ID or '-'>``)"""},
 };
 
 std::string FormatApiMethodSignatureParameters(
