@@ -378,7 +378,7 @@ void AppendFunctionSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
       yaml << YAML::EndMap;
     }
     // Generate the template parameters as normal parameters, as there does not
-    // seem to be other way to document them.
+    // seem to be any other way to document them.
     for (auto const& i : tparams) {
       auto type = std::string{i.child("type").child_value()};
       yaml << YAML::BeginMap  //
