@@ -13,9 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/retry_client.h"
+#include "google/cloud/storage/internal/tracing_client.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/internal/opentelemetry_options.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -608,6 +611,63 @@ TEST(RetryClientTest, UploadFinalChunkQueryTooManyMissingPayloads) {
                          CreateNullHashFunction(), HashValues{}));
   ASSERT_THAT(response, Not(IsOk()));
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+using ::google::cloud::internal::OpenTelemetryTracingOption;
+using ::google::cloud::testing_util::InstallSpanCatcher;
+using ::google::cloud::testing_util::SpanNamed;
+using ::testing::ElementsAre;
+using ::testing::Return;
+
+TEST(RetryClientTest, BackoffSpansSimple) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<testing::MockClient>();
+  auto client = storage_internal::MakeTracingClient(
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock)));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<OpenTelemetryTracingOption>(true));
+  EXPECT_CALL(*mock, GetObjectMetadata)
+      .WillRepeatedly(Return(TransientError()));
+  auto response = client->GetObjectMetadata(GetObjectMetadataRequest());
+  EXPECT_THAT(response, StatusIs(TransientError().code()));
+  EXPECT_THAT(span_catcher->GetSpans(),
+              ElementsAre(SpanNamed("Backoff"), SpanNamed("Backoff"),
+                          SpanNamed("Backoff"),
+                          SpanNamed("storage::Client::GetObjectMetadata")));
+}
+
+TEST(RetryClientTest, BackoffSpansUploadChunk) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<testing::MockClient>();
+  auto client = storage_internal::MakeTracingClient(
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(mock)));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<OpenTelemetryTracingOption>(true));
+
+  ::testing::InSequence sequence;
+  EXPECT_CALL(*mock, UploadChunk).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock, QueryResumableUpload)
+      .WillOnce(Return(QueryResumableUploadResponse{0, absl::nullopt}));
+  EXPECT_CALL(*mock, UploadChunk).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock, QueryResumableUpload)
+      .WillOnce(Return(QueryResumableUploadResponse{0, absl::nullopt}));
+  EXPECT_CALL(*mock, UploadChunk).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock, QueryResumableUpload)
+      .WillOnce(Return(QueryResumableUploadResponse{0, absl::nullopt}));
+  EXPECT_CALL(*mock, UploadChunk).WillOnce(Return(TransientError()));
+
+  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
+  std::string const payload(std::string(quantum * 2, 'X'));
+  auto response = client->UploadChunk(UploadChunkRequest(
+      "test-only-upload-id", 0, {{payload}}, CreateNullHashFunction()));
+  EXPECT_THAT(response, StatusIs(TransientError().code()));
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(SpanNamed("Backoff"), SpanNamed("Backoff"),
+                  SpanNamed("Backoff"),
+                  SpanNamed("storage::Client::WriteObject/UploadChunk")));
+}
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 }  // namespace internal

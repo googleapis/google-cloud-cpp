@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/internal/raw_client_wrapper_utils.h"
 #include "google/cloud/storage/internal/retry_object_read_source.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "absl/strings/match.h"
@@ -54,6 +55,8 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
     typename Signature<MemberFunction>::RequestType const& request,
     char const* location) {
   using ::google::cloud::internal::RetryLoopError;
+  auto sleeper = google::cloud::internal::MakeTracedSleeper(
+      [](std::chrono::milliseconds d) { std::this_thread::sleep_for(d); });
   Status last_status(StatusCode::kDeadlineExceeded,
                      "Retry policy exhausted before first attempt was made.");
   while (!retry_policy.IsExhausted()) {
@@ -71,8 +74,7 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
       // Exit the loop immediately instead of sleeping before trying again.
       break;
     }
-    auto delay = backoff_policy.OnCompletion();
-    std::this_thread::sleep_for(delay);
+    sleeper(backoff_policy.OnCompletion());
   }
   return RetryLoopError("Retry policy exhausted", location, last_status);
 }
@@ -513,6 +515,8 @@ StatusOr<EmptyResponse> RetryClient::DeleteResumableUpload(
 //
 StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
     UploadChunkRequest const& request) {
+  auto sleeper = google::cloud::internal::MakeTracedSleeper(
+      [](std::chrono::milliseconds d) { std::this_thread::sleep_for(d); });
   auto last_status =
       Status(StatusCode::kDeadlineExceeded,
              "Retry policy exhausted before first attempt was made.");
@@ -561,7 +565,7 @@ StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
       }
 
       auto delay = backoff_policy->OnCompletion();
-      std::this_thread::sleep_for(delay);
+      sleeper(delay);
       operation = &reset;
       continue;
     }
