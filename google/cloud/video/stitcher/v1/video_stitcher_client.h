@@ -308,12 +308,12 @@ class VideoStitcherServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::VodSession,google/cloud/video/stitcher/v1/sessions.proto#L41}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::VodSession,google/cloud/video/stitcher/v1/sessions.proto#L32}
   ///
   /// [google.cloud.video.stitcher.v1.CreateVodSessionRequest]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L391}
   /// [google.cloud.video.stitcher.v1.VodSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L41}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L32}
   ///
   StatusOr<google::cloud::video::stitcher::v1::VodSession> CreateVodSession(
       std::string const& parent,
@@ -329,12 +329,12 @@ class VideoStitcherServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::VodSession,google/cloud/video/stitcher/v1/sessions.proto#L41}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::VodSession,google/cloud/video/stitcher/v1/sessions.proto#L32}
   ///
   /// [google.cloud.video.stitcher.v1.CreateVodSessionRequest]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L391}
   /// [google.cloud.video.stitcher.v1.VodSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L41}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L32}
   ///
   StatusOr<google::cloud::video::stitcher::v1::VodSession> CreateVodSession(
       google::cloud::video::stitcher::v1::CreateVodSessionRequest const&
@@ -351,12 +351,12 @@ class VideoStitcherServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::VodSession,google/cloud/video/stitcher/v1/sessions.proto#L41}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::VodSession,google/cloud/video/stitcher/v1/sessions.proto#L32}
   ///
   /// [google.cloud.video.stitcher.v1.GetVodSessionRequest]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L406}
   /// [google.cloud.video.stitcher.v1.VodSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L41}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L32}
   ///
   StatusOr<google::cloud::video::stitcher::v1::VodSession> GetVodSession(
       std::string const& name, Options opts = {});
@@ -370,12 +370,12 @@ class VideoStitcherServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::VodSession,google/cloud/video/stitcher/v1/sessions.proto#L41}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::VodSession,google/cloud/video/stitcher/v1/sessions.proto#L32}
   ///
   /// [google.cloud.video.stitcher.v1.GetVodSessionRequest]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L406}
   /// [google.cloud.video.stitcher.v1.VodSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L41}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L32}
   ///
   StatusOr<google::cloud::video::stitcher::v1::VodSession> GetVodSession(
       google::cloud::video::stitcher::v1::GetVodSessionRequest const& request,
@@ -828,12 +828,12 @@ class VideoStitcherServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveSession,google/cloud/video/stitcher/v1/sessions.proto#L142}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveSession,google/cloud/video/stitcher/v1/sessions.proto#L143}
   ///
   /// [google.cloud.video.stitcher.v1.CreateLiveSessionRequest]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L644}
   /// [google.cloud.video.stitcher.v1.LiveSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L142}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L143}
   ///
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> CreateLiveSession(
       std::string const& parent,
@@ -848,12 +848,12 @@ class VideoStitcherServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveSession,google/cloud/video/stitcher/v1/sessions.proto#L142}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveSession,google/cloud/video/stitcher/v1/sessions.proto#L143}
   ///
   /// [google.cloud.video.stitcher.v1.CreateLiveSessionRequest]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L644}
   /// [google.cloud.video.stitcher.v1.LiveSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L142}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L143}
   ///
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> CreateLiveSession(
       google::cloud::video::stitcher::v1::CreateLiveSessionRequest const&
@@ -868,12 +868,12 @@ class VideoStitcherServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveSession,google/cloud/video/stitcher/v1/sessions.proto#L142}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveSession,google/cloud/video/stitcher/v1/sessions.proto#L143}
   ///
   /// [google.cloud.video.stitcher.v1.GetLiveSessionRequest]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L659}
   /// [google.cloud.video.stitcher.v1.LiveSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L142}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L143}
   ///
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> GetLiveSession(
       std::string const& name, Options opts = {});
@@ -886,12 +886,12 @@ class VideoStitcherServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveSession,google/cloud/video/stitcher/v1/sessions.proto#L142}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveSession,google/cloud/video/stitcher/v1/sessions.proto#L143}
   ///
   /// [google.cloud.video.stitcher.v1.GetLiveSessionRequest]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L659}
   /// [google.cloud.video.stitcher.v1.LiveSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L142}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L143}
   ///
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> GetLiveSession(
       google::cloud::video::stitcher::v1::GetLiveSessionRequest const& request,

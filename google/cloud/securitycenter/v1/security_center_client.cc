@@ -50,6 +50,31 @@ SecurityCenterClient::BulkMuteFindings(
   return connection_->BulkMuteFindings(request);
 }
 
+StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterClient::CreateSecurityHealthAnalyticsCustomModule(
+    std::string const& parent,
+    google::cloud::securitycenter::v1::
+        SecurityHealthAnalyticsCustomModule const&
+            security_health_analytics_custom_module,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::
+      CreateSecurityHealthAnalyticsCustomModuleRequest request;
+  request.set_parent(parent);
+  *request.mutable_security_health_analytics_custom_module() =
+      security_health_analytics_custom_module;
+  return connection_->CreateSecurityHealthAnalyticsCustomModule(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterClient::CreateSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        CreateSecurityHealthAnalyticsCustomModuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateSecurityHealthAnalyticsCustomModule(request);
+}
+
 StatusOr<google::cloud::securitycenter::v1::Source>
 SecurityCenterClient::CreateSource(
     std::string const& parent,
@@ -189,6 +214,23 @@ Status SecurityCenterClient::DeleteNotificationConfig(
   return connection_->DeleteNotificationConfig(request);
 }
 
+Status SecurityCenterClient::DeleteSecurityHealthAnalyticsCustomModule(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::
+      DeleteSecurityHealthAnalyticsCustomModuleRequest request;
+  request.set_name(name);
+  return connection_->DeleteSecurityHealthAnalyticsCustomModule(request);
+}
+
+Status SecurityCenterClient::DeleteSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        DeleteSecurityHealthAnalyticsCustomModuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSecurityHealthAnalyticsCustomModule(request);
+}
+
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 SecurityCenterClient::GetBigQueryExport(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -271,6 +313,46 @@ SecurityCenterClient::GetOrganizationSettings(
   return connection_->GetOrganizationSettings(request);
 }
 
+StatusOr<google::cloud::securitycenter::v1::
+             EffectiveSecurityHealthAnalyticsCustomModule>
+SecurityCenterClient::GetEffectiveSecurityHealthAnalyticsCustomModule(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::
+      GetEffectiveSecurityHealthAnalyticsCustomModuleRequest request;
+  request.set_name(name);
+  return connection_->GetEffectiveSecurityHealthAnalyticsCustomModule(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             EffectiveSecurityHealthAnalyticsCustomModule>
+SecurityCenterClient::GetEffectiveSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetEffectiveSecurityHealthAnalyticsCustomModule(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterClient::GetSecurityHealthAnalyticsCustomModule(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::
+      GetSecurityHealthAnalyticsCustomModuleRequest request;
+  request.set_name(name);
+  return connection_->GetSecurityHealthAnalyticsCustomModule(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterClient::GetSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        GetSecurityHealthAnalyticsCustomModuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetSecurityHealthAnalyticsCustomModule(request);
+}
+
 StatusOr<google::cloud::securitycenter::v1::Source>
 SecurityCenterClient::GetSource(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -323,6 +405,29 @@ SecurityCenterClient::ListAssets(
 }
 
 StreamRange<
+    google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterClient::ListDescendantSecurityHealthAnalyticsCustomModules(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::
+      ListDescendantSecurityHealthAnalyticsCustomModulesRequest request;
+  request.set_parent(parent);
+  return connection_->ListDescendantSecurityHealthAnalyticsCustomModules(
+      request);
+}
+
+StreamRange<
+    google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterClient::ListDescendantSecurityHealthAnalyticsCustomModules(
+    google::cloud::securitycenter::v1::
+        ListDescendantSecurityHealthAnalyticsCustomModulesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListDescendantSecurityHealthAnalyticsCustomModules(
+      std::move(request));
+}
+
+StreamRange<
     google::cloud::securitycenter::v1::ListFindingsResponse::ListFindingsResult>
 SecurityCenterClient::ListFindings(
     google::cloud::securitycenter::v1::ListFindingsRequest request,
@@ -362,6 +467,51 @@ SecurityCenterClient::ListNotificationConfigs(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNotificationConfigs(std::move(request));
+}
+
+StreamRange<google::cloud::securitycenter::v1::
+                EffectiveSecurityHealthAnalyticsCustomModule>
+SecurityCenterClient::ListEffectiveSecurityHealthAnalyticsCustomModules(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::
+      ListEffectiveSecurityHealthAnalyticsCustomModulesRequest request;
+  request.set_parent(parent);
+  return connection_->ListEffectiveSecurityHealthAnalyticsCustomModules(
+      request);
+}
+
+StreamRange<google::cloud::securitycenter::v1::
+                EffectiveSecurityHealthAnalyticsCustomModule>
+SecurityCenterClient::ListEffectiveSecurityHealthAnalyticsCustomModules(
+    google::cloud::securitycenter::v1::
+        ListEffectiveSecurityHealthAnalyticsCustomModulesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListEffectiveSecurityHealthAnalyticsCustomModules(
+      std::move(request));
+}
+
+StreamRange<
+    google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterClient::ListSecurityHealthAnalyticsCustomModules(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::
+      ListSecurityHealthAnalyticsCustomModulesRequest request;
+  request.set_parent(parent);
+  return connection_->ListSecurityHealthAnalyticsCustomModules(request);
+}
+
+StreamRange<
+    google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterClient::ListSecurityHealthAnalyticsCustomModules(
+    google::cloud::securitycenter::v1::
+        ListSecurityHealthAnalyticsCustomModulesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListSecurityHealthAnalyticsCustomModules(
+      std::move(request));
 }
 
 StreamRange<google::cloud::securitycenter::v1::Source>
@@ -610,6 +760,30 @@ SecurityCenterClient::UpdateOrganizationSettings(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateOrganizationSettings(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterClient::UpdateSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        SecurityHealthAnalyticsCustomModule const&
+            security_health_analytics_custom_module,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::
+      UpdateSecurityHealthAnalyticsCustomModuleRequest request;
+  *request.mutable_security_health_analytics_custom_module() =
+      security_health_analytics_custom_module;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateSecurityHealthAnalyticsCustomModule(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterClient::UpdateSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        UpdateSecurityHealthAnalyticsCustomModuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateSecurityHealthAnalyticsCustomModule(request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Source>

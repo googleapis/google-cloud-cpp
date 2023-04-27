@@ -419,7 +419,7 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Queue]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   /// [google.cloud.tasks.v2.Queue.state]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L154}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L161}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(std::string const& name,
                                                        Options opts = {});
@@ -448,7 +448,7 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Queue]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   /// [google.cloud.tasks.v2.Queue.state]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L154}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L161}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(
       google::cloud::tasks::v2::PauseQueueRequest const& request,
@@ -480,7 +480,7 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Queue]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   /// [google.cloud.tasks.v2.Queue.state]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L154}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L161}
   /// [google.cloud.tasks.v2.ResumeQueueRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L455}
   ///
@@ -513,7 +513,7 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.Queue]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   /// [google.cloud.tasks.v2.Queue.state]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L154}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L161}
   /// [google.cloud.tasks.v2.ResumeQueueRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L455}
   ///
@@ -971,15 +971,15 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.CloudTasks.RunTask]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L298}
   /// [google.cloud.tasks.v2.RateLimits]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L182}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L191}
   /// [google.cloud.tasks.v2.RetryConfig]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L252}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L261}
   /// [google.cloud.tasks.v2.RunTaskRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L632}
   /// [google.cloud.tasks.v2.Task]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L32}
   /// [google.cloud.tasks.v2.Task.schedule_time]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L105}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L109}
   ///
   StatusOr<google::cloud::tasks::v2::Task> RunTask(std::string const& name,
                                                    Options opts = {});
@@ -1022,15 +1022,15 @@ class CloudTasksClient {
   /// [google.cloud.tasks.v2.CloudTasks.RunTask]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L298}
   /// [google.cloud.tasks.v2.RateLimits]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L182}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L191}
   /// [google.cloud.tasks.v2.RetryConfig]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L252}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L261}
   /// [google.cloud.tasks.v2.RunTaskRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L632}
   /// [google.cloud.tasks.v2.Task]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L32}
   /// [google.cloud.tasks.v2.Task.schedule_time]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L105}
+  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L109}
   ///
   StatusOr<google::cloud::tasks::v2::Task> RunTask(
       google::cloud::tasks::v2::RunTaskRequest const& request,

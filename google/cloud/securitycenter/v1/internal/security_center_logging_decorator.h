@@ -45,6 +45,14 @@ class SecurityCenterLogging : public SecurityCenterStub {
       google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request)
       override;
 
+  StatusOr<
+      google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+  CreateSecurityHealthAnalyticsCustomModule(
+      grpc::ClientContext& context,
+      google::cloud::securitycenter::v1::
+          CreateSecurityHealthAnalyticsCustomModuleRequest const& request)
+      override;
+
   StatusOr<google::cloud::securitycenter::v1::Source> CreateSource(
       grpc::ClientContext& context,
       google::cloud::securitycenter::v1::CreateSourceRequest const& request)
@@ -76,6 +84,12 @@ class SecurityCenterLogging : public SecurityCenterStub {
       google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const&
           request) override;
 
+  Status DeleteSecurityHealthAnalyticsCustomModule(
+      grpc::ClientContext& context,
+      google::cloud::securitycenter::v1::
+          DeleteSecurityHealthAnalyticsCustomModuleRequest const& request)
+      override;
+
   StatusOr<google::cloud::securitycenter::v1::BigQueryExport> GetBigQueryExport(
       grpc::ClientContext& context,
       google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
@@ -102,6 +116,22 @@ class SecurityCenterLogging : public SecurityCenterStub {
       google::cloud::securitycenter::v1::GetOrganizationSettingsRequest const&
           request) override;
 
+  StatusOr<google::cloud::securitycenter::v1::
+               EffectiveSecurityHealthAnalyticsCustomModule>
+  GetEffectiveSecurityHealthAnalyticsCustomModule(
+      grpc::ClientContext& context,
+      google::cloud::securitycenter::v1::
+          GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const& request)
+      override;
+
+  StatusOr<
+      google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+  GetSecurityHealthAnalyticsCustomModule(
+      grpc::ClientContext& context,
+      google::cloud::securitycenter::v1::
+          GetSecurityHealthAnalyticsCustomModuleRequest const& request)
+      override;
+
   StatusOr<google::cloud::securitycenter::v1::Source> GetSource(
       grpc::ClientContext& context,
       google::cloud::securitycenter::v1::GetSourceRequest const& request)
@@ -122,6 +152,14 @@ class SecurityCenterLogging : public SecurityCenterStub {
       google::cloud::securitycenter::v1::ListAssetsRequest const& request)
       override;
 
+  StatusOr<google::cloud::securitycenter::v1::
+               ListDescendantSecurityHealthAnalyticsCustomModulesResponse>
+  ListDescendantSecurityHealthAnalyticsCustomModules(
+      grpc::ClientContext& context,
+      google::cloud::securitycenter::v1::
+          ListDescendantSecurityHealthAnalyticsCustomModulesRequest const&
+              request) override;
+
   StatusOr<google::cloud::securitycenter::v1::ListFindingsResponse>
   ListFindings(grpc::ClientContext& context,
                google::cloud::securitycenter::v1::ListFindingsRequest const&
@@ -138,6 +176,22 @@ class SecurityCenterLogging : public SecurityCenterStub {
       grpc::ClientContext& context,
       google::cloud::securitycenter::v1::ListNotificationConfigsRequest const&
           request) override;
+
+  StatusOr<google::cloud::securitycenter::v1::
+               ListEffectiveSecurityHealthAnalyticsCustomModulesResponse>
+  ListEffectiveSecurityHealthAnalyticsCustomModules(
+      grpc::ClientContext& context,
+      google::cloud::securitycenter::v1::
+          ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const&
+              request) override;
+
+  StatusOr<google::cloud::securitycenter::v1::
+               ListSecurityHealthAnalyticsCustomModulesResponse>
+  ListSecurityHealthAnalyticsCustomModules(
+      grpc::ClientContext& context,
+      google::cloud::securitycenter::v1::
+          ListSecurityHealthAnalyticsCustomModulesRequest const& request)
+      override;
 
   StatusOr<google::cloud::securitycenter::v1::ListSourcesResponse> ListSources(
       grpc::ClientContext& context,
@@ -195,6 +249,14 @@ class SecurityCenterLogging : public SecurityCenterStub {
       grpc::ClientContext& context,
       google::cloud::securitycenter::v1::
           UpdateOrganizationSettingsRequest const& request) override;
+
+  StatusOr<
+      google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+  UpdateSecurityHealthAnalyticsCustomModule(
+      grpc::ClientContext& context,
+      google::cloud::securitycenter::v1::
+          UpdateSecurityHealthAnalyticsCustomModuleRequest const& request)
+      override;
 
   StatusOr<google::cloud::securitycenter::v1::Source> UpdateSource(
       grpc::ClientContext& context,

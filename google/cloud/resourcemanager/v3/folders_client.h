@@ -98,12 +98,12 @@ class FoldersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
   /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
   /// [google.cloud.resourcemanager.v3.GetFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L322}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L335}
   ///
   StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
       std::string const& name, Options opts = {});
@@ -116,16 +116,16 @@ class FoldersClient {
   /// identified folder.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::GetFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L322}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::GetFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L335}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
   /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
   /// [google.cloud.resourcemanager.v3.GetFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L322}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L335}
   ///
   StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
       google::cloud::resourcemanager::v3::GetFolderRequest const& request,
@@ -139,21 +139,23 @@ class FoldersClient {
   /// ordering of their display_name. The caller must have
   /// `resourcemanager.folders.list` permission on the identified parent.
   ///
-  /// @param parent  Required. The resource name of the organization or folder
-  /// whose folders are
-  ///  being listed.
-  ///  Must be of the form `folders/{folder_id}` or `organizations/{org_id}`.
+  /// @param parent  Required. The name of the parent resource whose folders are
+  /// being listed.
+  ///  Only children of this parent resource are listed; descendants are not
+  ///  listed.
+  ///  If the parent is a folder, use the value `folders/{folder_id}`. If the
+  ///  parent is an organization, use the value `organizations/{org_id}`.
   ///  Access to this method is controlled by checking the
   ///  `resourcemanager.folders.list` permission on the `parent`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
   /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
   /// [google.cloud.resourcemanager.v3.ListFoldersRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L334}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L347}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Folder> ListFolders(
       std::string const& parent, Options opts = {});
@@ -167,16 +169,16 @@ class FoldersClient {
   /// `resourcemanager.folders.list` permission on the identified parent.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::ListFoldersRequest,google/cloud/resourcemanager/v3/folders.proto#L334}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::ListFoldersRequest,google/cloud/resourcemanager/v3/folders.proto#L347}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
   /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
   /// [google.cloud.resourcemanager.v3.ListFoldersRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L334}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L347}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Folder> ListFolders(
       google::cloud::resourcemanager::v3::ListFoldersRequest request,
@@ -220,12 +222,12 @@ class FoldersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
   /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
   /// [google.cloud.resourcemanager.v3.SearchFoldersRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L373}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L389}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Folder> SearchFolders(
       std::string const& query, Options opts = {});
@@ -239,16 +241,16 @@ class FoldersClient {
   /// permission `resourcemanager.folders.get`.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::SearchFoldersRequest,google/cloud/resourcemanager/v3/folders.proto#L373}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::SearchFoldersRequest,google/cloud/resourcemanager/v3/folders.proto#L389}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
   /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
   /// [google.cloud.resourcemanager.v3.SearchFoldersRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L373}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L389}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Folder> SearchFolders(
       google::cloud::resourcemanager::v3::SearchFoldersRequest request,
@@ -284,17 +286,17 @@ class FoldersClient {
   /// identified parent.
   ///
   /// @param folder  Required. The folder being created, only the display name
-  /// and parent will be
-  ///  consulted. All other fields will be ignored.
+  /// and parent will
+  ///  be consulted. All other fields will be ignored.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
   /// [google.cloud.resourcemanager.v3.CreateFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L428}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L445}
   /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> CreateFolder(
       google::cloud::resourcemanager::v3::Folder const& folder,
@@ -330,16 +332,16 @@ class FoldersClient {
   /// identified parent.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::CreateFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L428}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::CreateFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L445}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
   /// [google.cloud.resourcemanager.v3.CreateFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L428}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L445}
   /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> CreateFolder(
       google::cloud::resourcemanager::v3::CreateFolderRequest const& request,
@@ -365,21 +367,21 @@ class FoldersClient {
   /// in the Status.details field.
   ///
   /// @param folder  Required. The new definition of the Folder. It must include
-  /// the `name` field, which
-  ///  cannot be changed.
+  /// the `name`
+  ///  field, which cannot be changed.
   /// @param update_mask  Required. Fields to be updated.
   ///  Only the `display_name` can be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
   /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
   /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
   /// [google.cloud.resourcemanager.v3.UpdateFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L452}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L469}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UpdateFolder(
       google::cloud::resourcemanager::v3::Folder const& folder,
@@ -405,18 +407,18 @@ class FoldersClient {
   /// in the Status.details field.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::UpdateFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L452}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::UpdateFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L469}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
   /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
   /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
   /// [google.cloud.resourcemanager.v3.UpdateFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L452}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L469}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UpdateFolder(
       google::cloud::resourcemanager::v3::UpdateFolderRequest const& request,
@@ -444,20 +446,20 @@ class FoldersClient {
   /// @param name  Required. The resource name of the Folder to move.
   ///  Must be of the form folders/{folder_id}
   /// @param destination_parent  Required. The resource name of the folder or
-  /// organization which should be the
-  ///  folder's new parent.
-  ///  Must be of the form `folders/{folder_id}` or `organizations/{org_id}`.
+  /// organization which should be
+  ///  the folder's new parent. Must be of the form `folders/{folder_id}` or
+  ///  `organizations/{org_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
   /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
   /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
   /// [google.cloud.resourcemanager.v3.MoveFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L469}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L485}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> MoveFolder(
       std::string const& name, std::string const& destination_parent,
@@ -483,18 +485,18 @@ class FoldersClient {
   /// permission on the folder's current and proposed new parent.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::MoveFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L469}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::MoveFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L485}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
   /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
   /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
   /// [google.cloud.resourcemanager.v3.MoveFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L469}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L485}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> MoveFolder(
       google::cloud::resourcemanager::v3::MoveFolderRequest const& request,
@@ -518,12 +520,12 @@ class FoldersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
   /// [google.cloud.resourcemanager.v3.DeleteFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L503}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L517}
   /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> DeleteFolder(
       std::string const& name, Options opts = {});
@@ -542,16 +544,16 @@ class FoldersClient {
   /// identified folder.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::DeleteFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L503}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::DeleteFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L517}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
   /// [google.cloud.resourcemanager.v3.DeleteFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L503}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L517}
   /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> DeleteFolder(
       google::cloud::resourcemanager::v3::DeleteFolderRequest const& request,
@@ -575,14 +577,14 @@ class FoldersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
   /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
   /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
   /// [google.cloud.resourcemanager.v3.UndeleteFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L521}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L533}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UndeleteFolder(
       std::string const& name, Options opts = {});
@@ -601,18 +603,18 @@ class FoldersClient {
   /// permission on the identified folder.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::UndeleteFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L521}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::UndeleteFolderRequest,google/cloud/resourcemanager/v3/folders.proto#L533}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L273}
   ///
   /// [google.cloud.resourcemanager.v3.Folder]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
   /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
   /// [google.cloud.resourcemanager.v3.UndeleteFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L521}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L533}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UndeleteFolder(
       google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request,

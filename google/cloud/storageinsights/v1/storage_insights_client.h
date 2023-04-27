@@ -92,12 +92,12 @@ class StorageInsightsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::storageinsights::v1::ReportConfig,google/cloud/storageinsights/v1/storageinsights.proto#L438}
+  /// @googleapis_link{google::cloud::storageinsights::v1::ReportConfig,google/cloud/storageinsights/v1/storageinsights.proto#L449}
   ///
   /// [google.cloud.storageinsights.v1.ListReportConfigsRequest]:
   /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L107}
   /// [google.cloud.storageinsights.v1.ReportConfig]:
-  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L438}
+  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L449}
   ///
   StreamRange<google::cloud::storageinsights::v1::ReportConfig>
   ListReportConfigs(std::string const& parent, Options opts = {});
@@ -110,12 +110,12 @@ class StorageInsightsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::storageinsights::v1::ReportConfig,google/cloud/storageinsights/v1/storageinsights.proto#L438}
+  /// @googleapis_link{google::cloud::storageinsights::v1::ReportConfig,google/cloud/storageinsights/v1/storageinsights.proto#L449}
   ///
   /// [google.cloud.storageinsights.v1.ListReportConfigsRequest]:
   /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L107}
   /// [google.cloud.storageinsights.v1.ReportConfig]:
-  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L438}
+  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L449}
   ///
   StreamRange<google::cloud::storageinsights::v1::ReportConfig>
   ListReportConfigs(
@@ -129,12 +129,12 @@ class StorageInsightsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::storageinsights::v1::ReportConfig,google/cloud/storageinsights/v1/storageinsights.proto#L438}
+  /// @googleapis_link{google::cloud::storageinsights::v1::ReportConfig,google/cloud/storageinsights/v1/storageinsights.proto#L449}
   ///
   /// [google.cloud.storageinsights.v1.GetReportConfigRequest]:
   /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L143}
   /// [google.cloud.storageinsights.v1.ReportConfig]:
-  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L438}
+  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L449}
   ///
   StatusOr<google::cloud::storageinsights::v1::ReportConfig> GetReportConfig(
       std::string const& name, Options opts = {});
@@ -147,12 +147,12 @@ class StorageInsightsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::storageinsights::v1::ReportConfig,google/cloud/storageinsights/v1/storageinsights.proto#L438}
+  /// @googleapis_link{google::cloud::storageinsights::v1::ReportConfig,google/cloud/storageinsights/v1/storageinsights.proto#L449}
   ///
   /// [google.cloud.storageinsights.v1.GetReportConfigRequest]:
   /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L143}
   /// [google.cloud.storageinsights.v1.ReportConfig]:
-  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L438}
+  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L449}
   ///
   StatusOr<google::cloud::storageinsights::v1::ReportConfig> GetReportConfig(
       google::cloud::storageinsights::v1::GetReportConfigRequest const& request,
@@ -166,12 +166,12 @@ class StorageInsightsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::storageinsights::v1::ReportConfig,google/cloud/storageinsights/v1/storageinsights.proto#L438}
+  /// @googleapis_link{google::cloud::storageinsights::v1::ReportConfig,google/cloud/storageinsights/v1/storageinsights.proto#L449}
   ///
   /// [google.cloud.storageinsights.v1.CreateReportConfigRequest]:
   /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L154}
   /// [google.cloud.storageinsights.v1.ReportConfig]:
-  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L438}
+  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L449}
   ///
   StatusOr<google::cloud::storageinsights::v1::ReportConfig> CreateReportConfig(
       std::string const& parent,
@@ -186,12 +186,12 @@ class StorageInsightsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::storageinsights::v1::ReportConfig,google/cloud/storageinsights/v1/storageinsights.proto#L438}
+  /// @googleapis_link{google::cloud::storageinsights::v1::ReportConfig,google/cloud/storageinsights/v1/storageinsights.proto#L449}
   ///
   /// [google.cloud.storageinsights.v1.CreateReportConfigRequest]:
   /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L154}
   /// [google.cloud.storageinsights.v1.ReportConfig]:
-  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L438}
+  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L449}
   ///
   StatusOr<google::cloud::storageinsights::v1::ReportConfig> CreateReportConfig(
       google::cloud::storageinsights::v1::CreateReportConfigRequest const&
@@ -211,10 +211,10 @@ class StorageInsightsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::storageinsights::v1::ReportConfig,google/cloud/storageinsights/v1/storageinsights.proto#L438}
+  /// @googleapis_link{google::cloud::storageinsights::v1::ReportConfig,google/cloud/storageinsights/v1/storageinsights.proto#L449}
   ///
   /// [google.cloud.storageinsights.v1.ReportConfig]:
-  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L438}
+  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L449}
   /// [google.cloud.storageinsights.v1.UpdateReportConfigRequest]:
   /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L183}
   ///
@@ -230,10 +230,10 @@ class StorageInsightsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::storageinsights::v1::ReportConfig,google/cloud/storageinsights/v1/storageinsights.proto#L438}
+  /// @googleapis_link{google::cloud::storageinsights::v1::ReportConfig,google/cloud/storageinsights/v1/storageinsights.proto#L449}
   ///
   /// [google.cloud.storageinsights.v1.ReportConfig]:
-  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L438}
+  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L449}
   /// [google.cloud.storageinsights.v1.UpdateReportConfigRequest]:
   /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L183}
   ///
@@ -280,7 +280,7 @@ class StorageInsightsClient {
   /// @googleapis_link{google::cloud::storageinsights::v1::ReportDetail,google/cloud/storageinsights/v1/storageinsights.proto#L243}
   ///
   /// [google.cloud.storageinsights.v1.ListReportDetailsRequest]:
-  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L282}
+  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L290}
   /// [google.cloud.storageinsights.v1.ReportDetail]:
   /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L243}
   ///
@@ -291,14 +291,14 @@ class StorageInsightsClient {
   /// Lists ReportDetails in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::storageinsights::v1::ListReportDetailsRequest,google/cloud/storageinsights/v1/storageinsights.proto#L282}
+  /// @googleapis_link{google::cloud::storageinsights::v1::ListReportDetailsRequest,google/cloud/storageinsights/v1/storageinsights.proto#L290}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::storageinsights::v1::ReportDetail,google/cloud/storageinsights/v1/storageinsights.proto#L243}
   ///
   /// [google.cloud.storageinsights.v1.ListReportDetailsRequest]:
-  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L282}
+  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L290}
   /// [google.cloud.storageinsights.v1.ReportDetail]:
   /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L243}
   ///
@@ -317,7 +317,7 @@ class StorageInsightsClient {
   /// @googleapis_link{google::cloud::storageinsights::v1::ReportDetail,google/cloud/storageinsights/v1/storageinsights.proto#L243}
   ///
   /// [google.cloud.storageinsights.v1.GetReportDetailRequest]:
-  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L318}
+  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L326}
   /// [google.cloud.storageinsights.v1.ReportDetail]:
   /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L243}
   ///
@@ -328,14 +328,14 @@ class StorageInsightsClient {
   /// Gets details of a single ReportDetail.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::storageinsights::v1::GetReportDetailRequest,google/cloud/storageinsights/v1/storageinsights.proto#L318}
+  /// @googleapis_link{google::cloud::storageinsights::v1::GetReportDetailRequest,google/cloud/storageinsights/v1/storageinsights.proto#L326}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::storageinsights::v1::ReportDetail,google/cloud/storageinsights/v1/storageinsights.proto#L243}
   ///
   /// [google.cloud.storageinsights.v1.GetReportDetailRequest]:
-  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L318}
+  /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L326}
   /// [google.cloud.storageinsights.v1.ReportDetail]:
   /// @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L243}
   ///

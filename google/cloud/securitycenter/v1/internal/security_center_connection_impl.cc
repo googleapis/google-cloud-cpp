@@ -70,6 +70,23 @@ SecurityCenterConnectionImpl::BulkMuteFindings(
       __func__);
 }
 
+StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterConnectionImpl::CreateSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        CreateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CreateSecurityHealthAnalyticsCustomModule(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::securitycenter::v1::
+              CreateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+        return stub_->CreateSecurityHealthAnalyticsCustomModule(context,
+                                                                request);
+      },
+      request, __func__);
+}
+
 StatusOr<google::cloud::securitycenter::v1::Source>
 SecurityCenterConnectionImpl::CreateSource(
     google::cloud::securitycenter::v1::CreateSourceRequest const& request) {
@@ -146,6 +163,22 @@ Status SecurityCenterConnectionImpl::DeleteNotificationConfig(
       request, __func__);
 }
 
+Status SecurityCenterConnectionImpl::DeleteSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        DeleteSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteSecurityHealthAnalyticsCustomModule(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::securitycenter::v1::
+              DeleteSecurityHealthAnalyticsCustomModuleRequest const& request) {
+        return stub_->DeleteSecurityHealthAnalyticsCustomModule(context,
+                                                                request);
+      },
+      request, __func__);
+}
+
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 SecurityCenterConnectionImpl::GetBigQueryExport(
     google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
@@ -212,6 +245,40 @@ SecurityCenterConnectionImpl::GetOrganizationSettings(
              google::cloud::securitycenter::v1::
                  GetOrganizationSettingsRequest const& request) {
         return stub_->GetOrganizationSettings(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             EffectiveSecurityHealthAnalyticsCustomModule>
+SecurityCenterConnectionImpl::GetEffectiveSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetEffectiveSecurityHealthAnalyticsCustomModule(
+          request),
+      [this](grpc::ClientContext& context,
+             google::cloud::securitycenter::v1::
+                 GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const&
+                     request) {
+        return stub_->GetEffectiveSecurityHealthAnalyticsCustomModule(context,
+                                                                      request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterConnectionImpl::GetSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        GetSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetSecurityHealthAnalyticsCustomModule(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::securitycenter::v1::
+                 GetSecurityHealthAnalyticsCustomModuleRequest const& request) {
+        return stub_->GetSecurityHealthAnalyticsCustomModule(context, request);
       },
       request, __func__);
 }
@@ -330,6 +397,52 @@ SecurityCenterConnectionImpl::ListAssets(
 }
 
 StreamRange<
+    google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterConnectionImpl::
+    ListDescendantSecurityHealthAnalyticsCustomModules(
+        google::cloud::securitycenter::v1::
+            ListDescendantSecurityHealthAnalyticsCustomModulesRequest request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry =
+      std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy const>(
+          retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency =
+      idempotency_policy()->ListDescendantSecurityHealthAnalyticsCustomModules(
+          request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+      google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::securitycenter::v1::
+              ListDescendantSecurityHealthAnalyticsCustomModulesRequest const&
+                  r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context,
+                google::cloud::securitycenter::v1::
+                    ListDescendantSecurityHealthAnalyticsCustomModulesRequest const&
+                        request) {
+              return stub->ListDescendantSecurityHealthAnalyticsCustomModules(
+                  context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::securitycenter::v1::
+             ListDescendantSecurityHealthAnalyticsCustomModulesResponse r) {
+        std::vector<google::cloud::securitycenter::v1::
+                        SecurityHealthAnalyticsCustomModule>
+            result(r.security_health_analytics_custom_modules().size());
+        auto& messages = *r.mutable_security_health_analytics_custom_modules();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StreamRange<
     google::cloud::securitycenter::v1::ListFindingsResponse::ListFindingsResult>
 SecurityCenterConnectionImpl::ListFindings(
     google::cloud::securitycenter::v1::ListFindingsRequest request) {
@@ -431,6 +544,96 @@ SecurityCenterConnectionImpl::ListNotificationConfigs(
         std::vector<google::cloud::securitycenter::v1::NotificationConfig>
             result(r.notification_configs().size());
         auto& messages = *r.mutable_notification_configs();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StreamRange<google::cloud::securitycenter::v1::
+                EffectiveSecurityHealthAnalyticsCustomModule>
+SecurityCenterConnectionImpl::ListEffectiveSecurityHealthAnalyticsCustomModules(
+    google::cloud::securitycenter::v1::
+        ListEffectiveSecurityHealthAnalyticsCustomModulesRequest request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry =
+      std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy const>(
+          retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency =
+      idempotency_policy()->ListEffectiveSecurityHealthAnalyticsCustomModules(
+          request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::
+                      EffectiveSecurityHealthAnalyticsCustomModule>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::securitycenter::v1::
+              ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const&
+                  r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context,
+                google::cloud::securitycenter::v1::
+                    ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const&
+                        request) {
+              return stub->ListEffectiveSecurityHealthAnalyticsCustomModules(
+                  context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::securitycenter::v1::
+             ListEffectiveSecurityHealthAnalyticsCustomModulesResponse r) {
+        std::vector<google::cloud::securitycenter::v1::
+                        EffectiveSecurityHealthAnalyticsCustomModule>
+            result(
+                r.effective_security_health_analytics_custom_modules().size());
+        auto& messages =
+            *r.mutable_effective_security_health_analytics_custom_modules();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StreamRange<
+    google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterConnectionImpl::ListSecurityHealthAnalyticsCustomModules(
+    google::cloud::securitycenter::v1::
+        ListSecurityHealthAnalyticsCustomModulesRequest request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry =
+      std::shared_ptr<securitycenter_v1::SecurityCenterRetryPolicy const>(
+          retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency =
+      idempotency_policy()->ListSecurityHealthAnalyticsCustomModules(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+      google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::securitycenter::v1::
+              ListSecurityHealthAnalyticsCustomModulesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::securitycenter::v1::
+                       ListSecurityHealthAnalyticsCustomModulesRequest const&
+                           request) {
+              return stub->ListSecurityHealthAnalyticsCustomModules(context,
+                                                                    request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::securitycenter::v1::
+             ListSecurityHealthAnalyticsCustomModulesResponse r) {
+        std::vector<google::cloud::securitycenter::v1::
+                        SecurityHealthAnalyticsCustomModule>
+            result(r.security_health_analytics_custom_modules().size());
+        auto& messages = *r.mutable_security_health_analytics_custom_modules();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
@@ -614,6 +817,23 @@ SecurityCenterConnectionImpl::UpdateOrganizationSettings(
              google::cloud::securitycenter::v1::
                  UpdateOrganizationSettingsRequest const& request) {
         return stub_->UpdateOrganizationSettings(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterConnectionImpl::UpdateSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        UpdateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateSecurityHealthAnalyticsCustomModule(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::securitycenter::v1::
+              UpdateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+        return stub_->UpdateSecurityHealthAnalyticsCustomModule(context,
+                                                                request);
       },
       request, __func__);
 }

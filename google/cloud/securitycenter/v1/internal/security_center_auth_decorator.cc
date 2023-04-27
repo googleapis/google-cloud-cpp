@@ -49,6 +49,16 @@ SecurityCenterAuth::AsyncBulkMuteFindings(
       });
 }
 
+StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterAuth::CreateSecurityHealthAnalyticsCustomModule(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::
+        CreateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateSecurityHealthAnalyticsCustomModule(context, request);
+}
+
 StatusOr<google::cloud::securitycenter::v1::Source>
 SecurityCenterAuth::CreateSource(
     grpc::ClientContext& context,
@@ -103,6 +113,15 @@ Status SecurityCenterAuth::DeleteNotificationConfig(
   return child_->DeleteNotificationConfig(context, request);
 }
 
+Status SecurityCenterAuth::DeleteSecurityHealthAnalyticsCustomModule(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::
+        DeleteSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteSecurityHealthAnalyticsCustomModule(context, request);
+}
+
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 SecurityCenterAuth::GetBigQueryExport(
     grpc::ClientContext& context,
@@ -150,6 +169,28 @@ SecurityCenterAuth::GetOrganizationSettings(
   return child_->GetOrganizationSettings(context, request);
 }
 
+StatusOr<google::cloud::securitycenter::v1::
+             EffectiveSecurityHealthAnalyticsCustomModule>
+SecurityCenterAuth::GetEffectiveSecurityHealthAnalyticsCustomModule(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::
+        GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetEffectiveSecurityHealthAnalyticsCustomModule(context,
+                                                                 request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterAuth::GetSecurityHealthAnalyticsCustomModule(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::
+        GetSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetSecurityHealthAnalyticsCustomModule(context, request);
+}
+
 StatusOr<google::cloud::securitycenter::v1::Source>
 SecurityCenterAuth::GetSource(
     grpc::ClientContext& context,
@@ -186,6 +227,19 @@ SecurityCenterAuth::ListAssets(
   return child_->ListAssets(context, request);
 }
 
+StatusOr<google::cloud::securitycenter::v1::
+             ListDescendantSecurityHealthAnalyticsCustomModulesResponse>
+SecurityCenterAuth::ListDescendantSecurityHealthAnalyticsCustomModules(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::
+        ListDescendantSecurityHealthAnalyticsCustomModulesRequest const&
+            request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListDescendantSecurityHealthAnalyticsCustomModules(context,
+                                                                    request);
+}
+
 StatusOr<google::cloud::securitycenter::v1::ListFindingsResponse>
 SecurityCenterAuth::ListFindings(
     grpc::ClientContext& context,
@@ -212,6 +266,30 @@ SecurityCenterAuth::ListNotificationConfigs(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListNotificationConfigs(context, request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             ListEffectiveSecurityHealthAnalyticsCustomModulesResponse>
+SecurityCenterAuth::ListEffectiveSecurityHealthAnalyticsCustomModules(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::
+        ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const&
+            request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListEffectiveSecurityHealthAnalyticsCustomModules(context,
+                                                                   request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             ListSecurityHealthAnalyticsCustomModulesResponse>
+SecurityCenterAuth::ListSecurityHealthAnalyticsCustomModules(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::
+        ListSecurityHealthAnalyticsCustomModulesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListSecurityHealthAnalyticsCustomModules(context, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ListSourcesResponse>
@@ -324,6 +402,16 @@ SecurityCenterAuth::UpdateOrganizationSettings(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateOrganizationSettings(context, request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterAuth::UpdateSecurityHealthAnalyticsCustomModule(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::
+        UpdateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateSecurityHealthAnalyticsCustomModule(context, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Source>
