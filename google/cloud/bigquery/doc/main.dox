@@ -102,7 +102,6 @@ Follow these links to find examples for other \c *Client classes:
  [bigquery_reservation_v1::ReservationServiceClient](@ref bigquery_reservation_v1::ReservationServiceClient-endpoint-snippet)
  [bigquery_storage_v1::BigQueryReadClient](@ref bigquery_storage_v1::BigQueryReadClient-endpoint-snippet)
  [bigquery_storage_v1::BigQueryWriteClient](@ref bigquery_storage_v1::BigQueryWriteClient-endpoint-snippet)
- [bigquery_v2::ModelServiceClient](@ref bigquery_v2::ModelServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -125,7 +124,6 @@ Follow these links to find examples for other \c *Client classes:
  [bigquery_reservation_v1::ReservationServiceClient](@ref bigquery_reservation_v1::ReservationServiceClient-service-account-snippet)
  [bigquery_storage_v1::BigQueryReadClient](@ref bigquery_storage_v1::BigQueryReadClient-service-account-snippet)
  [bigquery_storage_v1::BigQueryWriteClient](@ref bigquery_storage_v1::BigQueryWriteClient-service-account-snippet)
- [bigquery_v2::ModelServiceClient](@ref bigquery_v2::ModelServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -249,18 +247,6 @@ guide for more details.
 /*! @page bigquery_storage_v1::BigQueryWriteClient-service-account-snippet Override bigquery_storage_v1::BigQueryWriteClient Authentication Defaults
 
 @snippet google/cloud/bigquery/storage/v1/samples/bigquery_write_client_samples.cc with-service-account
-
-*/
-
-/*! @page bigquery_v2::ModelServiceClient-endpoint-snippet Override bigquery_v2::ModelServiceClient Endpoint Configuration
-
-@snippet google/cloud/bigquery/v2/samples/model_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page bigquery_v2::ModelServiceClient-service-account-snippet Override bigquery_v2::ModelServiceClient Authentication Defaults
-
-@snippet google/cloud/bigquery/v2/samples/model_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

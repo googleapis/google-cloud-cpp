@@ -38,10 +38,6 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "bigquerymigration.googleapis.com")
   used by `MakeMigrationServiceConnection()`.
 
-- `GOOGLE_CLOUD_CPP_MODEL_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "bigquery.googleapis.com")
-  used by `MakeModelServiceConnection()`.
-
 - `GOOGLE_CLOUD_CPP_RESERVATION_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "bigqueryreservation.googleapis.com")
   used by `MakeReservationServiceConnection()`.
