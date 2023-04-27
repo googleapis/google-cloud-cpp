@@ -45,6 +45,13 @@ class SecurityCenterTracingConnection
       google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request)
       override;
 
+  StatusOr<
+      google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+  CreateSecurityHealthAnalyticsCustomModule(
+      google::cloud::securitycenter::v1::
+          CreateSecurityHealthAnalyticsCustomModuleRequest const& request)
+      override;
+
   StatusOr<google::cloud::securitycenter::v1::Source> CreateSource(
       google::cloud::securitycenter::v1::CreateSourceRequest const& request)
       override;
@@ -70,6 +77,11 @@ class SecurityCenterTracingConnection
       google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const&
           request) override;
 
+  Status DeleteSecurityHealthAnalyticsCustomModule(
+      google::cloud::securitycenter::v1::
+          DeleteSecurityHealthAnalyticsCustomModuleRequest const& request)
+      override;
+
   StatusOr<google::cloud::securitycenter::v1::BigQueryExport> GetBigQueryExport(
       google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
           request) override;
@@ -91,6 +103,20 @@ class SecurityCenterTracingConnection
       google::cloud::securitycenter::v1::GetOrganizationSettingsRequest const&
           request) override;
 
+  StatusOr<google::cloud::securitycenter::v1::
+               EffectiveSecurityHealthAnalyticsCustomModule>
+  GetEffectiveSecurityHealthAnalyticsCustomModule(
+      google::cloud::securitycenter::v1::
+          GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const& request)
+      override;
+
+  StatusOr<
+      google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+  GetSecurityHealthAnalyticsCustomModule(
+      google::cloud::securitycenter::v1::
+          GetSecurityHealthAnalyticsCustomModuleRequest const& request)
+      override;
+
   StatusOr<google::cloud::securitycenter::v1::Source> GetSource(
       google::cloud::securitycenter::v1::GetSourceRequest const& request)
       override;
@@ -106,6 +132,13 @@ class SecurityCenterTracingConnection
   ListAssets(
       google::cloud::securitycenter::v1::ListAssetsRequest request) override;
 
+  StreamRange<
+      google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+  ListDescendantSecurityHealthAnalyticsCustomModules(
+      google::cloud::securitycenter::v1::
+          ListDescendantSecurityHealthAnalyticsCustomModulesRequest request)
+      override;
+
   StreamRange<google::cloud::securitycenter::v1::ListFindingsResponse::
                   ListFindingsResult>
   ListFindings(
@@ -119,6 +152,19 @@ class SecurityCenterTracingConnection
   ListNotificationConfigs(
       google::cloud::securitycenter::v1::ListNotificationConfigsRequest request)
       override;
+
+  StreamRange<google::cloud::securitycenter::v1::
+                  EffectiveSecurityHealthAnalyticsCustomModule>
+  ListEffectiveSecurityHealthAnalyticsCustomModules(
+      google::cloud::securitycenter::v1::
+          ListEffectiveSecurityHealthAnalyticsCustomModulesRequest request)
+      override;
+
+  StreamRange<
+      google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+  ListSecurityHealthAnalyticsCustomModules(
+      google::cloud::securitycenter::v1::
+          ListSecurityHealthAnalyticsCustomModulesRequest request) override;
 
   StreamRange<google::cloud::securitycenter::v1::Source> ListSources(
       google::cloud::securitycenter::v1::ListSourcesRequest request) override;
@@ -164,6 +210,13 @@ class SecurityCenterTracingConnection
   UpdateOrganizationSettings(
       google::cloud::securitycenter::v1::
           UpdateOrganizationSettingsRequest const& request) override;
+
+  StatusOr<
+      google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+  UpdateSecurityHealthAnalyticsCustomModule(
+      google::cloud::securitycenter::v1::
+          UpdateSecurityHealthAnalyticsCustomModuleRequest const& request)
+      override;
 
   StatusOr<google::cloud::securitycenter::v1::Source> UpdateSource(
       google::cloud::securitycenter::v1::UpdateSourceRequest const& request)

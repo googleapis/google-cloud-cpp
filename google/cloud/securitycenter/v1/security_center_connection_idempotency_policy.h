@@ -42,6 +42,10 @@ class SecurityCenterConnectionIdempotencyPolicy {
       google::cloud::securitycenter::v1::BulkMuteFindingsRequest const&
           request);
 
+  virtual google::cloud::Idempotency CreateSecurityHealthAnalyticsCustomModule(
+      google::cloud::securitycenter::v1::
+          CreateSecurityHealthAnalyticsCustomModuleRequest const& request);
+
   virtual google::cloud::Idempotency CreateSource(
       google::cloud::securitycenter::v1::CreateSourceRequest const& request);
 
@@ -64,6 +68,10 @@ class SecurityCenterConnectionIdempotencyPolicy {
       google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const&
           request);
 
+  virtual google::cloud::Idempotency DeleteSecurityHealthAnalyticsCustomModule(
+      google::cloud::securitycenter::v1::
+          DeleteSecurityHealthAnalyticsCustomModuleRequest const& request);
+
   virtual google::cloud::Idempotency GetBigQueryExport(
       google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
           request);
@@ -82,6 +90,16 @@ class SecurityCenterConnectionIdempotencyPolicy {
       google::cloud::securitycenter::v1::GetOrganizationSettingsRequest const&
           request);
 
+  virtual google::cloud::Idempotency
+  GetEffectiveSecurityHealthAnalyticsCustomModule(
+      google::cloud::securitycenter::v1::
+          GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const&
+              request);
+
+  virtual google::cloud::Idempotency GetSecurityHealthAnalyticsCustomModule(
+      google::cloud::securitycenter::v1::
+          GetSecurityHealthAnalyticsCustomModuleRequest const& request);
+
   virtual google::cloud::Idempotency GetSource(
       google::cloud::securitycenter::v1::GetSourceRequest const& request);
 
@@ -94,6 +112,11 @@ class SecurityCenterConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListAssets(
       google::cloud::securitycenter::v1::ListAssetsRequest request);
 
+  virtual google::cloud::Idempotency
+  ListDescendantSecurityHealthAnalyticsCustomModules(
+      google::cloud::securitycenter::v1::
+          ListDescendantSecurityHealthAnalyticsCustomModulesRequest request);
+
   virtual google::cloud::Idempotency ListFindings(
       google::cloud::securitycenter::v1::ListFindingsRequest request);
 
@@ -103,6 +126,15 @@ class SecurityCenterConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListNotificationConfigs(
       google::cloud::securitycenter::v1::ListNotificationConfigsRequest
           request);
+
+  virtual google::cloud::Idempotency
+  ListEffectiveSecurityHealthAnalyticsCustomModules(
+      google::cloud::securitycenter::v1::
+          ListEffectiveSecurityHealthAnalyticsCustomModulesRequest request);
+
+  virtual google::cloud::Idempotency ListSecurityHealthAnalyticsCustomModules(
+      google::cloud::securitycenter::v1::
+          ListSecurityHealthAnalyticsCustomModulesRequest request);
 
   virtual google::cloud::Idempotency ListSources(
       google::cloud::securitycenter::v1::ListSourcesRequest request);
@@ -141,6 +173,10 @@ class SecurityCenterConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UpdateOrganizationSettings(
       google::cloud::securitycenter::v1::
           UpdateOrganizationSettingsRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateSecurityHealthAnalyticsCustomModule(
+      google::cloud::securitycenter::v1::
+          UpdateSecurityHealthAnalyticsCustomModuleRequest const& request);
 
   virtual google::cloud::Idempotency UpdateSource(
       google::cloud::securitycenter::v1::UpdateSourceRequest const& request);

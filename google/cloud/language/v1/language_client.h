@@ -94,12 +94,12 @@ class LanguageServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeSentimentResponse,google/cloud/language/v1/language_service.proto#L1020}
+  /// @googleapis_link{google::cloud::language::v1::AnalyzeSentimentResponse,google/cloud/language/v1/language_service.proto#L1025}
   ///
   /// [google.cloud.language.v1.AnalyzeSentimentRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1011}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1016}
   /// [google.cloud.language.v1.AnalyzeSentimentResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1020}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1025}
   ///
   StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
   AnalyzeSentiment(google::cloud::language::v1::Document const& document,
@@ -113,12 +113,12 @@ class LanguageServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeSentimentResponse,google/cloud/language/v1/language_service.proto#L1020}
+  /// @googleapis_link{google::cloud::language::v1::AnalyzeSentimentResponse,google/cloud/language/v1/language_service.proto#L1025}
   ///
   /// [google.cloud.language.v1.AnalyzeSentimentRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1011}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1016}
   /// [google.cloud.language.v1.AnalyzeSentimentResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1020}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1025}
   ///
   StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
   AnalyzeSentiment(google::cloud::language::v1::Document const& document,
@@ -128,16 +128,16 @@ class LanguageServiceClient {
   /// Analyzes the sentiment of the provided text.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeSentimentRequest,google/cloud/language/v1/language_service.proto#L1011}
+  /// @googleapis_link{google::cloud::language::v1::AnalyzeSentimentRequest,google/cloud/language/v1/language_service.proto#L1016}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeSentimentResponse,google/cloud/language/v1/language_service.proto#L1020}
+  /// @googleapis_link{google::cloud::language::v1::AnalyzeSentimentResponse,google/cloud/language/v1/language_service.proto#L1025}
   ///
   /// [google.cloud.language.v1.AnalyzeSentimentRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1011}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1016}
   /// [google.cloud.language.v1.AnalyzeSentimentResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1020}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1025}
   ///
   StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
   AnalyzeSentiment(
@@ -155,12 +155,12 @@ class LanguageServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitiesResponse,google/cloud/language/v1/language_service.proto#L1063}
+  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitiesResponse,google/cloud/language/v1/language_service.proto#L1070}
   ///
   /// [google.cloud.language.v1.AnalyzeEntitiesRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1054}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1061}
   /// [google.cloud.language.v1.AnalyzeEntitiesResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1063}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1070}
   ///
   StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
   AnalyzeEntities(google::cloud::language::v1::Document const& document,
@@ -176,12 +176,12 @@ class LanguageServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitiesResponse,google/cloud/language/v1/language_service.proto#L1063}
+  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitiesResponse,google/cloud/language/v1/language_service.proto#L1070}
   ///
   /// [google.cloud.language.v1.AnalyzeEntitiesRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1054}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1061}
   /// [google.cloud.language.v1.AnalyzeEntitiesResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1063}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1070}
   ///
   StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
   AnalyzeEntities(google::cloud::language::v1::Document const& document,
@@ -193,16 +193,16 @@ class LanguageServiceClient {
   /// other properties.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitiesRequest,google/cloud/language/v1/language_service.proto#L1054}
+  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitiesRequest,google/cloud/language/v1/language_service.proto#L1061}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitiesResponse,google/cloud/language/v1/language_service.proto#L1063}
+  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitiesResponse,google/cloud/language/v1/language_service.proto#L1070}
   ///
   /// [google.cloud.language.v1.AnalyzeEntitiesRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1054}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1061}
   /// [google.cloud.language.v1.AnalyzeEntitiesResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1063}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1070}
   ///
   StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
   AnalyzeEntities(
@@ -221,14 +221,14 @@ class LanguageServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitySentimentResponse,google/cloud/language/v1/language_service.proto#L1043}
+  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitySentimentResponse,google/cloud/language/v1/language_service.proto#L1049}
   ///
   /// [google.cloud.language.v1.AnalyzeEntitySentimentRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1034}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1040}
   /// [google.cloud.language.v1.AnalyzeEntitySentimentResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1043}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1049}
   /// [google.cloud.language.v1.LanguageService.AnalyzeEntities]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L49}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L50}
   ///
   StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
   AnalyzeEntitySentiment(
@@ -246,14 +246,14 @@ class LanguageServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitySentimentResponse,google/cloud/language/v1/language_service.proto#L1043}
+  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitySentimentResponse,google/cloud/language/v1/language_service.proto#L1049}
   ///
   /// [google.cloud.language.v1.AnalyzeEntitySentimentRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1034}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1040}
   /// [google.cloud.language.v1.AnalyzeEntitySentimentResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1043}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1049}
   /// [google.cloud.language.v1.LanguageService.AnalyzeEntities]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L49}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L50}
   ///
   StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
   AnalyzeEntitySentiment(google::cloud::language::v1::Document const& document,
@@ -266,18 +266,18 @@ class LanguageServiceClient {
   /// mentions.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitySentimentRequest,google/cloud/language/v1/language_service.proto#L1034}
+  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitySentimentRequest,google/cloud/language/v1/language_service.proto#L1040}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitySentimentResponse,google/cloud/language/v1/language_service.proto#L1043}
+  /// @googleapis_link{google::cloud::language::v1::AnalyzeEntitySentimentResponse,google/cloud/language/v1/language_service.proto#L1049}
   ///
   /// [google.cloud.language.v1.AnalyzeEntitySentimentRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1034}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1040}
   /// [google.cloud.language.v1.AnalyzeEntitySentimentResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1043}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1049}
   /// [google.cloud.language.v1.LanguageService.AnalyzeEntities]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L49}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L50}
   ///
   StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
   AnalyzeEntitySentiment(
@@ -295,12 +295,12 @@ class LanguageServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeSyntaxResponse,google/cloud/language/v1/language_service.proto#L1083}
+  /// @googleapis_link{google::cloud::language::v1::AnalyzeSyntaxResponse,google/cloud/language/v1/language_service.proto#L1091}
   ///
   /// [google.cloud.language.v1.AnalyzeSyntaxRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1074}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1082}
   /// [google.cloud.language.v1.AnalyzeSyntaxResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1083}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1091}
   ///
   StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse> AnalyzeSyntax(
       google::cloud::language::v1::Document const& document,
@@ -316,12 +316,12 @@ class LanguageServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeSyntaxResponse,google/cloud/language/v1/language_service.proto#L1083}
+  /// @googleapis_link{google::cloud::language::v1::AnalyzeSyntaxResponse,google/cloud/language/v1/language_service.proto#L1091}
   ///
   /// [google.cloud.language.v1.AnalyzeSyntaxRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1074}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1082}
   /// [google.cloud.language.v1.AnalyzeSyntaxResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1083}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1091}
   ///
   StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse> AnalyzeSyntax(
       google::cloud::language::v1::Document const& document, Options opts = {});
@@ -332,16 +332,16 @@ class LanguageServiceClient {
   /// properties.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeSyntaxRequest,google/cloud/language/v1/language_service.proto#L1074}
+  /// @googleapis_link{google::cloud::language::v1::AnalyzeSyntaxRequest,google/cloud/language/v1/language_service.proto#L1082}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnalyzeSyntaxResponse,google/cloud/language/v1/language_service.proto#L1083}
+  /// @googleapis_link{google::cloud::language::v1::AnalyzeSyntaxResponse,google/cloud/language/v1/language_service.proto#L1091}
   ///
   /// [google.cloud.language.v1.AnalyzeSyntaxRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1074}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1082}
   /// [google.cloud.language.v1.AnalyzeSyntaxResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1083}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1091}
   ///
   StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse> AnalyzeSyntax(
       google::cloud::language::v1::AnalyzeSyntaxRequest const& request,
@@ -354,12 +354,12 @@ class LanguageServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::language::v1::ClassifyTextResponse,google/cloud/language/v1/language_service.proto#L1107}
+  /// @googleapis_link{google::cloud::language::v1::ClassifyTextResponse,google/cloud/language/v1/language_service.proto#L1116}
   ///
   /// [google.cloud.language.v1.ClassifyTextRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1097}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1106}
   /// [google.cloud.language.v1.ClassifyTextResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1107}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1116}
   ///
   StatusOr<google::cloud::language::v1::ClassifyTextResponse> ClassifyText(
       google::cloud::language::v1::Document const& document, Options opts = {});
@@ -368,16 +368,16 @@ class LanguageServiceClient {
   /// Classifies a document into categories.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::language::v1::ClassifyTextRequest,google/cloud/language/v1/language_service.proto#L1097}
+  /// @googleapis_link{google::cloud::language::v1::ClassifyTextRequest,google/cloud/language/v1/language_service.proto#L1106}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::language::v1::ClassifyTextResponse,google/cloud/language/v1/language_service.proto#L1107}
+  /// @googleapis_link{google::cloud::language::v1::ClassifyTextResponse,google/cloud/language/v1/language_service.proto#L1116}
   ///
   /// [google.cloud.language.v1.ClassifyTextRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1097}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1106}
   /// [google.cloud.language.v1.ClassifyTextResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1107}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1116}
   ///
   StatusOr<google::cloud::language::v1::ClassifyTextResponse> ClassifyText(
       google::cloud::language::v1::ClassifyTextRequest const& request,
@@ -394,12 +394,12 @@ class LanguageServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnnotateTextResponse,google/cloud/language/v1/language_service.proto#L1149}
+  /// @googleapis_link{google::cloud::language::v1::AnnotateTextResponse,google/cloud/language/v1/language_service.proto#L1158}
   ///
   /// [google.cloud.language.v1.AnnotateTextRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1114}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1123}
   /// [google.cloud.language.v1.AnnotateTextResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1149}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1158}
   ///
   StatusOr<google::cloud::language::v1::AnnotateTextResponse> AnnotateText(
       google::cloud::language::v1::Document const& document,
@@ -417,12 +417,12 @@ class LanguageServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnnotateTextResponse,google/cloud/language/v1/language_service.proto#L1149}
+  /// @googleapis_link{google::cloud::language::v1::AnnotateTextResponse,google/cloud/language/v1/language_service.proto#L1158}
   ///
   /// [google.cloud.language.v1.AnnotateTextRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1114}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1123}
   /// [google.cloud.language.v1.AnnotateTextResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1149}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1158}
   ///
   StatusOr<google::cloud::language::v1::AnnotateTextResponse> AnnotateText(
       google::cloud::language::v1::Document const& document,
@@ -435,16 +435,16 @@ class LanguageServiceClient {
   /// analyzeEntities, and analyzeSyntax provide in one call.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::language::v1::AnnotateTextRequest,google/cloud/language/v1/language_service.proto#L1114}
+  /// @googleapis_link{google::cloud::language::v1::AnnotateTextRequest,google/cloud/language/v1/language_service.proto#L1123}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::language::v1::AnnotateTextResponse,google/cloud/language/v1/language_service.proto#L1149}
+  /// @googleapis_link{google::cloud::language::v1::AnnotateTextResponse,google/cloud/language/v1/language_service.proto#L1158}
   ///
   /// [google.cloud.language.v1.AnnotateTextRequest]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1114}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1123}
   /// [google.cloud.language.v1.AnnotateTextResponse]:
-  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1149}
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1158}
   ///
   StatusOr<google::cloud::language::v1::AnnotateTextResponse> AnnotateText(
       google::cloud::language::v1::AnnotateTextRequest const& request,

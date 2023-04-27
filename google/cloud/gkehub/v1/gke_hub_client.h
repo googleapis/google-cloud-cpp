@@ -44,7 +44,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// * [Membership][google.cloud.gkehub.v1.Membership]
 /// * [Feature][google.cloud.gkehub.v1.Feature]
 ///
-/// GKE Hub is currently only available in the global region.
+/// GKE Hub is currently available in the global region and all regions in
+/// https://cloud.google.com/compute/docs/regions-zones. Feature is only
+/// available in global region while membership is global region and all the
+/// regions.
 ///
 /// **Membership management may be non-trivial:** it is recommended to use one
 /// of the Google-provided client libraries or tools where possible when working
@@ -106,15 +109,16 @@ class GkeHubClient {
   /// Lists Memberships in a given project and location.
   ///
   /// @param parent  Required. The parent (project and location) where the
-  /// Memberships will be listed.
-  ///  Specified in the format `projects/*/locations/*`.
+  /// Memberships will be
+  ///  listed. Specified in the format `projects/*/locations/*`.
+  ///  `projects/*/locations/-` list memberships in all the regions.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L32}
   ///
   /// [google.cloud.gkehub.v1.ListMembershipsRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L183}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L196}
   /// [google.cloud.gkehub.v1.Membership]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
   ///
@@ -125,14 +129,14 @@ class GkeHubClient {
   /// Lists Memberships in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkehub::v1::ListMembershipsRequest,google/cloud/gkehub/v1/service.proto#L183}
+  /// @googleapis_link{google::cloud::gkehub::v1::ListMembershipsRequest,google/cloud/gkehub/v1/service.proto#L196}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L32}
   ///
   /// [google.cloud.gkehub.v1.ListMembershipsRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L183}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L196}
   /// [google.cloud.gkehub.v1.Membership]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
   ///
@@ -154,7 +158,7 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.Feature]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
   /// [google.cloud.gkehub.v1.ListFeaturesRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L435}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L457}
   ///
   StreamRange<google::cloud::gkehub::v1::Feature> ListFeatures(
       std::string const& parent, Options opts = {});
@@ -163,7 +167,7 @@ class GkeHubClient {
   /// Lists Features in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkehub::v1::ListFeaturesRequest,google/cloud/gkehub/v1/service.proto#L435}
+  /// @googleapis_link{google::cloud::gkehub::v1::ListFeaturesRequest,google/cloud/gkehub/v1/service.proto#L457}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -172,7 +176,7 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.Feature]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
   /// [google.cloud.gkehub.v1.ListFeaturesRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L435}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L457}
   ///
   StreamRange<google::cloud::gkehub::v1::Feature> ListFeatures(
       google::cloud::gkehub::v1::ListFeaturesRequest request,
@@ -189,7 +193,7 @@ class GkeHubClient {
   /// @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L32}
   ///
   /// [google.cloud.gkehub.v1.GetMembershipRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L245}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L259}
   /// [google.cloud.gkehub.v1.Membership]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
   ///
@@ -200,14 +204,14 @@ class GkeHubClient {
   /// Gets the details of a Membership.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkehub::v1::GetMembershipRequest,google/cloud/gkehub/v1/service.proto#L245}
+  /// @googleapis_link{google::cloud::gkehub::v1::GetMembershipRequest,google/cloud/gkehub/v1/service.proto#L259}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L32}
   ///
   /// [google.cloud.gkehub.v1.GetMembershipRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L245}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L259}
   /// [google.cloud.gkehub.v1.Membership]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
   ///
@@ -228,7 +232,7 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.Feature]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
   /// [google.cloud.gkehub.v1.GetFeatureRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L489}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L511}
   ///
   StatusOr<google::cloud::gkehub::v1::Feature> GetFeature(
       std::string const& name, Options opts = {});
@@ -237,7 +241,7 @@ class GkeHubClient {
   /// Gets details of a single Feature.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkehub::v1::GetFeatureRequest,google/cloud/gkehub/v1/service.proto#L489}
+  /// @googleapis_link{google::cloud::gkehub::v1::GetFeatureRequest,google/cloud/gkehub/v1/service.proto#L511}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -246,7 +250,7 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.Feature]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
   /// [google.cloud.gkehub.v1.GetFeatureRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L489}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L511}
   ///
   StatusOr<google::cloud::gkehub::v1::Feature> GetFeature(
       google::cloud::gkehub::v1::GetFeatureRequest const& request,
@@ -260,12 +264,12 @@ class GkeHubClient {
   /// https://cloud.google.com/anthos/multicluster-management/connect/registering-a-cluster.
   ///
   /// @param parent  Required. The parent (project and location) where the
-  /// Memberships will be created.
-  ///  Specified in the format `projects/*/locations/*`.
+  /// Memberships will be
+  ///  created. Specified in the format `projects/*/locations/*`.
   /// @param resource  Required. The membership to create.
   /// @param membership_id  Required. Client chosen ID for the membership.
-  /// `membership_id` must be a valid RFC
-  ///  1123 compliant DNS label:
+  /// `membership_id` must be a
+  ///  valid RFC 1123 compliant DNS label:
   ///    1. At most 63 characters in length
   ///    2. It must consist of lower case alphanumeric characters or `-`
   ///    3. It must start and end with an alphanumeric character
@@ -277,7 +281,7 @@ class GkeHubClient {
   /// @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L32}
   ///
   /// [google.cloud.gkehub.v1.CreateMembershipRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L257}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L271}
   /// [google.cloud.gkehub.v1.Membership]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
   ///
@@ -294,14 +298,14 @@ class GkeHubClient {
   /// https://cloud.google.com/anthos/multicluster-management/connect/registering-a-cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkehub::v1::CreateMembershipRequest,google/cloud/gkehub/v1/service.proto#L257}
+  /// @googleapis_link{google::cloud::gkehub::v1::CreateMembershipRequest,google/cloud/gkehub/v1/service.proto#L271}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L32}
   ///
   /// [google.cloud.gkehub.v1.CreateMembershipRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L257}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L271}
   /// [google.cloud.gkehub.v1.Membership]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
   ///
@@ -323,7 +327,7 @@ class GkeHubClient {
   /// @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L34}
   ///
   /// [google.cloud.gkehub.v1.CreateFeatureRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L500}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L522}
   /// [google.cloud.gkehub.v1.Feature]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
   ///
@@ -336,14 +340,14 @@ class GkeHubClient {
   /// Adds a new Feature.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkehub::v1::CreateFeatureRequest,google/cloud/gkehub/v1/service.proto#L500}
+  /// @googleapis_link{google::cloud::gkehub::v1::CreateFeatureRequest,google/cloud/gkehub/v1/service.proto#L522}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L34}
   ///
   /// [google.cloud.gkehub.v1.CreateFeatureRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L500}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L522}
   /// [google.cloud.gkehub.v1.Feature]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
   ///
@@ -363,12 +367,12 @@ class GkeHubClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gkehub::v1::OperationMetadata,google/cloud/gkehub/v1/service.proto#L602}
+  /// @googleapis_link{google::cloud::gkehub::v1::OperationMetadata,google/cloud/gkehub/v1/service.proto#L624}
   ///
   /// [google.cloud.gkehub.v1.DeleteMembershipRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L298}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L312}
   /// [google.cloud.gkehub.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L602}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L624}
   ///
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
   DeleteMembership(std::string const& name, Options opts = {});
@@ -381,16 +385,16 @@ class GkeHubClient {
   /// https://cloud.google.com/anthos/multicluster-management/connect/unregistering-a-cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkehub::v1::DeleteMembershipRequest,google/cloud/gkehub/v1/service.proto#L298}
+  /// @googleapis_link{google::cloud::gkehub::v1::DeleteMembershipRequest,google/cloud/gkehub/v1/service.proto#L312}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gkehub::v1::OperationMetadata,google/cloud/gkehub/v1/service.proto#L602}
+  /// @googleapis_link{google::cloud::gkehub::v1::OperationMetadata,google/cloud/gkehub/v1/service.proto#L624}
   ///
   /// [google.cloud.gkehub.v1.DeleteMembershipRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L298}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L312}
   /// [google.cloud.gkehub.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L602}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L624}
   ///
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
   DeleteMembership(
@@ -405,12 +409,12 @@ class GkeHubClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gkehub::v1::OperationMetadata,google/cloud/gkehub/v1/service.proto#L602}
+  /// @googleapis_link{google::cloud::gkehub::v1::OperationMetadata,google/cloud/gkehub/v1/service.proto#L624}
   ///
   /// [google.cloud.gkehub.v1.DeleteFeatureRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L532}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L554}
   /// [google.cloud.gkehub.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L602}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L624}
   ///
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
       std::string const& name, Options opts = {});
@@ -419,16 +423,16 @@ class GkeHubClient {
   /// Removes a Feature.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkehub::v1::DeleteFeatureRequest,google/cloud/gkehub/v1/service.proto#L532}
+  /// @googleapis_link{google::cloud::gkehub::v1::DeleteFeatureRequest,google/cloud/gkehub/v1/service.proto#L554}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gkehub::v1::OperationMetadata,google/cloud/gkehub/v1/service.proto#L602}
+  /// @googleapis_link{google::cloud::gkehub::v1::OperationMetadata,google/cloud/gkehub/v1/service.proto#L624}
   ///
   /// [google.cloud.gkehub.v1.DeleteFeatureRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L532}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L554}
   /// [google.cloud.gkehub.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L602}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L624}
   ///
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
       google::cloud::gkehub::v1::DeleteFeatureRequest const& request,
@@ -456,7 +460,7 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.Membership]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
   /// [google.cloud.gkehub.v1.UpdateMembershipRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L325}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L344}
   ///
   future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
       std::string const& name,
@@ -467,7 +471,7 @@ class GkeHubClient {
   /// Updates an existing Membership.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkehub::v1::UpdateMembershipRequest,google/cloud/gkehub/v1/service.proto#L325}
+  /// @googleapis_link{google::cloud::gkehub::v1::UpdateMembershipRequest,google/cloud/gkehub/v1/service.proto#L344}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -476,7 +480,7 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.Membership]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
   /// [google.cloud.gkehub.v1.UpdateMembershipRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L325}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L344}
   ///
   future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
       google::cloud::gkehub::v1::UpdateMembershipRequest const& request,
@@ -503,7 +507,7 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.Feature]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
   /// [google.cloud.gkehub.v1.UpdateFeatureRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L563}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L585}
   ///
   future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
       std::string const& name,
@@ -514,7 +518,7 @@ class GkeHubClient {
   /// Updates an existing Feature.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkehub::v1::UpdateFeatureRequest,google/cloud/gkehub/v1/service.proto#L563}
+  /// @googleapis_link{google::cloud::gkehub::v1::UpdateFeatureRequest,google/cloud/gkehub/v1/service.proto#L585}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -523,7 +527,7 @@ class GkeHubClient {
   /// [google.cloud.gkehub.v1.Feature]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
   /// [google.cloud.gkehub.v1.UpdateFeatureRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L563}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L585}
   ///
   future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
       google::cloud::gkehub::v1::UpdateFeatureRequest const& request,
@@ -536,16 +540,16 @@ class GkeHubClient {
   /// Most clients should not need to call this method directly.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkehub::v1::GenerateConnectManifestRequest,google/cloud/gkehub/v1/service.proto#L367}
+  /// @googleapis_link{google::cloud::gkehub::v1::GenerateConnectManifestRequest,google/cloud/gkehub/v1/service.proto#L387}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gkehub::v1::GenerateConnectManifestResponse,google/cloud/gkehub/v1/service.proto#L408}
+  /// @googleapis_link{google::cloud::gkehub::v1::GenerateConnectManifestResponse,google/cloud/gkehub/v1/service.proto#L430}
   ///
   /// [google.cloud.gkehub.v1.GenerateConnectManifestRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L367}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L387}
   /// [google.cloud.gkehub.v1.GenerateConnectManifestResponse]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L408}
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L430}
   ///
   StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
   GenerateConnectManifest(

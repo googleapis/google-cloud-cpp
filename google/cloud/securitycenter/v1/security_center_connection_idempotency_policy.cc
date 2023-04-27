@@ -39,6 +39,13 @@ Idempotency SecurityCenterConnectionIdempotencyPolicy::BulkMuteFindings(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency SecurityCenterConnectionIdempotencyPolicy::
+    CreateSecurityHealthAnalyticsCustomModule(
+        google::cloud::securitycenter::v1::
+            CreateSecurityHealthAnalyticsCustomModuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency SecurityCenterConnectionIdempotencyPolicy::CreateSource(
     google::cloud::securitycenter::v1::CreateSourceRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -69,6 +76,13 @@ Idempotency SecurityCenterConnectionIdempotencyPolicy::DeleteNotificationConfig(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency SecurityCenterConnectionIdempotencyPolicy::
+    DeleteSecurityHealthAnalyticsCustomModule(
+        google::cloud::securitycenter::v1::
+            DeleteSecurityHealthAnalyticsCustomModuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency SecurityCenterConnectionIdempotencyPolicy::GetBigQueryExport(
     google::cloud::securitycenter::v1::GetBigQueryExportRequest const&) {
   return Idempotency::kIdempotent;
@@ -94,6 +108,20 @@ Idempotency SecurityCenterConnectionIdempotencyPolicy::GetOrganizationSettings(
   return Idempotency::kIdempotent;
 }
 
+Idempotency SecurityCenterConnectionIdempotencyPolicy::
+    GetEffectiveSecurityHealthAnalyticsCustomModule(
+        google::cloud::securitycenter::v1::
+            GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecurityCenterConnectionIdempotencyPolicy::
+    GetSecurityHealthAnalyticsCustomModule(
+        google::cloud::securitycenter::v1::
+            GetSecurityHealthAnalyticsCustomModuleRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency SecurityCenterConnectionIdempotencyPolicy::GetSource(
     google::cloud::securitycenter::v1::GetSourceRequest const&) {
   return Idempotency::kIdempotent;
@@ -114,6 +142,13 @@ Idempotency SecurityCenterConnectionIdempotencyPolicy::ListAssets(
   return Idempotency::kIdempotent;
 }
 
+Idempotency SecurityCenterConnectionIdempotencyPolicy::
+    ListDescendantSecurityHealthAnalyticsCustomModules(
+        google::cloud::securitycenter::v1::
+            ListDescendantSecurityHealthAnalyticsCustomModulesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency SecurityCenterConnectionIdempotencyPolicy::ListFindings(
     google::cloud::securitycenter::v1::ListFindingsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
@@ -127,6 +162,20 @@ Idempotency SecurityCenterConnectionIdempotencyPolicy::ListMuteConfigs(
 Idempotency SecurityCenterConnectionIdempotencyPolicy::ListNotificationConfigs(
     google::cloud::securitycenter::v1::
         ListNotificationConfigsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecurityCenterConnectionIdempotencyPolicy::
+    ListEffectiveSecurityHealthAnalyticsCustomModules(
+        google::cloud::securitycenter::v1::
+            ListEffectiveSecurityHealthAnalyticsCustomModulesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecurityCenterConnectionIdempotencyPolicy::
+    ListSecurityHealthAnalyticsCustomModules(
+        google::cloud::securitycenter::v1::
+            ListSecurityHealthAnalyticsCustomModulesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
@@ -185,6 +234,13 @@ Idempotency
 SecurityCenterConnectionIdempotencyPolicy::UpdateOrganizationSettings(
     google::cloud::securitycenter::v1::
         UpdateOrganizationSettingsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecurityCenterConnectionIdempotencyPolicy::
+    UpdateSecurityHealthAnalyticsCustomModule(
+        google::cloud::securitycenter::v1::
+            UpdateSecurityHealthAnalyticsCustomModuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

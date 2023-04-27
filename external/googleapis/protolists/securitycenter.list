@@ -1,11 +1,14 @@
 @com_google_googleapis//google/cloud/securitycenter/v1:access.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:asset.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:bigquery_export.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:cloud_dlp_data_profile.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:cloud_dlp_inspection.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:compliance.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:connection.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:contact_details.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:container.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:database.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:effective_security_health_analytics_custom_module.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:exfiltration.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:external_system.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:file.proto
@@ -24,6 +27,8 @@
 @com_google_googleapis//google/cloud/securitycenter/v1:process.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:resource.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:run_asset_discovery_response.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:security_health_analytics_custom_config.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:security_health_analytics_custom_module.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:security_marks.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:securitycenter_service.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:source.proto

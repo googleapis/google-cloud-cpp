@@ -44,6 +44,13 @@ SecurityCenterConnection::BulkMuteFindings(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterConnection::CreateSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        CreateSecurityHealthAnalyticsCustomModuleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::securitycenter::v1::Source>
 SecurityCenterConnection::CreateSource(
     google::cloud::securitycenter::v1::CreateSourceRequest const&) {
@@ -78,6 +85,12 @@ Status SecurityCenterConnection::DeleteNotificationConfig(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+Status SecurityCenterConnection::DeleteSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        DeleteSecurityHealthAnalyticsCustomModuleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 SecurityCenterConnection::GetBigQueryExport(
     google::cloud::securitycenter::v1::GetBigQueryExportRequest const&) {
@@ -104,6 +117,21 @@ SecurityCenterConnection::GetNotificationConfig(
 StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
 SecurityCenterConnection::GetOrganizationSettings(
     google::cloud::securitycenter::v1::GetOrganizationSettingsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             EffectiveSecurityHealthAnalyticsCustomModule>
+SecurityCenterConnection::GetEffectiveSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterConnection::GetSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        GetSecurityHealthAnalyticsCustomModuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -140,6 +168,16 @@ SecurityCenterConnection::ListAssets(
 }
 
 StreamRange<
+    google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterConnection::ListDescendantSecurityHealthAnalyticsCustomModules(
+    google::cloud::securitycenter::v1::
+        ListDescendantSecurityHealthAnalyticsCustomModulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::
+                      SecurityHealthAnalyticsCustomModule>>();
+}
+
+StreamRange<
     google::cloud::securitycenter::v1::ListFindingsResponse::ListFindingsResult>
 SecurityCenterConnection::ListFindings(
     google::cloud::securitycenter::v1::
@@ -163,6 +201,26 @@ SecurityCenterConnection::ListNotificationConfigs(
         ListNotificationConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::NotificationConfig>>();
+}
+
+StreamRange<google::cloud::securitycenter::v1::
+                EffectiveSecurityHealthAnalyticsCustomModule>
+SecurityCenterConnection::ListEffectiveSecurityHealthAnalyticsCustomModules(
+    google::cloud::securitycenter::v1::
+        ListEffectiveSecurityHealthAnalyticsCustomModulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::
+                      EffectiveSecurityHealthAnalyticsCustomModule>>();
+}
+
+StreamRange<
+    google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterConnection::ListSecurityHealthAnalyticsCustomModules(
+    google::cloud::securitycenter::v1::
+        ListSecurityHealthAnalyticsCustomModulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::
+                      SecurityHealthAnalyticsCustomModule>>();
 }
 
 StreamRange<google::cloud::securitycenter::v1::Source>
@@ -232,6 +290,13 @@ StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
 SecurityCenterConnection::UpdateOrganizationSettings(
     google::cloud::securitycenter::v1::
         UpdateOrganizationSettingsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterConnection::UpdateSecurityHealthAnalyticsCustomModule(
+    google::cloud::securitycenter::v1::
+        UpdateSecurityHealthAnalyticsCustomModuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

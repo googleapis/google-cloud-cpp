@@ -49,6 +49,22 @@ SecurityCenterLogging::AsyncBulkMuteFindings(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterLogging::CreateSecurityHealthAnalyticsCustomModule(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::
+        CreateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::securitycenter::v1::
+              CreateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+        return child_->CreateSecurityHealthAnalyticsCustomModule(context,
+                                                                 request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::securitycenter::v1::Source>
 SecurityCenterLogging::CreateSource(
     grpc::ClientContext& context,
@@ -123,6 +139,21 @@ Status SecurityCenterLogging::DeleteNotificationConfig(
       context, request, __func__, tracing_options_);
 }
 
+Status SecurityCenterLogging::DeleteSecurityHealthAnalyticsCustomModule(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::
+        DeleteSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::securitycenter::v1::
+              DeleteSecurityHealthAnalyticsCustomModuleRequest const& request) {
+        return child_->DeleteSecurityHealthAnalyticsCustomModule(context,
+                                                                 request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 SecurityCenterLogging::GetBigQueryExport(
     grpc::ClientContext& context,
@@ -188,6 +219,37 @@ SecurityCenterLogging::GetOrganizationSettings(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::securitycenter::v1::
+             EffectiveSecurityHealthAnalyticsCustomModule>
+SecurityCenterLogging::GetEffectiveSecurityHealthAnalyticsCustomModule(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::
+        GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::securitycenter::v1::
+                 GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const&
+                     request) {
+        return child_->GetEffectiveSecurityHealthAnalyticsCustomModule(context,
+                                                                       request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterLogging::GetSecurityHealthAnalyticsCustomModule(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::
+        GetSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::securitycenter::v1::
+                 GetSecurityHealthAnalyticsCustomModuleRequest const& request) {
+        return child_->GetSecurityHealthAnalyticsCustomModule(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::securitycenter::v1::Source>
 SecurityCenterLogging::GetSource(
     grpc::ClientContext& context,
@@ -236,6 +298,25 @@ SecurityCenterLogging::ListAssets(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::securitycenter::v1::
+             ListDescendantSecurityHealthAnalyticsCustomModulesResponse>
+SecurityCenterLogging::ListDescendantSecurityHealthAnalyticsCustomModules(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::
+        ListDescendantSecurityHealthAnalyticsCustomModulesRequest const&
+            request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::securitycenter::v1::
+              ListDescendantSecurityHealthAnalyticsCustomModulesRequest const&
+                  request) {
+        return child_->ListDescendantSecurityHealthAnalyticsCustomModules(
+            context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::securitycenter::v1::ListFindingsResponse>
 SecurityCenterLogging::ListFindings(
     grpc::ClientContext& context,
@@ -268,6 +349,41 @@ SecurityCenterLogging::ListNotificationConfigs(
              google::cloud::securitycenter::v1::
                  ListNotificationConfigsRequest const& request) {
         return child_->ListNotificationConfigs(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             ListEffectiveSecurityHealthAnalyticsCustomModulesResponse>
+SecurityCenterLogging::ListEffectiveSecurityHealthAnalyticsCustomModules(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::
+        ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const&
+            request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::securitycenter::v1::
+                 ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const&
+                     request) {
+        return child_->ListEffectiveSecurityHealthAnalyticsCustomModules(
+            context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             ListSecurityHealthAnalyticsCustomModulesResponse>
+SecurityCenterLogging::ListSecurityHealthAnalyticsCustomModules(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::
+        ListSecurityHealthAnalyticsCustomModulesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::securitycenter::v1::
+              ListSecurityHealthAnalyticsCustomModulesRequest const& request) {
+        return child_->ListSecurityHealthAnalyticsCustomModules(context,
+                                                                request);
       },
       context, request, __func__, tracing_options_);
 }
@@ -408,6 +524,22 @@ SecurityCenterLogging::UpdateOrganizationSettings(
              google::cloud::securitycenter::v1::
                  UpdateOrganizationSettingsRequest const& request) {
         return child_->UpdateOrganizationSettings(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
+SecurityCenterLogging::UpdateSecurityHealthAnalyticsCustomModule(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::
+        UpdateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::securitycenter::v1::
+              UpdateSecurityHealthAnalyticsCustomModuleRequest const& request) {
+        return child_->UpdateSecurityHealthAnalyticsCustomModule(context,
+                                                                 request);
       },
       context, request, __func__, tracing_options_);
 }

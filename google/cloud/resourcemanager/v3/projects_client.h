@@ -96,12 +96,12 @@ class ProjectsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   /// [google.cloud.resourcemanager.v3.GetProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L373}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L386}
   /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
       std::string const& name, Options opts = {});
@@ -114,16 +114,16 @@ class ProjectsClient {
   /// for this project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::GetProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L373}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::GetProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L386}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   /// [google.cloud.resourcemanager.v3.GetProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L373}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L386}
   /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
       google::cloud::resourcemanager::v3::GetProjectRequest const& request,
@@ -137,19 +137,21 @@ class ProjectsClient {
   /// `display_name`. The caller must have `resourcemanager.projects.list`
   /// permission on the identified parent.
   ///
-  /// @param parent  Required. The name of the parent resource to list projects
-  /// under.
-  ///  For example, setting this field to 'folders/1234' would list all projects
-  ///  directly under that folder.
+  /// @param parent  Required. The name of the parent resource whose projects
+  /// are being listed.
+  ///  Only children of this parent resource are listed; descendants are not
+  ///  listed.
+  ///  If the parent is a folder, use the value `folders/{folder_id}`. If the
+  ///  parent is an organization, use the value `organizations/{org_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   /// [google.cloud.resourcemanager.v3.ListProjectsRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L386}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L399}
   /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Project> ListProjects(
       std::string const& parent, Options opts = {});
@@ -163,16 +165,16 @@ class ProjectsClient {
   /// permission on the identified parent.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::ListProjectsRequest,google/cloud/resourcemanager/v3/projects.proto#L386}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::ListProjectsRequest,google/cloud/resourcemanager/v3/projects.proto#L399}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   /// [google.cloud.resourcemanager.v3.ListProjectsRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L386}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L399}
   /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Project> ListProjects(
       google::cloud::resourcemanager::v3::ListProjectsRequest request,
@@ -194,20 +196,20 @@ class ProjectsClient {
   /// @param query  Optional. A query string for searching for projects that the
   /// caller has
   ///  `resourcemanager.projects.get` permission to. If multiple fields are
-  ///  included in the query, the it will return results that match any of the
+  ///  included in the query, then it will return results that match any of the
   ///  fields. Some eligible fields are:
   ///  ```
   ///  | Field                   | Description |
   ///  |-------------------------|----------------------------------------------|
   ///  | displayName, name       | Filters by displayName. | | parent |
-  ///  Project's parent. (for example: folders/123, organizations/*) Prefer
-  ///  parent field over parent.type and parent.id. | | parent.type | Parent's
-  ///  type: `folder` or `organization`.   | | parent.id               |
-  ///  Parent's id number (for example: 123)        | | id, projectId | Filters
-  ///  by projectId.                        | | state, lifecycleState   |
-  ///  Filters by state.                            | | labels | Filters by
-  ///  label name or value.              | | labels.<key> (where *key* is the
-  ///  name of a label) | Filters by label name. |
+  ///  Project's parent (for example: folders/123, organizations/*). Prefer
+  ///  parent field over parent.type and parent.id.| | parent.type             |
+  ///  Parent's type: `folder` or `organization`.   | | parent.id | Parent's id
+  ///  number (for example: 123)        | | id, projectId           | Filters by
+  ///  projectId.                        | | state, lifecycleState   | Filters
+  ///  by state.                            | | labels                  |
+  ///  Filters by label name or value.              | | labels.\<key\> (where
+  ///  *key* is the name of a label) | Filters by label name.|
   ///  ```
   ///  Search expressions are case insensitive.
   ///  Some examples queries:
@@ -220,22 +222,22 @@ class ProjectsClient {
   ///  Equivalent to above.                                | | labels.color:* |
   ///  The project has the label `color`.                  | | labels.color:red
   ///  | The project's label `color` has the value `red`.    | |
-  ///  labels.color:red&nbsp;labels.size:big | The project's label `color` has
-  ///  the value `red` and its label `size` has the value `big`. |
+  ///  labels.color:red labels.size:big | The project's label `color` has the
+  ///  value `red` or its label `size` has the value `big`. |
   ///  ```
   ///  If no query is specified, the call will return projects for which the
   ///  user has the `resourcemanager.projects.get` permission.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   /// [google.cloud.resourcemanager.v3.Projects.GetProject]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L49}
   /// [google.cloud.resourcemanager.v3.SearchProjectsRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L444}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L457}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Project> SearchProjects(
       std::string const& query, Options opts = {});
@@ -254,18 +256,18 @@ class ProjectsClient {
   /// [GetProject][google.cloud.resourcemanager.v3.Projects.GetProject] method.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::SearchProjectsRequest,google/cloud/resourcemanager/v3/projects.proto#L444}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::SearchProjectsRequest,google/cloud/resourcemanager/v3/projects.proto#L457}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   /// [google.cloud.resourcemanager.v3.Projects.GetProject]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L49}
   /// [google.cloud.resourcemanager.v3.SearchProjectsRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L444}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L457}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Project> SearchProjects(
       google::cloud::resourcemanager::v3::SearchProjectsRequest request,
@@ -283,17 +285,17 @@ class ProjectsClient {
   ///  fails.
   ///  If the `parent` field is set, the `resourcemanager.projects.create`
   ///  permission is checked on the parent resource. If no parent is set and
-  ///  the authorization credentials belong to an Organziation, the parent
+  ///  the authorization credentials belong to an Organization, the parent
   ///  will be set to that Organization.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   /// [google.cloud.resourcemanager.v3.CreateProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L526}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L539}
   /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> CreateProject(
       google::cloud::resourcemanager::v3::Project const& project,
@@ -307,16 +309,16 @@ class ProjectsClient {
   /// `DeleteOperation`.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::CreateProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L526}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::CreateProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L539}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   /// [google.cloud.resourcemanager.v3.CreateProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L526}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L539}
   /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> CreateProject(
       google::cloud::resourcemanager::v3::CreateProjectRequest const& request,
@@ -335,12 +337,12 @@ class ProjectsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   /// [google.cloud.resourcemanager.v3.UpdateProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L562}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L575}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
       google::cloud::resourcemanager::v3::Project const& project,
@@ -355,16 +357,16 @@ class ProjectsClient {
   /// project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::UpdateProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L562}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::UpdateProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L575}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   /// [google.cloud.resourcemanager.v3.UpdateProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L562}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L575}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
       google::cloud::resourcemanager::v3::UpdateProjectRequest const& request,
@@ -379,9 +381,12 @@ class ProjectsClient {
   /// Upon success, the `Operation.response` field will be populated with the
   /// moved project.
   ///
-  /// The caller must have `resourcemanager.projects.update` permission on the
-  /// project and have `resourcemanager.projects.move` permission on the
-  /// project's current and proposed new parent.
+  /// The caller must have `resourcemanager.projects.move` permission on the
+  /// project, on the project's current and proposed new parent.
+  ///
+  /// If project has no current parent, or it currently does not have an
+  /// associated organization resource, you will also need the
+  /// `resourcemanager.projects.setIamPolicy` permission in the project.
   ///
   ///
   ///
@@ -391,12 +396,12 @@ class ProjectsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   /// [google.cloud.resourcemanager.v3.MoveProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L579}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L591}
   /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> MoveProject(
       std::string const& name, std::string const& destination_parent,
@@ -411,23 +416,26 @@ class ProjectsClient {
   /// Upon success, the `Operation.response` field will be populated with the
   /// moved project.
   ///
-  /// The caller must have `resourcemanager.projects.update` permission on the
-  /// project and have `resourcemanager.projects.move` permission on the
-  /// project's current and proposed new parent.
+  /// The caller must have `resourcemanager.projects.move` permission on the
+  /// project, on the project's current and proposed new parent.
+  ///
+  /// If project has no current parent, or it currently does not have an
+  /// associated organization resource, you will also need the
+  /// `resourcemanager.projects.setIamPolicy` permission in the project.
   ///
   ///
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::MoveProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L579}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::MoveProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L591}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   /// [google.cloud.resourcemanager.v3.MoveProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L579}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L591}
   /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> MoveProject(
       google::cloud::resourcemanager::v3::MoveProjectRequest const& request,
@@ -473,12 +481,12 @@ class ProjectsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   /// [google.cloud.resourcemanager.v3.DeleteProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L605}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L613}
   /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   /// [google.cloud.resourcemanager.v3.Projects.SearchProjects]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L79}
   ///
@@ -521,16 +529,16 @@ class ProjectsClient {
   /// this project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::DeleteProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L605}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::DeleteProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L613}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   /// [google.cloud.resourcemanager.v3.DeleteProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L605}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L613}
   /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   /// [google.cloud.resourcemanager.v3.Projects.SearchProjects]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L79}
   ///
@@ -555,12 +563,12 @@ class ProjectsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   /// [google.cloud.resourcemanager.v3.UndeleteProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L624}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L630}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
       std::string const& name, Options opts = {});
@@ -577,23 +585,24 @@ class ProjectsClient {
   /// this project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::UndeleteProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L624}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::UndeleteProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L630}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   /// [google.cloud.resourcemanager.v3.Project]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   /// [google.cloud.resourcemanager.v3.UndeleteProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L624}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L630}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
       google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request,
       Options opts = {});
 
   ///
-  /// Returns the IAM access control policy for the specified project.
+  /// Returns the IAM access control policy for the specified project, in the
+  /// format `projects/{ProjectIdOrNumber}` e.g. projects/123.
   /// Permission is denied if the policy or the resource do not exist.
   ///
   /// @param resource  REQUIRED: The resource for which the policy is being
@@ -613,7 +622,8 @@ class ProjectsClient {
                                                  Options opts = {});
 
   ///
-  /// Returns the IAM access control policy for the specified project.
+  /// Returns the IAM access control policy for the specified project, in the
+  /// format `projects/{ProjectIdOrNumber}` e.g. projects/123.
   /// Permission is denied if the policy or the resource do not exist.
   ///
   /// @param request
@@ -632,7 +642,8 @@ class ProjectsClient {
       google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   ///
-  /// Sets the IAM access control policy for the specified project.
+  /// Sets the IAM access control policy for the specified project, in the
+  /// format `projects/{ProjectIdOrNumber}` e.g. projects/123.
   ///
   /// CAUTION: This method will replace the existing policy, and cannot be used
   /// to append additional IAM settings.
@@ -664,18 +675,14 @@ class ProjectsClient {
   /// `setIamPolicy()`;
   /// they must be sent only using the Cloud Platform Console.
   ///
-  /// + Membership changes that leave the project without any owners that have
-  /// accepted the Terms of Service (ToS) will be rejected.
-  ///
   /// + If the project is not part of an organization, there must be at least
   /// one owner who has accepted the Terms of Service (ToS) agreement in the
   /// policy. Calling `setIamPolicy()` to remove the last ToS-accepted owner
   /// from the policy will fail. This restriction also applies to legacy
   /// projects that no longer have owners who have accepted the ToS. Edits to
   /// IAM policies will be rejected until the lack of a ToS-accepting owner is
-  /// rectified.
-  ///
-  /// + Calling this method requires enabling the App Engine Admin API.
+  /// rectified. If the project is part of an organization, you can remove all
+  /// owners, potentially making the organization inaccessible.
   ///
   /// @param resource  REQUIRED: The resource for which the policy is being
   /// specified.
@@ -700,7 +707,8 @@ class ProjectsClient {
       Options opts = {});
 
   ///
-  /// Sets the IAM access control policy for the specified project.
+  /// Sets the IAM access control policy for the specified project, in the
+  /// format `projects/{ProjectIdOrNumber}` e.g. projects/123.
   ///
   /// CAUTION: This method will replace the existing policy, and cannot be used
   /// to append additional IAM settings.
@@ -732,18 +740,14 @@ class ProjectsClient {
   /// `setIamPolicy()`;
   /// they must be sent only using the Cloud Platform Console.
   ///
-  /// + Membership changes that leave the project without any owners that have
-  /// accepted the Terms of Service (ToS) will be rejected.
-  ///
   /// + If the project is not part of an organization, there must be at least
   /// one owner who has accepted the Terms of Service (ToS) agreement in the
   /// policy. Calling `setIamPolicy()` to remove the last ToS-accepted owner
   /// from the policy will fail. This restriction also applies to legacy
   /// projects that no longer have owners who have accepted the ToS. Edits to
   /// IAM policies will be rejected until the lack of a ToS-accepting owner is
-  /// rectified.
-  ///
-  /// + Calling this method requires enabling the App Engine Admin API.
+  /// rectified. If the project is part of an organization, you can remove all
+  /// owners, potentially making the organization inaccessible.
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L101}
@@ -761,7 +765,8 @@ class ProjectsClient {
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   ///
-  /// Returns permissions that a caller has on the specified project.
+  /// Returns permissions that a caller has on the specified project, in the
+  /// format `projects/{ProjectIdOrNumber}` e.g. projects/123..
   ///
   /// @param resource  REQUIRED: The resource for which the policy detail is
   /// being requested.
@@ -786,7 +791,8 @@ class ProjectsClient {
       Options opts = {});
 
   ///
-  /// Returns permissions that a caller has on the specified project.
+  /// Returns permissions that a caller has on the specified project, in the
+  /// format `projects/{ProjectIdOrNumber}` e.g. projects/123..
   ///
   /// @param request
   /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L136}
