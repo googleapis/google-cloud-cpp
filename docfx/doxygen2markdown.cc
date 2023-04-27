@@ -331,9 +331,7 @@ bool AppendIfRef(std::ostream& os, MarkdownContext const& ctx,
   // `:cloud:`). We need to escape them as "computer output", but only if they
   // are not escaped already.
   auto ref = link.str();
-  if (  // NOLINTNEXTLINE(abseil-string-find-str-contains)
-      ref.find("::") != std::string::npos &&
-      // NOLINTNEXTLINE(abseil-string-find-str-contains)
+  if (ref.find("::") != std::string::npos &&
       ref.find('`') == std::string::npos) {
     ref = "`" + ref + "`";
   }
