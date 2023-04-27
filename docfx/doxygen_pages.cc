@@ -126,6 +126,11 @@ std::vector<TocEntry> PagesToc(Config const& cfg,
     auto const& page = i.node();
     if (!IncludeInPublicDocuments(cfg, page)) continue;
     auto const id = std::string_view{page.attribute("id").as_string()};
+    // We will skip groups with :: in their id. These are all generated pages,
+    // usually examples showing how to use a specific class. We link such
+    // examples from the landing page, and they otherwise clutter the navigation
+    // page.
+    if (id.find("::") != std::string_view::npos) continue;  // NOLINT
     std::ostringstream title;
     AppendTitle(title, MarkdownContext{}, page);
     auto filename =
