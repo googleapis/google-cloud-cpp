@@ -174,7 +174,7 @@ time {
 # different formatting output (sigh).
 printf "%-50s" "Running clang-format:" >&2
 time {
-  git_files -z -- '*.h' '*.cc' |
+  git_files -z -- '*.h' '*.cc' '*.proto' |
     xargs -r -P "$(nproc)" -n 1 -0 clang-format -i
 }
 

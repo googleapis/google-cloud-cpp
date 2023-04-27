@@ -69,10 +69,11 @@ service GoldenThingAdmin {
   // have a name of the format `<database_name>/operations/<operation_id>` and
   // can be used to track preparation of the database. The
   // [metadata][google.longrunning.Operation.metadata] field type is
-  // [CreateDatabaseMetadata][google.test.admin.database.v1.CreateDatabaseMetadata]. The
-  // [response][google.longrunning.Operation.response] field type is
+  // [CreateDatabaseMetadata][google.test.admin.database.v1.CreateDatabaseMetadata].
+  // The [response][google.longrunning.Operation.response] field type is
   // [Database][google.test.admin.database.v1.Database], if successful.
-  rpc CreateDatabase(CreateDatabaseRequest) returns (google.longrunning.Operation) {
+  rpc CreateDatabase(CreateDatabaseRequest)
+      returns (google.longrunning.Operation) {
     option (google.api.http) = {
       post: "/v1/{parent=projects/*/instances/*}/databases"
       body: "*"
@@ -98,8 +99,10 @@ service GoldenThingAdmin {
   // the format `<database_name>/operations/<operation_id>` and can be used to
   // track execution of the schema change(s). The
   // [metadata][google.longrunning.Operation.metadata] field type is
-  // [UpdateDatabaseDdlMetadata][google.test.admin.database.v1.UpdateDatabaseDdlMetadata].  The operation has no response.
-  rpc UpdateDatabaseDdl(UpdateDatabaseDdlRequest) returns (google.longrunning.Operation) {
+  // [UpdateDatabaseDdlMetadata][google.test.admin.database.v1.UpdateDatabaseDdlMetadata].
+  // The operation has no response.
+  rpc UpdateDatabaseDdl(UpdateDatabaseDdlRequest)
+      returns (google.longrunning.Operation) {
     option (google.api.http) = {
       patch: "/v1/{database=projects/*/instances/*/databases/*}/ddl"
       body: "*"
@@ -152,7 +155,8 @@ service GoldenThingAdmin {
   // permission on [resource][google.iam.v1.SetIamPolicyRequest.resource].
   // For backups, authorization requires `test.backups.setIamPolicy`
   // permission on [resource][google.iam.v1.SetIamPolicyRequest.resource].
-  rpc SetIamPolicy(google.iam.v1.SetIamPolicyRequest) returns (google.iam.v1.Policy) {
+  rpc SetIamPolicy(google.iam.v1.SetIamPolicyRequest)
+      returns (google.iam.v1.Policy) {
     option (google.api.http) = {
       post: "/v1/{resource=projects/*/instances/*/databases/*}:setIamPolicy"
       body: "*"
@@ -172,7 +176,8 @@ service GoldenThingAdmin {
   // [resource][google.iam.v1.GetIamPolicyRequest.resource].
   // For backups, authorization requires `test.backups.getIamPolicy`
   // permission on [resource][google.iam.v1.GetIamPolicyRequest.resource].
-  rpc GetIamPolicy(google.iam.v1.GetIamPolicyRequest) returns (google.iam.v1.Policy) {
+  rpc GetIamPolicy(google.iam.v1.GetIamPolicyRequest)
+      returns (google.iam.v1.Policy) {
     option (google.api.http) = {
       post: "/v1/{resource=projects/*/instances/*/databases/*}:getIamPolicy"
       body: "*"
@@ -194,7 +199,8 @@ service GoldenThingAdmin {
   // Calling this method on a backup that does not exist will
   // result in a NOT_FOUND error if the user has
   // `test.backups.list` permission on the containing instance.
-  rpc TestIamPermissions(google.iam.v1.TestIamPermissionsRequest) returns (google.iam.v1.TestIamPermissionsResponse) {
+  rpc TestIamPermissions(google.iam.v1.TestIamPermissionsRequest)
+      returns (google.iam.v1.TestIamPermissionsResponse) {
     option (google.api.http) = {
       post: "/v1/{resource=projects/*/instances/*/databases/*}:testIamPermissions"
       body: "*"
@@ -212,12 +218,12 @@ service GoldenThingAdmin {
   // `projects/<project>/instances/<instance>/backups/<backup>/operations/<operation_id>`
   // and can be used to track creation of the backup. The
   // [metadata][google.longrunning.Operation.metadata] field type is
-  // [CreateBackupMetadata][google.test.admin.database.v1.CreateBackupMetadata]. The
-  // [response][google.longrunning.Operation.response] field type is
-  // [Backup][google.test.admin.database.v1.Backup], if successful. Cancelling the returned operation will stop the
-  // creation and delete the backup.
-  // There can be only one pending backup creation per database. Backup creation
-  // of different databases can run concurrently.
+  // [CreateBackupMetadata][google.test.admin.database.v1.CreateBackupMetadata].
+  // The [response][google.longrunning.Operation.response] field type is
+  // [Backup][google.test.admin.database.v1.Backup], if successful. Cancelling
+  // the returned operation will stop the creation and delete the backup. There
+  // can be only one pending backup creation per database. Backup creation of
+  // different databases can run concurrently.
   rpc CreateBackup(CreateBackupRequest) returns (google.longrunning.Operation) {
     option (google.api.http) = {
       post: "/v1/{parent=projects/*/instances/*}/backups"
@@ -230,7 +236,8 @@ service GoldenThingAdmin {
     };
   }
 
-  // Gets metadata on a pending or completed [Backup][google.test.admin.database.v1.Backup].
+  // Gets metadata on a pending or completed
+  // [Backup][google.test.admin.database.v1.Backup].
   rpc GetBackup(GetBackupRequest) returns (Backup) {
     option (google.api.http) = {
       get: "/v1/{name=projects/*/instances/*/backups/*}"
@@ -238,7 +245,8 @@ service GoldenThingAdmin {
     option (google.api.method_signature) = "name";
   }
 
-  // Updates a pending or completed [Backup][google.test.admin.database.v1.Backup].
+  // Updates a pending or completed
+  // [Backup][google.test.admin.database.v1.Backup].
   rpc UpdateBackup(UpdateBackupRequest) returns (Backup) {
     option (google.api.http) = {
       patch: "/v1/{backup.name=projects/*/instances/*/backups/*}"
@@ -247,7 +255,8 @@ service GoldenThingAdmin {
     option (google.api.method_signature) = "backup,update_mask";
   }
 
-  // Deletes a pending or completed [Backup][google.test.admin.database.v1.Backup].
+  // Deletes a pending or completed
+  // [Backup][google.test.admin.database.v1.Backup].
   rpc DeleteBackup(DeleteBackupRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/v1/{name=projects/*/instances/*/backups/*}"
@@ -282,7 +291,8 @@ service GoldenThingAdmin {
   // Once the restore operation completes, a new restore operation can be
   // initiated, without waiting for the optimize operation associated with the
   // first restore to complete.
-  rpc RestoreDatabase(RestoreDatabaseRequest) returns (google.longrunning.Operation) {
+  rpc RestoreDatabase(RestoreDatabaseRequest)
+      returns (google.longrunning.Operation) {
     option (google.api.http) = {
       post: "/v1/{parent=projects/*/instances/*}/databases:restore"
       body: "*"
@@ -302,7 +312,8 @@ service GoldenThingAdmin {
   // `metadata.type_url` describes the type of the metadata. Operations returned
   // include those that have completed/failed/canceled within the last 7 days,
   // and pending operations.
-  rpc ListDatabaseOperations(ListDatabaseOperationsRequest) returns (ListDatabaseOperationsResponse) {
+  rpc ListDatabaseOperations(ListDatabaseOperationsRequest)
+      returns (ListDatabaseOperationsResponse) {
     option (google.api.http) = {
       get: "/v1/{parent=projects/*/instances/*}/databaseOperations"
     };
@@ -319,7 +330,8 @@ service GoldenThingAdmin {
   // and pending operations. Operations returned are ordered by
   // `operation.metadata.value.progress.start_time` in descending order starting
   // from the most recently started operation.
-  rpc ListBackupOperations(ListBackupOperationsRequest) returns (ListBackupOperationsResponse) {
+  rpc ListBackupOperations(ListBackupOperationsRequest)
+      returns (ListBackupOperationsResponse) {
     option (google.api.http) = {
       get: "/v1/{parent=projects/*/instances/*}/backupOperations"
     };
@@ -327,7 +339,8 @@ service GoldenThingAdmin {
   }
 
   // Tests longrunning operations without routing headers
-  rpc LongRunningWithoutRouting(RestoreDatabaseRequest) returns (google.longrunning.Operation) {
+  rpc LongRunningWithoutRouting(RestoreDatabaseRequest)
+      returns (google.longrunning.Operation) {
     option (google.longrunning.operation_info) = {
       response_type: "google.test.admin.database.v1.Database"
       metadata_type: "google.test.admin.database.v1.RestoreDatabaseMetadata"
@@ -389,22 +402,22 @@ message Database {
   State state = 2 [(google.api.field_behavior) = OUTPUT_ONLY];
 
   // Output only. If exists, the time at which the database creation started.
-  google.protobuf.Timestamp create_time = 3 [(google.api.field_behavior) = OUTPUT_ONLY];
+  google.protobuf.Timestamp create_time = 3
+      [(google.api.field_behavior) = OUTPUT_ONLY];
 
   // Output only. Applicable only for restored databases. Contains information
   // about the restore source.
   RestoreInfo restore_info = 4 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
-// The request for [ListDatabases][google.test.admin.database.v1.DatabaseAdmin.ListDatabases].
+// The request for
+// [ListDatabases][google.test.admin.database.v1.DatabaseAdmin.ListDatabases].
 message ListDatabasesRequest {
   // Required. The instance whose databases should be listed.
   // Values are of the form `projects/<project>/instances/<instance>`.
   string parent = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {
-      type: "test.googleapis.com/Instance"
-    }
+    (google.api.resource_reference) = { type: "test.googleapis.com/Instance" }
   ];
 
   // Number of databases to be returned in the response. If 0 or less,
@@ -412,31 +425,32 @@ message ListDatabasesRequest {
   int32 page_size = 3;
 
   // If non-empty, `page_token` should contain a
-  // [next_page_token][google.test.admin.database.v1.ListDatabasesResponse.next_page_token] from a
-  // previous [ListDatabasesResponse][google.test.admin.database.v1.ListDatabasesResponse].
+  // [next_page_token][google.test.admin.database.v1.ListDatabasesResponse.next_page_token]
+  // from a previous
+  // [ListDatabasesResponse][google.test.admin.database.v1.ListDatabasesResponse].
   string page_token = 4;
 }
 
-// The response for [ListDatabases][google.test.admin.database.v1.DatabaseAdmin.ListDatabases].
+// The response for
+// [ListDatabases][google.test.admin.database.v1.DatabaseAdmin.ListDatabases].
 message ListDatabasesResponse {
   // Databases that matched the request.
   repeated Database databases = 1;
 
   // `next_page_token` can be sent in a subsequent
-  // [ListDatabases][google.test.admin.database.v1.DatabaseAdmin.ListDatabases] call to fetch more
-  // of the matching databases.
+  // [ListDatabases][google.test.admin.database.v1.DatabaseAdmin.ListDatabases]
+  // call to fetch more of the matching databases.
   string next_page_token = 2;
 }
 
-// The request for [CreateDatabase][google.test.admin.database.v1.DatabaseAdmin.CreateDatabase].
+// The request for
+// [CreateDatabase][google.test.admin.database.v1.DatabaseAdmin.CreateDatabase].
 message CreateDatabaseRequest {
   // Required. The name of the instance that will serve the new database.
   // Values are of the form `projects/<project>/instances/<instance>`.
   string parent = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {
-      type: "test.googleapis.com/Instance"
-    }
+    (google.api.resource_reference) = { type: "test.googleapis.com/Instance" }
   ];
 
   // Required. A `CREATE DATABASE` statement, which specifies the ID of the
@@ -457,20 +471,19 @@ message CreateDatabaseRequest {
 // [CreateDatabase][google.test.admin.database.v1.DatabaseAdmin.CreateDatabase].
 message CreateDatabaseMetadata {
   // The database being created.
-  string database = 1 [(google.api.resource_reference) = {
-                         type: "test.googleapis.com/Database"
-                       }];
+  string database = 1 [
+    (google.api.resource_reference) = { type: "test.googleapis.com/Database" }
+  ];
 }
 
-// The request for [GetDatabase][google.test.admin.database.v1.DatabaseAdmin.GetDatabase].
+// The request for
+// [GetDatabase][google.test.admin.database.v1.DatabaseAdmin.GetDatabase].
 message GetDatabaseRequest {
   // Required. The name of the requested database. Values are of the form
   // `projects/<project>/instances/<instance>/databases/<database>`.
   string name = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {
-      type: "test.googleapis.com/Database"
-    }
+    (google.api.resource_reference) = { type: "test.googleapis.com/Database" }
   ];
 }
 
@@ -488,15 +501,13 @@ message GetDatabaseRequest {
 // Each batch of statements is assigned a name which can be used with
 // the [Operations][google.longrunning.Operations] API to monitor
 // progress. See the
-// [operation_id][google.test.admin.database.v1.UpdateDatabaseDdlRequest.operation_id] field for more
-// details.
+// [operation_id][google.test.admin.database.v1.UpdateDatabaseDdlRequest.operation_id]
+// field for more details.
 message UpdateDatabaseDdlRequest {
   // Required. The database to update.
   string database = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {
-      type: "test.googleapis.com/Database"
-    }
+    (google.api.resource_reference) = { type: "test.googleapis.com/Database" }
   ];
 
   // Required. DDL statements to be applied to the database.
@@ -509,18 +520,20 @@ message UpdateDatabaseDdlRequest {
   //
   // Specifying an explicit operation ID simplifies determining
   // whether the statements were executed in the event that the
-  // [UpdateDatabaseDdl][google.test.admin.database.v1.DatabaseAdmin.UpdateDatabaseDdl] call is replayed,
-  // or the return value is otherwise lost: the [database][google.test.admin.database.v1.UpdateDatabaseDdlRequest.database] and
-  // `operation_id` fields can be combined to form the
+  // [UpdateDatabaseDdl][google.test.admin.database.v1.DatabaseAdmin.UpdateDatabaseDdl]
+  // call is replayed, or the return value is otherwise lost: the
+  // [database][google.test.admin.database.v1.UpdateDatabaseDdlRequest.database]
+  // and `operation_id` fields can be combined to form the
   // [name][google.longrunning.Operation.name] of the resulting
-  // [longrunning.Operation][google.longrunning.Operation]: `<database>/operations/<operation_id>`.
+  // [longrunning.Operation][google.longrunning.Operation]:
+  // `<database>/operations/<operation_id>`.
   //
   // `operation_id` should be unique within the database, and must be
   // a valid identifier: `[a-z][a-z0-9_]*`. Note that
   // automatically-generated operation IDs always begin with an
   // underscore. If the named operation already exists,
-  // [UpdateDatabaseDdl][google.test.admin.database.v1.DatabaseAdmin.UpdateDatabaseDdl] returns
-  // `ALREADY_EXISTS`.
+  // [UpdateDatabaseDdl][google.test.admin.database.v1.DatabaseAdmin.UpdateDatabaseDdl]
+  // returns `ALREADY_EXISTS`.
   string operation_id = 3;
 }
 
@@ -528,9 +541,9 @@ message UpdateDatabaseDdlRequest {
 // [UpdateDatabaseDdl][google.test.admin.database.v1.DatabaseAdmin.UpdateDatabaseDdl].
 message UpdateDatabaseDdlMetadata {
   // The database being modified.
-  string database = 1 [(google.api.resource_reference) = {
-                         type: "test.googleapis.com/Database"
-                       }];
+  string database = 1 [
+    (google.api.resource_reference) = { type: "test.googleapis.com/Database" }
+  ];
 
   // For an update this list contains all the statements. For an
   // individual statement, this list contains only that statement.
@@ -542,29 +555,28 @@ message UpdateDatabaseDdlMetadata {
   repeated google.protobuf.Timestamp commit_timestamps = 3;
 }
 
-// The request for [DropDatabase][google.test.admin.database.v1.DatabaseAdmin.DropDatabase].
+// The request for
+// [DropDatabase][google.test.admin.database.v1.DatabaseAdmin.DropDatabase].
 message DropDatabaseRequest {
   // Required. The database to be dropped.
   string database = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {
-      type: "test.googleapis.com/Database"
-    }
+    (google.api.resource_reference) = { type: "test.googleapis.com/Database" }
   ];
 }
 
-// The request for [GetDatabaseDdl][google.test.admin.database.v1.DatabaseAdmin.GetDatabaseDdl].
+// The request for
+// [GetDatabaseDdl][google.test.admin.database.v1.DatabaseAdmin.GetDatabaseDdl].
 message GetDatabaseDdlRequest {
   // Required. The database whose schema we wish to get.
   string database = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {
-      type: "test.googleapis.com/Database"
-    }
+    (google.api.resource_reference) = { type: "test.googleapis.com/Database" }
   ];
 }
 
-// The response for [GetDatabaseDdl][google.test.admin.database.v1.DatabaseAdmin.GetDatabaseDdl].
+// The response for
+// [GetDatabaseDdl][google.test.admin.database.v1.DatabaseAdmin.GetDatabaseDdl].
 message GetDatabaseDdlResponse {
   // A list of formatted DDL statements defining the schema of the database
   // specified in the request.
@@ -578,9 +590,7 @@ message ListDatabaseOperationsRequest {
   // Values are of the form `projects/<project>/instances/<instance>`.
   string parent = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {
-      type: "test.googleapis.com/Instance"
-    }
+    (google.api.resource_reference) = { type: "test.googleapis.com/Instance" }
   ];
 
   // An expression that filters the list of returned operations.
@@ -597,7 +607,9 @@ message ListDatabaseOperationsRequest {
   //   * `name` - The name of the long-running operation
   //   * `done` - False if the operation is in progress, else true.
   //   * `metadata.@type` - the type of metadata. For example, the type string
-  //      for [RestoreDatabaseMetadata][google.test.admin.database.v1.RestoreDatabaseMetadata] is
+  //      for
+  //      [RestoreDatabaseMetadata][google.test.admin.database.v1.RestoreDatabaseMetadata]
+  //      is
   //      `type.googleapis.com/google.test.admin.database.v1.RestoreDatabaseMetadata`.
   //   * `metadata.<field_name>` - any field in metadata.value.
   //   * `error` - Error associated with the long-running operation.
@@ -617,7 +629,8 @@ message ListDatabaseOperationsRequest {
   //     `(metadata.name:restored_howl) AND` <br/>
   //     `(metadata.progress.start_time < \"2018-03-28T14:50:00Z\") AND` <br/>
   //     `(error:*)` - Return operations where:
-  //     * The operation's metadata type is [RestoreDatabaseMetadata][google.test.admin.database.v1.RestoreDatabaseMetadata].
+  //     * The operation's metadata type is
+  //     [RestoreDatabaseMetadata][google.test.admin.database.v1.RestoreDatabaseMetadata].
   //     * The database is restored from a backup.
   //     * The backup name contains "backup_howl".
   //     * The restored database's name contains "restored_howl".
@@ -631,8 +644,9 @@ message ListDatabaseOperationsRequest {
 
   // If non-empty, `page_token` should contain a
   // [next_page_token][google.test.admin.database.v1.ListDatabaseOperationsResponse.next_page_token]
-  // from a previous [ListDatabaseOperationsResponse][google.test.admin.database.v1.ListDatabaseOperationsResponse] to the
-  // same `parent` and with the same `filter`.
+  // from a previous
+  // [ListDatabaseOperationsResponse][google.test.admin.database.v1.ListDatabaseOperationsResponse]
+  // to the same `parent` and with the same `filter`.
   string page_token = 4;
 }
 
@@ -662,9 +676,7 @@ message RestoreDatabaseRequest {
   // `projects/<project>/instances/<instance>`.
   string parent = 1 [
     (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = {
-      type: "test.googleapis.com/Instance"
-    }
+    (google.api.resource_reference) = { type: "test.googleapis.com/Instance" }
   ];
 
   // Required. The id of the database to create and restore to. This
@@ -677,9 +689,9 @@ message RestoreDatabaseRequest {
   oneof source {
     // Name of the backup from which to restore.  Values are of the form
     // `projects/<project>/instances/<instance>/backups/<backup>`.
-    string backup = 3 [(google.api.resource_reference) = {
-                         type: "test.googleapis.com/Backup"
-                       }];
+    string backup = 3 [
+      (google.api.resource_reference) = { type: "test.googleapis.com/Backup" }
+    ];
   }
 }
 
@@ -693,7 +705,8 @@ message RestoreDatabaseMetadata {
   RestoreSourceType source_type = 2;
 
   // Information about the source used to restore the database, as specified by
-  // `source` in [RestoreDatabaseRequest][google.test.admin.database.v1.RestoreDatabaseRequest].
+  // `source` in
+  // [RestoreDatabaseRequest][google.test.admin.database.v1.RestoreDatabaseRequest].
   oneof source_info {
     // Information about the backup used to restore the database.
     BackupInfo backup_info = 3;
@@ -714,7 +727,8 @@ message RestoreDatabaseMetadata {
   // operation completed despite cancellation. On successful cancellation,
   // the operation is not deleted; instead, it becomes an operation with
   // an [Operation.error][google.longrunning.Operation.error] value with a
-  // [google.rpc.Status.code][google.rpc.Status.code] of 1, corresponding to `Code.CANCELLED`.
+  // [google.rpc.Status.code][google.rpc.Status.code] of 1, corresponding to
+  // `Code.CANCELLED`.
   google.protobuf.Timestamp cancel_time = 5;
 
   // If exists, the name of the long-running operation that will be used to
@@ -724,10 +738,10 @@ message RestoreDatabaseMetadata {
   // `projects/<project>/instances/<instance>/databases/<database>/operations/<operation>`
   // where the <database> is the name of database being created and restored to.
   // The metadata type of the  long-running operation is
-  // [OptimizeRestoredDatabaseMetadata][google.test.admin.database.v1.OptimizeRestoredDatabaseMetadata]. This long-running operation will be
-  // automatically created by the system after the RestoreDatabase long-running
-  // operation completes successfully. This operation will not be created if the
-  // restore was not successful.
+  // [OptimizeRestoredDatabaseMetadata][google.test.admin.database.v1.OptimizeRestoredDatabaseMetadata].
+  // This long-running operation will be automatically created by the system
+  // after the RestoreDatabase long-running operation completes successfully.
+  // This operation will not be created if the restore was not successful.
   string optimize_database_operation_name = 6;
 }
 
@@ -754,10 +768,12 @@ enum RestoreSourceType {
 
 service GoldenKitchenSink {
   option (google.api.default_host) = "goldenkitchensink.googleapis.com";
-  option (google.api.oauth_scopes) = "https://www.googleapis.com/auth/cloud-platform";
+  option (google.api.oauth_scopes) =
+      "https://www.googleapis.com/auth/cloud-platform";
 
   // Generates an OAuth 2.0 access token for a service account.
-  rpc GenerateAccessToken(GenerateAccessTokenRequest) returns (GenerateAccessTokenResponse) {
+  rpc GenerateAccessToken(GenerateAccessTokenRequest)
+      returns (GenerateAccessTokenResponse) {
     option (google.api.http) = {
       post: "/v1/{name=projects/*/serviceAccounts/*}:generateAccessToken"
       body: "*"
@@ -767,12 +783,14 @@ service GoldenKitchenSink {
   }
 
   // Generates an OpenID Connect ID token for a service account.
-  rpc GenerateIdToken(GenerateIdTokenRequest) returns (GenerateIdTokenResponse) {
+  rpc GenerateIdToken(GenerateIdTokenRequest)
+      returns (GenerateIdTokenResponse) {
     option (google.api.http) = {
       post: "/v1/token:generate"
       body: "*"
     };
-    option (google.api.method_signature) = "name,delegates,audience,include_email";
+    option (google.api.method_signature) =
+        "name,delegates,audience,include_email";
   }
 
   // Writes log entries to Logging. This API method is the
@@ -782,7 +800,8 @@ service GoldenKitchenSink {
   // A single request may contain log entries for a maximum of 1000
   // different resources (projects, organizations, billing accounts or
   // folders)
-  rpc WriteLogEntries(WriteLogEntriesRequest) returns (WriteLogEntriesResponse) {
+  rpc WriteLogEntries(WriteLogEntriesRequest)
+      returns (WriteLogEntriesResponse) {
     option (google.api.http) = {
       post: "/v2/entries:write"
       body: "*"
@@ -795,18 +814,10 @@ service GoldenKitchenSink {
   rpc ListLogs(ListLogsRequest) returns (ListLogsResponse) {
     option (google.api.http) = {
       get: "/v2/{parent=*/*}/logs"
-      additional_bindings {
-        get: "/v2/{parent=projects/*}/logs"
-      }
-      additional_bindings {
-        get: "/v2/{parent=organizations/*}/logs"
-      }
-      additional_bindings {
-        get: "/v2/{parent=folders/*}/logs"
-      }
-      additional_bindings {
-        get: "/v2/{parent=billingAccounts/*}/logs"
-      }
+      additional_bindings { get: "/v2/{parent=projects/*}/logs" }
+      additional_bindings { get: "/v2/{parent=organizations/*}/logs" }
+      additional_bindings { get: "/v2/{parent=folders/*}/logs" }
+      additional_bindings { get: "/v2/{parent=billingAccounts/*}/logs" }
     };
     option (google.api.method_signature) = "parent";
   }
@@ -827,8 +838,10 @@ service GoldenKitchenSink {
     };
   }
 
-  // Lists every [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey] for a service account.
-  rpc ListServiceAccountKeys(ListServiceAccountKeysRequest) returns (ListServiceAccountKeysResponse) {
+  // Lists every [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey] for
+  // a service account.
+  rpc ListServiceAccountKeys(ListServiceAccountKeysRequest)
+      returns (ListServiceAccountKeysResponse) {
     option (google.api.http) = {
       get: "/v1/{name=projects/*/serviceAccounts/*}/keys"
     };
@@ -863,12 +876,10 @@ service GoldenKitchenSink {
   }
 
   // Tests the generator for streaming write RPCs (aka client-side streaming)
-  rpc StreamingWrite(stream Request) returns (Response) {
-  }
+  rpc StreamingWrite(stream Request) returns (Response) {}
 
   // Tests the generator for streaming read-write RPCs (aka bidir streaming)
-  rpc StreamingReadWrite(stream Request) returns (stream Response) {
-  }
+  rpc StreamingReadWrite(stream Request) returns (stream Response) {}
 
   // An RPC to test that explicit routing headers are supported.
   //
@@ -925,9 +936,7 @@ service GoldenKitchenSink {
       body: "*"
     };
     option (google.api.routing) = {
-      routing_parameters {
-        field: "no_regex_needed"
-      }
+      routing_parameters { field: "no_regex_needed" }
       routing_parameters {
         field: "table_name"
         path_template: "{no_regex_needed=**}"
@@ -957,8 +966,8 @@ message Response {
 }
 
 message GenerateAccessTokenRequest {
-  // Required. The resource name of the service account for which the credentials
-  // are requested, in the following format:
+  // Required. The resource name of the service account for which the
+  // credentials are requested, in the following format:
   // `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
   // character is required; replacing it with a project ID is invalid.
   string name = 1 [
@@ -983,8 +992,9 @@ message GenerateAccessTokenRequest {
   // Deprecated field for testing method signatures.
   string not_used_anymore = 3 [deprecated = true];
 
-  // Required. Code to identify the scopes to be included in the OAuth 2.0 access token.
-  // See https://developers.google.com/identity/protocols/googlescopes for more
+  // Required. Code to identify the scopes to be included in the OAuth 2.0
+  // access token. See
+  // https://developers.google.com/identity/protocols/googlescopes for more
   // information.
   // At least one value required.
   repeated string scope = 4 [(google.api.field_behavior) = REQUIRED];
@@ -1006,8 +1016,8 @@ message GenerateAccessTokenResponse {
 }
 
 message GenerateIdTokenRequest {
-  // Required. The resource name of the service account for which the credentials
-  // are requested, in the following format:
+  // Required. The resource name of the service account for which the
+  // credentials are requested, in the following format:
   // `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
   // character is required; replacing it with a project ID is invalid.
   string name = 1 [
@@ -1029,8 +1039,8 @@ message GenerateIdTokenRequest {
   // character is required; replacing it with a project ID is invalid.
   repeated string delegates = 2;
 
-  // Required. The audience for the token, such as the API or account that this token
-  // grants access to.
+  // Required. The audience for the token, such as the API or account that this
+  // token grants access to.
   string audience = 3 [(google.api.field_behavior) = REQUIRED];
 
   // Include the service account email in the token. If set to `true`, the
@@ -1064,9 +1074,7 @@ message WriteLogEntriesRequest {
   // individual log entry. $Test delimiter.
   string log_name = 1 [
     (google.api.field_behavior) = OPTIONAL,
-    (google.api.resource_reference) = {
-      type: "logging.googleapis.com/Log"
-    }
+    (google.api.resource_reference) = { type: "logging.googleapis.com/Log" }
   ];
 
   // Optional. Default labels that are added to the `labels` field of all log
@@ -1196,27 +1204,31 @@ message LogEntry {
     google.protobuf.Struct json_payload = 6;
   }
 
-  // Optional. The time the event described by the log entry occurred. This time is used
-  // to compute the log entry's age and to enforce the logs retention period.
-  // If this field is omitted in a new log entry, then Logging assigns it the
-  // current time. Timestamps have nanosecond accuracy, but trailing zeros in
-  // the fractional seconds might be omitted when the timestamp is displayed.
+  // Optional. The time the event described by the log entry occurred. This time
+  // is used to compute the log entry's age and to enforce the logs retention
+  // period. If this field is omitted in a new log entry, then Logging assigns
+  // it the current time. Timestamps have nanosecond accuracy, but trailing
+  // zeros in the fractional seconds might be omitted when the timestamp is
+  // displayed.
   //
   // Incoming log entries must have timestamps that don't exceed the
   // [logs retention
   // period](https://cloud.google.com/logging/quotas#logs_retention_periods) in
   // the past, and that don't exceed 24 hours in the future. Log entries outside
   // those time boundaries aren't ingested by Logging.
-  google.protobuf.Timestamp timestamp = 9 [(google.api.field_behavior) = OPTIONAL];
+  google.protobuf.Timestamp timestamp = 9
+      [(google.api.field_behavior) = OPTIONAL];
 
   // Output only. The time the log entry was received by Logging.
-  google.protobuf.Timestamp receive_timestamp = 24 [(google.api.field_behavior) = OUTPUT_ONLY];
+  google.protobuf.Timestamp receive_timestamp = 24
+      [(google.api.field_behavior) = OUTPUT_ONLY];
 
-  // Optional. The severity of the log entry. The default value is `LogSeverity.DEFAULT`.
+  // Optional. The severity of the log entry. The default value is
+  // `LogSeverity.DEFAULT`.
   string severity = 10 [(google.api.field_behavior) = OPTIONAL];
 
-  // Optional. A unique identifier for the log entry. If you provide a value, then
-  // Logging considers other log entries in the same project, with the same
+  // Optional. A unique identifier for the log entry. If you provide a value,
+  // then Logging considers other log entries in the same project, with the same
   // `timestamp`, and with the same `insert_id` to be duplicates which are
   // removed in a single query result. However, there are no guarantees of
   // de-duplication in the export of logs.
@@ -1228,8 +1240,8 @@ message LogEntry {
   // the same `log_name` and `timestamp` values.
   string insert_id = 4 [(google.api.field_behavior) = OPTIONAL];
 
-  // Optional. Information about the HTTP request associated with this log entry, if
-  // applicable.
+  // Optional. Information about the HTTP request associated with this log
+  // entry, if applicable.
   string http_request = 7 [(google.api.field_behavior) = OPTIONAL];
 
   // Optional. A set of user-defined (key, value) data that provides additional
@@ -1240,8 +1252,9 @@ message LogEntry {
   // applicable.
   LogEntryOperation operation = 15 [(google.api.field_behavior) = OPTIONAL];
 
-  // Optional. Resource name of the trace associated with the log entry, if any. If it
-  // contains a relative resource name, the name is assumed to be relative to
+  // Optional. Resource name of the trace associated with the log entry, if any.
+  // If it contains a relative resource name, the name is assumed to be relative
+  // to
   // `//tracing.googleapis.com`. Example:
   // `projects/my-projectid/traces/06796866738c859f2f19b7cfb3214824`
   string trace = 22 [(google.api.field_behavior) = OPTIONAL];
@@ -1262,8 +1275,10 @@ message LogEntry {
   // request correlation identifier. The default is False.
   bool trace_sampled = 30 [(google.api.field_behavior) = OPTIONAL];
 
-  // Optional. Source code location information associated with the log entry, if any.
-  LogEntrySourceLocation source_location = 23 [(google.api.field_behavior) = OPTIONAL];
+  // Optional. Source code location information associated with the log entry,
+  // if any.
+  LogEntrySourceLocation source_location = 23
+      [(google.api.field_behavior) = OPTIONAL];
 }
 
 // Additional information about a potentially long-running operation with which
@@ -1327,9 +1342,7 @@ message ListServiceAccountKeysRequest {
   // Using `-` as a wildcard for the `PROJECT_ID`, will infer the project from
   // the account. The `ACCOUNT` value can be the `email` address or the
   // `unique_id` of the service account.
-  string name = 1 [
-    (google.api.field_behavior) = REQUIRED
-  ];
+  string name = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Filters the types of keys the user wants to include in the list
   // response. Duplicate key types are not allowed. If no key type
