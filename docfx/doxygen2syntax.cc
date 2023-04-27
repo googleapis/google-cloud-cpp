@@ -84,7 +84,6 @@ std::string LinkedTextType(pugi::xml_node const& node) {
 
 std::string HtmlEscape(std::string_view text) {
   std::string clean;
-  clean.reserve(text.size());
   for (auto c : text) {
     if (c == '<') {
       clean += "&lt;";
@@ -168,7 +167,7 @@ bool ParameterItemMatchesName(std::string_view parameter_name,
 std::string ParameterDescription(YamlContext const& /*ctx*/,
                                  pugi::xml_node const& node,
                                  std::string_view parameter_name) {
-  // The parameter descriptions, if present, is in a `<simplesect>` node that is
+  // The parameter description, if present, is in a `<simplesect>` node that is
   // part of the *function* description.
   auto selected = node.select_node(".//parameterlist[@kind='param']");
   if (!selected) return {};
@@ -190,7 +189,7 @@ std::string TemplateParameterDescription(YamlContext const& /*ctx*/,
   if (type.substr(0, prefix.size()) == prefix) {
     type = type.substr(prefix.size());
   }
-  // The parameter descriptions, if present, is in a `<simplesect>` node that is
+  // The parameter description, if present, is in a `<simplesect>` node that is
   // part of the *function* description.
   auto selected = node.select_node(".//parameterlist[@kind='templateparam']");
   if (!selected) return {};
@@ -378,8 +377,8 @@ void AppendFunctionSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
       }
       yaml << YAML::EndMap;
     }
-    // Generate the template parameters as normal parameters, there does not
-    // seem to be other ways to define them.
+    // Generate the template parameters as normal parameters, as there does not
+    // seem to be other way to document them.
     for (auto const& i : tparams) {
       auto type = std::string{i.child("type").child_value()};
       yaml << YAML::BeginMap  //
