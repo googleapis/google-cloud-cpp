@@ -22,6 +22,10 @@ add_library(
     v2/minimal/internal/common_v2_resources.h
     v2/minimal/internal/dataset.cc
     v2/minimal/internal/dataset.h
+    v2/minimal/internal/dataset_client.cc
+    v2/minimal/internal/dataset_client.h
+    v2/minimal/internal/dataset_connection.cc
+    v2/minimal/internal/dataset_connection.h
     v2/minimal/internal/dataset_idempotency_policy.cc
     v2/minimal/internal/dataset_idempotency_policy.h
     v2/minimal/internal/dataset_logging.cc
@@ -34,6 +38,8 @@ add_library(
     v2/minimal/internal/dataset_request.h
     v2/minimal/internal/dataset_response.cc
     v2/minimal/internal/dataset_response.h
+    v2/minimal/internal/dataset_rest_connection_impl.cc
+    v2/minimal/internal/dataset_rest_connection_impl.h
     v2/minimal/internal/dataset_rest_stub.cc
     v2/minimal/internal/dataset_rest_stub.h
     v2/minimal/internal/dataset_rest_stub_factory.cc
@@ -92,8 +98,9 @@ add_library(google-cloud-cpp::experimental-bigquery_rest ALIAS
 add_library(google_cloud_cpp_bigquery_rest_mocks INTERFACE)
 target_sources(
     google_cloud_cpp_bigquery_rest_mocks
-    INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/mocks/mock_job_connection.h
-)
+    INTERFACE
+        ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/mocks/mock_dataset_connection.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/mocks/mock_job_connection.h)
 target_link_libraries(
     google_cloud_cpp_bigquery_rest_mocks
     INTERFACE google-cloud-cpp::experimental-bigquery_rest GTest::gmock_main
@@ -153,6 +160,8 @@ function (bigquery_rest_define_tests)
         # cmake-format: sort
         v2/minimal/internal/bigquery_http_response_test.cc
         v2/minimal/internal/common_v2_resources_test.cc
+        v2/minimal/internal/dataset_client_test.cc
+        v2/minimal/internal/dataset_connection_test.cc
         v2/minimal/internal/dataset_idempotency_policy_test.cc
         v2/minimal/internal/dataset_logging_test.cc
         v2/minimal/internal/dataset_metadata_test.cc
