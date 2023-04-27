@@ -81,66 +81,6 @@ be preferable to retry the operation even though it is not idempotent.</para>
     </doxygen>
 )xml";
 
-auto constexpr kFunctionXml = R"xml(<?xml version="1.0" standalone="yes"?>
-    <doxygen version="1.9.1" xml:lang="en-US">
-      <memberdef kind="function" id="classgoogle_1_1cloud_1_1CompletionQueue_1a760d68ec606a03ab8cc80eea8bd965b3" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
-        <templateparamlist>
-          <param>
-            <type>typename Rep</type>
-          </param>
-          <param>
-            <type>typename Period</type>
-          </param>
-        </templateparamlist>
-        <type><ref refid="classgoogle_1_1cloud_1_1future" kindref="compound">future</ref>&lt; <ref refid="classgoogle_1_1cloud_1_1StatusOr" kindref="compound">StatusOr</ref>&lt; std::chrono::system_clock::time_point &gt; &gt;</type>
-        <definition>future&lt; StatusOr&lt; std::chrono::system_clock::time_point &gt; &gt; google::cloud::CompletionQueue::MakeRelativeTimer</definition>
-        <argsstring>(std::chrono::duration&lt; Rep, Period &gt; duration)</argsstring>
-        <name>MakeRelativeTimer</name>
-        <qualifiedname>google::cloud::CompletionQueue::MakeRelativeTimer</qualifiedname>
-        <param>
-          <type>std::chrono::duration&lt; Rep, Period &gt;</type>
-          <declname>duration</declname>
-        </param>
-        <briefdescription>
-<para>Create a timer that fires after the <computeroutput>duration</computeroutput>.</para>
-        </briefdescription>
-        <detaileddescription>
-<para>A longer description here.<parameterlist kind="templateparam"><parameteritem>
-<parameternamelist>
-<parametername>Rep</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>a placeholder to match the Rep tparam for <computeroutput>duration</computeroutput> type, the semantics of this template parameter are documented in <computeroutput>std::chrono::duration&lt;&gt;</computeroutput> (in brief, the underlying arithmetic type used to store the number of ticks), for our purposes it is simply a formal parameter. </para>
-</parameterdescription>
-</parameteritem>
-<parameteritem>
-<parameternamelist>
-<parametername>Period</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>a placeholder to match the Period tparam for <computeroutput>duration</computeroutput> type, the semantics of this template parameter are documented in <computeroutput>std::chrono::duration&lt;&gt;</computeroutput> (in brief, the length of the tick in seconds, expressed as a <computeroutput>std::ratio&lt;&gt;</computeroutput>), for our purposes it is simply a formal parameter.</para>
-</parameterdescription>
-</parameteritem>
-</parameterlist>
-<parameterlist kind="param"><parameteritem>
-<parameternamelist>
-<parametername>duration</parametername>
-</parameternamelist>
-<parameterdescription>
-<para>when should the timer expire relative to the current time.</para>
-</parameterdescription>
-</parameteritem>
-</parameterlist>
-<simplesect kind="return"><para>a future that becomes satisfied after <computeroutput>duration</computeroutput> time has elapsed. The result of the future is the time at which it expired, or an error <ref refid="classgoogle_1_1cloud_1_1Status" kindref="compound">Status</ref> if the timer did not run to expiration (e.g. it was cancelled). </para>
-</simplesect>
-</para>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="completion_queue.h" line="96" column="10" bodyfile="completion_queue.h" bodystart="96" bodyend="100"/>
-      </memberdef>
-    </doxygen>)xml";
-
 auto constexpr kStructXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
   <doxygen>
     <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="structgoogle_1_1cloud_1_1AccessTokenLifetimeOption" kind="struct" language="C++" prot="public">
@@ -836,13 +776,21 @@ items:
         google::cloud::CompletionQueue::MakeRelativeTimer (
             std::chrono::duration< Rep, Period > duration
           )
-      return:
-        var_type: |
-          future< StatusOr< std::chrono::system_clock::time_point > >
+      returns:
+        - var_type: "future&lt; StatusOr&lt; std::chrono::system_clock::time_point &gt; &gt;"
+          description: |
+            a future that becomes satisfied after `duration` time has elapsed. The result of the future is the time at which it expired, or an error [Status](xref:classgoogle_1_1cloud_1_1Status) if the timer did not run to expiration (e.g. it was cancelled).
       parameters:
         - id: duration
-          var_type: |
-            std::chrono::duration< Rep, Period >
+          var_type: "std::chrono::duration&lt; Rep, Period &gt;"
+          description: |
+            when should the timer expire relative to the current time.
+        - id: typename Rep
+          description: |
+            a placeholder to match the Rep tparam for `duration` type, the semantics of this template parameter are documented in `std::chrono::duration<>` (in brief, the underlying arithmetic type used to store the number of ticks), for our purposes it is simply a formal parameter.
+        - id: typename Period
+          description: |
+            a placeholder to match the Period tparam for `duration` type, the semantics of this template parameter are documented in `std::chrono::duration<>` (in brief, the length of the tick in seconds, expressed as a `std::ratio<>`), for our purposes it is simply a formal parameter.
       source:
         id: MakeRelativeTimer
         path: google/cloud/completion_queue.h
@@ -858,11 +806,9 @@ items:
 )yml";
 
   pugi::xml_document doc;
-  doc.load_string(kFunctionXml);
+  doc.load_string(docfx_testing::FunctionXml().c_str());
   auto selected = doc.select_node(
-      "//"
-      "*[@id='classgoogle_1_1cloud_1_1CompletionQueue_"
-      "1a760d68ec606a03ab8cc80eea8bd965b3']");
+      ("//*[@id='" + docfx_testing::FunctionXmlId() + "']").c_str());
   ASSERT_TRUE(selected);
   YAML::Emitter yaml;
   TestPre(yaml);
@@ -892,13 +838,11 @@ items:
         google::cloud::kms_inventory_v1::KeyDashboardServiceConnection::ListCryptoKeys (
             google::cloud::kms::inventory::v1::ListCryptoKeysRequest request
           )
-      return:
-        var_type: |
-          StreamRange< google::cloud::kms::v1::CryptoKey >
+      returns:
+        - var_type: "StreamRange&lt; google::cloud::kms::v1::CryptoKey &gt;"
       parameters:
         - id: request
-          var_type: |
-            google::cloud::kms::inventory::v1::ListCryptoKeysRequest
+          var_type: "google::cloud::kms::inventory::v1::ListCryptoKeysRequest"
       source:
         id: ListCryptoKeys
         path: google/cloud/inventory/v1/key_dashboard_connection.h
@@ -1062,8 +1006,7 @@ items:
           )
       parameters:
         - id: status
-          var_type: |
-            Status
+          var_type: "Status"
       source:
         id: RuntimeStatusError
         path: google/cloud/status.h
@@ -1085,9 +1028,8 @@ items:
       contents: |
         Status const &
         google::cloud::RuntimeStatusError::status ()
-      return:
-        var_type: |
-          Status const &
+      returns:
+        - var_type: "Status const &"
       source:
         id: status
         path: google/cloud/status.h

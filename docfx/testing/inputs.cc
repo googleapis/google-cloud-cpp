@@ -164,4 +164,71 @@ std::string MockedFunctionId() {
          "KeyDashboardServiceConnection_1a2518e5014c3adbc16e83281bd2a596a8";
 }
 
+std::string FunctionXml() {
+  return R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+      <memberdef kind="function" id="classgoogle_1_1cloud_1_1CompletionQueue_1a760d68ec606a03ab8cc80eea8bd965b3" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename Rep</type>
+          </param>
+          <param>
+            <type>typename Period</type>
+          </param>
+        </templateparamlist>
+        <type><ref refid="classgoogle_1_1cloud_1_1future" kindref="compound">future</ref>&lt; <ref refid="classgoogle_1_1cloud_1_1StatusOr" kindref="compound">StatusOr</ref>&lt; std::chrono::system_clock::time_point &gt; &gt;</type>
+        <definition>future&lt; StatusOr&lt; std::chrono::system_clock::time_point &gt; &gt; google::cloud::CompletionQueue::MakeRelativeTimer</definition>
+        <argsstring>(std::chrono::duration&lt; Rep, Period &gt; duration)</argsstring>
+        <name>MakeRelativeTimer</name>
+        <qualifiedname>google::cloud::CompletionQueue::MakeRelativeTimer</qualifiedname>
+        <param>
+          <type>std::chrono::duration&lt; Rep, Period &gt;</type>
+          <declname>duration</declname>
+        </param>
+        <briefdescription>
+<para>Create a timer that fires after the <computeroutput>duration</computeroutput>.</para>
+        </briefdescription>
+        <detaileddescription>
+<para>A longer description here.<parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>Rep</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>a placeholder to match the Rep tparam for <computeroutput>duration</computeroutput> type, the semantics of this template parameter are documented in <computeroutput>std::chrono::duration&lt;&gt;</computeroutput> (in brief, the underlying arithmetic type used to store the number of ticks), for our purposes it is simply a formal parameter.</para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>Period</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>a placeholder to match the Period tparam for <computeroutput>duration</computeroutput> type, the semantics of this template parameter are documented in <computeroutput>std::chrono::duration&lt;&gt;</computeroutput> (in brief, the length of the tick in seconds, expressed as a <computeroutput>std::ratio&lt;&gt;</computeroutput>), for our purposes it is simply a formal parameter.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>duration</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>when should the timer expire relative to the current time.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>a future that becomes satisfied after <computeroutput>duration</computeroutput> time has elapsed. The result of the future is the time at which it expired, or an error <ref refid="classgoogle_1_1cloud_1_1Status" kindref="compound">Status</ref> if the timer did not run to expiration (e.g. it was cancelled).</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="completion_queue.h" line="96" column="10" bodyfile="completion_queue.h" bodystart="96" bodyend="100"/>
+      </memberdef>
+    </doxygen>)xml";
+}
+
+std::string FunctionXmlId() {
+  return "classgoogle_1_1cloud_1_1CompletionQueue_"
+         "1a760d68ec606a03ab8cc80eea8bd965b3";
+}
+
 }  // namespace docfx_testing
