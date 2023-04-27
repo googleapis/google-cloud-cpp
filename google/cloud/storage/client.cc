@@ -17,10 +17,12 @@
 #include "google/cloud/storage/internal/curl_handle.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/internal/rest_client.h"
+#include "google/cloud/storage/internal/tracing_client.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/filesystem.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include <fstream>
 #include <thread>
@@ -48,6 +50,9 @@ std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
                               Contains(tracing_components, "rpc");
   if (enable_logging) {
     client = std::make_shared<internal::LoggingClient>(std::move(client));
+  }
+  if (google::cloud::internal::TracingEnabled(opts)) {
+    client = storage_internal::MakeTracingClient(std::move(client));
   }
   return internal::RetryClient::Create(std::move(client), opts);
 }
