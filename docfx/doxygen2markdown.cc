@@ -19,6 +19,20 @@
 #include <unordered_set>
 
 namespace docfx {
+namespace {
+
+std::string EscapeCodeLink(std::string link) {
+  // C++ names that are fully qualified often contain markdown emoji's (e.g.
+  // `:cloud:`). We need to escape them as "computer output", but only if they
+  // are not escaped already.
+  if (link.find("::") != std::string::npos &&
+      link.find('`') == std::string::npos) {
+    link = "`" + link + "`";
+  }
+  return link;
+}
+
+}  // namespace
 
 // A "sect4" node type is defined as (note the lack of sect5):
 //
@@ -236,12 +250,13 @@ bool AppendIfPlainText(std::ostream& os, MarkdownContext const& ctx,
 bool AppendIfULink(std::ostream& os, MarkdownContext const& ctx,
                    pugi::xml_node const& node) {
   if (std::string_view{node.name()} != "ulink") return false;
-  os << "[";
+  std::ostringstream link;
   for (auto const child : node) {
-    if (AppendIfDocTitleCmdGroup(os, ctx, child)) continue;
+    if (AppendIfDocTitleCmdGroup(link, ctx, child)) continue;
     UnknownChildType(__func__, child);
   }
-  os << "](" << node.attribute("url").as_string() << ")";
+  auto const ref = EscapeCodeLink(std::move(link).str());
+  os << "[" << ref << "](" << node.attribute("url").as_string() << ")";
   return true;
 }
 
@@ -327,14 +342,7 @@ bool AppendIfRef(std::ostream& os, MarkdownContext const& ctx,
     if (AppendIfDocTitleCmdGroup(link, ctx, child)) continue;
     UnknownChildType(__func__, child);
   }
-  // C++ names that are fully qualified often contain markdown emoji's (e.g.
-  // `:cloud:`). We need to escape them as "computer output", but only if they
-  // are not escaped already.
-  auto ref = link.str();
-  if (ref.find("::") != std::string::npos &&
-      ref.find('`') == std::string::npos) {
-    ref = "`" + ref + "`";
-  }
+  auto const ref = EscapeCodeLink(std::move(link).str());
 
   // DocFX YAML supports `xref:` as the syntax to cross link other documents
   // generated from the same DoxFX YAML source:
