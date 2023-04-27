@@ -2105,17 +2105,18 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   auto const snapshot_id = RandomSnapshotId(generator);
 
-  auto ignore_emulator_failures = [](auto lambda) {
-    using ::google::cloud::StatusCode;
-    try {
-      lambda();
-    } catch (google::cloud::Status const& s) {
-      if (UsingEmulator() && s.code() == StatusCode::kUnimplemented) return;
-      throw;
-    } catch (...) {
-      throw;
-    }
-  };
+  using ::google::cloud::StatusCode;
+  auto ignore_emulator_failures =
+      [](auto lambda, StatusCode code = StatusCode::kUnimplemented) {
+        try {
+          lambda();
+        } catch (google::cloud::Status const& s) {
+          if (UsingEmulator() && s.code() == code) return;
+          throw;
+        } catch (...) {
+          throw;
+        }
+      };
 
   google::cloud::pubsub::TopicAdminClient topic_admin_client(
       google::cloud::pubsub::MakeTopicAdminConnection());
@@ -2135,9 +2136,11 @@ void AutoRun(std::vector<std::string> const& argv) {
   GetTopic(topic_admin_client, {project_id, topic_id});
 
   std::cout << "\nRunning UpdateTopic() sample" << std::endl;
-  ignore_emulator_failures([&] {
-    UpdateTopic(topic_admin_client, {project_id, topic_id});
-  });
+  ignore_emulator_failures(
+      [&] {
+        UpdateTopic(topic_admin_client, {project_id, topic_id});
+      },
+      StatusCode::kInvalidArgument);
 
   std::cout << "\nRunning the StatusOr example" << std::endl;
   ExampleStatusOr(topic_admin_client, {project_id});
