@@ -122,7 +122,7 @@ function save_cache() {
   tmpd="$(mktemp -d)"
   local tmpf="${tmpd}/cache.tar.gz"
   tar -czf "${tmpf}" "${paths[@]}"
-  gcloud --quiet alpha storage cp "${tmpf}" "${PRIMARY_CACHE_URL}"
+  gcloud --quiet storage cp "${tmpf}" "${PRIMARY_CACHE_URL}"
   gsutil stat "${PRIMARY_CACHE_URL}"
   rm -fr "${tmpd}" || true
 }
@@ -138,7 +138,7 @@ function restore_cache() {
   for url in "${urls[@]}"; do
     if gsutil stat "${url}"; then
       io::log "Fetching cache url ${url}"
-      (gcloud --quiet alpha storage cp "${url}" "${tmpf}" && tar -zxf "${tmpf}") || continue
+      (gcloud --quiet storage cp "${url}" "${tmpf}" && tar -zxf "${tmpf}") || continue
       break
     fi
   done
