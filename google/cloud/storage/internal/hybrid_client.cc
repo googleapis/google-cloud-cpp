@@ -33,10 +33,10 @@ HybridClient::HybridClient(Options const& options)
           storage::internal::DefaultOptionsWithCredentials(options))) {}
 
 storage::ClientOptions const& HybridClient::client_options() const {
-  return rest_->client_options();
+  return grpc_->client_options();
 }
 
-Options HybridClient::options() const { return rest_->options(); }
+Options HybridClient::options() const { return grpc_->options(); }
 
 StatusOr<storage::internal::ListBucketsResponse> HybridClient::ListBuckets(
     storage::internal::ListBucketsRequest const& request) {

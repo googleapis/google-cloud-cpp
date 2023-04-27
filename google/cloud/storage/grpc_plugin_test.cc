@@ -118,6 +118,20 @@ TEST(GrpcPluginTest, MediaConfigCreatesHybrid) {
   ASSERT_THAT(hybrid, NotNull());
 }
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
+TEST(GrpcPluginTest, HybridUsesGrpcBufferOptions) {
+  // Explicitly disable logging, which may be enabled by our CI builds.
+  auto logging =
+      ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
+  auto config =
+      ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
+  auto client = DefaultGrpcClient(TestOptions().set<GrpcPluginOption>("media"));
+  EXPECT_GE(
+      client.raw_client()->options().get<storage::UploadBufferSizeOption>(),
+      32 * 1024 * 1024L);
+}
+#include "google/cloud/internal/diagnostics_pop.inc"
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
