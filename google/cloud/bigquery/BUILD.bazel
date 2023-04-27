@@ -25,7 +25,6 @@ service_dirs = [
     "migration/v2/",
     "reservation/v1/",
     "storage/v1/",
-    "v2/",
 ]
 
 src_dirs = service_dirs + [d + "internal/" for d in service_dirs]
