@@ -38,31 +38,39 @@ class LicensesRestStub {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteLicenses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const& request) = 0;
+      google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::License> GetLicenses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const& request) = 0;
+      google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const& request) = 0;
+      google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertLicenses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const& request) = 0;
+      google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::LicensesListResponse> ListLicenses(
+  virtual StatusOr<google::cloud::cpp::compute::v1::LicensesListResponse>
+  ListLicenses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const& request) = 0;
+      google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const& request) = 0;
+      google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::licenses::v1::
+                         TestIamPermissionsRequest const& request) = 0;
 };
 
 class DefaultLicensesRestStub : public LicensesRestStub {
@@ -70,37 +78,43 @@ class DefaultLicensesRestStub : public LicensesRestStub {
   ~DefaultLicensesRestStub() override = default;
 
   explicit DefaultLicensesRestStub(Options options);
-  DefaultLicensesRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+  DefaultLicensesRestStub(std::shared_ptr<rest_internal::RestClient> service,
+                          Options options);
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteLicenses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const& request) override;
+      google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::License> GetLicenses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const& request) override;
+      google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertLicenses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const& request) override;
+      google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::LicensesListResponse> ListLicenses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const& request) override;
+      google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::licenses::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

@@ -17,11 +17,11 @@
 // source: google/cloud/compute/projects/v1/projects.proto
 
 #include "google/cloud/compute/projects/v1/projects_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/projects/v1/internal/projects_option_defaults.h"
 #include "google/cloud/compute/projects/v1/internal/projects_tracing_connection.h"
 #include "google/cloud/compute/projects/v1/projects_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -42,7 +42,8 @@ ProjectsConnection::DisableXpnHost(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsConnection::DisableXpnResource(
-    google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const&) {
+    google::cloud::cpp::compute::projects::v1::
+        DisableXpnResourceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -53,8 +54,8 @@ ProjectsConnection::EnableXpnHost(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ProjectsConnection::EnableXpnResource(
-    google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&) {
+ProjectsConnection::EnableXpnResource(google::cloud::cpp::compute::projects::
+                                          v1::EnableXpnResourceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -76,8 +77,10 @@ ProjectsConnection::GetXpnResources(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Project> ProjectsConnection::ListXpnHosts(
-    google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::Project>
+ProjectsConnection::ListXpnHosts(
+    google::cloud::cpp::compute::projects::v1::
+        ListXpnHostsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Project>>();
 }
@@ -96,19 +99,22 @@ ProjectsConnection::MoveInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsConnection::SetCommonInstanceMetadata(
-    google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const&) {
+    google::cloud::cpp::compute::projects::v1::
+        SetCommonInstanceMetadataRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsConnection::SetDefaultNetworkTier(
-    google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const&) {
+    google::cloud::cpp::compute::projects::v1::
+        SetDefaultNetworkTierRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsConnection::SetUsageExportBucket(
-    google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const&) {
+    google::cloud::cpp::compute::projects::v1::
+        SetUsageExportBucketRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

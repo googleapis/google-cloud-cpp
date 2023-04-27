@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class PacketMirroringsClient {
  public:
-  explicit PacketMirroringsClient(ExperimentalTag, std::shared_ptr<PacketMirroringsConnection> connection, Options opts = {});
+  explicit PacketMirroringsClient(
+      ExperimentalTag, std::shared_ptr<PacketMirroringsConnection> connection,
+      Options opts = {});
   ~PacketMirroringsClient();
 
   ///@{
@@ -76,10 +78,12 @@ class PacketMirroringsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(PacketMirroringsClient const& a, PacketMirroringsClient const& b) {
+  friend bool operator==(PacketMirroringsClient const& a,
+                         PacketMirroringsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(PacketMirroringsClient const& a, PacketMirroringsClient const& b) {
+  friend bool operator!=(PacketMirroringsClient const& a,
+                         PacketMirroringsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -90,10 +94,13 @@ class PacketMirroringsClient {
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::PacketMirroringAggregatedList,google/cloud/compute/v1/internal/common.proto#L18107}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::PacketMirroringAggregatedList,google/cloud/compute/v1/internal/common.proto#L18107}
   ///
-  /// [google.cloud.cpp.compute.packetMirrorings.v1.AggregatedListPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L102}
-  /// [google.cloud.cpp.compute.v1.PacketMirroringAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18107}
+  /// [google.cloud.cpp.compute.packetMirrorings.v1.AggregatedListPacketMirroringsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L102}
+  /// [google.cloud.cpp.compute.v1.PacketMirroringAggregatedList]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18107}
   ///
   StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
   AggregatedListPacketMirrorings(std::string const& project, Options opts = {});
@@ -101,16 +108,23 @@ class PacketMirroringsClient {
   ///
   /// Retrieves an aggregated list of packetMirrorings.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::packetMirrorings::v1::AggregatedListPacketMirroringsRequest,google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L102}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::packetMirrorings::v1::AggregatedListPacketMirroringsRequest,google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L102}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::PacketMirroringAggregatedList,google/cloud/compute/v1/internal/common.proto#L18107}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::PacketMirroringAggregatedList,google/cloud/compute/v1/internal/common.proto#L18107}
   ///
-  /// [google.cloud.cpp.compute.packetMirrorings.v1.AggregatedListPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L102}
-  /// [google.cloud.cpp.compute.v1.PacketMirroringAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18107}
+  /// [google.cloud.cpp.compute.packetMirrorings.v1.AggregatedListPacketMirroringsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L102}
+  /// [google.cloud.cpp.compute.v1.PacketMirroringAggregatedList]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18107}
   ///
   StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
-  AggregatedListPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::AggregatedListPacketMirroringsRequest const& request, Options opts = {});
+  AggregatedListPacketMirrorings(
+      google::cloud::cpp::compute::packetMirrorings::v1::
+          AggregatedListPacketMirroringsRequest const& request,
+      Options opts = {});
 
   ///
   /// Deletes the specified PacketMirroring resource.
@@ -120,27 +134,37 @@ class PacketMirroringsClient {
   /// @param packet_mirroring  Name of the PacketMirroring resource to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.packetMirrorings.v1.DeletePacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L176}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.packetMirrorings.v1.DeletePacketMirroringsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L176}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeletePacketMirrorings(std::string const& project, std::string const& region, std::string const& packet_mirroring, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeletePacketMirrorings(
+      std::string const& project, std::string const& region,
+      std::string const& packet_mirroring, Options opts = {});
 
   ///
   /// Deletes the specified PacketMirroring resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::packetMirrorings::v1::DeletePacketMirroringsRequest,google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L176}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::packetMirrorings::v1::DeletePacketMirroringsRequest,google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L176}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.packetMirrorings.v1.DeletePacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L176}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.packetMirrorings.v1.DeletePacketMirroringsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L176}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeletePacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::DeletePacketMirroringsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeletePacketMirrorings(
+      google::cloud::cpp::compute::packetMirrorings::v1::
+          DeletePacketMirroringsRequest const& request,
+      Options opts = {});
 
   ///
   /// Returns the specified PacketMirroring resource.
@@ -150,27 +174,37 @@ class PacketMirroringsClient {
   /// @param packet_mirroring  Name of the PacketMirroring resource to return.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::PacketMirroring,google/cloud/compute/v1/internal/common.proto#L18043}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::PacketMirroring,google/cloud/compute/v1/internal/common.proto#L18043}
   ///
-  /// [google.cloud.cpp.compute.packetMirrorings.v1.GetPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L200}
-  /// [google.cloud.cpp.compute.v1.PacketMirroring]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18043}
+  /// [google.cloud.cpp.compute.packetMirrorings.v1.GetPacketMirroringsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L200}
+  /// [google.cloud.cpp.compute.v1.PacketMirroring]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18043}
   ///
   StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
-  GetPacketMirrorings(std::string const& project, std::string const& region, std::string const& packet_mirroring, Options opts = {});
+  GetPacketMirrorings(std::string const& project, std::string const& region,
+                      std::string const& packet_mirroring, Options opts = {});
 
   ///
   /// Returns the specified PacketMirroring resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::packetMirrorings::v1::GetPacketMirroringsRequest,google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L200}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::packetMirrorings::v1::GetPacketMirroringsRequest,google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L200}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::PacketMirroring,google/cloud/compute/v1/internal/common.proto#L18043}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::PacketMirroring,google/cloud/compute/v1/internal/common.proto#L18043}
   ///
-  /// [google.cloud.cpp.compute.packetMirrorings.v1.GetPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L200}
-  /// [google.cloud.cpp.compute.v1.PacketMirroring]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18043}
+  /// [google.cloud.cpp.compute.packetMirrorings.v1.GetPacketMirroringsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L200}
+  /// [google.cloud.cpp.compute.v1.PacketMirroring]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18043}
   ///
   StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
-  GetPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::GetPacketMirroringsRequest const& request, Options opts = {});
+  GetPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::
+                          GetPacketMirroringsRequest const& request,
+                      Options opts = {});
 
   ///
   /// Creates a PacketMirroring resource in the specified project and region
@@ -181,28 +215,40 @@ class PacketMirroringsClient {
   /// @param packet_mirroring_resource  The PacketMirroring for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.packetMirrorings.v1.InsertPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L212}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.packetMirrorings.v1.InsertPacketMirroringsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L212}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertPacketMirrorings(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::PacketMirroring const& packet_mirroring_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertPacketMirrorings(
+      std::string const& project, std::string const& region,
+      google::cloud::cpp::compute::v1::PacketMirroring const&
+          packet_mirroring_resource,
+      Options opts = {});
 
   ///
   /// Creates a PacketMirroring resource in the specified project and region
   /// using the data included in the request.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::packetMirrorings::v1::InsertPacketMirroringsRequest,google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L212}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::packetMirrorings::v1::InsertPacketMirroringsRequest,google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L212}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.packetMirrorings.v1.InsertPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L212}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.packetMirrorings.v1.InsertPacketMirroringsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L212}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::InsertPacketMirroringsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertPacketMirrorings(
+      google::cloud::cpp::compute::packetMirrorings::v1::
+          InsertPacketMirroringsRequest const& request,
+      Options opts = {});
 
   ///
   /// Retrieves a list of PacketMirroring resources available to the specified
@@ -212,33 +258,43 @@ class PacketMirroringsClient {
   /// @param region  Name of the region for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::PacketMirroring,google/cloud/compute/v1/internal/common.proto#L18043}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::PacketMirroring,google/cloud/compute/v1/internal/common.proto#L18043}
   ///
-  /// [google.cloud.cpp.compute.packetMirrorings.v1.ListPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L236}
-  /// [google.cloud.cpp.compute.v1.PacketMirroring]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18043}
+  /// [google.cloud.cpp.compute.packetMirrorings.v1.ListPacketMirroringsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L236}
+  /// [google.cloud.cpp.compute.v1.PacketMirroring]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18043}
   ///
   StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>
-  ListPacketMirrorings(std::string const& project, std::string const& region, Options opts = {});
+  ListPacketMirrorings(std::string const& project, std::string const& region,
+                       Options opts = {});
 
   ///
   /// Retrieves a list of PacketMirroring resources available to the specified
   /// project and region.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::packetMirrorings::v1::ListPacketMirroringsRequest,google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L236}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::packetMirrorings::v1::ListPacketMirroringsRequest,google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L236}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::PacketMirroring,google/cloud/compute/v1/internal/common.proto#L18043}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::PacketMirroring,google/cloud/compute/v1/internal/common.proto#L18043}
   ///
-  /// [google.cloud.cpp.compute.packetMirrorings.v1.ListPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L236}
-  /// [google.cloud.cpp.compute.v1.PacketMirroring]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18043}
+  /// [google.cloud.cpp.compute.packetMirrorings.v1.ListPacketMirroringsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L236}
+  /// [google.cloud.cpp.compute.v1.PacketMirroring]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18043}
   ///
   StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>
-  ListPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::ListPacketMirroringsRequest request, Options opts = {});
+  ListPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::
+                           ListPacketMirroringsRequest request,
+                       Options opts = {});
 
   ///
   /// Patches the specified PacketMirroring resource with the data included in
-  /// the request. This method supports PATCH semantics and uses JSON merge patch
-  /// format and processing rules.
+  /// the request. This method supports PATCH semantics and uses JSON merge
+  /// patch format and processing rules.
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
@@ -246,29 +302,42 @@ class PacketMirroringsClient {
   /// @param packet_mirroring_resource  The PacketMirroring for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.packetMirrorings.v1.PatchPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L304}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.packetMirrorings.v1.PatchPacketMirroringsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L304}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchPacketMirrorings(std::string const& project, std::string const& region, std::string const& packet_mirroring, google::cloud::cpp::compute::v1::PacketMirroring const& packet_mirroring_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchPacketMirrorings(
+      std::string const& project, std::string const& region,
+      std::string const& packet_mirroring,
+      google::cloud::cpp::compute::v1::PacketMirroring const&
+          packet_mirroring_resource,
+      Options opts = {});
 
   ///
   /// Patches the specified PacketMirroring resource with the data included in
-  /// the request. This method supports PATCH semantics and uses JSON merge patch
-  /// format and processing rules.
+  /// the request. This method supports PATCH semantics and uses JSON merge
+  /// patch format and processing rules.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::packetMirrorings::v1::PatchPacketMirroringsRequest,google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L304}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::packetMirrorings::v1::PatchPacketMirroringsRequest,google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L304}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.packetMirrorings.v1.PatchPacketMirroringsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L304}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.packetMirrorings.v1.PatchPacketMirroringsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L304}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::PatchPacketMirroringsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchPacketMirrorings(
+      google::cloud::cpp::compute::packetMirrorings::v1::
+          PatchPacketMirroringsRequest const& request,
+      Options opts = {});
 
   ///
   /// Returns permissions that a caller has on the specified resource.
@@ -276,30 +345,45 @@ class PacketMirroringsClient {
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
   /// @param resource  Name or id of the resource for this request.
-  /// @param test_permissions_request_resource  The TestPermissionsRequest for this request.
+  /// @param test_permissions_request_resource  The TestPermissionsRequest for
+  /// this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
   ///
-  /// [google.cloud.cpp.compute.packetMirrorings.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L331}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// [google.cloud.cpp.compute.packetMirrorings.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L331}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
+  TestIamPermissions(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
 
   ///
   /// Returns permissions that a caller has on the specified resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::packetMirrorings::v1::TestIamPermissionsRequest,google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L331}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::packetMirrorings::v1::TestIamPermissionsRequest,google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L331}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
   ///
-  /// [google.cloud.cpp.compute.packetMirrorings.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L331}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// [google.cloud.cpp.compute.packetMirrorings.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto#L331}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::packetMirrorings::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::packetMirrorings::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
  private:
   std::shared_ptr<PacketMirroringsConnection> connection_;

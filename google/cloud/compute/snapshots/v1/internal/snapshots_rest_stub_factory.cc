@@ -17,11 +17,10 @@
 // source: google/cloud/compute/snapshots/v1/snapshots.proto
 
 #include "google/cloud/compute/snapshots/v1/internal/snapshots_rest_stub_factory.h"
-#include "absl/strings/match.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/snapshots/v1/internal/snapshots_rest_logging_decorator.h"
 #include "google/cloud/compute/snapshots/v1/internal/snapshots_rest_metadata_decorator.h"
 #include "google/cloud/compute/snapshots/v1/internal/snapshots_rest_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/algorithm.h"
@@ -29,6 +28,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include "google/cloud/rest_options.h"
+#include "absl/strings/match.h"
 #include <memory>
 
 namespace google {
@@ -36,8 +36,8 @@ namespace cloud {
 namespace compute_snapshots_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<SnapshotsRestStub>
-CreateDefaultSnapshotsRestStub(Options const& options) {
+std::shared_ptr<SnapshotsRestStub> CreateDefaultSnapshotsRestStub(
+    Options const& options) {
   Options opts = options;
   if (!opts.has<UnifiedCredentialsOption>()) {
     opts.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
@@ -55,12 +55,10 @@ CreateDefaultSnapshotsRestStub(Options const& options) {
   std::shared_ptr<SnapshotsRestStub> stub =
       std::make_shared<DefaultSnapshotsRestStub>(std::move(opts));
   stub = std::make_shared<SnapshotsRestMetadata>(std::move(stub));
-  if (internal::Contains(
-      options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for REST rpc calls";
     stub = std::make_shared<SnapshotsRestLogging>(
-        std::move(stub),
-        options.get<RestTracingOptionsOption>(),
+        std::move(stub), options.get<RestTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
   }
   return stub;

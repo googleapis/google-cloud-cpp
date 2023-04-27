@@ -33,45 +33,62 @@ AddressesTracingConnection::AddressesTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
-AddressesTracingConnection::AggregatedListAddresses(google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest const& request) {
-  auto span = internal::MakeSpan("compute_addresses_v1::AddressesConnection::AggregatedListAddresses");
+AddressesTracingConnection::AggregatedListAddresses(
+    google::cloud::cpp::compute::addresses::v1::
+        AggregatedListAddressesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_addresses_v1::AddressesConnection::AggregatedListAddresses");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AggregatedListAddresses(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-AddressesTracingConnection::DeleteAddresses(google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const& request) {
-  auto span = internal::MakeSpan("compute_addresses_v1::AddressesConnection::DeleteAddresses");
+AddressesTracingConnection::DeleteAddresses(
+    google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_addresses_v1::AddressesConnection::DeleteAddresses");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteAddresses(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Address>
-AddressesTracingConnection::GetAddresses(google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const& request) {
-  auto span = internal::MakeSpan("compute_addresses_v1::AddressesConnection::GetAddresses");
+AddressesTracingConnection::GetAddresses(
+    google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_addresses_v1::AddressesConnection::GetAddresses");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetAddresses(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-AddressesTracingConnection::InsertAddresses(google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const& request) {
-  auto span = internal::MakeSpan("compute_addresses_v1::AddressesConnection::InsertAddresses");
+AddressesTracingConnection::InsertAddresses(
+    google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_addresses_v1::AddressesConnection::InsertAddresses");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->InsertAddresses(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Address>
-AddressesTracingConnection::ListAddresses(google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request) {
-  auto span = internal::MakeSpan("compute_addresses_v1::AddressesConnection::ListAddresses");
+AddressesTracingConnection::ListAddresses(
+    google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_addresses_v1::AddressesConnection::ListAddresses");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListAddresses(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::Address>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::Address>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-AddressesTracingConnection::SetLabels(google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request) {
-  auto span = internal::MakeSpan("compute_addresses_v1::AddressesConnection::SetLabels");
+AddressesTracingConnection::SetLabels(
+    google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_addresses_v1::AddressesConnection::SetLabels");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetLabels(request));
 }

@@ -17,8 +17,8 @@
 // source: google/cloud/compute/subnetworks/v1/subnetworks.proto
 
 #include "google/cloud/compute/subnetworks/v1/internal/subnetworks_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/subnetworks/v1/internal/subnetworks_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -34,104 +34,131 @@ SubnetworksRestConnectionImpl::SubnetworksRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<compute_subnetworks_v1_internal::SubnetworksRestStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        SubnetworksConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      SubnetworksConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::SubnetworkAggregatedList>
-SubnetworksRestConnectionImpl::AggregatedListSubnetworks(google::cloud::cpp::compute::subnetworks::v1::AggregatedListSubnetworksRequest const& request) {
+SubnetworksRestConnectionImpl::AggregatedListSubnetworks(
+    google::cloud::cpp::compute::subnetworks::v1::
+        AggregatedListSubnetworksRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AggregatedListSubnetworks(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::subnetworks::v1::AggregatedListSubnetworksRequest const& request) {
+             google::cloud::cpp::compute::subnetworks::v1::
+                 AggregatedListSubnetworksRequest const& request) {
         return stub_->AggregatedListSubnetworks(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SubnetworksRestConnectionImpl::DeleteSubnetworks(google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworksRequest const& request) {
+SubnetworksRestConnectionImpl::DeleteSubnetworks(
+    google::cloud::cpp::compute::subnetworks::v1::
+        DeleteSubnetworksRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteSubnetworks(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworksRequest const& request) {
+             google::cloud::cpp::compute::subnetworks::v1::
+                 DeleteSubnetworksRequest const& request) {
         return stub_->DeleteSubnetworks(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SubnetworksRestConnectionImpl::ExpandIpCidrRange(google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const& request) {
+SubnetworksRestConnectionImpl::ExpandIpCidrRange(
+    google::cloud::cpp::compute::subnetworks::v1::
+        ExpandIpCidrRangeRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->ExpandIpCidrRange(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const& request) {
+             google::cloud::cpp::compute::subnetworks::v1::
+                 ExpandIpCidrRangeRequest const& request) {
         return stub_->ExpandIpCidrRange(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Subnetwork>
-SubnetworksRestConnectionImpl::GetSubnetworks(google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const& request) {
+SubnetworksRestConnectionImpl::GetSubnetworks(
+    google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetSubnetworks(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const& request) {
+             google::cloud::cpp::compute::subnetworks::v1::
+                 GetSubnetworksRequest const& request) {
         return stub_->GetSubnetworks(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-SubnetworksRestConnectionImpl::GetIamPolicy(google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const& request) {
+SubnetworksRestConnectionImpl::GetIamPolicy(
+    google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::subnetworks::v1::
+                 GetIamPolicyRequest const& request) {
         return stub_->GetIamPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SubnetworksRestConnectionImpl::InsertSubnetworks(google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworksRequest const& request) {
+SubnetworksRestConnectionImpl::InsertSubnetworks(
+    google::cloud::cpp::compute::subnetworks::v1::
+        InsertSubnetworksRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->InsertSubnetworks(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworksRequest const& request) {
+             google::cloud::cpp::compute::subnetworks::v1::
+                 InsertSubnetworksRequest const& request) {
         return stub_->InsertSubnetworks(rest_context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Subnetwork>
-SubnetworksRestConnectionImpl::ListSubnetworks(google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest request) {
+SubnetworksRestConnectionImpl::ListSubnetworks(
+    google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest
+        request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_subnetworks_v1::SubnetworksRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<compute_subnetworks_v1::SubnetworksRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListSubnetworks(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::Subnetwork>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::Subnetwork>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::subnetworks::v1::
+                          ListSubnetworksRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::subnetworks::v1::
+                       ListSubnetworksRequest const& request) {
               return stub->ListSubnetworks(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::SubnetworkList r) {
-        std::vector<google::cloud::cpp::compute::v1::Subnetwork> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::Subnetwork> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -139,26 +166,34 @@ SubnetworksRestConnectionImpl::ListSubnetworks(google::cloud::cpp::compute::subn
 }
 
 StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork>
-SubnetworksRestConnectionImpl::ListUsable(google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request) {
+SubnetworksRestConnectionImpl::ListUsable(
+    google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_subnetworks_v1::SubnetworksRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<compute_subnetworks_v1::SubnetworksRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListUsable(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest const& r) {
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest const&
+              r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::subnetworks::v1::
+                       ListUsableRequest const& request) {
               return stub->ListUsable(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::UsableSubnetworksAggregatedList r) {
-        std::vector<google::cloud::cpp::compute::v1::UsableSubnetwork> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::UsableSubnetwork> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -166,48 +201,60 @@ SubnetworksRestConnectionImpl::ListUsable(google::cloud::cpp::compute::subnetwor
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SubnetworksRestConnectionImpl::PatchSubnetworks(google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworksRequest const& request) {
+SubnetworksRestConnectionImpl::PatchSubnetworks(
+    google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworksRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->PatchSubnetworks(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworksRequest const& request) {
+             google::cloud::cpp::compute::subnetworks::v1::
+                 PatchSubnetworksRequest const& request) {
         return stub_->PatchSubnetworks(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-SubnetworksRestConnectionImpl::SetIamPolicy(google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const& request) {
+SubnetworksRestConnectionImpl::SetIamPolicy(
+    google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::subnetworks::v1::
+                 SetIamPolicyRequest const& request) {
         return stub_->SetIamPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SubnetworksRestConnectionImpl::SetPrivateIpGoogleAccess(google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const& request) {
+SubnetworksRestConnectionImpl::SetPrivateIpGoogleAccess(
+    google::cloud::cpp::compute::subnetworks::v1::
+        SetPrivateIpGoogleAccessRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetPrivateIpGoogleAccess(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const& request) {
+             google::cloud::cpp::compute::subnetworks::v1::
+                 SetPrivateIpGoogleAccessRequest const& request) {
         return stub_->SetPrivateIpGoogleAccess(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-SubnetworksRestConnectionImpl::TestIamPermissions(google::cloud::cpp::compute::subnetworks::v1::TestIamPermissionsRequest const& request) {
+SubnetworksRestConnectionImpl::TestIamPermissions(
+    google::cloud::cpp::compute::subnetworks::v1::
+        TestIamPermissionsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->TestIamPermissions(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::subnetworks::v1::TestIamPermissionsRequest const& request) {
+             google::cloud::cpp::compute::subnetworks::v1::
+                 TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(rest_context, request);
       },
       request, __func__);

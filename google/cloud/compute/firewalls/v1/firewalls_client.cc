@@ -24,15 +24,17 @@ namespace cloud {
 namespace compute_firewalls_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-FirewallsClient::FirewallsClient(ExperimentalTag,
-    std::shared_ptr<FirewallsConnection> connection, Options opts)
+FirewallsClient::FirewallsClient(
+    ExperimentalTag, std::shared_ptr<FirewallsConnection> connection,
+    Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 FirewallsClient::~FirewallsClient() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-FirewallsClient::DeleteFirewalls(std::string const& project, std::string const& firewall, Options opts) {
+FirewallsClient::DeleteFirewalls(std::string const& project,
+                                 std::string const& firewall, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest request;
   request.set_project(project);
@@ -41,13 +43,17 @@ FirewallsClient::DeleteFirewalls(std::string const& project, std::string const& 
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-FirewallsClient::DeleteFirewalls(google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const& request, Options opts) {
+FirewallsClient::DeleteFirewalls(
+    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFirewalls(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Firewall>
-FirewallsClient::GetFirewalls(std::string const& project, std::string const& firewall, Options opts) {
+FirewallsClient::GetFirewalls(std::string const& project,
+                              std::string const& firewall, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest request;
   request.set_project(project);
@@ -56,13 +62,19 @@ FirewallsClient::GetFirewalls(std::string const& project, std::string const& fir
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Firewall>
-FirewallsClient::GetFirewalls(google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const& request, Options opts) {
+FirewallsClient::GetFirewalls(
+    google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetFirewalls(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-FirewallsClient::InsertFirewalls(std::string const& project, google::cloud::cpp::compute::v1::Firewall const& firewall_resource, Options opts) {
+FirewallsClient::InsertFirewalls(
+    std::string const& project,
+    google::cloud::cpp::compute::v1::Firewall const& firewall_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest request;
   request.set_project(project);
@@ -71,7 +83,10 @@ FirewallsClient::InsertFirewalls(std::string const& project, google::cloud::cpp:
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-FirewallsClient::InsertFirewalls(google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const& request, Options opts) {
+FirewallsClient::InsertFirewalls(
+    google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertFirewalls(request);
 }
@@ -85,13 +100,18 @@ FirewallsClient::ListFirewalls(std::string const& project, Options opts) {
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Firewall>
-FirewallsClient::ListFirewalls(google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest request, Options opts) {
+FirewallsClient::ListFirewalls(
+    google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListFirewalls(std::move(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-FirewallsClient::PatchFirewalls(std::string const& project, std::string const& firewall, google::cloud::cpp::compute::v1::Firewall const& firewall_resource, Options opts) {
+FirewallsClient::PatchFirewalls(
+    std::string const& project, std::string const& firewall,
+    google::cloud::cpp::compute::v1::Firewall const& firewall_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest request;
   request.set_project(project);
@@ -101,13 +121,19 @@ FirewallsClient::PatchFirewalls(std::string const& project, std::string const& f
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-FirewallsClient::PatchFirewalls(google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const& request, Options opts) {
+FirewallsClient::PatchFirewalls(
+    google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchFirewalls(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-FirewallsClient::UpdateFirewalls(std::string const& project, std::string const& firewall, google::cloud::cpp::compute::v1::Firewall const& firewall_resource, Options opts) {
+FirewallsClient::UpdateFirewalls(
+    std::string const& project, std::string const& firewall,
+    google::cloud::cpp::compute::v1::Firewall const& firewall_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest request;
   request.set_project(project);
@@ -117,7 +143,10 @@ FirewallsClient::UpdateFirewalls(std::string const& project, std::string const& 
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-FirewallsClient::UpdateFirewalls(google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const& request, Options opts) {
+FirewallsClient::UpdateFirewalls(
+    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFirewalls(request);
 }

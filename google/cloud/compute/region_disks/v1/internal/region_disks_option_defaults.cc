@@ -34,24 +34,28 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options RegionDisksDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_REGION_DISKS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_REGION_DISKS_AUTHORITY",
-      "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
+      std::move(options), "GOOGLE_CLOUD_CPP_REGION_DISKS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_REGION_DISKS_AUTHORITY", "compute.googleapis.com");
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<compute_region_disks_v1::RegionDisksRetryPolicyOption>()) {
     options.set<compute_region_disks_v1::RegionDisksRetryPolicyOption>(
         compute_region_disks_v1::RegionDisksLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<compute_region_disks_v1::RegionDisksBackoffPolicyOption>()) {
     options.set<compute_region_disks_v1::RegionDisksBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
-  if (!options.has<compute_region_disks_v1::RegionDisksConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_region_disks_v1::RegionDisksConnectionIdempotencyPolicyOption>(
-        compute_region_disks_v1::MakeDefaultRegionDisksConnectionIdempotencyPolicy());
+  if (!options.has<compute_region_disks_v1::
+                       RegionDisksConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        compute_region_disks_v1::RegionDisksConnectionIdempotencyPolicyOption>(
+        compute_region_disks_v1::
+            MakeDefaultRegionDisksConnectionIdempotencyPolicy());
   }
 
   return options;

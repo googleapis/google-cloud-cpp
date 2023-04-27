@@ -35,15 +35,14 @@ DefaultRegionInstancesRestStub::DefaultRegionInstancesRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultRegionInstancesRestStub::DefaultRegionInstancesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionInstancesRestStub::BulkInsert(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/instances/bulkInsert");

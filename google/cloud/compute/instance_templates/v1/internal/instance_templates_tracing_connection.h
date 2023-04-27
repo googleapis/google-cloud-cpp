@@ -36,36 +36,48 @@ class InstanceTemplatesTracingConnection
   ~InstanceTemplatesTracingConnection() override = default;
 
   explicit InstanceTemplatesTracingConnection(
-    std::shared_ptr<compute_instance_templates_v1::InstanceTemplatesConnection> child);
+      std::shared_ptr<
+          compute_instance_templates_v1::InstanceTemplatesConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
-  AggregatedListInstanceTemplates(google::cloud::cpp::compute::instanceTemplates::v1::AggregatedListInstanceTemplatesRequest const& request) override;
+  AggregatedListInstanceTemplates(
+      google::cloud::cpp::compute::instanceTemplates::v1::
+          AggregatedListInstanceTemplatesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteInstanceTemplates(google::cloud::cpp::compute::instanceTemplates::v1::DeleteInstanceTemplatesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceTemplates(
+      google::cloud::cpp::compute::instanceTemplates::v1::
+          DeleteInstanceTemplatesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-  GetInstanceTemplates(google::cloud::cpp::compute::instanceTemplates::v1::GetInstanceTemplatesRequest const& request) override;
+  GetInstanceTemplates(google::cloud::cpp::compute::instanceTemplates::v1::
+                           GetInstanceTemplatesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::instanceTemplates::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::instanceTemplates::v1::
+          GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertInstanceTemplates(google::cloud::cpp::compute::instanceTemplates::v1::InsertInstanceTemplatesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceTemplates(
+      google::cloud::cpp::compute::instanceTemplates::v1::
+          InsertInstanceTemplatesRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
-  ListInstanceTemplates(google::cloud::cpp::compute::instanceTemplates::v1::ListInstanceTemplatesRequest request) override;
+  ListInstanceTemplates(google::cloud::cpp::compute::instanceTemplates::v1::
+                            ListInstanceTemplatesRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::instanceTemplates::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::instanceTemplates::v1::
+          SetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::instanceTemplates::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::instanceTemplates::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
-  std::shared_ptr<compute_instance_templates_v1::InstanceTemplatesConnection> child_;
+  std::shared_ptr<compute_instance_templates_v1::InstanceTemplatesConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -78,7 +90,8 @@ class InstanceTemplatesTracingConnection
  */
 std::shared_ptr<compute_instance_templates_v1::InstanceTemplatesConnection>
 MakeInstanceTemplatesTracingConnection(
-    std::shared_ptr<compute_instance_templates_v1::InstanceTemplatesConnection> conn);
+    std::shared_ptr<compute_instance_templates_v1::InstanceTemplatesConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_instance_templates_v1_internal

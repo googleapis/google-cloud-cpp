@@ -35,40 +35,45 @@ DefaultVpnTunnelsRestStub::DefaultVpnTunnelsRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultVpnTunnelsRestStub::DefaultVpnTunnelsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::VpnTunnelAggregatedList>
 DefaultVpnTunnelsRestStub::AggregatedListVpnTunnels(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpnTunnels::v1::AggregatedListVpnTunnelsRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::VpnTunnelAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::vpnTunnels::v1::
+        AggregatedListVpnTunnelsRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::VpnTunnelAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/vpnTunnels",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultVpnTunnelsRestStub::DeleteVpnTunnels(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpnTunnels::v1::DeleteVpnTunnelsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::vpnTunnels::v1::DeleteVpnTunnelsRequest const&
+        request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/vpnTunnels/{vpn_tunnel}");
+      "/compute/v1/projects/{project}/regions/{region}/vpnTunnels/"
+      "{vpn_tunnel}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>
 DefaultVpnTunnelsRestStub::GetVpnTunnels(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpnTunnels::v1::GetVpnTunnelsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::vpnTunnels::v1::GetVpnTunnelsRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::VpnTunnel>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/vpnTunnels/{vpn_tunnel}",
@@ -79,8 +84,9 @@ DefaultVpnTunnelsRestStub::GetVpnTunnels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultVpnTunnelsRestStub::InsertVpnTunnels(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpnTunnels::v1::InsertVpnTunnelsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::vpnTunnels::v1::InsertVpnTunnelsRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/vpnTunnels");
@@ -88,8 +94,9 @@ DefaultVpnTunnelsRestStub::InsertVpnTunnels(
 
 StatusOr<google::cloud::cpp::compute::v1::VpnTunnelList>
 DefaultVpnTunnelsRestStub::ListVpnTunnels(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpnTunnels::v1::ListVpnTunnelsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::vpnTunnels::v1::ListVpnTunnelsRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::VpnTunnelList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/vpnTunnels",
@@ -99,16 +106,19 @@ DefaultVpnTunnelsRestStub::ListVpnTunnels(
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultVpnTunnelsRestStub::SetLabels(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpnTunnels::v1::SetLabelsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::vpnTunnels::v1::SetLabelsRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/vpnTunnels/{resource}/setLabels");
+      "/compute/v1/projects/{project}/regions/{region}/vpnTunnels/{resource}/"
+      "setLabels");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

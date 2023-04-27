@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_DISK_TYPES_V1_REGION_DISK_TYPES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_DISK_TYPES_V1_REGION_DISK_TYPES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_disk_types/v1/internal/region_disk_types_retry_traits.h"
 #include "google/cloud/compute/region_disk_types/v1/region_disk_types_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -35,11 +35,13 @@ namespace cloud {
 namespace compute_region_disk_types_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using RegionDiskTypesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_region_disk_types_v1_internal::RegionDiskTypesRetryTraits>;
+using RegionDiskTypesRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_region_disk_types_v1_internal::RegionDiskTypesRetryTraits>;
 
-using RegionDiskTypesLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_region_disk_types_v1_internal::RegionDiskTypesRetryTraits>;
+using RegionDiskTypesLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_region_disk_types_v1_internal::RegionDiskTypesRetryTraits>;
 
 using RegionDiskTypesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -55,7 +57,8 @@ using RegionDiskTypesLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeRegionDiskTypesConnection()`.
  *
- * For mocking, see `compute_region_disk_types_v1_mocks::MockRegionDiskTypesConnection`.
+ * For mocking, see
+ * `compute_region_disk_types_v1_mocks::MockRegionDiskTypesConnection`.
  */
 class RegionDiskTypesConnection {
  public:
@@ -64,10 +67,12 @@ class RegionDiskTypesConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::DiskType>
-  GetRegionDiskTypes(google::cloud::cpp::compute::regionDiskTypes::v1::GetRegionDiskTypesRequest const& request);
+  GetRegionDiskTypes(google::cloud::cpp::compute::regionDiskTypes::v1::
+                         GetRegionDiskTypesRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::DiskType>
-  ListRegionDiskTypes(google::cloud::cpp::compute::regionDiskTypes::v1::ListRegionDiskTypesRequest request);
+  ListRegionDiskTypes(google::cloud::cpp::compute::regionDiskTypes::v1::
+                          ListRegionDiskTypesRequest request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

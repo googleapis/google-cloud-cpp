@@ -36,27 +36,34 @@ class AddressesTracingConnection
   ~AddressesTracingConnection() override = default;
 
   explicit AddressesTracingConnection(
-    std::shared_ptr<compute_addresses_v1::AddressesConnection> child);
+      std::shared_ptr<compute_addresses_v1::AddressesConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
-  AggregatedListAddresses(google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest const& request) override;
+  AggregatedListAddresses(
+      google::cloud::cpp::compute::addresses::v1::
+          AggregatedListAddressesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteAddresses(google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAddresses(
+      google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Address>
-  GetAddresses(google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Address> GetAddresses(
+      google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertAddresses(google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAddresses(
+      google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&
+          request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Address>
-  ListAddresses(google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Address> ListAddresses(
+      google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
+          request) override;
 
  private:
   std::shared_ptr<compute_addresses_v1::AddressesConnection> child_;

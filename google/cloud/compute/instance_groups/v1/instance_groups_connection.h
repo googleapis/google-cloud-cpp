@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_GROUPS_V1_INSTANCE_GROUPS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_GROUPS_V1_INSTANCE_GROUPS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/instance_groups/v1/instance_groups_connection_idempotency_policy.h"
 #include "google/cloud/compute/instance_groups/v1/internal/instance_groups_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -35,11 +35,13 @@ namespace cloud {
 namespace compute_instance_groups_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using InstanceGroupsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_instance_groups_v1_internal::InstanceGroupsRetryTraits>;
+using InstanceGroupsRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_instance_groups_v1_internal::InstanceGroupsRetryTraits>;
 
-using InstanceGroupsLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_instance_groups_v1_internal::InstanceGroupsRetryTraits>;
+using InstanceGroupsLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_instance_groups_v1_internal::InstanceGroupsRetryTraits>;
 
 using InstanceGroupsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -55,7 +57,8 @@ using InstanceGroupsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeInstanceGroupsConnection()`.
  *
- * For mocking, see `compute_instance_groups_v1_mocks::MockInstanceGroupsConnection`.
+ * For mocking, see
+ * `compute_instance_groups_v1_mocks::MockInstanceGroupsConnection`.
  */
 class InstanceGroupsConnection {
  public:
@@ -63,32 +66,44 @@ class InstanceGroupsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddInstances(google::cloud::cpp::compute::instanceGroups::v1::AddInstancesRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddInstances(
+      google::cloud::cpp::compute::instanceGroups::v1::
+          AddInstancesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>
-  AggregatedListInstanceGroups(google::cloud::cpp::compute::instanceGroups::v1::AggregatedListInstanceGroupsRequest const& request);
+  AggregatedListInstanceGroups(
+      google::cloud::cpp::compute::instanceGroups::v1::
+          AggregatedListInstanceGroupsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteInstanceGroups(google::cloud::cpp::compute::instanceGroups::v1::DeleteInstanceGroupsRequest const& request);
+  DeleteInstanceGroups(google::cloud::cpp::compute::instanceGroups::v1::
+                           DeleteInstanceGroupsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
-  GetInstanceGroups(google::cloud::cpp::compute::instanceGroups::v1::GetInstanceGroupsRequest const& request);
+  GetInstanceGroups(google::cloud::cpp::compute::instanceGroups::v1::
+                        GetInstanceGroupsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertInstanceGroups(google::cloud::cpp::compute::instanceGroups::v1::InsertInstanceGroupsRequest const& request);
+  InsertInstanceGroups(google::cloud::cpp::compute::instanceGroups::v1::
+                           InsertInstanceGroupsRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
-  ListInstanceGroups(google::cloud::cpp::compute::instanceGroups::v1::ListInstanceGroupsRequest request);
+  ListInstanceGroups(
+      google::cloud::cpp::compute::instanceGroups::v1::ListInstanceGroupsRequest
+          request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>
-  ListInstances(google::cloud::cpp::compute::instanceGroups::v1::ListInstancesRequest request);
+  ListInstances(
+      google::cloud::cpp::compute::instanceGroups::v1::ListInstancesRequest
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  RemoveInstances(google::cloud::cpp::compute::instanceGroups::v1::RemoveInstancesRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveInstances(
+      google::cloud::cpp::compute::instanceGroups::v1::
+          RemoveInstancesRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetNamedPorts(google::cloud::cpp::compute::instanceGroups::v1::SetNamedPortsRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
+      google::cloud::cpp::compute::instanceGroups::v1::
+          SetNamedPortsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

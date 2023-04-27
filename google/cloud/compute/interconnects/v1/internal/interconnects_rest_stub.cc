@@ -35,15 +35,14 @@ DefaultInterconnectsRestStub::DefaultInterconnectsRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultInterconnectsRestStub::DefaultInterconnectsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInterconnectsRestStub::DeleteInterconnects(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::interconnects::v1::
+        DeleteInterconnectsRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/interconnects/{interconnect}");
@@ -51,8 +50,9 @@ DefaultInterconnectsRestStub::DeleteInterconnects(
 
 StatusOr<google::cloud::cpp::compute::v1::Interconnect>
 DefaultInterconnectsRestStub::GetInterconnects(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::interconnects::v1::GetInterconnectsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::interconnects::v1::
+        GetInterconnectsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Interconnect>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/interconnects/{interconnect}",
@@ -62,19 +62,23 @@ DefaultInterconnectsRestStub::GetInterconnects(
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
 DefaultInterconnectsRestStub::GetDiagnostics(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest const&
+        request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/interconnects/{interconnect}/getDiagnostics",
+      "/compute/v1/projects/{project}/global/interconnects/{interconnect}/"
+      "getDiagnostics",
       {std::make_pair("interconnect", request.interconnect()),
        std::make_pair("project", request.project())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInterconnectsRestStub::InsertInterconnects(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::interconnects::v1::InsertInterconnectsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::interconnects::v1::
+        InsertInterconnectsRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/interconnects");
@@ -82,8 +86,9 @@ DefaultInterconnectsRestStub::InsertInterconnects(
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectList>
 DefaultInterconnectsRestStub::ListInterconnects(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::interconnects::v1::
+        ListInterconnectsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::InterconnectList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/interconnects",
@@ -92,13 +97,15 @@ DefaultInterconnectsRestStub::ListInterconnects(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInterconnectsRestStub::PatchInterconnects(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::interconnects::v1::PatchInterconnectsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::interconnects::v1::
+        PatchInterconnectsRequest const& request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/interconnects/{interconnect}");
@@ -106,11 +113,13 @@ DefaultInterconnectsRestStub::PatchInterconnects(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInterconnectsRestStub::SetLabels(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/interconnects/{resource}/setLabels");
+      "/compute/v1/projects/{project}/global/interconnects/{resource}/"
+      "setLabels");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,11 +17,11 @@
 // source: google/cloud/compute/security_policies/v1/security_policies.proto
 
 #include "google/cloud/compute/security_policies/v1/security_policies_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/security_policies/v1/internal/security_policies_option_defaults.h"
 #include "google/cloud/compute/security_policies/v1/internal/security_policies_tracing_connection.h"
 #include "google/cloud/compute/security_policies/v1/security_policies_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -42,19 +42,22 @@ SecurityPoliciesConnection::AddRule(
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>
 SecurityPoliciesConnection::AggregatedListSecurityPolicies(
-    google::cloud::cpp::compute::securityPolicies::v1::AggregatedListSecurityPoliciesRequest const&) {
+    google::cloud::cpp::compute::securityPolicies::v1::
+        AggregatedListSecurityPoliciesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesConnection::DeleteSecurityPolicies(
-    google::cloud::cpp::compute::securityPolicies::v1::DeleteSecurityPoliciesRequest const&) {
+    google::cloud::cpp::compute::securityPolicies::v1::
+        DeleteSecurityPoliciesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
 SecurityPoliciesConnection::GetSecurityPolicies(
-    google::cloud::cpp::compute::securityPolicies::v1::GetSecurityPoliciesRequest const&) {
+    google::cloud::cpp::compute::securityPolicies::v1::
+        GetSecurityPoliciesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -66,43 +69,52 @@ SecurityPoliciesConnection::GetRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesConnection::InsertSecurityPolicies(
-    google::cloud::cpp::compute::securityPolicies::v1::InsertSecurityPoliciesRequest const&) {
+    google::cloud::cpp::compute::securityPolicies::v1::
+        InsertSecurityPoliciesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy> SecurityPoliciesConnection::ListSecurityPolicies(
-    google::cloud::cpp::compute::securityPolicies::v1::ListSecurityPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
+SecurityPoliciesConnection::ListSecurityPolicies(
+    google::cloud::cpp::compute::securityPolicies::v1::
+        ListSecurityPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>>();
 }
 
-StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesListPreconfiguredExpressionSetsResponse>
+StatusOr<google::cloud::cpp::compute::v1::
+             SecurityPoliciesListPreconfiguredExpressionSetsResponse>
 SecurityPoliciesConnection::ListPreconfiguredExpressionSets(
-    google::cloud::cpp::compute::securityPolicies::v1::ListPreconfiguredExpressionSetsRequest const&) {
+    google::cloud::cpp::compute::securityPolicies::v1::
+        ListPreconfiguredExpressionSetsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesConnection::PatchSecurityPolicies(
-    google::cloud::cpp::compute::securityPolicies::v1::PatchSecurityPoliciesRequest const&) {
+    google::cloud::cpp::compute::securityPolicies::v1::
+        PatchSecurityPoliciesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesConnection::PatchRule(
-    google::cloud::cpp::compute::securityPolicies::v1::PatchRuleRequest const&) {
+    google::cloud::cpp::compute::securityPolicies::v1::
+        PatchRuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesConnection::RemoveRule(
-    google::cloud::cpp::compute::securityPolicies::v1::RemoveRuleRequest const&) {
+    google::cloud::cpp::compute::securityPolicies::v1::
+        RemoveRuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesConnection::SetLabels(
-    google::cloud::cpp::compute::securityPolicies::v1::SetLabelsRequest const&) {
+    google::cloud::cpp::compute::securityPolicies::v1::
+        SetLabelsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

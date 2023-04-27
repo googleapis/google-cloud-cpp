@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/service_attachments/v1/service_attachments.proto
 
-
 #include "google/cloud/compute/service_attachments/v1/internal/service_attachments_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,12 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ServiceAttachmentsRestMetadata::ServiceAttachmentsRestMetadata(
     std::shared_ptr<ServiceAttachmentsRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>
 ServiceAttachmentsRestMetadata::AggregatedListServiceAttachments(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::serviceAttachments::v1::AggregatedListServiceAttachmentsRequest const& request) {
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        AggregatedListServiceAttachmentsRequest const& request) {
   SetMetadata(rest_context);
   return child_->AggregatedListServiceAttachments(rest_context, request);
 }
@@ -47,7 +48,8 @@ ServiceAttachmentsRestMetadata::AggregatedListServiceAttachments(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ServiceAttachmentsRestMetadata::DeleteServiceAttachments(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::serviceAttachments::v1::DeleteServiceAttachmentsRequest const& request) {
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        DeleteServiceAttachmentsRequest const& request) {
   SetMetadata(rest_context);
   return child_->DeleteServiceAttachments(rest_context, request);
 }
@@ -55,7 +57,8 @@ ServiceAttachmentsRestMetadata::DeleteServiceAttachments(
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
 ServiceAttachmentsRestMetadata::GetServiceAttachments(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::serviceAttachments::v1::GetServiceAttachmentsRequest const& request) {
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        GetServiceAttachmentsRequest const& request) {
   SetMetadata(rest_context);
   return child_->GetServiceAttachments(rest_context, request);
 }
@@ -63,7 +66,8 @@ ServiceAttachmentsRestMetadata::GetServiceAttachments(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ServiceAttachmentsRestMetadata::GetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::serviceAttachments::v1::GetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        GetIamPolicyRequest const& request) {
   SetMetadata(rest_context);
   return child_->GetIamPolicy(rest_context, request);
 }
@@ -71,7 +75,8 @@ ServiceAttachmentsRestMetadata::GetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ServiceAttachmentsRestMetadata::InsertServiceAttachments(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::serviceAttachments::v1::InsertServiceAttachmentsRequest const& request) {
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        InsertServiceAttachmentsRequest const& request) {
   SetMetadata(rest_context);
   return child_->InsertServiceAttachments(rest_context, request);
 }
@@ -79,7 +84,8 @@ ServiceAttachmentsRestMetadata::InsertServiceAttachments(
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentList>
 ServiceAttachmentsRestMetadata::ListServiceAttachments(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::serviceAttachments::v1::ListServiceAttachmentsRequest const& request) {
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        ListServiceAttachmentsRequest const& request) {
   SetMetadata(rest_context);
   return child_->ListServiceAttachments(rest_context, request);
 }
@@ -87,7 +93,8 @@ ServiceAttachmentsRestMetadata::ListServiceAttachments(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ServiceAttachmentsRestMetadata::PatchServiceAttachments(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::serviceAttachments::v1::PatchServiceAttachmentsRequest const& request) {
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        PatchServiceAttachmentsRequest const& request) {
   SetMetadata(rest_context);
   return child_->PatchServiceAttachments(rest_context, request);
 }
@@ -95,7 +102,8 @@ ServiceAttachmentsRestMetadata::PatchServiceAttachments(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ServiceAttachmentsRestMetadata::SetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::serviceAttachments::v1::SetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        SetIamPolicyRequest const& request) {
   SetMetadata(rest_context);
   return child_->SetIamPolicy(rest_context, request);
 }
@@ -103,33 +111,34 @@ ServiceAttachmentsRestMetadata::SetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 ServiceAttachmentsRestMetadata::TestIamPermissions(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::serviceAttachments::v1::TestIamPermissionsRequest const& request) {
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        TestIamPermissionsRequest const& request) {
   SetMetadata(rest_context);
   return child_->TestIamPermissions(rest_context, request);
 }
 
 void ServiceAttachmentsRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+    rest_internal::RestContext& rest_context,
+    std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

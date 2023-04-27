@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_VPN_GATEWAYS_V1_TARGET_VPN_GATEWAYS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_VPN_GATEWAYS_V1_TARGET_VPN_GATEWAYS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/target_vpn_gateways/v1/internal/target_vpn_gateways_retry_traits.h"
 #include "google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -35,11 +35,13 @@ namespace cloud {
 namespace compute_target_vpn_gateways_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using TargetVpnGatewaysRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_target_vpn_gateways_v1_internal::TargetVpnGatewaysRetryTraits>;
+using TargetVpnGatewaysRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_target_vpn_gateways_v1_internal::TargetVpnGatewaysRetryTraits>;
 
-using TargetVpnGatewaysLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_target_vpn_gateways_v1_internal::TargetVpnGatewaysRetryTraits>;
+using TargetVpnGatewaysLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_target_vpn_gateways_v1_internal::TargetVpnGatewaysRetryTraits>;
 
 using TargetVpnGatewaysLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -49,13 +51,14 @@ using TargetVpnGatewaysLimitedErrorCountRetryPolicy =
  * The `TargetVpnGatewaysConnection` object for `TargetVpnGatewaysClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `TargetVpnGatewaysClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `TargetVpnGatewaysClient`.
+ * sets in `TargetVpnGatewaysClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `TargetVpnGatewaysClient`.
  *
  * To create a concrete instance, see `MakeTargetVpnGatewaysConnection()`.
  *
- * For mocking, see `compute_target_vpn_gateways_v1_mocks::MockTargetVpnGatewaysConnection`.
+ * For mocking, see
+ * `compute_target_vpn_gateways_v1_mocks::MockTargetVpnGatewaysConnection`.
  */
 class TargetVpnGatewaysConnection {
  public:
@@ -63,23 +66,31 @@ class TargetVpnGatewaysConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>
-  AggregatedListTargetVpnGateways(google::cloud::cpp::compute::targetVpnGateways::v1::AggregatedListTargetVpnGatewaysRequest const& request);
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>
+  AggregatedListTargetVpnGateways(
+      google::cloud::cpp::compute::targetVpnGateways::v1::
+          AggregatedListTargetVpnGatewaysRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteTargetVpnGateways(google::cloud::cpp::compute::targetVpnGateways::v1::DeleteTargetVpnGatewaysRequest const& request);
+  DeleteTargetVpnGateways(google::cloud::cpp::compute::targetVpnGateways::v1::
+                              DeleteTargetVpnGatewaysRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
-  GetTargetVpnGateways(google::cloud::cpp::compute::targetVpnGateways::v1::GetTargetVpnGatewaysRequest const& request);
+  GetTargetVpnGateways(google::cloud::cpp::compute::targetVpnGateways::v1::
+                           GetTargetVpnGatewaysRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertTargetVpnGateways(google::cloud::cpp::compute::targetVpnGateways::v1::InsertTargetVpnGatewaysRequest const& request);
+  InsertTargetVpnGateways(google::cloud::cpp::compute::targetVpnGateways::v1::
+                              InsertTargetVpnGatewaysRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetVpnGateway>
-  ListTargetVpnGateways(google::cloud::cpp::compute::targetVpnGateways::v1::ListTargetVpnGatewaysRequest request);
+  ListTargetVpnGateways(google::cloud::cpp::compute::targetVpnGateways::v1::
+                            ListTargetVpnGatewaysRequest request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(google::cloud::cpp::compute::targetVpnGateways::v1::SetLabelsRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::cpp::compute::targetVpnGateways::v1::
+          SetLabelsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -27,19 +27,21 @@ namespace compute_target_pools_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TargetPoolsRestLogging::TargetPoolsRestLogging(
-    std::shared_ptr<TargetPoolsRestStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<TargetPoolsRestStub> child, TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestLogging::AddHealthCheck(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetPools::v1::AddHealthCheckRequest const& request) {
+    google::cloud::cpp::compute::targetPools::v1::AddHealthCheckRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetPools::v1::AddHealthCheckRequest const& request) {
+             google::cloud::cpp::compute::targetPools::v1::
+                 AddHealthCheckRequest const& request) {
         return child_->AddHealthCheck(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,10 +50,12 @@ TargetPoolsRestLogging::AddHealthCheck(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestLogging::AddInstance(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetPools::v1::AddInstanceRequest const& request) {
+    google::cloud::cpp::compute::targetPools::v1::AddInstanceRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetPools::v1::AddInstanceRequest const& request) {
+             google::cloud::cpp::compute::targetPools::v1::
+                 AddInstanceRequest const& request) {
         return child_->AddInstance(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -60,10 +64,12 @@ TargetPoolsRestLogging::AddInstance(
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolAggregatedList>
 TargetPoolsRestLogging::AggregatedListTargetPools(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetPools::v1::AggregatedListTargetPoolsRequest const& request) {
+    google::cloud::cpp::compute::targetPools::v1::
+        AggregatedListTargetPoolsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetPools::v1::AggregatedListTargetPoolsRequest const& request) {
+             google::cloud::cpp::compute::targetPools::v1::
+                 AggregatedListTargetPoolsRequest const& request) {
         return child_->AggregatedListTargetPools(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -72,10 +78,12 @@ TargetPoolsRestLogging::AggregatedListTargetPools(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestLogging::DeleteTargetPools(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetPools::v1::DeleteTargetPoolsRequest const& request) {
+    google::cloud::cpp::compute::targetPools::v1::
+        DeleteTargetPoolsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetPools::v1::DeleteTargetPoolsRequest const& request) {
+             google::cloud::cpp::compute::targetPools::v1::
+                 DeleteTargetPoolsRequest const& request) {
         return child_->DeleteTargetPools(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -84,10 +92,12 @@ TargetPoolsRestLogging::DeleteTargetPools(
 StatusOr<google::cloud::cpp::compute::v1::TargetPool>
 TargetPoolsRestLogging::GetTargetPools(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetPools::v1::GetTargetPoolsRequest const& request) {
+    google::cloud::cpp::compute::targetPools::v1::GetTargetPoolsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetPools::v1::GetTargetPoolsRequest const& request) {
+             google::cloud::cpp::compute::targetPools::v1::
+                 GetTargetPoolsRequest const& request) {
         return child_->GetTargetPools(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -96,22 +106,25 @@ TargetPoolsRestLogging::GetTargetPools(
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>
 TargetPoolsRestLogging::GetHealth(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetPools::v1::GetHealthRequest const& request) {
+    google::cloud::cpp::compute::targetPools::v1::GetHealthRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetPools::v1::GetHealthRequest const& request) {
-        return child_->GetHealth(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::targetPools::v1::GetHealthRequest const&
+              request) { return child_->GetHealth(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestLogging::InsertTargetPools(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetPools::v1::InsertTargetPoolsRequest const& request) {
+    google::cloud::cpp::compute::targetPools::v1::
+        InsertTargetPoolsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetPools::v1::InsertTargetPoolsRequest const& request) {
+             google::cloud::cpp::compute::targetPools::v1::
+                 InsertTargetPoolsRequest const& request) {
         return child_->InsertTargetPools(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -120,10 +133,12 @@ TargetPoolsRestLogging::InsertTargetPools(
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolList>
 TargetPoolsRestLogging::ListTargetPools(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetPools::v1::ListTargetPoolsRequest const& request) {
+    google::cloud::cpp::compute::targetPools::v1::ListTargetPoolsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetPools::v1::ListTargetPoolsRequest const& request) {
+             google::cloud::cpp::compute::targetPools::v1::
+                 ListTargetPoolsRequest const& request) {
         return child_->ListTargetPools(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -132,10 +147,12 @@ TargetPoolsRestLogging::ListTargetPools(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestLogging::RemoveHealthCheck(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetPools::v1::RemoveHealthCheckRequest const& request) {
+    google::cloud::cpp::compute::targetPools::v1::
+        RemoveHealthCheckRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetPools::v1::RemoveHealthCheckRequest const& request) {
+             google::cloud::cpp::compute::targetPools::v1::
+                 RemoveHealthCheckRequest const& request) {
         return child_->RemoveHealthCheck(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -144,10 +161,12 @@ TargetPoolsRestLogging::RemoveHealthCheck(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestLogging::RemoveInstance(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetPools::v1::RemoveInstanceRequest const& request) {
+    google::cloud::cpp::compute::targetPools::v1::RemoveInstanceRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetPools::v1::RemoveInstanceRequest const& request) {
+             google::cloud::cpp::compute::targetPools::v1::
+                 RemoveInstanceRequest const& request) {
         return child_->RemoveInstance(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -156,12 +175,13 @@ TargetPoolsRestLogging::RemoveInstance(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestLogging::SetBackup(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetPools::v1::SetBackupRequest const& request) {
+    google::cloud::cpp::compute::targetPools::v1::SetBackupRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetPools::v1::SetBackupRequest const& request) {
-        return child_->SetBackup(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::targetPools::v1::SetBackupRequest const&
+              request) { return child_->SetBackup(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 

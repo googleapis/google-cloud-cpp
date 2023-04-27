@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSES_V1_INTERNAL_LICENSES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSES_V1_INTERNAL_LICENSES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/licenses/v1/internal/licenses_rest_stub.h"
 #include "google/cloud/compute/licenses/v1/internal/licenses_retry_traits.h"
 #include "google/cloud/compute/licenses/v1/licenses_connection.h"
 #include "google/cloud/compute/licenses/v1/licenses_connection_idempotency_policy.h"
 #include "google/cloud/compute/licenses/v1/licenses_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,57 +43,73 @@ class LicensesRestConnectionImpl
   ~LicensesRestConnectionImpl() override = default;
 
   LicensesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_licenses_v1_internal::LicensesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<compute_licenses_v1_internal::LicensesRestStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteLicenses(google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteLicenses(
+      google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::License>
-  GetLicenses(google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::License> GetLicenses(
+      google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertLicenses(google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertLicenses(
+      google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+          request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::License>
-  ListLicenses(google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::License> ListLicenses(
+      google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::licenses::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   std::unique_ptr<compute_licenses_v1::LicensesRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<compute_licenses_v1::LicensesRetryPolicyOption>()) {
-      return options.get<compute_licenses_v1::LicensesRetryPolicyOption>()->clone();
+      return options.get<compute_licenses_v1::LicensesRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_licenses_v1::LicensesRetryPolicyOption>()->clone();
+    return options_.get<compute_licenses_v1::LicensesRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<compute_licenses_v1::LicensesBackoffPolicyOption>()) {
-      return options.get<compute_licenses_v1::LicensesBackoffPolicyOption>()->clone();
+      return options.get<compute_licenses_v1::LicensesBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_licenses_v1::LicensesBackoffPolicyOption>()->clone();
+    return options_.get<compute_licenses_v1::LicensesBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_licenses_v1::LicensesConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<compute_licenses_v1::LicensesConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_licenses_v1::LicensesConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_licenses_v1::LicensesConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<
+            compute_licenses_v1::LicensesConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_licenses_v1::LicensesConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_licenses_v1::LicensesConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_licenses_v1::LicensesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

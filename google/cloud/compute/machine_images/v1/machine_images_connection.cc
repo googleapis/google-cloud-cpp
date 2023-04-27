@@ -17,11 +17,11 @@
 // source: google/cloud/compute/machine_images/v1/machine_images.proto
 
 #include "google/cloud/compute/machine_images/v1/machine_images_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/machine_images/v1/internal/machine_images_option_defaults.h"
 #include "google/cloud/compute/machine_images/v1/internal/machine_images_tracing_connection.h"
 #include "google/cloud/compute/machine_images/v1/machine_images_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,43 +36,51 @@ MachineImagesConnection::~MachineImagesConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 MachineImagesConnection::DeleteMachineImages(
-    google::cloud::cpp::compute::machineImages::v1::DeleteMachineImagesRequest const&) {
+    google::cloud::cpp::compute::machineImages::v1::
+        DeleteMachineImagesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineImage>
 MachineImagesConnection::GetMachineImages(
-    google::cloud::cpp::compute::machineImages::v1::GetMachineImagesRequest const&) {
+    google::cloud::cpp::compute::machineImages::v1::
+        GetMachineImagesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 MachineImagesConnection::GetIamPolicy(
-    google::cloud::cpp::compute::machineImages::v1::GetIamPolicyRequest const&) {
+    google::cloud::cpp::compute::machineImages::v1::
+        GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 MachineImagesConnection::InsertMachineImages(
-    google::cloud::cpp::compute::machineImages::v1::InsertMachineImagesRequest const&) {
+    google::cloud::cpp::compute::machineImages::v1::
+        InsertMachineImagesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::MachineImage> MachineImagesConnection::ListMachineImages(
-    google::cloud::cpp::compute::machineImages::v1::ListMachineImagesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::MachineImage>
+MachineImagesConnection::ListMachineImages(
+    google::cloud::cpp::compute::machineImages::v1::
+        ListMachineImagesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::MachineImage>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 MachineImagesConnection::SetIamPolicy(
-    google::cloud::cpp::compute::machineImages::v1::SetIamPolicyRequest const&) {
+    google::cloud::cpp::compute::machineImages::v1::
+        SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 MachineImagesConnection::TestIamPermissions(
-    google::cloud::cpp::compute::machineImages::v1::TestIamPermissionsRequest const&) {
+    google::cloud::cpp::compute::machineImages::v1::
+        TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

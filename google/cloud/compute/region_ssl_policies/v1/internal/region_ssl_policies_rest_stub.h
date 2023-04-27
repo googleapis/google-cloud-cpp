@@ -36,29 +36,39 @@ class RegionSslPoliciesRestStub {
  public:
   virtual ~RegionSslPoliciesRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRegionSslPolicies(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteRegionSslPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionSslPolicies::v1::DeleteRegionSslPoliciesRequest const& request) = 0;
+      google::cloud::cpp::compute::regionSslPolicies::v1::
+          DeleteRegionSslPoliciesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetRegionSslPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionSslPolicies::v1::GetRegionSslPoliciesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
+  GetRegionSslPolicies(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::regionSslPolicies::v1::
+                           GetRegionSslPoliciesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionSslPolicies(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertRegionSslPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionSslPolicies::v1::InsertRegionSslPoliciesRequest const& request) = 0;
+      google::cloud::cpp::compute::regionSslPolicies::v1::
+          InsertRegionSslPoliciesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::SslPoliciesList> ListRegionSslPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionSslPolicies::v1::ListRegionSslPoliciesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::SslPoliciesList>
+  ListRegionSslPolicies(google::cloud::rest_internal::RestContext& rest_context,
+                        google::cloud::cpp::compute::regionSslPolicies::v1::
+                            ListRegionSslPoliciesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse> ListAvailableFeatures(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionSslPolicies::v1::ListAvailableFeaturesRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+  ListAvailableFeatures(google::cloud::rest_internal::RestContext& rest_context,
+                        google::cloud::cpp::compute::regionSslPolicies::v1::
+                            ListAvailableFeaturesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRegionSslPolicies(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchRegionSslPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionSslPolicies::v1::PatchRegionSslPoliciesRequest const& request) = 0;
+      google::cloud::cpp::compute::regionSslPolicies::v1::
+          PatchRegionSslPoliciesRequest const& request) = 0;
 };
 
 class DefaultRegionSslPoliciesRestStub : public RegionSslPoliciesRestStub {
@@ -67,32 +77,40 @@ class DefaultRegionSslPoliciesRestStub : public RegionSslPoliciesRestStub {
 
   explicit DefaultRegionSslPoliciesRestStub(Options options);
   DefaultRegionSslPoliciesRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRegionSslPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionSslPolicies::v1::DeleteRegionSslPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::regionSslPolicies::v1::
+          DeleteRegionSslPoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetRegionSslPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionSslPolicies::v1::GetRegionSslPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::regionSslPolicies::v1::
+          GetRegionSslPoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionSslPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionSslPolicies::v1::InsertRegionSslPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::regionSslPolicies::v1::
+          InsertRegionSslPoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SslPoliciesList> ListRegionSslPolicies(
+  StatusOr<google::cloud::cpp::compute::v1::SslPoliciesList>
+  ListRegionSslPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionSslPolicies::v1::ListRegionSslPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::regionSslPolicies::v1::
+          ListRegionSslPoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse> ListAvailableFeatures(
+  StatusOr<
+      google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+  ListAvailableFeatures(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionSslPolicies::v1::ListAvailableFeaturesRequest const& request) override;
+      google::cloud::cpp::compute::regionSslPolicies::v1::
+          ListAvailableFeaturesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRegionSslPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionSslPolicies::v1::PatchRegionSslPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::regionSslPolicies::v1::
+          PatchRegionSslPoliciesRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

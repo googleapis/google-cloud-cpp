@@ -35,35 +35,44 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TargetTcpProxiesRestMetadata : public TargetTcpProxiesRestStub {
  public:
   ~TargetTcpProxiesRestMetadata() override = default;
-  explicit TargetTcpProxiesRestMetadata(std::shared_ptr<TargetTcpProxiesRestStub> child);
+  explicit TargetTcpProxiesRestMetadata(
+      std::shared_ptr<TargetTcpProxiesRestStub> child);
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList> AggregatedListTargetTcpProxies(
+  StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>
+  AggregatedListTargetTcpProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetTcpProxies::v1::AggregatedListTargetTcpProxiesRequest const& request) override;
+      google::cloud::cpp::compute::targetTcpProxies::v1::
+          AggregatedListTargetTcpProxiesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetTcpProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetTcpProxies::v1::DeleteTargetTcpProxiesRequest const& request) override;
+      google::cloud::cpp::compute::targetTcpProxies::v1::
+          DeleteTargetTcpProxiesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy> GetTargetTcpProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetTcpProxies::v1::GetTargetTcpProxiesRequest const& request) override;
+      google::cloud::cpp::compute::targetTcpProxies::v1::
+          GetTargetTcpProxiesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetTcpProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetTcpProxies::v1::InsertTargetTcpProxiesRequest const& request) override;
+      google::cloud::cpp::compute::targetTcpProxies::v1::
+          InsertTargetTcpProxiesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyList> ListTargetTcpProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetTcpProxies::v1::ListTargetTcpProxiesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyList>
+  ListTargetTcpProxies(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::targetTcpProxies::v1::
+                           ListTargetTcpProxiesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetBackendService(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetTcpProxies::v1::SetBackendServiceRequest const& request) override;
+      google::cloud::cpp::compute::targetTcpProxies::v1::
+          SetBackendServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetProxyHeader(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetTcpProxies::v1::SetProxyHeaderRequest const& request) override;
+      google::cloud::cpp::compute::targetTcpProxies::v1::
+          SetProxyHeaderRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

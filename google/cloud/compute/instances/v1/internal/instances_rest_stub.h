@@ -38,187 +38,243 @@ class InstancesRestStub {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddAccessConfig(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::AddResourcePoliciesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  AddResourcePolicies(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::instances::v1::
+                          AddResourcePoliciesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList> AggregatedListInstances(
+  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList>
+  AggregatedListInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::AggregatedListInstancesRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          AggregatedListInstancesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AttachDisk(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::AttachDiskRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::BulkInsertRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAccessConfig(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::DeleteAccessConfigRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteAccessConfig(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::instances::v1::
+                         DeleteAccessConfigRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DetachDisk(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::DetachDiskRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Instance> GetInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetInstancesRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::GetInstancesRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse> GetEffectiveFirewalls(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetEffectiveFirewallsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>
+  GetEffectiveFirewalls(google::cloud::rest_internal::RestContext& rest_context,
+                        google::cloud::cpp::compute::instances::v1::
+                            GetEffectiveFirewallsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::GuestAttributes> GetGuestAttributes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetGuestAttributesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::GuestAttributes>
+  GetGuestAttributes(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::instances::v1::
+                         GetGuestAttributesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Screenshot> GetScreenshot(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput> GetSerialPortOutput(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetSerialPortOutputRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput>
+  GetSerialPortOutput(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::instances::v1::
+                          GetSerialPortOutputRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity> GetShieldedInstanceIdentity(
+  virtual StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>
+  GetShieldedInstanceIdentity(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetShieldedInstanceIdentityRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          GetShieldedInstanceIdentityRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::InsertInstancesRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::InsertInstancesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InstanceList> ListInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::ListInstancesRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::ListInstancesRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceListReferrers> ListReferrers(
+  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceListReferrers>
+  ListReferrers(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::ListReferrersRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::ListReferrersRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  RemoveResourcePolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::RemoveResourcePoliciesRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          RemoveResourcePoliciesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Reset(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::ResetRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::ResetRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Resume(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::ResumeRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::ResumeRequest const&
+          request) = 0;
 
   virtual Status SendDiagnosticInterrupt(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SendDiagnosticInterruptRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          SendDiagnosticInterruptRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetDeletionProtection(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetDeletionProtectionRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetDeletionProtection(google::cloud::rest_internal::RestContext& rest_context,
+                        google::cloud::cpp::compute::instances::v1::
+                            SetDeletionProtectionRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetDiskAutoDelete(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetDiskAutoDeleteRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetDiskAutoDelete(google::cloud::rest_internal::RestContext& rest_context,
+                    google::cloud::cpp::compute::instances::v1::
+                        SetDiskAutoDeleteRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetLabelsRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetMachineResources(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetMachineResourcesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetMachineResources(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::instances::v1::
+                          SetMachineResourcesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetMachineType(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetMetadata(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetMetadataRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetMinCpuPlatform(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetMinCpuPlatformRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetMinCpuPlatform(google::cloud::rest_internal::RestContext& rest_context,
+                    google::cloud::cpp::compute::instances::v1::
+                        SetMinCpuPlatformRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetName(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetNameRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::SetNameRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetScheduling(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetServiceAccount(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetServiceAccountRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetServiceAccount(google::cloud::rest_internal::RestContext& rest_context,
+                    google::cloud::cpp::compute::instances::v1::
+                        SetServiceAccountRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetShieldedInstanceIntegrityPolicy(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetShieldedInstanceIntegrityPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetShieldedInstanceIntegrityPolicyRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          SetShieldedInstanceIntegrityPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetTags(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::SetTagsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SimulateMaintenanceEvent(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SimulateMaintenanceEvent(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SimulateMaintenanceEventRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          SimulateMaintenanceEventRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Start(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::StartRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::StartRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> StartWithEncryptionKey(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  StartWithEncryptionKey(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::StartWithEncryptionKeyRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          StartWithEncryptionKeyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Stop(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::StopRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::StopRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Suspend(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SuspendRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::SuspendRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::TestIamPermissionsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::instances::v1::
+                         TestIamPermissionsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAccessConfig(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateAccessConfigRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateAccessConfig(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::instances::v1::
+                         UpdateAccessConfigRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisplayDevice(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateDisplayDeviceRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateDisplayDevice(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::instances::v1::
+                          UpdateDisplayDeviceRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateNetworkInterface(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateNetworkInterface(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateNetworkInterfaceRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          UpdateNetworkInterfaceRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateShieldedInstanceConfig(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateShieldedInstanceConfig(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateShieldedInstanceConfigRequest const& request) = 0;
+      google::cloud::cpp::compute::instances::v1::
+          UpdateShieldedInstanceConfigRequest const& request) = 0;
 };
 
 class DefaultInstancesRestStub : public InstancesRestStub {
@@ -226,193 +282,245 @@ class DefaultInstancesRestStub : public InstancesRestStub {
   ~DefaultInstancesRestStub() override = default;
 
   explicit DefaultInstancesRestStub(Options options);
-  DefaultInstancesRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+  DefaultInstancesRestStub(std::shared_ptr<rest_internal::RestClient> service,
+                           Options options);
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddAccessConfig(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::AddResourcePoliciesRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          AddResourcePoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList> AggregatedListInstances(
+  StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList>
+  AggregatedListInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::AggregatedListInstancesRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          AggregatedListInstancesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AttachDisk(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::AttachDiskRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::BulkInsertRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAccessConfig(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::DeleteAccessConfigRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          DeleteAccessConfigRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DetachDisk(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::DetachDiskRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Instance> GetInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetInstancesRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::GetInstancesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse> GetEffectiveFirewalls(
+  StatusOr<
+      google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>
+  GetEffectiveFirewalls(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetEffectiveFirewallsRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          GetEffectiveFirewallsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::GuestAttributes> GetGuestAttributes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetGuestAttributesRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          GetGuestAttributesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Screenshot> GetScreenshot(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput> GetSerialPortOutput(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetSerialPortOutputRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput>
+  GetSerialPortOutput(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::instances::v1::
+                          GetSerialPortOutputRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity> GetShieldedInstanceIdentity(
+  StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>
+  GetShieldedInstanceIdentity(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetShieldedInstanceIdentityRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          GetShieldedInstanceIdentityRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::InsertInstancesRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::InsertInstancesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceList> ListInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::ListInstancesRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::ListInstancesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceListReferrers> ListReferrers(
+  StatusOr<google::cloud::cpp::compute::v1::InstanceListReferrers>
+  ListReferrers(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::ListReferrersRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::ListReferrersRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::RemoveResourcePoliciesRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          RemoveResourcePoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Reset(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::ResetRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::ResetRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resume(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::ResumeRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::ResumeRequest const& request)
+      override;
 
   Status SendDiagnosticInterrupt(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SendDiagnosticInterruptRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          SendDiagnosticInterruptRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetDeletionProtection(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetDeletionProtectionRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          SetDeletionProtectionRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetDiskAutoDelete(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetDiskAutoDeleteRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          SetDiskAutoDeleteRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetLabelsRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMachineResources(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetMachineResourcesRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          SetMachineResourcesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMachineType(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMetadata(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetMetadataRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMinCpuPlatform(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetMinCpuPlatformRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          SetMinCpuPlatformRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetName(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetNameRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::SetNameRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetScheduling(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetServiceAccount(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetServiceAccountRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          SetServiceAccountRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> SetShieldedInstanceIntegrityPolicy(
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetShieldedInstanceIntegrityPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetShieldedInstanceIntegrityPolicyRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          SetShieldedInstanceIntegrityPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetTags(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SimulateMaintenanceEvent(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SimulateMaintenanceEventRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          SimulateMaintenanceEventRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Start(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::StartRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::StartRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> StartWithEncryptionKey(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::StartWithEncryptionKeyRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          StartWithEncryptionKeyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Stop(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::StopRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::StopRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Suspend(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SuspendRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::SuspendRequest const& request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::instances::v1::
+                         TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAccessConfig(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateAccessConfigRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          UpdateAccessConfigRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisplayDevice(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateDisplayDeviceRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          UpdateDisplayDeviceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateNetworkInterface(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateNetworkInterfaceRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          UpdateNetworkInterfaceRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateShieldedInstanceConfig(
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateShieldedInstanceConfig(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateShieldedInstanceConfigRequest const& request) override;
+      google::cloud::cpp::compute::instances::v1::
+          UpdateShieldedInstanceConfigRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

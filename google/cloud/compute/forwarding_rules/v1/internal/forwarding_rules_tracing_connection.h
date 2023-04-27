@@ -36,36 +36,47 @@ class ForwardingRulesTracingConnection
   ~ForwardingRulesTracingConnection() override = default;
 
   explicit ForwardingRulesTracingConnection(
-    std::shared_ptr<compute_forwarding_rules_v1::ForwardingRulesConnection> child);
+      std::shared_ptr<compute_forwarding_rules_v1::ForwardingRulesConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>
-  AggregatedListForwardingRules(google::cloud::cpp::compute::forwardingRules::v1::AggregatedListForwardingRulesRequest const& request) override;
+  AggregatedListForwardingRules(
+      google::cloud::cpp::compute::forwardingRules::v1::
+          AggregatedListForwardingRulesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteForwardingRules(google::cloud::cpp::compute::forwardingRules::v1::DeleteForwardingRulesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteForwardingRules(
+      google::cloud::cpp::compute::forwardingRules::v1::
+          DeleteForwardingRulesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
-  GetForwardingRules(google::cloud::cpp::compute::forwardingRules::v1::GetForwardingRulesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::ForwardingRule> GetForwardingRules(
+      google::cloud::cpp::compute::forwardingRules::v1::
+          GetForwardingRulesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertForwardingRules(google::cloud::cpp::compute::forwardingRules::v1::InsertForwardingRulesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertForwardingRules(
+      google::cloud::cpp::compute::forwardingRules::v1::
+          InsertForwardingRulesRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>
-  ListForwardingRules(google::cloud::cpp::compute::forwardingRules::v1::ListForwardingRulesRequest request) override;
+  ListForwardingRules(google::cloud::cpp::compute::forwardingRules::v1::
+                          ListForwardingRulesRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchForwardingRules(google::cloud::cpp::compute::forwardingRules::v1::PatchForwardingRulesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchForwardingRules(
+      google::cloud::cpp::compute::forwardingRules::v1::
+          PatchForwardingRulesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(google::cloud::cpp::compute::forwardingRules::v1::SetLabelsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::cpp::compute::forwardingRules::v1::SetLabelsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetTarget(google::cloud::cpp::compute::forwardingRules::v1::SetTargetRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetTarget(
+      google::cloud::cpp::compute::forwardingRules::v1::SetTargetRequest const&
+          request) override;
 
  private:
-  std::shared_ptr<compute_forwarding_rules_v1::ForwardingRulesConnection> child_;
+  std::shared_ptr<compute_forwarding_rules_v1::ForwardingRulesConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -78,7 +89,8 @@ class ForwardingRulesTracingConnection
  */
 std::shared_ptr<compute_forwarding_rules_v1::ForwardingRulesConnection>
 MakeForwardingRulesTracingConnection(
-    std::shared_ptr<compute_forwarding_rules_v1::ForwardingRulesConnection> conn);
+    std::shared_ptr<compute_forwarding_rules_v1::ForwardingRulesConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_forwarding_rules_v1_internal

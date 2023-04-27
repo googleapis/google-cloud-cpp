@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AutoscalersClient {
  public:
-  explicit AutoscalersClient(ExperimentalTag, std::shared_ptr<AutoscalersConnection> connection, Options opts = {});
+  explicit AutoscalersClient(ExperimentalTag,
+                             std::shared_ptr<AutoscalersConnection> connection,
+                             Options opts = {});
   ~AutoscalersClient();
 
   ///@{
@@ -76,10 +78,12 @@ class AutoscalersClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(AutoscalersClient const& a, AutoscalersClient const& b) {
+  friend bool operator==(AutoscalersClient const& a,
+                         AutoscalersClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(AutoscalersClient const& a, AutoscalersClient const& b) {
+  friend bool operator!=(AutoscalersClient const& a,
+                         AutoscalersClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -90,10 +94,13 @@ class AutoscalersClient {
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::AutoscalerAggregatedList,google/cloud/compute/v1/internal/common.proto#L1338}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::AutoscalerAggregatedList,google/cloud/compute/v1/internal/common.proto#L1338}
   ///
-  /// [google.cloud.cpp.compute.autoscalers.v1.AggregatedListAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L103}
-  /// [google.cloud.cpp.compute.v1.AutoscalerAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L1338}
+  /// [google.cloud.cpp.compute.autoscalers.v1.AggregatedListAutoscalersRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L103}
+  /// [google.cloud.cpp.compute.v1.AutoscalerAggregatedList]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L1338}
   ///
   StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>
   AggregatedListAutoscalers(std::string const& project, Options opts = {});
@@ -101,16 +108,22 @@ class AutoscalersClient {
   ///
   /// Retrieves an aggregated list of autoscalers.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::autoscalers::v1::AggregatedListAutoscalersRequest,google/cloud/compute/autoscalers/v1/autoscalers.proto#L103}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::autoscalers::v1::AggregatedListAutoscalersRequest,google/cloud/compute/autoscalers/v1/autoscalers.proto#L103}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::AutoscalerAggregatedList,google/cloud/compute/v1/internal/common.proto#L1338}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::AutoscalerAggregatedList,google/cloud/compute/v1/internal/common.proto#L1338}
   ///
-  /// [google.cloud.cpp.compute.autoscalers.v1.AggregatedListAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L103}
-  /// [google.cloud.cpp.compute.v1.AutoscalerAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L1338}
+  /// [google.cloud.cpp.compute.autoscalers.v1.AggregatedListAutoscalersRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L103}
+  /// [google.cloud.cpp.compute.v1.AutoscalerAggregatedList]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L1338}
   ///
   StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>
-  AggregatedListAutoscalers(google::cloud::cpp::compute::autoscalers::v1::AggregatedListAutoscalersRequest const& request, Options opts = {});
+  AggregatedListAutoscalers(google::cloud::cpp::compute::autoscalers::v1::
+                                AggregatedListAutoscalersRequest const& request,
+                            Options opts = {});
 
   ///
   /// Deletes the specified autoscaler.
@@ -120,27 +133,37 @@ class AutoscalersClient {
   /// @param autoscaler  Name of the autoscaler to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.autoscalers.v1.DeleteAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L177}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.autoscalers.v1.DeleteAutoscalersRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L177}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteAutoscalers(std::string const& project, std::string const& zone, std::string const& autoscaler, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAutoscalers(
+      std::string const& project, std::string const& zone,
+      std::string const& autoscaler, Options opts = {});
 
   ///
   /// Deletes the specified autoscaler.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalersRequest,google/cloud/compute/autoscalers/v1/autoscalers.proto#L177}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalersRequest,google/cloud/compute/autoscalers/v1/autoscalers.proto#L177}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.autoscalers.v1.DeleteAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L177}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.autoscalers.v1.DeleteAutoscalersRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L177}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteAutoscalers(google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalersRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAutoscalers(
+      google::cloud::cpp::compute::autoscalers::v1::
+          DeleteAutoscalersRequest const& request,
+      Options opts = {});
 
   ///
   /// Returns the specified autoscaler resource.
@@ -150,27 +173,37 @@ class AutoscalersClient {
   /// @param autoscaler  Name of the autoscaler to return.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Autoscaler,google/cloud/compute/v1/internal/common.proto#L1262}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Autoscaler,google/cloud/compute/v1/internal/common.proto#L1262}
   ///
-  /// [google.cloud.cpp.compute.autoscalers.v1.GetAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L201}
-  /// [google.cloud.cpp.compute.v1.Autoscaler]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L1262}
+  /// [google.cloud.cpp.compute.autoscalers.v1.GetAutoscalersRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L201}
+  /// [google.cloud.cpp.compute.v1.Autoscaler]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L1262}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
-  GetAutoscalers(std::string const& project, std::string const& zone, std::string const& autoscaler, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscalers(
+      std::string const& project, std::string const& zone,
+      std::string const& autoscaler, Options opts = {});
 
   ///
   /// Returns the specified autoscaler resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest,google/cloud/compute/autoscalers/v1/autoscalers.proto#L201}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest,google/cloud/compute/autoscalers/v1/autoscalers.proto#L201}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Autoscaler,google/cloud/compute/v1/internal/common.proto#L1262}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Autoscaler,google/cloud/compute/v1/internal/common.proto#L1262}
   ///
-  /// [google.cloud.cpp.compute.autoscalers.v1.GetAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L201}
-  /// [google.cloud.cpp.compute.v1.Autoscaler]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L1262}
+  /// [google.cloud.cpp.compute.autoscalers.v1.GetAutoscalersRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L201}
+  /// [google.cloud.cpp.compute.v1.Autoscaler]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L1262}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
-  GetAutoscalers(google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscalers(
+      google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Creates an autoscaler in the specified project using the data included in
@@ -181,28 +214,39 @@ class AutoscalersClient {
   /// @param autoscaler_resource  The Autoscaler for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.autoscalers.v1.InsertAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L213}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.autoscalers.v1.InsertAutoscalersRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L213}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertAutoscalers(std::string const& project, std::string const& zone, google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAutoscalers(
+      std::string const& project, std::string const& zone,
+      google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
+      Options opts = {});
 
   ///
   /// Creates an autoscaler in the specified project using the data included in
   /// the request.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalersRequest,google/cloud/compute/autoscalers/v1/autoscalers.proto#L213}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalersRequest,google/cloud/compute/autoscalers/v1/autoscalers.proto#L213}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.autoscalers.v1.InsertAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L213}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.autoscalers.v1.InsertAutoscalersRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L213}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertAutoscalers(google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalersRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAutoscalers(
+      google::cloud::cpp::compute::autoscalers::v1::
+          InsertAutoscalersRequest const& request,
+      Options opts = {});
 
   ///
   /// Retrieves a list of autoscalers contained within the specified zone.
@@ -211,27 +255,36 @@ class AutoscalersClient {
   /// @param zone  Name of the zone for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Autoscaler,google/cloud/compute/v1/internal/common.proto#L1262}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Autoscaler,google/cloud/compute/v1/internal/common.proto#L1262}
   ///
-  /// [google.cloud.cpp.compute.autoscalers.v1.ListAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L237}
-  /// [google.cloud.cpp.compute.v1.Autoscaler]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L1262}
+  /// [google.cloud.cpp.compute.autoscalers.v1.ListAutoscalersRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L237}
+  /// [google.cloud.cpp.compute.v1.Autoscaler]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L1262}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
-  ListAutoscalers(std::string const& project, std::string const& zone, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Autoscaler> ListAutoscalers(
+      std::string const& project, std::string const& zone, Options opts = {});
 
   ///
   /// Retrieves a list of autoscalers contained within the specified zone.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest,google/cloud/compute/autoscalers/v1/autoscalers.proto#L237}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest,google/cloud/compute/autoscalers/v1/autoscalers.proto#L237}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Autoscaler,google/cloud/compute/v1/internal/common.proto#L1262}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Autoscaler,google/cloud/compute/v1/internal/common.proto#L1262}
   ///
-  /// [google.cloud.cpp.compute.autoscalers.v1.ListAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L237}
-  /// [google.cloud.cpp.compute.v1.Autoscaler]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L1262}
+  /// [google.cloud.cpp.compute.autoscalers.v1.ListAutoscalersRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L237}
+  /// [google.cloud.cpp.compute.v1.Autoscaler]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L1262}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
-  ListAutoscalers(google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Autoscaler> ListAutoscalers(
+      google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest
+          request,
+      Options opts = {});
 
   ///
   /// Updates an autoscaler in the specified project using the data included in
@@ -243,29 +296,40 @@ class AutoscalersClient {
   /// @param autoscaler_resource  The Autoscaler for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.autoscalers.v1.PatchAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L305}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.autoscalers.v1.PatchAutoscalersRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L305}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchAutoscalers(std::string const& project, std::string const& zone, google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchAutoscalers(
+      std::string const& project, std::string const& zone,
+      google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
+      Options opts = {});
 
   ///
   /// Updates an autoscaler in the specified project using the data included in
   /// the request. This method supports PATCH semantics and uses the JSON merge
   /// patch format and processing rules.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalersRequest,google/cloud/compute/autoscalers/v1/autoscalers.proto#L305}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalersRequest,google/cloud/compute/autoscalers/v1/autoscalers.proto#L305}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.autoscalers.v1.PatchAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L305}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.autoscalers.v1.PatchAutoscalersRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L305}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchAutoscalers(google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalersRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchAutoscalers(
+      google::cloud::cpp::compute::autoscalers::v1::
+          PatchAutoscalersRequest const& request,
+      Options opts = {});
 
   ///
   /// Updates an autoscaler in the specified project using the data included in
@@ -276,28 +340,39 @@ class AutoscalersClient {
   /// @param autoscaler_resource  The Autoscaler for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.autoscalers.v1.UpdateAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L332}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.autoscalers.v1.UpdateAutoscalersRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L332}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateAutoscalers(std::string const& project, std::string const& zone, google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAutoscalers(
+      std::string const& project, std::string const& zone,
+      google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
+      Options opts = {});
 
   ///
   /// Updates an autoscaler in the specified project using the data included in
   /// the request.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalersRequest,google/cloud/compute/autoscalers/v1/autoscalers.proto#L332}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalersRequest,google/cloud/compute/autoscalers/v1/autoscalers.proto#L332}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.autoscalers.v1.UpdateAutoscalersRequest]: @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L332}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.autoscalers.v1.UpdateAutoscalersRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/autoscalers/v1/autoscalers.proto#L332}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateAutoscalers(google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalersRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAutoscalers(
+      google::cloud::cpp::compute::autoscalers::v1::
+          UpdateAutoscalersRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<AutoscalersConnection> connection_;

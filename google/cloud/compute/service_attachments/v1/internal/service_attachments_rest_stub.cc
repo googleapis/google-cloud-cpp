@@ -29,49 +29,56 @@ namespace cloud {
 namespace compute_service_attachments_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultServiceAttachmentsRestStub::DefaultServiceAttachmentsRestStub(Options options)
+DefaultServiceAttachmentsRestStub::DefaultServiceAttachmentsRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       options_(std::move(options)) {}
 
 DefaultServiceAttachmentsRestStub::DefaultServiceAttachmentsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>
 DefaultServiceAttachmentsRestStub::AggregatedListServiceAttachments(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::AggregatedListServiceAttachmentsRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        AggregatedListServiceAttachmentsRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/serviceAttachments",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultServiceAttachmentsRestStub::DeleteServiceAttachments(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::DeleteServiceAttachmentsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        DeleteServiceAttachmentsRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/serviceAttachments/{service_attachment}");
+      "/compute/v1/projects/{project}/regions/{region}/serviceAttachments/"
+      "{service_attachment}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
 DefaultServiceAttachmentsRestStub::GetServiceAttachments(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::GetServiceAttachmentsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        GetServiceAttachmentsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::ServiceAttachment>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/serviceAttachments/{service_attachment}",
+      "/compute/v1/projects/{project}/regions/{region}/serviceAttachments/"
+      "{service_attachment}",
       {std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
        std::make_pair("service_attachment", request.service_attachment())});
@@ -79,12 +86,16 @@ DefaultServiceAttachmentsRestStub::GetServiceAttachments(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultServiceAttachmentsRestStub::GetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::GetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        GetIamPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/serviceAttachments/{resource}/getIamPolicy",
-      {std::make_pair("options_requested_policy_version", std::to_string(request.options_requested_policy_version())),
+      "/compute/v1/projects/{project}/regions/{region}/serviceAttachments/"
+      "{resource}/getIamPolicy",
+      {std::make_pair(
+           "options_requested_policy_version",
+           std::to_string(request.options_requested_policy_version())),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
        std::make_pair("resource", request.resource())});
@@ -92,8 +103,9 @@ DefaultServiceAttachmentsRestStub::GetIamPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultServiceAttachmentsRestStub::InsertServiceAttachments(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::InsertServiceAttachmentsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        InsertServiceAttachmentsRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/serviceAttachments");
@@ -101,9 +113,11 @@ DefaultServiceAttachmentsRestStub::InsertServiceAttachments(
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentList>
 DefaultServiceAttachmentsRestStub::ListServiceAttachments(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::ListServiceAttachmentsRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::ServiceAttachmentList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        ListServiceAttachmentsRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::ServiceAttachmentList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/serviceAttachments",
       {std::make_pair("filter", request.filter()),
@@ -112,34 +126,42 @@ DefaultServiceAttachmentsRestStub::ListServiceAttachments(
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultServiceAttachmentsRestStub::PatchServiceAttachments(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::PatchServiceAttachmentsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        PatchServiceAttachmentsRequest const& request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/serviceAttachments/{service_attachment}");
+      "/compute/v1/projects/{project}/regions/{region}/serviceAttachments/"
+      "{service_attachment}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultServiceAttachmentsRestStub::SetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::SetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        SetIamPolicyRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/serviceAttachments/{resource}/setIamPolicy");
+      "/compute/v1/projects/{project}/regions/{region}/serviceAttachments/"
+      "{resource}/setIamPolicy");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultServiceAttachmentsRestStub::TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::TestIamPermissionsRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        TestIamPermissionsRequest const& request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/serviceAttachments/{resource}/testIamPermissions");
+      "/compute/v1/projects/{project}/regions/{region}/serviceAttachments/"
+      "{resource}/testIamPermissions");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

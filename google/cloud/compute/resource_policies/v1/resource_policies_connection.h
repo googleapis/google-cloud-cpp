@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_RESOURCE_POLICIES_V1_RESOURCE_POLICIES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_RESOURCE_POLICIES_V1_RESOURCE_POLICIES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/resource_policies/v1/internal/resource_policies_retry_traits.h"
 #include "google/cloud/compute/resource_policies/v1/resource_policies_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -35,11 +35,13 @@ namespace cloud {
 namespace compute_resource_policies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ResourcePoliciesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_resource_policies_v1_internal::ResourcePoliciesRetryTraits>;
+using ResourcePoliciesRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_resource_policies_v1_internal::ResourcePoliciesRetryTraits>;
 
-using ResourcePoliciesLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_resource_policies_v1_internal::ResourcePoliciesRetryTraits>;
+using ResourcePoliciesLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_resource_policies_v1_internal::ResourcePoliciesRetryTraits>;
 
 using ResourcePoliciesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -55,7 +57,8 @@ using ResourcePoliciesLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeResourcePoliciesConnection()`.
  *
- * For mocking, see `compute_resource_policies_v1_mocks::MockResourcePoliciesConnection`.
+ * For mocking, see
+ * `compute_resource_policies_v1_mocks::MockResourcePoliciesConnection`.
  */
 class ResourcePoliciesConnection {
  public:
@@ -63,29 +66,39 @@ class ResourcePoliciesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>
-  AggregatedListResourcePolicies(google::cloud::cpp::compute::resourcePolicies::v1::AggregatedListResourcePoliciesRequest const& request);
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>
+  AggregatedListResourcePolicies(
+      google::cloud::cpp::compute::resourcePolicies::v1::
+          AggregatedListResourcePoliciesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteResourcePolicies(google::cloud::cpp::compute::resourcePolicies::v1::DeleteResourcePoliciesRequest const& request);
+  DeleteResourcePolicies(google::cloud::cpp::compute::resourcePolicies::v1::
+                             DeleteResourcePoliciesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
-  GetResourcePolicies(google::cloud::cpp::compute::resourcePolicies::v1::GetResourcePoliciesRequest const& request);
+  GetResourcePolicies(google::cloud::cpp::compute::resourcePolicies::v1::
+                          GetResourcePoliciesRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::resourcePolicies::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::resourcePolicies::v1::
+          GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertResourcePolicies(google::cloud::cpp::compute::resourcePolicies::v1::InsertResourcePoliciesRequest const& request);
+  InsertResourcePolicies(google::cloud::cpp::compute::resourcePolicies::v1::
+                             InsertResourcePoliciesRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>
-  ListResourcePolicies(google::cloud::cpp::compute::resourcePolicies::v1::ListResourcePoliciesRequest request);
+  ListResourcePolicies(google::cloud::cpp::compute::resourcePolicies::v1::
+                           ListResourcePoliciesRequest request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::resourcePolicies::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::resourcePolicies::v1::
+          SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::resourcePolicies::v1::TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::resourcePolicies::v1::
+                         TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -34,24 +34,30 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options BackendBucketsDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_BACKEND_BUCKETS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_BACKEND_BUCKETS_AUTHORITY",
-      "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
-  if (!options.has<compute_backend_buckets_v1::BackendBucketsRetryPolicyOption>()) {
+      std::move(options), "GOOGLE_CLOUD_CPP_BACKEND_BUCKETS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_BACKEND_BUCKETS_AUTHORITY", "compute.googleapis.com");
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  if (!options.has<
+          compute_backend_buckets_v1::BackendBucketsRetryPolicyOption>()) {
     options.set<compute_backend_buckets_v1::BackendBucketsRetryPolicyOption>(
         compute_backend_buckets_v1::BackendBucketsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_backend_buckets_v1::BackendBucketsBackoffPolicyOption>()) {
+  if (!options.has<
+          compute_backend_buckets_v1::BackendBucketsBackoffPolicyOption>()) {
     options.set<compute_backend_buckets_v1::BackendBucketsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
-  if (!options.has<compute_backend_buckets_v1::BackendBucketsConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_backend_buckets_v1::BackendBucketsConnectionIdempotencyPolicyOption>(
-        compute_backend_buckets_v1::MakeDefaultBackendBucketsConnectionIdempotencyPolicy());
+  if (!options.has<compute_backend_buckets_v1::
+                       BackendBucketsConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_backend_buckets_v1::
+                    BackendBucketsConnectionIdempotencyPolicyOption>(
+        compute_backend_buckets_v1::
+            MakeDefaultBackendBucketsConnectionIdempotencyPolicy());
   }
 
   return options;

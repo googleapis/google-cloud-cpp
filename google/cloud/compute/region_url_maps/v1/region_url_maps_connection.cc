@@ -17,11 +17,11 @@
 // source: google/cloud/compute/region_url_maps/v1/region_url_maps.proto
 
 #include "google/cloud/compute/region_url_maps/v1/region_url_maps_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/region_url_maps/v1/internal/region_url_maps_option_defaults.h"
 #include "google/cloud/compute/region_url_maps/v1/internal/region_url_maps_tracing_connection.h"
 #include "google/cloud/compute/region_url_maps/v1/region_url_maps_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,37 +36,44 @@ RegionUrlMapsConnection::~RegionUrlMapsConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionUrlMapsConnection::DeleteRegionUrlMaps(
-    google::cloud::cpp::compute::regionUrlMaps::v1::DeleteRegionUrlMapsRequest const&) {
+    google::cloud::cpp::compute::regionUrlMaps::v1::
+        DeleteRegionUrlMapsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMap>
 RegionUrlMapsConnection::GetRegionUrlMaps(
-    google::cloud::cpp::compute::regionUrlMaps::v1::GetRegionUrlMapsRequest const&) {
+    google::cloud::cpp::compute::regionUrlMaps::v1::
+        GetRegionUrlMapsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionUrlMapsConnection::InsertRegionUrlMaps(
-    google::cloud::cpp::compute::regionUrlMaps::v1::InsertRegionUrlMapsRequest const&) {
+    google::cloud::cpp::compute::regionUrlMaps::v1::
+        InsertRegionUrlMapsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::UrlMap> RegionUrlMapsConnection::ListRegionUrlMaps(
-    google::cloud::cpp::compute::regionUrlMaps::v1::ListRegionUrlMapsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::UrlMap>
+RegionUrlMapsConnection::ListRegionUrlMaps(
+    google::cloud::cpp::compute::regionUrlMaps::v1::
+        ListRegionUrlMapsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::UrlMap>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionUrlMapsConnection::PatchRegionUrlMaps(
-    google::cloud::cpp::compute::regionUrlMaps::v1::PatchRegionUrlMapsRequest const&) {
+    google::cloud::cpp::compute::regionUrlMaps::v1::
+        PatchRegionUrlMapsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionUrlMapsConnection::UpdateRegionUrlMaps(
-    google::cloud::cpp::compute::regionUrlMaps::v1::UpdateRegionUrlMapsRequest const&) {
+    google::cloud::cpp::compute::regionUrlMaps::v1::
+        UpdateRegionUrlMapsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

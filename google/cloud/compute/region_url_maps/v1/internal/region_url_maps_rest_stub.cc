@@ -35,15 +35,14 @@ DefaultRegionUrlMapsRestStub::DefaultRegionUrlMapsRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultRegionUrlMapsRestStub::DefaultRegionUrlMapsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionUrlMapsRestStub::DeleteRegionUrlMaps(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionUrlMaps::v1::DeleteRegionUrlMapsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionUrlMaps::v1::
+        DeleteRegionUrlMapsRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/urlMaps/{url_map}");
@@ -51,8 +50,9 @@ DefaultRegionUrlMapsRestStub::DeleteRegionUrlMaps(
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMap>
 DefaultRegionUrlMapsRestStub::GetRegionUrlMaps(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionUrlMaps::v1::GetRegionUrlMapsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionUrlMaps::v1::
+        GetRegionUrlMapsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMap>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/urlMaps/{url_map}",
@@ -63,8 +63,9 @@ DefaultRegionUrlMapsRestStub::GetRegionUrlMaps(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionUrlMapsRestStub::InsertRegionUrlMaps(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionUrlMaps::v1::InsertRegionUrlMapsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionUrlMaps::v1::
+        InsertRegionUrlMapsRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/urlMaps");
@@ -72,8 +73,9 @@ DefaultRegionUrlMapsRestStub::InsertRegionUrlMaps(
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapList>
 DefaultRegionUrlMapsRestStub::ListRegionUrlMaps(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionUrlMaps::v1::ListRegionUrlMapsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionUrlMaps::v1::
+        ListRegionUrlMapsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMapList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/urlMaps",
@@ -83,13 +85,15 @@ DefaultRegionUrlMapsRestStub::ListRegionUrlMaps(
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionUrlMapsRestStub::PatchRegionUrlMaps(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionUrlMaps::v1::PatchRegionUrlMapsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionUrlMaps::v1::
+        PatchRegionUrlMapsRequest const& request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/urlMaps/{url_map}");
@@ -97,8 +101,9 @@ DefaultRegionUrlMapsRestStub::PatchRegionUrlMaps(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionUrlMapsRestStub::UpdateRegionUrlMaps(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionUrlMaps::v1::UpdateRegionUrlMapsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionUrlMaps::v1::
+        UpdateRegionUrlMapsRequest const& request) {
   return rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/urlMaps/{url_map}");
@@ -106,11 +111,14 @@ DefaultRegionUrlMapsRestStub::UpdateRegionUrlMaps(
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
 DefaultRegionUrlMapsRestStub::Validate(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionUrlMaps::v1::ValidateRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionUrlMaps::v1::ValidateRequest const&
+        request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::UrlMapsValidateResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/urlMaps/{url_map}/validate");
+      "/compute/v1/projects/{project}/regions/{region}/urlMaps/{url_map}/"
+      "validate");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto
 
-
 #include "google/cloud/compute/region_ssl_policies/v1/internal/region_ssl_policies_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,12 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RegionSslPoliciesRestMetadata::RegionSslPoliciesRestMetadata(
     std::shared_ptr<RegionSslPoliciesRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionSslPoliciesRestMetadata::DeleteRegionSslPolicies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionSslPolicies::v1::DeleteRegionSslPoliciesRequest const& request) {
+    google::cloud::cpp::compute::regionSslPolicies::v1::
+        DeleteRegionSslPoliciesRequest const& request) {
   SetMetadata(rest_context);
   return child_->DeleteRegionSslPolicies(rest_context, request);
 }
@@ -47,7 +48,8 @@ RegionSslPoliciesRestMetadata::DeleteRegionSslPolicies(
 StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
 RegionSslPoliciesRestMetadata::GetRegionSslPolicies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionSslPolicies::v1::GetRegionSslPoliciesRequest const& request) {
+    google::cloud::cpp::compute::regionSslPolicies::v1::
+        GetRegionSslPoliciesRequest const& request) {
   SetMetadata(rest_context);
   return child_->GetRegionSslPolicies(rest_context, request);
 }
@@ -55,7 +57,8 @@ RegionSslPoliciesRestMetadata::GetRegionSslPolicies(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionSslPoliciesRestMetadata::InsertRegionSslPolicies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionSslPolicies::v1::InsertRegionSslPoliciesRequest const& request) {
+    google::cloud::cpp::compute::regionSslPolicies::v1::
+        InsertRegionSslPoliciesRequest const& request) {
   SetMetadata(rest_context);
   return child_->InsertRegionSslPolicies(rest_context, request);
 }
@@ -63,15 +66,18 @@ RegionSslPoliciesRestMetadata::InsertRegionSslPolicies(
 StatusOr<google::cloud::cpp::compute::v1::SslPoliciesList>
 RegionSslPoliciesRestMetadata::ListRegionSslPolicies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionSslPolicies::v1::ListRegionSslPoliciesRequest const& request) {
+    google::cloud::cpp::compute::regionSslPolicies::v1::
+        ListRegionSslPoliciesRequest const& request) {
   SetMetadata(rest_context);
   return child_->ListRegionSslPolicies(rest_context, request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+StatusOr<
+    google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
 RegionSslPoliciesRestMetadata::ListAvailableFeatures(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionSslPolicies::v1::ListAvailableFeaturesRequest const& request) {
+    google::cloud::cpp::compute::regionSslPolicies::v1::
+        ListAvailableFeaturesRequest const& request) {
   SetMetadata(rest_context);
   return child_->ListAvailableFeatures(rest_context, request);
 }
@@ -79,33 +85,34 @@ RegionSslPoliciesRestMetadata::ListAvailableFeatures(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionSslPoliciesRestMetadata::PatchRegionSslPolicies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionSslPolicies::v1::PatchRegionSslPoliciesRequest const& request) {
+    google::cloud::cpp::compute::regionSslPolicies::v1::
+        PatchRegionSslPoliciesRequest const& request) {
   SetMetadata(rest_context);
   return child_->PatchRegionSslPolicies(rest_context, request);
 }
 
 void RegionSslPoliciesRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+    rest_internal::RestContext& rest_context,
+    std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

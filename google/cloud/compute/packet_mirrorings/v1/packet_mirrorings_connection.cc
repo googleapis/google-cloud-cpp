@@ -17,11 +17,11 @@
 // source: google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto
 
 #include "google/cloud/compute/packet_mirrorings/v1/packet_mirrorings_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/packet_mirrorings/v1/internal/packet_mirrorings_option_defaults.h"
 #include "google/cloud/compute/packet_mirrorings/v1/internal/packet_mirrorings_tracing_connection.h"
 #include "google/cloud/compute/packet_mirrorings/v1/packet_mirrorings_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,43 +36,51 @@ PacketMirroringsConnection::~PacketMirroringsConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
 PacketMirroringsConnection::AggregatedListPacketMirrorings(
-    google::cloud::cpp::compute::packetMirrorings::v1::AggregatedListPacketMirroringsRequest const&) {
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        AggregatedListPacketMirroringsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsConnection::DeletePacketMirrorings(
-    google::cloud::cpp::compute::packetMirrorings::v1::DeletePacketMirroringsRequest const&) {
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        DeletePacketMirroringsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
 PacketMirroringsConnection::GetPacketMirrorings(
-    google::cloud::cpp::compute::packetMirrorings::v1::GetPacketMirroringsRequest const&) {
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        GetPacketMirroringsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsConnection::InsertPacketMirrorings(
-    google::cloud::cpp::compute::packetMirrorings::v1::InsertPacketMirroringsRequest const&) {
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        InsertPacketMirroringsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::PacketMirroring> PacketMirroringsConnection::ListPacketMirrorings(
-    google::cloud::cpp::compute::packetMirrorings::v1::ListPacketMirroringsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>
+PacketMirroringsConnection::ListPacketMirrorings(
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        ListPacketMirroringsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsConnection::PatchPacketMirrorings(
-    google::cloud::cpp::compute::packetMirrorings::v1::PatchPacketMirroringsRequest const&) {
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        PatchPacketMirroringsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 PacketMirroringsConnection::TestIamPermissions(
-    google::cloud::cpp::compute::packetMirrorings::v1::TestIamPermissionsRequest const&) {
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

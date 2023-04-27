@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_DISKS_V1_DISKS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_DISKS_V1_DISKS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/disks/v1/disks_connection_idempotency_policy.h"
 #include "google/cloud/compute/disks/v1/internal/disks_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -38,8 +38,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using DisksRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     compute_disks_v1_internal::DisksRetryTraits>;
 
-using DisksLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_disks_v1_internal::DisksRetryTraits>;
+using DisksLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_disks_v1_internal::DisksRetryTraits>;
 
 using DisksLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -64,46 +65,59 @@ class DisksConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddResourcePolicies(google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const& request);
+  AddResourcePolicies(
+      google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::DiskAggregatedList>
-  AggregatedListDisks(google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const& request);
+  AggregatedListDisks(
+      google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> CreateSnapshot(
+      google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteDisks(
+      google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisks(
+      google::cloud::cpp::compute::disks::v1::GetDisksRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertDisks(
+      google::cloud::cpp::compute::disks::v1::InsertDisksRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::cpp::compute::v1::Disk> ListDisks(
+      google::cloud::cpp::compute::disks::v1::ListDisksRequest request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  CreateSnapshot(google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const& request);
+  RemoveResourcePolicies(google::cloud::cpp::compute::disks::v1::
+                             RemoveResourcePoliciesRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteDisks(google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
+      google::cloud::cpp::compute::disks::v1::ResizeRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Disk>
-  GetDisks(google::cloud::cpp::compute::disks::v1::GetDisksRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::disks::v1::SetIamPolicyRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertDisks(google::cloud::cpp::compute::disks::v1::InsertDisksRequest const& request);
-
-  virtual StreamRange<google::cloud::cpp::compute::v1::Disk>
-  ListDisks(google::cloud::cpp::compute::disks::v1::ListDisksRequest request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  RemoveResourcePolicies(google::cloud::cpp::compute::disks::v1::RemoveResourcePoliciesRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Resize(google::cloud::cpp::compute::disks::v1::ResizeRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::disks::v1::SetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::disks::v1::TestIamPermissionsRequest const& request);
+  TestIamPermissions(
+      google::cloud::cpp::compute::disks::v1::TestIamPermissionsRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateDisks(google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisks(
+      google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

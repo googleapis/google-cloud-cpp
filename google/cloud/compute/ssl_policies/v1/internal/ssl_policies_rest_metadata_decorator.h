@@ -37,33 +37,43 @@ class SslPoliciesRestMetadata : public SslPoliciesRestStub {
   ~SslPoliciesRestMetadata() override = default;
   explicit SslPoliciesRestMetadata(std::shared_ptr<SslPoliciesRestStub> child);
 
-  StatusOr<google::cloud::cpp::compute::v1::SslPoliciesAggregatedList> AggregatedListSslPolicies(
+  StatusOr<google::cloud::cpp::compute::v1::SslPoliciesAggregatedList>
+  AggregatedListSslPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslPolicies::v1::AggregatedListSslPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::sslPolicies::v1::
+          AggregatedListSslPoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslPolicies::v1::DeleteSslPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::sslPolicies::v1::
+          DeleteSslPoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslPolicies::v1::GetSslPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::sslPolicies::v1::GetSslPoliciesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslPolicies::v1::InsertSslPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::sslPolicies::v1::
+          InsertSslPoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SslPoliciesList> ListSslPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslPolicies::v1::ListSslPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::sslPolicies::v1::
+          ListSslPoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse> ListAvailableFeatures(
+  StatusOr<
+      google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+  ListAvailableFeatures(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslPolicies::v1::ListAvailableFeaturesRequest const& request) override;
+      google::cloud::cpp::compute::sslPolicies::v1::
+          ListAvailableFeaturesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSslPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslPolicies::v1::PatchSslPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::sslPolicies::v1::
+          PatchSslPoliciesRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

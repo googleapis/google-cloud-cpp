@@ -38,12 +38,13 @@ class RegionInstancesRestLogging : public RegionInstancesRestStub {
  public:
   ~RegionInstancesRestLogging() override = default;
   RegionInstancesRestLogging(std::shared_ptr<RegionInstancesRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                             TracingOptions tracing_options,
+                             std::set<std::string> components);
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const& request) override;
+      google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const&
+          request) override;
 
  private:
   std::shared_ptr<RegionInstancesRestStub> child_;

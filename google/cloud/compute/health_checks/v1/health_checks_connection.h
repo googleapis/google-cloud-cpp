@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_HEALTH_CHECKS_V1_HEALTH_CHECKS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_HEALTH_CHECKS_V1_HEALTH_CHECKS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/health_checks/v1/health_checks_connection_idempotency_policy.h"
 #include "google/cloud/compute/health_checks/v1/internal/health_checks_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -35,11 +35,13 @@ namespace cloud {
 namespace compute_health_checks_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using HealthChecksRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_health_checks_v1_internal::HealthChecksRetryTraits>;
+using HealthChecksRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_health_checks_v1_internal::HealthChecksRetryTraits>;
 
-using HealthChecksLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_health_checks_v1_internal::HealthChecksRetryTraits>;
+using HealthChecksLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_health_checks_v1_internal::HealthChecksRetryTraits>;
 
 using HealthChecksLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -55,7 +57,8 @@ using HealthChecksLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeHealthChecksConnection()`.
  *
- * For mocking, see `compute_health_checks_v1_mocks::MockHealthChecksConnection`.
+ * For mocking, see
+ * `compute_health_checks_v1_mocks::MockHealthChecksConnection`.
  */
 class HealthChecksConnection {
  public:
@@ -64,25 +67,34 @@ class HealthChecksConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::HealthChecksAggregatedList>
-  AggregatedListHealthChecks(google::cloud::cpp::compute::healthChecks::v1::AggregatedListHealthChecksRequest const& request);
+  AggregatedListHealthChecks(
+      google::cloud::cpp::compute::healthChecks::v1::
+          AggregatedListHealthChecksRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteHealthChecks(google::cloud::cpp::compute::healthChecks::v1::DeleteHealthChecksRequest const& request);
+  DeleteHealthChecks(google::cloud::cpp::compute::healthChecks::v1::
+                         DeleteHealthChecksRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::HealthCheck>
-  GetHealthChecks(google::cloud::cpp::compute::healthChecks::v1::GetHealthChecksRequest const& request);
+  GetHealthChecks(google::cloud::cpp::compute::healthChecks::v1::
+                      GetHealthChecksRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertHealthChecks(google::cloud::cpp::compute::healthChecks::v1::InsertHealthChecksRequest const& request);
+  InsertHealthChecks(google::cloud::cpp::compute::healthChecks::v1::
+                         InsertHealthChecksRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::HealthCheck>
-  ListHealthChecks(google::cloud::cpp::compute::healthChecks::v1::ListHealthChecksRequest request);
+  ListHealthChecks(
+      google::cloud::cpp::compute::healthChecks::v1::ListHealthChecksRequest
+          request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchHealthChecks(google::cloud::cpp::compute::healthChecks::v1::PatchHealthChecksRequest const& request);
+  PatchHealthChecks(google::cloud::cpp::compute::healthChecks::v1::
+                        PatchHealthChecksRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateHealthChecks(google::cloud::cpp::compute::healthChecks::v1::UpdateHealthChecksRequest const& request);
+  UpdateHealthChecks(google::cloud::cpp::compute::healthChecks::v1::
+                         UpdateHealthChecksRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

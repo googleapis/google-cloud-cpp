@@ -42,45 +42,66 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockInstanceGroupsConnection : public compute_instance_groups_v1::InstanceGroupsConnection {
+class MockInstanceGroupsConnection
+    : public compute_instance_groups_v1::InstanceGroupsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  AddInstances,
-  (google::cloud::cpp::compute::instanceGroups::v1::AddInstancesRequest const& request), (override));
+              AddInstances,
+              (google::cloud::cpp::compute::instanceGroups::v1::
+                   AddInstancesRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>,
-  AggregatedListInstanceGroups,
-  (google::cloud::cpp::compute::instanceGroups::v1::AggregatedListInstanceGroupsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>,
+      AggregatedListInstanceGroups,
+      (google::cloud::cpp::compute::instanceGroups::v1::
+           AggregatedListInstanceGroupsRequest const& request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteInstanceGroups,
-  (google::cloud::cpp::compute::instanceGroups::v1::DeleteInstanceGroupsRequest const& request), (override));
+              DeleteInstanceGroups,
+              (google::cloud::cpp::compute::instanceGroups::v1::
+                   DeleteInstanceGroupsRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>,
-  GetInstanceGroups,
-  (google::cloud::cpp::compute::instanceGroups::v1::GetInstanceGroupsRequest const& request), (override));
+              GetInstanceGroups,
+              (google::cloud::cpp::compute::instanceGroups::v1::
+                   GetInstanceGroupsRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertInstanceGroups,
-  (google::cloud::cpp::compute::instanceGroups::v1::InsertInstanceGroupsRequest const& request), (override));
+              InsertInstanceGroups,
+              (google::cloud::cpp::compute::instanceGroups::v1::
+                   InsertInstanceGroupsRequest const& request),
+              (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>,
-  ListInstanceGroups,
-  (google::cloud::cpp::compute::instanceGroups::v1::ListInstanceGroupsRequest request), (override));
+              ListInstanceGroups,
+              (google::cloud::cpp::compute::instanceGroups::v1::
+                   ListInstanceGroupsRequest request),
+              (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>,
-  ListInstances,
-  (google::cloud::cpp::compute::instanceGroups::v1::ListInstancesRequest request), (override));
+  MOCK_METHOD(
+      StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>,
+      ListInstances,
+      (google::cloud::cpp::compute::instanceGroups::v1::ListInstancesRequest
+           request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  RemoveInstances,
-  (google::cloud::cpp::compute::instanceGroups::v1::RemoveInstancesRequest const& request), (override));
+              RemoveInstances,
+              (google::cloud::cpp::compute::instanceGroups::v1::
+                   RemoveInstancesRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  SetNamedPorts,
-  (google::cloud::cpp::compute::instanceGroups::v1::SetNamedPortsRequest const& request), (override));
+              SetNamedPorts,
+              (google::cloud::cpp::compute::instanceGroups::v1::
+                   SetNamedPortsRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

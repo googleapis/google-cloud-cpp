@@ -42,17 +42,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockRegionDiskTypesConnection : public compute_region_disk_types_v1::RegionDiskTypesConnection {
+class MockRegionDiskTypesConnection
+    : public compute_region_disk_types_v1::RegionDiskTypesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::DiskType>,
-  GetRegionDiskTypes,
-  (google::cloud::cpp::compute::regionDiskTypes::v1::GetRegionDiskTypesRequest const& request), (override));
+              GetRegionDiskTypes,
+              (google::cloud::cpp::compute::regionDiskTypes::v1::
+                   GetRegionDiskTypesRequest const& request),
+              (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::DiskType>,
-  ListRegionDiskTypes,
-  (google::cloud::cpp::compute::regionDiskTypes::v1::ListRegionDiskTypesRequest request), (override));
+              ListRegionDiskTypes,
+              (google::cloud::cpp::compute::regionDiskTypes::v1::
+                   ListRegionDiskTypesRequest request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

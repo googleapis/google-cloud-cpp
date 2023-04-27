@@ -29,41 +29,45 @@ namespace cloud {
 namespace compute_target_grpc_proxies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultTargetGrpcProxiesRestStub::DefaultTargetGrpcProxiesRestStub(Options options)
+DefaultTargetGrpcProxiesRestStub::DefaultTargetGrpcProxiesRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       options_(std::move(options)) {}
 
 DefaultTargetGrpcProxiesRestStub::DefaultTargetGrpcProxiesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetGrpcProxiesRestStub::DeleteTargetGrpcProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetGrpcProxies::v1::DeleteTargetGrpcProxiesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetGrpcProxies::v1::
+        DeleteTargetGrpcProxiesRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/targetGrpcProxies/{target_grpc_proxy}");
+      "/compute/v1/projects/{project}/global/targetGrpcProxies/"
+      "{target_grpc_proxy}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
 DefaultTargetGrpcProxiesRestStub::GetTargetGrpcProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetGrpcProxies::v1::GetTargetGrpcProxiesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetGrpcProxies::v1::
+        GetTargetGrpcProxiesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetGrpcProxy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/targetGrpcProxies/{target_grpc_proxy}",
+      "/compute/v1/projects/{project}/global/targetGrpcProxies/"
+      "{target_grpc_proxy}",
       {std::make_pair("project", request.project()),
        std::make_pair("target_grpc_proxy", request.target_grpc_proxy())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetGrpcProxiesRestStub::InsertTargetGrpcProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetGrpcProxies::v1::InsertTargetGrpcProxiesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetGrpcProxies::v1::
+        InsertTargetGrpcProxiesRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/targetGrpcProxies");
@@ -71,9 +75,11 @@ DefaultTargetGrpcProxiesRestStub::InsertTargetGrpcProxies(
 
 StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxyList>
 DefaultTargetGrpcProxiesRestStub::ListTargetGrpcProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetGrpcProxies::v1::ListTargetGrpcProxiesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::TargetGrpcProxyList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetGrpcProxies::v1::
+        ListTargetGrpcProxiesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::TargetGrpcProxyList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/targetGrpcProxies",
       {std::make_pair("filter", request.filter()),
@@ -81,16 +87,19 @@ DefaultTargetGrpcProxiesRestStub::ListTargetGrpcProxies(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetGrpcProxiesRestStub::PatchTargetGrpcProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetGrpcProxies::v1::PatchTargetGrpcProxiesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetGrpcProxies::v1::
+        PatchTargetGrpcProxiesRequest const& request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/targetGrpcProxies/{target_grpc_proxy}");
+      "/compute/v1/projects/{project}/global/targetGrpcProxies/"
+      "{target_grpc_proxy}");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

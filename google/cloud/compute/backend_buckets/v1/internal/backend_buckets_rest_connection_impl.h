@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_BACKEND_BUCKETS_V1_INTERNAL_BACKEND_BUCKETS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_BACKEND_BUCKETS_V1_INTERNAL_BACKEND_BUCKETS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/backend_buckets/v1/backend_buckets_connection.h"
 #include "google/cloud/compute/backend_buckets/v1/backend_buckets_connection_idempotency_policy.h"
 #include "google/cloud/compute/backend_buckets/v1/backend_buckets_options.h"
 #include "google/cloud/compute/backend_buckets/v1/internal/backend_buckets_rest_stub.h"
 #include "google/cloud/compute/backend_buckets/v1/internal/backend_buckets_retry_traits.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,67 +43,99 @@ class BackendBucketsRestConnectionImpl
   ~BackendBucketsRestConnectionImpl() override = default;
 
   BackendBucketsRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_backend_buckets_v1_internal::BackendBucketsRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_backend_buckets_v1_internal::BackendBucketsRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddSignedUrlKey(google::cloud::cpp::compute::backendBuckets::v1::AddSignedUrlKeyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddSignedUrlKey(
+      google::cloud::cpp::compute::backendBuckets::v1::
+          AddSignedUrlKeyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::DeleteBackendBucketsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteBackendBuckets(
+      google::cloud::cpp::compute::backendBuckets::v1::
+          DeleteBackendBucketsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteSignedUrlKey(google::cloud::cpp::compute::backendBuckets::v1::DeleteSignedUrlKeyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSignedUrlKey(
+      google::cloud::cpp::compute::backendBuckets::v1::
+          DeleteSignedUrlKeyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::BackendBucket>
-  GetBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::GetBackendBucketsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::BackendBucket> GetBackendBuckets(
+      google::cloud::cpp::compute::backendBuckets::v1::
+          GetBackendBucketsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::InsertBackendBucketsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertBackendBuckets(
+      google::cloud::cpp::compute::backendBuckets::v1::
+          InsertBackendBucketsRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::BackendBucket>
-  ListBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::ListBackendBucketsRequest request) override;
+  ListBackendBuckets(
+      google::cloud::cpp::compute::backendBuckets::v1::ListBackendBucketsRequest
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::PatchBackendBucketsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchBackendBuckets(
+      google::cloud::cpp::compute::backendBuckets::v1::
+          PatchBackendBucketsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetEdgeSecurityPolicy(google::cloud::cpp::compute::backendBuckets::v1::SetEdgeSecurityPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetEdgeSecurityPolicy(
+      google::cloud::cpp::compute::backendBuckets::v1::
+          SetEdgeSecurityPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::UpdateBackendBucketsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateBackendBuckets(
+      google::cloud::cpp::compute::backendBuckets::v1::
+          UpdateBackendBucketsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_backend_buckets_v1::BackendBucketsRetryPolicy> retry_policy() {
+  std::unique_ptr<compute_backend_buckets_v1::BackendBucketsRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_backend_buckets_v1::BackendBucketsRetryPolicyOption>()) {
-      return options.get<compute_backend_buckets_v1::BackendBucketsRetryPolicyOption>()->clone();
+    if (options.has<
+            compute_backend_buckets_v1::BackendBucketsRetryPolicyOption>()) {
+      return options
+          .get<compute_backend_buckets_v1::BackendBucketsRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_backend_buckets_v1::BackendBucketsRetryPolicyOption>()->clone();
+    return options_
+        .get<compute_backend_buckets_v1::BackendBucketsRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_backend_buckets_v1::BackendBucketsBackoffPolicyOption>()) {
-      return options.get<compute_backend_buckets_v1::BackendBucketsBackoffPolicyOption>()->clone();
+    if (options.has<
+            compute_backend_buckets_v1::BackendBucketsBackoffPolicyOption>()) {
+      return options
+          .get<compute_backend_buckets_v1::BackendBucketsBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_backend_buckets_v1::BackendBucketsBackoffPolicyOption>()->clone();
+    return options_
+        .get<compute_backend_buckets_v1::BackendBucketsBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_backend_buckets_v1::BackendBucketsConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<
+      compute_backend_buckets_v1::BackendBucketsConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_backend_buckets_v1::BackendBucketsConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_backend_buckets_v1::BackendBucketsConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<compute_backend_buckets_v1::
+                        BackendBucketsConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_backend_buckets_v1::
+                   BackendBucketsConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_backend_buckets_v1::BackendBucketsConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_backend_buckets_v1::
+                 BackendBucketsConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_backend_buckets_v1_internal::BackendBucketsRestStub> stub_;
+  std::shared_ptr<compute_backend_buckets_v1_internal::BackendBucketsRestStub>
+      stub_;
   Options options_;
 };
 

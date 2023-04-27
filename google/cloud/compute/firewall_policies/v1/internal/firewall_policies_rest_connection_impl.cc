@@ -17,8 +17,8 @@
 // source: google/cloud/compute/firewall_policies/v1/firewall_policies.proto
 
 #include "google/cloud/compute/firewall_policies/v1/internal/firewall_policies_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/firewall_policies/v1/internal/firewall_policies_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -32,239 +32,298 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 FirewallPoliciesRestConnectionImpl::FirewallPoliciesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_firewall_policies_v1_internal::FirewallPoliciesRestStub> stub,
+    std::shared_ptr<
+        compute_firewall_policies_v1_internal::FirewallPoliciesRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        FirewallPoliciesConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      FirewallPoliciesConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-FirewallPoliciesRestConnectionImpl::AddAssociation(google::cloud::cpp::compute::firewallPolicies::v1::AddAssociationRequest const& request) {
+FirewallPoliciesRestConnectionImpl::AddAssociation(
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        AddAssociationRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AddAssociation(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::firewallPolicies::v1::AddAssociationRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 AddAssociationRequest const& request) {
         return stub_->AddAssociation(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-FirewallPoliciesRestConnectionImpl::AddRule(google::cloud::cpp::compute::firewallPolicies::v1::AddRuleRequest const& request) {
+FirewallPoliciesRestConnectionImpl::AddRule(
+    google::cloud::cpp::compute::firewallPolicies::v1::AddRuleRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AddRule(request),
+      retry_policy(), backoff_policy(), idempotency_policy()->AddRule(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::firewallPolicies::v1::AddRuleRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 AddRuleRequest const& request) {
         return stub_->AddRule(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-FirewallPoliciesRestConnectionImpl::CloneRules(google::cloud::cpp::compute::firewallPolicies::v1::CloneRulesRequest const& request) {
+FirewallPoliciesRestConnectionImpl::CloneRules(
+    google::cloud::cpp::compute::firewallPolicies::v1::CloneRulesRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CloneRules(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::firewallPolicies::v1::CloneRulesRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 CloneRulesRequest const& request) {
         return stub_->CloneRules(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-FirewallPoliciesRestConnectionImpl::DeleteFirewallPolicies(google::cloud::cpp::compute::firewallPolicies::v1::DeleteFirewallPoliciesRequest const& request) {
+FirewallPoliciesRestConnectionImpl::DeleteFirewallPolicies(
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        DeleteFirewallPoliciesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteFirewallPolicies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::firewallPolicies::v1::DeleteFirewallPoliciesRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 DeleteFirewallPoliciesRequest const& request) {
         return stub_->DeleteFirewallPolicies(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
-FirewallPoliciesRestConnectionImpl::GetFirewallPolicies(google::cloud::cpp::compute::firewallPolicies::v1::GetFirewallPoliciesRequest const& request) {
+FirewallPoliciesRestConnectionImpl::GetFirewallPolicies(
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        GetFirewallPoliciesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetFirewallPolicies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::firewallPolicies::v1::GetFirewallPoliciesRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 GetFirewallPoliciesRequest const& request) {
         return stub_->GetFirewallPolicies(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
-FirewallPoliciesRestConnectionImpl::GetAssociation(google::cloud::cpp::compute::firewallPolicies::v1::GetAssociationRequest const& request) {
+FirewallPoliciesRestConnectionImpl::GetAssociation(
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        GetAssociationRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetAssociation(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::firewallPolicies::v1::GetAssociationRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 GetAssociationRequest const& request) {
         return stub_->GetAssociation(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-FirewallPoliciesRestConnectionImpl::GetIamPolicy(google::cloud::cpp::compute::firewallPolicies::v1::GetIamPolicyRequest const& request) {
+FirewallPoliciesRestConnectionImpl::GetIamPolicy(
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        GetIamPolicyRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::firewallPolicies::v1::GetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 GetIamPolicyRequest const& request) {
         return stub_->GetIamPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
-FirewallPoliciesRestConnectionImpl::GetRule(google::cloud::cpp::compute::firewallPolicies::v1::GetRuleRequest const& request) {
+FirewallPoliciesRestConnectionImpl::GetRule(
+    google::cloud::cpp::compute::firewallPolicies::v1::GetRuleRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetRule(request),
+      retry_policy(), backoff_policy(), idempotency_policy()->GetRule(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::firewallPolicies::v1::GetRuleRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 GetRuleRequest const& request) {
         return stub_->GetRule(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-FirewallPoliciesRestConnectionImpl::InsertFirewallPolicies(google::cloud::cpp::compute::firewallPolicies::v1::InsertFirewallPoliciesRequest const& request) {
+FirewallPoliciesRestConnectionImpl::InsertFirewallPolicies(
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        InsertFirewallPoliciesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->InsertFirewallPolicies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::firewallPolicies::v1::InsertFirewallPoliciesRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 InsertFirewallPoliciesRequest const& request) {
         return stub_->InsertFirewallPolicies(rest_context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>
-FirewallPoliciesRestConnectionImpl::ListFirewallPolicies(google::cloud::cpp::compute::firewallPolicies::v1::ListFirewallPoliciesRequest request) {
+FirewallPoliciesRestConnectionImpl::ListFirewallPolicies(
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        ListFirewallPoliciesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_firewall_policies_v1::FirewallPoliciesRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<
+      compute_firewall_policies_v1::FirewallPoliciesRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListFirewallPolicies(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::firewallPolicies::v1::ListFirewallPoliciesRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::firewallPolicies::v1::
+                          ListFirewallPoliciesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::firewallPolicies::v1::ListFirewallPoliciesRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::firewallPolicies::v1::
+                       ListFirewallPoliciesRequest const& request) {
               return stub->ListFirewallPolicies(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::FirewallPolicyList r) {
-        std::vector<google::cloud::cpp::compute::v1::FirewallPolicy> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::FirewallPolicy> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StatusOr<google::cloud::cpp::compute::v1::FirewallPoliciesListAssociationsResponse>
-FirewallPoliciesRestConnectionImpl::ListAssociations(google::cloud::cpp::compute::firewallPolicies::v1::ListAssociationsRequest const& request) {
+StatusOr<
+    google::cloud::cpp::compute::v1::FirewallPoliciesListAssociationsResponse>
+FirewallPoliciesRestConnectionImpl::ListAssociations(
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        ListAssociationsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->ListAssociations(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::firewallPolicies::v1::ListAssociationsRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 ListAssociationsRequest const& request) {
         return stub_->ListAssociations(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-FirewallPoliciesRestConnectionImpl::Move(google::cloud::cpp::compute::firewallPolicies::v1::MoveRequest const& request) {
+FirewallPoliciesRestConnectionImpl::Move(
+    google::cloud::cpp::compute::firewallPolicies::v1::MoveRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->Move(request),
-      [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::firewallPolicies::v1::MoveRequest const& request) {
-        return stub_->Move(rest_context, request);
-      },
+      retry_policy(), backoff_policy(), idempotency_policy()->Move(request),
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::firewallPolicies::v1::MoveRequest const&
+              request) { return stub_->Move(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-FirewallPoliciesRestConnectionImpl::PatchFirewallPolicies(google::cloud::cpp::compute::firewallPolicies::v1::PatchFirewallPoliciesRequest const& request) {
+FirewallPoliciesRestConnectionImpl::PatchFirewallPolicies(
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        PatchFirewallPoliciesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->PatchFirewallPolicies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::firewallPolicies::v1::PatchFirewallPoliciesRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 PatchFirewallPoliciesRequest const& request) {
         return stub_->PatchFirewallPolicies(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-FirewallPoliciesRestConnectionImpl::PatchRule(google::cloud::cpp::compute::firewallPolicies::v1::PatchRuleRequest const& request) {
+FirewallPoliciesRestConnectionImpl::PatchRule(
+    google::cloud::cpp::compute::firewallPolicies::v1::PatchRuleRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->PatchRule(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::firewallPolicies::v1::PatchRuleRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 PatchRuleRequest const& request) {
         return stub_->PatchRule(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-FirewallPoliciesRestConnectionImpl::RemoveAssociation(google::cloud::cpp::compute::firewallPolicies::v1::RemoveAssociationRequest const& request) {
+FirewallPoliciesRestConnectionImpl::RemoveAssociation(
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        RemoveAssociationRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->RemoveAssociation(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::firewallPolicies::v1::RemoveAssociationRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 RemoveAssociationRequest const& request) {
         return stub_->RemoveAssociation(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-FirewallPoliciesRestConnectionImpl::RemoveRule(google::cloud::cpp::compute::firewallPolicies::v1::RemoveRuleRequest const& request) {
+FirewallPoliciesRestConnectionImpl::RemoveRule(
+    google::cloud::cpp::compute::firewallPolicies::v1::RemoveRuleRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->RemoveRule(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::firewallPolicies::v1::RemoveRuleRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 RemoveRuleRequest const& request) {
         return stub_->RemoveRule(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-FirewallPoliciesRestConnectionImpl::SetIamPolicy(google::cloud::cpp::compute::firewallPolicies::v1::SetIamPolicyRequest const& request) {
+FirewallPoliciesRestConnectionImpl::SetIamPolicy(
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        SetIamPolicyRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::firewallPolicies::v1::SetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 SetIamPolicyRequest const& request) {
         return stub_->SetIamPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-FirewallPoliciesRestConnectionImpl::TestIamPermissions(google::cloud::cpp::compute::firewallPolicies::v1::TestIamPermissionsRequest const& request) {
+FirewallPoliciesRestConnectionImpl::TestIamPermissions(
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        TestIamPermissionsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->TestIamPermissions(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::firewallPolicies::v1::TestIamPermissionsRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(rest_context, request);
       },
       request, __func__);

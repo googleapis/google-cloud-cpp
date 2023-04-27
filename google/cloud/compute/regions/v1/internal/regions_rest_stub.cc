@@ -35,15 +35,14 @@ DefaultRegionsRestStub::DefaultRegionsRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultRegionsRestStub::DefaultRegionsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Region>
 DefaultRegionsRestStub::GetRegions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regions::v1::GetRegionsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Region>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}",
@@ -53,8 +52,9 @@ DefaultRegionsRestStub::GetRegions(
 
 StatusOr<google::cloud::cpp::compute::v1::RegionList>
 DefaultRegionsRestStub::ListRegions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regions::v1::ListRegionsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regions::v1::ListRegionsRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::RegionList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions",
@@ -63,7 +63,8 @@ DefaultRegionsRestStub::ListRegions(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

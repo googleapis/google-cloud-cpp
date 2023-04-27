@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROUTERS_V1_ROUTERS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROUTERS_V1_ROUTERS_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/routers/v1/routers_connection.h"
 #include "google/cloud/compute/routers/v1/routers_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,8 +64,7 @@ struct RoutersConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-compute-options
  */
 using RoutersPolicyOptionList =
-    OptionList<RoutersRetryPolicyOption,
-               RoutersBackoffPolicyOption,
+    OptionList<RoutersRetryPolicyOption, RoutersBackoffPolicyOption,
                RoutersConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -30,42 +30,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class UrlMapsTracingConnection
-    : public compute_url_maps_v1::UrlMapsConnection {
+class UrlMapsTracingConnection : public compute_url_maps_v1::UrlMapsConnection {
  public:
   ~UrlMapsTracingConnection() override = default;
 
   explicit UrlMapsTracingConnection(
-    std::shared_ptr<compute_url_maps_v1::UrlMapsConnection> child);
+      std::shared_ptr<compute_url_maps_v1::UrlMapsConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
-  AggregatedListUrlMaps(google::cloud::cpp::compute::urlMaps::v1::AggregatedListUrlMapsRequest const& request) override;
+  AggregatedListUrlMaps(
+      google::cloud::cpp::compute::urlMaps::v1::
+          AggregatedListUrlMapsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteUrlMaps(google::cloud::cpp::compute::urlMaps::v1::DeleteUrlMapsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteUrlMaps(
+      google::cloud::cpp::compute::urlMaps::v1::DeleteUrlMapsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::UrlMap>
-  GetUrlMaps(google::cloud::cpp::compute::urlMaps::v1::GetUrlMapsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMaps(
+      google::cloud::cpp::compute::urlMaps::v1::GetUrlMapsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertUrlMaps(google::cloud::cpp::compute::urlMaps::v1::InsertUrlMapsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertUrlMaps(
+      google::cloud::cpp::compute::urlMaps::v1::InsertUrlMapsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InvalidateCache(google::cloud::cpp::compute::urlMaps::v1::InvalidateCacheRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InvalidateCache(
+      google::cloud::cpp::compute::urlMaps::v1::InvalidateCacheRequest const&
+          request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::UrlMap>
-  ListUrlMaps(google::cloud::cpp::compute::urlMaps::v1::ListUrlMapsRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::UrlMap> ListUrlMaps(
+      google::cloud::cpp::compute::urlMaps::v1::ListUrlMapsRequest request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchUrlMaps(google::cloud::cpp::compute::urlMaps::v1::PatchUrlMapsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchUrlMaps(
+      google::cloud::cpp::compute::urlMaps::v1::PatchUrlMapsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateUrlMaps(google::cloud::cpp::compute::urlMaps::v1::UpdateUrlMapsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateUrlMaps(
+      google::cloud::cpp::compute::urlMaps::v1::UpdateUrlMapsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
-  Validate(google::cloud::cpp::compute::urlMaps::v1::ValidateRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse> Validate(
+      google::cloud::cpp::compute::urlMaps::v1::ValidateRequest const& request)
+      override;
 
  private:
   std::shared_ptr<compute_url_maps_v1::UrlMapsConnection> child_;

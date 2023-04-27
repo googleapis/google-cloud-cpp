@@ -29,49 +29,56 @@ namespace cloud {
 namespace compute_packet_mirrorings_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultPacketMirroringsRestStub::DefaultPacketMirroringsRestStub(Options options)
+DefaultPacketMirroringsRestStub::DefaultPacketMirroringsRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       options_(std::move(options)) {}
 
 DefaultPacketMirroringsRestStub::DefaultPacketMirroringsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
 DefaultPacketMirroringsRestStub::AggregatedListPacketMirrorings(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::packetMirrorings::v1::AggregatedListPacketMirroringsRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        AggregatedListPacketMirroringsRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/packetMirrorings",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultPacketMirroringsRestStub::DeletePacketMirrorings(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::packetMirrorings::v1::DeletePacketMirroringsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        DeletePacketMirroringsRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/packetMirrorings/{packet_mirroring}");
+      "/compute/v1/projects/{project}/regions/{region}/packetMirrorings/"
+      "{packet_mirroring}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
 DefaultPacketMirroringsRestStub::GetPacketMirrorings(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::packetMirrorings::v1::GetPacketMirroringsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        GetPacketMirroringsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::PacketMirroring>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/packetMirrorings/{packet_mirroring}",
+      "/compute/v1/projects/{project}/regions/{region}/packetMirrorings/"
+      "{packet_mirroring}",
       {std::make_pair("packet_mirroring", request.packet_mirroring()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region())});
@@ -79,8 +86,9 @@ DefaultPacketMirroringsRestStub::GetPacketMirrorings(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultPacketMirroringsRestStub::InsertPacketMirrorings(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::packetMirrorings::v1::InsertPacketMirroringsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        InsertPacketMirroringsRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/packetMirrorings");
@@ -88,9 +96,11 @@ DefaultPacketMirroringsRestStub::InsertPacketMirrorings(
 
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroringList>
 DefaultPacketMirroringsRestStub::ListPacketMirrorings(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::packetMirrorings::v1::ListPacketMirroringsRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::PacketMirroringList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        ListPacketMirroringsRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::PacketMirroringList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/packetMirrorings",
       {std::make_pair("filter", request.filter()),
@@ -99,25 +109,31 @@ DefaultPacketMirroringsRestStub::ListPacketMirrorings(
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultPacketMirroringsRestStub::PatchPacketMirrorings(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::packetMirrorings::v1::PatchPacketMirroringsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        PatchPacketMirroringsRequest const& request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/packetMirrorings/{packet_mirroring}");
+      "/compute/v1/projects/{project}/regions/{region}/packetMirrorings/"
+      "{packet_mirroring}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultPacketMirroringsRestStub::TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::packetMirrorings::v1::TestIamPermissionsRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        TestIamPermissionsRequest const& request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/packetMirrorings/{resource}/testIamPermissions");
+      "/compute/v1/projects/{project}/regions/{region}/packetMirrorings/"
+      "{resource}/testIamPermissions");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -28,18 +28,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TargetInstancesRestLogging::TargetInstancesRestLogging(
     std::shared_ptr<TargetInstancesRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
 TargetInstancesRestLogging::AggregatedListTargetInstances(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetInstances::v1::AggregatedListTargetInstancesRequest const& request) {
+    google::cloud::cpp::compute::targetInstances::v1::
+        AggregatedListTargetInstancesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetInstances::v1::AggregatedListTargetInstancesRequest const& request) {
+             google::cloud::cpp::compute::targetInstances::v1::
+                 AggregatedListTargetInstancesRequest const& request) {
         return child_->AggregatedListTargetInstances(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,10 +50,12 @@ TargetInstancesRestLogging::AggregatedListTargetInstances(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetInstancesRestLogging::DeleteTargetInstances(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetInstances::v1::DeleteTargetInstancesRequest const& request) {
+    google::cloud::cpp::compute::targetInstances::v1::
+        DeleteTargetInstancesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetInstances::v1::DeleteTargetInstancesRequest const& request) {
+             google::cloud::cpp::compute::targetInstances::v1::
+                 DeleteTargetInstancesRequest const& request) {
         return child_->DeleteTargetInstances(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -60,10 +64,12 @@ TargetInstancesRestLogging::DeleteTargetInstances(
 StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
 TargetInstancesRestLogging::GetTargetInstances(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetInstances::v1::GetTargetInstancesRequest const& request) {
+    google::cloud::cpp::compute::targetInstances::v1::
+        GetTargetInstancesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetInstances::v1::GetTargetInstancesRequest const& request) {
+             google::cloud::cpp::compute::targetInstances::v1::
+                 GetTargetInstancesRequest const& request) {
         return child_->GetTargetInstances(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -72,10 +78,12 @@ TargetInstancesRestLogging::GetTargetInstances(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetInstancesRestLogging::InsertTargetInstances(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetInstances::v1::InsertTargetInstancesRequest const& request) {
+    google::cloud::cpp::compute::targetInstances::v1::
+        InsertTargetInstancesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetInstances::v1::InsertTargetInstancesRequest const& request) {
+             google::cloud::cpp::compute::targetInstances::v1::
+                 InsertTargetInstancesRequest const& request) {
         return child_->InsertTargetInstances(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -84,10 +92,12 @@ TargetInstancesRestLogging::InsertTargetInstances(
 StatusOr<google::cloud::cpp::compute::v1::TargetInstanceList>
 TargetInstancesRestLogging::ListTargetInstances(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetInstances::v1::ListTargetInstancesRequest const& request) {
+    google::cloud::cpp::compute::targetInstances::v1::
+        ListTargetInstancesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetInstances::v1::ListTargetInstancesRequest const& request) {
+             google::cloud::cpp::compute::targetInstances::v1::
+                 ListTargetInstancesRequest const& request) {
         return child_->ListTargetInstances(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);

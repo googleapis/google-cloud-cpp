@@ -35,39 +35,49 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ResourcePoliciesRestMetadata : public ResourcePoliciesRestStub {
  public:
   ~ResourcePoliciesRestMetadata() override = default;
-  explicit ResourcePoliciesRestMetadata(std::shared_ptr<ResourcePoliciesRestStub> child);
+  explicit ResourcePoliciesRestMetadata(
+      std::shared_ptr<ResourcePoliciesRestStub> child);
 
-  StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList> AggregatedListResourcePolicies(
+  StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>
+  AggregatedListResourcePolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::resourcePolicies::v1::AggregatedListResourcePoliciesRequest const& request) override;
+      google::cloud::cpp::compute::resourcePolicies::v1::
+          AggregatedListResourcePoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteResourcePolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::resourcePolicies::v1::DeleteResourcePoliciesRequest const& request) override;
+      google::cloud::cpp::compute::resourcePolicies::v1::
+          DeleteResourcePoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy> GetResourcePolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::resourcePolicies::v1::GetResourcePoliciesRequest const& request) override;
+      google::cloud::cpp::compute::resourcePolicies::v1::
+          GetResourcePoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::resourcePolicies::v1::GetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::resourcePolicies::v1::
+          GetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertResourcePolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::resourcePolicies::v1::InsertResourcePoliciesRequest const& request) override;
+      google::cloud::cpp::compute::resourcePolicies::v1::
+          InsertResourcePoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyList> ListResourcePolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::resourcePolicies::v1::ListResourcePoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyList>
+  ListResourcePolicies(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::resourcePolicies::v1::
+                           ListResourcePoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::resourcePolicies::v1::SetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::resourcePolicies::v1::
+          SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::resourcePolicies::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::resourcePolicies::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

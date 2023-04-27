@@ -36,48 +36,65 @@ class SecurityPoliciesTracingConnection
   ~SecurityPoliciesTracingConnection() override = default;
 
   explicit SecurityPoliciesTracingConnection(
-    std::shared_ptr<compute_security_policies_v1::SecurityPoliciesConnection> child);
+      std::shared_ptr<compute_security_policies_v1::SecurityPoliciesConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddRule(google::cloud::cpp::compute::securityPolicies::v1::AddRuleRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddRule(
+      google::cloud::cpp::compute::securityPolicies::v1::AddRuleRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>
-  AggregatedListSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::AggregatedListSecurityPoliciesRequest const& request) override;
+  AggregatedListSecurityPolicies(
+      google::cloud::cpp::compute::securityPolicies::v1::
+          AggregatedListSecurityPoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::DeleteSecurityPoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSecurityPolicies(
+      google::cloud::cpp::compute::securityPolicies::v1::
+          DeleteSecurityPoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
-  GetSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::GetSecurityPoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicies(
+      google::cloud::cpp::compute::securityPolicies::v1::
+          GetSecurityPoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>
-  GetRule(google::cloud::cpp::compute::securityPolicies::v1::GetRuleRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule> GetRule(
+      google::cloud::cpp::compute::securityPolicies::v1::GetRuleRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::InsertSecurityPoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSecurityPolicies(
+      google::cloud::cpp::compute::securityPolicies::v1::
+          InsertSecurityPoliciesRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
-  ListSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::ListSecurityPoliciesRequest request) override;
+  ListSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::
+                           ListSecurityPoliciesRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesListPreconfiguredExpressionSetsResponse>
-  ListPreconfiguredExpressionSets(google::cloud::cpp::compute::securityPolicies::v1::ListPreconfiguredExpressionSetsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::
+               SecurityPoliciesListPreconfiguredExpressionSetsResponse>
+  ListPreconfiguredExpressionSets(
+      google::cloud::cpp::compute::securityPolicies::v1::
+          ListPreconfiguredExpressionSetsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::PatchSecurityPoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSecurityPolicies(
+      google::cloud::cpp::compute::securityPolicies::v1::
+          PatchSecurityPoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchRule(google::cloud::cpp::compute::securityPolicies::v1::PatchRuleRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRule(
+      google::cloud::cpp::compute::securityPolicies::v1::PatchRuleRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  RemoveRule(google::cloud::cpp::compute::securityPolicies::v1::RemoveRuleRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveRule(
+      google::cloud::cpp::compute::securityPolicies::v1::
+          RemoveRuleRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(google::cloud::cpp::compute::securityPolicies::v1::SetLabelsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::cpp::compute::securityPolicies::v1::SetLabelsRequest const&
+          request) override;
 
  private:
-  std::shared_ptr<compute_security_policies_v1::SecurityPoliciesConnection> child_;
+  std::shared_ptr<compute_security_policies_v1::SecurityPoliciesConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -90,7 +107,8 @@ class SecurityPoliciesTracingConnection
  */
 std::shared_ptr<compute_security_policies_v1::SecurityPoliciesConnection>
 MakeSecurityPoliciesTracingConnection(
-    std::shared_ptr<compute_security_policies_v1::SecurityPoliciesConnection> conn);
+    std::shared_ptr<compute_security_policies_v1::SecurityPoliciesConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_security_policies_v1_internal

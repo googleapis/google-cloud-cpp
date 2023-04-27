@@ -17,11 +17,11 @@
 // source: google/cloud/compute/node_types/v1/node_types.proto
 
 #include "google/cloud/compute/node_types/v1/node_types_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/node_types/v1/internal/node_types_option_defaults.h"
 #include "google/cloud/compute/node_types/v1/internal/node_types_tracing_connection.h"
 #include "google/cloud/compute/node_types/v1/node_types_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,7 +36,8 @@ NodeTypesConnection::~NodeTypesConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
 NodeTypesConnection::AggregatedListNodeTypes(
-    google::cloud::cpp::compute::nodeTypes::v1::AggregatedListNodeTypesRequest const&) {
+    google::cloud::cpp::compute::nodeTypes::v1::
+        AggregatedListNodeTypesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -46,8 +47,10 @@ NodeTypesConnection::GetNodeTypes(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::NodeType> NodeTypesConnection::ListNodeTypes(
-    google::cloud::cpp::compute::nodeTypes::v1::ListNodeTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::NodeType>
+NodeTypesConnection::ListNodeTypes(
+    google::cloud::cpp::compute::nodeTypes::v1::
+        ListNodeTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::NodeType>>();
 }

@@ -17,11 +17,11 @@
 // source: google/cloud/compute/firewalls/v1/firewalls.proto
 
 #include "google/cloud/compute/firewalls/v1/firewalls_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/firewalls/v1/firewalls_options.h"
 #include "google/cloud/compute/firewalls/v1/internal/firewalls_option_defaults.h"
 #include "google/cloud/compute/firewalls/v1/internal/firewalls_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -52,8 +52,10 @@ FirewallsConnection::InsertFirewalls(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Firewall> FirewallsConnection::ListFirewalls(
-    google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::Firewall>
+FirewallsConnection::ListFirewalls(
+    google::cloud::cpp::compute::firewalls::v1::
+        ListFirewallsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Firewall>>();
 }

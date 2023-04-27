@@ -35,31 +35,38 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class HttpHealthChecksRestMetadata : public HttpHealthChecksRestStub {
  public:
   ~HttpHealthChecksRestMetadata() override = default;
-  explicit HttpHealthChecksRestMetadata(std::shared_ptr<HttpHealthChecksRestStub> child);
+  explicit HttpHealthChecksRestMetadata(
+      std::shared_ptr<HttpHealthChecksRestStub> child);
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHttpHealthChecks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::httpHealthChecks::v1::DeleteHttpHealthChecksRequest const& request) override;
+      google::cloud::cpp::compute::httpHealthChecks::v1::
+          DeleteHttpHealthChecksRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck> GetHttpHealthChecks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::httpHealthChecks::v1::GetHttpHealthChecksRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck>
+  GetHttpHealthChecks(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::httpHealthChecks::v1::
+                          GetHttpHealthChecksRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHttpHealthChecks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::httpHealthChecks::v1::InsertHttpHealthChecksRequest const& request) override;
+      google::cloud::cpp::compute::httpHealthChecks::v1::
+          InsertHttpHealthChecksRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheckList> ListHttpHealthChecks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::httpHealthChecks::v1::ListHttpHealthChecksRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheckList>
+  ListHttpHealthChecks(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::httpHealthChecks::v1::
+                           ListHttpHealthChecksRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHttpHealthChecks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::httpHealthChecks::v1::PatchHttpHealthChecksRequest const& request) override;
+      google::cloud::cpp::compute::httpHealthChecks::v1::
+          PatchHttpHealthChecksRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateHttpHealthChecks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::httpHealthChecks::v1::UpdateHttpHealthChecksRequest const& request) override;
+      google::cloud::cpp::compute::httpHealthChecks::v1::
+          UpdateHttpHealthChecksRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

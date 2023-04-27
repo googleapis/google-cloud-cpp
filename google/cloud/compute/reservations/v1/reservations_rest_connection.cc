@@ -17,11 +17,11 @@
 // source: google/cloud/compute/reservations/v1/reservations.proto
 
 #include "google/cloud/compute/reservations/v1/reservations_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/reservations/v1/internal/reservations_option_defaults.h"
 #include "google/cloud/compute/reservations/v1/internal/reservations_rest_connection_impl.h"
 #include "google/cloud/compute/reservations/v1/internal/reservations_rest_stub_factory.h"
 #include "google/cloud/compute/reservations/v1/reservations_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include <memory>
@@ -34,15 +34,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<ReservationsConnection> MakeReservationsConnectionRest(
     ExperimentalTag, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList,
-      ReservationsPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 ReservationsPolicyOptionList>(options,
+                                                               __func__);
   options = compute_reservations_v1_internal::ReservationsDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_reservations_v1_internal::CreateDefaultReservationsRestStub(
-    options);
-  return std::make_shared<compute_reservations_v1_internal::ReservationsRestConnectionImpl>(
+  auto stub =
+      compute_reservations_v1_internal::CreateDefaultReservationsRestStub(
+          options);
+  return std::make_shared<
+      compute_reservations_v1_internal::ReservationsRestConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 

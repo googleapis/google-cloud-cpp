@@ -28,18 +28,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SecurityPoliciesRestLogging::SecurityPoliciesRestLogging(
     std::shared_ptr<SecurityPoliciesRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesRestLogging::AddRule(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::securityPolicies::v1::AddRuleRequest const& request) {
+    google::cloud::cpp::compute::securityPolicies::v1::AddRuleRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::securityPolicies::v1::AddRuleRequest const& request) {
+             google::cloud::cpp::compute::securityPolicies::v1::
+                 AddRuleRequest const& request) {
         return child_->AddRule(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,10 +50,12 @@ SecurityPoliciesRestLogging::AddRule(
 StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>
 SecurityPoliciesRestLogging::AggregatedListSecurityPolicies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::securityPolicies::v1::AggregatedListSecurityPoliciesRequest const& request) {
+    google::cloud::cpp::compute::securityPolicies::v1::
+        AggregatedListSecurityPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::securityPolicies::v1::AggregatedListSecurityPoliciesRequest const& request) {
+             google::cloud::cpp::compute::securityPolicies::v1::
+                 AggregatedListSecurityPoliciesRequest const& request) {
         return child_->AggregatedListSecurityPolicies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -60,10 +64,12 @@ SecurityPoliciesRestLogging::AggregatedListSecurityPolicies(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesRestLogging::DeleteSecurityPolicies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::securityPolicies::v1::DeleteSecurityPoliciesRequest const& request) {
+    google::cloud::cpp::compute::securityPolicies::v1::
+        DeleteSecurityPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::securityPolicies::v1::DeleteSecurityPoliciesRequest const& request) {
+             google::cloud::cpp::compute::securityPolicies::v1::
+                 DeleteSecurityPoliciesRequest const& request) {
         return child_->DeleteSecurityPolicies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -72,10 +78,12 @@ SecurityPoliciesRestLogging::DeleteSecurityPolicies(
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
 SecurityPoliciesRestLogging::GetSecurityPolicies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::securityPolicies::v1::GetSecurityPoliciesRequest const& request) {
+    google::cloud::cpp::compute::securityPolicies::v1::
+        GetSecurityPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::securityPolicies::v1::GetSecurityPoliciesRequest const& request) {
+             google::cloud::cpp::compute::securityPolicies::v1::
+                 GetSecurityPoliciesRequest const& request) {
         return child_->GetSecurityPolicies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -84,10 +92,12 @@ SecurityPoliciesRestLogging::GetSecurityPolicies(
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>
 SecurityPoliciesRestLogging::GetRule(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::securityPolicies::v1::GetRuleRequest const& request) {
+    google::cloud::cpp::compute::securityPolicies::v1::GetRuleRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::securityPolicies::v1::GetRuleRequest const& request) {
+             google::cloud::cpp::compute::securityPolicies::v1::
+                 GetRuleRequest const& request) {
         return child_->GetRule(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -96,10 +106,12 @@ SecurityPoliciesRestLogging::GetRule(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesRestLogging::InsertSecurityPolicies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::securityPolicies::v1::InsertSecurityPoliciesRequest const& request) {
+    google::cloud::cpp::compute::securityPolicies::v1::
+        InsertSecurityPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::securityPolicies::v1::InsertSecurityPoliciesRequest const& request) {
+             google::cloud::cpp::compute::securityPolicies::v1::
+                 InsertSecurityPoliciesRequest const& request) {
         return child_->InsertSecurityPolicies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -108,22 +120,27 @@ SecurityPoliciesRestLogging::InsertSecurityPolicies(
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyList>
 SecurityPoliciesRestLogging::ListSecurityPolicies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::securityPolicies::v1::ListSecurityPoliciesRequest const& request) {
+    google::cloud::cpp::compute::securityPolicies::v1::
+        ListSecurityPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::securityPolicies::v1::ListSecurityPoliciesRequest const& request) {
+             google::cloud::cpp::compute::securityPolicies::v1::
+                 ListSecurityPoliciesRequest const& request) {
         return child_->ListSecurityPolicies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesListPreconfiguredExpressionSetsResponse>
+StatusOr<google::cloud::cpp::compute::v1::
+             SecurityPoliciesListPreconfiguredExpressionSetsResponse>
 SecurityPoliciesRestLogging::ListPreconfiguredExpressionSets(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::securityPolicies::v1::ListPreconfiguredExpressionSetsRequest const& request) {
+    google::cloud::cpp::compute::securityPolicies::v1::
+        ListPreconfiguredExpressionSetsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::securityPolicies::v1::ListPreconfiguredExpressionSetsRequest const& request) {
+             google::cloud::cpp::compute::securityPolicies::v1::
+                 ListPreconfiguredExpressionSetsRequest const& request) {
         return child_->ListPreconfiguredExpressionSets(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -132,10 +149,12 @@ SecurityPoliciesRestLogging::ListPreconfiguredExpressionSets(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesRestLogging::PatchSecurityPolicies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::securityPolicies::v1::PatchSecurityPoliciesRequest const& request) {
+    google::cloud::cpp::compute::securityPolicies::v1::
+        PatchSecurityPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::securityPolicies::v1::PatchSecurityPoliciesRequest const& request) {
+             google::cloud::cpp::compute::securityPolicies::v1::
+                 PatchSecurityPoliciesRequest const& request) {
         return child_->PatchSecurityPolicies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -144,10 +163,12 @@ SecurityPoliciesRestLogging::PatchSecurityPolicies(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesRestLogging::PatchRule(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::securityPolicies::v1::PatchRuleRequest const& request) {
+    google::cloud::cpp::compute::securityPolicies::v1::PatchRuleRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::securityPolicies::v1::PatchRuleRequest const& request) {
+             google::cloud::cpp::compute::securityPolicies::v1::
+                 PatchRuleRequest const& request) {
         return child_->PatchRule(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -156,10 +177,12 @@ SecurityPoliciesRestLogging::PatchRule(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesRestLogging::RemoveRule(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::securityPolicies::v1::RemoveRuleRequest const& request) {
+    google::cloud::cpp::compute::securityPolicies::v1::RemoveRuleRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::securityPolicies::v1::RemoveRuleRequest const& request) {
+             google::cloud::cpp::compute::securityPolicies::v1::
+                 RemoveRuleRequest const& request) {
         return child_->RemoveRule(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -168,10 +191,12 @@ SecurityPoliciesRestLogging::RemoveRule(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesRestLogging::SetLabels(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::securityPolicies::v1::SetLabelsRequest const& request) {
+    google::cloud::cpp::compute::securityPolicies::v1::SetLabelsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::securityPolicies::v1::SetLabelsRequest const& request) {
+             google::cloud::cpp::compute::securityPolicies::v1::
+                 SetLabelsRequest const& request) {
         return child_->SetLabels(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SSL_CERTIFICATES_V1_SSL_CERTIFICATES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SSL_CERTIFICATES_V1_SSL_CERTIFICATES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/ssl_certificates/v1/internal/ssl_certificates_retry_traits.h"
 #include "google/cloud/compute/ssl_certificates/v1/ssl_certificates_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -35,11 +35,13 @@ namespace cloud {
 namespace compute_ssl_certificates_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using SslCertificatesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_ssl_certificates_v1_internal::SslCertificatesRetryTraits>;
+using SslCertificatesRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_ssl_certificates_v1_internal::SslCertificatesRetryTraits>;
 
-using SslCertificatesLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_ssl_certificates_v1_internal::SslCertificatesRetryTraits>;
+using SslCertificatesLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_ssl_certificates_v1_internal::SslCertificatesRetryTraits>;
 
 using SslCertificatesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -55,7 +57,8 @@ using SslCertificatesLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeSslCertificatesConnection()`.
  *
- * For mocking, see `compute_ssl_certificates_v1_mocks::MockSslCertificatesConnection`.
+ * For mocking, see
+ * `compute_ssl_certificates_v1_mocks::MockSslCertificatesConnection`.
  */
 class SslCertificatesConnection {
  public:
@@ -63,20 +66,27 @@ class SslCertificatesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
-  AggregatedListSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::AggregatedListSslCertificatesRequest const& request);
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
+  AggregatedListSslCertificates(
+      google::cloud::cpp::compute::sslCertificates::v1::
+          AggregatedListSslCertificatesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::DeleteSslCertificatesRequest const& request);
+  DeleteSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::
+                            DeleteSslCertificatesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-  GetSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::GetSslCertificatesRequest const& request);
+  GetSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::
+                         GetSslCertificatesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::InsertSslCertificatesRequest const& request);
+  InsertSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::
+                            InsertSslCertificatesRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
-  ListSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::ListSslCertificatesRequest request);
+  ListSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::
+                          ListSslCertificatesRequest request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

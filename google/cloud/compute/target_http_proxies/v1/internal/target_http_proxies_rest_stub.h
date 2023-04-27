@@ -36,33 +36,45 @@ class TargetHttpProxiesRestStub {
  public:
   virtual ~TargetHttpProxiesRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyAggregatedList> AggregatedListTargetHttpProxies(
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::TargetHttpProxyAggregatedList>
+  AggregatedListTargetHttpProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetHttpProxies::v1::AggregatedListTargetHttpProxiesRequest const& request) = 0;
+      google::cloud::cpp::compute::targetHttpProxies::v1::
+          AggregatedListTargetHttpProxiesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetHttpProxies(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteTargetHttpProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetHttpProxies::v1::DeleteTargetHttpProxiesRequest const& request) = 0;
+      google::cloud::cpp::compute::targetHttpProxies::v1::
+          DeleteTargetHttpProxiesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy> GetTargetHttpProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetHttpProxies::v1::GetTargetHttpProxiesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
+  GetTargetHttpProxies(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::targetHttpProxies::v1::
+                           GetTargetHttpProxiesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetHttpProxies(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertTargetHttpProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetHttpProxies::v1::InsertTargetHttpProxiesRequest const& request) = 0;
+      google::cloud::cpp::compute::targetHttpProxies::v1::
+          InsertTargetHttpProxiesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyList> ListTargetHttpProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetHttpProxies::v1::ListTargetHttpProxiesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyList>
+  ListTargetHttpProxies(google::cloud::rest_internal::RestContext& rest_context,
+                        google::cloud::cpp::compute::targetHttpProxies::v1::
+                            ListTargetHttpProxiesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchTargetHttpProxies(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchTargetHttpProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetHttpProxies::v1::PatchTargetHttpProxiesRequest const& request) = 0;
+      google::cloud::cpp::compute::targetHttpProxies::v1::
+          PatchTargetHttpProxiesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetUrlMap(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetHttpProxies::v1::SetUrlMapRequest const& request) = 0;
+      google::cloud::cpp::compute::targetHttpProxies::v1::
+          SetUrlMapRequest const& request) = 0;
 };
 
 class DefaultTargetHttpProxiesRestStub : public TargetHttpProxiesRestStub {
@@ -71,36 +83,44 @@ class DefaultTargetHttpProxiesRestStub : public TargetHttpProxiesRestStub {
 
   explicit DefaultTargetHttpProxiesRestStub(Options options);
   DefaultTargetHttpProxiesRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyAggregatedList> AggregatedListTargetHttpProxies(
+  StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyAggregatedList>
+  AggregatedListTargetHttpProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetHttpProxies::v1::AggregatedListTargetHttpProxiesRequest const& request) override;
+      google::cloud::cpp::compute::targetHttpProxies::v1::
+          AggregatedListTargetHttpProxiesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetHttpProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetHttpProxies::v1::DeleteTargetHttpProxiesRequest const& request) override;
+      google::cloud::cpp::compute::targetHttpProxies::v1::
+          DeleteTargetHttpProxiesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy> GetTargetHttpProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetHttpProxies::v1::GetTargetHttpProxiesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
+  GetTargetHttpProxies(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::targetHttpProxies::v1::
+                           GetTargetHttpProxiesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetHttpProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetHttpProxies::v1::InsertTargetHttpProxiesRequest const& request) override;
+      google::cloud::cpp::compute::targetHttpProxies::v1::
+          InsertTargetHttpProxiesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyList> ListTargetHttpProxies(
+  StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyList>
+  ListTargetHttpProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetHttpProxies::v1::ListTargetHttpProxiesRequest const& request) override;
+      google::cloud::cpp::compute::targetHttpProxies::v1::
+          ListTargetHttpProxiesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchTargetHttpProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetHttpProxies::v1::PatchTargetHttpProxiesRequest const& request) override;
+      google::cloud::cpp::compute::targetHttpProxies::v1::
+          PatchTargetHttpProxiesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetUrlMap(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetHttpProxies::v1::SetUrlMapRequest const& request) override;
+      google::cloud::cpp::compute::targetHttpProxies::v1::
+          SetUrlMapRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

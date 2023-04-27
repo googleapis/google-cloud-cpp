@@ -38,39 +38,48 @@ class BackendBucketsRestStub {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddSignedUrlKey(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::AddSignedUrlKeyRequest const& request) = 0;
+      google::cloud::cpp::compute::backendBuckets::v1::
+          AddSignedUrlKeyRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteBackendBuckets(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::DeleteBackendBucketsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteBackendBuckets(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::backendBuckets::v1::
+                           DeleteBackendBucketsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSignedUrlKey(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::DeleteSignedUrlKeyRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteSignedUrlKey(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::backendBuckets::v1::
+                         DeleteSignedUrlKeyRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::BackendBucket> GetBackendBuckets(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::GetBackendBucketsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::BackendBucket>
+  GetBackendBuckets(google::cloud::rest_internal::RestContext& rest_context,
+                    google::cloud::cpp::compute::backendBuckets::v1::
+                        GetBackendBucketsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertBackendBuckets(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::InsertBackendBucketsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertBackendBuckets(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::backendBuckets::v1::
+                           InsertBackendBucketsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::BackendBucketList> ListBackendBuckets(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::ListBackendBucketsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::BackendBucketList>
+  ListBackendBuckets(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::backendBuckets::v1::
+                         ListBackendBucketsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchBackendBuckets(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::PatchBackendBucketsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchBackendBuckets(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::backendBuckets::v1::
+                          PatchBackendBucketsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetEdgeSecurityPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::SetEdgeSecurityPolicyRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetEdgeSecurityPolicy(google::cloud::rest_internal::RestContext& rest_context,
+                        google::cloud::cpp::compute::backendBuckets::v1::
+                            SetEdgeSecurityPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateBackendBuckets(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::UpdateBackendBucketsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateBackendBuckets(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::backendBuckets::v1::
+                           UpdateBackendBucketsRequest const& request) = 0;
 };
 
 class DefaultBackendBucketsRestStub : public BackendBucketsRestStub {
@@ -79,44 +88,52 @@ class DefaultBackendBucketsRestStub : public BackendBucketsRestStub {
 
   explicit DefaultBackendBucketsRestStub(Options options);
   DefaultBackendBucketsRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddSignedUrlKey(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::AddSignedUrlKeyRequest const& request) override;
+      google::cloud::cpp::compute::backendBuckets::v1::
+          AddSignedUrlKeyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteBackendBuckets(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::DeleteBackendBucketsRequest const& request) override;
+      google::cloud::cpp::compute::backendBuckets::v1::
+          DeleteBackendBucketsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSignedUrlKey(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::DeleteSignedUrlKeyRequest const& request) override;
+      google::cloud::cpp::compute::backendBuckets::v1::
+          DeleteSignedUrlKeyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::BackendBucket> GetBackendBuckets(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::GetBackendBucketsRequest const& request) override;
+      google::cloud::cpp::compute::backendBuckets::v1::
+          GetBackendBucketsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertBackendBuckets(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::InsertBackendBucketsRequest const& request) override;
+      google::cloud::cpp::compute::backendBuckets::v1::
+          InsertBackendBucketsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::BackendBucketList> ListBackendBuckets(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::ListBackendBucketsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::BackendBucketList>
+  ListBackendBuckets(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::backendBuckets::v1::
+                         ListBackendBucketsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchBackendBuckets(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::PatchBackendBucketsRequest const& request) override;
+      google::cloud::cpp::compute::backendBuckets::v1::
+          PatchBackendBucketsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetEdgeSecurityPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::SetEdgeSecurityPolicyRequest const& request) override;
+      google::cloud::cpp::compute::backendBuckets::v1::
+          SetEdgeSecurityPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateBackendBuckets(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::UpdateBackendBucketsRequest const& request) override;
+      google::cloud::cpp::compute::backendBuckets::v1::
+          UpdateBackendBucketsRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

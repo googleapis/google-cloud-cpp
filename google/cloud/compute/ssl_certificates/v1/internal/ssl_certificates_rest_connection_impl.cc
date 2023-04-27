@@ -17,8 +17,8 @@
 // source: google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto
 
 #include "google/cloud/compute/ssl_certificates/v1/internal/ssl_certificates_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/ssl_certificates/v1/internal/ssl_certificates_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -32,82 +32,105 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SslCertificatesRestConnectionImpl::SslCertificatesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_ssl_certificates_v1_internal::SslCertificatesRestStub> stub,
+    std::shared_ptr<
+        compute_ssl_certificates_v1_internal::SslCertificatesRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        SslCertificatesConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      SslCertificatesConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
-SslCertificatesRestConnectionImpl::AggregatedListSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::AggregatedListSslCertificatesRequest const& request) {
+SslCertificatesRestConnectionImpl::AggregatedListSslCertificates(
+    google::cloud::cpp::compute::sslCertificates::v1::
+        AggregatedListSslCertificatesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AggregatedListSslCertificates(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::sslCertificates::v1::AggregatedListSslCertificatesRequest const& request) {
+             google::cloud::cpp::compute::sslCertificates::v1::
+                 AggregatedListSslCertificatesRequest const& request) {
         return stub_->AggregatedListSslCertificates(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SslCertificatesRestConnectionImpl::DeleteSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::DeleteSslCertificatesRequest const& request) {
+SslCertificatesRestConnectionImpl::DeleteSslCertificates(
+    google::cloud::cpp::compute::sslCertificates::v1::
+        DeleteSslCertificatesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteSslCertificates(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::sslCertificates::v1::DeleteSslCertificatesRequest const& request) {
+             google::cloud::cpp::compute::sslCertificates::v1::
+                 DeleteSslCertificatesRequest const& request) {
         return stub_->DeleteSslCertificates(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-SslCertificatesRestConnectionImpl::GetSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::GetSslCertificatesRequest const& request) {
+SslCertificatesRestConnectionImpl::GetSslCertificates(
+    google::cloud::cpp::compute::sslCertificates::v1::
+        GetSslCertificatesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetSslCertificates(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::sslCertificates::v1::GetSslCertificatesRequest const& request) {
+             google::cloud::cpp::compute::sslCertificates::v1::
+                 GetSslCertificatesRequest const& request) {
         return stub_->GetSslCertificates(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SslCertificatesRestConnectionImpl::InsertSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::InsertSslCertificatesRequest const& request) {
+SslCertificatesRestConnectionImpl::InsertSslCertificates(
+    google::cloud::cpp::compute::sslCertificates::v1::
+        InsertSslCertificatesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->InsertSslCertificates(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::sslCertificates::v1::InsertSslCertificatesRequest const& request) {
+             google::cloud::cpp::compute::sslCertificates::v1::
+                 InsertSslCertificatesRequest const& request) {
         return stub_->InsertSslCertificates(rest_context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
-SslCertificatesRestConnectionImpl::ListSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::ListSslCertificatesRequest request) {
+SslCertificatesRestConnectionImpl::ListSslCertificates(
+    google::cloud::cpp::compute::sslCertificates::v1::ListSslCertificatesRequest
+        request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_ssl_certificates_v1::SslCertificatesRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<
+      compute_ssl_certificates_v1::SslCertificatesRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListSslCertificates(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::SslCertificate>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::SslCertificate>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::sslCertificates::v1::ListSslCertificatesRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::sslCertificates::v1::
+                          ListSslCertificatesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::sslCertificates::v1::ListSslCertificatesRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::sslCertificates::v1::
+                       ListSslCertificatesRequest const& request) {
               return stub->ListSslCertificates(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::SslCertificateList r) {
-        std::vector<google::cloud::cpp::compute::v1::SslCertificate> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::SslCertificate> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

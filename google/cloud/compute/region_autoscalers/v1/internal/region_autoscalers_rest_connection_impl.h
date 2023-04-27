@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_AUTOSCALERS_V1_INTERNAL_REGION_AUTOSCALERS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_AUTOSCALERS_V1_INTERNAL_REGION_AUTOSCALERS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_autoscalers/v1/internal/region_autoscalers_rest_stub.h"
 #include "google/cloud/compute/region_autoscalers/v1/internal/region_autoscalers_retry_traits.h"
 #include "google/cloud/compute/region_autoscalers/v1/region_autoscalers_connection.h"
 #include "google/cloud/compute/region_autoscalers/v1/region_autoscalers_connection_idempotency_policy.h"
 #include "google/cloud/compute/region_autoscalers/v1/region_autoscalers_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,58 +43,91 @@ class RegionAutoscalersRestConnectionImpl
   ~RegionAutoscalersRestConnectionImpl() override = default;
 
   RegionAutoscalersRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_region_autoscalers_v1_internal::RegionAutoscalersRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_region_autoscalers_v1_internal::RegionAutoscalersRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::DeleteRegionAutoscalersRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRegionAutoscalers(
+      google::cloud::cpp::compute::regionAutoscalers::v1::
+          DeleteRegionAutoscalersRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
-  GetRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::GetRegionAutoscalersRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetRegionAutoscalers(
+      google::cloud::cpp::compute::regionAutoscalers::v1::
+          GetRegionAutoscalersRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::InsertRegionAutoscalersRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionAutoscalers(
+      google::cloud::cpp::compute::regionAutoscalers::v1::
+          InsertRegionAutoscalersRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
-  ListRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::ListRegionAutoscalersRequest request) override;
+  ListRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::
+                            ListRegionAutoscalersRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::PatchRegionAutoscalersRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRegionAutoscalers(
+      google::cloud::cpp::compute::regionAutoscalers::v1::
+          PatchRegionAutoscalersRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::UpdateRegionAutoscalersRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRegionAutoscalers(
+      google::cloud::cpp::compute::regionAutoscalers::v1::
+          UpdateRegionAutoscalersRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_region_autoscalers_v1::RegionAutoscalersRetryPolicy> retry_policy() {
+  std::unique_ptr<compute_region_autoscalers_v1::RegionAutoscalersRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_autoscalers_v1::RegionAutoscalersRetryPolicyOption>()) {
-      return options.get<compute_region_autoscalers_v1::RegionAutoscalersRetryPolicyOption>()->clone();
+    if (options.has<compute_region_autoscalers_v1::
+                        RegionAutoscalersRetryPolicyOption>()) {
+      return options
+          .get<compute_region_autoscalers_v1::
+                   RegionAutoscalersRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_region_autoscalers_v1::RegionAutoscalersRetryPolicyOption>()->clone();
+    return options_
+        .get<
+            compute_region_autoscalers_v1::RegionAutoscalersRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_autoscalers_v1::RegionAutoscalersBackoffPolicyOption>()) {
-      return options.get<compute_region_autoscalers_v1::RegionAutoscalersBackoffPolicyOption>()->clone();
+    if (options.has<compute_region_autoscalers_v1::
+                        RegionAutoscalersBackoffPolicyOption>()) {
+      return options
+          .get<compute_region_autoscalers_v1::
+                   RegionAutoscalersBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_region_autoscalers_v1::RegionAutoscalersBackoffPolicyOption>()->clone();
+    return options_
+        .get<compute_region_autoscalers_v1::
+                 RegionAutoscalersBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_region_autoscalers_v1::RegionAutoscalersConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<compute_region_autoscalers_v1::
+                      RegionAutoscalersConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_autoscalers_v1::RegionAutoscalersConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_region_autoscalers_v1::RegionAutoscalersConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<compute_region_autoscalers_v1::
+                        RegionAutoscalersConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_region_autoscalers_v1::
+                   RegionAutoscalersConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_region_autoscalers_v1::RegionAutoscalersConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_region_autoscalers_v1::
+                 RegionAutoscalersConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_region_autoscalers_v1_internal::RegionAutoscalersRestStub> stub_;
+  std::shared_ptr<
+      compute_region_autoscalers_v1_internal::RegionAutoscalersRestStub>
+      stub_;
   Options options_;
 };
 

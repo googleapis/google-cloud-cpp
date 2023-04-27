@@ -62,7 +62,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ImageFamilyViewsClient {
  public:
-  explicit ImageFamilyViewsClient(ExperimentalTag, std::shared_ptr<ImageFamilyViewsConnection> connection, Options opts = {});
+  explicit ImageFamilyViewsClient(
+      ExperimentalTag, std::shared_ptr<ImageFamilyViewsConnection> connection,
+      Options opts = {});
   ~ImageFamilyViewsClient();
 
   ///@{
@@ -75,45 +77,57 @@ class ImageFamilyViewsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ImageFamilyViewsClient const& a, ImageFamilyViewsClient const& b) {
+  friend bool operator==(ImageFamilyViewsClient const& a,
+                         ImageFamilyViewsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ImageFamilyViewsClient const& a, ImageFamilyViewsClient const& b) {
+  friend bool operator!=(ImageFamilyViewsClient const& a,
+                         ImageFamilyViewsClient const& b) {
     return !(a == b);
   }
   ///@}
 
   ///
-  /// Returns the latest image that is part of an image family, is not deprecated
-  /// and is rolled out in the specified zone.
+  /// Returns the latest image that is part of an image family, is not
+  /// deprecated and is rolled out in the specified zone.
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
   /// @param family  Name of the image family to search for.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::ImageFamilyView,google/cloud/compute/v1/internal/common.proto#L8958}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ImageFamilyView,google/cloud/compute/v1/internal/common.proto#L8958}
   ///
-  /// [google.cloud.cpp.compute.imageFamilyViews.v1.GetImageFamilyViewsRequest]: @googleapis_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L44}
-  /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L8958}
+  /// [google.cloud.cpp.compute.imageFamilyViews.v1.GetImageFamilyViewsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L44}
+  /// [google.cloud.cpp.compute.v1.ImageFamilyView]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L8958}
   ///
   StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-  GetImageFamilyViews(std::string const& project, std::string const& zone, std::string const& family, Options opts = {});
+  GetImageFamilyViews(std::string const& project, std::string const& zone,
+                      std::string const& family, Options opts = {});
 
   ///
-  /// Returns the latest image that is part of an image family, is not deprecated
-  /// and is rolled out in the specified zone.
+  /// Returns the latest image that is part of an image family, is not
+  /// deprecated and is rolled out in the specified zone.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::imageFamilyViews::v1::GetImageFamilyViewsRequest,google/cloud/compute/image_family_views/v1/image_family_views.proto#L44}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::imageFamilyViews::v1::GetImageFamilyViewsRequest,google/cloud/compute/image_family_views/v1/image_family_views.proto#L44}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::ImageFamilyView,google/cloud/compute/v1/internal/common.proto#L8958}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ImageFamilyView,google/cloud/compute/v1/internal/common.proto#L8958}
   ///
-  /// [google.cloud.cpp.compute.imageFamilyViews.v1.GetImageFamilyViewsRequest]: @googleapis_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L44}
-  /// [google.cloud.cpp.compute.v1.ImageFamilyView]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L8958}
+  /// [google.cloud.cpp.compute.imageFamilyViews.v1.GetImageFamilyViewsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L44}
+  /// [google.cloud.cpp.compute.v1.ImageFamilyView]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L8958}
   ///
   StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-  GetImageFamilyViews(google::cloud::cpp::compute::imageFamilyViews::v1::GetImageFamilyViewsRequest const& request, Options opts = {});
+  GetImageFamilyViews(google::cloud::cpp::compute::imageFamilyViews::v1::
+                          GetImageFamilyViewsRequest const& request,
+                      Options opts = {});
 
  private:
   std::shared_ptr<ImageFamilyViewsConnection> connection_;

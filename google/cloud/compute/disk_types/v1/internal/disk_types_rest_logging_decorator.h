@@ -41,17 +41,21 @@ class DiskTypesRestLogging : public DiskTypesRestStub {
                        TracingOptions tracing_options,
                        std::set<std::string> components);
 
-  StatusOr<google::cloud::cpp::compute::v1::DiskTypeAggregatedList> AggregatedListDiskTypes(
+  StatusOr<google::cloud::cpp::compute::v1::DiskTypeAggregatedList>
+  AggregatedListDiskTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::diskTypes::v1::AggregatedListDiskTypesRequest const& request) override;
+      google::cloud::cpp::compute::diskTypes::v1::
+          AggregatedListDiskTypesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::diskTypes::v1::GetDiskTypesRequest const& request) override;
+      google::cloud::cpp::compute::diskTypes::v1::GetDiskTypesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::DiskTypeList> ListDiskTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::diskTypes::v1::ListDiskTypesRequest const& request) override;
+      google::cloud::cpp::compute::diskTypes::v1::ListDiskTypesRequest const&
+          request) override;
 
  private:
   std::shared_ptr<DiskTypesRestStub> child_;

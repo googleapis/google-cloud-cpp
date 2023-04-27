@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_PROJECTS_V1_INTERNAL_PROJECTS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_PROJECTS_V1_INTERNAL_PROJECTS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/projects/v1/internal/projects_rest_stub.h"
 #include "google/cloud/compute/projects/v1/internal/projects_retry_traits.h"
 #include "google/cloud/compute/projects/v1/projects_connection.h"
 #include "google/cloud/compute/projects/v1/projects_connection_idempotency_policy.h"
 #include "google/cloud/compute/projects/v1/projects_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,75 +43,99 @@ class ProjectsRestConnectionImpl
   ~ProjectsRestConnectionImpl() override = default;
 
   ProjectsRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_projects_v1_internal::ProjectsRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<compute_projects_v1_internal::ProjectsRestStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DisableXpnHost(google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnHost(
+      google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DisableXpnResource(google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnResource(
+      google::cloud::cpp::compute::projects::v1::
+          DisableXpnResourceRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  EnableXpnHost(google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnHost(
+      google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  EnableXpnResource(google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnResource(
+      google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Project>
-  GetProjects(google::cloud::cpp::compute::projects::v1::GetProjectsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Project> GetProjects(
+      google::cloud::cpp::compute::projects::v1::GetProjectsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Project>
-  GetXpnHost(google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Project> GetXpnHost(
+      google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ProjectsGetXpnResources>
-  GetXpnResources(google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const& request) override;
+  GetXpnResources(
+      google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const&
+          request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Project>
-  ListXpnHosts(google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Project> ListXpnHosts(
+      google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest request)
+      override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> MoveDisk(
+      google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request)
+      override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> MoveInstance(
+      google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
-  MoveDisk(google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request) override;
+  SetCommonInstanceMetadata(
+      google::cloud::cpp::compute::projects::v1::
+          SetCommonInstanceMetadataRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  MoveInstance(google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetDefaultNetworkTier(
+      google::cloud::cpp::compute::projects::v1::
+          SetDefaultNetworkTierRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetCommonInstanceMetadata(google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const& request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetDefaultNetworkTier(google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const& request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetUsageExportBucket(google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetUsageExportBucket(
+      google::cloud::cpp::compute::projects::v1::
+          SetUsageExportBucketRequest const& request) override;
 
  private:
   std::unique_ptr<compute_projects_v1::ProjectsRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<compute_projects_v1::ProjectsRetryPolicyOption>()) {
-      return options.get<compute_projects_v1::ProjectsRetryPolicyOption>()->clone();
+      return options.get<compute_projects_v1::ProjectsRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_projects_v1::ProjectsRetryPolicyOption>()->clone();
+    return options_.get<compute_projects_v1::ProjectsRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<compute_projects_v1::ProjectsBackoffPolicyOption>()) {
-      return options.get<compute_projects_v1::ProjectsBackoffPolicyOption>()->clone();
+      return options.get<compute_projects_v1::ProjectsBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_projects_v1::ProjectsBackoffPolicyOption>()->clone();
+    return options_.get<compute_projects_v1::ProjectsBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_projects_v1::ProjectsConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<compute_projects_v1::ProjectsConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_projects_v1::ProjectsConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_projects_v1::ProjectsConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<
+            compute_projects_v1::ProjectsConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_projects_v1::ProjectsConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_projects_v1::ProjectsConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_projects_v1::ProjectsConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

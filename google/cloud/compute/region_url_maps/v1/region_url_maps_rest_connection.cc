@@ -17,11 +17,11 @@
 // source: google/cloud/compute/region_url_maps/v1/region_url_maps.proto
 
 #include "google/cloud/compute/region_url_maps/v1/region_url_maps_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/region_url_maps/v1/internal/region_url_maps_option_defaults.h"
 #include "google/cloud/compute/region_url_maps/v1/internal/region_url_maps_rest_connection_impl.h"
 #include "google/cloud/compute/region_url_maps/v1/internal/region_url_maps_rest_stub_factory.h"
 #include "google/cloud/compute/region_url_maps/v1/region_url_maps_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include <memory>
@@ -34,15 +34,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<RegionUrlMapsConnection> MakeRegionUrlMapsConnectionRest(
     ExperimentalTag, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList,
-      RegionUrlMapsPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 RegionUrlMapsPolicyOptionList>(options,
+                                                                __func__);
   options = compute_region_url_maps_v1_internal::RegionUrlMapsDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_region_url_maps_v1_internal::CreateDefaultRegionUrlMapsRestStub(
-    options);
-  return std::make_shared<compute_region_url_maps_v1_internal::RegionUrlMapsRestConnectionImpl>(
+  auto stub =
+      compute_region_url_maps_v1_internal::CreateDefaultRegionUrlMapsRestStub(
+          options);
+  return std::make_shared<
+      compute_region_url_maps_v1_internal::RegionUrlMapsRestConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 

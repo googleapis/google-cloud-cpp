@@ -36,15 +36,18 @@ class RegionInstancesTracingConnection
   ~RegionInstancesTracingConnection() override = default;
 
   explicit RegionInstancesTracingConnection(
-    std::shared_ptr<compute_region_instances_v1::RegionInstancesConnection> child);
+      std::shared_ptr<compute_region_instances_v1::RegionInstancesConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  BulkInsert(google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
+      google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const&
+          request) override;
 
  private:
-  std::shared_ptr<compute_region_instances_v1::RegionInstancesConnection> child_;
+  std::shared_ptr<compute_region_instances_v1::RegionInstancesConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -57,7 +60,8 @@ class RegionInstancesTracingConnection
  */
 std::shared_ptr<compute_region_instances_v1::RegionInstancesConnection>
 MakeRegionInstancesTracingConnection(
-    std::shared_ptr<compute_region_instances_v1::RegionInstancesConnection> conn);
+    std::shared_ptr<compute_region_instances_v1::RegionInstancesConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_instances_v1_internal

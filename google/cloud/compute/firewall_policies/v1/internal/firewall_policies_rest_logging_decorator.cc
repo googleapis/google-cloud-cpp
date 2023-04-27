@@ -28,18 +28,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 FirewallPoliciesRestLogging::FirewallPoliciesRestLogging(
     std::shared_ptr<FirewallPoliciesRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestLogging::AddAssociation(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::AddAssociationRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        AddAssociationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewallPolicies::v1::AddAssociationRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 AddAssociationRequest const& request) {
         return child_->AddAssociation(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,10 +50,12 @@ FirewallPoliciesRestLogging::AddAssociation(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestLogging::AddRule(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::AddRuleRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::AddRuleRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewallPolicies::v1::AddRuleRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 AddRuleRequest const& request) {
         return child_->AddRule(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -60,10 +64,12 @@ FirewallPoliciesRestLogging::AddRule(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestLogging::CloneRules(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::CloneRulesRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::CloneRulesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewallPolicies::v1::CloneRulesRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 CloneRulesRequest const& request) {
         return child_->CloneRules(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -72,10 +78,12 @@ FirewallPoliciesRestLogging::CloneRules(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestLogging::DeleteFirewallPolicies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::DeleteFirewallPoliciesRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        DeleteFirewallPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewallPolicies::v1::DeleteFirewallPoliciesRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 DeleteFirewallPoliciesRequest const& request) {
         return child_->DeleteFirewallPolicies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -84,10 +92,12 @@ FirewallPoliciesRestLogging::DeleteFirewallPolicies(
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
 FirewallPoliciesRestLogging::GetFirewallPolicies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::GetFirewallPoliciesRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        GetFirewallPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewallPolicies::v1::GetFirewallPoliciesRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 GetFirewallPoliciesRequest const& request) {
         return child_->GetFirewallPolicies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -96,10 +106,12 @@ FirewallPoliciesRestLogging::GetFirewallPolicies(
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
 FirewallPoliciesRestLogging::GetAssociation(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::GetAssociationRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        GetAssociationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewallPolicies::v1::GetAssociationRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 GetAssociationRequest const& request) {
         return child_->GetAssociation(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -108,10 +120,12 @@ FirewallPoliciesRestLogging::GetAssociation(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 FirewallPoliciesRestLogging::GetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::GetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewallPolicies::v1::GetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -120,10 +134,12 @@ FirewallPoliciesRestLogging::GetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
 FirewallPoliciesRestLogging::GetRule(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::GetRuleRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::GetRuleRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewallPolicies::v1::GetRuleRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 GetRuleRequest const& request) {
         return child_->GetRule(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -132,10 +148,12 @@ FirewallPoliciesRestLogging::GetRule(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestLogging::InsertFirewallPolicies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::InsertFirewallPoliciesRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        InsertFirewallPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewallPolicies::v1::InsertFirewallPoliciesRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 InsertFirewallPoliciesRequest const& request) {
         return child_->InsertFirewallPolicies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -144,22 +162,27 @@ FirewallPoliciesRestLogging::InsertFirewallPolicies(
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyList>
 FirewallPoliciesRestLogging::ListFirewallPolicies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::ListFirewallPoliciesRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        ListFirewallPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewallPolicies::v1::ListFirewallPoliciesRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 ListFirewallPoliciesRequest const& request) {
         return child_->ListFirewallPolicies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::FirewallPoliciesListAssociationsResponse>
+StatusOr<
+    google::cloud::cpp::compute::v1::FirewallPoliciesListAssociationsResponse>
 FirewallPoliciesRestLogging::ListAssociations(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::ListAssociationsRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        ListAssociationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewallPolicies::v1::ListAssociationsRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 ListAssociationsRequest const& request) {
         return child_->ListAssociations(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -168,22 +191,25 @@ FirewallPoliciesRestLogging::ListAssociations(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestLogging::Move(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::MoveRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::MoveRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewallPolicies::v1::MoveRequest const& request) {
-        return child_->Move(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::firewallPolicies::v1::MoveRequest const&
+              request) { return child_->Move(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestLogging::PatchFirewallPolicies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::PatchFirewallPoliciesRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        PatchFirewallPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewallPolicies::v1::PatchFirewallPoliciesRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 PatchFirewallPoliciesRequest const& request) {
         return child_->PatchFirewallPolicies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -192,10 +218,12 @@ FirewallPoliciesRestLogging::PatchFirewallPolicies(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestLogging::PatchRule(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::PatchRuleRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::PatchRuleRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewallPolicies::v1::PatchRuleRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 PatchRuleRequest const& request) {
         return child_->PatchRule(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -204,10 +232,12 @@ FirewallPoliciesRestLogging::PatchRule(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestLogging::RemoveAssociation(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::RemoveAssociationRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        RemoveAssociationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewallPolicies::v1::RemoveAssociationRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 RemoveAssociationRequest const& request) {
         return child_->RemoveAssociation(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -216,10 +246,12 @@ FirewallPoliciesRestLogging::RemoveAssociation(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestLogging::RemoveRule(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::RemoveRuleRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::RemoveRuleRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewallPolicies::v1::RemoveRuleRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 RemoveRuleRequest const& request) {
         return child_->RemoveRule(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -228,10 +260,12 @@ FirewallPoliciesRestLogging::RemoveRule(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 FirewallPoliciesRestLogging::SetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::SetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewallPolicies::v1::SetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -240,10 +274,12 @@ FirewallPoliciesRestLogging::SetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 FirewallPoliciesRestLogging::TestIamPermissions(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::TestIamPermissionsRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewallPolicies::v1::TestIamPermissionsRequest const& request) {
+             google::cloud::cpp::compute::firewallPolicies::v1::
+                 TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);

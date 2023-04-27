@@ -35,39 +35,51 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class NetworkAttachmentsRestMetadata : public NetworkAttachmentsRestStub {
  public:
   ~NetworkAttachmentsRestMetadata() override = default;
-  explicit NetworkAttachmentsRestMetadata(std::shared_ptr<NetworkAttachmentsRestStub> child);
+  explicit NetworkAttachmentsRestMetadata(
+      std::shared_ptr<NetworkAttachmentsRestStub> child);
 
-  StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList> AggregatedListNetworkAttachments(
+  StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>
+  AggregatedListNetworkAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networkAttachments::v1::AggregatedListNetworkAttachmentsRequest const& request) override;
+      google::cloud::cpp::compute::networkAttachments::v1::
+          AggregatedListNetworkAttachmentsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetworkAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networkAttachments::v1::DeleteNetworkAttachmentsRequest const& request) override;
+      google::cloud::cpp::compute::networkAttachments::v1::
+          DeleteNetworkAttachmentsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment> GetNetworkAttachments(
+  StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
+  GetNetworkAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networkAttachments::v1::GetNetworkAttachmentsRequest const& request) override;
+      google::cloud::cpp::compute::networkAttachments::v1::
+          GetNetworkAttachmentsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networkAttachments::v1::GetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::networkAttachments::v1::
+          GetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNetworkAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networkAttachments::v1::InsertNetworkAttachmentsRequest const& request) override;
+      google::cloud::cpp::compute::networkAttachments::v1::
+          InsertNetworkAttachmentsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentList> ListNetworkAttachments(
+  StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentList>
+  ListNetworkAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networkAttachments::v1::ListNetworkAttachmentsRequest const& request) override;
+      google::cloud::cpp::compute::networkAttachments::v1::
+          ListNetworkAttachmentsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networkAttachments::v1::SetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::networkAttachments::v1::
+          SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networkAttachments::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::networkAttachments::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

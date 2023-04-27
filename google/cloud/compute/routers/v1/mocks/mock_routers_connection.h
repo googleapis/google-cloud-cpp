@@ -47,44 +47,65 @@ class MockRoutersConnection : public compute_routers_v1::RoutersConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>,
-  AggregatedListRouters,
-  (google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest const& request), (override));
+              AggregatedListRouters,
+              (google::cloud::cpp::compute::routers::v1::
+                   AggregatedListRoutersRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteRouters,
-  (google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteRouters,
+      (google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Router>,
-  GetRouters,
-  (google::cloud::cpp::compute::routers::v1::GetRoutersRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Router>, GetRouters,
+      (google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>,
-  GetNatMappingInfo,
-  (google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>,
+      GetNatMappingInfo,
+      (google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>,
-  GetRouterStatus,
-  (google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>,
+      GetRouterStatus,
+      (google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertRouters,
-  (google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertRouters,
+      (google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Router>,
-  ListRouters,
-  (google::cloud::cpp::compute::routers::v1::ListRoutersRequest request), (override));
+  MOCK_METHOD(
+      StreamRange<google::cloud::cpp::compute::v1::Router>, ListRouters,
+      (google::cloud::cpp::compute::routers::v1::ListRoutersRequest request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  PatchRouters,
-  (google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, PatchRouters,
+      (google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>,
-  Preview,
-  (google::cloud::cpp::compute::routers::v1::PreviewRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>,
+      Preview,
+      (google::cloud::cpp::compute::routers::v1::PreviewRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  UpdateRouters,
-  (google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, UpdateRouters,
+      (google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

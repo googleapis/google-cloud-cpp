@@ -17,8 +17,8 @@
 // source: google/cloud/compute/addresses/v1/addresses.proto
 
 #include "google/cloud/compute/addresses/v1/internal/addresses_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/addresses/v1/internal/addresses_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -34,80 +34,99 @@ AddressesRestConnectionImpl::AddressesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<compute_addresses_v1_internal::AddressesRestStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        AddressesConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      AddressesConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
-AddressesRestConnectionImpl::AggregatedListAddresses(google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest const& request) {
+AddressesRestConnectionImpl::AggregatedListAddresses(
+    google::cloud::cpp::compute::addresses::v1::
+        AggregatedListAddressesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AggregatedListAddresses(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest const& request) {
+             google::cloud::cpp::compute::addresses::v1::
+                 AggregatedListAddressesRequest const& request) {
         return stub_->AggregatedListAddresses(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-AddressesRestConnectionImpl::DeleteAddresses(google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const& request) {
+AddressesRestConnectionImpl::DeleteAddresses(
+    google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteAddresses(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const& request) {
+             google::cloud::cpp::compute::addresses::v1::
+                 DeleteAddressesRequest const& request) {
         return stub_->DeleteAddresses(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Address>
-AddressesRestConnectionImpl::GetAddresses(google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const& request) {
+AddressesRestConnectionImpl::GetAddresses(
+    google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetAddresses(request),
-      [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const& request) {
-        return stub_->GetAddresses(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&
+              request) { return stub_->GetAddresses(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-AddressesRestConnectionImpl::InsertAddresses(google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const& request) {
+AddressesRestConnectionImpl::InsertAddresses(
+    google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->InsertAddresses(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const& request) {
+             google::cloud::cpp::compute::addresses::v1::
+                 InsertAddressesRequest const& request) {
         return stub_->InsertAddresses(rest_context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Address>
-AddressesRestConnectionImpl::ListAddresses(google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request) {
+AddressesRestConnectionImpl::ListAddresses(
+    google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_addresses_v1::AddressesRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<compute_addresses_v1::AddressesRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListAddresses(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::Address>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::Address>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::addresses::v1::ListAddressesRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::addresses::v1::
+                          ListAddressesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::addresses::v1::ListAddressesRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::addresses::v1::
+                       ListAddressesRequest const& request) {
               return stub->ListAddresses(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::AddressList r) {
-        std::vector<google::cloud::cpp::compute::v1::Address> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::Address> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -115,14 +134,15 @@ AddressesRestConnectionImpl::ListAddresses(google::cloud::cpp::compute::addresse
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-AddressesRestConnectionImpl::SetLabels(google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request) {
+AddressesRestConnectionImpl::SetLabels(
+    google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetLabels(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request) {
-        return stub_->SetLabels(rest_context, request);
-      },
+             google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
+                 request) { return stub_->SetLabels(rest_context, request); },
       request, __func__);
 }
 

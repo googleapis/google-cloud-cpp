@@ -36,41 +36,50 @@ class UrlMapsRestStub {
  public:
   virtual ~UrlMapsRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList> AggregatedListUrlMaps(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::AggregatedListUrlMapsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
+  AggregatedListUrlMaps(google::cloud::rest_internal::RestContext& rest_context,
+                        google::cloud::cpp::compute::urlMaps::v1::
+                            AggregatedListUrlMapsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::DeleteUrlMapsRequest const& request) = 0;
+      google::cloud::cpp::compute::urlMaps::v1::DeleteUrlMapsRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::GetUrlMapsRequest const& request) = 0;
+      google::cloud::cpp::compute::urlMaps::v1::GetUrlMapsRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::InsertUrlMapsRequest const& request) = 0;
+      google::cloud::cpp::compute::urlMaps::v1::InsertUrlMapsRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InvalidateCache(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::InvalidateCacheRequest const& request) = 0;
+      google::cloud::cpp::compute::urlMaps::v1::InvalidateCacheRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::UrlMapList> ListUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::ListUrlMapsRequest const& request) = 0;
+      google::cloud::cpp::compute::urlMaps::v1::ListUrlMapsRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::PatchUrlMapsRequest const& request) = 0;
+      google::cloud::cpp::compute::urlMaps::v1::PatchUrlMapsRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::UpdateUrlMapsRequest const& request) = 0;
+      google::cloud::cpp::compute::urlMaps::v1::UpdateUrlMapsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse> Validate(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::ValidateRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
+  Validate(google::cloud::rest_internal::RestContext& rest_context,
+           google::cloud::cpp::compute::urlMaps::v1::ValidateRequest const&
+               request) = 0;
 };
 
 class DefaultUrlMapsRestStub : public UrlMapsRestStub {
@@ -78,45 +87,54 @@ class DefaultUrlMapsRestStub : public UrlMapsRestStub {
   ~DefaultUrlMapsRestStub() override = default;
 
   explicit DefaultUrlMapsRestStub(Options options);
-  DefaultUrlMapsRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+  DefaultUrlMapsRestStub(std::shared_ptr<rest_internal::RestClient> service,
+                         Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList> AggregatedListUrlMaps(
+  StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
+  AggregatedListUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::AggregatedListUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::urlMaps::v1::
+          AggregatedListUrlMapsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::DeleteUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::urlMaps::v1::DeleteUrlMapsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::GetUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::urlMaps::v1::GetUrlMapsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::InsertUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::urlMaps::v1::InsertUrlMapsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InvalidateCache(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::InvalidateCacheRequest const& request) override;
+      google::cloud::cpp::compute::urlMaps::v1::InvalidateCacheRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMapList> ListUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::ListUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::urlMaps::v1::ListUrlMapsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::PatchUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::urlMaps::v1::PatchUrlMapsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::UpdateUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::urlMaps::v1::UpdateUrlMapsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse> Validate(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::ValidateRequest const& request) override;
+      google::cloud::cpp::compute::urlMaps::v1::ValidateRequest const& request)
+      override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

@@ -36,27 +36,34 @@ class GlobalAddressesTracingConnection
   ~GlobalAddressesTracingConnection() override = default;
 
   explicit GlobalAddressesTracingConnection(
-    std::shared_ptr<compute_global_addresses_v1::GlobalAddressesConnection> child);
+      std::shared_ptr<compute_global_addresses_v1::GlobalAddressesConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteGlobalAddresses(google::cloud::cpp::compute::globalAddresses::v1::DeleteGlobalAddressesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteGlobalAddresses(
+      google::cloud::cpp::compute::globalAddresses::v1::
+          DeleteGlobalAddressesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Address>
-  GetGlobalAddresses(google::cloud::cpp::compute::globalAddresses::v1::GetGlobalAddressesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Address> GetGlobalAddresses(
+      google::cloud::cpp::compute::globalAddresses::v1::
+          GetGlobalAddressesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertGlobalAddresses(google::cloud::cpp::compute::globalAddresses::v1::InsertGlobalAddressesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertGlobalAddresses(
+      google::cloud::cpp::compute::globalAddresses::v1::
+          InsertGlobalAddressesRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Address>
-  ListGlobalAddresses(google::cloud::cpp::compute::globalAddresses::v1::ListGlobalAddressesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Address> ListGlobalAddresses(
+      google::cloud::cpp::compute::globalAddresses::v1::
+          ListGlobalAddressesRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(google::cloud::cpp::compute::globalAddresses::v1::SetLabelsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::cpp::compute::globalAddresses::v1::SetLabelsRequest const&
+          request) override;
 
  private:
-  std::shared_ptr<compute_global_addresses_v1::GlobalAddressesConnection> child_;
+  std::shared_ptr<compute_global_addresses_v1::GlobalAddressesConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -69,7 +76,8 @@ class GlobalAddressesTracingConnection
  */
 std::shared_ptr<compute_global_addresses_v1::GlobalAddressesConnection>
 MakeGlobalAddressesTracingConnection(
-    std::shared_ptr<compute_global_addresses_v1::GlobalAddressesConnection> conn);
+    std::shared_ptr<compute_global_addresses_v1::GlobalAddressesConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_global_addresses_v1_internal

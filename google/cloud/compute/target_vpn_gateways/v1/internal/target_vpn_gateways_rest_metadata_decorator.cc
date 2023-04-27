@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto
 
-
 #include "google/cloud/compute/target_vpn_gateways/v1/internal/target_vpn_gateways_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,12 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TargetVpnGatewaysRestMetadata::TargetVpnGatewaysRestMetadata(
     std::shared_ptr<TargetVpnGatewaysRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>
 TargetVpnGatewaysRestMetadata::AggregatedListTargetVpnGateways(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetVpnGateways::v1::AggregatedListTargetVpnGatewaysRequest const& request) {
+    google::cloud::cpp::compute::targetVpnGateways::v1::
+        AggregatedListTargetVpnGatewaysRequest const& request) {
   SetMetadata(rest_context);
   return child_->AggregatedListTargetVpnGateways(rest_context, request);
 }
@@ -47,7 +48,8 @@ TargetVpnGatewaysRestMetadata::AggregatedListTargetVpnGateways(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetVpnGatewaysRestMetadata::DeleteTargetVpnGateways(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetVpnGateways::v1::DeleteTargetVpnGatewaysRequest const& request) {
+    google::cloud::cpp::compute::targetVpnGateways::v1::
+        DeleteTargetVpnGatewaysRequest const& request) {
   SetMetadata(rest_context);
   return child_->DeleteTargetVpnGateways(rest_context, request);
 }
@@ -55,7 +57,8 @@ TargetVpnGatewaysRestMetadata::DeleteTargetVpnGateways(
 StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
 TargetVpnGatewaysRestMetadata::GetTargetVpnGateways(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetVpnGateways::v1::GetTargetVpnGatewaysRequest const& request) {
+    google::cloud::cpp::compute::targetVpnGateways::v1::
+        GetTargetVpnGatewaysRequest const& request) {
   SetMetadata(rest_context);
   return child_->GetTargetVpnGateways(rest_context, request);
 }
@@ -63,7 +66,8 @@ TargetVpnGatewaysRestMetadata::GetTargetVpnGateways(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetVpnGatewaysRestMetadata::InsertTargetVpnGateways(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetVpnGateways::v1::InsertTargetVpnGatewaysRequest const& request) {
+    google::cloud::cpp::compute::targetVpnGateways::v1::
+        InsertTargetVpnGatewaysRequest const& request) {
   SetMetadata(rest_context);
   return child_->InsertTargetVpnGateways(rest_context, request);
 }
@@ -71,7 +75,8 @@ TargetVpnGatewaysRestMetadata::InsertTargetVpnGateways(
 StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayList>
 TargetVpnGatewaysRestMetadata::ListTargetVpnGateways(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetVpnGateways::v1::ListTargetVpnGatewaysRequest const& request) {
+    google::cloud::cpp::compute::targetVpnGateways::v1::
+        ListTargetVpnGatewaysRequest const& request) {
   SetMetadata(rest_context);
   return child_->ListTargetVpnGateways(rest_context, request);
 }
@@ -79,33 +84,34 @@ TargetVpnGatewaysRestMetadata::ListTargetVpnGateways(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetVpnGatewaysRestMetadata::SetLabels(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetVpnGateways::v1::SetLabelsRequest const& request) {
+    google::cloud::cpp::compute::targetVpnGateways::v1::SetLabelsRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->SetLabels(rest_context, request);
 }
 
 void TargetVpnGatewaysRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+    rest_internal::RestContext& rest_context,
+    std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

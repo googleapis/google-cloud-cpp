@@ -29,49 +29,56 @@ namespace cloud {
 namespace compute_network_attachments_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultNetworkAttachmentsRestStub::DefaultNetworkAttachmentsRestStub(Options options)
+DefaultNetworkAttachmentsRestStub::DefaultNetworkAttachmentsRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       options_(std::move(options)) {}
 
 DefaultNetworkAttachmentsRestStub::DefaultNetworkAttachmentsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>
 DefaultNetworkAttachmentsRestStub::AggregatedListNetworkAttachments(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networkAttachments::v1::AggregatedListNetworkAttachmentsRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::networkAttachments::v1::
+        AggregatedListNetworkAttachmentsRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/networkAttachments",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultNetworkAttachmentsRestStub::DeleteNetworkAttachments(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networkAttachments::v1::DeleteNetworkAttachmentsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::networkAttachments::v1::
+        DeleteNetworkAttachmentsRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/networkAttachments/{network_attachment}");
+      "/compute/v1/projects/{project}/regions/{region}/networkAttachments/"
+      "{network_attachment}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
 DefaultNetworkAttachmentsRestStub::GetNetworkAttachments(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networkAttachments::v1::GetNetworkAttachmentsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::networkAttachments::v1::
+        GetNetworkAttachmentsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::NetworkAttachment>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/networkAttachments/{network_attachment}",
+      "/compute/v1/projects/{project}/regions/{region}/networkAttachments/"
+      "{network_attachment}",
       {std::make_pair("network_attachment", request.network_attachment()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region())});
@@ -79,12 +86,16 @@ DefaultNetworkAttachmentsRestStub::GetNetworkAttachments(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultNetworkAttachmentsRestStub::GetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networkAttachments::v1::GetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::networkAttachments::v1::
+        GetIamPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/networkAttachments/{resource}/getIamPolicy",
-      {std::make_pair("options_requested_policy_version", std::to_string(request.options_requested_policy_version())),
+      "/compute/v1/projects/{project}/regions/{region}/networkAttachments/"
+      "{resource}/getIamPolicy",
+      {std::make_pair(
+           "options_requested_policy_version",
+           std::to_string(request.options_requested_policy_version())),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
        std::make_pair("resource", request.resource())});
@@ -92,8 +103,9 @@ DefaultNetworkAttachmentsRestStub::GetIamPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultNetworkAttachmentsRestStub::InsertNetworkAttachments(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networkAttachments::v1::InsertNetworkAttachmentsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::networkAttachments::v1::
+        InsertNetworkAttachmentsRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/networkAttachments");
@@ -101,9 +113,11 @@ DefaultNetworkAttachmentsRestStub::InsertNetworkAttachments(
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentList>
 DefaultNetworkAttachmentsRestStub::ListNetworkAttachments(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networkAttachments::v1::ListNetworkAttachmentsRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::NetworkAttachmentList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::networkAttachments::v1::
+        ListNetworkAttachmentsRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::NetworkAttachmentList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/networkAttachments",
       {std::make_pair("filter", request.filter()),
@@ -112,25 +126,31 @@ DefaultNetworkAttachmentsRestStub::ListNetworkAttachments(
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultNetworkAttachmentsRestStub::SetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networkAttachments::v1::SetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::networkAttachments::v1::
+        SetIamPolicyRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/networkAttachments/{resource}/setIamPolicy");
+      "/compute/v1/projects/{project}/regions/{region}/networkAttachments/"
+      "{resource}/setIamPolicy");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultNetworkAttachmentsRestStub::TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networkAttachments::v1::TestIamPermissionsRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::networkAttachments::v1::
+        TestIamPermissionsRequest const& request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/networkAttachments/{resource}/testIamPermissions");
+      "/compute/v1/projects/{project}/regions/{region}/networkAttachments/"
+      "{resource}/testIamPermissions");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

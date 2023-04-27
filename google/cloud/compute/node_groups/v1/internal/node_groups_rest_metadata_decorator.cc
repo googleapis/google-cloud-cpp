@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/node_groups/v1/node_groups.proto
 
-
 #include "google/cloud/compute/node_groups/v1/internal/node_groups_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,12 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 NodeGroupsRestMetadata::NodeGroupsRestMetadata(
     std::shared_ptr<NodeGroupsRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeGroupsRestMetadata::AddNodes(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::nodeGroups::v1::AddNodesRequest const& request) {
+    google::cloud::cpp::compute::nodeGroups::v1::AddNodesRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->AddNodes(rest_context, request);
 }
@@ -47,7 +48,8 @@ NodeGroupsRestMetadata::AddNodes(
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
 NodeGroupsRestMetadata::AggregatedListNodeGroups(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::nodeGroups::v1::AggregatedListNodeGroupsRequest const& request) {
+    google::cloud::cpp::compute::nodeGroups::v1::
+        AggregatedListNodeGroupsRequest const& request) {
   SetMetadata(rest_context);
   return child_->AggregatedListNodeGroups(rest_context, request);
 }
@@ -55,7 +57,8 @@ NodeGroupsRestMetadata::AggregatedListNodeGroups(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeGroupsRestMetadata::DeleteNodeGroups(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::nodeGroups::v1::DeleteNodeGroupsRequest const& request) {
+    google::cloud::cpp::compute::nodeGroups::v1::DeleteNodeGroupsRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->DeleteNodeGroups(rest_context, request);
 }
@@ -63,7 +66,8 @@ NodeGroupsRestMetadata::DeleteNodeGroups(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeGroupsRestMetadata::DeleteNodes(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::nodeGroups::v1::DeleteNodesRequest const& request) {
+    google::cloud::cpp::compute::nodeGroups::v1::DeleteNodesRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->DeleteNodes(rest_context, request);
 }
@@ -71,7 +75,8 @@ NodeGroupsRestMetadata::DeleteNodes(
 StatusOr<google::cloud::cpp::compute::v1::NodeGroup>
 NodeGroupsRestMetadata::GetNodeGroups(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::nodeGroups::v1::GetNodeGroupsRequest const& request) {
+    google::cloud::cpp::compute::nodeGroups::v1::GetNodeGroupsRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->GetNodeGroups(rest_context, request);
 }
@@ -79,7 +84,8 @@ NodeGroupsRestMetadata::GetNodeGroups(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NodeGroupsRestMetadata::GetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::nodeGroups::v1::GetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::nodeGroups::v1::GetIamPolicyRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->GetIamPolicy(rest_context, request);
 }
@@ -87,7 +93,8 @@ NodeGroupsRestMetadata::GetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeGroupsRestMetadata::InsertNodeGroups(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::nodeGroups::v1::InsertNodeGroupsRequest const& request) {
+    google::cloud::cpp::compute::nodeGroups::v1::InsertNodeGroupsRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->InsertNodeGroups(rest_context, request);
 }
@@ -95,7 +102,8 @@ NodeGroupsRestMetadata::InsertNodeGroups(
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupList>
 NodeGroupsRestMetadata::ListNodeGroups(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::nodeGroups::v1::ListNodeGroupsRequest const& request) {
+    google::cloud::cpp::compute::nodeGroups::v1::ListNodeGroupsRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->ListNodeGroups(rest_context, request);
 }
@@ -103,7 +111,8 @@ NodeGroupsRestMetadata::ListNodeGroups(
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupsListNodes>
 NodeGroupsRestMetadata::ListNodes(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest const& request) {
+    google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->ListNodes(rest_context, request);
 }
@@ -111,7 +120,8 @@ NodeGroupsRestMetadata::ListNodes(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeGroupsRestMetadata::PatchNodeGroups(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::nodeGroups::v1::PatchNodeGroupsRequest const& request) {
+    google::cloud::cpp::compute::nodeGroups::v1::PatchNodeGroupsRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->PatchNodeGroups(rest_context, request);
 }
@@ -119,7 +129,8 @@ NodeGroupsRestMetadata::PatchNodeGroups(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NodeGroupsRestMetadata::SetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::nodeGroups::v1::SetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::nodeGroups::v1::SetIamPolicyRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->SetIamPolicy(rest_context, request);
 }
@@ -127,7 +138,8 @@ NodeGroupsRestMetadata::SetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeGroupsRestMetadata::SetNodeTemplate(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::nodeGroups::v1::SetNodeTemplateRequest const& request) {
+    google::cloud::cpp::compute::nodeGroups::v1::SetNodeTemplateRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->SetNodeTemplate(rest_context, request);
 }
@@ -135,33 +147,34 @@ NodeGroupsRestMetadata::SetNodeTemplate(
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 NodeGroupsRestMetadata::TestIamPermissions(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::nodeGroups::v1::TestIamPermissionsRequest const& request) {
+    google::cloud::cpp::compute::nodeGroups::v1::
+        TestIamPermissionsRequest const& request) {
   SetMetadata(rest_context);
   return child_->TestIamPermissions(rest_context, request);
 }
 
 void NodeGroupsRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+    rest_internal::RestContext& rest_context,
+    std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

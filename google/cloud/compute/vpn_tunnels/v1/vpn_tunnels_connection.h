@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_VPN_TUNNELS_V1_VPN_TUNNELS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_VPN_TUNNELS_V1_VPN_TUNNELS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/vpn_tunnels/v1/internal/vpn_tunnels_retry_traits.h"
 #include "google/cloud/compute/vpn_tunnels/v1/vpn_tunnels_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -38,8 +38,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using VpnTunnelsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     compute_vpn_tunnels_v1_internal::VpnTunnelsRetryTraits>;
 
-using VpnTunnelsLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_vpn_tunnels_v1_internal::VpnTunnelsRetryTraits>;
+using VpnTunnelsLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_vpn_tunnels_v1_internal::VpnTunnelsRetryTraits>;
 
 using VpnTunnelsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -64,22 +65,29 @@ class VpnTunnelsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::VpnTunnelAggregatedList>
-  AggregatedListVpnTunnels(google::cloud::cpp::compute::vpnTunnels::v1::AggregatedListVpnTunnelsRequest const& request);
+  AggregatedListVpnTunnels(google::cloud::cpp::compute::vpnTunnels::v1::
+                               AggregatedListVpnTunnelsRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteVpnTunnels(google::cloud::cpp::compute::vpnTunnels::v1::DeleteVpnTunnelsRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteVpnTunnels(
+      google::cloud::cpp::compute::vpnTunnels::v1::
+          DeleteVpnTunnelsRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>
-  GetVpnTunnels(google::cloud::cpp::compute::vpnTunnels::v1::GetVpnTunnelsRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnels(
+      google::cloud::cpp::compute::vpnTunnels::v1::GetVpnTunnelsRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertVpnTunnels(google::cloud::cpp::compute::vpnTunnels::v1::InsertVpnTunnelsRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertVpnTunnels(
+      google::cloud::cpp::compute::vpnTunnels::v1::
+          InsertVpnTunnelsRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::VpnTunnel>
-  ListVpnTunnels(google::cloud::cpp::compute::vpnTunnels::v1::ListVpnTunnelsRequest request);
+  ListVpnTunnels(
+      google::cloud::cpp::compute::vpnTunnels::v1::ListVpnTunnelsRequest
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(google::cloud::cpp::compute::vpnTunnels::v1::SetLabelsRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::cpp::compute::vpnTunnels::v1::SetLabelsRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

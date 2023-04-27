@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SSL_POLICIES_V1_INTERNAL_SSL_POLICIES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SSL_POLICIES_V1_INTERNAL_SSL_POLICIES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/ssl_policies/v1/internal/ssl_policies_rest_stub.h"
 #include "google/cloud/compute/ssl_policies/v1/internal/ssl_policies_retry_traits.h"
 #include "google/cloud/compute/ssl_policies/v1/ssl_policies_connection.h"
 #include "google/cloud/compute/ssl_policies/v1/ssl_policies_connection_idempotency_policy.h"
 #include "google/cloud/compute/ssl_policies/v1/ssl_policies_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,57 +43,86 @@ class SslPoliciesRestConnectionImpl
   ~SslPoliciesRestConnectionImpl() override = default;
 
   SslPoliciesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_ssl_policies_v1_internal::SslPoliciesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<compute_ssl_policies_v1_internal::SslPoliciesRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::cpp::compute::v1::SslPoliciesAggregatedList>
-  AggregatedListSslPolicies(google::cloud::cpp::compute::sslPolicies::v1::AggregatedListSslPoliciesRequest const& request) override;
+  AggregatedListSslPolicies(
+      google::cloud::cpp::compute::sslPolicies::v1::
+          AggregatedListSslPoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteSslPolicies(google::cloud::cpp::compute::sslPolicies::v1::DeleteSslPoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslPolicies(
+      google::cloud::cpp::compute::sslPolicies::v1::
+          DeleteSslPoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-  GetSslPolicies(google::cloud::cpp::compute::sslPolicies::v1::GetSslPoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicies(
+      google::cloud::cpp::compute::sslPolicies::v1::GetSslPoliciesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertSslPolicies(google::cloud::cpp::compute::sslPolicies::v1::InsertSslPoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslPolicies(
+      google::cloud::cpp::compute::sslPolicies::v1::
+          InsertSslPoliciesRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
-  ListSslPolicies(google::cloud::cpp::compute::sslPolicies::v1::ListSslPoliciesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::SslPolicy> ListSslPolicies(
+      google::cloud::cpp::compute::sslPolicies::v1::ListSslPoliciesRequest
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
-  ListAvailableFeatures(google::cloud::cpp::compute::sslPolicies::v1::ListAvailableFeaturesRequest const& request) override;
+  StatusOr<
+      google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+  ListAvailableFeatures(
+      google::cloud::cpp::compute::sslPolicies::v1::
+          ListAvailableFeaturesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchSslPolicies(google::cloud::cpp::compute::sslPolicies::v1::PatchSslPoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSslPolicies(
+      google::cloud::cpp::compute::sslPolicies::v1::
+          PatchSslPoliciesRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_ssl_policies_v1::SslPoliciesRetryPolicy> retry_policy() {
+  std::unique_ptr<compute_ssl_policies_v1::SslPoliciesRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<compute_ssl_policies_v1::SslPoliciesRetryPolicyOption>()) {
-      return options.get<compute_ssl_policies_v1::SslPoliciesRetryPolicyOption>()->clone();
+      return options
+          .get<compute_ssl_policies_v1::SslPoliciesRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_ssl_policies_v1::SslPoliciesRetryPolicyOption>()->clone();
+    return options_
+        .get<compute_ssl_policies_v1::SslPoliciesRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_ssl_policies_v1::SslPoliciesBackoffPolicyOption>()) {
-      return options.get<compute_ssl_policies_v1::SslPoliciesBackoffPolicyOption>()->clone();
+    if (options
+            .has<compute_ssl_policies_v1::SslPoliciesBackoffPolicyOption>()) {
+      return options
+          .get<compute_ssl_policies_v1::SslPoliciesBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_ssl_policies_v1::SslPoliciesBackoffPolicyOption>()->clone();
+    return options_
+        .get<compute_ssl_policies_v1::SslPoliciesBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_ssl_policies_v1::SslPoliciesConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<
+      compute_ssl_policies_v1::SslPoliciesConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_ssl_policies_v1::SslPoliciesConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_ssl_policies_v1::SslPoliciesConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<compute_ssl_policies_v1::
+                        SslPoliciesConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_ssl_policies_v1::
+                   SslPoliciesConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_ssl_policies_v1::SslPoliciesConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_ssl_policies_v1::
+                 SslPoliciesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

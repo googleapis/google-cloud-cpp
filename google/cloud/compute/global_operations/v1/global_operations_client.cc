@@ -24,73 +24,94 @@ namespace cloud {
 namespace compute_global_operations_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-GlobalOperationsClient::GlobalOperationsClient(ExperimentalTag,
-    std::shared_ptr<GlobalOperationsConnection> connection, Options opts)
+GlobalOperationsClient::GlobalOperationsClient(
+    ExperimentalTag, std::shared_ptr<GlobalOperationsConnection> connection,
+    Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 GlobalOperationsClient::~GlobalOperationsClient() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
-GlobalOperationsClient::AggregatedListGlobalOperations(std::string const& project, Options opts) {
+GlobalOperationsClient::AggregatedListGlobalOperations(
+    std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::globalOperations::v1::AggregatedListGlobalOperationsRequest request;
+  google::cloud::cpp::compute::globalOperations::v1::
+      AggregatedListGlobalOperationsRequest request;
   request.set_project(project);
   return connection_->AggregatedListGlobalOperations(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
-GlobalOperationsClient::AggregatedListGlobalOperations(google::cloud::cpp::compute::globalOperations::v1::AggregatedListGlobalOperationsRequest const& request, Options opts) {
+GlobalOperationsClient::AggregatedListGlobalOperations(
+    google::cloud::cpp::compute::globalOperations::v1::
+        AggregatedListGlobalOperationsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AggregatedListGlobalOperations(request);
 }
 
-Status
-GlobalOperationsClient::DeleteGlobalOperations(std::string const& project, std::string const& operation, Options opts) {
+Status GlobalOperationsClient::DeleteGlobalOperations(
+    std::string const& project, std::string const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::globalOperations::v1::DeleteGlobalOperationsRequest request;
+  google::cloud::cpp::compute::globalOperations::v1::
+      DeleteGlobalOperationsRequest request;
   request.set_project(project);
   request.set_operation(operation);
   return connection_->DeleteGlobalOperations(request);
 }
 
-Status
-GlobalOperationsClient::DeleteGlobalOperations(google::cloud::cpp::compute::globalOperations::v1::DeleteGlobalOperationsRequest const& request, Options opts) {
+Status GlobalOperationsClient::DeleteGlobalOperations(
+    google::cloud::cpp::compute::globalOperations::v1::
+        DeleteGlobalOperationsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteGlobalOperations(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-GlobalOperationsClient::GetGlobalOperations(std::string const& project, std::string const& operation, Options opts) {
+GlobalOperationsClient::GetGlobalOperations(std::string const& project,
+                                            std::string const& operation,
+                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::globalOperations::v1::GetGlobalOperationsRequest request;
+  google::cloud::cpp::compute::globalOperations::v1::GetGlobalOperationsRequest
+      request;
   request.set_project(project);
   request.set_operation(operation);
   return connection_->GetGlobalOperations(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-GlobalOperationsClient::GetGlobalOperations(google::cloud::cpp::compute::globalOperations::v1::GetGlobalOperationsRequest const& request, Options opts) {
+GlobalOperationsClient::GetGlobalOperations(
+    google::cloud::cpp::compute::globalOperations::v1::
+        GetGlobalOperationsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetGlobalOperations(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Operation>
-GlobalOperationsClient::ListGlobalOperations(std::string const& project, Options opts) {
+GlobalOperationsClient::ListGlobalOperations(std::string const& project,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::globalOperations::v1::ListGlobalOperationsRequest request;
+  google::cloud::cpp::compute::globalOperations::v1::ListGlobalOperationsRequest
+      request;
   request.set_project(project);
   return connection_->ListGlobalOperations(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Operation>
-GlobalOperationsClient::ListGlobalOperations(google::cloud::cpp::compute::globalOperations::v1::ListGlobalOperationsRequest request, Options opts) {
+GlobalOperationsClient::ListGlobalOperations(
+    google::cloud::cpp::compute::globalOperations::v1::
+        ListGlobalOperationsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListGlobalOperations(std::move(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-GlobalOperationsClient::Wait(std::string const& project, std::string const& operation, Options opts) {
+GlobalOperationsClient::Wait(std::string const& project,
+                             std::string const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::globalOperations::v1::WaitRequest request;
   request.set_project(project);
@@ -99,7 +120,10 @@ GlobalOperationsClient::Wait(std::string const& project, std::string const& oper
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-GlobalOperationsClient::Wait(google::cloud::cpp::compute::globalOperations::v1::WaitRequest const& request, Options opts) {
+GlobalOperationsClient::Wait(
+    google::cloud::cpp::compute::globalOperations::v1::WaitRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Wait(request);
 }

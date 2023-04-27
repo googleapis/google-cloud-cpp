@@ -28,18 +28,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MachineImagesRestLogging::MachineImagesRestLogging(
     std::shared_ptr<MachineImagesRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 MachineImagesRestLogging::DeleteMachineImages(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::machineImages::v1::DeleteMachineImagesRequest const& request) {
+    google::cloud::cpp::compute::machineImages::v1::
+        DeleteMachineImagesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::machineImages::v1::DeleteMachineImagesRequest const& request) {
+             google::cloud::cpp::compute::machineImages::v1::
+                 DeleteMachineImagesRequest const& request) {
         return child_->DeleteMachineImages(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,10 +50,12 @@ MachineImagesRestLogging::DeleteMachineImages(
 StatusOr<google::cloud::cpp::compute::v1::MachineImage>
 MachineImagesRestLogging::GetMachineImages(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::machineImages::v1::GetMachineImagesRequest const& request) {
+    google::cloud::cpp::compute::machineImages::v1::
+        GetMachineImagesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::machineImages::v1::GetMachineImagesRequest const& request) {
+             google::cloud::cpp::compute::machineImages::v1::
+                 GetMachineImagesRequest const& request) {
         return child_->GetMachineImages(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -60,10 +64,12 @@ MachineImagesRestLogging::GetMachineImages(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 MachineImagesRestLogging::GetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::machineImages::v1::GetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::machineImages::v1::GetIamPolicyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::machineImages::v1::GetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::machineImages::v1::
+                 GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -72,10 +78,12 @@ MachineImagesRestLogging::GetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 MachineImagesRestLogging::InsertMachineImages(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::machineImages::v1::InsertMachineImagesRequest const& request) {
+    google::cloud::cpp::compute::machineImages::v1::
+        InsertMachineImagesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::machineImages::v1::InsertMachineImagesRequest const& request) {
+             google::cloud::cpp::compute::machineImages::v1::
+                 InsertMachineImagesRequest const& request) {
         return child_->InsertMachineImages(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -84,10 +92,12 @@ MachineImagesRestLogging::InsertMachineImages(
 StatusOr<google::cloud::cpp::compute::v1::MachineImageList>
 MachineImagesRestLogging::ListMachineImages(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::machineImages::v1::ListMachineImagesRequest const& request) {
+    google::cloud::cpp::compute::machineImages::v1::
+        ListMachineImagesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::machineImages::v1::ListMachineImagesRequest const& request) {
+             google::cloud::cpp::compute::machineImages::v1::
+                 ListMachineImagesRequest const& request) {
         return child_->ListMachineImages(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -96,10 +106,12 @@ MachineImagesRestLogging::ListMachineImages(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 MachineImagesRestLogging::SetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::machineImages::v1::SetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::machineImages::v1::SetIamPolicyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::machineImages::v1::SetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::machineImages::v1::
+                 SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -108,10 +120,12 @@ MachineImagesRestLogging::SetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 MachineImagesRestLogging::TestIamPermissions(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::machineImages::v1::TestIamPermissionsRequest const& request) {
+    google::cloud::cpp::compute::machineImages::v1::
+        TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::machineImages::v1::TestIamPermissionsRequest const& request) {
+             google::cloud::cpp::compute::machineImages::v1::
+                 TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);

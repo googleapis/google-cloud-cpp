@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/http_health_checks/v1/http_health_checks.proto
 
-
 #include "google/cloud/compute/http_health_checks/v1/internal/http_health_checks_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,12 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 HttpHealthChecksRestMetadata::HttpHealthChecksRestMetadata(
     std::shared_ptr<HttpHealthChecksRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HttpHealthChecksRestMetadata::DeleteHttpHealthChecks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::httpHealthChecks::v1::DeleteHttpHealthChecksRequest const& request) {
+    google::cloud::cpp::compute::httpHealthChecks::v1::
+        DeleteHttpHealthChecksRequest const& request) {
   SetMetadata(rest_context);
   return child_->DeleteHttpHealthChecks(rest_context, request);
 }
@@ -47,7 +48,8 @@ HttpHealthChecksRestMetadata::DeleteHttpHealthChecks(
 StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck>
 HttpHealthChecksRestMetadata::GetHttpHealthChecks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::httpHealthChecks::v1::GetHttpHealthChecksRequest const& request) {
+    google::cloud::cpp::compute::httpHealthChecks::v1::
+        GetHttpHealthChecksRequest const& request) {
   SetMetadata(rest_context);
   return child_->GetHttpHealthChecks(rest_context, request);
 }
@@ -55,7 +57,8 @@ HttpHealthChecksRestMetadata::GetHttpHealthChecks(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HttpHealthChecksRestMetadata::InsertHttpHealthChecks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::httpHealthChecks::v1::InsertHttpHealthChecksRequest const& request) {
+    google::cloud::cpp::compute::httpHealthChecks::v1::
+        InsertHttpHealthChecksRequest const& request) {
   SetMetadata(rest_context);
   return child_->InsertHttpHealthChecks(rest_context, request);
 }
@@ -63,7 +66,8 @@ HttpHealthChecksRestMetadata::InsertHttpHealthChecks(
 StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheckList>
 HttpHealthChecksRestMetadata::ListHttpHealthChecks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::httpHealthChecks::v1::ListHttpHealthChecksRequest const& request) {
+    google::cloud::cpp::compute::httpHealthChecks::v1::
+        ListHttpHealthChecksRequest const& request) {
   SetMetadata(rest_context);
   return child_->ListHttpHealthChecks(rest_context, request);
 }
@@ -71,7 +75,8 @@ HttpHealthChecksRestMetadata::ListHttpHealthChecks(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HttpHealthChecksRestMetadata::PatchHttpHealthChecks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::httpHealthChecks::v1::PatchHttpHealthChecksRequest const& request) {
+    google::cloud::cpp::compute::httpHealthChecks::v1::
+        PatchHttpHealthChecksRequest const& request) {
   SetMetadata(rest_context);
   return child_->PatchHttpHealthChecks(rest_context, request);
 }
@@ -79,33 +84,34 @@ HttpHealthChecksRestMetadata::PatchHttpHealthChecks(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HttpHealthChecksRestMetadata::UpdateHttpHealthChecks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::httpHealthChecks::v1::UpdateHttpHealthChecksRequest const& request) {
+    google::cloud::cpp::compute::httpHealthChecks::v1::
+        UpdateHttpHealthChecksRequest const& request) {
   SetMetadata(rest_context);
   return child_->UpdateHttpHealthChecks(rest_context, request);
 }
 
 void HttpHealthChecksRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+    rest_internal::RestContext& rest_context,
+    std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

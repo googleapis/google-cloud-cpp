@@ -36,25 +36,32 @@ class SslCertificatesRestStub {
  public:
   virtual ~SslCertificatesRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList> AggregatedListSslCertificates(
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
+  AggregatedListSslCertificates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslCertificates::v1::AggregatedListSslCertificatesRequest const& request) = 0;
+      google::cloud::cpp::compute::sslCertificates::v1::
+          AggregatedListSslCertificatesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslCertificates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslCertificates::v1::DeleteSslCertificatesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteSslCertificates(google::cloud::rest_internal::RestContext& rest_context,
+                        google::cloud::cpp::compute::sslCertificates::v1::
+                            DeleteSslCertificatesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslCertificates::v1::GetSslCertificatesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
+  GetSslCertificates(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::sslCertificates::v1::
+                         GetSslCertificatesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslCertificates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslCertificates::v1::InsertSslCertificatesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertSslCertificates(google::cloud::rest_internal::RestContext& rest_context,
+                        google::cloud::cpp::compute::sslCertificates::v1::
+                            InsertSslCertificatesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::SslCertificateList> ListSslCertificates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslCertificates::v1::ListSslCertificatesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::SslCertificateList>
+  ListSslCertificates(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::sslCertificates::v1::
+                          ListSslCertificatesRequest const& request) = 0;
 };
 
 class DefaultSslCertificatesRestStub : public SslCertificatesRestStub {
@@ -63,28 +70,33 @@ class DefaultSslCertificatesRestStub : public SslCertificatesRestStub {
 
   explicit DefaultSslCertificatesRestStub(Options options);
   DefaultSslCertificatesRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList> AggregatedListSslCertificates(
+  StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
+  AggregatedListSslCertificates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslCertificates::v1::AggregatedListSslCertificatesRequest const& request) override;
+      google::cloud::cpp::compute::sslCertificates::v1::
+          AggregatedListSslCertificatesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslCertificates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslCertificates::v1::DeleteSslCertificatesRequest const& request) override;
+      google::cloud::cpp::compute::sslCertificates::v1::
+          DeleteSslCertificatesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslCertificates::v1::GetSslCertificatesRequest const& request) override;
+      google::cloud::cpp::compute::sslCertificates::v1::
+          GetSslCertificatesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslCertificates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslCertificates::v1::InsertSslCertificatesRequest const& request) override;
+      google::cloud::cpp::compute::sslCertificates::v1::
+          InsertSslCertificatesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SslCertificateList> ListSslCertificates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslCertificates::v1::ListSslCertificatesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::SslCertificateList>
+  ListSslCertificates(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::sslCertificates::v1::
+                          ListSslCertificatesRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

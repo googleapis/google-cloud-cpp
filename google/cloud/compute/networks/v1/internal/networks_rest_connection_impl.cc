@@ -17,8 +17,8 @@
 // source: google/cloud/compute/networks/v1/networks.proto
 
 #include "google/cloud/compute/networks/v1/internal/networks_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/networks/v1/internal/networks_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -34,92 +34,111 @@ NetworksRestConnectionImpl::NetworksRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<compute_networks_v1_internal::NetworksRestStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        NetworksConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      NetworksConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworksRestConnectionImpl::AddPeering(google::cloud::cpp::compute::networks::v1::AddPeeringRequest const& request) {
+NetworksRestConnectionImpl::AddPeering(
+    google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AddPeering(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::networks::v1::AddPeeringRequest const& request) {
-        return stub_->AddPeering(rest_context, request);
-      },
+             google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
+                 request) { return stub_->AddPeering(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworksRestConnectionImpl::DeleteNetworks(google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const& request) {
+NetworksRestConnectionImpl::DeleteNetworks(
+    google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteNetworks(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const& request) {
+             google::cloud::cpp::compute::networks::v1::
+                 DeleteNetworksRequest const& request) {
         return stub_->DeleteNetworks(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Network>
-NetworksRestConnectionImpl::GetNetworks(google::cloud::cpp::compute::networks::v1::GetNetworksRequest const& request) {
+NetworksRestConnectionImpl::GetNetworks(
+    google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetNetworks(request),
-      [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::networks::v1::GetNetworksRequest const& request) {
-        return stub_->GetNetworks(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&
+              request) { return stub_->GetNetworks(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>
-NetworksRestConnectionImpl::GetEffectiveFirewalls(google::cloud::cpp::compute::networks::v1::GetEffectiveFirewallsRequest const& request) {
+NetworksRestConnectionImpl::GetEffectiveFirewalls(
+    google::cloud::cpp::compute::networks::v1::
+        GetEffectiveFirewallsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetEffectiveFirewalls(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::networks::v1::GetEffectiveFirewallsRequest const& request) {
+             google::cloud::cpp::compute::networks::v1::
+                 GetEffectiveFirewallsRequest const& request) {
         return stub_->GetEffectiveFirewalls(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworksRestConnectionImpl::InsertNetworks(google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const& request) {
+NetworksRestConnectionImpl::InsertNetworks(
+    google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->InsertNetworks(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const& request) {
+             google::cloud::cpp::compute::networks::v1::
+                 InsertNetworksRequest const& request) {
         return stub_->InsertNetworks(rest_context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Network>
-NetworksRestConnectionImpl::ListNetworks(google::cloud::cpp::compute::networks::v1::ListNetworksRequest request) {
+NetworksRestConnectionImpl::ListNetworks(
+    google::cloud::cpp::compute::networks::v1::ListNetworksRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_networks_v1::NetworksRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<compute_networks_v1::NetworksRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListNetworks(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::Network>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::Network>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::networks::v1::ListNetworksRequest const& r) {
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::cpp::compute::networks::v1::ListNetworksRequest const&
+              r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::networks::v1::ListNetworksRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::networks::v1::
+                       ListNetworksRequest const& request) {
               return stub->ListNetworks(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::NetworkList r) {
-        std::vector<google::cloud::cpp::compute::v1::Network> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::Network> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -127,26 +146,34 @@ NetworksRestConnectionImpl::ListNetworks(google::cloud::cpp::compute::networks::
 }
 
 StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>
-NetworksRestConnectionImpl::ListPeeringRoutes(google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest request) {
+NetworksRestConnectionImpl::ListPeeringRoutes(
+    google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest
+        request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_networks_v1::NetworksRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<compute_networks_v1::NetworksRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListPeeringRoutes(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::networks::v1::
+                          ListPeeringRoutesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::networks::v1::
+                       ListPeeringRoutesRequest const& request) {
               return stub->ListPeeringRoutes(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::ExchangedPeeringRoutesList r) {
-        std::vector<google::cloud::cpp::compute::v1::ExchangedPeeringRoute> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>
+            result(r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -154,50 +181,59 @@ NetworksRestConnectionImpl::ListPeeringRoutes(google::cloud::cpp::compute::netwo
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworksRestConnectionImpl::PatchNetworks(google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const& request) {
+NetworksRestConnectionImpl::PatchNetworks(
+    google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->PatchNetworks(request),
-      [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const& request) {
-        return stub_->PatchNetworks(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&
+              request) { return stub_->PatchNetworks(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworksRestConnectionImpl::RemovePeering(google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const& request) {
+NetworksRestConnectionImpl::RemovePeering(
+    google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->RemovePeering(request),
-      [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const& request) {
-        return stub_->RemovePeering(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
+              request) { return stub_->RemovePeering(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworksRestConnectionImpl::SwitchToCustomMode(google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const& request) {
+NetworksRestConnectionImpl::SwitchToCustomMode(
+    google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SwitchToCustomMode(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const& request) {
+             google::cloud::cpp::compute::networks::v1::
+                 SwitchToCustomModeRequest const& request) {
         return stub_->SwitchToCustomMode(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworksRestConnectionImpl::UpdatePeering(google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const& request) {
+NetworksRestConnectionImpl::UpdatePeering(
+    google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdatePeering(request),
-      [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const& request) {
-        return stub_->UpdatePeering(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
+              request) { return stub_->UpdatePeering(rest_context, request); },
       request, __func__);
 }
 

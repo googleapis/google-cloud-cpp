@@ -29,41 +29,45 @@ namespace cloud {
 namespace compute_target_ssl_proxies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultTargetSslProxiesRestStub::DefaultTargetSslProxiesRestStub(Options options)
+DefaultTargetSslProxiesRestStub::DefaultTargetSslProxiesRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       options_(std::move(options)) {}
 
 DefaultTargetSslProxiesRestStub::DefaultTargetSslProxiesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetSslProxiesRestStub::DeleteTargetSslProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::DeleteTargetSslProxiesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        DeleteTargetSslProxiesRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/targetSslProxies/{target_ssl_proxy}");
+      "/compute/v1/projects/{project}/global/targetSslProxies/"
+      "{target_ssl_proxy}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>
 DefaultTargetSslProxiesRestStub::GetTargetSslProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::GetTargetSslProxiesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        GetTargetSslProxiesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetSslProxy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/targetSslProxies/{target_ssl_proxy}",
+      "/compute/v1/projects/{project}/global/targetSslProxies/"
+      "{target_ssl_proxy}",
       {std::make_pair("project", request.project()),
        std::make_pair("target_ssl_proxy", request.target_ssl_proxy())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetSslProxiesRestStub::InsertTargetSslProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::InsertTargetSslProxiesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        InsertTargetSslProxiesRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/targetSslProxies");
@@ -71,9 +75,11 @@ DefaultTargetSslProxiesRestStub::InsertTargetSslProxies(
 
 StatusOr<google::cloud::cpp::compute::v1::TargetSslProxyList>
 DefaultTargetSslProxiesRestStub::ListTargetSslProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::ListTargetSslProxiesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::TargetSslProxyList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        ListTargetSslProxiesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::TargetSslProxyList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/targetSslProxies",
       {std::make_pair("filter", request.filter()),
@@ -81,52 +87,63 @@ DefaultTargetSslProxiesRestStub::ListTargetSslProxies(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetSslProxiesRestStub::SetBackendService(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::SetBackendServiceRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        SetBackendServiceRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/targetSslProxies/{target_ssl_proxy}/setBackendService");
+      "/compute/v1/projects/{project}/global/targetSslProxies/"
+      "{target_ssl_proxy}/setBackendService");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetSslProxiesRestStub::SetCertificateMap(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::SetCertificateMapRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        SetCertificateMapRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/targetSslProxies/{target_ssl_proxy}/setCertificateMap");
+      "/compute/v1/projects/{project}/global/targetSslProxies/"
+      "{target_ssl_proxy}/setCertificateMap");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetSslProxiesRestStub::SetProxyHeader(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::SetProxyHeaderRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        SetProxyHeaderRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/targetSslProxies/{target_ssl_proxy}/setProxyHeader");
+      "/compute/v1/projects/{project}/global/targetSslProxies/"
+      "{target_ssl_proxy}/setProxyHeader");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetSslProxiesRestStub::SetSslCertificates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::SetSslCertificatesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        SetSslCertificatesRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/targetSslProxies/{target_ssl_proxy}/setSslCertificates");
+      "/compute/v1/projects/{project}/global/targetSslProxies/"
+      "{target_ssl_proxy}/setSslCertificates");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetSslProxiesRestStub::SetSslPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::SetSslPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        SetSslPolicyRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/targetSslProxies/{target_ssl_proxy}/setSslPolicy");
+      "/compute/v1/projects/{project}/global/targetSslProxies/"
+      "{target_ssl_proxy}/setSslPolicy");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

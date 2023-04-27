@@ -28,18 +28,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TargetTcpProxiesRestLogging::TargetTcpProxiesRestLogging(
     std::shared_ptr<TargetTcpProxiesRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>
 TargetTcpProxiesRestLogging::AggregatedListTargetTcpProxies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetTcpProxies::v1::AggregatedListTargetTcpProxiesRequest const& request) {
+    google::cloud::cpp::compute::targetTcpProxies::v1::
+        AggregatedListTargetTcpProxiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetTcpProxies::v1::AggregatedListTargetTcpProxiesRequest const& request) {
+             google::cloud::cpp::compute::targetTcpProxies::v1::
+                 AggregatedListTargetTcpProxiesRequest const& request) {
         return child_->AggregatedListTargetTcpProxies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,10 +50,12 @@ TargetTcpProxiesRestLogging::AggregatedListTargetTcpProxies(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetTcpProxiesRestLogging::DeleteTargetTcpProxies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetTcpProxies::v1::DeleteTargetTcpProxiesRequest const& request) {
+    google::cloud::cpp::compute::targetTcpProxies::v1::
+        DeleteTargetTcpProxiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetTcpProxies::v1::DeleteTargetTcpProxiesRequest const& request) {
+             google::cloud::cpp::compute::targetTcpProxies::v1::
+                 DeleteTargetTcpProxiesRequest const& request) {
         return child_->DeleteTargetTcpProxies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -60,10 +64,12 @@ TargetTcpProxiesRestLogging::DeleteTargetTcpProxies(
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
 TargetTcpProxiesRestLogging::GetTargetTcpProxies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetTcpProxies::v1::GetTargetTcpProxiesRequest const& request) {
+    google::cloud::cpp::compute::targetTcpProxies::v1::
+        GetTargetTcpProxiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetTcpProxies::v1::GetTargetTcpProxiesRequest const& request) {
+             google::cloud::cpp::compute::targetTcpProxies::v1::
+                 GetTargetTcpProxiesRequest const& request) {
         return child_->GetTargetTcpProxies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -72,10 +78,12 @@ TargetTcpProxiesRestLogging::GetTargetTcpProxies(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetTcpProxiesRestLogging::InsertTargetTcpProxies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetTcpProxies::v1::InsertTargetTcpProxiesRequest const& request) {
+    google::cloud::cpp::compute::targetTcpProxies::v1::
+        InsertTargetTcpProxiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetTcpProxies::v1::InsertTargetTcpProxiesRequest const& request) {
+             google::cloud::cpp::compute::targetTcpProxies::v1::
+                 InsertTargetTcpProxiesRequest const& request) {
         return child_->InsertTargetTcpProxies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -84,10 +92,12 @@ TargetTcpProxiesRestLogging::InsertTargetTcpProxies(
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyList>
 TargetTcpProxiesRestLogging::ListTargetTcpProxies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetTcpProxies::v1::ListTargetTcpProxiesRequest const& request) {
+    google::cloud::cpp::compute::targetTcpProxies::v1::
+        ListTargetTcpProxiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetTcpProxies::v1::ListTargetTcpProxiesRequest const& request) {
+             google::cloud::cpp::compute::targetTcpProxies::v1::
+                 ListTargetTcpProxiesRequest const& request) {
         return child_->ListTargetTcpProxies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -96,10 +106,12 @@ TargetTcpProxiesRestLogging::ListTargetTcpProxies(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetTcpProxiesRestLogging::SetBackendService(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetTcpProxies::v1::SetBackendServiceRequest const& request) {
+    google::cloud::cpp::compute::targetTcpProxies::v1::
+        SetBackendServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetTcpProxies::v1::SetBackendServiceRequest const& request) {
+             google::cloud::cpp::compute::targetTcpProxies::v1::
+                 SetBackendServiceRequest const& request) {
         return child_->SetBackendService(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -108,10 +120,12 @@ TargetTcpProxiesRestLogging::SetBackendService(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetTcpProxiesRestLogging::SetProxyHeader(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetTcpProxies::v1::SetProxyHeaderRequest const& request) {
+    google::cloud::cpp::compute::targetTcpProxies::v1::
+        SetProxyHeaderRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetTcpProxies::v1::SetProxyHeaderRequest const& request) {
+             google::cloud::cpp::compute::targetTcpProxies::v1::
+                 SetProxyHeaderRequest const& request) {
         return child_->SetProxyHeader(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);

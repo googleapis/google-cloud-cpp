@@ -42,33 +42,46 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockAddressesConnection : public compute_addresses_v1::AddressesConnection {
+class MockAddressesConnection
+    : public compute_addresses_v1::AddressesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>,
-  AggregatedListAddresses,
-  (google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest const& request), (override));
+              AggregatedListAddresses,
+              (google::cloud::cpp::compute::addresses::v1::
+                   AggregatedListAddressesRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteAddresses,
-  (google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteAddresses,
+      (google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Address>,
-  GetAddresses,
-  (google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Address>, GetAddresses,
+      (google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertAddresses,
-  (google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertAddresses,
+      (google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Address>,
-  ListAddresses,
-  (google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request), (override));
+              ListAddresses,
+              (google::cloud::cpp::compute::addresses::v1::ListAddressesRequest
+                   request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  SetLabels,
-  (google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, SetLabels,
+      (google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

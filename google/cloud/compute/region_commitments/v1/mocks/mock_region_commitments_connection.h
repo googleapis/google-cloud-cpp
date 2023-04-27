@@ -32,9 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Application developers may want to test their code with simulated responses,
  * including errors, from an object of type `RegionCommitmentsClient`. To do so,
- * construct an object of type `RegionCommitmentsClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * construct an object of type `RegionCommitmentsClient` with an instance of
+ * this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,29 +42,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockRegionCommitmentsConnection : public compute_region_commitments_v1::RegionCommitmentsConnection {
+class MockRegionCommitmentsConnection
+    : public compute_region_commitments_v1::RegionCommitmentsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>,
-  AggregatedListRegionCommitments,
-  (google::cloud::cpp::compute::regionCommitments::v1::AggregatedListRegionCommitmentsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>,
+      AggregatedListRegionCommitments,
+      (google::cloud::cpp::compute::regionCommitments::v1::
+           AggregatedListRegionCommitmentsRequest const& request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Commitment>,
-  GetRegionCommitments,
-  (google::cloud::cpp::compute::regionCommitments::v1::GetRegionCommitmentsRequest const& request), (override));
+              GetRegionCommitments,
+              (google::cloud::cpp::compute::regionCommitments::v1::
+                   GetRegionCommitmentsRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertRegionCommitments,
-  (google::cloud::cpp::compute::regionCommitments::v1::InsertRegionCommitmentsRequest const& request), (override));
+              InsertRegionCommitments,
+              (google::cloud::cpp::compute::regionCommitments::v1::
+                   InsertRegionCommitmentsRequest const& request),
+              (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Commitment>,
-  ListRegionCommitments,
-  (google::cloud::cpp::compute::regionCommitments::v1::ListRegionCommitmentsRequest request), (override));
+              ListRegionCommitments,
+              (google::cloud::cpp::compute::regionCommitments::v1::
+                   ListRegionCommitmentsRequest request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  UpdateRegionCommitments,
-  (google::cloud::cpp::compute::regionCommitments::v1::UpdateRegionCommitmentsRequest const& request), (override));
+              UpdateRegionCommitments,
+              (google::cloud::cpp::compute::regionCommitments::v1::
+                   UpdateRegionCommitmentsRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

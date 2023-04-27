@@ -62,7 +62,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class LicensesClient {
  public:
-  explicit LicensesClient(ExperimentalTag, std::shared_ptr<LicensesConnection> connection, Options opts = {});
+  explicit LicensesClient(ExperimentalTag,
+                          std::shared_ptr<LicensesConnection> connection,
+                          Options opts = {});
   ~LicensesClient();
 
   ///@{
@@ -85,153 +87,174 @@ class LicensesClient {
 
   ///
   /// Deletes the specified license. *Caution* This resource is intended for use
-  /// only by third-party partners who are creating Cloud Marketplace images. 
+  /// only by third-party partners who are creating Cloud Marketplace images.
   ///
   /// @param project  Project ID for this request.
   /// @param license  Name of the license resource to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.licenses.v1.DeleteLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L117}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.licenses.v1.DeleteLicensesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L117}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteLicenses(std::string const& project, std::string const& license, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteLicenses(
+      std::string const& project, std::string const& license,
+      Options opts = {});
 
   ///
   /// Deletes the specified license. *Caution* This resource is intended for use
-  /// only by third-party partners who are creating Cloud Marketplace images. 
+  /// only by third-party partners who are creating Cloud Marketplace images.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest,google/cloud/compute/licenses/v1/licenses.proto#L117}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest,google/cloud/compute/licenses/v1/licenses.proto#L117}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.licenses.v1.DeleteLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L117}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.licenses.v1.DeleteLicensesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L117}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteLicenses(google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteLicenses(
+      google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+          request,
+      Options opts = {});
 
   ///
-  /// Returns the specified License resource. *Caution* This resource is intended
-  /// for use only by third-party partners who are creating Cloud Marketplace
-  /// images. 
+  /// Returns the specified License resource. *Caution* This resource is
+  /// intended for use only by third-party partners who are creating Cloud
+  /// Marketplace images.
   ///
   /// @param project  Project ID for this request.
   /// @param license  Name of the License resource to return.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::License,google/cloud/compute/v1/internal/common.proto#L13042}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::License,google/cloud/compute/v1/internal/common.proto#L13042}
   ///
-  /// [google.cloud.cpp.compute.licenses.v1.GetLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L150}
-  /// [google.cloud.cpp.compute.v1.License]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13042}
+  /// [google.cloud.cpp.compute.licenses.v1.GetLicensesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L150}
+  /// [google.cloud.cpp.compute.v1.License]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13042}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::License>
-  GetLicenses(std::string const& project, std::string const& license, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::License> GetLicenses(
+      std::string const& project, std::string const& license,
+      Options opts = {});
 
   ///
-  /// Returns the specified License resource. *Caution* This resource is intended
-  /// for use only by third-party partners who are creating Cloud Marketplace
-  /// images. 
+  /// Returns the specified License resource. *Caution* This resource is
+  /// intended for use only by third-party partners who are creating Cloud
+  /// Marketplace images.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::licenses::v1::GetLicensesRequest,google/cloud/compute/licenses/v1/licenses.proto#L150}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::licenses::v1::GetLicensesRequest,google/cloud/compute/licenses/v1/licenses.proto#L150}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::License,google/cloud/compute/v1/internal/common.proto#L13042}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::License,google/cloud/compute/v1/internal/common.proto#L13042}
   ///
-  /// [google.cloud.cpp.compute.licenses.v1.GetLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L150}
-  /// [google.cloud.cpp.compute.v1.License]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13042}
+  /// [google.cloud.cpp.compute.licenses.v1.GetLicensesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L150}
+  /// [google.cloud.cpp.compute.v1.License]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13042}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::License>
-  GetLicenses(google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::License> GetLicenses(
+      google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Gets the access control policy for a resource. May be empty if no such
-  /// policy or resource exists. *Caution* This resource is intended for use only
-  /// by third-party partners who are creating Cloud Marketplace images. 
+  /// policy or resource exists. *Caution* This resource is intended for use
+  /// only by third-party partners who are creating Cloud Marketplace images.
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.licenses.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L138}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.licenses.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L138}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(std::string const& project, std::string const& resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      std::string const& project, std::string const& resource,
+      Options opts = {});
 
   ///
   /// Gets the access control policy for a resource. May be empty if no such
-  /// policy or resource exists. *Caution* This resource is intended for use only
-  /// by third-party partners who are creating Cloud Marketplace images. 
+  /// policy or resource exists. *Caution* This resource is intended for use
+  /// only by third-party partners who are creating Cloud Marketplace images.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest,google/cloud/compute/licenses/v1/licenses.proto#L138}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest,google/cloud/compute/licenses/v1/licenses.proto#L138}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.licenses.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L138}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.licenses.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L138}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
+          request,
+      Options opts = {});
 
   ///
-  /// Create a License resource in the specified project. *Caution* This resource
-  /// is intended for use only by third-party partners who are creating Cloud
-  /// Marketplace images. 
+  /// Create a License resource in the specified project. *Caution* This
+  /// resource is intended for use only by third-party partners who are creating
+  /// Cloud Marketplace images.
   ///
   /// @param project  Project ID for this request.
   /// @param license_resource  The License for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.licenses.v1.InsertLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L159}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.licenses.v1.InsertLicensesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L159}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertLicenses(std::string const& project, google::cloud::cpp::compute::v1::License const& license_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertLicenses(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::License const& license_resource,
+      Options opts = {});
 
   ///
-  /// Create a License resource in the specified project. *Caution* This resource
-  /// is intended for use only by third-party partners who are creating Cloud
-  /// Marketplace images. 
+  /// Create a License resource in the specified project. *Caution* This
+  /// resource is intended for use only by third-party partners who are creating
+  /// Cloud Marketplace images.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest,google/cloud/compute/licenses/v1/licenses.proto#L159}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest,google/cloud/compute/licenses/v1/licenses.proto#L159}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.licenses.v1.InsertLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L159}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.licenses.v1.InsertLicensesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L159}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertLicenses(google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const& request, Options opts = {});
-
-  ///
-  /// Retrieves the list of licenses available in the specified project. This
-  /// method does not get any licenses that belong to other projects, including
-  /// licenses attached to publicly-available images, like Debian 9. If you want
-  /// to get a list of publicly-available licenses, use this method to make a
-  /// request to the respective image project, such as debian-cloud or
-  /// windows-cloud. *Caution* This resource is intended for use only by
-  /// third-party partners who are creating Cloud Marketplace images. 
-  ///
-  /// @param project  Project ID for this request.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::License,google/cloud/compute/v1/internal/common.proto#L13042}
-  ///
-  /// [google.cloud.cpp.compute.licenses.v1.ListLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L180}
-  /// [google.cloud.cpp.compute.v1.License]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13042}
-  ///
-  StreamRange<google::cloud::cpp::compute::v1::License>
-  ListLicenses(std::string const& project, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertLicenses(
+      google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Retrieves the list of licenses available in the specified project. This
@@ -240,86 +263,141 @@ class LicensesClient {
   /// to get a list of publicly-available licenses, use this method to make a
   /// request to the respective image project, such as debian-cloud or
   /// windows-cloud. *Caution* This resource is intended for use only by
-  /// third-party partners who are creating Cloud Marketplace images. 
+  /// third-party partners who are creating Cloud Marketplace images.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::licenses::v1::ListLicensesRequest,google/cloud/compute/licenses/v1/licenses.proto#L180}
+  /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::License,google/cloud/compute/v1/internal/common.proto#L13042}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::License,google/cloud/compute/v1/internal/common.proto#L13042}
   ///
-  /// [google.cloud.cpp.compute.licenses.v1.ListLicensesRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L180}
-  /// [google.cloud.cpp.compute.v1.License]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13042}
+  /// [google.cloud.cpp.compute.licenses.v1.ListLicensesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L180}
+  /// [google.cloud.cpp.compute.v1.License]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13042}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::License>
-  ListLicenses(google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::License> ListLicenses(
+      std::string const& project, Options opts = {});
+
+  ///
+  /// Retrieves the list of licenses available in the specified project. This
+  /// method does not get any licenses that belong to other projects, including
+  /// licenses attached to publicly-available images, like Debian 9. If you want
+  /// to get a list of publicly-available licenses, use this method to make a
+  /// request to the respective image project, such as debian-cloud or
+  /// windows-cloud. *Caution* This resource is intended for use only by
+  /// third-party partners who are creating Cloud Marketplace images.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::licenses::v1::ListLicensesRequest,google/cloud/compute/licenses/v1/licenses.proto#L180}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::License,google/cloud/compute/v1/internal/common.proto#L13042}
+  ///
+  /// [google.cloud.cpp.compute.licenses.v1.ListLicensesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L180}
+  /// [google.cloud.cpp.compute.v1.License]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13042}
+  ///
+  StreamRange<google::cloud::cpp::compute::v1::License> ListLicenses(
+      google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request,
+      Options opts = {});
 
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy. *Caution* This resource is intended for use only by
-  /// third-party partners who are creating Cloud Marketplace images. 
+  /// third-party partners who are creating Cloud Marketplace images.
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
-  /// @param global_set_policy_request_resource  The GlobalSetPolicyRequest for this request.
+  /// @param global_set_policy_request_resource  The GlobalSetPolicyRequest for
+  /// this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.licenses.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L245}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.licenses.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L245}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const& global_set_policy_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const&
+          global_set_policy_request_resource,
+      Options opts = {});
 
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy. *Caution* This resource is intended for use only by
-  /// third-party partners who are creating Cloud Marketplace images. 
+  /// third-party partners who are creating Cloud Marketplace images.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest,google/cloud/compute/licenses/v1/licenses.proto#L245}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest,google/cloud/compute/licenses/v1/licenses.proto#L245}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.licenses.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L245}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.licenses.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L245}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Returns permissions that a caller has on the specified resource. *Caution*
   /// This resource is intended for use only by third-party partners who are
-  /// creating Cloud Marketplace images. 
+  /// creating Cloud Marketplace images.
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
-  /// @param test_permissions_request_resource  The TestPermissionsRequest for this request.
+  /// @param test_permissions_request_resource  The TestPermissionsRequest for
+  /// this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
   ///
-  /// [google.cloud.cpp.compute.licenses.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L257}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// [google.cloud.cpp.compute.licenses.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L257}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
+  TestIamPermissions(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
 
   ///
   /// Returns permissions that a caller has on the specified resource. *Caution*
   /// This resource is intended for use only by third-party partners who are
-  /// creating Cloud Marketplace images. 
+  /// creating Cloud Marketplace images.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest,google/cloud/compute/licenses/v1/licenses.proto#L257}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest,google/cloud/compute/licenses/v1/licenses.proto#L257}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
   ///
-  /// [google.cloud.cpp.compute.licenses.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L257}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// [google.cloud.cpp.compute.licenses.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/licenses/v1/licenses.proto#L257}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::licenses::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
  private:
   std::shared_ptr<LicensesConnection> connection_;

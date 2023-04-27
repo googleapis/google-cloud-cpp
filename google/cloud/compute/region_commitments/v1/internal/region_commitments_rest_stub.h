@@ -36,25 +36,33 @@ class RegionCommitmentsRestStub {
  public:
   virtual ~RegionCommitmentsRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList> AggregatedListRegionCommitments(
+  virtual StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
+  AggregatedListRegionCommitments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionCommitments::v1::AggregatedListRegionCommitmentsRequest const& request) = 0;
+      google::cloud::cpp::compute::regionCommitments::v1::
+          AggregatedListRegionCommitmentsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Commitment> GetRegionCommitments(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionCommitments::v1::GetRegionCommitmentsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Commitment>
+  GetRegionCommitments(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::regionCommitments::v1::
+                           GetRegionCommitmentsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionCommitments(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertRegionCommitments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionCommitments::v1::InsertRegionCommitmentsRequest const& request) = 0;
+      google::cloud::cpp::compute::regionCommitments::v1::
+          InsertRegionCommitmentsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::CommitmentList> ListRegionCommitments(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionCommitments::v1::ListRegionCommitmentsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::CommitmentList>
+  ListRegionCommitments(google::cloud::rest_internal::RestContext& rest_context,
+                        google::cloud::cpp::compute::regionCommitments::v1::
+                            ListRegionCommitmentsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRegionCommitments(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateRegionCommitments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionCommitments::v1::UpdateRegionCommitmentsRequest const& request) = 0;
+      google::cloud::cpp::compute::regionCommitments::v1::
+          UpdateRegionCommitmentsRequest const& request) = 0;
 };
 
 class DefaultRegionCommitmentsRestStub : public RegionCommitmentsRestStub {
@@ -63,28 +71,34 @@ class DefaultRegionCommitmentsRestStub : public RegionCommitmentsRestStub {
 
   explicit DefaultRegionCommitmentsRestStub(Options options);
   DefaultRegionCommitmentsRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList> AggregatedListRegionCommitments(
+  StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
+  AggregatedListRegionCommitments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionCommitments::v1::AggregatedListRegionCommitmentsRequest const& request) override;
+      google::cloud::cpp::compute::regionCommitments::v1::
+          AggregatedListRegionCommitmentsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Commitment> GetRegionCommitments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionCommitments::v1::GetRegionCommitmentsRequest const& request) override;
+      google::cloud::cpp::compute::regionCommitments::v1::
+          GetRegionCommitmentsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionCommitments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionCommitments::v1::InsertRegionCommitmentsRequest const& request) override;
+      google::cloud::cpp::compute::regionCommitments::v1::
+          InsertRegionCommitmentsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::CommitmentList> ListRegionCommitments(
+  StatusOr<google::cloud::cpp::compute::v1::CommitmentList>
+  ListRegionCommitments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionCommitments::v1::ListRegionCommitmentsRequest const& request) override;
+      google::cloud::cpp::compute::regionCommitments::v1::
+          ListRegionCommitmentsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRegionCommitments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionCommitments::v1::UpdateRegionCommitmentsRequest const& request) override;
+      google::cloud::cpp::compute::regionCommitments::v1::
+          UpdateRegionCommitmentsRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

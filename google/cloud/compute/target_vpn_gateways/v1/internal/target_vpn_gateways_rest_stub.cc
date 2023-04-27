@@ -29,49 +29,56 @@ namespace cloud {
 namespace compute_target_vpn_gateways_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultTargetVpnGatewaysRestStub::DefaultTargetVpnGatewaysRestStub(Options options)
+DefaultTargetVpnGatewaysRestStub::DefaultTargetVpnGatewaysRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       options_(std::move(options)) {}
 
 DefaultTargetVpnGatewaysRestStub::DefaultTargetVpnGatewaysRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>
 DefaultTargetVpnGatewaysRestStub::AggregatedListTargetVpnGateways(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetVpnGateways::v1::AggregatedListTargetVpnGatewaysRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetVpnGateways::v1::
+        AggregatedListTargetVpnGatewaysRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/targetVpnGateways",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetVpnGatewaysRestStub::DeleteTargetVpnGateways(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetVpnGateways::v1::DeleteTargetVpnGatewaysRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetVpnGateways::v1::
+        DeleteTargetVpnGatewaysRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/targetVpnGateways/{target_vpn_gateway}");
+      "/compute/v1/projects/{project}/regions/{region}/targetVpnGateways/"
+      "{target_vpn_gateway}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
 DefaultTargetVpnGatewaysRestStub::GetTargetVpnGateways(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetVpnGateways::v1::GetTargetVpnGatewaysRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetVpnGateways::v1::
+        GetTargetVpnGatewaysRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetVpnGateway>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/targetVpnGateways/{target_vpn_gateway}",
+      "/compute/v1/projects/{project}/regions/{region}/targetVpnGateways/"
+      "{target_vpn_gateway}",
       {std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
        std::make_pair("target_vpn_gateway", request.target_vpn_gateway())});
@@ -79,8 +86,9 @@ DefaultTargetVpnGatewaysRestStub::GetTargetVpnGateways(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetVpnGatewaysRestStub::InsertTargetVpnGateways(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetVpnGateways::v1::InsertTargetVpnGatewaysRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetVpnGateways::v1::
+        InsertTargetVpnGatewaysRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/targetVpnGateways");
@@ -88,9 +96,11 @@ DefaultTargetVpnGatewaysRestStub::InsertTargetVpnGateways(
 
 StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayList>
 DefaultTargetVpnGatewaysRestStub::ListTargetVpnGateways(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetVpnGateways::v1::ListTargetVpnGatewaysRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::TargetVpnGatewayList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetVpnGateways::v1::
+        ListTargetVpnGatewaysRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::TargetVpnGatewayList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/targetVpnGateways",
       {std::make_pair("filter", request.filter()),
@@ -99,16 +109,19 @@ DefaultTargetVpnGatewaysRestStub::ListTargetVpnGateways(
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetVpnGatewaysRestStub::SetLabels(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetVpnGateways::v1::SetLabelsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetVpnGateways::v1::SetLabelsRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/targetVpnGateways/{resource}/setLabels");
+      "/compute/v1/projects/{project}/regions/{region}/targetVpnGateways/"
+      "{resource}/setLabels");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

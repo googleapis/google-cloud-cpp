@@ -36,39 +36,50 @@ class ReservationsTracingConnection
   ~ReservationsTracingConnection() override = default;
 
   explicit ReservationsTracingConnection(
-    std::shared_ptr<compute_reservations_v1::ReservationsConnection> child);
+      std::shared_ptr<compute_reservations_v1::ReservationsConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>
-  AggregatedListReservations(google::cloud::cpp::compute::reservations::v1::AggregatedListReservationsRequest const& request) override;
+  AggregatedListReservations(
+      google::cloud::cpp::compute::reservations::v1::
+          AggregatedListReservationsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteReservations(google::cloud::cpp::compute::reservations::v1::DeleteReservationsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteReservations(
+      google::cloud::cpp::compute::reservations::v1::
+          DeleteReservationsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Reservation>
-  GetReservations(google::cloud::cpp::compute::reservations::v1::GetReservationsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservations(
+      google::cloud::cpp::compute::reservations::v1::
+          GetReservationsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertReservations(google::cloud::cpp::compute::reservations::v1::InsertReservationsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertReservations(
+      google::cloud::cpp::compute::reservations::v1::
+          InsertReservationsRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Reservation>
-  ListReservations(google::cloud::cpp::compute::reservations::v1::ListReservationsRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Reservation> ListReservations(
+      google::cloud::cpp::compute::reservations::v1::ListReservationsRequest
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Resize(google::cloud::cpp::compute::reservations::v1::ResizeRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
+      google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::reservations::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::reservations::v1::
+                         TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateReservations(google::cloud::cpp::compute::reservations::v1::UpdateReservationsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateReservations(
+      google::cloud::cpp::compute::reservations::v1::
+          UpdateReservationsRequest const& request) override;
 
  private:
   std::shared_ptr<compute_reservations_v1::ReservationsConnection> child_;

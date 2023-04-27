@@ -42,37 +42,54 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockSslPoliciesConnection : public compute_ssl_policies_v1::SslPoliciesConnection {
+class MockSslPoliciesConnection
+    : public compute_ssl_policies_v1::SslPoliciesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::SslPoliciesAggregatedList>,
-  AggregatedListSslPolicies,
-  (google::cloud::cpp::compute::sslPolicies::v1::AggregatedListSslPoliciesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::SslPoliciesAggregatedList>,
+      AggregatedListSslPolicies,
+      (google::cloud::cpp::compute::sslPolicies::v1::
+           AggregatedListSslPoliciesRequest const& request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteSslPolicies,
-  (google::cloud::cpp::compute::sslPolicies::v1::DeleteSslPoliciesRequest const& request), (override));
+              DeleteSslPolicies,
+              (google::cloud::cpp::compute::sslPolicies::v1::
+                   DeleteSslPoliciesRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::SslPolicy>,
-  GetSslPolicies,
-  (google::cloud::cpp::compute::sslPolicies::v1::GetSslPoliciesRequest const& request), (override));
+              GetSslPolicies,
+              (google::cloud::cpp::compute::sslPolicies::v1::
+                   GetSslPoliciesRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertSslPolicies,
-  (google::cloud::cpp::compute::sslPolicies::v1::InsertSslPoliciesRequest const& request), (override));
+              InsertSslPolicies,
+              (google::cloud::cpp::compute::sslPolicies::v1::
+                   InsertSslPoliciesRequest const& request),
+              (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::SslPolicy>,
-  ListSslPolicies,
-  (google::cloud::cpp::compute::sslPolicies::v1::ListSslPoliciesRequest request), (override));
+  MOCK_METHOD(
+      StreamRange<google::cloud::cpp::compute::v1::SslPolicy>, ListSslPolicies,
+      (google::cloud::cpp::compute::sslPolicies::v1::ListSslPoliciesRequest
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>,
-  ListAvailableFeatures,
-  (google::cloud::cpp::compute::sslPolicies::v1::ListAvailableFeaturesRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::
+                           SslPoliciesListAvailableFeaturesResponse>,
+              ListAvailableFeatures,
+              (google::cloud::cpp::compute::sslPolicies::v1::
+                   ListAvailableFeaturesRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  PatchSslPolicies,
-  (google::cloud::cpp::compute::sslPolicies::v1::PatchSslPoliciesRequest const& request), (override));
+              PatchSslPolicies,
+              (google::cloud::cpp::compute::sslPolicies::v1::
+                   PatchSslPoliciesRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/region_disks/v1/region_disks.proto
 
-
 #include "google/cloud/compute/region_disks/v1/internal/region_disks_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,12 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RegionDisksRestMetadata::RegionDisksRestMetadata(
     std::shared_ptr<RegionDisksRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksRestMetadata::AddResourcePolicies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionDisks::v1::AddResourcePoliciesRequest const& request) {
+    google::cloud::cpp::compute::regionDisks::v1::
+        AddResourcePoliciesRequest const& request) {
   SetMetadata(rest_context);
   return child_->AddResourcePolicies(rest_context, request);
 }
@@ -47,7 +48,8 @@ RegionDisksRestMetadata::AddResourcePolicies(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksRestMetadata::CreateSnapshot(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionDisks::v1::CreateSnapshotRequest const& request) {
+    google::cloud::cpp::compute::regionDisks::v1::CreateSnapshotRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->CreateSnapshot(rest_context, request);
 }
@@ -55,7 +57,8 @@ RegionDisksRestMetadata::CreateSnapshot(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksRestMetadata::DeleteRegionDisks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionDisks::v1::DeleteRegionDisksRequest const& request) {
+    google::cloud::cpp::compute::regionDisks::v1::
+        DeleteRegionDisksRequest const& request) {
   SetMetadata(rest_context);
   return child_->DeleteRegionDisks(rest_context, request);
 }
@@ -63,7 +66,8 @@ RegionDisksRestMetadata::DeleteRegionDisks(
 StatusOr<google::cloud::cpp::compute::v1::Disk>
 RegionDisksRestMetadata::GetRegionDisks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionDisks::v1::GetRegionDisksRequest const& request) {
+    google::cloud::cpp::compute::regionDisks::v1::GetRegionDisksRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->GetRegionDisks(rest_context, request);
 }
@@ -71,7 +75,8 @@ RegionDisksRestMetadata::GetRegionDisks(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 RegionDisksRestMetadata::GetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionDisks::v1::GetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::regionDisks::v1::GetIamPolicyRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->GetIamPolicy(rest_context, request);
 }
@@ -79,7 +84,8 @@ RegionDisksRestMetadata::GetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksRestMetadata::InsertRegionDisks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionDisks::v1::InsertRegionDisksRequest const& request) {
+    google::cloud::cpp::compute::regionDisks::v1::
+        InsertRegionDisksRequest const& request) {
   SetMetadata(rest_context);
   return child_->InsertRegionDisks(rest_context, request);
 }
@@ -87,7 +93,8 @@ RegionDisksRestMetadata::InsertRegionDisks(
 StatusOr<google::cloud::cpp::compute::v1::DiskList>
 RegionDisksRestMetadata::ListRegionDisks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionDisks::v1::ListRegionDisksRequest const& request) {
+    google::cloud::cpp::compute::regionDisks::v1::ListRegionDisksRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->ListRegionDisks(rest_context, request);
 }
@@ -95,7 +102,8 @@ RegionDisksRestMetadata::ListRegionDisks(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksRestMetadata::RemoveResourcePolicies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionDisks::v1::RemoveResourcePoliciesRequest const& request) {
+    google::cloud::cpp::compute::regionDisks::v1::
+        RemoveResourcePoliciesRequest const& request) {
   SetMetadata(rest_context);
   return child_->RemoveResourcePolicies(rest_context, request);
 }
@@ -103,7 +111,8 @@ RegionDisksRestMetadata::RemoveResourcePolicies(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksRestMetadata::Resize(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionDisks::v1::ResizeRequest const& request) {
+    google::cloud::cpp::compute::regionDisks::v1::ResizeRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->Resize(rest_context, request);
 }
@@ -111,7 +120,8 @@ RegionDisksRestMetadata::Resize(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 RegionDisksRestMetadata::SetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionDisks::v1::SetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::regionDisks::v1::SetIamPolicyRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->SetIamPolicy(rest_context, request);
 }
@@ -119,7 +129,8 @@ RegionDisksRestMetadata::SetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksRestMetadata::SetLabels(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionDisks::v1::SetLabelsRequest const& request) {
+    google::cloud::cpp::compute::regionDisks::v1::SetLabelsRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->SetLabels(rest_context, request);
 }
@@ -127,7 +138,8 @@ RegionDisksRestMetadata::SetLabels(
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 RegionDisksRestMetadata::TestIamPermissions(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionDisks::v1::TestIamPermissionsRequest const& request) {
+    google::cloud::cpp::compute::regionDisks::v1::
+        TestIamPermissionsRequest const& request) {
   SetMetadata(rest_context);
   return child_->TestIamPermissions(rest_context, request);
 }
@@ -135,33 +147,34 @@ RegionDisksRestMetadata::TestIamPermissions(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksRestMetadata::UpdateRegionDisks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionDisks::v1::UpdateRegionDisksRequest const& request) {
+    google::cloud::cpp::compute::regionDisks::v1::
+        UpdateRegionDisksRequest const& request) {
   SetMetadata(rest_context);
   return child_->UpdateRegionDisks(rest_context, request);
 }
 
 void RegionDisksRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+    rest_internal::RestContext& rest_context,
+    std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

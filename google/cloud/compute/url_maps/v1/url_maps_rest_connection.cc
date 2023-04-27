@@ -17,11 +17,11 @@
 // source: google/cloud/compute/url_maps/v1/url_maps.proto
 
 #include "google/cloud/compute/url_maps/v1/url_maps_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/url_maps/v1/internal/url_maps_option_defaults.h"
 #include "google/cloud/compute/url_maps/v1/internal/url_maps_rest_connection_impl.h"
 #include "google/cloud/compute/url_maps/v1/internal/url_maps_rest_stub_factory.h"
 #include "google/cloud/compute/url_maps/v1/url_maps_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include <memory>
@@ -31,18 +31,19 @@ namespace cloud {
 namespace compute_url_maps_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<UrlMapsConnection> MakeUrlMapsConnectionRest(
-    ExperimentalTag, Options options) {
+std::shared_ptr<UrlMapsConnection> MakeUrlMapsConnectionRest(ExperimentalTag,
+                                                             Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList,
-      UrlMapsPolicyOptionList>(options, __func__);
-  options = compute_url_maps_v1_internal::UrlMapsDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 UrlMapsPolicyOptionList>(options, __func__);
+  options =
+      compute_url_maps_v1_internal::UrlMapsDefaultOptions(std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_url_maps_v1_internal::CreateDefaultUrlMapsRestStub(
-    options);
-  return std::make_shared<compute_url_maps_v1_internal::UrlMapsRestConnectionImpl>(
+  auto stub =
+      compute_url_maps_v1_internal::CreateDefaultUrlMapsRestStub(options);
+  return std::make_shared<
+      compute_url_maps_v1_internal::UrlMapsRestConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 

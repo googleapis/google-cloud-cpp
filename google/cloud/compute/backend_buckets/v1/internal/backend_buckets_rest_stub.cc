@@ -35,24 +35,25 @@ DefaultBackendBucketsRestStub::DefaultBackendBucketsRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultBackendBucketsRestStub::DefaultBackendBucketsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultBackendBucketsRestStub::AddSignedUrlKey(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::AddSignedUrlKeyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backendBuckets::v1::
+        AddSignedUrlKeyRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}/addSignedUrlKey");
+      "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}/"
+      "addSignedUrlKey");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultBackendBucketsRestStub::DeleteBackendBuckets(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::DeleteBackendBucketsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backendBuckets::v1::
+        DeleteBackendBucketsRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}");
@@ -60,17 +61,20 @@ DefaultBackendBucketsRestStub::DeleteBackendBuckets(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultBackendBucketsRestStub::DeleteSignedUrlKey(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::DeleteSignedUrlKeyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backendBuckets::v1::
+        DeleteSignedUrlKeyRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}/deleteSignedUrlKey");
+      "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}/"
+      "deleteSignedUrlKey");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendBucket>
 DefaultBackendBucketsRestStub::GetBackendBuckets(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::GetBackendBucketsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backendBuckets::v1::
+        GetBackendBucketsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::BackendBucket>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}",
@@ -80,8 +84,9 @@ DefaultBackendBucketsRestStub::GetBackendBuckets(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultBackendBucketsRestStub::InsertBackendBuckets(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::InsertBackendBucketsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backendBuckets::v1::
+        InsertBackendBucketsRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/backendBuckets");
@@ -89,8 +94,9 @@ DefaultBackendBucketsRestStub::InsertBackendBuckets(
 
 StatusOr<google::cloud::cpp::compute::v1::BackendBucketList>
 DefaultBackendBucketsRestStub::ListBackendBuckets(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::ListBackendBucketsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backendBuckets::v1::
+        ListBackendBucketsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::BackendBucketList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/backendBuckets",
@@ -99,13 +105,15 @@ DefaultBackendBucketsRestStub::ListBackendBuckets(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultBackendBucketsRestStub::PatchBackendBuckets(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::PatchBackendBucketsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backendBuckets::v1::
+        PatchBackendBucketsRequest const& request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}");
@@ -113,17 +121,20 @@ DefaultBackendBucketsRestStub::PatchBackendBuckets(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultBackendBucketsRestStub::SetEdgeSecurityPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::SetEdgeSecurityPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backendBuckets::v1::
+        SetEdgeSecurityPolicyRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}/setEdgeSecurityPolicy");
+      "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}/"
+      "setEdgeSecurityPolicy");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultBackendBucketsRestStub::UpdateBackendBuckets(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendBuckets::v1::UpdateBackendBucketsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backendBuckets::v1::
+        UpdateBackendBucketsRequest const& request) {
   return rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/backendBuckets/{backend_bucket}");

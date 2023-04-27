@@ -17,11 +17,11 @@
 // source: google/cloud/compute/node_groups/v1/node_groups.proto
 
 #include "google/cloud/compute/node_groups/v1/node_groups_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/node_groups/v1/internal/node_groups_option_defaults.h"
 #include "google/cloud/compute/node_groups/v1/internal/node_groups_tracing_connection.h"
 #include "google/cloud/compute/node_groups/v1/node_groups_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -42,13 +42,14 @@ NodeGroupsConnection::AddNodes(
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
 NodeGroupsConnection::AggregatedListNodeGroups(
-    google::cloud::cpp::compute::nodeGroups::v1::AggregatedListNodeGroupsRequest const&) {
+    google::cloud::cpp::compute::nodeGroups::v1::
+        AggregatedListNodeGroupsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsConnection::DeleteNodeGroups(
-    google::cloud::cpp::compute::nodeGroups::v1::DeleteNodeGroupsRequest const&) {
+NodeGroupsConnection::DeleteNodeGroups(google::cloud::cpp::compute::nodeGroups::
+                                           v1::DeleteNodeGroupsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -71,26 +72,30 @@ NodeGroupsConnection::GetIamPolicy(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsConnection::InsertNodeGroups(
-    google::cloud::cpp::compute::nodeGroups::v1::InsertNodeGroupsRequest const&) {
+NodeGroupsConnection::InsertNodeGroups(google::cloud::cpp::compute::nodeGroups::
+                                           v1::InsertNodeGroupsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::NodeGroup> NodeGroupsConnection::ListNodeGroups(
-    google::cloud::cpp::compute::nodeGroups::v1::ListNodeGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::NodeGroup>
+NodeGroupsConnection::ListNodeGroups(
+    google::cloud::cpp::compute::nodeGroups::v1::
+        ListNodeGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::NodeGroup>>();
 }
 
-StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode> NodeGroupsConnection::ListNodes(
-    google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode>
+NodeGroupsConnection::ListNodes(
+    google::cloud::cpp::compute::nodeGroups::v1::
+        ListNodesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsConnection::PatchNodeGroups(
-    google::cloud::cpp::compute::nodeGroups::v1::PatchNodeGroupsRequest const&) {
+NodeGroupsConnection::PatchNodeGroups(google::cloud::cpp::compute::nodeGroups::
+                                          v1::PatchNodeGroupsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -101,14 +106,15 @@ NodeGroupsConnection::SetIamPolicy(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsConnection::SetNodeTemplate(
-    google::cloud::cpp::compute::nodeGroups::v1::SetNodeTemplateRequest const&) {
+NodeGroupsConnection::SetNodeTemplate(google::cloud::cpp::compute::nodeGroups::
+                                          v1::SetNodeTemplateRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 NodeGroupsConnection::TestIamPermissions(
-    google::cloud::cpp::compute::nodeGroups::v1::TestIamPermissionsRequest const&) {
+    google::cloud::cpp::compute::nodeGroups::v1::
+        TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

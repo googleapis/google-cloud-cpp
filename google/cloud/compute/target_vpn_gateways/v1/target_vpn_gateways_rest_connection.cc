@@ -17,11 +17,11 @@
 // source: google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto
 
 #include "google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/target_vpn_gateways/v1/internal/target_vpn_gateways_option_defaults.h"
 #include "google/cloud/compute/target_vpn_gateways/v1/internal/target_vpn_gateways_rest_connection_impl.h"
 #include "google/cloud/compute/target_vpn_gateways/v1/internal/target_vpn_gateways_rest_stub_factory.h"
 #include "google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include <memory>
@@ -31,18 +31,21 @@ namespace cloud {
 namespace compute_target_vpn_gateways_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<TargetVpnGatewaysConnection> MakeTargetVpnGatewaysConnectionRest(
-    ExperimentalTag, Options options) {
+std::shared_ptr<TargetVpnGatewaysConnection>
+MakeTargetVpnGatewaysConnectionRest(ExperimentalTag, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList,
-      TargetVpnGatewaysPolicyOptionList>(options, __func__);
-  options = compute_target_vpn_gateways_v1_internal::TargetVpnGatewaysDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 TargetVpnGatewaysPolicyOptionList>(options,
+                                                                    __func__);
+  options =
+      compute_target_vpn_gateways_v1_internal::TargetVpnGatewaysDefaultOptions(
+          std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_target_vpn_gateways_v1_internal::CreateDefaultTargetVpnGatewaysRestStub(
-    options);
-  return std::make_shared<compute_target_vpn_gateways_v1_internal::TargetVpnGatewaysRestConnectionImpl>(
+  auto stub = compute_target_vpn_gateways_v1_internal::
+      CreateDefaultTargetVpnGatewaysRestStub(options);
+  return std::make_shared<compute_target_vpn_gateways_v1_internal::
+                              TargetVpnGatewaysRestConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 

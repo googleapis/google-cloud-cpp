@@ -35,15 +35,14 @@ DefaultNetworksRestStub::DefaultNetworksRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultNetworksRestStub::DefaultNetworksRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultNetworksRestStub::AddPeering(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::AddPeeringRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/networks/{network}/addPeering");
@@ -51,8 +50,9 @@ DefaultNetworksRestStub::AddPeering(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultNetworksRestStub::DeleteNetworks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const&
+        request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/networks/{network}");
@@ -60,8 +60,9 @@ DefaultNetworksRestStub::DeleteNetworks(
 
 StatusOr<google::cloud::cpp::compute::v1::Network>
 DefaultNetworksRestStub::GetNetworks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::GetNetworksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Network>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/networks/{network}",
@@ -71,19 +72,23 @@ DefaultNetworksRestStub::GetNetworks(
 
 StatusOr<google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>
 DefaultNetworksRestStub::GetEffectiveFirewalls(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::GetEffectiveFirewallsRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::networks::v1::
+        GetEffectiveFirewallsRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/networks/{network}/getEffectiveFirewalls",
+      "/compute/v1/projects/{project}/global/networks/{network}/"
+      "getEffectiveFirewalls",
       {std::make_pair("network", request.network()),
        std::make_pair("project", request.project())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultNetworksRestStub::InsertNetworks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/networks");
@@ -91,8 +96,9 @@ DefaultNetworksRestStub::InsertNetworks(
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkList>
 DefaultNetworksRestStub::ListNetworks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::ListNetworksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::networks::v1::ListNetworksRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::NetworkList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/networks",
@@ -101,16 +107,20 @@ DefaultNetworksRestStub::ListNetworks(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ExchangedPeeringRoutesList>
 DefaultNetworksRestStub::ListPeeringRoutes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::ExchangedPeeringRoutesList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest const&
+        request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::ExchangedPeeringRoutesList>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/networks/{network}/listPeeringRoutes",
+      "/compute/v1/projects/{project}/global/networks/{network}/"
+      "listPeeringRoutes",
       {std::make_pair("direction", request.direction()),
        std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
@@ -120,13 +130,15 @@ DefaultNetworksRestStub::ListPeeringRoutes(
        std::make_pair("peering_name", request.peering_name()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultNetworksRestStub::PatchNetworks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&
+        request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/networks/{network}");
@@ -134,8 +146,9 @@ DefaultNetworksRestStub::PatchNetworks(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultNetworksRestStub::RemovePeering(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/networks/{network}/removePeering");
@@ -143,17 +156,20 @@ DefaultNetworksRestStub::RemovePeering(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultNetworksRestStub::SwitchToCustomMode(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/networks/{network}/switchToCustomMode");
+      "/compute/v1/projects/{project}/global/networks/{network}/"
+      "switchToCustomMode");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultNetworksRestStub::UpdatePeering(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
+        request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/networks/{network}/updatePeering");

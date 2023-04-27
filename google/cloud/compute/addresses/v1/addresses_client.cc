@@ -24,29 +24,37 @@ namespace cloud {
 namespace compute_addresses_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-AddressesClient::AddressesClient(ExperimentalTag,
-    std::shared_ptr<AddressesConnection> connection, Options opts)
+AddressesClient::AddressesClient(
+    ExperimentalTag, std::shared_ptr<AddressesConnection> connection,
+    Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AddressesClient::~AddressesClient() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
-AddressesClient::AggregatedListAddresses(std::string const& project, Options opts) {
+AddressesClient::AggregatedListAddresses(std::string const& project,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest request;
+  google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest
+      request;
   request.set_project(project);
   return connection_->AggregatedListAddresses(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
-AddressesClient::AggregatedListAddresses(google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest const& request, Options opts) {
+AddressesClient::AggregatedListAddresses(
+    google::cloud::cpp::compute::addresses::v1::
+        AggregatedListAddressesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AggregatedListAddresses(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-AddressesClient::DeleteAddresses(std::string const& project, std::string const& region, std::string const& address, Options opts) {
+AddressesClient::DeleteAddresses(std::string const& project,
+                                 std::string const& region,
+                                 std::string const& address, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest request;
   request.set_project(project);
@@ -56,13 +64,18 @@ AddressesClient::DeleteAddresses(std::string const& project, std::string const& 
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-AddressesClient::DeleteAddresses(google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const& request, Options opts) {
+AddressesClient::DeleteAddresses(
+    google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAddresses(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Address>
-AddressesClient::GetAddresses(std::string const& project, std::string const& region, std::string const& address, Options opts) {
+AddressesClient::GetAddresses(std::string const& project,
+                              std::string const& region,
+                              std::string const& address, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::addresses::v1::GetAddressesRequest request;
   request.set_project(project);
@@ -72,13 +85,19 @@ AddressesClient::GetAddresses(std::string const& project, std::string const& reg
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Address>
-AddressesClient::GetAddresses(google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const& request, Options opts) {
+AddressesClient::GetAddresses(
+    google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetAddresses(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-AddressesClient::InsertAddresses(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::Address const& address_resource, Options opts) {
+AddressesClient::InsertAddresses(
+    std::string const& project, std::string const& region,
+    google::cloud::cpp::compute::v1::Address const& address_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest request;
   request.set_project(project);
@@ -88,13 +107,17 @@ AddressesClient::InsertAddresses(std::string const& project, std::string const& 
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-AddressesClient::InsertAddresses(google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const& request, Options opts) {
+AddressesClient::InsertAddresses(
+    google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertAddresses(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Address>
-AddressesClient::ListAddresses(std::string const& project, std::string const& region, Options opts) {
+AddressesClient::ListAddresses(std::string const& project,
+                               std::string const& region, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request;
   request.set_project(project);
@@ -103,24 +126,32 @@ AddressesClient::ListAddresses(std::string const& project, std::string const& re
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Address>
-AddressesClient::ListAddresses(google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request, Options opts) {
+AddressesClient::ListAddresses(
+    google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListAddresses(std::move(request));
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Operation>
-AddressesClient::SetLabels(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::RegionSetLabelsRequest const& region_set_labels_request_resource, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Operation> AddressesClient::SetLabels(
+    std::string const& project, std::string const& region,
+    std::string const& resource,
+    google::cloud::cpp::compute::v1::RegionSetLabelsRequest const&
+        region_set_labels_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::addresses::v1::SetLabelsRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_resource(resource);
-  *request.mutable_region_set_labels_request_resource() = region_set_labels_request_resource;
+  *request.mutable_region_set_labels_request_resource() =
+      region_set_labels_request_resource;
   return connection_->SetLabels(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Operation>
-AddressesClient::SetLabels(google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Operation> AddressesClient::SetLabels(
+    google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetLabels(request);
 }

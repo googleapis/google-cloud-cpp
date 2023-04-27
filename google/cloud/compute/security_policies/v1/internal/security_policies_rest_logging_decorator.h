@@ -38,56 +38,71 @@ class SecurityPoliciesRestLogging : public SecurityPoliciesRestStub {
  public:
   ~SecurityPoliciesRestLogging() override = default;
   SecurityPoliciesRestLogging(std::shared_ptr<SecurityPoliciesRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                              TracingOptions tracing_options,
+                              std::set<std::string> components);
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddRule(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::AddRuleRequest const& request) override;
+      google::cloud::cpp::compute::securityPolicies::v1::AddRuleRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList> AggregatedListSecurityPolicies(
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>
+  AggregatedListSecurityPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::AggregatedListSecurityPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::securityPolicies::v1::
+          AggregatedListSecurityPoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSecurityPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::DeleteSecurityPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::securityPolicies::v1::
+          DeleteSecurityPoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::GetSecurityPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::securityPolicies::v1::
+          GetSecurityPoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule> GetRule(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::GetRuleRequest const& request) override;
+      google::cloud::cpp::compute::securityPolicies::v1::GetRuleRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSecurityPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::InsertSecurityPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::securityPolicies::v1::
+          InsertSecurityPoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyList> ListSecurityPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::ListSecurityPoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyList>
+  ListSecurityPolicies(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::securityPolicies::v1::
+                           ListSecurityPoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesListPreconfiguredExpressionSetsResponse> ListPreconfiguredExpressionSets(
+  StatusOr<google::cloud::cpp::compute::v1::
+               SecurityPoliciesListPreconfiguredExpressionSetsResponse>
+  ListPreconfiguredExpressionSets(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::ListPreconfiguredExpressionSetsRequest const& request) override;
+      google::cloud::cpp::compute::securityPolicies::v1::
+          ListPreconfiguredExpressionSetsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSecurityPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::PatchSecurityPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::securityPolicies::v1::
+          PatchSecurityPoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRule(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::PatchRuleRequest const& request) override;
+      google::cloud::cpp::compute::securityPolicies::v1::PatchRuleRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveRule(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::RemoveRuleRequest const& request) override;
+      google::cloud::cpp::compute::securityPolicies::v1::
+          RemoveRuleRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::SetLabelsRequest const& request) override;
+      google::cloud::cpp::compute::securityPolicies::v1::SetLabelsRequest const&
+          request) override;
 
  private:
   std::shared_ptr<SecurityPoliciesRestStub> child_;

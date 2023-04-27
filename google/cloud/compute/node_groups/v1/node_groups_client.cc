@@ -24,46 +24,61 @@ namespace cloud {
 namespace compute_node_groups_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-NodeGroupsClient::NodeGroupsClient(ExperimentalTag,
-    std::shared_ptr<NodeGroupsConnection> connection, Options opts)
+NodeGroupsClient::NodeGroupsClient(
+    ExperimentalTag, std::shared_ptr<NodeGroupsConnection> connection,
+    Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 NodeGroupsClient::~NodeGroupsClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsClient::AddNodes(std::string const& project, std::string const& zone, std::string const& node_group, google::cloud::cpp::compute::v1::NodeGroupsAddNodesRequest const& node_groups_add_nodes_request_resource, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Operation> NodeGroupsClient::AddNodes(
+    std::string const& project, std::string const& zone,
+    std::string const& node_group,
+    google::cloud::cpp::compute::v1::NodeGroupsAddNodesRequest const&
+        node_groups_add_nodes_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::nodeGroups::v1::AddNodesRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_node_group(node_group);
-  *request.mutable_node_groups_add_nodes_request_resource() = node_groups_add_nodes_request_resource;
+  *request.mutable_node_groups_add_nodes_request_resource() =
+      node_groups_add_nodes_request_resource;
   return connection_->AddNodes(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsClient::AddNodes(google::cloud::cpp::compute::nodeGroups::v1::AddNodesRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Operation> NodeGroupsClient::AddNodes(
+    google::cloud::cpp::compute::nodeGroups::v1::AddNodesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddNodes(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
-NodeGroupsClient::AggregatedListNodeGroups(std::string const& project, Options opts) {
+NodeGroupsClient::AggregatedListNodeGroups(std::string const& project,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::nodeGroups::v1::AggregatedListNodeGroupsRequest request;
+  google::cloud::cpp::compute::nodeGroups::v1::AggregatedListNodeGroupsRequest
+      request;
   request.set_project(project);
   return connection_->AggregatedListNodeGroups(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
-NodeGroupsClient::AggregatedListNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::AggregatedListNodeGroupsRequest const& request, Options opts) {
+NodeGroupsClient::AggregatedListNodeGroups(
+    google::cloud::cpp::compute::nodeGroups::v1::
+        AggregatedListNodeGroupsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AggregatedListNodeGroups(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsClient::DeleteNodeGroups(std::string const& project, std::string const& zone, std::string const& node_group, Options opts) {
+NodeGroupsClient::DeleteNodeGroups(std::string const& project,
+                                   std::string const& zone,
+                                   std::string const& node_group,
+                                   Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::nodeGroups::v1::DeleteNodeGroupsRequest request;
   request.set_project(project);
@@ -73,30 +88,44 @@ NodeGroupsClient::DeleteNodeGroups(std::string const& project, std::string const
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsClient::DeleteNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::DeleteNodeGroupsRequest const& request, Options opts) {
+NodeGroupsClient::DeleteNodeGroups(
+    google::cloud::cpp::compute::nodeGroups::v1::DeleteNodeGroupsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNodeGroups(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsClient::DeleteNodes(std::string const& project, std::string const& zone, std::string const& node_group, google::cloud::cpp::compute::v1::NodeGroupsDeleteNodesRequest const& node_groups_delete_nodes_request_resource, Options opts) {
+NodeGroupsClient::DeleteNodes(
+    std::string const& project, std::string const& zone,
+    std::string const& node_group,
+    google::cloud::cpp::compute::v1::NodeGroupsDeleteNodesRequest const&
+        node_groups_delete_nodes_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::nodeGroups::v1::DeleteNodesRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_node_group(node_group);
-  *request.mutable_node_groups_delete_nodes_request_resource() = node_groups_delete_nodes_request_resource;
+  *request.mutable_node_groups_delete_nodes_request_resource() =
+      node_groups_delete_nodes_request_resource;
   return connection_->DeleteNodes(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsClient::DeleteNodes(google::cloud::cpp::compute::nodeGroups::v1::DeleteNodesRequest const& request, Options opts) {
+NodeGroupsClient::DeleteNodes(
+    google::cloud::cpp::compute::nodeGroups::v1::DeleteNodesRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNodes(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroup>
-NodeGroupsClient::GetNodeGroups(std::string const& project, std::string const& zone, std::string const& node_group, Options opts) {
+NodeGroupsClient::GetNodeGroups(std::string const& project,
+                                std::string const& zone,
+                                std::string const& node_group, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::nodeGroups::v1::GetNodeGroupsRequest request;
   request.set_project(project);
@@ -106,13 +135,18 @@ NodeGroupsClient::GetNodeGroups(std::string const& project, std::string const& z
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroup>
-NodeGroupsClient::GetNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::GetNodeGroupsRequest const& request, Options opts) {
+NodeGroupsClient::GetNodeGroups(
+    google::cloud::cpp::compute::nodeGroups::v1::GetNodeGroupsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNodeGroups(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-NodeGroupsClient::GetIamPolicy(std::string const& project, std::string const& zone, std::string const& resource, Options opts) {
+NodeGroupsClient::GetIamPolicy(std::string const& project,
+                               std::string const& zone,
+                               std::string const& resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::nodeGroups::v1::GetIamPolicyRequest request;
   request.set_project(project);
@@ -122,13 +156,20 @@ NodeGroupsClient::GetIamPolicy(std::string const& project, std::string const& zo
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-NodeGroupsClient::GetIamPolicy(google::cloud::cpp::compute::nodeGroups::v1::GetIamPolicyRequest const& request, Options opts) {
+NodeGroupsClient::GetIamPolicy(
+    google::cloud::cpp::compute::nodeGroups::v1::GetIamPolicyRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsClient::InsertNodeGroups(std::string const& project, std::string const& zone, std::int32_t initial_node_count, google::cloud::cpp::compute::v1::NodeGroup const& node_group_resource, Options opts) {
+NodeGroupsClient::InsertNodeGroups(
+    std::string const& project, std::string const& zone,
+    std::int32_t initial_node_count,
+    google::cloud::cpp::compute::v1::NodeGroup const& node_group_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::nodeGroups::v1::InsertNodeGroupsRequest request;
   request.set_project(project);
@@ -139,13 +180,17 @@ NodeGroupsClient::InsertNodeGroups(std::string const& project, std::string const
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsClient::InsertNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::InsertNodeGroupsRequest const& request, Options opts) {
+NodeGroupsClient::InsertNodeGroups(
+    google::cloud::cpp::compute::nodeGroups::v1::InsertNodeGroupsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertNodeGroups(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NodeGroup>
-NodeGroupsClient::ListNodeGroups(std::string const& project, std::string const& zone, Options opts) {
+NodeGroupsClient::ListNodeGroups(std::string const& project,
+                                 std::string const& zone, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::nodeGroups::v1::ListNodeGroupsRequest request;
   request.set_project(project);
@@ -154,13 +199,16 @@ NodeGroupsClient::ListNodeGroups(std::string const& project, std::string const& 
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NodeGroup>
-NodeGroupsClient::ListNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::ListNodeGroupsRequest request, Options opts) {
+NodeGroupsClient::ListNodeGroups(
+    google::cloud::cpp::compute::nodeGroups::v1::ListNodeGroupsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNodeGroups(std::move(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode>
-NodeGroupsClient::ListNodes(std::string const& project, std::string const& zone, std::string const& node_group, Options opts) {
+NodeGroupsClient::ListNodes(std::string const& project, std::string const& zone,
+                            std::string const& node_group, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest request;
   request.set_project(project);
@@ -170,13 +218,19 @@ NodeGroupsClient::ListNodes(std::string const& project, std::string const& zone,
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode>
-NodeGroupsClient::ListNodes(google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest request, Options opts) {
+NodeGroupsClient::ListNodes(
+    google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNodes(std::move(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsClient::PatchNodeGroups(std::string const& project, std::string const& zone, std::string const& node_group, google::cloud::cpp::compute::v1::NodeGroup const& node_group_resource, Options opts) {
+NodeGroupsClient::PatchNodeGroups(
+    std::string const& project, std::string const& zone,
+    std::string const& node_group,
+    google::cloud::cpp::compute::v1::NodeGroup const& node_group_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::nodeGroups::v1::PatchNodeGroupsRequest request;
   request.set_project(project);
@@ -187,58 +241,89 @@ NodeGroupsClient::PatchNodeGroups(std::string const& project, std::string const&
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsClient::PatchNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::PatchNodeGroupsRequest const& request, Options opts) {
+NodeGroupsClient::PatchNodeGroups(
+    google::cloud::cpp::compute::nodeGroups::v1::PatchNodeGroupsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchNodeGroups(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-NodeGroupsClient::SetIamPolicy(std::string const& project, std::string const& zone, std::string const& resource, google::cloud::cpp::compute::v1::ZoneSetPolicyRequest const& zone_set_policy_request_resource, Options opts) {
+NodeGroupsClient::SetIamPolicy(
+    std::string const& project, std::string const& zone,
+    std::string const& resource,
+    google::cloud::cpp::compute::v1::ZoneSetPolicyRequest const&
+        zone_set_policy_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::nodeGroups::v1::SetIamPolicyRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_resource(resource);
-  *request.mutable_zone_set_policy_request_resource() = zone_set_policy_request_resource;
+  *request.mutable_zone_set_policy_request_resource() =
+      zone_set_policy_request_resource;
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-NodeGroupsClient::SetIamPolicy(google::cloud::cpp::compute::nodeGroups::v1::SetIamPolicyRequest const& request, Options opts) {
+NodeGroupsClient::SetIamPolicy(
+    google::cloud::cpp::compute::nodeGroups::v1::SetIamPolicyRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsClient::SetNodeTemplate(std::string const& project, std::string const& zone, std::string const& node_group, google::cloud::cpp::compute::v1::NodeGroupsSetNodeTemplateRequest const& node_groups_set_node_template_request_resource, Options opts) {
+NodeGroupsClient::SetNodeTemplate(
+    std::string const& project, std::string const& zone,
+    std::string const& node_group,
+    google::cloud::cpp::compute::v1::NodeGroupsSetNodeTemplateRequest const&
+        node_groups_set_node_template_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::nodeGroups::v1::SetNodeTemplateRequest request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_node_group(node_group);
-  *request.mutable_node_groups_set_node_template_request_resource() = node_groups_set_node_template_request_resource;
+  *request.mutable_node_groups_set_node_template_request_resource() =
+      node_groups_set_node_template_request_resource;
   return connection_->SetNodeTemplate(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsClient::SetNodeTemplate(google::cloud::cpp::compute::nodeGroups::v1::SetNodeTemplateRequest const& request, Options opts) {
+NodeGroupsClient::SetNodeTemplate(
+    google::cloud::cpp::compute::nodeGroups::v1::SetNodeTemplateRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetNodeTemplate(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-NodeGroupsClient::TestIamPermissions(std::string const& project, std::string const& zone, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts) {
+NodeGroupsClient::TestIamPermissions(
+    std::string const& project, std::string const& zone,
+    std::string const& resource,
+    google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+        test_permissions_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::nodeGroups::v1::TestIamPermissionsRequest request;
+  google::cloud::cpp::compute::nodeGroups::v1::TestIamPermissionsRequest
+      request;
   request.set_project(project);
   request.set_zone(zone);
   request.set_resource(resource);
-  *request.mutable_test_permissions_request_resource() = test_permissions_request_resource;
+  *request.mutable_test_permissions_request_resource() =
+      test_permissions_request_resource;
   return connection_->TestIamPermissions(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-NodeGroupsClient::TestIamPermissions(google::cloud::cpp::compute::nodeGroups::v1::TestIamPermissionsRequest const& request, Options opts) {
+NodeGroupsClient::TestIamPermissions(
+    google::cloud::cpp::compute::nodeGroups::v1::
+        TestIamPermissionsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }

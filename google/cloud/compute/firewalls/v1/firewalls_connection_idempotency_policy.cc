@@ -26,39 +26,47 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-FirewallsConnectionIdempotencyPolicy::~FirewallsConnectionIdempotencyPolicy() = default;
+FirewallsConnectionIdempotencyPolicy::~FirewallsConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<FirewallsConnectionIdempotencyPolicy>
 FirewallsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<FirewallsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency FirewallsConnectionIdempotencyPolicy::DeleteFirewalls(google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const&) {
+Idempotency FirewallsConnectionIdempotencyPolicy::DeleteFirewalls(
+    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FirewallsConnectionIdempotencyPolicy::GetFirewalls(google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&) {
+Idempotency FirewallsConnectionIdempotencyPolicy::GetFirewalls(
+    google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency FirewallsConnectionIdempotencyPolicy::InsertFirewalls(google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const&) {
+Idempotency FirewallsConnectionIdempotencyPolicy::InsertFirewalls(
+    google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FirewallsConnectionIdempotencyPolicy::ListFirewalls(google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest) {  // NOLINT
+Idempotency FirewallsConnectionIdempotencyPolicy::ListFirewalls(
+    google::cloud::cpp::compute::firewalls::v1::
+        ListFirewallsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency FirewallsConnectionIdempotencyPolicy::PatchFirewalls(google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const&) {
+Idempotency FirewallsConnectionIdempotencyPolicy::PatchFirewalls(
+    google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency FirewallsConnectionIdempotencyPolicy::UpdateFirewalls(google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const&) {
+Idempotency FirewallsConnectionIdempotencyPolicy::UpdateFirewalls(
+    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<FirewallsConnectionIdempotencyPolicy>
-    MakeDefaultFirewallsConnectionIdempotencyPolicy() {
+MakeDefaultFirewallsConnectionIdempotencyPolicy() {
   return std::make_unique<FirewallsConnectionIdempotencyPolicy>();
 }
 

@@ -34,24 +34,31 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options TargetInstancesDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_TARGET_INSTANCES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_TARGET_INSTANCES_AUTHORITY",
-      "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
-  if (!options.has<compute_target_instances_v1::TargetInstancesRetryPolicyOption>()) {
+      std::move(options), "GOOGLE_CLOUD_CPP_TARGET_INSTANCES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_TARGET_INSTANCES_AUTHORITY", "compute.googleapis.com");
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  if (!options.has<
+          compute_target_instances_v1::TargetInstancesRetryPolicyOption>()) {
     options.set<compute_target_instances_v1::TargetInstancesRetryPolicyOption>(
         compute_target_instances_v1::TargetInstancesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_target_instances_v1::TargetInstancesBackoffPolicyOption>()) {
-    options.set<compute_target_instances_v1::TargetInstancesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+  if (!options.has<
+          compute_target_instances_v1::TargetInstancesBackoffPolicyOption>()) {
+    options
+        .set<compute_target_instances_v1::TargetInstancesBackoffPolicyOption>(
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone());
   }
-  if (!options.has<compute_target_instances_v1::TargetInstancesConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_target_instances_v1::TargetInstancesConnectionIdempotencyPolicyOption>(
-        compute_target_instances_v1::MakeDefaultTargetInstancesConnectionIdempotencyPolicy());
+  if (!options.has<compute_target_instances_v1::
+                       TargetInstancesConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_target_instances_v1::
+                    TargetInstancesConnectionIdempotencyPolicyOption>(
+        compute_target_instances_v1::
+            MakeDefaultTargetInstancesConnectionIdempotencyPolicy());
   }
 
   return options;

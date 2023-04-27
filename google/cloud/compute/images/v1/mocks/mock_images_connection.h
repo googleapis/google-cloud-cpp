@@ -46,49 +46,68 @@ class MockImagesConnection : public compute_images_v1::ImagesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteImages,
-  (google::cloud::cpp::compute::images::v1::DeleteImagesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteImages,
+      (google::cloud::cpp::compute::images::v1::DeleteImagesRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  Deprecate,
-  (google::cloud::cpp::compute::images::v1::DeprecateRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, Deprecate,
+              (google::cloud::cpp::compute::images::v1::DeprecateRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Image>,
-  GetImages,
-  (google::cloud::cpp::compute::images::v1::GetImagesRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Image>, GetImages,
+              (google::cloud::cpp::compute::images::v1::GetImagesRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Image>,
-  GetFromFamily,
-  (google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Image>, GetFromFamily,
+      (google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  GetIamPolicy,
-  (google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+      (google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertImages,
-  (google::cloud::cpp::compute::images::v1::InsertImagesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertImages,
+      (google::cloud::cpp::compute::images::v1::InsertImagesRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Image>,
-  ListImages,
-  (google::cloud::cpp::compute::images::v1::ListImagesRequest request), (override));
+  MOCK_METHOD(
+      StreamRange<google::cloud::cpp::compute::v1::Image>, ListImages,
+      (google::cloud::cpp::compute::images::v1::ListImagesRequest request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  PatchImages,
-  (google::cloud::cpp::compute::images::v1::PatchImagesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, PatchImages,
+      (google::cloud::cpp::compute::images::v1::PatchImagesRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  SetIamPolicy,
-  (google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+      (google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  SetLabels,
-  (google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, SetLabels,
+              (google::cloud::cpp::compute::images::v1::SetLabelsRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
-  TestIamPermissions,
-  (google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      TestIamPermissions,
+      (google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

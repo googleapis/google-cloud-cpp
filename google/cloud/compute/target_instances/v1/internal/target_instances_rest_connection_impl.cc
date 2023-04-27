@@ -17,8 +17,8 @@
 // source: google/cloud/compute/target_instances/v1/target_instances.proto
 
 #include "google/cloud/compute/target_instances/v1/internal/target_instances_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/target_instances/v1/internal/target_instances_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -32,82 +32,105 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TargetInstancesRestConnectionImpl::TargetInstancesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_target_instances_v1_internal::TargetInstancesRestStub> stub,
+    std::shared_ptr<
+        compute_target_instances_v1_internal::TargetInstancesRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        TargetInstancesConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      TargetInstancesConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
-TargetInstancesRestConnectionImpl::AggregatedListTargetInstances(google::cloud::cpp::compute::targetInstances::v1::AggregatedListTargetInstancesRequest const& request) {
+TargetInstancesRestConnectionImpl::AggregatedListTargetInstances(
+    google::cloud::cpp::compute::targetInstances::v1::
+        AggregatedListTargetInstancesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AggregatedListTargetInstances(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::targetInstances::v1::AggregatedListTargetInstancesRequest const& request) {
+             google::cloud::cpp::compute::targetInstances::v1::
+                 AggregatedListTargetInstancesRequest const& request) {
         return stub_->AggregatedListTargetInstances(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetInstancesRestConnectionImpl::DeleteTargetInstances(google::cloud::cpp::compute::targetInstances::v1::DeleteTargetInstancesRequest const& request) {
+TargetInstancesRestConnectionImpl::DeleteTargetInstances(
+    google::cloud::cpp::compute::targetInstances::v1::
+        DeleteTargetInstancesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteTargetInstances(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::targetInstances::v1::DeleteTargetInstancesRequest const& request) {
+             google::cloud::cpp::compute::targetInstances::v1::
+                 DeleteTargetInstancesRequest const& request) {
         return stub_->DeleteTargetInstances(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
-TargetInstancesRestConnectionImpl::GetTargetInstances(google::cloud::cpp::compute::targetInstances::v1::GetTargetInstancesRequest const& request) {
+TargetInstancesRestConnectionImpl::GetTargetInstances(
+    google::cloud::cpp::compute::targetInstances::v1::
+        GetTargetInstancesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetTargetInstances(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::targetInstances::v1::GetTargetInstancesRequest const& request) {
+             google::cloud::cpp::compute::targetInstances::v1::
+                 GetTargetInstancesRequest const& request) {
         return stub_->GetTargetInstances(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetInstancesRestConnectionImpl::InsertTargetInstances(google::cloud::cpp::compute::targetInstances::v1::InsertTargetInstancesRequest const& request) {
+TargetInstancesRestConnectionImpl::InsertTargetInstances(
+    google::cloud::cpp::compute::targetInstances::v1::
+        InsertTargetInstancesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->InsertTargetInstances(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::targetInstances::v1::InsertTargetInstancesRequest const& request) {
+             google::cloud::cpp::compute::targetInstances::v1::
+                 InsertTargetInstancesRequest const& request) {
         return stub_->InsertTargetInstances(rest_context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
-TargetInstancesRestConnectionImpl::ListTargetInstances(google::cloud::cpp::compute::targetInstances::v1::ListTargetInstancesRequest request) {
+TargetInstancesRestConnectionImpl::ListTargetInstances(
+    google::cloud::cpp::compute::targetInstances::v1::ListTargetInstancesRequest
+        request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_target_instances_v1::TargetInstancesRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<
+      compute_target_instances_v1::TargetInstancesRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTargetInstances(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::TargetInstance>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::TargetInstance>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::targetInstances::v1::ListTargetInstancesRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::targetInstances::v1::
+                          ListTargetInstancesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::targetInstances::v1::ListTargetInstancesRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::targetInstances::v1::
+                       ListTargetInstancesRequest const& request) {
               return stub->ListTargetInstances(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::TargetInstanceList r) {
-        std::vector<google::cloud::cpp::compute::v1::TargetInstance> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::TargetInstance> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;

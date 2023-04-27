@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/target_pools/v1/target_pools.proto
 
-
 #include "google/cloud/compute/target_pools/v1/internal/target_pools_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,12 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TargetPoolsRestMetadata::TargetPoolsRestMetadata(
     std::shared_ptr<TargetPoolsRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestMetadata::AddHealthCheck(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetPools::v1::AddHealthCheckRequest const& request) {
+    google::cloud::cpp::compute::targetPools::v1::AddHealthCheckRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->AddHealthCheck(rest_context, request);
 }
@@ -47,7 +48,8 @@ TargetPoolsRestMetadata::AddHealthCheck(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestMetadata::AddInstance(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetPools::v1::AddInstanceRequest const& request) {
+    google::cloud::cpp::compute::targetPools::v1::AddInstanceRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->AddInstance(rest_context, request);
 }
@@ -55,7 +57,8 @@ TargetPoolsRestMetadata::AddInstance(
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolAggregatedList>
 TargetPoolsRestMetadata::AggregatedListTargetPools(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetPools::v1::AggregatedListTargetPoolsRequest const& request) {
+    google::cloud::cpp::compute::targetPools::v1::
+        AggregatedListTargetPoolsRequest const& request) {
   SetMetadata(rest_context);
   return child_->AggregatedListTargetPools(rest_context, request);
 }
@@ -63,7 +66,8 @@ TargetPoolsRestMetadata::AggregatedListTargetPools(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestMetadata::DeleteTargetPools(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetPools::v1::DeleteTargetPoolsRequest const& request) {
+    google::cloud::cpp::compute::targetPools::v1::
+        DeleteTargetPoolsRequest const& request) {
   SetMetadata(rest_context);
   return child_->DeleteTargetPools(rest_context, request);
 }
@@ -71,7 +75,8 @@ TargetPoolsRestMetadata::DeleteTargetPools(
 StatusOr<google::cloud::cpp::compute::v1::TargetPool>
 TargetPoolsRestMetadata::GetTargetPools(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetPools::v1::GetTargetPoolsRequest const& request) {
+    google::cloud::cpp::compute::targetPools::v1::GetTargetPoolsRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->GetTargetPools(rest_context, request);
 }
@@ -79,7 +84,8 @@ TargetPoolsRestMetadata::GetTargetPools(
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>
 TargetPoolsRestMetadata::GetHealth(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetPools::v1::GetHealthRequest const& request) {
+    google::cloud::cpp::compute::targetPools::v1::GetHealthRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->GetHealth(rest_context, request);
 }
@@ -87,7 +93,8 @@ TargetPoolsRestMetadata::GetHealth(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestMetadata::InsertTargetPools(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetPools::v1::InsertTargetPoolsRequest const& request) {
+    google::cloud::cpp::compute::targetPools::v1::
+        InsertTargetPoolsRequest const& request) {
   SetMetadata(rest_context);
   return child_->InsertTargetPools(rest_context, request);
 }
@@ -95,7 +102,8 @@ TargetPoolsRestMetadata::InsertTargetPools(
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolList>
 TargetPoolsRestMetadata::ListTargetPools(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetPools::v1::ListTargetPoolsRequest const& request) {
+    google::cloud::cpp::compute::targetPools::v1::ListTargetPoolsRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->ListTargetPools(rest_context, request);
 }
@@ -103,7 +111,8 @@ TargetPoolsRestMetadata::ListTargetPools(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestMetadata::RemoveHealthCheck(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetPools::v1::RemoveHealthCheckRequest const& request) {
+    google::cloud::cpp::compute::targetPools::v1::
+        RemoveHealthCheckRequest const& request) {
   SetMetadata(rest_context);
   return child_->RemoveHealthCheck(rest_context, request);
 }
@@ -111,7 +120,8 @@ TargetPoolsRestMetadata::RemoveHealthCheck(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestMetadata::RemoveInstance(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetPools::v1::RemoveInstanceRequest const& request) {
+    google::cloud::cpp::compute::targetPools::v1::RemoveInstanceRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->RemoveInstance(rest_context, request);
 }
@@ -119,33 +129,34 @@ TargetPoolsRestMetadata::RemoveInstance(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestMetadata::SetBackup(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetPools::v1::SetBackupRequest const& request) {
+    google::cloud::cpp::compute::targetPools::v1::SetBackupRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->SetBackup(rest_context, request);
 }
 
 void TargetPoolsRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+    rest_internal::RestContext& rest_context,
+    std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

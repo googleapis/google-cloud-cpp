@@ -29,63 +29,99 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 NetworkAttachmentsTracingConnection::NetworkAttachmentsTracingConnection(
-    std::shared_ptr<compute_network_attachments_v1::NetworkAttachmentsConnection> child)
+    std::shared_ptr<
+        compute_network_attachments_v1::NetworkAttachmentsConnection>
+        child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>
-NetworkAttachmentsTracingConnection::AggregatedListNetworkAttachments(google::cloud::cpp::compute::networkAttachments::v1::AggregatedListNetworkAttachmentsRequest const& request) {
-  auto span = internal::MakeSpan("compute_network_attachments_v1::NetworkAttachmentsConnection::AggregatedListNetworkAttachments");
+NetworkAttachmentsTracingConnection::AggregatedListNetworkAttachments(
+    google::cloud::cpp::compute::networkAttachments::v1::
+        AggregatedListNetworkAttachmentsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_network_attachments_v1::NetworkAttachmentsConnection::"
+      "AggregatedListNetworkAttachments");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->AggregatedListNetworkAttachments(request));
+  return internal::EndSpan(*span,
+                           child_->AggregatedListNetworkAttachments(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworkAttachmentsTracingConnection::DeleteNetworkAttachments(google::cloud::cpp::compute::networkAttachments::v1::DeleteNetworkAttachmentsRequest const& request) {
-  auto span = internal::MakeSpan("compute_network_attachments_v1::NetworkAttachmentsConnection::DeleteNetworkAttachments");
+NetworkAttachmentsTracingConnection::DeleteNetworkAttachments(
+    google::cloud::cpp::compute::networkAttachments::v1::
+        DeleteNetworkAttachmentsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_network_attachments_v1::NetworkAttachmentsConnection::"
+      "DeleteNetworkAttachments");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteNetworkAttachments(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
-NetworkAttachmentsTracingConnection::GetNetworkAttachments(google::cloud::cpp::compute::networkAttachments::v1::GetNetworkAttachmentsRequest const& request) {
-  auto span = internal::MakeSpan("compute_network_attachments_v1::NetworkAttachmentsConnection::GetNetworkAttachments");
+NetworkAttachmentsTracingConnection::GetNetworkAttachments(
+    google::cloud::cpp::compute::networkAttachments::v1::
+        GetNetworkAttachmentsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_network_attachments_v1::NetworkAttachmentsConnection::"
+      "GetNetworkAttachments");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetNetworkAttachments(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-NetworkAttachmentsTracingConnection::GetIamPolicy(google::cloud::cpp::compute::networkAttachments::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("compute_network_attachments_v1::NetworkAttachmentsConnection::GetIamPolicy");
+NetworkAttachmentsTracingConnection::GetIamPolicy(
+    google::cloud::cpp::compute::networkAttachments::v1::
+        GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_network_attachments_v1::NetworkAttachmentsConnection::"
+      "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworkAttachmentsTracingConnection::InsertNetworkAttachments(google::cloud::cpp::compute::networkAttachments::v1::InsertNetworkAttachmentsRequest const& request) {
-  auto span = internal::MakeSpan("compute_network_attachments_v1::NetworkAttachmentsConnection::InsertNetworkAttachments");
+NetworkAttachmentsTracingConnection::InsertNetworkAttachments(
+    google::cloud::cpp::compute::networkAttachments::v1::
+        InsertNetworkAttachmentsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_network_attachments_v1::NetworkAttachmentsConnection::"
+      "InsertNetworkAttachments");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->InsertNetworkAttachments(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>
-NetworkAttachmentsTracingConnection::ListNetworkAttachments(google::cloud::cpp::compute::networkAttachments::v1::ListNetworkAttachmentsRequest request) {
-  auto span = internal::MakeSpan("compute_network_attachments_v1::NetworkAttachmentsConnection::ListNetworkAttachments");
+NetworkAttachmentsTracingConnection::ListNetworkAttachments(
+    google::cloud::cpp::compute::networkAttachments::v1::
+        ListNetworkAttachmentsRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_network_attachments_v1::NetworkAttachmentsConnection::"
+      "ListNetworkAttachments");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListNetworkAttachments(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::NetworkAttachment>(std::move(span),
+                                                          std::move(sr));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-NetworkAttachmentsTracingConnection::SetIamPolicy(google::cloud::cpp::compute::networkAttachments::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("compute_network_attachments_v1::NetworkAttachmentsConnection::SetIamPolicy");
+NetworkAttachmentsTracingConnection::SetIamPolicy(
+    google::cloud::cpp::compute::networkAttachments::v1::
+        SetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_network_attachments_v1::NetworkAttachmentsConnection::"
+      "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-NetworkAttachmentsTracingConnection::TestIamPermissions(google::cloud::cpp::compute::networkAttachments::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("compute_network_attachments_v1::NetworkAttachmentsConnection::TestIamPermissions");
+NetworkAttachmentsTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::networkAttachments::v1::
+        TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_network_attachments_v1::NetworkAttachmentsConnection::"
+      "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
@@ -94,10 +130,13 @@ NetworkAttachmentsTracingConnection::TestIamPermissions(google::cloud::cpp::comp
 
 std::shared_ptr<compute_network_attachments_v1::NetworkAttachmentsConnection>
 MakeNetworkAttachmentsTracingConnection(
-    std::shared_ptr<compute_network_attachments_v1::NetworkAttachmentsConnection> conn) {
+    std::shared_ptr<
+        compute_network_attachments_v1::NetworkAttachmentsConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<NetworkAttachmentsTracingConnection>(std::move(conn));
+    conn =
+        std::make_shared<NetworkAttachmentsTracingConnection>(std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

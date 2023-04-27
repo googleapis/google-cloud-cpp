@@ -36,30 +36,37 @@ class InterconnectsTracingConnection
   ~InterconnectsTracingConnection() override = default;
 
   explicit InterconnectsTracingConnection(
-    std::shared_ptr<compute_interconnects_v1::InterconnectsConnection> child);
+      std::shared_ptr<compute_interconnects_v1::InterconnectsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteInterconnects(google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInterconnects(
+      google::cloud::cpp::compute::interconnects::v1::
+          DeleteInterconnectsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Interconnect>
-  GetInterconnects(google::cloud::cpp::compute::interconnects::v1::GetInterconnectsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Interconnect> GetInterconnects(
+      google::cloud::cpp::compute::interconnects::v1::
+          GetInterconnectsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
-  GetDiagnostics(google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest const& request) override;
+  GetDiagnostics(google::cloud::cpp::compute::interconnects::v1::
+                     GetDiagnosticsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertInterconnects(google::cloud::cpp::compute::interconnects::v1::InsertInterconnectsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInterconnects(
+      google::cloud::cpp::compute::interconnects::v1::
+          InsertInterconnectsRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Interconnect>
-  ListInterconnects(google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Interconnect> ListInterconnects(
+      google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchInterconnects(google::cloud::cpp::compute::interconnects::v1::PatchInterconnectsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInterconnects(
+      google::cloud::cpp::compute::interconnects::v1::
+          PatchInterconnectsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
+          request) override;
 
  private:
   std::shared_ptr<compute_interconnects_v1::InterconnectsConnection> child_;

@@ -29,40 +29,45 @@ namespace cloud {
 namespace compute_accelerator_types_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultAcceleratorTypesRestStub::DefaultAcceleratorTypesRestStub(Options options)
+DefaultAcceleratorTypesRestStub::DefaultAcceleratorTypesRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       options_(std::move(options)) {}
 
 DefaultAcceleratorTypesRestStub::DefaultAcceleratorTypesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>
 DefaultAcceleratorTypesRestStub::AggregatedListAcceleratorTypes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::acceleratorTypes::v1::AggregatedListAcceleratorTypesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::acceleratorTypes::v1::
+        AggregatedListAcceleratorTypesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/acceleratorTypes",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
 DefaultAcceleratorTypesRestStub::GetAcceleratorTypes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::acceleratorTypes::v1::GetAcceleratorTypesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::acceleratorTypes::v1::
+        GetAcceleratorTypesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::AcceleratorType>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/acceleratorTypes/{accelerator_type}",
+      "/compute/v1/projects/{project}/zones/{zone}/acceleratorTypes/"
+      "{accelerator_type}",
       {std::make_pair("accelerator_type", request.accelerator_type()),
        std::make_pair("project", request.project()),
        std::make_pair("zone", request.zone())});
@@ -70,9 +75,11 @@ DefaultAcceleratorTypesRestStub::GetAcceleratorTypes(
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeList>
 DefaultAcceleratorTypesRestStub::ListAcceleratorTypes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::acceleratorTypes::v1::ListAcceleratorTypesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::AcceleratorTypeList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::acceleratorTypes::v1::
+        ListAcceleratorTypesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::AcceleratorTypeList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/acceleratorTypes",
       {std::make_pair("filter", request.filter()),
@@ -80,7 +87,8 @@ DefaultAcceleratorTypesRestStub::ListAcceleratorTypes(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success())),
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success())),
        std::make_pair("zone", request.zone())});
 }
 

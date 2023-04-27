@@ -17,11 +17,11 @@
 // source: google/cloud/compute/instances/v1/instances.proto
 
 #include "google/cloud/compute/instances/v1/instances_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/instances/v1/instances_options.h"
 #include "google/cloud/compute/instances/v1/internal/instances_option_defaults.h"
 #include "google/cloud/compute/instances/v1/internal/instances_rest_connection_impl.h"
 #include "google/cloud/compute/instances/v1/internal/instances_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include <memory>
@@ -34,15 +34,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<InstancesConnection> MakeInstancesConnectionRest(
     ExperimentalTag, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList,
-      InstancesPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 InstancesPolicyOptionList>(options, __func__);
   options = compute_instances_v1_internal::InstancesDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_instances_v1_internal::CreateDefaultInstancesRestStub(
-    options);
-  return std::make_shared<compute_instances_v1_internal::InstancesRestConnectionImpl>(
+  auto stub =
+      compute_instances_v1_internal::CreateDefaultInstancesRestStub(options);
+  return std::make_shared<
+      compute_instances_v1_internal::InstancesRestConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 

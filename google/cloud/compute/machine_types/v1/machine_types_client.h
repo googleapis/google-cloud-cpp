@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class MachineTypesClient {
  public:
-  explicit MachineTypesClient(ExperimentalTag, std::shared_ptr<MachineTypesConnection> connection, Options opts = {});
+  explicit MachineTypesClient(
+      ExperimentalTag, std::shared_ptr<MachineTypesConnection> connection,
+      Options opts = {});
   ~MachineTypesClient();
 
   ///@{
@@ -76,10 +78,12 @@ class MachineTypesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(MachineTypesClient const& a, MachineTypesClient const& b) {
+  friend bool operator==(MachineTypesClient const& a,
+                         MachineTypesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(MachineTypesClient const& a, MachineTypesClient const& b) {
+  friend bool operator!=(MachineTypesClient const& a,
+                         MachineTypesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -90,10 +94,13 @@ class MachineTypesClient {
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::MachineTypeAggregatedList,google/cloud/compute/v1/internal/common.proto#L13645}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::MachineTypeAggregatedList,google/cloud/compute/v1/internal/common.proto#L13645}
   ///
-  /// [google.cloud.cpp.compute.machineTypes.v1.AggregatedListMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L59}
-  /// [google.cloud.cpp.compute.v1.MachineTypeAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13645}
+  /// [google.cloud.cpp.compute.machineTypes.v1.AggregatedListMachineTypesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L59}
+  /// [google.cloud.cpp.compute.v1.MachineTypeAggregatedList]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13645}
   ///
   StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
   AggregatedListMachineTypes(std::string const& project, Options opts = {});
@@ -101,16 +108,23 @@ class MachineTypesClient {
   ///
   /// Retrieves an aggregated list of machine types.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::machineTypes::v1::AggregatedListMachineTypesRequest,google/cloud/compute/machine_types/v1/machine_types.proto#L59}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::machineTypes::v1::AggregatedListMachineTypesRequest,google/cloud/compute/machine_types/v1/machine_types.proto#L59}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::MachineTypeAggregatedList,google/cloud/compute/v1/internal/common.proto#L13645}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::MachineTypeAggregatedList,google/cloud/compute/v1/internal/common.proto#L13645}
   ///
-  /// [google.cloud.cpp.compute.machineTypes.v1.AggregatedListMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L59}
-  /// [google.cloud.cpp.compute.v1.MachineTypeAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13645}
+  /// [google.cloud.cpp.compute.machineTypes.v1.AggregatedListMachineTypesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L59}
+  /// [google.cloud.cpp.compute.v1.MachineTypeAggregatedList]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13645}
   ///
   StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
-  AggregatedListMachineTypes(google::cloud::cpp::compute::machineTypes::v1::AggregatedListMachineTypesRequest const& request, Options opts = {});
+  AggregatedListMachineTypes(
+      google::cloud::cpp::compute::machineTypes::v1::
+          AggregatedListMachineTypesRequest const& request,
+      Options opts = {});
 
   ///
   /// Returns the specified machine type.
@@ -120,27 +134,37 @@ class MachineTypesClient {
   /// @param machine_type  Name of the machine type to return.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::MachineType,google/cloud/compute/v1/internal/common.proto#L13572}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::MachineType,google/cloud/compute/v1/internal/common.proto#L13572}
   ///
-  /// [google.cloud.cpp.compute.machineTypes.v1.GetMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L133}
-  /// [google.cloud.cpp.compute.v1.MachineType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13572}
+  /// [google.cloud.cpp.compute.machineTypes.v1.GetMachineTypesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L133}
+  /// [google.cloud.cpp.compute.v1.MachineType]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13572}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::MachineType>
-  GetMachineTypes(std::string const& project, std::string const& zone, std::string const& machine_type, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineTypes(
+      std::string const& project, std::string const& zone,
+      std::string const& machine_type, Options opts = {});
 
   ///
   /// Returns the specified machine type.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::machineTypes::v1::GetMachineTypesRequest,google/cloud/compute/machine_types/v1/machine_types.proto#L133}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::machineTypes::v1::GetMachineTypesRequest,google/cloud/compute/machine_types/v1/machine_types.proto#L133}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::MachineType,google/cloud/compute/v1/internal/common.proto#L13572}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::MachineType,google/cloud/compute/v1/internal/common.proto#L13572}
   ///
-  /// [google.cloud.cpp.compute.machineTypes.v1.GetMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L133}
-  /// [google.cloud.cpp.compute.v1.MachineType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13572}
+  /// [google.cloud.cpp.compute.machineTypes.v1.GetMachineTypesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L133}
+  /// [google.cloud.cpp.compute.v1.MachineType]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13572}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::MachineType>
-  GetMachineTypes(google::cloud::cpp::compute::machineTypes::v1::GetMachineTypesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineTypes(
+      google::cloud::cpp::compute::machineTypes::v1::
+          GetMachineTypesRequest const& request,
+      Options opts = {});
 
   ///
   /// Retrieves a list of machine types available to the specified project.
@@ -149,27 +173,36 @@ class MachineTypesClient {
   /// @param zone  The name of the zone for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::MachineType,google/cloud/compute/v1/internal/common.proto#L13572}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::MachineType,google/cloud/compute/v1/internal/common.proto#L13572}
   ///
-  /// [google.cloud.cpp.compute.machineTypes.v1.ListMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L145}
-  /// [google.cloud.cpp.compute.v1.MachineType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13572}
+  /// [google.cloud.cpp.compute.machineTypes.v1.ListMachineTypesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L145}
+  /// [google.cloud.cpp.compute.v1.MachineType]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13572}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::MachineType>
-  ListMachineTypes(std::string const& project, std::string const& zone, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::MachineType> ListMachineTypes(
+      std::string const& project, std::string const& zone, Options opts = {});
 
   ///
   /// Retrieves a list of machine types available to the specified project.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::machineTypes::v1::ListMachineTypesRequest,google/cloud/compute/machine_types/v1/machine_types.proto#L145}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::machineTypes::v1::ListMachineTypesRequest,google/cloud/compute/machine_types/v1/machine_types.proto#L145}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::MachineType,google/cloud/compute/v1/internal/common.proto#L13572}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::MachineType,google/cloud/compute/v1/internal/common.proto#L13572}
   ///
-  /// [google.cloud.cpp.compute.machineTypes.v1.ListMachineTypesRequest]: @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L145}
-  /// [google.cloud.cpp.compute.v1.MachineType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13572}
+  /// [google.cloud.cpp.compute.machineTypes.v1.ListMachineTypesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L145}
+  /// [google.cloud.cpp.compute.v1.MachineType]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13572}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::MachineType>
-  ListMachineTypes(google::cloud::cpp::compute::machineTypes::v1::ListMachineTypesRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::MachineType> ListMachineTypes(
+      google::cloud::cpp::compute::machineTypes::v1::ListMachineTypesRequest
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<MachineTypesConnection> connection_;

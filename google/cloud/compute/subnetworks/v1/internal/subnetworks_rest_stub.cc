@@ -35,52 +35,60 @@ DefaultSubnetworksRestStub::DefaultSubnetworksRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultSubnetworksRestStub::DefaultSubnetworksRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::SubnetworkAggregatedList>
 DefaultSubnetworksRestStub::AggregatedListSubnetworks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::AggregatedListSubnetworksRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::SubnetworkAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::subnetworks::v1::
+        AggregatedListSubnetworksRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::SubnetworkAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/subnetworks",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultSubnetworksRestStub::DeleteSubnetworks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::subnetworks::v1::
+        DeleteSubnetworksRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/subnetworks/{subnetwork}");
+      "/compute/v1/projects/{project}/regions/{region}/subnetworks/"
+      "{subnetwork}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultSubnetworksRestStub::ExpandIpCidrRange(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::subnetworks::v1::
+        ExpandIpCidrRangeRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/subnetworks/{subnetwork}/expandIpCidrRange");
+      "/compute/v1/projects/{project}/regions/{region}/subnetworks/"
+      "{subnetwork}/expandIpCidrRange");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Subnetwork>
 DefaultSubnetworksRestStub::GetSubnetworks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Subnetwork>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/subnetworks/{subnetwork}",
+      "/compute/v1/projects/{project}/regions/{region}/subnetworks/"
+      "{subnetwork}",
       {std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
        std::make_pair("subnetwork", request.subnetwork())});
@@ -88,12 +96,16 @@ DefaultSubnetworksRestStub::GetSubnetworks(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultSubnetworksRestStub::GetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/subnetworks/{resource}/getIamPolicy",
-      {std::make_pair("options_requested_policy_version", std::to_string(request.options_requested_policy_version())),
+      "/compute/v1/projects/{project}/regions/{region}/subnetworks/{resource}/"
+      "getIamPolicy",
+      {std::make_pair(
+           "options_requested_policy_version",
+           std::to_string(request.options_requested_policy_version())),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
        std::make_pair("resource", request.resource())});
@@ -101,8 +113,9 @@ DefaultSubnetworksRestStub::GetIamPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultSubnetworksRestStub::InsertSubnetworks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::subnetworks::v1::
+        InsertSubnetworksRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/subnetworks");
@@ -110,8 +123,9 @@ DefaultSubnetworksRestStub::InsertSubnetworks(
 
 StatusOr<google::cloud::cpp::compute::v1::SubnetworkList>
 DefaultSubnetworksRestStub::ListSubnetworks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SubnetworkList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/subnetworks",
@@ -121,14 +135,17 @@ DefaultSubnetworksRestStub::ListSubnetworks(
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UsableSubnetworksAggregatedList>
 DefaultSubnetworksRestStub::ListUsable(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::UsableSubnetworksAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest const&
+        request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::UsableSubnetworksAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/subnetworks/listUsable",
       {std::make_pair("filter", request.filter()),
@@ -136,43 +153,53 @@ DefaultSubnetworksRestStub::ListUsable(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultSubnetworksRestStub::PatchSubnetworks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworksRequest const&
+        request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/subnetworks/{subnetwork}");
+      "/compute/v1/projects/{project}/regions/{region}/subnetworks/"
+      "{subnetwork}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultSubnetworksRestStub::SetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/subnetworks/{resource}/setIamPolicy");
+      "/compute/v1/projects/{project}/regions/{region}/subnetworks/{resource}/"
+      "setIamPolicy");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultSubnetworksRestStub::SetPrivateIpGoogleAccess(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::subnetworks::v1::
+        SetPrivateIpGoogleAccessRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/subnetworks/{subnetwork}/setPrivateIpGoogleAccess");
+      "/compute/v1/projects/{project}/regions/{region}/subnetworks/"
+      "{subnetwork}/setPrivateIpGoogleAccess");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultSubnetworksRestStub::TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::subnetworks::v1::TestIamPermissionsRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::subnetworks::v1::
+        TestIamPermissionsRequest const& request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/subnetworks/{resource}/testIamPermissions");
+      "/compute/v1/projects/{project}/regions/{region}/subnetworks/{resource}/"
+      "testIamPermissions");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

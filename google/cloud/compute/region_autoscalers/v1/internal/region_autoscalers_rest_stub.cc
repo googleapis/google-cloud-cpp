@@ -29,33 +29,36 @@ namespace cloud {
 namespace compute_region_autoscalers_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultRegionAutoscalersRestStub::DefaultRegionAutoscalersRestStub(Options options)
+DefaultRegionAutoscalersRestStub::DefaultRegionAutoscalersRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       options_(std::move(options)) {}
 
 DefaultRegionAutoscalersRestStub::DefaultRegionAutoscalersRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionAutoscalersRestStub::DeleteRegionAutoscalers(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionAutoscalers::v1::DeleteRegionAutoscalersRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        DeleteRegionAutoscalersRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/autoscalers/{autoscaler}");
+      "/compute/v1/projects/{project}/regions/{region}/autoscalers/"
+      "{autoscaler}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
 DefaultRegionAutoscalersRestStub::GetRegionAutoscalers(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionAutoscalers::v1::GetRegionAutoscalersRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        GetRegionAutoscalersRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Autoscaler>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/autoscalers/{autoscaler}",
+      "/compute/v1/projects/{project}/regions/{region}/autoscalers/"
+      "{autoscaler}",
       {std::make_pair("autoscaler", request.autoscaler()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region())});
@@ -63,8 +66,9 @@ DefaultRegionAutoscalersRestStub::GetRegionAutoscalers(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionAutoscalersRestStub::InsertRegionAutoscalers(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionAutoscalers::v1::InsertRegionAutoscalersRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        InsertRegionAutoscalersRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/autoscalers");
@@ -72,9 +76,11 @@ DefaultRegionAutoscalersRestStub::InsertRegionAutoscalers(
 
 StatusOr<google::cloud::cpp::compute::v1::RegionAutoscalerList>
 DefaultRegionAutoscalersRestStub::ListRegionAutoscalers(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionAutoscalers::v1::ListRegionAutoscalersRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::RegionAutoscalerList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        ListRegionAutoscalersRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::RegionAutoscalerList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/autoscalers",
       {std::make_pair("filter", request.filter()),
@@ -83,13 +89,15 @@ DefaultRegionAutoscalersRestStub::ListRegionAutoscalers(
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionAutoscalersRestStub::PatchRegionAutoscalers(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionAutoscalers::v1::PatchRegionAutoscalersRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        PatchRegionAutoscalersRequest const& request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/autoscalers");
@@ -97,8 +105,9 @@ DefaultRegionAutoscalersRestStub::PatchRegionAutoscalers(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionAutoscalersRestStub::UpdateRegionAutoscalers(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionAutoscalers::v1::UpdateRegionAutoscalersRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        UpdateRegionAutoscalersRequest const& request) {
   return rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/autoscalers");

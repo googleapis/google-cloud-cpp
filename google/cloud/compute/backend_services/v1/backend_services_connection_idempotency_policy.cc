@@ -26,71 +26,100 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-BackendServicesConnectionIdempotencyPolicy::~BackendServicesConnectionIdempotencyPolicy() = default;
+BackendServicesConnectionIdempotencyPolicy::
+    ~BackendServicesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<BackendServicesConnectionIdempotencyPolicy>
 BackendServicesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<BackendServicesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency BackendServicesConnectionIdempotencyPolicy::AddSignedUrlKey(google::cloud::cpp::compute::backendServices::v1::AddSignedUrlKeyRequest const&) {
+Idempotency BackendServicesConnectionIdempotencyPolicy::AddSignedUrlKey(
+    google::cloud::cpp::compute::backendServices::v1::
+        AddSignedUrlKeyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackendServicesConnectionIdempotencyPolicy::AggregatedListBackendServices(google::cloud::cpp::compute::backendServices::v1::AggregatedListBackendServicesRequest const&) {
+Idempotency
+BackendServicesConnectionIdempotencyPolicy::AggregatedListBackendServices(
+    google::cloud::cpp::compute::backendServices::v1::
+        AggregatedListBackendServicesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackendServicesConnectionIdempotencyPolicy::DeleteBackendServices(google::cloud::cpp::compute::backendServices::v1::DeleteBackendServicesRequest const&) {
+Idempotency BackendServicesConnectionIdempotencyPolicy::DeleteBackendServices(
+    google::cloud::cpp::compute::backendServices::v1::
+        DeleteBackendServicesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackendServicesConnectionIdempotencyPolicy::DeleteSignedUrlKey(google::cloud::cpp::compute::backendServices::v1::DeleteSignedUrlKeyRequest const&) {
+Idempotency BackendServicesConnectionIdempotencyPolicy::DeleteSignedUrlKey(
+    google::cloud::cpp::compute::backendServices::v1::
+        DeleteSignedUrlKeyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackendServicesConnectionIdempotencyPolicy::GetBackendServices(google::cloud::cpp::compute::backendServices::v1::GetBackendServicesRequest const&) {
+Idempotency BackendServicesConnectionIdempotencyPolicy::GetBackendServices(
+    google::cloud::cpp::compute::backendServices::v1::
+        GetBackendServicesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackendServicesConnectionIdempotencyPolicy::GetHealth(google::cloud::cpp::compute::backendServices::v1::GetHealthRequest const&) {
+Idempotency BackendServicesConnectionIdempotencyPolicy::GetHealth(
+    google::cloud::cpp::compute::backendServices::v1::GetHealthRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackendServicesConnectionIdempotencyPolicy::GetIamPolicy(google::cloud::cpp::compute::backendServices::v1::GetIamPolicyRequest const&) {
+Idempotency BackendServicesConnectionIdempotencyPolicy::GetIamPolicy(
+    google::cloud::cpp::compute::backendServices::v1::
+        GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackendServicesConnectionIdempotencyPolicy::InsertBackendServices(google::cloud::cpp::compute::backendServices::v1::InsertBackendServicesRequest const&) {
+Idempotency BackendServicesConnectionIdempotencyPolicy::InsertBackendServices(
+    google::cloud::cpp::compute::backendServices::v1::
+        InsertBackendServicesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackendServicesConnectionIdempotencyPolicy::ListBackendServices(google::cloud::cpp::compute::backendServices::v1::ListBackendServicesRequest) {  // NOLINT
+Idempotency BackendServicesConnectionIdempotencyPolicy::ListBackendServices(
+    google::cloud::cpp::compute::backendServices::v1::
+        ListBackendServicesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackendServicesConnectionIdempotencyPolicy::PatchBackendServices(google::cloud::cpp::compute::backendServices::v1::PatchBackendServicesRequest const&) {
+Idempotency BackendServicesConnectionIdempotencyPolicy::PatchBackendServices(
+    google::cloud::cpp::compute::backendServices::v1::
+        PatchBackendServicesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackendServicesConnectionIdempotencyPolicy::SetEdgeSecurityPolicy(google::cloud::cpp::compute::backendServices::v1::SetEdgeSecurityPolicyRequest const&) {
+Idempotency BackendServicesConnectionIdempotencyPolicy::SetEdgeSecurityPolicy(
+    google::cloud::cpp::compute::backendServices::v1::
+        SetEdgeSecurityPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackendServicesConnectionIdempotencyPolicy::SetIamPolicy(google::cloud::cpp::compute::backendServices::v1::SetIamPolicyRequest const&) {
+Idempotency BackendServicesConnectionIdempotencyPolicy::SetIamPolicy(
+    google::cloud::cpp::compute::backendServices::v1::
+        SetIamPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackendServicesConnectionIdempotencyPolicy::SetSecurityPolicy(google::cloud::cpp::compute::backendServices::v1::SetSecurityPolicyRequest const&) {
+Idempotency BackendServicesConnectionIdempotencyPolicy::SetSecurityPolicy(
+    google::cloud::cpp::compute::backendServices::v1::
+        SetSecurityPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackendServicesConnectionIdempotencyPolicy::UpdateBackendServices(google::cloud::cpp::compute::backendServices::v1::UpdateBackendServicesRequest const&) {
+Idempotency BackendServicesConnectionIdempotencyPolicy::UpdateBackendServices(
+    google::cloud::cpp::compute::backendServices::v1::
+        UpdateBackendServicesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<BackendServicesConnectionIdempotencyPolicy>
-    MakeDefaultBackendServicesConnectionIdempotencyPolicy() {
+MakeDefaultBackendServicesConnectionIdempotencyPolicy() {
   return std::make_unique<BackendServicesConnectionIdempotencyPolicy>();
 }
 

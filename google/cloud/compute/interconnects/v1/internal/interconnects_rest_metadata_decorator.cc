@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/interconnects/v1/interconnects.proto
 
-
 #include "google/cloud/compute/interconnects/v1/internal/interconnects_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,12 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 InterconnectsRestMetadata::InterconnectsRestMetadata(
     std::shared_ptr<InterconnectsRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectsRestMetadata::DeleteInterconnects(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectsRequest const& request) {
+    google::cloud::cpp::compute::interconnects::v1::
+        DeleteInterconnectsRequest const& request) {
   SetMetadata(rest_context);
   return child_->DeleteInterconnects(rest_context, request);
 }
@@ -47,7 +48,8 @@ InterconnectsRestMetadata::DeleteInterconnects(
 StatusOr<google::cloud::cpp::compute::v1::Interconnect>
 InterconnectsRestMetadata::GetInterconnects(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::interconnects::v1::GetInterconnectsRequest const& request) {
+    google::cloud::cpp::compute::interconnects::v1::
+        GetInterconnectsRequest const& request) {
   SetMetadata(rest_context);
   return child_->GetInterconnects(rest_context, request);
 }
@@ -55,7 +57,8 @@ InterconnectsRestMetadata::GetInterconnects(
 StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
 InterconnectsRestMetadata::GetDiagnostics(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest const& request) {
+    google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->GetDiagnostics(rest_context, request);
 }
@@ -63,7 +66,8 @@ InterconnectsRestMetadata::GetDiagnostics(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectsRestMetadata::InsertInterconnects(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::interconnects::v1::InsertInterconnectsRequest const& request) {
+    google::cloud::cpp::compute::interconnects::v1::
+        InsertInterconnectsRequest const& request) {
   SetMetadata(rest_context);
   return child_->InsertInterconnects(rest_context, request);
 }
@@ -71,7 +75,8 @@ InterconnectsRestMetadata::InsertInterconnects(
 StatusOr<google::cloud::cpp::compute::v1::InterconnectList>
 InterconnectsRestMetadata::ListInterconnects(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest const& request) {
+    google::cloud::cpp::compute::interconnects::v1::
+        ListInterconnectsRequest const& request) {
   SetMetadata(rest_context);
   return child_->ListInterconnects(rest_context, request);
 }
@@ -79,7 +84,8 @@ InterconnectsRestMetadata::ListInterconnects(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectsRestMetadata::PatchInterconnects(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::interconnects::v1::PatchInterconnectsRequest const& request) {
+    google::cloud::cpp::compute::interconnects::v1::
+        PatchInterconnectsRequest const& request) {
   SetMetadata(rest_context);
   return child_->PatchInterconnects(rest_context, request);
 }
@@ -87,33 +93,34 @@ InterconnectsRestMetadata::PatchInterconnects(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectsRestMetadata::SetLabels(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const& request) {
+    google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->SetLabels(rest_context, request);
 }
 
 void InterconnectsRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+    rest_internal::RestContext& rest_context,
+    std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

@@ -35,58 +35,67 @@ DefaultBackendServicesRestStub::DefaultBackendServicesRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultBackendServicesRestStub::DefaultBackendServicesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultBackendServicesRestStub::AddSignedUrlKey(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendServices::v1::AddSignedUrlKeyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backendServices::v1::
+        AddSignedUrlKeyRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/backendServices/{backend_service}/addSignedUrlKey");
+      "/compute/v1/projects/{project}/global/backendServices/{backend_service}/"
+      "addSignedUrlKey");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceAggregatedList>
 DefaultBackendServicesRestStub::AggregatedListBackendServices(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendServices::v1::AggregatedListBackendServicesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::BackendServiceAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backendServices::v1::
+        AggregatedListBackendServicesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::BackendServiceAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/backendServices",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultBackendServicesRestStub::DeleteBackendServices(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendServices::v1::DeleteBackendServicesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backendServices::v1::
+        DeleteBackendServicesRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/backendServices/{backend_service}");
+      "/compute/v1/projects/{project}/global/backendServices/"
+      "{backend_service}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultBackendServicesRestStub::DeleteSignedUrlKey(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendServices::v1::DeleteSignedUrlKeyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backendServices::v1::
+        DeleteSignedUrlKeyRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/backendServices/{backend_service}/deleteSignedUrlKey");
+      "/compute/v1/projects/{project}/global/backendServices/{backend_service}/"
+      "deleteSignedUrlKey");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendService>
 DefaultBackendServicesRestStub::GetBackendServices(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendServices::v1::GetBackendServicesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backendServices::v1::
+        GetBackendServicesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::BackendService>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/backendServices/{backend_service}",
@@ -96,29 +105,37 @@ DefaultBackendServicesRestStub::GetBackendServices(
 
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
 DefaultBackendServicesRestStub::GetHealth(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendServices::v1::GetHealthRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backendServices::v1::GetHealthRequest const&
+        request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::BackendServiceGroupHealth>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/backendServices/{backend_service}/getHealth");
+      "/compute/v1/projects/{project}/global/backendServices/{backend_service}/"
+      "getHealth");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultBackendServicesRestStub::GetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendServices::v1::GetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backendServices::v1::GetIamPolicyRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/backendServices/{resource}/getIamPolicy",
-      {std::make_pair("options_requested_policy_version", std::to_string(request.options_requested_policy_version())),
+      "/compute/v1/projects/{project}/global/backendServices/{resource}/"
+      "getIamPolicy",
+      {std::make_pair(
+           "options_requested_policy_version",
+           std::to_string(request.options_requested_policy_version())),
        std::make_pair("project", request.project()),
        std::make_pair("resource", request.resource())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultBackendServicesRestStub::InsertBackendServices(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendServices::v1::InsertBackendServicesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backendServices::v1::
+        InsertBackendServicesRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/backendServices");
@@ -126,9 +143,11 @@ DefaultBackendServicesRestStub::InsertBackendServices(
 
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceList>
 DefaultBackendServicesRestStub::ListBackendServices(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendServices::v1::ListBackendServicesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::BackendServiceList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backendServices::v1::
+        ListBackendServicesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::BackendServiceList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/backendServices",
       {std::make_pair("filter", request.filter()),
@@ -136,52 +155,63 @@ DefaultBackendServicesRestStub::ListBackendServices(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultBackendServicesRestStub::PatchBackendServices(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendServices::v1::PatchBackendServicesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backendServices::v1::
+        PatchBackendServicesRequest const& request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/backendServices/{backend_service}");
+      "/compute/v1/projects/{project}/global/backendServices/"
+      "{backend_service}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultBackendServicesRestStub::SetEdgeSecurityPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendServices::v1::SetEdgeSecurityPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backendServices::v1::
+        SetEdgeSecurityPolicyRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/backendServices/{backend_service}/setEdgeSecurityPolicy");
+      "/compute/v1/projects/{project}/global/backendServices/{backend_service}/"
+      "setEdgeSecurityPolicy");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultBackendServicesRestStub::SetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendServices::v1::SetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backendServices::v1::SetIamPolicyRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/backendServices/{resource}/setIamPolicy");
+      "/compute/v1/projects/{project}/global/backendServices/{resource}/"
+      "setIamPolicy");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultBackendServicesRestStub::SetSecurityPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendServices::v1::SetSecurityPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backendServices::v1::
+        SetSecurityPolicyRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/backendServices/{backend_service}/setSecurityPolicy");
+      "/compute/v1/projects/{project}/global/backendServices/{backend_service}/"
+      "setSecurityPolicy");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultBackendServicesRestStub::UpdateBackendServices(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::backendServices::v1::UpdateBackendServicesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::backendServices::v1::
+        UpdateBackendServicesRequest const& request) {
   return rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/backendServices/{backend_service}");
+      "/compute/v1/projects/{project}/global/backendServices/"
+      "{backend_service}");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

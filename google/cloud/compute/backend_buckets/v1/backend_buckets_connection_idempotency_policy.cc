@@ -26,51 +26,70 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-BackendBucketsConnectionIdempotencyPolicy::~BackendBucketsConnectionIdempotencyPolicy() = default;
+BackendBucketsConnectionIdempotencyPolicy::
+    ~BackendBucketsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<BackendBucketsConnectionIdempotencyPolicy>
 BackendBucketsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<BackendBucketsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency BackendBucketsConnectionIdempotencyPolicy::AddSignedUrlKey(google::cloud::cpp::compute::backendBuckets::v1::AddSignedUrlKeyRequest const&) {
+Idempotency BackendBucketsConnectionIdempotencyPolicy::AddSignedUrlKey(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        AddSignedUrlKeyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackendBucketsConnectionIdempotencyPolicy::DeleteBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::DeleteBackendBucketsRequest const&) {
+Idempotency BackendBucketsConnectionIdempotencyPolicy::DeleteBackendBuckets(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        DeleteBackendBucketsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackendBucketsConnectionIdempotencyPolicy::DeleteSignedUrlKey(google::cloud::cpp::compute::backendBuckets::v1::DeleteSignedUrlKeyRequest const&) {
+Idempotency BackendBucketsConnectionIdempotencyPolicy::DeleteSignedUrlKey(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        DeleteSignedUrlKeyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackendBucketsConnectionIdempotencyPolicy::GetBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::GetBackendBucketsRequest const&) {
+Idempotency BackendBucketsConnectionIdempotencyPolicy::GetBackendBuckets(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        GetBackendBucketsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackendBucketsConnectionIdempotencyPolicy::InsertBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::InsertBackendBucketsRequest const&) {
+Idempotency BackendBucketsConnectionIdempotencyPolicy::InsertBackendBuckets(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        InsertBackendBucketsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackendBucketsConnectionIdempotencyPolicy::ListBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::ListBackendBucketsRequest) {  // NOLINT
+Idempotency BackendBucketsConnectionIdempotencyPolicy::ListBackendBuckets(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        ListBackendBucketsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency BackendBucketsConnectionIdempotencyPolicy::PatchBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::PatchBackendBucketsRequest const&) {
+Idempotency BackendBucketsConnectionIdempotencyPolicy::PatchBackendBuckets(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        PatchBackendBucketsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackendBucketsConnectionIdempotencyPolicy::SetEdgeSecurityPolicy(google::cloud::cpp::compute::backendBuckets::v1::SetEdgeSecurityPolicyRequest const&) {
+Idempotency BackendBucketsConnectionIdempotencyPolicy::SetEdgeSecurityPolicy(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        SetEdgeSecurityPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency BackendBucketsConnectionIdempotencyPolicy::UpdateBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::UpdateBackendBucketsRequest const&) {
+Idempotency BackendBucketsConnectionIdempotencyPolicy::UpdateBackendBuckets(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        UpdateBackendBucketsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<BackendBucketsConnectionIdempotencyPolicy>
-    MakeDefaultBackendBucketsConnectionIdempotencyPolicy() {
+MakeDefaultBackendBucketsConnectionIdempotencyPolicy() {
   return std::make_unique<BackendBucketsConnectionIdempotencyPolicy>();
 }
 

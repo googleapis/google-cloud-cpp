@@ -35,15 +35,14 @@ DefaultLicensesRestStub::DefaultLicensesRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultLicensesRestStub::DefaultLicensesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultLicensesRestStub::DeleteLicenses(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::licenses::v1::DeleteLicensesRequest const&
+        request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/licenses/{license}");
@@ -51,8 +50,9 @@ DefaultLicensesRestStub::DeleteLicenses(
 
 StatusOr<google::cloud::cpp::compute::v1::License>
 DefaultLicensesRestStub::GetLicenses(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::licenses::v1::GetLicensesRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::License>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/licenses/{license}",
@@ -62,20 +62,24 @@ DefaultLicensesRestStub::GetLicenses(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultLicensesRestStub::GetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::licenses::v1::GetIamPolicyRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/licenses/{resource}/getIamPolicy",
-      {std::make_pair("options_requested_policy_version", std::to_string(request.options_requested_policy_version())),
+      {std::make_pair(
+           "options_requested_policy_version",
+           std::to_string(request.options_requested_policy_version())),
        std::make_pair("project", request.project()),
        std::make_pair("resource", request.resource())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultLicensesRestStub::InsertLicenses(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::licenses::v1::InsertLicensesRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/licenses");
@@ -83,9 +87,11 @@ DefaultLicensesRestStub::InsertLicenses(
 
 StatusOr<google::cloud::cpp::compute::v1::LicensesListResponse>
 DefaultLicensesRestStub::ListLicenses(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::LicensesListResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const&
+        request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::LicensesListResponse>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/licenses",
       {std::make_pair("filter", request.filter()),
@@ -93,13 +99,15 @@ DefaultLicensesRestStub::ListLicenses(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultLicensesRestStub::SetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/licenses/{resource}/setIamPolicy");
@@ -107,11 +115,14 @@ DefaultLicensesRestStub::SetIamPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultLicensesRestStub::TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const&
+        request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/licenses/{resource}/testIamPermissions");
+      "/compute/v1/projects/{project}/global/licenses/{resource}/"
+      "testIamPermissions");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

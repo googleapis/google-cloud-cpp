@@ -17,11 +17,11 @@
 // source: google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto
 
 #include "google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/target_grpc_proxies/v1/internal/target_grpc_proxies_option_defaults.h"
 #include "google/cloud/compute/target_grpc_proxies/v1/internal/target_grpc_proxies_tracing_connection.h"
 #include "google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,31 +36,37 @@ TargetGrpcProxiesConnection::~TargetGrpcProxiesConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetGrpcProxiesConnection::DeleteTargetGrpcProxies(
-    google::cloud::cpp::compute::targetGrpcProxies::v1::DeleteTargetGrpcProxiesRequest const&) {
+    google::cloud::cpp::compute::targetGrpcProxies::v1::
+        DeleteTargetGrpcProxiesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
 TargetGrpcProxiesConnection::GetTargetGrpcProxies(
-    google::cloud::cpp::compute::targetGrpcProxies::v1::GetTargetGrpcProxiesRequest const&) {
+    google::cloud::cpp::compute::targetGrpcProxies::v1::
+        GetTargetGrpcProxiesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetGrpcProxiesConnection::InsertTargetGrpcProxies(
-    google::cloud::cpp::compute::targetGrpcProxies::v1::InsertTargetGrpcProxiesRequest const&) {
+    google::cloud::cpp::compute::targetGrpcProxies::v1::
+        InsertTargetGrpcProxiesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy> TargetGrpcProxiesConnection::ListTargetGrpcProxies(
-    google::cloud::cpp::compute::targetGrpcProxies::v1::ListTargetGrpcProxiesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>
+TargetGrpcProxiesConnection::ListTargetGrpcProxies(
+    google::cloud::cpp::compute::targetGrpcProxies::v1::
+        ListTargetGrpcProxiesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetGrpcProxiesConnection::PatchTargetGrpcProxies(
-    google::cloud::cpp::compute::targetGrpcProxies::v1::PatchTargetGrpcProxiesRequest const&) {
+    google::cloud::cpp::compute::targetGrpcProxies::v1::
+        PatchTargetGrpcProxiesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

@@ -37,36 +37,43 @@ class UrlMapsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<UrlMapsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  AggregatedListUrlMaps(google::cloud::cpp::compute::urlMaps::v1::AggregatedListUrlMapsRequest const& request);
+  virtual google::cloud::Idempotency AggregatedListUrlMaps(
+      google::cloud::cpp::compute::urlMaps::v1::
+          AggregatedListUrlMapsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteUrlMaps(google::cloud::cpp::compute::urlMaps::v1::DeleteUrlMapsRequest const& request);
+  virtual google::cloud::Idempotency DeleteUrlMaps(
+      google::cloud::cpp::compute::urlMaps::v1::DeleteUrlMapsRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetUrlMaps(google::cloud::cpp::compute::urlMaps::v1::GetUrlMapsRequest const& request);
+  virtual google::cloud::Idempotency GetUrlMaps(
+      google::cloud::cpp::compute::urlMaps::v1::GetUrlMapsRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  InsertUrlMaps(google::cloud::cpp::compute::urlMaps::v1::InsertUrlMapsRequest const& request);
+  virtual google::cloud::Idempotency InsertUrlMaps(
+      google::cloud::cpp::compute::urlMaps::v1::InsertUrlMapsRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  InvalidateCache(google::cloud::cpp::compute::urlMaps::v1::InvalidateCacheRequest const& request);
+  virtual google::cloud::Idempotency InvalidateCache(
+      google::cloud::cpp::compute::urlMaps::v1::InvalidateCacheRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListUrlMaps(google::cloud::cpp::compute::urlMaps::v1::ListUrlMapsRequest request);
+  virtual google::cloud::Idempotency ListUrlMaps(
+      google::cloud::cpp::compute::urlMaps::v1::ListUrlMapsRequest request);
 
-  virtual google::cloud::Idempotency
-  PatchUrlMaps(google::cloud::cpp::compute::urlMaps::v1::PatchUrlMapsRequest const& request);
+  virtual google::cloud::Idempotency PatchUrlMaps(
+      google::cloud::cpp::compute::urlMaps::v1::PatchUrlMapsRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateUrlMaps(google::cloud::cpp::compute::urlMaps::v1::UpdateUrlMapsRequest const& request);
+  virtual google::cloud::Idempotency UpdateUrlMaps(
+      google::cloud::cpp::compute::urlMaps::v1::UpdateUrlMapsRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  Validate(google::cloud::cpp::compute::urlMaps::v1::ValidateRequest const& request);
+  virtual google::cloud::Idempotency Validate(
+      google::cloud::cpp::compute::urlMaps::v1::ValidateRequest const& request);
 };
 
 std::unique_ptr<UrlMapsConnectionIdempotencyPolicy>
-    MakeDefaultUrlMapsConnectionIdempotencyPolicy();
+MakeDefaultUrlMapsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_url_maps_v1

@@ -29,40 +29,45 @@ namespace cloud {
 namespace compute_region_commitments_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultRegionCommitmentsRestStub::DefaultRegionCommitmentsRestStub(Options options)
+DefaultRegionCommitmentsRestStub::DefaultRegionCommitmentsRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       options_(std::move(options)) {}
 
 DefaultRegionCommitmentsRestStub::DefaultRegionCommitmentsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
 DefaultRegionCommitmentsRestStub::AggregatedListRegionCommitments(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionCommitments::v1::AggregatedListRegionCommitmentsRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::CommitmentAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionCommitments::v1::
+        AggregatedListRegionCommitmentsRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::CommitmentAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/commitments",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Commitment>
 DefaultRegionCommitmentsRestStub::GetRegionCommitments(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionCommitments::v1::GetRegionCommitmentsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionCommitments::v1::
+        GetRegionCommitmentsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Commitment>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/commitments/{commitment}",
+      "/compute/v1/projects/{project}/regions/{region}/commitments/"
+      "{commitment}",
       {std::make_pair("commitment", request.commitment()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region())});
@@ -70,8 +75,9 @@ DefaultRegionCommitmentsRestStub::GetRegionCommitments(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionCommitmentsRestStub::InsertRegionCommitments(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionCommitments::v1::InsertRegionCommitmentsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionCommitments::v1::
+        InsertRegionCommitmentsRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/commitments");
@@ -79,8 +85,9 @@ DefaultRegionCommitmentsRestStub::InsertRegionCommitments(
 
 StatusOr<google::cloud::cpp::compute::v1::CommitmentList>
 DefaultRegionCommitmentsRestStub::ListRegionCommitments(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionCommitments::v1::ListRegionCommitmentsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionCommitments::v1::
+        ListRegionCommitmentsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::CommitmentList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/commitments",
@@ -90,16 +97,19 @@ DefaultRegionCommitmentsRestStub::ListRegionCommitments(
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionCommitmentsRestStub::UpdateRegionCommitments(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionCommitments::v1::UpdateRegionCommitmentsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionCommitments::v1::
+        UpdateRegionCommitmentsRequest const& request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/commitments/{commitment}");
+      "/compute/v1/projects/{project}/regions/{region}/commitments/"
+      "{commitment}");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

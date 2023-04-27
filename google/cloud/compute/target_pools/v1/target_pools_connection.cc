@@ -17,11 +17,11 @@
 // source: google/cloud/compute/target_pools/v1/target_pools.proto
 
 #include "google/cloud/compute/target_pools/v1/target_pools_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/target_pools/v1/internal/target_pools_option_defaults.h"
 #include "google/cloud/compute/target_pools/v1/internal/target_pools_tracing_connection.h"
 #include "google/cloud/compute/target_pools/v1/target_pools_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -35,8 +35,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TargetPoolsConnection::~TargetPoolsConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetPoolsConnection::AddHealthCheck(
-    google::cloud::cpp::compute::targetPools::v1::AddHealthCheckRequest const&) {
+TargetPoolsConnection::AddHealthCheck(google::cloud::cpp::compute::targetPools::
+                                          v1::AddHealthCheckRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -48,19 +48,21 @@ TargetPoolsConnection::AddInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolAggregatedList>
 TargetPoolsConnection::AggregatedListTargetPools(
-    google::cloud::cpp::compute::targetPools::v1::AggregatedListTargetPoolsRequest const&) {
+    google::cloud::cpp::compute::targetPools::v1::
+        AggregatedListTargetPoolsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsConnection::DeleteTargetPools(
-    google::cloud::cpp::compute::targetPools::v1::DeleteTargetPoolsRequest const&) {
+    google::cloud::cpp::compute::targetPools::v1::
+        DeleteTargetPoolsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPool>
-TargetPoolsConnection::GetTargetPools(
-    google::cloud::cpp::compute::targetPools::v1::GetTargetPoolsRequest const&) {
+TargetPoolsConnection::GetTargetPools(google::cloud::cpp::compute::targetPools::
+                                          v1::GetTargetPoolsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -72,25 +74,29 @@ TargetPoolsConnection::GetHealth(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsConnection::InsertTargetPools(
-    google::cloud::cpp::compute::targetPools::v1::InsertTargetPoolsRequest const&) {
+    google::cloud::cpp::compute::targetPools::v1::
+        InsertTargetPoolsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::TargetPool> TargetPoolsConnection::ListTargetPools(
-    google::cloud::cpp::compute::targetPools::v1::ListTargetPoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::TargetPool>
+TargetPoolsConnection::ListTargetPools(
+    google::cloud::cpp::compute::targetPools::v1::
+        ListTargetPoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::TargetPool>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsConnection::RemoveHealthCheck(
-    google::cloud::cpp::compute::targetPools::v1::RemoveHealthCheckRequest const&) {
+    google::cloud::cpp::compute::targetPools::v1::
+        RemoveHealthCheckRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetPoolsConnection::RemoveInstance(
-    google::cloud::cpp::compute::targetPools::v1::RemoveInstanceRequest const&) {
+TargetPoolsConnection::RemoveInstance(google::cloud::cpp::compute::targetPools::
+                                          v1::RemoveInstanceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

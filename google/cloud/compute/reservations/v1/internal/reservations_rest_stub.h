@@ -36,45 +36,56 @@ class ReservationsRestStub {
  public:
   virtual ~ReservationsRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList> AggregatedListReservations(
+  virtual StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>
+  AggregatedListReservations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::AggregatedListReservationsRequest const& request) = 0;
+      google::cloud::cpp::compute::reservations::v1::
+          AggregatedListReservationsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteReservations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::DeleteReservationsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteReservations(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::reservations::v1::
+                         DeleteReservationsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::GetReservationsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Reservation>
+  GetReservations(google::cloud::rest_internal::RestContext& rest_context,
+                  google::cloud::cpp::compute::reservations::v1::
+                      GetReservationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const& request) = 0;
+      google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertReservations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::InsertReservationsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertReservations(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::reservations::v1::
+                         InsertReservationsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::ReservationList> ListReservations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::ListReservationsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::ReservationList>
+  ListReservations(google::cloud::rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::reservations::v1::
+                       ListReservationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::ResizeRequest const& request) = 0;
+      google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const& request) = 0;
+      google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::TestIamPermissionsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::reservations::v1::
+                         TestIamPermissionsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateReservations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::UpdateReservationsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateReservations(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::reservations::v1::
+                         UpdateReservationsRequest const& request) = 0;
 };
 
 class DefaultReservationsRestStub : public ReservationsRestStub {
@@ -83,48 +94,58 @@ class DefaultReservationsRestStub : public ReservationsRestStub {
 
   explicit DefaultReservationsRestStub(Options options);
   DefaultReservationsRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList> AggregatedListReservations(
+  StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>
+  AggregatedListReservations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::AggregatedListReservationsRequest const& request) override;
+      google::cloud::cpp::compute::reservations::v1::
+          AggregatedListReservationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteReservations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::DeleteReservationsRequest const& request) override;
+      google::cloud::cpp::compute::reservations::v1::
+          DeleteReservationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::GetReservationsRequest const& request) override;
+      google::cloud::cpp::compute::reservations::v1::
+          GetReservationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertReservations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::InsertReservationsRequest const& request) override;
+      google::cloud::cpp::compute::reservations::v1::
+          InsertReservationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ReservationList> ListReservations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::ListReservationsRequest const& request) override;
+      google::cloud::cpp::compute::reservations::v1::
+          ListReservationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::ResizeRequest const& request) override;
+      google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::reservations::v1::
+                         TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateReservations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::UpdateReservationsRequest const& request) override;
+      google::cloud::cpp::compute::reservations::v1::
+          UpdateReservationsRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

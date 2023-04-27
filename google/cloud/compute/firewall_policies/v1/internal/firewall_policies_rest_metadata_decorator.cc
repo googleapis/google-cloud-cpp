@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/firewall_policies/v1/firewall_policies.proto
 
-
 #include "google/cloud/compute/firewall_policies/v1/internal/firewall_policies_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,12 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 FirewallPoliciesRestMetadata::FirewallPoliciesRestMetadata(
     std::shared_ptr<FirewallPoliciesRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestMetadata::AddAssociation(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::AddAssociationRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        AddAssociationRequest const& request) {
   SetMetadata(rest_context);
   return child_->AddAssociation(rest_context, request);
 }
@@ -47,7 +48,8 @@ FirewallPoliciesRestMetadata::AddAssociation(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestMetadata::AddRule(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::AddRuleRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::AddRuleRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->AddRule(rest_context, request);
 }
@@ -55,7 +57,8 @@ FirewallPoliciesRestMetadata::AddRule(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestMetadata::CloneRules(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::CloneRulesRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::CloneRulesRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->CloneRules(rest_context, request);
 }
@@ -63,7 +66,8 @@ FirewallPoliciesRestMetadata::CloneRules(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestMetadata::DeleteFirewallPolicies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::DeleteFirewallPoliciesRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        DeleteFirewallPoliciesRequest const& request) {
   SetMetadata(rest_context);
   return child_->DeleteFirewallPolicies(rest_context, request);
 }
@@ -71,7 +75,8 @@ FirewallPoliciesRestMetadata::DeleteFirewallPolicies(
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
 FirewallPoliciesRestMetadata::GetFirewallPolicies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::GetFirewallPoliciesRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        GetFirewallPoliciesRequest const& request) {
   SetMetadata(rest_context);
   return child_->GetFirewallPolicies(rest_context, request);
 }
@@ -79,7 +84,8 @@ FirewallPoliciesRestMetadata::GetFirewallPolicies(
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
 FirewallPoliciesRestMetadata::GetAssociation(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::GetAssociationRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        GetAssociationRequest const& request) {
   SetMetadata(rest_context);
   return child_->GetAssociation(rest_context, request);
 }
@@ -87,7 +93,8 @@ FirewallPoliciesRestMetadata::GetAssociation(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 FirewallPoliciesRestMetadata::GetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::GetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        GetIamPolicyRequest const& request) {
   SetMetadata(rest_context);
   return child_->GetIamPolicy(rest_context, request);
 }
@@ -95,7 +102,8 @@ FirewallPoliciesRestMetadata::GetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
 FirewallPoliciesRestMetadata::GetRule(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::GetRuleRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::GetRuleRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->GetRule(rest_context, request);
 }
@@ -103,7 +111,8 @@ FirewallPoliciesRestMetadata::GetRule(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestMetadata::InsertFirewallPolicies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::InsertFirewallPoliciesRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        InsertFirewallPoliciesRequest const& request) {
   SetMetadata(rest_context);
   return child_->InsertFirewallPolicies(rest_context, request);
 }
@@ -111,15 +120,18 @@ FirewallPoliciesRestMetadata::InsertFirewallPolicies(
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyList>
 FirewallPoliciesRestMetadata::ListFirewallPolicies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::ListFirewallPoliciesRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        ListFirewallPoliciesRequest const& request) {
   SetMetadata(rest_context);
   return child_->ListFirewallPolicies(rest_context, request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::FirewallPoliciesListAssociationsResponse>
+StatusOr<
+    google::cloud::cpp::compute::v1::FirewallPoliciesListAssociationsResponse>
 FirewallPoliciesRestMetadata::ListAssociations(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::ListAssociationsRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        ListAssociationsRequest const& request) {
   SetMetadata(rest_context);
   return child_->ListAssociations(rest_context, request);
 }
@@ -127,7 +139,8 @@ FirewallPoliciesRestMetadata::ListAssociations(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestMetadata::Move(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::MoveRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::MoveRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->Move(rest_context, request);
 }
@@ -135,7 +148,8 @@ FirewallPoliciesRestMetadata::Move(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestMetadata::PatchFirewallPolicies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::PatchFirewallPoliciesRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        PatchFirewallPoliciesRequest const& request) {
   SetMetadata(rest_context);
   return child_->PatchFirewallPolicies(rest_context, request);
 }
@@ -143,7 +157,8 @@ FirewallPoliciesRestMetadata::PatchFirewallPolicies(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestMetadata::PatchRule(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::PatchRuleRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::PatchRuleRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->PatchRule(rest_context, request);
 }
@@ -151,7 +166,8 @@ FirewallPoliciesRestMetadata::PatchRule(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestMetadata::RemoveAssociation(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::RemoveAssociationRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        RemoveAssociationRequest const& request) {
   SetMetadata(rest_context);
   return child_->RemoveAssociation(rest_context, request);
 }
@@ -159,7 +175,8 @@ FirewallPoliciesRestMetadata::RemoveAssociation(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestMetadata::RemoveRule(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::RemoveRuleRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::RemoveRuleRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->RemoveRule(rest_context, request);
 }
@@ -167,7 +184,8 @@ FirewallPoliciesRestMetadata::RemoveRule(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 FirewallPoliciesRestMetadata::SetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::SetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        SetIamPolicyRequest const& request) {
   SetMetadata(rest_context);
   return child_->SetIamPolicy(rest_context, request);
 }
@@ -175,33 +193,34 @@ FirewallPoliciesRestMetadata::SetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 FirewallPoliciesRestMetadata::TestIamPermissions(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewallPolicies::v1::TestIamPermissionsRequest const& request) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        TestIamPermissionsRequest const& request) {
   SetMetadata(rest_context);
   return child_->TestIamPermissions(rest_context, request);
 }
 
 void FirewallPoliciesRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+    rest_internal::RestContext& rest_context,
+    std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

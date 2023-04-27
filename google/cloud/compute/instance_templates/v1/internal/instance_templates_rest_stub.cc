@@ -29,69 +29,81 @@ namespace cloud {
 namespace compute_instance_templates_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultInstanceTemplatesRestStub::DefaultInstanceTemplatesRestStub(Options options)
+DefaultInstanceTemplatesRestStub::DefaultInstanceTemplatesRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       options_(std::move(options)) {}
 
 DefaultInstanceTemplatesRestStub::DefaultInstanceTemplatesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
 DefaultInstanceTemplatesRestStub::AggregatedListInstanceTemplates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::AggregatedListInstanceTemplatesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instanceTemplates::v1::
+        AggregatedListInstanceTemplatesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/instanceTemplates",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstanceTemplatesRestStub::DeleteInstanceTemplates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::DeleteInstanceTemplatesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instanceTemplates::v1::
+        DeleteInstanceTemplatesRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/instanceTemplates/{instance_template}");
+      "/compute/v1/projects/{project}/global/instanceTemplates/"
+      "{instance_template}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
 DefaultInstanceTemplatesRestStub::GetInstanceTemplates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::GetInstanceTemplatesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instanceTemplates::v1::
+        GetInstanceTemplatesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceTemplate>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/instanceTemplates/{instance_template}",
+      "/compute/v1/projects/{project}/global/instanceTemplates/"
+      "{instance_template}",
       {std::make_pair("instance_template", request.instance_template()),
        std::make_pair("project", request.project())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultInstanceTemplatesRestStub::GetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::GetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instanceTemplates::v1::
+        GetIamPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/instanceTemplates/{resource}/getIamPolicy",
-      {std::make_pair("options_requested_policy_version", std::to_string(request.options_requested_policy_version())),
+      "/compute/v1/projects/{project}/global/instanceTemplates/{resource}/"
+      "getIamPolicy",
+      {std::make_pair(
+           "options_requested_policy_version",
+           std::to_string(request.options_requested_policy_version())),
        std::make_pair("project", request.project()),
        std::make_pair("resource", request.resource())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstanceTemplatesRestStub::InsertInstanceTemplates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::InsertInstanceTemplatesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instanceTemplates::v1::
+        InsertInstanceTemplatesRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/instanceTemplates");
@@ -99,9 +111,11 @@ DefaultInstanceTemplatesRestStub::InsertInstanceTemplates(
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateList>
 DefaultInstanceTemplatesRestStub::ListInstanceTemplates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::ListInstanceTemplatesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceTemplateList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instanceTemplates::v1::
+        ListInstanceTemplatesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::InstanceTemplateList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/instanceTemplates",
       {std::make_pair("filter", request.filter()),
@@ -109,25 +123,31 @@ DefaultInstanceTemplatesRestStub::ListInstanceTemplates(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultInstanceTemplatesRestStub::SetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::SetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instanceTemplates::v1::
+        SetIamPolicyRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/instanceTemplates/{resource}/setIamPolicy");
+      "/compute/v1/projects/{project}/global/instanceTemplates/{resource}/"
+      "setIamPolicy");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultInstanceTemplatesRestStub::TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::TestIamPermissionsRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instanceTemplates::v1::
+        TestIamPermissionsRequest const& request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/instanceTemplates/{resource}/testIamPermissions");
+      "/compute/v1/projects/{project}/global/instanceTemplates/{resource}/"
+      "testIamPermissions");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

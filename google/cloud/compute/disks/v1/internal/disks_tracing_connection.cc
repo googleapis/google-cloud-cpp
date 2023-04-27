@@ -33,109 +33,141 @@ DisksTracingConnection::DisksTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-DisksTracingConnection::AddResourcePolicies(google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const& request) {
-  auto span = internal::MakeSpan("compute_disks_v1::DisksConnection::AddResourcePolicies");
+DisksTracingConnection::AddResourcePolicies(
+    google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_disks_v1::DisksConnection::AddResourcePolicies");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AddResourcePolicies(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskAggregatedList>
-DisksTracingConnection::AggregatedListDisks(google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const& request) {
-  auto span = internal::MakeSpan("compute_disks_v1::DisksConnection::AggregatedListDisks");
+DisksTracingConnection::AggregatedListDisks(
+    google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_disks_v1::DisksConnection::AggregatedListDisks");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AggregatedListDisks(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-DisksTracingConnection::CreateSnapshot(google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const& request) {
-  auto span = internal::MakeSpan("compute_disks_v1::DisksConnection::CreateSnapshot");
+DisksTracingConnection::CreateSnapshot(
+    google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("compute_disks_v1::DisksConnection::CreateSnapshot");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateSnapshot(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-DisksTracingConnection::DeleteDisks(google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const& request) {
-  auto span = internal::MakeSpan("compute_disks_v1::DisksConnection::DeleteDisks");
+DisksTracingConnection::DeleteDisks(
+    google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const& request) {
+  auto span =
+      internal::MakeSpan("compute_disks_v1::DisksConnection::DeleteDisks");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteDisks(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Disk>
-DisksTracingConnection::GetDisks(google::cloud::cpp::compute::disks::v1::GetDisksRequest const& request) {
+DisksTracingConnection::GetDisks(
+    google::cloud::cpp::compute::disks::v1::GetDisksRequest const& request) {
   auto span = internal::MakeSpan("compute_disks_v1::DisksConnection::GetDisks");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDisks(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-DisksTracingConnection::GetIamPolicy(google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("compute_disks_v1::DisksConnection::GetIamPolicy");
+DisksTracingConnection::GetIamPolicy(
+    google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("compute_disks_v1::DisksConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-DisksTracingConnection::InsertDisks(google::cloud::cpp::compute::disks::v1::InsertDisksRequest const& request) {
-  auto span = internal::MakeSpan("compute_disks_v1::DisksConnection::InsertDisks");
+DisksTracingConnection::InsertDisks(
+    google::cloud::cpp::compute::disks::v1::InsertDisksRequest const& request) {
+  auto span =
+      internal::MakeSpan("compute_disks_v1::DisksConnection::InsertDisks");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->InsertDisks(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Disk>
-DisksTracingConnection::ListDisks(google::cloud::cpp::compute::disks::v1::ListDisksRequest request) {
-  auto span = internal::MakeSpan("compute_disks_v1::DisksConnection::ListDisks");
+DisksTracingConnection::ListDisks(
+    google::cloud::cpp::compute::disks::v1::ListDisksRequest request) {
+  auto span =
+      internal::MakeSpan("compute_disks_v1::DisksConnection::ListDisks");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListDisks(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::Disk>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-DisksTracingConnection::RemoveResourcePolicies(google::cloud::cpp::compute::disks::v1::RemoveResourcePoliciesRequest const& request) {
-  auto span = internal::MakeSpan("compute_disks_v1::DisksConnection::RemoveResourcePolicies");
+DisksTracingConnection::RemoveResourcePolicies(
+    google::cloud::cpp::compute::disks::v1::RemoveResourcePoliciesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_disks_v1::DisksConnection::RemoveResourcePolicies");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RemoveResourcePolicies(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-DisksTracingConnection::Resize(google::cloud::cpp::compute::disks::v1::ResizeRequest const& request) {
+DisksTracingConnection::Resize(
+    google::cloud::cpp::compute::disks::v1::ResizeRequest const& request) {
   auto span = internal::MakeSpan("compute_disks_v1::DisksConnection::Resize");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Resize(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-DisksTracingConnection::SetIamPolicy(google::cloud::cpp::compute::disks::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("compute_disks_v1::DisksConnection::SetIamPolicy");
+DisksTracingConnection::SetIamPolicy(
+    google::cloud::cpp::compute::disks::v1::SetIamPolicyRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("compute_disks_v1::DisksConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-DisksTracingConnection::SetLabels(google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request) {
-  auto span = internal::MakeSpan("compute_disks_v1::DisksConnection::SetLabels");
+DisksTracingConnection::SetLabels(
+    google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request) {
+  auto span =
+      internal::MakeSpan("compute_disks_v1::DisksConnection::SetLabels");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetLabels(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-DisksTracingConnection::TestIamPermissions(google::cloud::cpp::compute::disks::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("compute_disks_v1::DisksConnection::TestIamPermissions");
+DisksTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::disks::v1::TestIamPermissionsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_disks_v1::DisksConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-DisksTracingConnection::UpdateDisks(google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const& request) {
-  auto span = internal::MakeSpan("compute_disks_v1::DisksConnection::UpdateDisks");
+DisksTracingConnection::UpdateDisks(
+    google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const& request) {
+  auto span =
+      internal::MakeSpan("compute_disks_v1::DisksConnection::UpdateDisks");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateDisks(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<compute_disks_v1::DisksConnection>
-MakeDisksTracingConnection(
+std::shared_ptr<compute_disks_v1::DisksConnection> MakeDisksTracingConnection(
     std::shared_ptr<compute_disks_v1::DisksConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {

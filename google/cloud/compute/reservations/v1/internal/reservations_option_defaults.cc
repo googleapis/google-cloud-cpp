@@ -34,24 +34,29 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ReservationsDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_RESERVATIONS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_RESERVATIONS_AUTHORITY",
-      "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
+      std::move(options), "GOOGLE_CLOUD_CPP_RESERVATIONS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_RESERVATIONS_AUTHORITY", "compute.googleapis.com");
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<compute_reservations_v1::ReservationsRetryPolicyOption>()) {
     options.set<compute_reservations_v1::ReservationsRetryPolicyOption>(
         compute_reservations_v1::ReservationsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_reservations_v1::ReservationsBackoffPolicyOption>()) {
+  if (!options
+           .has<compute_reservations_v1::ReservationsBackoffPolicyOption>()) {
     options.set<compute_reservations_v1::ReservationsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
-  if (!options.has<compute_reservations_v1::ReservationsConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_reservations_v1::ReservationsConnectionIdempotencyPolicyOption>(
-        compute_reservations_v1::MakeDefaultReservationsConnectionIdempotencyPolicy());
+  if (!options.has<compute_reservations_v1::
+                       ReservationsConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        compute_reservations_v1::ReservationsConnectionIdempotencyPolicyOption>(
+        compute_reservations_v1::
+            MakeDefaultReservationsConnectionIdempotencyPolicy());
   }
 
   return options;

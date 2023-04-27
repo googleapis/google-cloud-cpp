@@ -38,39 +38,49 @@ class InstanceGroupsRestStub {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::AddInstancesRequest const& request) = 0;
+      google::cloud::cpp::compute::instanceGroups::v1::
+          AddInstancesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList> AggregatedListInstanceGroups(
+  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>
+  AggregatedListInstanceGroups(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::AggregatedListInstanceGroupsRequest const& request) = 0;
+      google::cloud::cpp::compute::instanceGroups::v1::
+          AggregatedListInstanceGroupsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceGroups(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::DeleteInstanceGroupsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteInstanceGroups(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::instanceGroups::v1::
+                           DeleteInstanceGroupsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroups(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::GetInstanceGroupsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
+  GetInstanceGroups(google::cloud::rest_internal::RestContext& rest_context,
+                    google::cloud::cpp::compute::instanceGroups::v1::
+                        GetInstanceGroupsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceGroups(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::InsertInstanceGroupsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertInstanceGroups(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::instanceGroups::v1::
+                           InsertInstanceGroupsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceGroupList> ListInstanceGroups(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::ListInstanceGroupsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceGroupList>
+  ListInstanceGroups(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::instanceGroups::v1::
+                         ListInstanceGroupsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceGroupsListInstances> ListInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::ListInstancesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceGroupsListInstances>
+  ListInstances(google::cloud::rest_internal::RestContext& rest_context,
+                google::cloud::cpp::compute::instanceGroups::v1::
+                    ListInstancesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::RemoveInstancesRequest const& request) = 0;
+      google::cloud::cpp::compute::instanceGroups::v1::
+          RemoveInstancesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::SetNamedPortsRequest const& request) = 0;
+      google::cloud::cpp::compute::instanceGroups::v1::
+          SetNamedPortsRequest const& request) = 0;
 };
 
 class DefaultInstanceGroupsRestStub : public InstanceGroupsRestStub {
@@ -79,44 +89,53 @@ class DefaultInstanceGroupsRestStub : public InstanceGroupsRestStub {
 
   explicit DefaultInstanceGroupsRestStub(Options options);
   DefaultInstanceGroupsRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::AddInstancesRequest const& request) override;
+      google::cloud::cpp::compute::instanceGroups::v1::
+          AddInstancesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList> AggregatedListInstanceGroups(
+  StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>
+  AggregatedListInstanceGroups(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::AggregatedListInstanceGroupsRequest const& request) override;
+      google::cloud::cpp::compute::instanceGroups::v1::
+          AggregatedListInstanceGroupsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceGroups(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::DeleteInstanceGroupsRequest const& request) override;
+      google::cloud::cpp::compute::instanceGroups::v1::
+          DeleteInstanceGroupsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroups(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::GetInstanceGroupsRequest const& request) override;
+      google::cloud::cpp::compute::instanceGroups::v1::
+          GetInstanceGroupsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceGroups(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::InsertInstanceGroupsRequest const& request) override;
+      google::cloud::cpp::compute::instanceGroups::v1::
+          InsertInstanceGroupsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceGroupList> ListInstanceGroups(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::ListInstanceGroupsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::InstanceGroupList>
+  ListInstanceGroups(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::instanceGroups::v1::
+                         ListInstanceGroupsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceGroupsListInstances> ListInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::ListInstancesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::InstanceGroupsListInstances>
+  ListInstances(google::cloud::rest_internal::RestContext& rest_context,
+                google::cloud::cpp::compute::instanceGroups::v1::
+                    ListInstancesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::RemoveInstancesRequest const& request) override;
+      google::cloud::cpp::compute::instanceGroups::v1::
+          RemoveInstancesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::SetNamedPortsRequest const& request) override;
+      google::cloud::cpp::compute::instanceGroups::v1::
+          SetNamedPortsRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

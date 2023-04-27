@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_HTTPS_HEALTH_CHECKS_V1_HTTPS_HEALTH_CHECKS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_HTTPS_HEALTH_CHECKS_V1_HTTPS_HEALTH_CHECKS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/https_health_checks/v1/https_health_checks_connection_idempotency_policy.h"
 #include "google/cloud/compute/https_health_checks/v1/internal/https_health_checks_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -35,11 +35,13 @@ namespace cloud {
 namespace compute_https_health_checks_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using HttpsHealthChecksRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_https_health_checks_v1_internal::HttpsHealthChecksRetryTraits>;
+using HttpsHealthChecksRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_https_health_checks_v1_internal::HttpsHealthChecksRetryTraits>;
 
-using HttpsHealthChecksLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_https_health_checks_v1_internal::HttpsHealthChecksRetryTraits>;
+using HttpsHealthChecksLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_https_health_checks_v1_internal::HttpsHealthChecksRetryTraits>;
 
 using HttpsHealthChecksLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -49,13 +51,14 @@ using HttpsHealthChecksLimitedErrorCountRetryPolicy =
  * The `HttpsHealthChecksConnection` object for `HttpsHealthChecksClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `HttpsHealthChecksClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `HttpsHealthChecksClient`.
+ * sets in `HttpsHealthChecksClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `HttpsHealthChecksClient`.
  *
  * To create a concrete instance, see `MakeHttpsHealthChecksConnection()`.
  *
- * For mocking, see `compute_https_health_checks_v1_mocks::MockHttpsHealthChecksConnection`.
+ * For mocking, see
+ * `compute_https_health_checks_v1_mocks::MockHttpsHealthChecksConnection`.
  */
 class HttpsHealthChecksConnection {
  public:
@@ -64,22 +67,28 @@ class HttpsHealthChecksConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteHttpsHealthChecks(google::cloud::cpp::compute::httpsHealthChecks::v1::DeleteHttpsHealthChecksRequest const& request);
+  DeleteHttpsHealthChecks(google::cloud::cpp::compute::httpsHealthChecks::v1::
+                              DeleteHttpsHealthChecksRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::HttpsHealthCheck>
-  GetHttpsHealthChecks(google::cloud::cpp::compute::httpsHealthChecks::v1::GetHttpsHealthChecksRequest const& request);
+  GetHttpsHealthChecks(google::cloud::cpp::compute::httpsHealthChecks::v1::
+                           GetHttpsHealthChecksRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertHttpsHealthChecks(google::cloud::cpp::compute::httpsHealthChecks::v1::InsertHttpsHealthChecksRequest const& request);
+  InsertHttpsHealthChecks(google::cloud::cpp::compute::httpsHealthChecks::v1::
+                              InsertHttpsHealthChecksRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::HttpsHealthCheck>
-  ListHttpsHealthChecks(google::cloud::cpp::compute::httpsHealthChecks::v1::ListHttpsHealthChecksRequest request);
+  ListHttpsHealthChecks(google::cloud::cpp::compute::httpsHealthChecks::v1::
+                            ListHttpsHealthChecksRequest request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchHttpsHealthChecks(google::cloud::cpp::compute::httpsHealthChecks::v1::PatchHttpsHealthChecksRequest const& request);
+  PatchHttpsHealthChecks(google::cloud::cpp::compute::httpsHealthChecks::v1::
+                             PatchHttpsHealthChecksRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateHttpsHealthChecks(google::cloud::cpp::compute::httpsHealthChecks::v1::UpdateHttpsHealthChecksRequest const& request);
+  UpdateHttpsHealthChecks(google::cloud::cpp::compute::httpsHealthChecks::v1::
+                              UpdateHttpsHealthChecksRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

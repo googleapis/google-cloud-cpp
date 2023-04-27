@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/backend_buckets/v1/backend_buckets.proto
 
-
 #include "google/cloud/compute/backend_buckets/v1/internal/backend_buckets_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,12 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 BackendBucketsRestMetadata::BackendBucketsRestMetadata(
     std::shared_ptr<BackendBucketsRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendBucketsRestMetadata::AddSignedUrlKey(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendBuckets::v1::AddSignedUrlKeyRequest const& request) {
+    google::cloud::cpp::compute::backendBuckets::v1::
+        AddSignedUrlKeyRequest const& request) {
   SetMetadata(rest_context);
   return child_->AddSignedUrlKey(rest_context, request);
 }
@@ -47,7 +48,8 @@ BackendBucketsRestMetadata::AddSignedUrlKey(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendBucketsRestMetadata::DeleteBackendBuckets(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendBuckets::v1::DeleteBackendBucketsRequest const& request) {
+    google::cloud::cpp::compute::backendBuckets::v1::
+        DeleteBackendBucketsRequest const& request) {
   SetMetadata(rest_context);
   return child_->DeleteBackendBuckets(rest_context, request);
 }
@@ -55,7 +57,8 @@ BackendBucketsRestMetadata::DeleteBackendBuckets(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendBucketsRestMetadata::DeleteSignedUrlKey(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendBuckets::v1::DeleteSignedUrlKeyRequest const& request) {
+    google::cloud::cpp::compute::backendBuckets::v1::
+        DeleteSignedUrlKeyRequest const& request) {
   SetMetadata(rest_context);
   return child_->DeleteSignedUrlKey(rest_context, request);
 }
@@ -63,7 +66,8 @@ BackendBucketsRestMetadata::DeleteSignedUrlKey(
 StatusOr<google::cloud::cpp::compute::v1::BackendBucket>
 BackendBucketsRestMetadata::GetBackendBuckets(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendBuckets::v1::GetBackendBucketsRequest const& request) {
+    google::cloud::cpp::compute::backendBuckets::v1::
+        GetBackendBucketsRequest const& request) {
   SetMetadata(rest_context);
   return child_->GetBackendBuckets(rest_context, request);
 }
@@ -71,7 +75,8 @@ BackendBucketsRestMetadata::GetBackendBuckets(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendBucketsRestMetadata::InsertBackendBuckets(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendBuckets::v1::InsertBackendBucketsRequest const& request) {
+    google::cloud::cpp::compute::backendBuckets::v1::
+        InsertBackendBucketsRequest const& request) {
   SetMetadata(rest_context);
   return child_->InsertBackendBuckets(rest_context, request);
 }
@@ -79,7 +84,8 @@ BackendBucketsRestMetadata::InsertBackendBuckets(
 StatusOr<google::cloud::cpp::compute::v1::BackendBucketList>
 BackendBucketsRestMetadata::ListBackendBuckets(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendBuckets::v1::ListBackendBucketsRequest const& request) {
+    google::cloud::cpp::compute::backendBuckets::v1::
+        ListBackendBucketsRequest const& request) {
   SetMetadata(rest_context);
   return child_->ListBackendBuckets(rest_context, request);
 }
@@ -87,7 +93,8 @@ BackendBucketsRestMetadata::ListBackendBuckets(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendBucketsRestMetadata::PatchBackendBuckets(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendBuckets::v1::PatchBackendBucketsRequest const& request) {
+    google::cloud::cpp::compute::backendBuckets::v1::
+        PatchBackendBucketsRequest const& request) {
   SetMetadata(rest_context);
   return child_->PatchBackendBuckets(rest_context, request);
 }
@@ -95,7 +102,8 @@ BackendBucketsRestMetadata::PatchBackendBuckets(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendBucketsRestMetadata::SetEdgeSecurityPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendBuckets::v1::SetEdgeSecurityPolicyRequest const& request) {
+    google::cloud::cpp::compute::backendBuckets::v1::
+        SetEdgeSecurityPolicyRequest const& request) {
   SetMetadata(rest_context);
   return child_->SetEdgeSecurityPolicy(rest_context, request);
 }
@@ -103,33 +111,34 @@ BackendBucketsRestMetadata::SetEdgeSecurityPolicy(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendBucketsRestMetadata::UpdateBackendBuckets(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendBuckets::v1::UpdateBackendBucketsRequest const& request) {
+    google::cloud::cpp::compute::backendBuckets::v1::
+        UpdateBackendBucketsRequest const& request) {
   SetMetadata(rest_context);
   return child_->UpdateBackendBuckets(rest_context, request);
 }
 
 void BackendBucketsRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+    rest_internal::RestContext& rest_context,
+    std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

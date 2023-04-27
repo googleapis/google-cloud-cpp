@@ -34,24 +34,33 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options HttpsHealthChecksDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_HTTPS_HEALTH_CHECKS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_HTTPS_HEALTH_CHECKS_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_HTTPS_HEALTH_CHECKS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_HTTPS_HEALTH_CHECKS_AUTHORITY",
       "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
-  if (!options.has<compute_https_health_checks_v1::HttpsHealthChecksRetryPolicyOption>()) {
-    options.set<compute_https_health_checks_v1::HttpsHealthChecksRetryPolicyOption>(
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  if (!options.has<compute_https_health_checks_v1::
+                       HttpsHealthChecksRetryPolicyOption>()) {
+    options.set<
+        compute_https_health_checks_v1::HttpsHealthChecksRetryPolicyOption>(
         compute_https_health_checks_v1::HttpsHealthChecksLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_https_health_checks_v1::HttpsHealthChecksBackoffPolicyOption>()) {
-    options.set<compute_https_health_checks_v1::HttpsHealthChecksBackoffPolicyOption>(
+  if (!options.has<compute_https_health_checks_v1::
+                       HttpsHealthChecksBackoffPolicyOption>()) {
+    options.set<
+        compute_https_health_checks_v1::HttpsHealthChecksBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
-  if (!options.has<compute_https_health_checks_v1::HttpsHealthChecksConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_https_health_checks_v1::HttpsHealthChecksConnectionIdempotencyPolicyOption>(
-        compute_https_health_checks_v1::MakeDefaultHttpsHealthChecksConnectionIdempotencyPolicy());
+  if (!options.has<compute_https_health_checks_v1::
+                       HttpsHealthChecksConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_https_health_checks_v1::
+                    HttpsHealthChecksConnectionIdempotencyPolicyOption>(
+        compute_https_health_checks_v1::
+            MakeDefaultHttpsHealthChecksConnectionIdempotencyPolicy());
   }
 
   return options;

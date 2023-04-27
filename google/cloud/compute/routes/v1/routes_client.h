@@ -62,7 +62,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RoutesClient {
  public:
-  explicit RoutesClient(ExperimentalTag, std::shared_ptr<RoutesConnection> connection, Options opts = {});
+  explicit RoutesClient(ExperimentalTag,
+                        std::shared_ptr<RoutesConnection> connection,
+                        Options opts = {});
   ~RoutesClient();
 
   ///@{
@@ -90,27 +92,36 @@ class RoutesClient {
   /// @param route  Name of the Route resource to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.routes.v1.DeleteRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L72}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.routes.v1.DeleteRoutesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L72}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteRoutes(std::string const& project, std::string const& route, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRoutes(
+      std::string const& project, std::string const& route, Options opts = {});
 
   ///
   /// Deletes the specified Route resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest,google/cloud/compute/routes/v1/routes.proto#L72}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest,google/cloud/compute/routes/v1/routes.proto#L72}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.routes.v1.DeleteRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L72}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.routes.v1.DeleteRoutesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L72}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteRoutes(google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRoutes(
+      google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Returns the specified Route resource.
@@ -119,27 +130,35 @@ class RoutesClient {
   /// @param route  Name of the Route resource to return.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Route,google/cloud/compute/v1/internal/common.proto#L21630}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Route,google/cloud/compute/v1/internal/common.proto#L21630}
   ///
-  /// [google.cloud.cpp.compute.routes.v1.GetRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L93}
-  /// [google.cloud.cpp.compute.v1.Route]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21630}
+  /// [google.cloud.cpp.compute.routes.v1.GetRoutesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L93}
+  /// [google.cloud.cpp.compute.v1.Route]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21630}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Route>
-  GetRoutes(std::string const& project, std::string const& route, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Route> GetRoutes(
+      std::string const& project, std::string const& route, Options opts = {});
 
   ///
   /// Returns the specified Route resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::routes::v1::GetRoutesRequest,google/cloud/compute/routes/v1/routes.proto#L93}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::routes::v1::GetRoutesRequest,google/cloud/compute/routes/v1/routes.proto#L93}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Route,google/cloud/compute/v1/internal/common.proto#L21630}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Route,google/cloud/compute/v1/internal/common.proto#L21630}
   ///
-  /// [google.cloud.cpp.compute.routes.v1.GetRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L93}
-  /// [google.cloud.cpp.compute.v1.Route]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21630}
+  /// [google.cloud.cpp.compute.routes.v1.GetRoutesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L93}
+  /// [google.cloud.cpp.compute.v1.Route]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21630}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Route>
-  GetRoutes(google::cloud::cpp::compute::routes::v1::GetRoutesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Route> GetRoutes(
+      google::cloud::cpp::compute::routes::v1::GetRoutesRequest const& request,
+      Options opts = {});
 
   ///
   /// Creates a Route resource in the specified project using the data included
@@ -149,28 +168,39 @@ class RoutesClient {
   /// @param route_resource  The Route for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.routes.v1.InsertRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L102}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.routes.v1.InsertRoutesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L102}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertRoutes(std::string const& project, google::cloud::cpp::compute::v1::Route const& route_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRoutes(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::Route const& route_resource,
+      Options opts = {});
 
   ///
   /// Creates a Route resource in the specified project using the data included
   /// in the request.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::routes::v1::InsertRoutesRequest,google/cloud/compute/routes/v1/routes.proto#L102}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::routes::v1::InsertRoutesRequest,google/cloud/compute/routes/v1/routes.proto#L102}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.routes.v1.InsertRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L102}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.routes.v1.InsertRoutesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L102}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertRoutes(google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRoutes(
+      google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Retrieves the list of Route resources available to the specified project.
@@ -178,27 +208,35 @@ class RoutesClient {
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Route,google/cloud/compute/v1/internal/common.proto#L21630}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Route,google/cloud/compute/v1/internal/common.proto#L21630}
   ///
-  /// [google.cloud.cpp.compute.routes.v1.ListRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L123}
-  /// [google.cloud.cpp.compute.v1.Route]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21630}
+  /// [google.cloud.cpp.compute.routes.v1.ListRoutesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L123}
+  /// [google.cloud.cpp.compute.v1.Route]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21630}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::Route>
-  ListRoutes(std::string const& project, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Route> ListRoutes(
+      std::string const& project, Options opts = {});
 
   ///
   /// Retrieves the list of Route resources available to the specified project.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::routes::v1::ListRoutesRequest,google/cloud/compute/routes/v1/routes.proto#L123}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::routes::v1::ListRoutesRequest,google/cloud/compute/routes/v1/routes.proto#L123}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Route,google/cloud/compute/v1/internal/common.proto#L21630}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Route,google/cloud/compute/v1/internal/common.proto#L21630}
   ///
-  /// [google.cloud.cpp.compute.routes.v1.ListRoutesRequest]: @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L123}
-  /// [google.cloud.cpp.compute.v1.Route]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21630}
+  /// [google.cloud.cpp.compute.routes.v1.ListRoutesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/routes/v1/routes.proto#L123}
+  /// [google.cloud.cpp.compute.v1.Route]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21630}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::Route>
-  ListRoutes(google::cloud::cpp::compute::routes::v1::ListRoutesRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Route> ListRoutes(
+      google::cloud::cpp::compute::routes::v1::ListRoutesRequest request,
+      Options opts = {});
 
  private:
   std::shared_ptr<RoutesConnection> connection_;

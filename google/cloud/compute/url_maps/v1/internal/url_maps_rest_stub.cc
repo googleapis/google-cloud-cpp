@@ -35,31 +35,34 @@ DefaultUrlMapsRestStub::DefaultUrlMapsRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultUrlMapsRestStub::DefaultUrlMapsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
 DefaultUrlMapsRestStub::AggregatedListUrlMaps(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::AggregatedListUrlMapsRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::urlMaps::v1::
+        AggregatedListUrlMapsRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::UrlMapsAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/urlMaps",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultUrlMapsRestStub::DeleteUrlMaps(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::DeleteUrlMapsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::urlMaps::v1::DeleteUrlMapsRequest const&
+        request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/urlMaps/{url_map}");
@@ -67,8 +70,9 @@ DefaultUrlMapsRestStub::DeleteUrlMaps(
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMap>
 DefaultUrlMapsRestStub::GetUrlMaps(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::GetUrlMapsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::urlMaps::v1::GetUrlMapsRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMap>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/urlMaps/{url_map}",
@@ -78,8 +82,9 @@ DefaultUrlMapsRestStub::GetUrlMaps(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultUrlMapsRestStub::InsertUrlMaps(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::InsertUrlMapsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::urlMaps::v1::InsertUrlMapsRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/urlMaps");
@@ -87,17 +92,20 @@ DefaultUrlMapsRestStub::InsertUrlMaps(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultUrlMapsRestStub::InvalidateCache(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::InvalidateCacheRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::urlMaps::v1::InvalidateCacheRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/urlMaps/{url_map}/invalidateCache");
+      "/compute/v1/projects/{project}/global/urlMaps/{url_map}/"
+      "invalidateCache");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapList>
 DefaultUrlMapsRestStub::ListUrlMaps(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::ListUrlMapsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::urlMaps::v1::ListUrlMapsRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMapList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/urlMaps",
@@ -106,13 +114,15 @@ DefaultUrlMapsRestStub::ListUrlMaps(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultUrlMapsRestStub::PatchUrlMaps(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::PatchUrlMapsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::urlMaps::v1::PatchUrlMapsRequest const&
+        request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/urlMaps/{url_map}");
@@ -120,8 +130,9 @@ DefaultUrlMapsRestStub::PatchUrlMaps(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultUrlMapsRestStub::UpdateUrlMaps(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::UpdateUrlMapsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::urlMaps::v1::UpdateUrlMapsRequest const&
+        request) {
   return rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/urlMaps/{url_map}");
@@ -129,9 +140,10 @@ DefaultUrlMapsRestStub::UpdateUrlMaps(
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
 DefaultUrlMapsRestStub::Validate(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::ValidateRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::urlMaps::v1::ValidateRequest const& request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::UrlMapsValidateResponse>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/urlMaps/{url_map}/validate");
 }

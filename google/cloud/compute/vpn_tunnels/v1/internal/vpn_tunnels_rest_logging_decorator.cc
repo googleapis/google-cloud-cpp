@@ -27,19 +27,21 @@ namespace compute_vpn_tunnels_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 VpnTunnelsRestLogging::VpnTunnelsRestLogging(
-    std::shared_ptr<VpnTunnelsRestStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<VpnTunnelsRestStub> child, TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::VpnTunnelAggregatedList>
 VpnTunnelsRestLogging::AggregatedListVpnTunnels(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::vpnTunnels::v1::AggregatedListVpnTunnelsRequest const& request) {
+    google::cloud::cpp::compute::vpnTunnels::v1::
+        AggregatedListVpnTunnelsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::vpnTunnels::v1::AggregatedListVpnTunnelsRequest const& request) {
+             google::cloud::cpp::compute::vpnTunnels::v1::
+                 AggregatedListVpnTunnelsRequest const& request) {
         return child_->AggregatedListVpnTunnels(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,10 +50,12 @@ VpnTunnelsRestLogging::AggregatedListVpnTunnels(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 VpnTunnelsRestLogging::DeleteVpnTunnels(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::vpnTunnels::v1::DeleteVpnTunnelsRequest const& request) {
+    google::cloud::cpp::compute::vpnTunnels::v1::DeleteVpnTunnelsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::vpnTunnels::v1::DeleteVpnTunnelsRequest const& request) {
+             google::cloud::cpp::compute::vpnTunnels::v1::
+                 DeleteVpnTunnelsRequest const& request) {
         return child_->DeleteVpnTunnels(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -60,10 +64,12 @@ VpnTunnelsRestLogging::DeleteVpnTunnels(
 StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>
 VpnTunnelsRestLogging::GetVpnTunnels(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::vpnTunnels::v1::GetVpnTunnelsRequest const& request) {
+    google::cloud::cpp::compute::vpnTunnels::v1::GetVpnTunnelsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::vpnTunnels::v1::GetVpnTunnelsRequest const& request) {
+             google::cloud::cpp::compute::vpnTunnels::v1::
+                 GetVpnTunnelsRequest const& request) {
         return child_->GetVpnTunnels(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -72,10 +78,12 @@ VpnTunnelsRestLogging::GetVpnTunnels(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 VpnTunnelsRestLogging::InsertVpnTunnels(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::vpnTunnels::v1::InsertVpnTunnelsRequest const& request) {
+    google::cloud::cpp::compute::vpnTunnels::v1::InsertVpnTunnelsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::vpnTunnels::v1::InsertVpnTunnelsRequest const& request) {
+             google::cloud::cpp::compute::vpnTunnels::v1::
+                 InsertVpnTunnelsRequest const& request) {
         return child_->InsertVpnTunnels(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -84,10 +92,12 @@ VpnTunnelsRestLogging::InsertVpnTunnels(
 StatusOr<google::cloud::cpp::compute::v1::VpnTunnelList>
 VpnTunnelsRestLogging::ListVpnTunnels(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::vpnTunnels::v1::ListVpnTunnelsRequest const& request) {
+    google::cloud::cpp::compute::vpnTunnels::v1::ListVpnTunnelsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::vpnTunnels::v1::ListVpnTunnelsRequest const& request) {
+             google::cloud::cpp::compute::vpnTunnels::v1::
+                 ListVpnTunnelsRequest const& request) {
         return child_->ListVpnTunnels(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -96,12 +106,13 @@ VpnTunnelsRestLogging::ListVpnTunnels(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 VpnTunnelsRestLogging::SetLabels(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::vpnTunnels::v1::SetLabelsRequest const& request) {
+    google::cloud::cpp::compute::vpnTunnels::v1::SetLabelsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::vpnTunnels::v1::SetLabelsRequest const& request) {
-        return child_->SetLabels(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::vpnTunnels::v1::SetLabelsRequest const&
+              request) { return child_->SetLabels(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
