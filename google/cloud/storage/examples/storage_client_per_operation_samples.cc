@@ -91,20 +91,20 @@ void ChangeRetryPolicy(std::vector<std::string> const& argv) {
         bucket_name, object_name_1,
         "The quick brown fox jumps over the lazy dog",
         g::Options{}.set<gcs::RetryPolicyOption>(
-            gcs::LimitedTimeRetryPolicy(std::chrono::seconds(10)).clone()));
+            gcs::LimitedTimeRetryPolicy(std::chrono::minutes(5)).clone()));
     if (!metadata) throw std::move(metadata).status();
 
-    auto is = client.ReadObject(
-        bucket_name, object_name_1,
-        g::Options{}.set<gcs::RetryPolicyOption>(
-            gcs::LimitedTimeRetryPolicy(std::chrono::seconds(10)).clone()));
+    auto is =
+        client.ReadObject(bucket_name, object_name_1,
+                          g::Options{}.set<gcs::RetryPolicyOption>(
+                              gcs::LimitedErrorCountRetryPolicy(10).clone()));
     auto contents = std::string{std::istreambuf_iterator<char>(is.rdbuf()), {}};
     if (is.bad()) throw google::cloud::Status(is.status());
 
     auto os = client.WriteObject(
         bucket_name, object_name_2,
         g::Options{}.set<gcs::RetryPolicyOption>(
-            gcs::LimitedTimeRetryPolicy(std::chrono::seconds(10)).clone()));
+            gcs::LimitedTimeRetryPolicy(std::chrono::minutes(5)).clone()));
     os << contents;
     os.Close();
     if (os.bad()) throw google::cloud::Status(os.metadata().status());
@@ -112,14 +112,14 @@ void ChangeRetryPolicy(std::vector<std::string> const& argv) {
     auto result = client.DeleteObject(
         bucket_name, object_name_1, gcs::Generation(metadata->generation()),
         g::Options{}.set<gcs::RetryPolicyOption>(
-            gcs::LimitedTimeRetryPolicy(std::chrono::seconds(10)).clone()));
+            gcs::LimitedErrorCountRetryPolicy(12).clone()));
     if (!result.ok()) throw std::move(metadata).status();
 
     metadata = os.metadata();
     result = client.DeleteObject(
         bucket_name, object_name_2, gcs::Generation(metadata->generation()),
         g::Options{}.set<gcs::RetryPolicyOption>(
-            gcs::LimitedTimeRetryPolicy(std::chrono::seconds(10)).clone()));
+            gcs::LimitedErrorCountRetryPolicy(12).clone()));
     if (!result.ok()) throw std::move(metadata).status();
   }
   //! [change-retry-policy]
