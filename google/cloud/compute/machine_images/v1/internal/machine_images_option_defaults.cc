@@ -34,24 +34,30 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options MachineImagesDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_MACHINE_IMAGES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_MACHINE_IMAGES_AUTHORITY",
-      "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
-  if (!options.has<compute_machine_images_v1::MachineImagesRetryPolicyOption>()) {
+      std::move(options), "GOOGLE_CLOUD_CPP_MACHINE_IMAGES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_MACHINE_IMAGES_AUTHORITY", "compute.googleapis.com");
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  if (!options
+           .has<compute_machine_images_v1::MachineImagesRetryPolicyOption>()) {
     options.set<compute_machine_images_v1::MachineImagesRetryPolicyOption>(
         compute_machine_images_v1::MachineImagesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_machine_images_v1::MachineImagesBackoffPolicyOption>()) {
+  if (!options.has<
+          compute_machine_images_v1::MachineImagesBackoffPolicyOption>()) {
     options.set<compute_machine_images_v1::MachineImagesBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
-  if (!options.has<compute_machine_images_v1::MachineImagesConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_machine_images_v1::MachineImagesConnectionIdempotencyPolicyOption>(
-        compute_machine_images_v1::MakeDefaultMachineImagesConnectionIdempotencyPolicy());
+  if (!options.has<compute_machine_images_v1::
+                       MachineImagesConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_machine_images_v1::
+                    MachineImagesConnectionIdempotencyPolicyOption>(
+        compute_machine_images_v1::
+            MakeDefaultMachineImagesConnectionIdempotencyPolicy());
   }
 
   return options;

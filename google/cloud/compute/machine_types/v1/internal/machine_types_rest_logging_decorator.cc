@@ -27,19 +27,21 @@ namespace compute_machine_types_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 MachineTypesRestLogging::MachineTypesRestLogging(
-    std::shared_ptr<MachineTypesRestStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<MachineTypesRestStub> child, TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
 MachineTypesRestLogging::AggregatedListMachineTypes(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::machineTypes::v1::AggregatedListMachineTypesRequest const& request) {
+    google::cloud::cpp::compute::machineTypes::v1::
+        AggregatedListMachineTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::machineTypes::v1::AggregatedListMachineTypesRequest const& request) {
+             google::cloud::cpp::compute::machineTypes::v1::
+                 AggregatedListMachineTypesRequest const& request) {
         return child_->AggregatedListMachineTypes(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,10 +50,12 @@ MachineTypesRestLogging::AggregatedListMachineTypes(
 StatusOr<google::cloud::cpp::compute::v1::MachineType>
 MachineTypesRestLogging::GetMachineTypes(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::machineTypes::v1::GetMachineTypesRequest const& request) {
+    google::cloud::cpp::compute::machineTypes::v1::GetMachineTypesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::machineTypes::v1::GetMachineTypesRequest const& request) {
+             google::cloud::cpp::compute::machineTypes::v1::
+                 GetMachineTypesRequest const& request) {
         return child_->GetMachineTypes(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -60,10 +64,12 @@ MachineTypesRestLogging::GetMachineTypes(
 StatusOr<google::cloud::cpp::compute::v1::MachineTypeList>
 MachineTypesRestLogging::ListMachineTypes(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::machineTypes::v1::ListMachineTypesRequest const& request) {
+    google::cloud::cpp::compute::machineTypes::v1::
+        ListMachineTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::machineTypes::v1::ListMachineTypesRequest const& request) {
+             google::cloud::cpp::compute::machineTypes::v1::
+                 ListMachineTypesRequest const& request) {
         return child_->ListMachineTypes(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);

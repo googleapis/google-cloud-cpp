@@ -38,20 +38,24 @@ class MachineTypesRestLogging : public MachineTypesRestStub {
  public:
   ~MachineTypesRestLogging() override = default;
   MachineTypesRestLogging(std::shared_ptr<MachineTypesRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                          TracingOptions tracing_options,
+                          std::set<std::string> components);
 
-  StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList> AggregatedListMachineTypes(
+  StatusOr<google::cloud::cpp::compute::v1::MachineTypeAggregatedList>
+  AggregatedListMachineTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineTypes::v1::AggregatedListMachineTypesRequest const& request) override;
+      google::cloud::cpp::compute::machineTypes::v1::
+          AggregatedListMachineTypesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineTypes::v1::GetMachineTypesRequest const& request) override;
+      google::cloud::cpp::compute::machineTypes::v1::
+          GetMachineTypesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::MachineTypeList> ListMachineTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineTypes::v1::ListMachineTypesRequest const& request) override;
+      google::cloud::cpp::compute::machineTypes::v1::
+          ListMachineTypesRequest const& request) override;
 
  private:
   std::shared_ptr<MachineTypesRestStub> child_;

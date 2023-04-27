@@ -42,13 +42,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockRegionInstancesConnection : public compute_region_instances_v1::RegionInstancesConnection {
+class MockRegionInstancesConnection
+    : public compute_region_instances_v1::RegionInstancesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  BulkInsert,
-  (google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, BulkInsert,
+              (google::cloud::cpp::compute::regionInstances::v1::
+                   BulkInsertRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

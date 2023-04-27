@@ -35,79 +35,99 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class FirewallPoliciesRestMetadata : public FirewallPoliciesRestStub {
  public:
   ~FirewallPoliciesRestMetadata() override = default;
-  explicit FirewallPoliciesRestMetadata(std::shared_ptr<FirewallPoliciesRestStub> child);
+  explicit FirewallPoliciesRestMetadata(
+      std::shared_ptr<FirewallPoliciesRestStub> child);
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddAssociation(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::AddAssociationRequest const& request) override;
+      google::cloud::cpp::compute::firewallPolicies::v1::
+          AddAssociationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddRule(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::AddRuleRequest const& request) override;
+      google::cloud::cpp::compute::firewallPolicies::v1::AddRuleRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> CloneRules(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::CloneRulesRequest const& request) override;
+      google::cloud::cpp::compute::firewallPolicies::v1::
+          CloneRulesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteFirewallPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::DeleteFirewallPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::firewallPolicies::v1::
+          DeleteFirewallPoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy> GetFirewallPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::GetFirewallPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::firewallPolicies::v1::
+          GetFirewallPoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation> GetAssociation(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::GetAssociationRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
+  GetAssociation(google::cloud::rest_internal::RestContext& rest_context,
+                 google::cloud::cpp::compute::firewallPolicies::v1::
+                     GetAssociationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::GetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::firewallPolicies::v1::
+          GetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule> GetRule(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::GetRuleRequest const& request) override;
+      google::cloud::cpp::compute::firewallPolicies::v1::GetRuleRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertFirewallPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::InsertFirewallPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::firewallPolicies::v1::
+          InsertFirewallPoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyList> ListFirewallPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::ListFirewallPoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyList>
+  ListFirewallPolicies(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::firewallPolicies::v1::
+                           ListFirewallPoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::FirewallPoliciesListAssociationsResponse> ListAssociations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::ListAssociationsRequest const& request) override;
+  StatusOr<
+      google::cloud::cpp::compute::v1::FirewallPoliciesListAssociationsResponse>
+  ListAssociations(google::cloud::rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::firewallPolicies::v1::
+                       ListAssociationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Move(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::MoveRequest const& request) override;
+      google::cloud::cpp::compute::firewallPolicies::v1::MoveRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchFirewallPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::PatchFirewallPoliciesRequest const& request) override;
+      google::cloud::cpp::compute::firewallPolicies::v1::
+          PatchFirewallPoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRule(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::PatchRuleRequest const& request) override;
+      google::cloud::cpp::compute::firewallPolicies::v1::PatchRuleRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveAssociation(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::RemoveAssociationRequest const& request) override;
+      google::cloud::cpp::compute::firewallPolicies::v1::
+          RemoveAssociationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveRule(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::RemoveRuleRequest const& request) override;
+      google::cloud::cpp::compute::firewallPolicies::v1::
+          RemoveRuleRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::SetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::firewallPolicies::v1::
+          SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::firewallPolicies::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

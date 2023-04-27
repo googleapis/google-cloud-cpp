@@ -35,15 +35,14 @@ DefaultRegionDiskTypesRestStub::DefaultRegionDiskTypesRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultRegionDiskTypesRestStub::DefaultRegionDiskTypesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
 DefaultRegionDiskTypesRestStub::GetRegionDiskTypes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDiskTypes::v1::GetRegionDiskTypesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionDiskTypes::v1::
+        GetRegionDiskTypesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::DiskType>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/diskTypes/{disk_type}",
@@ -54,9 +53,11 @@ DefaultRegionDiskTypesRestStub::GetRegionDiskTypes(
 
 StatusOr<google::cloud::cpp::compute::v1::RegionDiskTypeList>
 DefaultRegionDiskTypesRestStub::ListRegionDiskTypes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDiskTypes::v1::ListRegionDiskTypesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::RegionDiskTypeList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionDiskTypes::v1::
+        ListRegionDiskTypesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::RegionDiskTypeList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/diskTypes",
       {std::make_pair("filter", request.filter()),
@@ -65,7 +66,8 @@ DefaultRegionDiskTypesRestStub::ListRegionDiskTypes(
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

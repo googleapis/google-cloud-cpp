@@ -24,25 +24,34 @@ namespace cloud {
 namespace compute_region_instances_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-RegionInstancesClient::RegionInstancesClient(ExperimentalTag,
-    std::shared_ptr<RegionInstancesConnection> connection, Options opts)
+RegionInstancesClient::RegionInstancesClient(
+    ExperimentalTag, std::shared_ptr<RegionInstancesConnection> connection,
+    Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 RegionInstancesClient::~RegionInstancesClient() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionInstancesClient::BulkInsert(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::BulkInsertInstanceResource const& bulk_insert_instance_resource, Options opts) {
+RegionInstancesClient::BulkInsert(
+    std::string const& project, std::string const& region,
+    google::cloud::cpp::compute::v1::BulkInsertInstanceResource const&
+        bulk_insert_instance_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest request;
   request.set_project(project);
   request.set_region(region);
-  *request.mutable_bulk_insert_instance_resource() = bulk_insert_instance_resource;
+  *request.mutable_bulk_insert_instance_resource() =
+      bulk_insert_instance_resource;
   return connection_->BulkInsert(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionInstancesClient::BulkInsert(google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const& request, Options opts) {
+RegionInstancesClient::BulkInsert(
+    google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BulkInsert(request);
 }

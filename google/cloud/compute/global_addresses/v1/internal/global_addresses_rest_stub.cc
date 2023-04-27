@@ -35,15 +35,14 @@ DefaultGlobalAddressesRestStub::DefaultGlobalAddressesRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultGlobalAddressesRestStub::DefaultGlobalAddressesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultGlobalAddressesRestStub::DeleteGlobalAddresses(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::globalAddresses::v1::DeleteGlobalAddressesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::globalAddresses::v1::
+        DeleteGlobalAddressesRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/addresses/{address}");
@@ -51,8 +50,9 @@ DefaultGlobalAddressesRestStub::DeleteGlobalAddresses(
 
 StatusOr<google::cloud::cpp::compute::v1::Address>
 DefaultGlobalAddressesRestStub::GetGlobalAddresses(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::globalAddresses::v1::GetGlobalAddressesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::globalAddresses::v1::
+        GetGlobalAddressesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Address>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/addresses/{address}",
@@ -62,8 +62,9 @@ DefaultGlobalAddressesRestStub::GetGlobalAddresses(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultGlobalAddressesRestStub::InsertGlobalAddresses(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::globalAddresses::v1::InsertGlobalAddressesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::globalAddresses::v1::
+        InsertGlobalAddressesRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/addresses");
@@ -71,8 +72,9 @@ DefaultGlobalAddressesRestStub::InsertGlobalAddresses(
 
 StatusOr<google::cloud::cpp::compute::v1::AddressList>
 DefaultGlobalAddressesRestStub::ListGlobalAddresses(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::globalAddresses::v1::ListGlobalAddressesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::globalAddresses::v1::
+        ListGlobalAddressesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::AddressList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/addresses",
@@ -81,13 +83,15 @@ DefaultGlobalAddressesRestStub::ListGlobalAddresses(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultGlobalAddressesRestStub::SetLabels(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::globalAddresses::v1::SetLabelsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::globalAddresses::v1::SetLabelsRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/addresses/{resource}/setLabels");

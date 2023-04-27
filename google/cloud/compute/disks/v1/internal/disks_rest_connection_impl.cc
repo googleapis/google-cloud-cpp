@@ -17,8 +17,8 @@
 // source: google/cloud/compute/disks/v1/disks.proto
 
 #include "google/cloud/compute/disks/v1/internal/disks_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/disks/v1/internal/disks_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -34,116 +34,131 @@ DisksRestConnectionImpl::DisksRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<compute_disks_v1_internal::DisksRestStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        DisksConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      DisksConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-DisksRestConnectionImpl::AddResourcePolicies(google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const& request) {
+DisksRestConnectionImpl::AddResourcePolicies(
+    google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AddResourcePolicies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const& request) {
+             google::cloud::cpp::compute::disks::v1::
+                 AddResourcePoliciesRequest const& request) {
         return stub_->AddResourcePolicies(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskAggregatedList>
-DisksRestConnectionImpl::AggregatedListDisks(google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const& request) {
+DisksRestConnectionImpl::AggregatedListDisks(
+    google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AggregatedListDisks(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const& request) {
+             google::cloud::cpp::compute::disks::v1::
+                 AggregatedListDisksRequest const& request) {
         return stub_->AggregatedListDisks(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-DisksRestConnectionImpl::CreateSnapshot(google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const& request) {
+DisksRestConnectionImpl::CreateSnapshot(
+    google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CreateSnapshot(request),
-      [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const& request) {
-        return stub_->CreateSnapshot(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
+              request) { return stub_->CreateSnapshot(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-DisksRestConnectionImpl::DeleteDisks(google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const& request) {
+DisksRestConnectionImpl::DeleteDisks(
+    google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteDisks(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const& request) {
-        return stub_->DeleteDisks(rest_context, request);
-      },
+             google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const&
+                 request) { return stub_->DeleteDisks(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Disk>
-DisksRestConnectionImpl::GetDisks(google::cloud::cpp::compute::disks::v1::GetDisksRequest const& request) {
+DisksRestConnectionImpl::GetDisks(
+    google::cloud::cpp::compute::disks::v1::GetDisksRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetDisks(request),
+      retry_policy(), backoff_policy(), idempotency_policy()->GetDisks(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::disks::v1::GetDisksRequest const& request) {
-        return stub_->GetDisks(rest_context, request);
-      },
+             google::cloud::cpp::compute::disks::v1::GetDisksRequest const&
+                 request) { return stub_->GetDisks(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-DisksRestConnectionImpl::GetIamPolicy(google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const& request) {
+DisksRestConnectionImpl::GetIamPolicy(
+    google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const&
+                 request) {
         return stub_->GetIamPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-DisksRestConnectionImpl::InsertDisks(google::cloud::cpp::compute::disks::v1::InsertDisksRequest const& request) {
+DisksRestConnectionImpl::InsertDisks(
+    google::cloud::cpp::compute::disks::v1::InsertDisksRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->InsertDisks(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::disks::v1::InsertDisksRequest const& request) {
-        return stub_->InsertDisks(rest_context, request);
-      },
+             google::cloud::cpp::compute::disks::v1::InsertDisksRequest const&
+                 request) { return stub_->InsertDisks(rest_context, request); },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Disk>
-DisksRestConnectionImpl::ListDisks(google::cloud::cpp::compute::disks::v1::ListDisksRequest request) {
+DisksRestConnectionImpl::ListDisks(
+    google::cloud::cpp::compute::disks::v1::ListDisksRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_disks_v1::DisksRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<compute_disks_v1::DisksRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDisks(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::Disk>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::Disk>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::disks::v1::ListDisksRequest const& r) {
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::cpp::compute::disks::v1::ListDisksRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::disks::v1::ListDisksRequest const& request) {
-              return stub->ListDisks(rest_context, request);
-            },
+            [stub](
+                rest_internal::RestContext& rest_context,
+                google::cloud::cpp::compute::disks::v1::ListDisksRequest const&
+                    request) { return stub->ListDisks(rest_context, request); },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::DiskList r) {
-        std::vector<google::cloud::cpp::compute::v1::Disk> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::Disk> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -151,74 +166,82 @@ DisksRestConnectionImpl::ListDisks(google::cloud::cpp::compute::disks::v1::ListD
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-DisksRestConnectionImpl::RemoveResourcePolicies(google::cloud::cpp::compute::disks::v1::RemoveResourcePoliciesRequest const& request) {
+DisksRestConnectionImpl::RemoveResourcePolicies(
+    google::cloud::cpp::compute::disks::v1::RemoveResourcePoliciesRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->RemoveResourcePolicies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::disks::v1::RemoveResourcePoliciesRequest const& request) {
+             google::cloud::cpp::compute::disks::v1::
+                 RemoveResourcePoliciesRequest const& request) {
         return stub_->RemoveResourcePolicies(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-DisksRestConnectionImpl::Resize(google::cloud::cpp::compute::disks::v1::ResizeRequest const& request) {
+DisksRestConnectionImpl::Resize(
+    google::cloud::cpp::compute::disks::v1::ResizeRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->Resize(request),
+      retry_policy(), backoff_policy(), idempotency_policy()->Resize(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::disks::v1::ResizeRequest const& request) {
-        return stub_->Resize(rest_context, request);
-      },
+             google::cloud::cpp::compute::disks::v1::ResizeRequest const&
+                 request) { return stub_->Resize(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-DisksRestConnectionImpl::SetIamPolicy(google::cloud::cpp::compute::disks::v1::SetIamPolicyRequest const& request) {
+DisksRestConnectionImpl::SetIamPolicy(
+    google::cloud::cpp::compute::disks::v1::SetIamPolicyRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::disks::v1::SetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::disks::v1::SetIamPolicyRequest const&
+                 request) {
         return stub_->SetIamPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-DisksRestConnectionImpl::SetLabels(google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request) {
+DisksRestConnectionImpl::SetLabels(
+    google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetLabels(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request) {
-        return stub_->SetLabels(rest_context, request);
-      },
+             google::cloud::cpp::compute::disks::v1::SetLabelsRequest const&
+                 request) { return stub_->SetLabels(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-DisksRestConnectionImpl::TestIamPermissions(google::cloud::cpp::compute::disks::v1::TestIamPermissionsRequest const& request) {
+DisksRestConnectionImpl::TestIamPermissions(
+    google::cloud::cpp::compute::disks::v1::TestIamPermissionsRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->TestIamPermissions(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::disks::v1::TestIamPermissionsRequest const& request) {
+             google::cloud::cpp::compute::disks::v1::
+                 TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-DisksRestConnectionImpl::UpdateDisks(google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const& request) {
+DisksRestConnectionImpl::UpdateDisks(
+    google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateDisks(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const& request) {
-        return stub_->UpdateDisks(rest_context, request);
-      },
+             google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const&
+                 request) { return stub_->UpdateDisks(rest_context, request); },
       request, __func__);
 }
 

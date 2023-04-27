@@ -36,29 +36,39 @@ class TargetVpnGatewaysRestStub {
  public:
   virtual ~TargetVpnGatewaysRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList> AggregatedListTargetVpnGateways(
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>
+  AggregatedListTargetVpnGateways(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetVpnGateways::v1::AggregatedListTargetVpnGatewaysRequest const& request) = 0;
+      google::cloud::cpp::compute::targetVpnGateways::v1::
+          AggregatedListTargetVpnGatewaysRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetVpnGateways(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteTargetVpnGateways(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetVpnGateways::v1::DeleteTargetVpnGatewaysRequest const& request) = 0;
+      google::cloud::cpp::compute::targetVpnGateways::v1::
+          DeleteTargetVpnGatewaysRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway> GetTargetVpnGateways(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetVpnGateways::v1::GetTargetVpnGatewaysRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
+  GetTargetVpnGateways(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::targetVpnGateways::v1::
+                           GetTargetVpnGatewaysRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetVpnGateways(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertTargetVpnGateways(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetVpnGateways::v1::InsertTargetVpnGatewaysRequest const& request) = 0;
+      google::cloud::cpp::compute::targetVpnGateways::v1::
+          InsertTargetVpnGatewaysRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayList> ListTargetVpnGateways(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetVpnGateways::v1::ListTargetVpnGatewaysRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayList>
+  ListTargetVpnGateways(google::cloud::rest_internal::RestContext& rest_context,
+                        google::cloud::cpp::compute::targetVpnGateways::v1::
+                            ListTargetVpnGatewaysRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetVpnGateways::v1::SetLabelsRequest const& request) = 0;
+      google::cloud::cpp::compute::targetVpnGateways::v1::
+          SetLabelsRequest const& request) = 0;
 };
 
 class DefaultTargetVpnGatewaysRestStub : public TargetVpnGatewaysRestStub {
@@ -67,32 +77,39 @@ class DefaultTargetVpnGatewaysRestStub : public TargetVpnGatewaysRestStub {
 
   explicit DefaultTargetVpnGatewaysRestStub(Options options);
   DefaultTargetVpnGatewaysRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList> AggregatedListTargetVpnGateways(
+  StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>
+  AggregatedListTargetVpnGateways(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetVpnGateways::v1::AggregatedListTargetVpnGatewaysRequest const& request) override;
+      google::cloud::cpp::compute::targetVpnGateways::v1::
+          AggregatedListTargetVpnGatewaysRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetVpnGateways(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetVpnGateways::v1::DeleteTargetVpnGatewaysRequest const& request) override;
+      google::cloud::cpp::compute::targetVpnGateways::v1::
+          DeleteTargetVpnGatewaysRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway> GetTargetVpnGateways(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetVpnGateways::v1::GetTargetVpnGatewaysRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
+  GetTargetVpnGateways(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::targetVpnGateways::v1::
+                           GetTargetVpnGatewaysRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetVpnGateways(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetVpnGateways::v1::InsertTargetVpnGatewaysRequest const& request) override;
+      google::cloud::cpp::compute::targetVpnGateways::v1::
+          InsertTargetVpnGatewaysRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayList> ListTargetVpnGateways(
+  StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayList>
+  ListTargetVpnGateways(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetVpnGateways::v1::ListTargetVpnGatewaysRequest const& request) override;
+      google::cloud::cpp::compute::targetVpnGateways::v1::
+          ListTargetVpnGatewaysRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetVpnGateways::v1::SetLabelsRequest const& request) override;
+      google::cloud::cpp::compute::targetVpnGateways::v1::
+          SetLabelsRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

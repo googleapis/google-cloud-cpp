@@ -35,15 +35,14 @@ DefaultRoutesRestStub::DefaultRoutesRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultRoutesRestStub::DefaultRoutesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRoutesRestStub::DeleteRoutes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const&
+        request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/routes/{route}");
@@ -51,8 +50,8 @@ DefaultRoutesRestStub::DeleteRoutes(
 
 StatusOr<google::cloud::cpp::compute::v1::Route>
 DefaultRoutesRestStub::GetRoutes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routes::v1::GetRoutesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::routes::v1::GetRoutesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Route>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/routes/{route}",
@@ -62,8 +61,9 @@ DefaultRoutesRestStub::GetRoutes(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRoutesRestStub::InsertRoutes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/routes");
@@ -71,8 +71,8 @@ DefaultRoutesRestStub::InsertRoutes(
 
 StatusOr<google::cloud::cpp::compute::v1::RouteList>
 DefaultRoutesRestStub::ListRoutes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routes::v1::ListRoutesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::routes::v1::ListRoutesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::RouteList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/routes",
@@ -81,7 +81,8 @@ DefaultRoutesRestStub::ListRoutes(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

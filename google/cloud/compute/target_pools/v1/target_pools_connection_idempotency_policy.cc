@@ -26,59 +26,79 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TargetPoolsConnectionIdempotencyPolicy::~TargetPoolsConnectionIdempotencyPolicy() = default;
+TargetPoolsConnectionIdempotencyPolicy::
+    ~TargetPoolsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<TargetPoolsConnectionIdempotencyPolicy>
 TargetPoolsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TargetPoolsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TargetPoolsConnectionIdempotencyPolicy::AddHealthCheck(google::cloud::cpp::compute::targetPools::v1::AddHealthCheckRequest const&) {
+Idempotency TargetPoolsConnectionIdempotencyPolicy::AddHealthCheck(
+    google::cloud::cpp::compute::targetPools::v1::
+        AddHealthCheckRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetPoolsConnectionIdempotencyPolicy::AddInstance(google::cloud::cpp::compute::targetPools::v1::AddInstanceRequest const&) {
+Idempotency TargetPoolsConnectionIdempotencyPolicy::AddInstance(
+    google::cloud::cpp::compute::targetPools::v1::AddInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetPoolsConnectionIdempotencyPolicy::AggregatedListTargetPools(google::cloud::cpp::compute::targetPools::v1::AggregatedListTargetPoolsRequest const&) {
+Idempotency TargetPoolsConnectionIdempotencyPolicy::AggregatedListTargetPools(
+    google::cloud::cpp::compute::targetPools::v1::
+        AggregatedListTargetPoolsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TargetPoolsConnectionIdempotencyPolicy::DeleteTargetPools(google::cloud::cpp::compute::targetPools::v1::DeleteTargetPoolsRequest const&) {
+Idempotency TargetPoolsConnectionIdempotencyPolicy::DeleteTargetPools(
+    google::cloud::cpp::compute::targetPools::v1::
+        DeleteTargetPoolsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetPoolsConnectionIdempotencyPolicy::GetTargetPools(google::cloud::cpp::compute::targetPools::v1::GetTargetPoolsRequest const&) {
+Idempotency TargetPoolsConnectionIdempotencyPolicy::GetTargetPools(
+    google::cloud::cpp::compute::targetPools::v1::
+        GetTargetPoolsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TargetPoolsConnectionIdempotencyPolicy::GetHealth(google::cloud::cpp::compute::targetPools::v1::GetHealthRequest const&) {
+Idempotency TargetPoolsConnectionIdempotencyPolicy::GetHealth(
+    google::cloud::cpp::compute::targetPools::v1::GetHealthRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetPoolsConnectionIdempotencyPolicy::InsertTargetPools(google::cloud::cpp::compute::targetPools::v1::InsertTargetPoolsRequest const&) {
+Idempotency TargetPoolsConnectionIdempotencyPolicy::InsertTargetPools(
+    google::cloud::cpp::compute::targetPools::v1::
+        InsertTargetPoolsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetPoolsConnectionIdempotencyPolicy::ListTargetPools(google::cloud::cpp::compute::targetPools::v1::ListTargetPoolsRequest) {  // NOLINT
+Idempotency TargetPoolsConnectionIdempotencyPolicy::ListTargetPools(
+    google::cloud::cpp::compute::targetPools::v1::
+        ListTargetPoolsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency TargetPoolsConnectionIdempotencyPolicy::RemoveHealthCheck(google::cloud::cpp::compute::targetPools::v1::RemoveHealthCheckRequest const&) {
+Idempotency TargetPoolsConnectionIdempotencyPolicy::RemoveHealthCheck(
+    google::cloud::cpp::compute::targetPools::v1::
+        RemoveHealthCheckRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetPoolsConnectionIdempotencyPolicy::RemoveInstance(google::cloud::cpp::compute::targetPools::v1::RemoveInstanceRequest const&) {
+Idempotency TargetPoolsConnectionIdempotencyPolicy::RemoveInstance(
+    google::cloud::cpp::compute::targetPools::v1::
+        RemoveInstanceRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TargetPoolsConnectionIdempotencyPolicy::SetBackup(google::cloud::cpp::compute::targetPools::v1::SetBackupRequest const&) {
+Idempotency TargetPoolsConnectionIdempotencyPolicy::SetBackup(
+    google::cloud::cpp::compute::targetPools::v1::SetBackupRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<TargetPoolsConnectionIdempotencyPolicy>
-    MakeDefaultTargetPoolsConnectionIdempotencyPolicy() {
+MakeDefaultTargetPoolsConnectionIdempotencyPolicy() {
   return std::make_unique<TargetPoolsConnectionIdempotencyPolicy>();
 }
 

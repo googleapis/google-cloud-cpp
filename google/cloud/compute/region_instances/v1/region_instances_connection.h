@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_INSTANCES_V1_REGION_INSTANCES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_INSTANCES_V1_REGION_INSTANCES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_instances/v1/internal/region_instances_retry_traits.h"
 #include "google/cloud/compute/region_instances/v1/region_instances_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -34,11 +34,13 @@ namespace cloud {
 namespace compute_region_instances_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using RegionInstancesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_region_instances_v1_internal::RegionInstancesRetryTraits>;
+using RegionInstancesRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_region_instances_v1_internal::RegionInstancesRetryTraits>;
 
-using RegionInstancesLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_region_instances_v1_internal::RegionInstancesRetryTraits>;
+using RegionInstancesLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_region_instances_v1_internal::RegionInstancesRetryTraits>;
 
 using RegionInstancesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -54,7 +56,8 @@ using RegionInstancesLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeRegionInstancesConnection()`.
  *
- * For mocking, see `compute_region_instances_v1_mocks::MockRegionInstancesConnection`.
+ * For mocking, see
+ * `compute_region_instances_v1_mocks::MockRegionInstancesConnection`.
  */
 class RegionInstancesConnection {
  public:
@@ -62,8 +65,9 @@ class RegionInstancesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  BulkInsert(google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
+      google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

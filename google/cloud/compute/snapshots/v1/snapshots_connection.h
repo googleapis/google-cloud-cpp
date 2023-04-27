@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SNAPSHOTS_V1_SNAPSHOTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SNAPSHOTS_V1_SNAPSHOTS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/snapshots/v1/internal/snapshots_retry_traits.h"
 #include "google/cloud/compute/snapshots/v1/snapshots_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -38,8 +38,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using SnapshotsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     compute_snapshots_v1_internal::SnapshotsRetryTraits>;
 
-using SnapshotsLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_snapshots_v1_internal::SnapshotsRetryTraits>;
+using SnapshotsLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_snapshots_v1_internal::SnapshotsRetryTraits>;
 
 using SnapshotsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -63,29 +64,36 @@ class SnapshotsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteSnapshots(google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSnapshots(
+      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Snapshot>
-  GetSnapshots(google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshots(
+      google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertSnapshots(google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSnapshots(
+      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const&
+          request);
 
-  virtual StreamRange<google::cloud::cpp::compute::v1::Snapshot>
-  ListSnapshots(google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest request);
+  virtual StreamRange<google::cloud::cpp::compute::v1::Snapshot> ListSnapshots(
+      google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::snapshots::v1::
+                         TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -35,17 +35,20 @@ class LicenseCodesConnectionIdempotencyPolicy {
   virtual ~LicenseCodesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<LicenseCodesConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<LicenseCodesConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  GetLicenseCodes(google::cloud::cpp::compute::licenseCodes::v1::GetLicenseCodesRequest const& request);
+  virtual google::cloud::Idempotency GetLicenseCodes(
+      google::cloud::cpp::compute::licenseCodes::v1::
+          GetLicenseCodesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::cloud::cpp::compute::licenseCodes::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::licenseCodes::v1::
+          TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<LicenseCodesConnectionIdempotencyPolicy>
-    MakeDefaultLicenseCodesConnectionIdempotencyPolicy();
+MakeDefaultLicenseCodesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_license_codes_v1

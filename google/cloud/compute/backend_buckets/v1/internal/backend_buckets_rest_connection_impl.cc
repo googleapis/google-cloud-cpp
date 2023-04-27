@@ -17,8 +17,8 @@
 // source: google/cloud/compute/backend_buckets/v1/backend_buckets.proto
 
 #include "google/cloud/compute/backend_buckets/v1/internal/backend_buckets_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/backend_buckets/v1/internal/backend_buckets_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -32,94 +32,119 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BackendBucketsRestConnectionImpl::BackendBucketsRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_backend_buckets_v1_internal::BackendBucketsRestStub> stub,
+    std::shared_ptr<compute_backend_buckets_v1_internal::BackendBucketsRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        BackendBucketsConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      BackendBucketsConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendBucketsRestConnectionImpl::AddSignedUrlKey(google::cloud::cpp::compute::backendBuckets::v1::AddSignedUrlKeyRequest const& request) {
+BackendBucketsRestConnectionImpl::AddSignedUrlKey(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        AddSignedUrlKeyRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AddSignedUrlKey(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::backendBuckets::v1::AddSignedUrlKeyRequest const& request) {
+             google::cloud::cpp::compute::backendBuckets::v1::
+                 AddSignedUrlKeyRequest const& request) {
         return stub_->AddSignedUrlKey(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendBucketsRestConnectionImpl::DeleteBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::DeleteBackendBucketsRequest const& request) {
+BackendBucketsRestConnectionImpl::DeleteBackendBuckets(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        DeleteBackendBucketsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteBackendBuckets(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::backendBuckets::v1::DeleteBackendBucketsRequest const& request) {
+             google::cloud::cpp::compute::backendBuckets::v1::
+                 DeleteBackendBucketsRequest const& request) {
         return stub_->DeleteBackendBuckets(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendBucketsRestConnectionImpl::DeleteSignedUrlKey(google::cloud::cpp::compute::backendBuckets::v1::DeleteSignedUrlKeyRequest const& request) {
+BackendBucketsRestConnectionImpl::DeleteSignedUrlKey(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        DeleteSignedUrlKeyRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteSignedUrlKey(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::backendBuckets::v1::DeleteSignedUrlKeyRequest const& request) {
+             google::cloud::cpp::compute::backendBuckets::v1::
+                 DeleteSignedUrlKeyRequest const& request) {
         return stub_->DeleteSignedUrlKey(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendBucket>
-BackendBucketsRestConnectionImpl::GetBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::GetBackendBucketsRequest const& request) {
+BackendBucketsRestConnectionImpl::GetBackendBuckets(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        GetBackendBucketsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetBackendBuckets(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::backendBuckets::v1::GetBackendBucketsRequest const& request) {
+             google::cloud::cpp::compute::backendBuckets::v1::
+                 GetBackendBucketsRequest const& request) {
         return stub_->GetBackendBuckets(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendBucketsRestConnectionImpl::InsertBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::InsertBackendBucketsRequest const& request) {
+BackendBucketsRestConnectionImpl::InsertBackendBuckets(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        InsertBackendBucketsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->InsertBackendBuckets(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::backendBuckets::v1::InsertBackendBucketsRequest const& request) {
+             google::cloud::cpp::compute::backendBuckets::v1::
+                 InsertBackendBucketsRequest const& request) {
         return stub_->InsertBackendBuckets(rest_context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::BackendBucket>
-BackendBucketsRestConnectionImpl::ListBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::ListBackendBucketsRequest request) {
+BackendBucketsRestConnectionImpl::ListBackendBuckets(
+    google::cloud::cpp::compute::backendBuckets::v1::ListBackendBucketsRequest
+        request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_backend_buckets_v1::BackendBucketsRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<
+      compute_backend_buckets_v1::BackendBucketsRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListBackendBuckets(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::BackendBucket>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::BackendBucket>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::backendBuckets::v1::ListBackendBucketsRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::backendBuckets::v1::
+                          ListBackendBucketsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::backendBuckets::v1::ListBackendBucketsRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::backendBuckets::v1::
+                       ListBackendBucketsRequest const& request) {
               return stub->ListBackendBuckets(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::BackendBucketList r) {
-        std::vector<google::cloud::cpp::compute::v1::BackendBucket> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::BackendBucket> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -127,36 +152,45 @@ BackendBucketsRestConnectionImpl::ListBackendBuckets(google::cloud::cpp::compute
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendBucketsRestConnectionImpl::PatchBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::PatchBackendBucketsRequest const& request) {
+BackendBucketsRestConnectionImpl::PatchBackendBuckets(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        PatchBackendBucketsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->PatchBackendBuckets(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::backendBuckets::v1::PatchBackendBucketsRequest const& request) {
+             google::cloud::cpp::compute::backendBuckets::v1::
+                 PatchBackendBucketsRequest const& request) {
         return stub_->PatchBackendBuckets(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendBucketsRestConnectionImpl::SetEdgeSecurityPolicy(google::cloud::cpp::compute::backendBuckets::v1::SetEdgeSecurityPolicyRequest const& request) {
+BackendBucketsRestConnectionImpl::SetEdgeSecurityPolicy(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        SetEdgeSecurityPolicyRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetEdgeSecurityPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::backendBuckets::v1::SetEdgeSecurityPolicyRequest const& request) {
+             google::cloud::cpp::compute::backendBuckets::v1::
+                 SetEdgeSecurityPolicyRequest const& request) {
         return stub_->SetEdgeSecurityPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendBucketsRestConnectionImpl::UpdateBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::UpdateBackendBucketsRequest const& request) {
+BackendBucketsRestConnectionImpl::UpdateBackendBuckets(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        UpdateBackendBucketsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateBackendBuckets(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::backendBuckets::v1::UpdateBackendBucketsRequest const& request) {
+             google::cloud::cpp::compute::backendBuckets::v1::
+                 UpdateBackendBucketsRequest const& request) {
         return stub_->UpdateBackendBuckets(rest_context, request);
       },
       request, __func__);

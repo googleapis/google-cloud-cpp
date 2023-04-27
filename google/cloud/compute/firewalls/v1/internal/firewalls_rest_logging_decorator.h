@@ -43,27 +43,33 @@ class FirewallsRestLogging : public FirewallsRestStub {
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteFirewalls(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const& request) override;
+      google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Firewall> GetFirewalls(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const& request) override;
+      google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertFirewalls(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const& request) override;
+      google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::FirewallList> ListFirewalls(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest const& request) override;
+      google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchFirewalls(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const& request) override;
+      google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateFirewalls(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const& request) override;
+      google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const&
+          request) override;
 
  private:
   std::shared_ptr<FirewallsRestStub> child_;

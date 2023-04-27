@@ -17,8 +17,8 @@
 // source: google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto
 
 #include "google/cloud/compute/target_vpn_gateways/v1/internal/target_vpn_gateways_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/target_vpn_gateways/v1/internal/target_vpn_gateways_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -32,82 +32,105 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TargetVpnGatewaysRestConnectionImpl::TargetVpnGatewaysRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_target_vpn_gateways_v1_internal::TargetVpnGatewaysRestStub> stub,
+    std::shared_ptr<
+        compute_target_vpn_gateways_v1_internal::TargetVpnGatewaysRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        TargetVpnGatewaysConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), TargetVpnGatewaysConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>
-TargetVpnGatewaysRestConnectionImpl::AggregatedListTargetVpnGateways(google::cloud::cpp::compute::targetVpnGateways::v1::AggregatedListTargetVpnGatewaysRequest const& request) {
+TargetVpnGatewaysRestConnectionImpl::AggregatedListTargetVpnGateways(
+    google::cloud::cpp::compute::targetVpnGateways::v1::
+        AggregatedListTargetVpnGatewaysRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AggregatedListTargetVpnGateways(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::targetVpnGateways::v1::AggregatedListTargetVpnGatewaysRequest const& request) {
+             google::cloud::cpp::compute::targetVpnGateways::v1::
+                 AggregatedListTargetVpnGatewaysRequest const& request) {
         return stub_->AggregatedListTargetVpnGateways(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetVpnGatewaysRestConnectionImpl::DeleteTargetVpnGateways(google::cloud::cpp::compute::targetVpnGateways::v1::DeleteTargetVpnGatewaysRequest const& request) {
+TargetVpnGatewaysRestConnectionImpl::DeleteTargetVpnGateways(
+    google::cloud::cpp::compute::targetVpnGateways::v1::
+        DeleteTargetVpnGatewaysRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteTargetVpnGateways(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::targetVpnGateways::v1::DeleteTargetVpnGatewaysRequest const& request) {
+             google::cloud::cpp::compute::targetVpnGateways::v1::
+                 DeleteTargetVpnGatewaysRequest const& request) {
         return stub_->DeleteTargetVpnGateways(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
-TargetVpnGatewaysRestConnectionImpl::GetTargetVpnGateways(google::cloud::cpp::compute::targetVpnGateways::v1::GetTargetVpnGatewaysRequest const& request) {
+TargetVpnGatewaysRestConnectionImpl::GetTargetVpnGateways(
+    google::cloud::cpp::compute::targetVpnGateways::v1::
+        GetTargetVpnGatewaysRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetTargetVpnGateways(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::targetVpnGateways::v1::GetTargetVpnGatewaysRequest const& request) {
+             google::cloud::cpp::compute::targetVpnGateways::v1::
+                 GetTargetVpnGatewaysRequest const& request) {
         return stub_->GetTargetVpnGateways(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetVpnGatewaysRestConnectionImpl::InsertTargetVpnGateways(google::cloud::cpp::compute::targetVpnGateways::v1::InsertTargetVpnGatewaysRequest const& request) {
+TargetVpnGatewaysRestConnectionImpl::InsertTargetVpnGateways(
+    google::cloud::cpp::compute::targetVpnGateways::v1::
+        InsertTargetVpnGatewaysRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->InsertTargetVpnGateways(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::targetVpnGateways::v1::InsertTargetVpnGatewaysRequest const& request) {
+             google::cloud::cpp::compute::targetVpnGateways::v1::
+                 InsertTargetVpnGatewaysRequest const& request) {
         return stub_->InsertTargetVpnGateways(rest_context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetVpnGateway>
-TargetVpnGatewaysRestConnectionImpl::ListTargetVpnGateways(google::cloud::cpp::compute::targetVpnGateways::v1::ListTargetVpnGatewaysRequest request) {
+TargetVpnGatewaysRestConnectionImpl::ListTargetVpnGateways(
+    google::cloud::cpp::compute::targetVpnGateways::v1::
+        ListTargetVpnGatewaysRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_target_vpn_gateways_v1::TargetVpnGatewaysRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<
+      compute_target_vpn_gateways_v1::TargetVpnGatewaysRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTargetVpnGateways(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::TargetVpnGateway>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::TargetVpnGateway>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::targetVpnGateways::v1::ListTargetVpnGatewaysRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::targetVpnGateways::v1::
+                          ListTargetVpnGatewaysRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::targetVpnGateways::v1::ListTargetVpnGatewaysRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::targetVpnGateways::v1::
+                       ListTargetVpnGatewaysRequest const& request) {
               return stub->ListTargetVpnGateways(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::TargetVpnGatewayList r) {
-        std::vector<google::cloud::cpp::compute::v1::TargetVpnGateway> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::TargetVpnGateway> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -115,12 +138,15 @@ TargetVpnGatewaysRestConnectionImpl::ListTargetVpnGateways(google::cloud::cpp::c
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetVpnGatewaysRestConnectionImpl::SetLabels(google::cloud::cpp::compute::targetVpnGateways::v1::SetLabelsRequest const& request) {
+TargetVpnGatewaysRestConnectionImpl::SetLabels(
+    google::cloud::cpp::compute::targetVpnGateways::v1::SetLabelsRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetLabels(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::targetVpnGateways::v1::SetLabelsRequest const& request) {
+             google::cloud::cpp::compute::targetVpnGateways::v1::
+                 SetLabelsRequest const& request) {
         return stub_->SetLabels(rest_context, request);
       },
       request, __func__);

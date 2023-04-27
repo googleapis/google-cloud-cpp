@@ -36,37 +36,48 @@ class VpnGatewaysRestStub {
  public:
   virtual ~VpnGatewaysRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::VpnGatewayAggregatedList> AggregatedListVpnGateways(
+  virtual StatusOr<google::cloud::cpp::compute::v1::VpnGatewayAggregatedList>
+  AggregatedListVpnGateways(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpnGateways::v1::AggregatedListVpnGatewaysRequest const& request) = 0;
+      google::cloud::cpp::compute::vpnGateways::v1::
+          AggregatedListVpnGatewaysRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteVpnGateways(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpnGateways::v1::DeleteVpnGatewaysRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteVpnGateways(google::cloud::rest_internal::RestContext& rest_context,
+                    google::cloud::cpp::compute::vpnGateways::v1::
+                        DeleteVpnGatewaysRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::VpnGateway> GetVpnGateways(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpnGateways::v1::GetVpnGatewaysRequest const& request) = 0;
+      google::cloud::cpp::compute::vpnGateways::v1::GetVpnGatewaysRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse> GetStatus(
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse>
+  GetStatus(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpnGateways::v1::GetStatusRequest const& request) = 0;
+      google::cloud::cpp::compute::vpnGateways::v1::GetStatusRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertVpnGateways(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpnGateways::v1::InsertVpnGatewaysRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertVpnGateways(google::cloud::rest_internal::RestContext& rest_context,
+                    google::cloud::cpp::compute::vpnGateways::v1::
+                        InsertVpnGatewaysRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::VpnGatewayList> ListVpnGateways(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpnGateways::v1::ListVpnGatewaysRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::VpnGatewayList>
+  ListVpnGateways(google::cloud::rest_internal::RestContext& rest_context,
+                  google::cloud::cpp::compute::vpnGateways::v1::
+                      ListVpnGatewaysRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpnGateways::v1::SetLabelsRequest const& request) = 0;
+      google::cloud::cpp::compute::vpnGateways::v1::SetLabelsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpnGateways::v1::TestIamPermissionsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::vpnGateways::v1::
+                         TestIamPermissionsRequest const& request) = 0;
 };
 
 class DefaultVpnGatewaysRestStub : public VpnGatewaysRestStub {
@@ -74,41 +85,50 @@ class DefaultVpnGatewaysRestStub : public VpnGatewaysRestStub {
   ~DefaultVpnGatewaysRestStub() override = default;
 
   explicit DefaultVpnGatewaysRestStub(Options options);
-  DefaultVpnGatewaysRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+  DefaultVpnGatewaysRestStub(std::shared_ptr<rest_internal::RestClient> service,
+                             Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::VpnGatewayAggregatedList> AggregatedListVpnGateways(
+  StatusOr<google::cloud::cpp::compute::v1::VpnGatewayAggregatedList>
+  AggregatedListVpnGateways(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpnGateways::v1::AggregatedListVpnGatewaysRequest const& request) override;
+      google::cloud::cpp::compute::vpnGateways::v1::
+          AggregatedListVpnGatewaysRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteVpnGateways(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpnGateways::v1::DeleteVpnGatewaysRequest const& request) override;
+      google::cloud::cpp::compute::vpnGateways::v1::
+          DeleteVpnGatewaysRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::VpnGateway> GetVpnGateways(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpnGateways::v1::GetVpnGatewaysRequest const& request) override;
+      google::cloud::cpp::compute::vpnGateways::v1::GetVpnGatewaysRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse> GetStatus(
+  StatusOr<google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse>
+  GetStatus(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpnGateways::v1::GetStatusRequest const& request) override;
+      google::cloud::cpp::compute::vpnGateways::v1::GetStatusRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertVpnGateways(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpnGateways::v1::InsertVpnGatewaysRequest const& request) override;
+      google::cloud::cpp::compute::vpnGateways::v1::
+          InsertVpnGatewaysRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::VpnGatewayList> ListVpnGateways(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpnGateways::v1::ListVpnGatewaysRequest const& request) override;
+      google::cloud::cpp::compute::vpnGateways::v1::
+          ListVpnGatewaysRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpnGateways::v1::SetLabelsRequest const& request) override;
+      google::cloud::cpp::compute::vpnGateways::v1::SetLabelsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::vpnGateways::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::vpnGateways::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

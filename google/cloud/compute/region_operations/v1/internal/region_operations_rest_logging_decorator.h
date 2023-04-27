@@ -38,24 +38,28 @@ class RegionOperationsRestLogging : public RegionOperationsRestStub {
  public:
   ~RegionOperationsRestLogging() override = default;
   RegionOperationsRestLogging(std::shared_ptr<RegionOperationsRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                              TracingOptions tracing_options,
+                              std::set<std::string> components);
 
   Status DeleteRegionOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionOperations::v1::DeleteRegionOperationsRequest const& request) override;
+      google::cloud::cpp::compute::regionOperations::v1::
+          DeleteRegionOperationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetRegionOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionOperations::v1::GetRegionOperationsRequest const& request) override;
+      google::cloud::cpp::compute::regionOperations::v1::
+          GetRegionOperationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::OperationList> ListRegionOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionOperations::v1::ListRegionOperationsRequest const& request) override;
+      google::cloud::cpp::compute::regionOperations::v1::
+          ListRegionOperationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionOperations::v1::WaitRequest const& request) override;
+      google::cloud::cpp::compute::regionOperations::v1::WaitRequest const&
+          request) override;
 
  private:
   std::shared_ptr<RegionOperationsRestStub> child_;

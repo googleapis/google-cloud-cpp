@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_VPN_GATEWAYS_V1_VPN_GATEWAYS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_VPN_GATEWAYS_V1_VPN_GATEWAYS_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/vpn_gateways/v1/vpn_gateways_connection.h"
 #include "google/cloud/compute/vpn_gateways/v1/vpn_gateways_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,8 +64,7 @@ struct VpnGatewaysConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-compute-options
  */
 using VpnGatewaysPolicyOptionList =
-    OptionList<VpnGatewaysRetryPolicyOption,
-               VpnGatewaysBackoffPolicyOption,
+    OptionList<VpnGatewaysRetryPolicyOption, VpnGatewaysBackoffPolicyOption,
                VpnGatewaysConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

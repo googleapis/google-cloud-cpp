@@ -26,20 +26,22 @@ namespace cloud {
 namespace compute_images_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ImagesRestLogging::ImagesRestLogging(
-    std::shared_ptr<ImagesRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+ImagesRestLogging::ImagesRestLogging(std::shared_ptr<ImagesRestStub> child,
+                                     TracingOptions tracing_options,
+                                     std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ImagesRestLogging::DeleteImages(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::images::v1::DeleteImagesRequest const& request) {
+    google::cloud::cpp::compute::images::v1::DeleteImagesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::images::v1::DeleteImagesRequest const& request) {
+             google::cloud::cpp::compute::images::v1::DeleteImagesRequest const&
+                 request) {
         return child_->DeleteImages(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -51,43 +53,43 @@ ImagesRestLogging::Deprecate(
     google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) {
-        return child_->Deprecate(rest_context, request);
-      },
+             google::cloud::cpp::compute::images::v1::DeprecateRequest const&
+                 request) { return child_->Deprecate(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Image>
-ImagesRestLogging::GetImages(
+StatusOr<google::cloud::cpp::compute::v1::Image> ImagesRestLogging::GetImages(
     rest_internal::RestContext& rest_context,
     google::cloud::cpp::compute::images::v1::GetImagesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::images::v1::GetImagesRequest const& request) {
-        return child_->GetImages(rest_context, request);
-      },
+             google::cloud::cpp::compute::images::v1::GetImagesRequest const&
+                 request) { return child_->GetImages(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Image>
 ImagesRestLogging::GetFromFamily(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const& request) {
+    google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const& request) {
-        return child_->GetFromFamily(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const&
+              request) { return child_->GetFromFamily(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ImagesRestLogging::GetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const&
+                 request) {
         return child_->GetIamPolicy(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -96,10 +98,12 @@ ImagesRestLogging::GetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ImagesRestLogging::InsertImages(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::images::v1::InsertImagesRequest const& request) {
+    google::cloud::cpp::compute::images::v1::InsertImagesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::images::v1::InsertImagesRequest const& request) {
+             google::cloud::cpp::compute::images::v1::InsertImagesRequest const&
+                 request) {
         return child_->InsertImages(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -111,19 +115,20 @@ ImagesRestLogging::ListImages(
     google::cloud::cpp::compute::images::v1::ListImagesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::images::v1::ListImagesRequest const& request) {
-        return child_->ListImages(rest_context, request);
-      },
+             google::cloud::cpp::compute::images::v1::ListImagesRequest const&
+                 request) { return child_->ListImages(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ImagesRestLogging::PatchImages(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::images::v1::PatchImagesRequest const& request) {
+    google::cloud::cpp::compute::images::v1::PatchImagesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::images::v1::PatchImagesRequest const& request) {
+             google::cloud::cpp::compute::images::v1::PatchImagesRequest const&
+                 request) {
         return child_->PatchImages(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -132,10 +137,12 @@ ImagesRestLogging::PatchImages(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 ImagesRestLogging::SetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const&
+                 request) {
         return child_->SetIamPolicy(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -147,19 +154,20 @@ ImagesRestLogging::SetLabels(
     google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) {
-        return child_->SetLabels(rest_context, request);
-      },
+             google::cloud::cpp::compute::images::v1::SetLabelsRequest const&
+                 request) { return child_->SetLabels(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 ImagesRestLogging::TestIamPermissions(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const& request) {
+    google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const& request) {
+             google::cloud::cpp::compute::images::v1::
+                 TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);

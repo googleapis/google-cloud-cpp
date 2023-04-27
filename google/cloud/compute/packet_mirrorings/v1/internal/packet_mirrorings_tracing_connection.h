@@ -36,33 +36,43 @@ class PacketMirroringsTracingConnection
   ~PacketMirroringsTracingConnection() override = default;
 
   explicit PacketMirroringsTracingConnection(
-    std::shared_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnection> child);
+      std::shared_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
-  AggregatedListPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::AggregatedListPacketMirroringsRequest const& request) override;
+  AggregatedListPacketMirrorings(
+      google::cloud::cpp::compute::packetMirrorings::v1::
+          AggregatedListPacketMirroringsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeletePacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::DeletePacketMirroringsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeletePacketMirrorings(
+      google::cloud::cpp::compute::packetMirrorings::v1::
+          DeletePacketMirroringsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
-  GetPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::GetPacketMirroringsRequest const& request) override;
+  GetPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::
+                          GetPacketMirroringsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::InsertPacketMirroringsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertPacketMirrorings(
+      google::cloud::cpp::compute::packetMirrorings::v1::
+          InsertPacketMirroringsRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>
-  ListPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::ListPacketMirroringsRequest request) override;
+  ListPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::
+                           ListPacketMirroringsRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::PatchPacketMirroringsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchPacketMirrorings(
+      google::cloud::cpp::compute::packetMirrorings::v1::
+          PatchPacketMirroringsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::packetMirrorings::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::packetMirrorings::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
-  std::shared_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnection> child_;
+  std::shared_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -75,7 +85,8 @@ class PacketMirroringsTracingConnection
  */
 std::shared_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnection>
 MakePacketMirroringsTracingConnection(
-    std::shared_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnection> conn);
+    std::shared_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_packet_mirrorings_v1_internal

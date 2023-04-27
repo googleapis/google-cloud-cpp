@@ -38,7 +38,8 @@ class RegionInstancesRestStub {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const& request) = 0;
+      google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const&
+          request) = 0;
 };
 
 class DefaultRegionInstancesRestStub : public RegionInstancesRestStub {
@@ -47,12 +48,12 @@ class DefaultRegionInstancesRestStub : public RegionInstancesRestStub {
 
   explicit DefaultRegionInstancesRestStub(Options options);
   DefaultRegionInstancesRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const& request) override;
+      google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const&
+          request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

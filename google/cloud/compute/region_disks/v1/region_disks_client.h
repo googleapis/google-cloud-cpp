@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RegionDisksClient {
  public:
-  explicit RegionDisksClient(ExperimentalTag, std::shared_ptr<RegionDisksConnection> connection, Options opts = {});
+  explicit RegionDisksClient(ExperimentalTag,
+                             std::shared_ptr<RegionDisksConnection> connection,
+                             Options opts = {});
   ~RegionDisksClient();
 
   ///@{
@@ -76,46 +78,65 @@ class RegionDisksClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(RegionDisksClient const& a, RegionDisksClient const& b) {
+  friend bool operator==(RegionDisksClient const& a,
+                         RegionDisksClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RegionDisksClient const& a, RegionDisksClient const& b) {
+  friend bool operator!=(RegionDisksClient const& a,
+                         RegionDisksClient const& b) {
     return !(a == b);
   }
   ///@}
 
   ///
   /// Adds existing resource policies to a regional disk. You can only add one
-  /// policy which will be applied to this disk for scheduling snapshot creation.
+  /// policy which will be applied to this disk for scheduling snapshot
+  /// creation.
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
   /// @param disk  The disk name for this request.
-  /// @param region_disks_add_resource_policies_request_resource  The RegionDisksAddResourcePoliciesRequest for this request.
+  /// @param region_disks_add_resource_policies_request_resource  The
+  /// RegionDisksAddResourcePoliciesRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.AddResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L170}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.regionDisks.v1.AddResourcePoliciesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L170}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddResourcePolicies(std::string const& project, std::string const& region, std::string const& disk, google::cloud::cpp::compute::v1::RegionDisksAddResourcePoliciesRequest const& region_disks_add_resource_policies_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
+      std::string const& project, std::string const& region,
+      std::string const& disk,
+      google::cloud::cpp::compute::v1::
+          RegionDisksAddResourcePoliciesRequest const&
+              region_disks_add_resource_policies_request_resource,
+      Options opts = {});
 
   ///
   /// Adds existing resource policies to a regional disk. You can only add one
-  /// policy which will be applied to this disk for scheduling snapshot creation.
+  /// policy which will be applied to this disk for scheduling snapshot
+  /// creation.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::AddResourcePoliciesRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L170}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::AddResourcePoliciesRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L170}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.AddResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L170}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.regionDisks.v1.AddResourcePoliciesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L170}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddResourcePolicies(google::cloud::cpp::compute::regionDisks::v1::AddResourcePoliciesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
+      google::cloud::cpp::compute::regionDisks::v1::
+          AddResourcePoliciesRequest const& request,
+      Options opts = {});
 
   ///
   /// Creates a snapshot of a specified persistent disk. For regular snapshot
@@ -129,13 +150,19 @@ class RegionDisksClient {
   /// @param snapshot_resource  The Snapshot for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.CreateSnapshotRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L197}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.regionDisks.v1.CreateSnapshotRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L197}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  CreateSnapshot(std::string const& project, std::string const& region, std::string const& disk, google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> CreateSnapshot(
+      std::string const& project, std::string const& region,
+      std::string const& disk,
+      google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource,
+      Options opts = {});
 
   ///
   /// Creates a snapshot of a specified persistent disk. For regular snapshot
@@ -143,52 +170,68 @@ class RegionDisksClient {
   /// more features, such as creating snapshots in a project different from the
   /// source disk project.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::CreateSnapshotRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L197}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::CreateSnapshotRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L197}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.CreateSnapshotRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L197}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.regionDisks.v1.CreateSnapshotRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L197}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  CreateSnapshot(google::cloud::cpp::compute::regionDisks::v1::CreateSnapshotRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> CreateSnapshot(
+      google::cloud::cpp::compute::regionDisks::v1::CreateSnapshotRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Deletes the specified regional persistent disk. Deleting a regional disk
   /// removes all the replicas of its data permanently and is irreversible.
-  /// However, deleting a disk does not delete any snapshots previously made from
-  /// the disk. You must separately delete snapshots.
+  /// However, deleting a disk does not delete any snapshots previously made
+  /// from the disk. You must separately delete snapshots.
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
   /// @param disk  Name of the regional persistent disk to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.DeleteRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L224}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.regionDisks.v1.DeleteRegionDisksRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L224}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteRegionDisks(std::string const& project, std::string const& region, std::string const& disk, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRegionDisks(
+      std::string const& project, std::string const& region,
+      std::string const& disk, Options opts = {});
 
   ///
   /// Deletes the specified regional persistent disk. Deleting a regional disk
   /// removes all the replicas of its data permanently and is irreversible.
-  /// However, deleting a disk does not delete any snapshots previously made from
-  /// the disk. You must separately delete snapshots.
+  /// However, deleting a disk does not delete any snapshots previously made
+  /// from the disk. You must separately delete snapshots.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::DeleteRegionDisksRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L224}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::DeleteRegionDisksRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L224}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.DeleteRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L224}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.regionDisks.v1.DeleteRegionDisksRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L224}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteRegionDisks(google::cloud::cpp::compute::regionDisks::v1::DeleteRegionDisksRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRegionDisks(
+      google::cloud::cpp::compute::regionDisks::v1::
+          DeleteRegionDisksRequest const& request,
+      Options opts = {});
 
   ///
   /// Returns a specified regional persistent disk.
@@ -198,27 +241,37 @@ class RegionDisksClient {
   /// @param disk  Name of the regional persistent disk to return.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Disk,google/cloud/compute/v1/internal/common.proto#L4287}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Disk,google/cloud/compute/v1/internal/common.proto#L4287}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.GetRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L263}
-  /// [google.cloud.cpp.compute.v1.Disk]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4287}
+  /// [google.cloud.cpp.compute.regionDisks.v1.GetRegionDisksRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L263}
+  /// [google.cloud.cpp.compute.v1.Disk]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4287}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Disk>
-  GetRegionDisks(std::string const& project, std::string const& region, std::string const& disk, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Disk> GetRegionDisks(
+      std::string const& project, std::string const& region,
+      std::string const& disk, Options opts = {});
 
   ///
   /// Returns a specified regional persistent disk.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::GetRegionDisksRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L263}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::GetRegionDisksRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L263}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Disk,google/cloud/compute/v1/internal/common.proto#L4287}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Disk,google/cloud/compute/v1/internal/common.proto#L4287}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.GetRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L263}
-  /// [google.cloud.cpp.compute.v1.Disk]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4287}
+  /// [google.cloud.cpp.compute.regionDisks.v1.GetRegionDisksRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L263}
+  /// [google.cloud.cpp.compute.v1.Disk]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4287}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Disk>
-  GetRegionDisks(google::cloud::cpp::compute::regionDisks::v1::GetRegionDisksRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Disk> GetRegionDisks(
+      google::cloud::cpp::compute::regionDisks::v1::GetRegionDisksRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Gets the access control policy for a resource. May be empty if no such
@@ -229,28 +282,38 @@ class RegionDisksClient {
   /// @param resource  Name or id of the resource for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L248}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.regionDisks.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L248}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(std::string const& project, std::string const& region, std::string const& resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      std::string const& project, std::string const& region,
+      std::string const& resource, Options opts = {});
 
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::GetIamPolicyRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L248}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::GetIamPolicyRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L248}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L248}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.regionDisks.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L248}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::regionDisks::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::regionDisks::v1::GetIamPolicyRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Creates a persistent regional disk in the specified project using the data
@@ -261,28 +324,39 @@ class RegionDisksClient {
   /// @param disk_resource  The Disk for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.InsertRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L275}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.regionDisks.v1.InsertRegionDisksRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L275}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertRegionDisks(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::Disk const& disk_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionDisks(
+      std::string const& project, std::string const& region,
+      google::cloud::cpp::compute::v1::Disk const& disk_resource,
+      Options opts = {});
 
   ///
   /// Creates a persistent regional disk in the specified project using the data
   /// included in the request.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::InsertRegionDisksRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L275}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::InsertRegionDisksRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L275}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.InsertRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L275}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.regionDisks.v1.InsertRegionDisksRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L275}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertRegionDisks(google::cloud::cpp::compute::regionDisks::v1::InsertRegionDisksRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionDisks(
+      google::cloud::cpp::compute::regionDisks::v1::
+          InsertRegionDisksRequest const& request,
+      Options opts = {});
 
   ///
   /// Retrieves the list of persistent disks contained within the specified
@@ -292,28 +366,37 @@ class RegionDisksClient {
   /// @param region  Name of the region for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Disk,google/cloud/compute/v1/internal/common.proto#L4287}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Disk,google/cloud/compute/v1/internal/common.proto#L4287}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.ListRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L302}
-  /// [google.cloud.cpp.compute.v1.Disk]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4287}
+  /// [google.cloud.cpp.compute.regionDisks.v1.ListRegionDisksRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L302}
+  /// [google.cloud.cpp.compute.v1.Disk]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4287}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::Disk>
-  ListRegionDisks(std::string const& project, std::string const& region, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Disk> ListRegionDisks(
+      std::string const& project, std::string const& region, Options opts = {});
 
   ///
   /// Retrieves the list of persistent disks contained within the specified
   /// region.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::ListRegionDisksRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L302}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::ListRegionDisksRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L302}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Disk,google/cloud/compute/v1/internal/common.proto#L4287}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Disk,google/cloud/compute/v1/internal/common.proto#L4287}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.ListRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L302}
-  /// [google.cloud.cpp.compute.v1.Disk]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4287}
+  /// [google.cloud.cpp.compute.regionDisks.v1.ListRegionDisksRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L302}
+  /// [google.cloud.cpp.compute.v1.Disk]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4287}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::Disk>
-  ListRegionDisks(google::cloud::cpp::compute::regionDisks::v1::ListRegionDisksRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Disk> ListRegionDisks(
+      google::cloud::cpp::compute::regionDisks::v1::ListRegionDisksRequest
+          request,
+      Options opts = {});
 
   ///
   /// Removes resource policies from a regional disk.
@@ -321,30 +404,45 @@ class RegionDisksClient {
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
   /// @param disk  The disk name for this request.
-  /// @param region_disks_remove_resource_policies_request_resource  The RegionDisksRemoveResourcePoliciesRequest for this request.
+  /// @param region_disks_remove_resource_policies_request_resource  The
+  /// RegionDisksRemoveResourcePoliciesRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.RemoveResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L370}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.regionDisks.v1.RemoveResourcePoliciesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L370}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  RemoveResourcePolicies(std::string const& project, std::string const& region, std::string const& disk, google::cloud::cpp::compute::v1::RegionDisksRemoveResourcePoliciesRequest const& region_disks_remove_resource_policies_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
+      std::string const& project, std::string const& region,
+      std::string const& disk,
+      google::cloud::cpp::compute::v1::
+          RegionDisksRemoveResourcePoliciesRequest const&
+              region_disks_remove_resource_policies_request_resource,
+      Options opts = {});
 
   ///
   /// Removes resource policies from a regional disk.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::RemoveResourcePoliciesRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L370}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::RemoveResourcePoliciesRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L370}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.RemoveResourcePoliciesRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L370}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.regionDisks.v1.RemoveResourcePoliciesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L370}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  RemoveResourcePolicies(google::cloud::cpp::compute::regionDisks::v1::RemoveResourcePoliciesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
+      google::cloud::cpp::compute::regionDisks::v1::
+          RemoveResourcePoliciesRequest const& request,
+      Options opts = {});
 
   ///
   /// Resizes the specified regional persistent disk.
@@ -352,30 +450,44 @@ class RegionDisksClient {
   /// @param project  The project ID for this request.
   /// @param region  Name of the region for this request.
   /// @param disk  Name of the regional persistent disk.
-  /// @param region_disks_resize_request_resource  The RegionDisksResizeRequest for this request.
+  /// @param region_disks_resize_request_resource  The RegionDisksResizeRequest
+  /// for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L397}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.regionDisks.v1.ResizeRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L397}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Resize(std::string const& project, std::string const& region, std::string const& disk, google::cloud::cpp::compute::v1::RegionDisksResizeRequest const& region_disks_resize_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
+      std::string const& project, std::string const& region,
+      std::string const& disk,
+      google::cloud::cpp::compute::v1::RegionDisksResizeRequest const&
+          region_disks_resize_request_resource,
+      Options opts = {});
 
   ///
   /// Resizes the specified regional persistent disk.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::ResizeRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L397}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::ResizeRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L397}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.ResizeRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L397}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.regionDisks.v1.ResizeRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L397}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Resize(google::cloud::cpp::compute::regionDisks::v1::ResizeRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
+      google::cloud::cpp::compute::regionDisks::v1::ResizeRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Sets the access control policy on the specified resource. Replaces any
@@ -384,31 +496,45 @@ class RegionDisksClient {
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
   /// @param resource  Name or id of the resource for this request.
-  /// @param region_set_policy_request_resource  The RegionSetPolicyRequest for this request.
+  /// @param region_set_policy_request_resource  The RegionSetPolicyRequest for
+  /// this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L424}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.regionDisks.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L424}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::RegionSetPolicyRequest const& region_set_policy_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::RegionSetPolicyRequest const&
+          region_set_policy_request_resource,
+      Options opts = {});
 
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::SetIamPolicyRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L424}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::SetIamPolicyRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L424}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L424}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.regionDisks.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L424}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::regionDisks::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::regionDisks::v1::SetIamPolicyRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Sets the labels on the target regional disk.
@@ -416,30 +542,44 @@ class RegionDisksClient {
   /// @param project  Project ID for this request.
   /// @param region  The region for this request.
   /// @param resource  Name or id of the resource for this request.
-  /// @param region_set_labels_request_resource  The RegionSetLabelsRequest for this request.
+  /// @param region_set_labels_request_resource  The RegionSetLabelsRequest for
+  /// this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L439}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.regionDisks.v1.SetLabelsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L439}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::RegionSetLabelsRequest const& region_set_labels_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::RegionSetLabelsRequest const&
+          region_set_labels_request_resource,
+      Options opts = {});
 
   ///
   /// Sets the labels on the target regional disk.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::SetLabelsRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L439}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::SetLabelsRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L439}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L439}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.regionDisks.v1.SetLabelsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L439}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(google::cloud::cpp::compute::regionDisks::v1::SetLabelsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::cpp::compute::regionDisks::v1::SetLabelsRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Returns permissions that a caller has on the specified resource.
@@ -447,35 +587,50 @@ class RegionDisksClient {
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
   /// @param resource  Name or id of the resource for this request.
-  /// @param test_permissions_request_resource  The TestPermissionsRequest for this request.
+  /// @param test_permissions_request_resource  The TestPermissionsRequest for
+  /// this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L466}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// [google.cloud.cpp.compute.regionDisks.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L466}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
+  TestIamPermissions(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
 
   ///
   /// Returns permissions that a caller has on the specified resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::TestIamPermissionsRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L466}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::TestIamPermissionsRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L466}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L466}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// [google.cloud.cpp.compute.regionDisks.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L466}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::regionDisks::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::regionDisks::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
   ///
   /// Update the specified disk with the data included in the request. Update is
-  /// performed only on selected fields included as part of update-mask. Only the
-  /// following fields can be modified: user_license.
+  /// performed only on selected fields included as part of update-mask. Only
+  /// the following fields can be modified: user_license.
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
@@ -483,29 +638,41 @@ class RegionDisksClient {
   /// @param disk_resource  The Disk for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.UpdateRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L481}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.regionDisks.v1.UpdateRegionDisksRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L481}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateRegionDisks(std::string const& project, std::string const& region, std::string const& disk, google::cloud::cpp::compute::v1::Disk const& disk_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRegionDisks(
+      std::string const& project, std::string const& region,
+      std::string const& disk,
+      google::cloud::cpp::compute::v1::Disk const& disk_resource,
+      Options opts = {});
 
   ///
   /// Update the specified disk with the data included in the request. Update is
-  /// performed only on selected fields included as part of update-mask. Only the
-  /// following fields can be modified: user_license.
+  /// performed only on selected fields included as part of update-mask. Only
+  /// the following fields can be modified: user_license.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::UpdateRegionDisksRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L481}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::regionDisks::v1::UpdateRegionDisksRequest,google/cloud/compute/region_disks/v1/region_disks.proto#L481}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.regionDisks.v1.UpdateRegionDisksRequest]: @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L481}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.regionDisks.v1.UpdateRegionDisksRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disks/v1/region_disks.proto#L481}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateRegionDisks(google::cloud::cpp::compute::regionDisks::v1::UpdateRegionDisksRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRegionDisks(
+      google::cloud::cpp::compute::regionDisks::v1::
+          UpdateRegionDisksRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<RegionDisksConnection> connection_;

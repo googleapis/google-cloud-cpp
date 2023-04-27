@@ -33,66 +33,102 @@ BackendBucketsTracingConnection::BackendBucketsTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendBucketsTracingConnection::AddSignedUrlKey(google::cloud::cpp::compute::backendBuckets::v1::AddSignedUrlKeyRequest const& request) {
-  auto span = internal::MakeSpan("compute_backend_buckets_v1::BackendBucketsConnection::AddSignedUrlKey");
+BackendBucketsTracingConnection::AddSignedUrlKey(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        AddSignedUrlKeyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::AddSignedUrlKey");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AddSignedUrlKey(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendBucketsTracingConnection::DeleteBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::DeleteBackendBucketsRequest const& request) {
-  auto span = internal::MakeSpan("compute_backend_buckets_v1::BackendBucketsConnection::DeleteBackendBuckets");
+BackendBucketsTracingConnection::DeleteBackendBuckets(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        DeleteBackendBucketsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::"
+      "DeleteBackendBuckets");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteBackendBuckets(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendBucketsTracingConnection::DeleteSignedUrlKey(google::cloud::cpp::compute::backendBuckets::v1::DeleteSignedUrlKeyRequest const& request) {
-  auto span = internal::MakeSpan("compute_backend_buckets_v1::BackendBucketsConnection::DeleteSignedUrlKey");
+BackendBucketsTracingConnection::DeleteSignedUrlKey(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        DeleteSignedUrlKeyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::"
+      "DeleteSignedUrlKey");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteSignedUrlKey(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendBucket>
-BackendBucketsTracingConnection::GetBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::GetBackendBucketsRequest const& request) {
-  auto span = internal::MakeSpan("compute_backend_buckets_v1::BackendBucketsConnection::GetBackendBuckets");
+BackendBucketsTracingConnection::GetBackendBuckets(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        GetBackendBucketsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::"
+      "GetBackendBuckets");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetBackendBuckets(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendBucketsTracingConnection::InsertBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::InsertBackendBucketsRequest const& request) {
-  auto span = internal::MakeSpan("compute_backend_buckets_v1::BackendBucketsConnection::InsertBackendBuckets");
+BackendBucketsTracingConnection::InsertBackendBuckets(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        InsertBackendBucketsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::"
+      "InsertBackendBuckets");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->InsertBackendBuckets(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::BackendBucket>
-BackendBucketsTracingConnection::ListBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::ListBackendBucketsRequest request) {
-  auto span = internal::MakeSpan("compute_backend_buckets_v1::BackendBucketsConnection::ListBackendBuckets");
+BackendBucketsTracingConnection::ListBackendBuckets(
+    google::cloud::cpp::compute::backendBuckets::v1::ListBackendBucketsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::"
+      "ListBackendBuckets");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListBackendBuckets(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::BackendBucket>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::BackendBucket>(std::move(span),
+                                                      std::move(sr));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendBucketsTracingConnection::PatchBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::PatchBackendBucketsRequest const& request) {
-  auto span = internal::MakeSpan("compute_backend_buckets_v1::BackendBucketsConnection::PatchBackendBuckets");
+BackendBucketsTracingConnection::PatchBackendBuckets(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        PatchBackendBucketsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::"
+      "PatchBackendBuckets");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->PatchBackendBuckets(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendBucketsTracingConnection::SetEdgeSecurityPolicy(google::cloud::cpp::compute::backendBuckets::v1::SetEdgeSecurityPolicyRequest const& request) {
-  auto span = internal::MakeSpan("compute_backend_buckets_v1::BackendBucketsConnection::SetEdgeSecurityPolicy");
+BackendBucketsTracingConnection::SetEdgeSecurityPolicy(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        SetEdgeSecurityPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::"
+      "SetEdgeSecurityPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetEdgeSecurityPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendBucketsTracingConnection::UpdateBackendBuckets(google::cloud::cpp::compute::backendBuckets::v1::UpdateBackendBucketsRequest const& request) {
-  auto span = internal::MakeSpan("compute_backend_buckets_v1::BackendBucketsConnection::UpdateBackendBuckets");
+BackendBucketsTracingConnection::UpdateBackendBuckets(
+    google::cloud::cpp::compute::backendBuckets::v1::
+        UpdateBackendBucketsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::"
+      "UpdateBackendBuckets");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateBackendBuckets(request));
 }
@@ -101,7 +137,8 @@ BackendBucketsTracingConnection::UpdateBackendBuckets(google::cloud::cpp::comput
 
 std::shared_ptr<compute_backend_buckets_v1::BackendBucketsConnection>
 MakeBackendBucketsTracingConnection(
-    std::shared_ptr<compute_backend_buckets_v1::BackendBucketsConnection> conn) {
+    std::shared_ptr<compute_backend_buckets_v1::BackendBucketsConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<BackendBucketsTracingConnection>(std::move(conn));

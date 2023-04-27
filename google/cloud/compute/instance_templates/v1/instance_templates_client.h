@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class InstanceTemplatesClient {
  public:
-  explicit InstanceTemplatesClient(ExperimentalTag, std::shared_ptr<InstanceTemplatesConnection> connection, Options opts = {});
+  explicit InstanceTemplatesClient(
+      ExperimentalTag, std::shared_ptr<InstanceTemplatesConnection> connection,
+      Options opts = {});
   ~InstanceTemplatesClient();
 
   ///@{
@@ -76,76 +78,99 @@ class InstanceTemplatesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(InstanceTemplatesClient const& a, InstanceTemplatesClient const& b) {
+  friend bool operator==(InstanceTemplatesClient const& a,
+                         InstanceTemplatesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(InstanceTemplatesClient const& a, InstanceTemplatesClient const& b) {
+  friend bool operator!=(InstanceTemplatesClient const& a,
+                         InstanceTemplatesClient const& b) {
     return !(a == b);
   }
   ///@}
 
   ///
-  /// Retrieves the list of all InstanceTemplates resources, regional and global,
-  /// available to the specified project.
+  /// Retrieves the list of all InstanceTemplates resources, regional and
+  /// global, available to the specified project.
   ///
   /// @param project  Name of the project scoping this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList,google/cloud/compute/v1/internal/common.proto#L11293}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList,google/cloud/compute/v1/internal/common.proto#L11293}
   ///
-  /// [google.cloud.cpp.compute.instanceTemplates.v1.AggregatedListInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L114}
-  /// [google.cloud.cpp.compute.v1.InstanceTemplateAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11293}
+  /// [google.cloud.cpp.compute.instanceTemplates.v1.AggregatedListInstanceTemplatesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L114}
+  /// [google.cloud.cpp.compute.v1.InstanceTemplateAggregatedList]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11293}
   ///
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
-  AggregatedListInstanceTemplates(std::string const& project, Options opts = {});
+  AggregatedListInstanceTemplates(std::string const& project,
+                                  Options opts = {});
 
   ///
-  /// Retrieves the list of all InstanceTemplates resources, regional and global,
-  /// available to the specified project.
+  /// Retrieves the list of all InstanceTemplates resources, regional and
+  /// global, available to the specified project.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::instanceTemplates::v1::AggregatedListInstanceTemplatesRequest,google/cloud/compute/instance_templates/v1/instance_templates.proto#L114}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::instanceTemplates::v1::AggregatedListInstanceTemplatesRequest,google/cloud/compute/instance_templates/v1/instance_templates.proto#L114}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList,google/cloud/compute/v1/internal/common.proto#L11293}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList,google/cloud/compute/v1/internal/common.proto#L11293}
   ///
-  /// [google.cloud.cpp.compute.instanceTemplates.v1.AggregatedListInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L114}
-  /// [google.cloud.cpp.compute.v1.InstanceTemplateAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11293}
+  /// [google.cloud.cpp.compute.instanceTemplates.v1.AggregatedListInstanceTemplatesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L114}
+  /// [google.cloud.cpp.compute.v1.InstanceTemplateAggregatedList]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11293}
   ///
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
-  AggregatedListInstanceTemplates(google::cloud::cpp::compute::instanceTemplates::v1::AggregatedListInstanceTemplatesRequest const& request, Options opts = {});
+  AggregatedListInstanceTemplates(
+      google::cloud::cpp::compute::instanceTemplates::v1::
+          AggregatedListInstanceTemplatesRequest const& request,
+      Options opts = {});
 
   ///
   /// Deletes the specified instance template. Deleting an instance template is
-  /// permanent and cannot be undone. It is not possible to delete templates that
-  /// are already in use by a managed instance group.
+  /// permanent and cannot be undone. It is not possible to delete templates
+  /// that are already in use by a managed instance group.
   ///
   /// @param project  Project ID for this request.
   /// @param instance_template  The name of the instance template to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.instanceTemplates.v1.DeleteInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L188}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.instanceTemplates.v1.DeleteInstanceTemplatesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L188}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteInstanceTemplates(std::string const& project, std::string const& instance_template, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceTemplates(
+      std::string const& project, std::string const& instance_template,
+      Options opts = {});
 
   ///
   /// Deletes the specified instance template. Deleting an instance template is
-  /// permanent and cannot be undone. It is not possible to delete templates that
-  /// are already in use by a managed instance group.
+  /// permanent and cannot be undone. It is not possible to delete templates
+  /// that are already in use by a managed instance group.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::instanceTemplates::v1::DeleteInstanceTemplatesRequest,google/cloud/compute/instance_templates/v1/instance_templates.proto#L188}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::instanceTemplates::v1::DeleteInstanceTemplatesRequest,google/cloud/compute/instance_templates/v1/instance_templates.proto#L188}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.instanceTemplates.v1.DeleteInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L188}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.instanceTemplates.v1.DeleteInstanceTemplatesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L188}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteInstanceTemplates(google::cloud::cpp::compute::instanceTemplates::v1::DeleteInstanceTemplatesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceTemplates(
+      google::cloud::cpp::compute::instanceTemplates::v1::
+          DeleteInstanceTemplatesRequest const& request,
+      Options opts = {});
 
   ///
   /// Returns the specified instance template.
@@ -154,27 +179,37 @@ class InstanceTemplatesClient {
   /// @param instance_template  The name of the instance template.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::InstanceTemplate,google/cloud/compute/v1/internal/common.proto#L11245}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceTemplate,google/cloud/compute/v1/internal/common.proto#L11245}
   ///
-  /// [google.cloud.cpp.compute.instanceTemplates.v1.GetInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L221}
-  /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11245}
+  /// [google.cloud.cpp.compute.instanceTemplates.v1.GetInstanceTemplatesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L221}
+  /// [google.cloud.cpp.compute.v1.InstanceTemplate]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11245}
   ///
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-  GetInstanceTemplates(std::string const& project, std::string const& instance_template, Options opts = {});
+  GetInstanceTemplates(std::string const& project,
+                       std::string const& instance_template, Options opts = {});
 
   ///
   /// Returns the specified instance template.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::instanceTemplates::v1::GetInstanceTemplatesRequest,google/cloud/compute/instance_templates/v1/instance_templates.proto#L221}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::instanceTemplates::v1::GetInstanceTemplatesRequest,google/cloud/compute/instance_templates/v1/instance_templates.proto#L221}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::InstanceTemplate,google/cloud/compute/v1/internal/common.proto#L11245}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceTemplate,google/cloud/compute/v1/internal/common.proto#L11245}
   ///
-  /// [google.cloud.cpp.compute.instanceTemplates.v1.GetInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L221}
-  /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11245}
+  /// [google.cloud.cpp.compute.instanceTemplates.v1.GetInstanceTemplatesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L221}
+  /// [google.cloud.cpp.compute.v1.InstanceTemplate]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11245}
   ///
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
-  GetInstanceTemplates(google::cloud::cpp::compute::instanceTemplates::v1::GetInstanceTemplatesRequest const& request, Options opts = {});
+  GetInstanceTemplates(google::cloud::cpp::compute::instanceTemplates::v1::
+                           GetInstanceTemplatesRequest const& request,
+                       Options opts = {});
 
   ///
   /// Gets the access control policy for a resource. May be empty if no such
@@ -184,63 +219,85 @@ class InstanceTemplatesClient {
   /// @param resource  Name or id of the resource for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.instanceTemplates.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L209}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.instanceTemplates.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L209}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(std::string const& project, std::string const& resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      std::string const& project, std::string const& resource,
+      Options opts = {});
 
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::instanceTemplates::v1::GetIamPolicyRequest,google/cloud/compute/instance_templates/v1/instance_templates.proto#L209}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::instanceTemplates::v1::GetIamPolicyRequest,google/cloud/compute/instance_templates/v1/instance_templates.proto#L209}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.instanceTemplates.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L209}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.instanceTemplates.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L209}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::instanceTemplates::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::instanceTemplates::v1::
+          GetIamPolicyRequest const& request,
+      Options opts = {});
 
   ///
   /// Creates an instance template in the specified project using the data that
-  /// is included in the request. If you are creating a new template to update an
-  /// existing instance group, your new instance template must use the same
+  /// is included in the request. If you are creating a new template to update
+  /// an existing instance group, your new instance template must use the same
   /// network or, if applicable, the same subnetwork as the original template.
   ///
   /// @param project  Project ID for this request.
   /// @param instance_template_resource  The InstanceTemplate for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.instanceTemplates.v1.InsertInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L230}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.instanceTemplates.v1.InsertInstanceTemplatesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L230}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertInstanceTemplates(std::string const& project, google::cloud::cpp::compute::v1::InstanceTemplate const& instance_template_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceTemplates(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::InstanceTemplate const&
+          instance_template_resource,
+      Options opts = {});
 
   ///
   /// Creates an instance template in the specified project using the data that
-  /// is included in the request. If you are creating a new template to update an
-  /// existing instance group, your new instance template must use the same
+  /// is included in the request. If you are creating a new template to update
+  /// an existing instance group, your new instance template must use the same
   /// network or, if applicable, the same subnetwork as the original template.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::instanceTemplates::v1::InsertInstanceTemplatesRequest,google/cloud/compute/instance_templates/v1/instance_templates.proto#L230}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::instanceTemplates::v1::InsertInstanceTemplatesRequest,google/cloud/compute/instance_templates/v1/instance_templates.proto#L230}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.instanceTemplates.v1.InsertInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L230}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.instanceTemplates.v1.InsertInstanceTemplatesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L230}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertInstanceTemplates(google::cloud::cpp::compute::instanceTemplates::v1::InsertInstanceTemplatesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceTemplates(
+      google::cloud::cpp::compute::instanceTemplates::v1::
+          InsertInstanceTemplatesRequest const& request,
+      Options opts = {});
 
   ///
   /// Retrieves a list of instance templates that are contained within the
@@ -249,10 +306,13 @@ class InstanceTemplatesClient {
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::InstanceTemplate,google/cloud/compute/v1/internal/common.proto#L11245}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceTemplate,google/cloud/compute/v1/internal/common.proto#L11245}
   ///
-  /// [google.cloud.cpp.compute.instanceTemplates.v1.ListInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L251}
-  /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11245}
+  /// [google.cloud.cpp.compute.instanceTemplates.v1.ListInstanceTemplatesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L251}
+  /// [google.cloud.cpp.compute.v1.InstanceTemplate]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11245}
   ///
   StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
   ListInstanceTemplates(std::string const& project, Options opts = {});
@@ -261,16 +321,22 @@ class InstanceTemplatesClient {
   /// Retrieves a list of instance templates that are contained within the
   /// specified project.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::instanceTemplates::v1::ListInstanceTemplatesRequest,google/cloud/compute/instance_templates/v1/instance_templates.proto#L251}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::instanceTemplates::v1::ListInstanceTemplatesRequest,google/cloud/compute/instance_templates/v1/instance_templates.proto#L251}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::InstanceTemplate,google/cloud/compute/v1/internal/common.proto#L11245}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceTemplate,google/cloud/compute/v1/internal/common.proto#L11245}
   ///
-  /// [google.cloud.cpp.compute.instanceTemplates.v1.ListInstanceTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L251}
-  /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11245}
+  /// [google.cloud.cpp.compute.instanceTemplates.v1.ListInstanceTemplatesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L251}
+  /// [google.cloud.cpp.compute.v1.InstanceTemplate]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11245}
   ///
   StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
-  ListInstanceTemplates(google::cloud::cpp::compute::instanceTemplates::v1::ListInstanceTemplatesRequest request, Options opts = {});
+  ListInstanceTemplates(google::cloud::cpp::compute::instanceTemplates::v1::
+                            ListInstanceTemplatesRequest request,
+                        Options opts = {});
 
   ///
   /// Sets the access control policy on the specified resource. Replaces any
@@ -278,61 +344,88 @@ class InstanceTemplatesClient {
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
-  /// @param global_set_policy_request_resource  The GlobalSetPolicyRequest for this request.
+  /// @param global_set_policy_request_resource  The GlobalSetPolicyRequest for
+  /// this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.instanceTemplates.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L316}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.instanceTemplates.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L316}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const& global_set_policy_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const&
+          global_set_policy_request_resource,
+      Options opts = {});
 
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::instanceTemplates::v1::SetIamPolicyRequest,google/cloud/compute/instance_templates/v1/instance_templates.proto#L316}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::instanceTemplates::v1::SetIamPolicyRequest,google/cloud/compute/instance_templates/v1/instance_templates.proto#L316}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.instanceTemplates.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L316}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.instanceTemplates.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L316}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::instanceTemplates::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::instanceTemplates::v1::
+          SetIamPolicyRequest const& request,
+      Options opts = {});
 
   ///
   /// Returns permissions that a caller has on the specified resource.
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
-  /// @param test_permissions_request_resource  The TestPermissionsRequest for this request.
+  /// @param test_permissions_request_resource  The TestPermissionsRequest for
+  /// this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
   ///
-  /// [google.cloud.cpp.compute.instanceTemplates.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L328}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// [google.cloud.cpp.compute.instanceTemplates.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L328}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
+  TestIamPermissions(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
 
   ///
   /// Returns permissions that a caller has on the specified resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::instanceTemplates::v1::TestIamPermissionsRequest,google/cloud/compute/instance_templates/v1/instance_templates.proto#L328}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::instanceTemplates::v1::TestIamPermissionsRequest,google/cloud/compute/instance_templates/v1/instance_templates.proto#L328}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
   ///
-  /// [google.cloud.cpp.compute.instanceTemplates.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L328}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// [google.cloud.cpp.compute.instanceTemplates.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L328}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::instanceTemplates::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::instanceTemplates::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
  private:
   std::shared_ptr<InstanceTemplatesConnection> connection_;

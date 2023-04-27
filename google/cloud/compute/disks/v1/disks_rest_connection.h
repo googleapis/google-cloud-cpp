@@ -53,8 +53,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @param options (optional) Configure the `DisksConnection` created by
  * this function.
  */
-std::shared_ptr<DisksConnection> MakeDisksConnectionRest(
-    ExperimentalTag, Options options = {});
+std::shared_ptr<DisksConnection> MakeDisksConnectionRest(ExperimentalTag,
+                                                         Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_disks_v1

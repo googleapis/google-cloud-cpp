@@ -35,31 +35,34 @@ DefaultRoutersRestStub::DefaultRoutersRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultRoutersRestStub::DefaultRoutersRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
 DefaultRoutersRestStub::AggregatedListRouters(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::RouterAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::routers::v1::
+        AggregatedListRoutersRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::RouterAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/routers",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRoutersRestStub::DeleteRouters(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
+        request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/routers/{router}");
@@ -67,8 +70,9 @@ DefaultRoutersRestStub::DeleteRouters(
 
 StatusOr<google::cloud::cpp::compute::v1::Router>
 DefaultRoutersRestStub::GetRouters(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::GetRoutersRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Router>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/routers/{router}",
@@ -79,28 +83,35 @@ DefaultRoutersRestStub::GetRouters(
 
 StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
 DefaultRoutersRestStub::GetNatMappingInfo(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
+        request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/routers/{router}/getNatMappingInfo",
+      "/compute/v1/projects/{project}/regions/{region}/routers/{router}/"
+      "getNatMappingInfo",
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success())),
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success())),
        std::make_pair("router", request.router())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
 DefaultRoutersRestStub::GetRouterStatus(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::RouterStatusResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
+        request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::RouterStatusResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/routers/{router}/getRouterStatus",
+      "/compute/v1/projects/{project}/regions/{region}/routers/{router}/"
+      "getRouterStatus",
       {std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
        std::make_pair("router", request.router())});
@@ -108,8 +119,9 @@ DefaultRoutersRestStub::GetRouterStatus(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRoutersRestStub::InsertRouters(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/routers");
@@ -117,8 +129,9 @@ DefaultRoutersRestStub::InsertRouters(
 
 StatusOr<google::cloud::cpp::compute::v1::RouterList>
 DefaultRoutersRestStub::ListRouters(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::ListRoutersRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::routers::v1::ListRoutersRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::RouterList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/routers",
@@ -128,13 +141,15 @@ DefaultRoutersRestStub::ListRouters(
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRoutersRestStub::PatchRouters(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
+        request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/routers/{router}");
@@ -142,17 +157,20 @@ DefaultRoutersRestStub::PatchRouters(
 
 StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
 DefaultRoutersRestStub::Preview(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::PreviewRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::RoutersPreviewResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::routers::v1::PreviewRequest const& request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::RoutersPreviewResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/routers/{router}/preview");
+      "/compute/v1/projects/{project}/regions/{region}/routers/{router}/"
+      "preview");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRoutersRestStub::UpdateRouters(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&
+        request) {
   return rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/routers/{router}");

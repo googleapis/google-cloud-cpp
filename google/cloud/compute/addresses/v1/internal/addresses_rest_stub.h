@@ -36,29 +36,36 @@ class AddressesRestStub {
  public:
   virtual ~AddressesRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList> AggregatedListAddresses(
+  virtual StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
+  AggregatedListAddresses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest const& request) = 0;
+      google::cloud::cpp::compute::addresses::v1::
+          AggregatedListAddressesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAddresses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const& request) = 0;
+      google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Address> GetAddresses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const& request) = 0;
+      google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAddresses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const& request) = 0;
+      google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::AddressList> ListAddresses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::addresses::v1::ListAddressesRequest const& request) = 0;
+      google::cloud::cpp::compute::addresses::v1::ListAddressesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request) = 0;
+      google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
+          request) = 0;
 };
 
 class DefaultAddressesRestStub : public AddressesRestStub {
@@ -66,33 +73,39 @@ class DefaultAddressesRestStub : public AddressesRestStub {
   ~DefaultAddressesRestStub() override = default;
 
   explicit DefaultAddressesRestStub(Options options);
-  DefaultAddressesRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+  DefaultAddressesRestStub(std::shared_ptr<rest_internal::RestClient> service,
+                           Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList> AggregatedListAddresses(
+  StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
+  AggregatedListAddresses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest const& request) override;
+      google::cloud::cpp::compute::addresses::v1::
+          AggregatedListAddressesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAddresses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const& request) override;
+      google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Address> GetAddresses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const& request) override;
+      google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAddresses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const& request) override;
+      google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::AddressList> ListAddresses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::addresses::v1::ListAddressesRequest const& request) override;
+      google::cloud::cpp::compute::addresses::v1::ListAddressesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request) override;
+      google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
+          request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

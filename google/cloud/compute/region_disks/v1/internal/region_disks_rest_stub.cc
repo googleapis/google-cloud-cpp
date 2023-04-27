@@ -35,33 +35,36 @@ DefaultRegionDisksRestStub::DefaultRegionDisksRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultRegionDisksRestStub::DefaultRegionDisksRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionDisksRestStub::AddResourcePolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::AddResourcePoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionDisks::v1::
+        AddResourcePoliciesRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/disks/{disk}/addResourcePolicies");
+      "/compute/v1/projects/{project}/regions/{region}/disks/{disk}/"
+      "addResourcePolicies");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionDisksRestStub::CreateSnapshot(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::CreateSnapshotRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionDisks::v1::CreateSnapshotRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/disks/{disk}/createSnapshot");
+      "/compute/v1/projects/{project}/regions/{region}/disks/{disk}/"
+      "createSnapshot");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionDisksRestStub::DeleteRegionDisks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::DeleteRegionDisksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionDisks::v1::
+        DeleteRegionDisksRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/disks/{disk}");
@@ -69,8 +72,9 @@ DefaultRegionDisksRestStub::DeleteRegionDisks(
 
 StatusOr<google::cloud::cpp::compute::v1::Disk>
 DefaultRegionDisksRestStub::GetRegionDisks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::GetRegionDisksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionDisks::v1::GetRegionDisksRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Disk>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/disks/{disk}",
@@ -81,12 +85,16 @@ DefaultRegionDisksRestStub::GetRegionDisks(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultRegionDisksRestStub::GetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::GetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionDisks::v1::GetIamPolicyRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/disks/{resource}/getIamPolicy",
-      {std::make_pair("options_requested_policy_version", std::to_string(request.options_requested_policy_version())),
+      "/compute/v1/projects/{project}/regions/{region}/disks/{resource}/"
+      "getIamPolicy",
+      {std::make_pair(
+           "options_requested_policy_version",
+           std::to_string(request.options_requested_policy_version())),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
        std::make_pair("resource", request.resource())});
@@ -94,8 +102,9 @@ DefaultRegionDisksRestStub::GetIamPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionDisksRestStub::InsertRegionDisks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::InsertRegionDisksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionDisks::v1::
+        InsertRegionDisksRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/disks");
@@ -103,8 +112,9 @@ DefaultRegionDisksRestStub::InsertRegionDisks(
 
 StatusOr<google::cloud::cpp::compute::v1::DiskList>
 DefaultRegionDisksRestStub::ListRegionDisks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::ListRegionDisksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionDisks::v1::ListRegionDisksRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::DiskList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/disks",
@@ -114,22 +124,26 @@ DefaultRegionDisksRestStub::ListRegionDisks(
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionDisksRestStub::RemoveResourcePolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::RemoveResourcePoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionDisks::v1::
+        RemoveResourcePoliciesRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/disks/{disk}/removeResourcePolicies");
+      "/compute/v1/projects/{project}/regions/{region}/disks/{disk}/"
+      "removeResourcePolicies");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionDisksRestStub::Resize(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::ResizeRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionDisks::v1::ResizeRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/disks/{disk}/resize");
@@ -137,35 +151,43 @@ DefaultRegionDisksRestStub::Resize(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultRegionDisksRestStub::SetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::SetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionDisks::v1::SetIamPolicyRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/disks/{resource}/setIamPolicy");
+      "/compute/v1/projects/{project}/regions/{region}/disks/{resource}/"
+      "setIamPolicy");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionDisksRestStub::SetLabels(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::SetLabelsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionDisks::v1::SetLabelsRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/disks/{resource}/setLabels");
+      "/compute/v1/projects/{project}/regions/{region}/disks/{resource}/"
+      "setLabels");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultRegionDisksRestStub::TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::TestIamPermissionsRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionDisks::v1::
+        TestIamPermissionsRequest const& request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/disks/{resource}/testIamPermissions");
+      "/compute/v1/projects/{project}/regions/{region}/disks/{resource}/"
+      "testIamPermissions");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionDisksRestStub::UpdateRegionDisks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::UpdateRegionDisksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionDisks::v1::
+        UpdateRegionDisksRequest const& request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/disks/{disk}");

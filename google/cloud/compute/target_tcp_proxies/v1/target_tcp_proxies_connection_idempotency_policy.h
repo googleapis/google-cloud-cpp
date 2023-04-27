@@ -35,32 +35,40 @@ class TargetTcpProxiesConnectionIdempotencyPolicy {
   virtual ~TargetTcpProxiesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<TargetTcpProxiesConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<TargetTcpProxiesConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  AggregatedListTargetTcpProxies(google::cloud::cpp::compute::targetTcpProxies::v1::AggregatedListTargetTcpProxiesRequest const& request);
+  virtual google::cloud::Idempotency AggregatedListTargetTcpProxies(
+      google::cloud::cpp::compute::targetTcpProxies::v1::
+          AggregatedListTargetTcpProxiesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteTargetTcpProxies(google::cloud::cpp::compute::targetTcpProxies::v1::DeleteTargetTcpProxiesRequest const& request);
+  virtual google::cloud::Idempotency DeleteTargetTcpProxies(
+      google::cloud::cpp::compute::targetTcpProxies::v1::
+          DeleteTargetTcpProxiesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetTargetTcpProxies(google::cloud::cpp::compute::targetTcpProxies::v1::GetTargetTcpProxiesRequest const& request);
+  virtual google::cloud::Idempotency GetTargetTcpProxies(
+      google::cloud::cpp::compute::targetTcpProxies::v1::
+          GetTargetTcpProxiesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  InsertTargetTcpProxies(google::cloud::cpp::compute::targetTcpProxies::v1::InsertTargetTcpProxiesRequest const& request);
+  virtual google::cloud::Idempotency InsertTargetTcpProxies(
+      google::cloud::cpp::compute::targetTcpProxies::v1::
+          InsertTargetTcpProxiesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListTargetTcpProxies(google::cloud::cpp::compute::targetTcpProxies::v1::ListTargetTcpProxiesRequest request);
+  virtual google::cloud::Idempotency ListTargetTcpProxies(
+      google::cloud::cpp::compute::targetTcpProxies::v1::
+          ListTargetTcpProxiesRequest request);
 
-  virtual google::cloud::Idempotency
-  SetBackendService(google::cloud::cpp::compute::targetTcpProxies::v1::SetBackendServiceRequest const& request);
+  virtual google::cloud::Idempotency SetBackendService(
+      google::cloud::cpp::compute::targetTcpProxies::v1::
+          SetBackendServiceRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetProxyHeader(google::cloud::cpp::compute::targetTcpProxies::v1::SetProxyHeaderRequest const& request);
+  virtual google::cloud::Idempotency SetProxyHeader(
+      google::cloud::cpp::compute::targetTcpProxies::v1::
+          SetProxyHeaderRequest const& request);
 };
 
 std::unique_ptr<TargetTcpProxiesConnectionIdempotencyPolicy>
-    MakeDefaultTargetTcpProxiesConnectionIdempotencyPolicy();
+MakeDefaultTargetTcpProxiesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_tcp_proxies_v1

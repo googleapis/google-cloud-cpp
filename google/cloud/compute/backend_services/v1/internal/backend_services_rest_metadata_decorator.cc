@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/backend_services/v1/backend_services.proto
 
-
 #include "google/cloud/compute/backend_services/v1/internal/backend_services_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,12 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 BackendServicesRestMetadata::BackendServicesRestMetadata(
     std::shared_ptr<BackendServicesRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestMetadata::AddSignedUrlKey(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::AddSignedUrlKeyRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::
+        AddSignedUrlKeyRequest const& request) {
   SetMetadata(rest_context);
   return child_->AddSignedUrlKey(rest_context, request);
 }
@@ -47,7 +48,8 @@ BackendServicesRestMetadata::AddSignedUrlKey(
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceAggregatedList>
 BackendServicesRestMetadata::AggregatedListBackendServices(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::AggregatedListBackendServicesRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::
+        AggregatedListBackendServicesRequest const& request) {
   SetMetadata(rest_context);
   return child_->AggregatedListBackendServices(rest_context, request);
 }
@@ -55,7 +57,8 @@ BackendServicesRestMetadata::AggregatedListBackendServices(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestMetadata::DeleteBackendServices(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::DeleteBackendServicesRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::
+        DeleteBackendServicesRequest const& request) {
   SetMetadata(rest_context);
   return child_->DeleteBackendServices(rest_context, request);
 }
@@ -63,7 +66,8 @@ BackendServicesRestMetadata::DeleteBackendServices(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestMetadata::DeleteSignedUrlKey(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::DeleteSignedUrlKeyRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::
+        DeleteSignedUrlKeyRequest const& request) {
   SetMetadata(rest_context);
   return child_->DeleteSignedUrlKey(rest_context, request);
 }
@@ -71,7 +75,8 @@ BackendServicesRestMetadata::DeleteSignedUrlKey(
 StatusOr<google::cloud::cpp::compute::v1::BackendService>
 BackendServicesRestMetadata::GetBackendServices(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::GetBackendServicesRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::
+        GetBackendServicesRequest const& request) {
   SetMetadata(rest_context);
   return child_->GetBackendServices(rest_context, request);
 }
@@ -79,7 +84,8 @@ BackendServicesRestMetadata::GetBackendServices(
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
 BackendServicesRestMetadata::GetHealth(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::GetHealthRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::GetHealthRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->GetHealth(rest_context, request);
 }
@@ -87,7 +93,8 @@ BackendServicesRestMetadata::GetHealth(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 BackendServicesRestMetadata::GetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::GetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::GetIamPolicyRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->GetIamPolicy(rest_context, request);
 }
@@ -95,7 +102,8 @@ BackendServicesRestMetadata::GetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestMetadata::InsertBackendServices(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::InsertBackendServicesRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::
+        InsertBackendServicesRequest const& request) {
   SetMetadata(rest_context);
   return child_->InsertBackendServices(rest_context, request);
 }
@@ -103,7 +111,8 @@ BackendServicesRestMetadata::InsertBackendServices(
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceList>
 BackendServicesRestMetadata::ListBackendServices(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::ListBackendServicesRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::
+        ListBackendServicesRequest const& request) {
   SetMetadata(rest_context);
   return child_->ListBackendServices(rest_context, request);
 }
@@ -111,7 +120,8 @@ BackendServicesRestMetadata::ListBackendServices(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestMetadata::PatchBackendServices(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::PatchBackendServicesRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::
+        PatchBackendServicesRequest const& request) {
   SetMetadata(rest_context);
   return child_->PatchBackendServices(rest_context, request);
 }
@@ -119,7 +129,8 @@ BackendServicesRestMetadata::PatchBackendServices(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestMetadata::SetEdgeSecurityPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::SetEdgeSecurityPolicyRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::
+        SetEdgeSecurityPolicyRequest const& request) {
   SetMetadata(rest_context);
   return child_->SetEdgeSecurityPolicy(rest_context, request);
 }
@@ -127,7 +138,8 @@ BackendServicesRestMetadata::SetEdgeSecurityPolicy(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 BackendServicesRestMetadata::SetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::SetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::SetIamPolicyRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->SetIamPolicy(rest_context, request);
 }
@@ -135,7 +147,8 @@ BackendServicesRestMetadata::SetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestMetadata::SetSecurityPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::SetSecurityPolicyRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::
+        SetSecurityPolicyRequest const& request) {
   SetMetadata(rest_context);
   return child_->SetSecurityPolicy(rest_context, request);
 }
@@ -143,33 +156,34 @@ BackendServicesRestMetadata::SetSecurityPolicy(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestMetadata::UpdateBackendServices(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::UpdateBackendServicesRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::
+        UpdateBackendServicesRequest const& request) {
   SetMetadata(rest_context);
   return child_->UpdateBackendServices(rest_context, request);
 }
 
 void BackendServicesRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+    rest_internal::RestContext& rest_context,
+    std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

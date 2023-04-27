@@ -35,15 +35,14 @@ DefaultSnapshotsRestStub::DefaultSnapshotsRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultSnapshotsRestStub::DefaultSnapshotsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultSnapshotsRestStub::DeleteSnapshots(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const&
+        request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/snapshots/{snapshot}");
@@ -51,8 +50,9 @@ DefaultSnapshotsRestStub::DeleteSnapshots(
 
 StatusOr<google::cloud::cpp::compute::v1::Snapshot>
 DefaultSnapshotsRestStub::GetSnapshots(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Snapshot>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/snapshots/{snapshot}",
@@ -62,20 +62,24 @@ DefaultSnapshotsRestStub::GetSnapshots(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultSnapshotsRestStub::GetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/snapshots/{resource}/getIamPolicy",
-      {std::make_pair("options_requested_policy_version", std::to_string(request.options_requested_policy_version())),
+      {std::make_pair(
+           "options_requested_policy_version",
+           std::to_string(request.options_requested_policy_version())),
        std::make_pair("project", request.project()),
        std::make_pair("resource", request.resource())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultSnapshotsRestStub::InsertSnapshots(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/snapshots");
@@ -83,8 +87,9 @@ DefaultSnapshotsRestStub::InsertSnapshots(
 
 StatusOr<google::cloud::cpp::compute::v1::SnapshotList>
 DefaultSnapshotsRestStub::ListSnapshots(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SnapshotList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/snapshots",
@@ -93,22 +98,26 @@ DefaultSnapshotsRestStub::ListSnapshots(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultSnapshotsRestStub::SetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/snapshots/{resource}/setIamPolicy");
+      "/compute/v1/projects/{project}/global/snapshots/{resource}/"
+      "setIamPolicy");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultSnapshotsRestStub::SetLabels(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/snapshots/{resource}/setLabels");
@@ -116,11 +125,14 @@ DefaultSnapshotsRestStub::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultSnapshotsRestStub::TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const&
+        request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/snapshots/{resource}/testIamPermissions");
+      "/compute/v1/projects/{project}/global/snapshots/{resource}/"
+      "testIamPermissions");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

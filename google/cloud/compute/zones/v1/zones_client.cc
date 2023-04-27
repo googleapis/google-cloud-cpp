@@ -25,14 +25,15 @@ namespace compute_zones_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ZonesClient::ZonesClient(ExperimentalTag,
-    std::shared_ptr<ZonesConnection> connection, Options opts)
+                         std::shared_ptr<ZonesConnection> connection,
+                         Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ZonesClient::~ZonesClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::Zone>
-ZonesClient::GetZones(std::string const& project, std::string const& zone, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Zone> ZonesClient::GetZones(
+    std::string const& project, std::string const& zone, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::zones::v1::GetZonesRequest request;
   request.set_project(project);
@@ -40,22 +41,24 @@ ZonesClient::GetZones(std::string const& project, std::string const& zone, Optio
   return connection_->GetZones(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Zone>
-ZonesClient::GetZones(google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Zone> ZonesClient::GetZones(
+    google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetZones(request);
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Zone>
-ZonesClient::ListZones(std::string const& project, Options opts) {
+StreamRange<google::cloud::cpp::compute::v1::Zone> ZonesClient::ListZones(
+    std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::zones::v1::ListZonesRequest request;
   request.set_project(project);
   return connection_->ListZones(request);
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Zone>
-ZonesClient::ListZones(google::cloud::cpp::compute::zones::v1::ListZonesRequest request, Options opts) {
+StreamRange<google::cloud::cpp::compute::v1::Zone> ZonesClient::ListZones(
+    google::cloud::cpp::compute::zones::v1::ListZonesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListZones(std::move(request));
 }

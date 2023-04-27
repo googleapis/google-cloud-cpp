@@ -63,116 +63,155 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ServiceAttachmentsClient {
  public:
-  explicit ServiceAttachmentsClient(ExperimentalTag, std::shared_ptr<ServiceAttachmentsConnection> connection, Options opts = {});
+  explicit ServiceAttachmentsClient(
+      ExperimentalTag, std::shared_ptr<ServiceAttachmentsConnection> connection,
+      Options opts = {});
   ~ServiceAttachmentsClient();
 
   ///@{
   /// @name Copy and move support
   ServiceAttachmentsClient(ServiceAttachmentsClient const&) = default;
-  ServiceAttachmentsClient& operator=(ServiceAttachmentsClient const&) = default;
+  ServiceAttachmentsClient& operator=(ServiceAttachmentsClient const&) =
+      default;
   ServiceAttachmentsClient(ServiceAttachmentsClient&&) = default;
   ServiceAttachmentsClient& operator=(ServiceAttachmentsClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(ServiceAttachmentsClient const& a, ServiceAttachmentsClient const& b) {
+  friend bool operator==(ServiceAttachmentsClient const& a,
+                         ServiceAttachmentsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ServiceAttachmentsClient const& a, ServiceAttachmentsClient const& b) {
+  friend bool operator!=(ServiceAttachmentsClient const& a,
+                         ServiceAttachmentsClient const& b) {
     return !(a == b);
   }
   ///@}
 
   ///
-  /// Retrieves the list of all ServiceAttachment resources, regional and global,
-  /// available to the specified project.
+  /// Retrieves the list of all ServiceAttachment resources, regional and
+  /// global, available to the specified project.
   ///
   /// @param project  Name of the project scoping this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList,google/cloud/compute/v1/internal/common.proto#L24002}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList,google/cloud/compute/v1/internal/common.proto#L24002}
   ///
-  /// [google.cloud.cpp.compute.serviceAttachments.v1.AggregatedListServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L121}
-  /// [google.cloud.cpp.compute.v1.ServiceAttachmentAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24002}
+  /// [google.cloud.cpp.compute.serviceAttachments.v1.AggregatedListServiceAttachmentsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L121}
+  /// [google.cloud.cpp.compute.v1.ServiceAttachmentAggregatedList]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24002}
   ///
   StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>
-  AggregatedListServiceAttachments(std::string const& project, Options opts = {});
+  AggregatedListServiceAttachments(std::string const& project,
+                                   Options opts = {});
 
   ///
-  /// Retrieves the list of all ServiceAttachment resources, regional and global,
-  /// available to the specified project.
+  /// Retrieves the list of all ServiceAttachment resources, regional and
+  /// global, available to the specified project.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::serviceAttachments::v1::AggregatedListServiceAttachmentsRequest,google/cloud/compute/service_attachments/v1/service_attachments.proto#L121}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::serviceAttachments::v1::AggregatedListServiceAttachmentsRequest,google/cloud/compute/service_attachments/v1/service_attachments.proto#L121}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList,google/cloud/compute/v1/internal/common.proto#L24002}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList,google/cloud/compute/v1/internal/common.proto#L24002}
   ///
-  /// [google.cloud.cpp.compute.serviceAttachments.v1.AggregatedListServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L121}
-  /// [google.cloud.cpp.compute.v1.ServiceAttachmentAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24002}
+  /// [google.cloud.cpp.compute.serviceAttachments.v1.AggregatedListServiceAttachmentsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L121}
+  /// [google.cloud.cpp.compute.v1.ServiceAttachmentAggregatedList]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24002}
   ///
   StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>
-  AggregatedListServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::AggregatedListServiceAttachmentsRequest const& request, Options opts = {});
+  AggregatedListServiceAttachments(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          AggregatedListServiceAttachmentsRequest const& request,
+      Options opts = {});
 
   ///
   /// Deletes the specified ServiceAttachment in the given scope
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region of this request.
-  /// @param service_attachment  Name of the ServiceAttachment resource to delete.
+  /// @param service_attachment  Name of the ServiceAttachment resource to
+  /// delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.serviceAttachments.v1.DeleteServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L195}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.serviceAttachments.v1.DeleteServiceAttachmentsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L195}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteServiceAttachments(std::string const& project, std::string const& region, std::string const& service_attachment, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteServiceAttachments(
+      std::string const& project, std::string const& region,
+      std::string const& service_attachment, Options opts = {});
 
   ///
   /// Deletes the specified ServiceAttachment in the given scope
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::serviceAttachments::v1::DeleteServiceAttachmentsRequest,google/cloud/compute/service_attachments/v1/service_attachments.proto#L195}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::serviceAttachments::v1::DeleteServiceAttachmentsRequest,google/cloud/compute/service_attachments/v1/service_attachments.proto#L195}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.serviceAttachments.v1.DeleteServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L195}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.serviceAttachments.v1.DeleteServiceAttachmentsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L195}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::DeleteServiceAttachmentsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteServiceAttachments(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          DeleteServiceAttachmentsRequest const& request,
+      Options opts = {});
 
   ///
   /// Returns the specified ServiceAttachment resource in the given scope.
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region of this request.
-  /// @param service_attachment  Name of the ServiceAttachment resource to return.
+  /// @param service_attachment  Name of the ServiceAttachment resource to
+  /// return.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::ServiceAttachment,google/cloud/compute/v1/internal/common.proto#L23913}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ServiceAttachment,google/cloud/compute/v1/internal/common.proto#L23913}
   ///
-  /// [google.cloud.cpp.compute.serviceAttachments.v1.GetServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L234}
-  /// [google.cloud.cpp.compute.v1.ServiceAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23913}
+  /// [google.cloud.cpp.compute.serviceAttachments.v1.GetServiceAttachmentsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L234}
+  /// [google.cloud.cpp.compute.v1.ServiceAttachment]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23913}
   ///
   StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
-  GetServiceAttachments(std::string const& project, std::string const& region, std::string const& service_attachment, Options opts = {});
+  GetServiceAttachments(std::string const& project, std::string const& region,
+                        std::string const& service_attachment,
+                        Options opts = {});
 
   ///
   /// Returns the specified ServiceAttachment resource in the given scope.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::serviceAttachments::v1::GetServiceAttachmentsRequest,google/cloud/compute/service_attachments/v1/service_attachments.proto#L234}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::serviceAttachments::v1::GetServiceAttachmentsRequest,google/cloud/compute/service_attachments/v1/service_attachments.proto#L234}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::ServiceAttachment,google/cloud/compute/v1/internal/common.proto#L23913}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ServiceAttachment,google/cloud/compute/v1/internal/common.proto#L23913}
   ///
-  /// [google.cloud.cpp.compute.serviceAttachments.v1.GetServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L234}
-  /// [google.cloud.cpp.compute.v1.ServiceAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23913}
+  /// [google.cloud.cpp.compute.serviceAttachments.v1.GetServiceAttachmentsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L234}
+  /// [google.cloud.cpp.compute.v1.ServiceAttachment]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23913}
   ///
   StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
-  GetServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::GetServiceAttachmentsRequest const& request, Options opts = {});
+  GetServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::
+                            GetServiceAttachmentsRequest const& request,
+                        Options opts = {});
 
   ///
   /// Gets the access control policy for a resource. May be empty if no such
@@ -183,28 +222,38 @@ class ServiceAttachmentsClient {
   /// @param resource  Name or id of the resource for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.serviceAttachments.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L219}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.serviceAttachments.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L219}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(std::string const& project, std::string const& region, std::string const& resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      std::string const& project, std::string const& region,
+      std::string const& resource, Options opts = {});
 
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::serviceAttachments::v1::GetIamPolicyRequest,google/cloud/compute/service_attachments/v1/service_attachments.proto#L219}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::serviceAttachments::v1::GetIamPolicyRequest,google/cloud/compute/service_attachments/v1/service_attachments.proto#L219}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.serviceAttachments.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L219}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.serviceAttachments.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L219}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::serviceAttachments::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          GetIamPolicyRequest const& request,
+      Options opts = {});
 
   ///
   /// Creates a ServiceAttachment in the specified project in the given scope
@@ -212,31 +261,44 @@ class ServiceAttachmentsClient {
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region of this request.
-  /// @param service_attachment_resource  The ServiceAttachment for this request.
+  /// @param service_attachment_resource  The ServiceAttachment for this
+  /// request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.serviceAttachments.v1.InsertServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L246}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.serviceAttachments.v1.InsertServiceAttachmentsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L246}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertServiceAttachments(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::ServiceAttachment const& service_attachment_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertServiceAttachments(
+      std::string const& project, std::string const& region,
+      google::cloud::cpp::compute::v1::ServiceAttachment const&
+          service_attachment_resource,
+      Options opts = {});
 
   ///
   /// Creates a ServiceAttachment in the specified project in the given scope
   /// using the parameters that are included in the request.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::serviceAttachments::v1::InsertServiceAttachmentsRequest,google/cloud/compute/service_attachments/v1/service_attachments.proto#L246}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::serviceAttachments::v1::InsertServiceAttachmentsRequest,google/cloud/compute/service_attachments/v1/service_attachments.proto#L246}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.serviceAttachments.v1.InsertServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L246}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.serviceAttachments.v1.InsertServiceAttachmentsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L246}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::InsertServiceAttachmentsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertServiceAttachments(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          InsertServiceAttachmentsRequest const& request,
+      Options opts = {});
 
   ///
   /// Lists the ServiceAttachments for a project in the given scope.
@@ -245,63 +307,89 @@ class ServiceAttachmentsClient {
   /// @param region  Name of the region of this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::ServiceAttachment,google/cloud/compute/v1/internal/common.proto#L23913}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ServiceAttachment,google/cloud/compute/v1/internal/common.proto#L23913}
   ///
-  /// [google.cloud.cpp.compute.serviceAttachments.v1.ListServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L270}
-  /// [google.cloud.cpp.compute.v1.ServiceAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23913}
+  /// [google.cloud.cpp.compute.serviceAttachments.v1.ListServiceAttachmentsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L270}
+  /// [google.cloud.cpp.compute.v1.ServiceAttachment]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23913}
   ///
   StreamRange<google::cloud::cpp::compute::v1::ServiceAttachment>
-  ListServiceAttachments(std::string const& project, std::string const& region, Options opts = {});
+  ListServiceAttachments(std::string const& project, std::string const& region,
+                         Options opts = {});
 
   ///
   /// Lists the ServiceAttachments for a project in the given scope.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::serviceAttachments::v1::ListServiceAttachmentsRequest,google/cloud/compute/service_attachments/v1/service_attachments.proto#L270}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::serviceAttachments::v1::ListServiceAttachmentsRequest,google/cloud/compute/service_attachments/v1/service_attachments.proto#L270}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::ServiceAttachment,google/cloud/compute/v1/internal/common.proto#L23913}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ServiceAttachment,google/cloud/compute/v1/internal/common.proto#L23913}
   ///
-  /// [google.cloud.cpp.compute.serviceAttachments.v1.ListServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L270}
-  /// [google.cloud.cpp.compute.v1.ServiceAttachment]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23913}
+  /// [google.cloud.cpp.compute.serviceAttachments.v1.ListServiceAttachmentsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L270}
+  /// [google.cloud.cpp.compute.v1.ServiceAttachment]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23913}
   ///
   StreamRange<google::cloud::cpp::compute::v1::ServiceAttachment>
-  ListServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::ListServiceAttachmentsRequest request, Options opts = {});
+  ListServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::
+                             ListServiceAttachmentsRequest request,
+                         Options opts = {});
 
   ///
   /// Patches the specified ServiceAttachment resource with the data included in
-  /// the request. This method supports PATCH semantics and uses JSON merge patch
-  /// format and processing rules.
+  /// the request. This method supports PATCH semantics and uses JSON merge
+  /// patch format and processing rules.
   ///
   /// @param project  Project ID for this request.
-  /// @param region  The region scoping this request and should conform to RFC1035.
-  /// @param service_attachment  The resource id of the ServiceAttachment to patch. It should conform to
+  /// @param region  The region scoping this request and should conform to
+  /// RFC1035.
+  /// @param service_attachment  The resource id of the ServiceAttachment to
+  /// patch. It should conform to
   ///  RFC1035 resource name or be a string form on an unsigned long number.
-  /// @param service_attachment_resource  The ServiceAttachment for this request.
+  /// @param service_attachment_resource  The ServiceAttachment for this
+  /// request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.serviceAttachments.v1.PatchServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L338}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.serviceAttachments.v1.PatchServiceAttachmentsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L338}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchServiceAttachments(std::string const& project, std::string const& region, std::string const& service_attachment, google::cloud::cpp::compute::v1::ServiceAttachment const& service_attachment_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchServiceAttachments(
+      std::string const& project, std::string const& region,
+      std::string const& service_attachment,
+      google::cloud::cpp::compute::v1::ServiceAttachment const&
+          service_attachment_resource,
+      Options opts = {});
 
   ///
   /// Patches the specified ServiceAttachment resource with the data included in
-  /// the request. This method supports PATCH semantics and uses JSON merge patch
-  /// format and processing rules.
+  /// the request. This method supports PATCH semantics and uses JSON merge
+  /// patch format and processing rules.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::serviceAttachments::v1::PatchServiceAttachmentsRequest,google/cloud/compute/service_attachments/v1/service_attachments.proto#L338}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::serviceAttachments::v1::PatchServiceAttachmentsRequest,google/cloud/compute/service_attachments/v1/service_attachments.proto#L338}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.serviceAttachments.v1.PatchServiceAttachmentsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L338}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.serviceAttachments.v1.PatchServiceAttachmentsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L338}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::PatchServiceAttachmentsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchServiceAttachments(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          PatchServiceAttachmentsRequest const& request,
+      Options opts = {});
 
   ///
   /// Sets the access control policy on the specified resource. Replaces any
@@ -310,31 +398,45 @@ class ServiceAttachmentsClient {
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
   /// @param resource  Name or id of the resource for this request.
-  /// @param region_set_policy_request_resource  The RegionSetPolicyRequest for this request.
+  /// @param region_set_policy_request_resource  The RegionSetPolicyRequest for
+  /// this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.serviceAttachments.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L366}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.serviceAttachments.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L366}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::RegionSetPolicyRequest const& region_set_policy_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::RegionSetPolicyRequest const&
+          region_set_policy_request_resource,
+      Options opts = {});
 
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::serviceAttachments::v1::SetIamPolicyRequest,google/cloud/compute/service_attachments/v1/service_attachments.proto#L366}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::serviceAttachments::v1::SetIamPolicyRequest,google/cloud/compute/service_attachments/v1/service_attachments.proto#L366}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.serviceAttachments.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L366}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.serviceAttachments.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L366}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::serviceAttachments::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          SetIamPolicyRequest const& request,
+      Options opts = {});
 
   ///
   /// Returns permissions that a caller has on the specified resource.
@@ -342,30 +444,45 @@ class ServiceAttachmentsClient {
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
   /// @param resource  Name or id of the resource for this request.
-  /// @param test_permissions_request_resource  The TestPermissionsRequest for this request.
+  /// @param test_permissions_request_resource  The TestPermissionsRequest for
+  /// this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
   ///
-  /// [google.cloud.cpp.compute.serviceAttachments.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L381}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// [google.cloud.cpp.compute.serviceAttachments.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L381}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
+  TestIamPermissions(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
 
   ///
   /// Returns permissions that a caller has on the specified resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::serviceAttachments::v1::TestIamPermissionsRequest,google/cloud/compute/service_attachments/v1/service_attachments.proto#L381}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::serviceAttachments::v1::TestIamPermissionsRequest,google/cloud/compute/service_attachments/v1/service_attachments.proto#L381}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
   ///
-  /// [google.cloud.cpp.compute.serviceAttachments.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L381}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// [google.cloud.cpp.compute.serviceAttachments.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L381}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::serviceAttachments::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::serviceAttachments::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
  private:
   std::shared_ptr<ServiceAttachmentsConnection> connection_;

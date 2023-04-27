@@ -28,18 +28,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BackendServicesRestLogging::BackendServicesRestLogging(
     std::shared_ptr<BackendServicesRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestLogging::AddSignedUrlKey(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::AddSignedUrlKeyRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::
+        AddSignedUrlKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::backendServices::v1::AddSignedUrlKeyRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 AddSignedUrlKeyRequest const& request) {
         return child_->AddSignedUrlKey(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,10 +50,12 @@ BackendServicesRestLogging::AddSignedUrlKey(
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceAggregatedList>
 BackendServicesRestLogging::AggregatedListBackendServices(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::AggregatedListBackendServicesRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::
+        AggregatedListBackendServicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::backendServices::v1::AggregatedListBackendServicesRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 AggregatedListBackendServicesRequest const& request) {
         return child_->AggregatedListBackendServices(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -60,10 +64,12 @@ BackendServicesRestLogging::AggregatedListBackendServices(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestLogging::DeleteBackendServices(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::DeleteBackendServicesRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::
+        DeleteBackendServicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::backendServices::v1::DeleteBackendServicesRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 DeleteBackendServicesRequest const& request) {
         return child_->DeleteBackendServices(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -72,10 +78,12 @@ BackendServicesRestLogging::DeleteBackendServices(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestLogging::DeleteSignedUrlKey(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::DeleteSignedUrlKeyRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::
+        DeleteSignedUrlKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::backendServices::v1::DeleteSignedUrlKeyRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 DeleteSignedUrlKeyRequest const& request) {
         return child_->DeleteSignedUrlKey(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -84,10 +92,12 @@ BackendServicesRestLogging::DeleteSignedUrlKey(
 StatusOr<google::cloud::cpp::compute::v1::BackendService>
 BackendServicesRestLogging::GetBackendServices(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::GetBackendServicesRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::
+        GetBackendServicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::backendServices::v1::GetBackendServicesRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 GetBackendServicesRequest const& request) {
         return child_->GetBackendServices(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -96,10 +106,12 @@ BackendServicesRestLogging::GetBackendServices(
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
 BackendServicesRestLogging::GetHealth(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::GetHealthRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::GetHealthRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::backendServices::v1::GetHealthRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 GetHealthRequest const& request) {
         return child_->GetHealth(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -108,10 +120,12 @@ BackendServicesRestLogging::GetHealth(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 BackendServicesRestLogging::GetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::GetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::GetIamPolicyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::backendServices::v1::GetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -120,10 +134,12 @@ BackendServicesRestLogging::GetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestLogging::InsertBackendServices(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::InsertBackendServicesRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::
+        InsertBackendServicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::backendServices::v1::InsertBackendServicesRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 InsertBackendServicesRequest const& request) {
         return child_->InsertBackendServices(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -132,10 +148,12 @@ BackendServicesRestLogging::InsertBackendServices(
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceList>
 BackendServicesRestLogging::ListBackendServices(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::ListBackendServicesRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::
+        ListBackendServicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::backendServices::v1::ListBackendServicesRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 ListBackendServicesRequest const& request) {
         return child_->ListBackendServices(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -144,10 +162,12 @@ BackendServicesRestLogging::ListBackendServices(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestLogging::PatchBackendServices(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::PatchBackendServicesRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::
+        PatchBackendServicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::backendServices::v1::PatchBackendServicesRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 PatchBackendServicesRequest const& request) {
         return child_->PatchBackendServices(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -156,10 +176,12 @@ BackendServicesRestLogging::PatchBackendServices(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestLogging::SetEdgeSecurityPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::SetEdgeSecurityPolicyRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::
+        SetEdgeSecurityPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::backendServices::v1::SetEdgeSecurityPolicyRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 SetEdgeSecurityPolicyRequest const& request) {
         return child_->SetEdgeSecurityPolicy(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -168,10 +190,12 @@ BackendServicesRestLogging::SetEdgeSecurityPolicy(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 BackendServicesRestLogging::SetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::SetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::SetIamPolicyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::backendServices::v1::SetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -180,10 +204,12 @@ BackendServicesRestLogging::SetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestLogging::SetSecurityPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::SetSecurityPolicyRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::
+        SetSecurityPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::backendServices::v1::SetSecurityPolicyRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 SetSecurityPolicyRequest const& request) {
         return child_->SetSecurityPolicy(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -192,10 +218,12 @@ BackendServicesRestLogging::SetSecurityPolicy(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestLogging::UpdateBackendServices(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::backendServices::v1::UpdateBackendServicesRequest const& request) {
+    google::cloud::cpp::compute::backendServices::v1::
+        UpdateBackendServicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::backendServices::v1::UpdateBackendServicesRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 UpdateBackendServicesRequest const& request) {
         return child_->UpdateBackendServices(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);

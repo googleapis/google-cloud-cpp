@@ -33,19 +33,24 @@ RegionsTracingConnection::RegionsTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Region>
-RegionsTracingConnection::GetRegions(google::cloud::cpp::compute::regions::v1::GetRegionsRequest const& request) {
-  auto span = internal::MakeSpan("compute_regions_v1::RegionsConnection::GetRegions");
+RegionsTracingConnection::GetRegions(
+    google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("compute_regions_v1::RegionsConnection::GetRegions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetRegions(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Region>
-RegionsTracingConnection::ListRegions(google::cloud::cpp::compute::regions::v1::ListRegionsRequest request) {
-  auto span = internal::MakeSpan("compute_regions_v1::RegionsConnection::ListRegions");
+RegionsTracingConnection::ListRegions(
+    google::cloud::cpp::compute::regions::v1::ListRegionsRequest request) {
+  auto span =
+      internal::MakeSpan("compute_regions_v1::RegionsConnection::ListRegions");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListRegions(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::Region>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::Region>(std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -34,24 +34,33 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options RegionSslPoliciesDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_REGION_SSL_POLICIES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_REGION_SSL_POLICIES_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_REGION_SSL_POLICIES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_REGION_SSL_POLICIES_AUTHORITY",
       "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
-  if (!options.has<compute_region_ssl_policies_v1::RegionSslPoliciesRetryPolicyOption>()) {
-    options.set<compute_region_ssl_policies_v1::RegionSslPoliciesRetryPolicyOption>(
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  if (!options.has<compute_region_ssl_policies_v1::
+                       RegionSslPoliciesRetryPolicyOption>()) {
+    options.set<
+        compute_region_ssl_policies_v1::RegionSslPoliciesRetryPolicyOption>(
         compute_region_ssl_policies_v1::RegionSslPoliciesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_region_ssl_policies_v1::RegionSslPoliciesBackoffPolicyOption>()) {
-    options.set<compute_region_ssl_policies_v1::RegionSslPoliciesBackoffPolicyOption>(
+  if (!options.has<compute_region_ssl_policies_v1::
+                       RegionSslPoliciesBackoffPolicyOption>()) {
+    options.set<
+        compute_region_ssl_policies_v1::RegionSslPoliciesBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
-  if (!options.has<compute_region_ssl_policies_v1::RegionSslPoliciesConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_region_ssl_policies_v1::RegionSslPoliciesConnectionIdempotencyPolicyOption>(
-        compute_region_ssl_policies_v1::MakeDefaultRegionSslPoliciesConnectionIdempotencyPolicy());
+  if (!options.has<compute_region_ssl_policies_v1::
+                       RegionSslPoliciesConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_region_ssl_policies_v1::
+                    RegionSslPoliciesConnectionIdempotencyPolicyOption>(
+        compute_region_ssl_policies_v1::
+            MakeDefaultRegionSslPoliciesConnectionIdempotencyPolicy());
   }
 
   return options;

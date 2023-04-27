@@ -17,11 +17,11 @@
 // source: google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto
 
 #include "google/cloud/compute/vpn_gateways/v1/vpn_gateways_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/vpn_gateways/v1/internal/vpn_gateways_option_defaults.h"
 #include "google/cloud/compute/vpn_gateways/v1/internal/vpn_gateways_tracing_connection.h"
 #include "google/cloud/compute/vpn_gateways/v1/vpn_gateways_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,19 +36,21 @@ VpnGatewaysConnection::~VpnGatewaysConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::VpnGatewayAggregatedList>
 VpnGatewaysConnection::AggregatedListVpnGateways(
-    google::cloud::cpp::compute::vpnGateways::v1::AggregatedListVpnGatewaysRequest const&) {
+    google::cloud::cpp::compute::vpnGateways::v1::
+        AggregatedListVpnGatewaysRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 VpnGatewaysConnection::DeleteVpnGateways(
-    google::cloud::cpp::compute::vpnGateways::v1::DeleteVpnGatewaysRequest const&) {
+    google::cloud::cpp::compute::vpnGateways::v1::
+        DeleteVpnGatewaysRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VpnGateway>
-VpnGatewaysConnection::GetVpnGateways(
-    google::cloud::cpp::compute::vpnGateways::v1::GetVpnGatewaysRequest const&) {
+VpnGatewaysConnection::GetVpnGateways(google::cloud::cpp::compute::vpnGateways::
+                                          v1::GetVpnGatewaysRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -60,12 +62,15 @@ VpnGatewaysConnection::GetStatus(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 VpnGatewaysConnection::InsertVpnGateways(
-    google::cloud::cpp::compute::vpnGateways::v1::InsertVpnGatewaysRequest const&) {
+    google::cloud::cpp::compute::vpnGateways::v1::
+        InsertVpnGatewaysRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::VpnGateway> VpnGatewaysConnection::ListVpnGateways(
-    google::cloud::cpp::compute::vpnGateways::v1::ListVpnGatewaysRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::VpnGateway>
+VpnGatewaysConnection::ListVpnGateways(
+    google::cloud::cpp::compute::vpnGateways::v1::
+        ListVpnGatewaysRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::VpnGateway>>();
 }
@@ -78,7 +83,8 @@ VpnGatewaysConnection::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 VpnGatewaysConnection::TestIamPermissions(
-    google::cloud::cpp::compute::vpnGateways::v1::TestIamPermissionsRequest const&) {
+    google::cloud::cpp::compute::vpnGateways::v1::
+        TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

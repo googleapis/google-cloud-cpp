@@ -62,7 +62,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class GlobalAddressesClient {
  public:
-  explicit GlobalAddressesClient(ExperimentalTag, std::shared_ptr<GlobalAddressesConnection> connection, Options opts = {});
+  explicit GlobalAddressesClient(
+      ExperimentalTag, std::shared_ptr<GlobalAddressesConnection> connection,
+      Options opts = {});
   ~GlobalAddressesClient();
 
   ///@{
@@ -75,10 +77,12 @@ class GlobalAddressesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(GlobalAddressesClient const& a, GlobalAddressesClient const& b) {
+  friend bool operator==(GlobalAddressesClient const& a,
+                         GlobalAddressesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(GlobalAddressesClient const& a, GlobalAddressesClient const& b) {
+  friend bool operator!=(GlobalAddressesClient const& a,
+                         GlobalAddressesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -90,27 +94,37 @@ class GlobalAddressesClient {
   /// @param address  Name of the address resource to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.globalAddresses.v1.DeleteGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L83}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.globalAddresses.v1.DeleteGlobalAddressesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L83}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteGlobalAddresses(std::string const& project, std::string const& address, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteGlobalAddresses(
+      std::string const& project, std::string const& address,
+      Options opts = {});
 
   ///
   /// Deletes the specified address resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::globalAddresses::v1::DeleteGlobalAddressesRequest,google/cloud/compute/global_addresses/v1/global_addresses.proto#L83}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::globalAddresses::v1::DeleteGlobalAddressesRequest,google/cloud/compute/global_addresses/v1/global_addresses.proto#L83}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.globalAddresses.v1.DeleteGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L83}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.globalAddresses.v1.DeleteGlobalAddressesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L83}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteGlobalAddresses(google::cloud::cpp::compute::globalAddresses::v1::DeleteGlobalAddressesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteGlobalAddresses(
+      google::cloud::cpp::compute::globalAddresses::v1::
+          DeleteGlobalAddressesRequest const& request,
+      Options opts = {});
 
   ///
   /// Returns the specified address resource.
@@ -119,27 +133,37 @@ class GlobalAddressesClient {
   /// @param address  Name of the address resource to return.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Address,google/cloud/compute/v1/internal/common.proto#L437}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Address,google/cloud/compute/v1/internal/common.proto#L437}
   ///
-  /// [google.cloud.cpp.compute.globalAddresses.v1.GetGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L104}
-  /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L437}
+  /// [google.cloud.cpp.compute.globalAddresses.v1.GetGlobalAddressesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L104}
+  /// [google.cloud.cpp.compute.v1.Address]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L437}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Address>
-  GetGlobalAddresses(std::string const& project, std::string const& address, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Address> GetGlobalAddresses(
+      std::string const& project, std::string const& address,
+      Options opts = {});
 
   ///
   /// Returns the specified address resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::globalAddresses::v1::GetGlobalAddressesRequest,google/cloud/compute/global_addresses/v1/global_addresses.proto#L104}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::globalAddresses::v1::GetGlobalAddressesRequest,google/cloud/compute/global_addresses/v1/global_addresses.proto#L104}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Address,google/cloud/compute/v1/internal/common.proto#L437}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Address,google/cloud/compute/v1/internal/common.proto#L437}
   ///
-  /// [google.cloud.cpp.compute.globalAddresses.v1.GetGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L104}
-  /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L437}
+  /// [google.cloud.cpp.compute.globalAddresses.v1.GetGlobalAddressesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L104}
+  /// [google.cloud.cpp.compute.v1.Address]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L437}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Address>
-  GetGlobalAddresses(google::cloud::cpp::compute::globalAddresses::v1::GetGlobalAddressesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Address> GetGlobalAddresses(
+      google::cloud::cpp::compute::globalAddresses::v1::
+          GetGlobalAddressesRequest const& request,
+      Options opts = {});
 
   ///
   /// Creates an address resource in the specified project by using the data
@@ -149,28 +173,39 @@ class GlobalAddressesClient {
   /// @param address_resource  The Address for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.globalAddresses.v1.InsertGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L113}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.globalAddresses.v1.InsertGlobalAddressesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L113}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertGlobalAddresses(std::string const& project, google::cloud::cpp::compute::v1::Address const& address_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertGlobalAddresses(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::Address const& address_resource,
+      Options opts = {});
 
   ///
   /// Creates an address resource in the specified project by using the data
   /// included in the request.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::globalAddresses::v1::InsertGlobalAddressesRequest,google/cloud/compute/global_addresses/v1/global_addresses.proto#L113}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::globalAddresses::v1::InsertGlobalAddressesRequest,google/cloud/compute/global_addresses/v1/global_addresses.proto#L113}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.globalAddresses.v1.InsertGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L113}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.globalAddresses.v1.InsertGlobalAddressesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L113}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertGlobalAddresses(google::cloud::cpp::compute::globalAddresses::v1::InsertGlobalAddressesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertGlobalAddresses(
+      google::cloud::cpp::compute::globalAddresses::v1::
+          InsertGlobalAddressesRequest const& request,
+      Options opts = {});
 
   ///
   /// Retrieves a list of global addresses.
@@ -178,27 +213,36 @@ class GlobalAddressesClient {
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Address,google/cloud/compute/v1/internal/common.proto#L437}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Address,google/cloud/compute/v1/internal/common.proto#L437}
   ///
-  /// [google.cloud.cpp.compute.globalAddresses.v1.ListGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L134}
-  /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L437}
+  /// [google.cloud.cpp.compute.globalAddresses.v1.ListGlobalAddressesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L134}
+  /// [google.cloud.cpp.compute.v1.Address]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L437}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::Address>
-  ListGlobalAddresses(std::string const& project, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Address> ListGlobalAddresses(
+      std::string const& project, Options opts = {});
 
   ///
   /// Retrieves a list of global addresses.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::globalAddresses::v1::ListGlobalAddressesRequest,google/cloud/compute/global_addresses/v1/global_addresses.proto#L134}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::globalAddresses::v1::ListGlobalAddressesRequest,google/cloud/compute/global_addresses/v1/global_addresses.proto#L134}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Address,google/cloud/compute/v1/internal/common.proto#L437}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Address,google/cloud/compute/v1/internal/common.proto#L437}
   ///
-  /// [google.cloud.cpp.compute.globalAddresses.v1.ListGlobalAddressesRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L134}
-  /// [google.cloud.cpp.compute.v1.Address]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L437}
+  /// [google.cloud.cpp.compute.globalAddresses.v1.ListGlobalAddressesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L134}
+  /// [google.cloud.cpp.compute.v1.Address]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L437}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::Address>
-  ListGlobalAddresses(google::cloud::cpp::compute::globalAddresses::v1::ListGlobalAddressesRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Address> ListGlobalAddresses(
+      google::cloud::cpp::compute::globalAddresses::v1::
+          ListGlobalAddressesRequest request,
+      Options opts = {});
 
   ///
   /// Sets the labels on a GlobalAddress. To learn more about labels, read the
@@ -206,31 +250,44 @@ class GlobalAddressesClient {
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
-  /// @param global_set_labels_request_resource  The GlobalSetLabelsRequest for this request.
+  /// @param global_set_labels_request_resource  The GlobalSetLabelsRequest for
+  /// this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.globalAddresses.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L199}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.globalAddresses.v1.SetLabelsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L199}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const& global_set_labels_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
+          global_set_labels_request_resource,
+      Options opts = {});
 
   ///
   /// Sets the labels on a GlobalAddress. To learn more about labels, read the
   /// Labeling Resources documentation.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::globalAddresses::v1::SetLabelsRequest,google/cloud/compute/global_addresses/v1/global_addresses.proto#L199}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::globalAddresses::v1::SetLabelsRequest,google/cloud/compute/global_addresses/v1/global_addresses.proto#L199}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.globalAddresses.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L199}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.globalAddresses.v1.SetLabelsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/global_addresses/v1/global_addresses.proto#L199}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(google::cloud::cpp::compute::globalAddresses::v1::SetLabelsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::cpp::compute::globalAddresses::v1::SetLabelsRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<GlobalAddressesConnection> connection_;

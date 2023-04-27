@@ -33,52 +33,74 @@ InterconnectsTracingConnection::InterconnectsTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InterconnectsTracingConnection::DeleteInterconnects(google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectsRequest const& request) {
-  auto span = internal::MakeSpan("compute_interconnects_v1::InterconnectsConnection::DeleteInterconnects");
+InterconnectsTracingConnection::DeleteInterconnects(
+    google::cloud::cpp::compute::interconnects::v1::
+        DeleteInterconnectsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_interconnects_v1::InterconnectsConnection::DeleteInterconnects");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteInterconnects(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Interconnect>
-InterconnectsTracingConnection::GetInterconnects(google::cloud::cpp::compute::interconnects::v1::GetInterconnectsRequest const& request) {
-  auto span = internal::MakeSpan("compute_interconnects_v1::InterconnectsConnection::GetInterconnects");
+InterconnectsTracingConnection::GetInterconnects(
+    google::cloud::cpp::compute::interconnects::v1::
+        GetInterconnectsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_interconnects_v1::InterconnectsConnection::GetInterconnects");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetInterconnects(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
-InterconnectsTracingConnection::GetDiagnostics(google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest const& request) {
-  auto span = internal::MakeSpan("compute_interconnects_v1::InterconnectsConnection::GetDiagnostics");
+InterconnectsTracingConnection::GetDiagnostics(
+    google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_interconnects_v1::InterconnectsConnection::GetDiagnostics");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDiagnostics(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InterconnectsTracingConnection::InsertInterconnects(google::cloud::cpp::compute::interconnects::v1::InsertInterconnectsRequest const& request) {
-  auto span = internal::MakeSpan("compute_interconnects_v1::InterconnectsConnection::InsertInterconnects");
+InterconnectsTracingConnection::InsertInterconnects(
+    google::cloud::cpp::compute::interconnects::v1::
+        InsertInterconnectsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_interconnects_v1::InterconnectsConnection::InsertInterconnects");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->InsertInterconnects(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Interconnect>
-InterconnectsTracingConnection::ListInterconnects(google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest request) {
-  auto span = internal::MakeSpan("compute_interconnects_v1::InterconnectsConnection::ListInterconnects");
+InterconnectsTracingConnection::ListInterconnects(
+    google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_interconnects_v1::InterconnectsConnection::ListInterconnects");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListInterconnects(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::Interconnect>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::Interconnect>(std::move(span),
+                                                     std::move(sr));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InterconnectsTracingConnection::PatchInterconnects(google::cloud::cpp::compute::interconnects::v1::PatchInterconnectsRequest const& request) {
-  auto span = internal::MakeSpan("compute_interconnects_v1::InterconnectsConnection::PatchInterconnects");
+InterconnectsTracingConnection::PatchInterconnects(
+    google::cloud::cpp::compute::interconnects::v1::
+        PatchInterconnectsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_interconnects_v1::InterconnectsConnection::PatchInterconnects");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->PatchInterconnects(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-InterconnectsTracingConnection::SetLabels(google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const& request) {
-  auto span = internal::MakeSpan("compute_interconnects_v1::InterconnectsConnection::SetLabels");
+InterconnectsTracingConnection::SetLabels(
+    google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_interconnects_v1::InterconnectsConnection::SetLabels");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetLabels(request));
 }

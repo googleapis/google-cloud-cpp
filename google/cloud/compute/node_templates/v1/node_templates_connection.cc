@@ -17,11 +17,11 @@
 // source: google/cloud/compute/node_templates/v1/node_templates.proto
 
 #include "google/cloud/compute/node_templates/v1/node_templates_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/node_templates/v1/internal/node_templates_option_defaults.h"
 #include "google/cloud/compute/node_templates/v1/internal/node_templates_tracing_connection.h"
 #include "google/cloud/compute/node_templates/v1/node_templates_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,49 +36,58 @@ NodeTemplatesConnection::~NodeTemplatesConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>
 NodeTemplatesConnection::AggregatedListNodeTemplates(
-    google::cloud::cpp::compute::nodeTemplates::v1::AggregatedListNodeTemplatesRequest const&) {
+    google::cloud::cpp::compute::nodeTemplates::v1::
+        AggregatedListNodeTemplatesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeTemplatesConnection::DeleteNodeTemplates(
-    google::cloud::cpp::compute::nodeTemplates::v1::DeleteNodeTemplatesRequest const&) {
+    google::cloud::cpp::compute::nodeTemplates::v1::
+        DeleteNodeTemplatesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
 NodeTemplatesConnection::GetNodeTemplates(
-    google::cloud::cpp::compute::nodeTemplates::v1::GetNodeTemplatesRequest const&) {
+    google::cloud::cpp::compute::nodeTemplates::v1::
+        GetNodeTemplatesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NodeTemplatesConnection::GetIamPolicy(
-    google::cloud::cpp::compute::nodeTemplates::v1::GetIamPolicyRequest const&) {
+    google::cloud::cpp::compute::nodeTemplates::v1::
+        GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeTemplatesConnection::InsertNodeTemplates(
-    google::cloud::cpp::compute::nodeTemplates::v1::InsertNodeTemplatesRequest const&) {
+    google::cloud::cpp::compute::nodeTemplates::v1::
+        InsertNodeTemplatesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::NodeTemplate> NodeTemplatesConnection::ListNodeTemplates(
-    google::cloud::cpp::compute::nodeTemplates::v1::ListNodeTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>
+NodeTemplatesConnection::ListNodeTemplates(
+    google::cloud::cpp::compute::nodeTemplates::v1::
+        ListNodeTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 NodeTemplatesConnection::SetIamPolicy(
-    google::cloud::cpp::compute::nodeTemplates::v1::SetIamPolicyRequest const&) {
+    google::cloud::cpp::compute::nodeTemplates::v1::
+        SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 NodeTemplatesConnection::TestIamPermissions(
-    google::cloud::cpp::compute::nodeTemplates::v1::TestIamPermissionsRequest const&) {
+    google::cloud::cpp::compute::nodeTemplates::v1::
+        TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

@@ -46,49 +46,72 @@ class MockNetworksConnection : public compute_networks_v1::NetworksConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  AddPeering,
-  (google::cloud::cpp::compute::networks::v1::AddPeeringRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, AddPeering,
+      (google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteNetworks,
+      (google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Network>, GetNetworks,
+      (google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::
+                           NetworksGetEffectiveFirewallsResponse>,
+              GetEffectiveFirewalls,
+              (google::cloud::cpp::compute::networks::v1::
+                   GetEffectiveFirewallsRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertNetworks,
+      (google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StreamRange<google::cloud::cpp::compute::v1::Network>, ListNetworks,
+      (google::cloud::cpp::compute::networks::v1::ListNetworksRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>,
+      ListPeeringRoutes,
+      (google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, PatchNetworks,
+      (google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, RemovePeering,
+      (google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteNetworks,
-  (google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const& request), (override));
+              SwitchToCustomMode,
+              (google::cloud::cpp::compute::networks::v1::
+                   SwitchToCustomModeRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Network>,
-  GetNetworks,
-  (google::cloud::cpp::compute::networks::v1::GetNetworksRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>,
-  GetEffectiveFirewalls,
-  (google::cloud::cpp::compute::networks::v1::GetEffectiveFirewallsRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertNetworks,
-  (google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const& request), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Network>,
-  ListNetworks,
-  (google::cloud::cpp::compute::networks::v1::ListNetworksRequest request), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>,
-  ListPeeringRoutes,
-  (google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  PatchNetworks,
-  (google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  RemovePeering,
-  (google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  SwitchToCustomMode,
-  (google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  UpdatePeering,
-  (google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, UpdatePeering,
+      (google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

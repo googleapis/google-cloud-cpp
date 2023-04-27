@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_HTTP_HEALTH_CHECKS_V1_HTTP_HEALTH_CHECKS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_HTTP_HEALTH_CHECKS_V1_HTTP_HEALTH_CHECKS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/http_health_checks/v1/http_health_checks_connection_idempotency_policy.h"
 #include "google/cloud/compute/http_health_checks/v1/internal/http_health_checks_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -35,11 +35,13 @@ namespace cloud {
 namespace compute_http_health_checks_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using HttpHealthChecksRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_http_health_checks_v1_internal::HttpHealthChecksRetryTraits>;
+using HttpHealthChecksRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_http_health_checks_v1_internal::HttpHealthChecksRetryTraits>;
 
-using HttpHealthChecksLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_http_health_checks_v1_internal::HttpHealthChecksRetryTraits>;
+using HttpHealthChecksLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_http_health_checks_v1_internal::HttpHealthChecksRetryTraits>;
 
 using HttpHealthChecksLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -55,7 +57,8 @@ using HttpHealthChecksLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeHttpHealthChecksConnection()`.
  *
- * For mocking, see `compute_http_health_checks_v1_mocks::MockHttpHealthChecksConnection`.
+ * For mocking, see
+ * `compute_http_health_checks_v1_mocks::MockHttpHealthChecksConnection`.
  */
 class HttpHealthChecksConnection {
  public:
@@ -64,22 +67,28 @@ class HttpHealthChecksConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::DeleteHttpHealthChecksRequest const& request);
+  DeleteHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::
+                             DeleteHttpHealthChecksRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck>
-  GetHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::GetHttpHealthChecksRequest const& request);
+  GetHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::
+                          GetHttpHealthChecksRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::InsertHttpHealthChecksRequest const& request);
+  InsertHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::
+                             InsertHttpHealthChecksRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::HttpHealthCheck>
-  ListHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::ListHttpHealthChecksRequest request);
+  ListHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::
+                           ListHttpHealthChecksRequest request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::PatchHttpHealthChecksRequest const& request);
+  PatchHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::
+                            PatchHttpHealthChecksRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::UpdateHttpHealthChecksRequest const& request);
+  UpdateHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::
+                             UpdateHttpHealthChecksRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

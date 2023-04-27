@@ -38,11 +38,13 @@ class RegionsRestStub {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Region> GetRegions(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regions::v1::GetRegionsRequest const& request) = 0;
+      google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::RegionList> ListRegions(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regions::v1::ListRegionsRequest const& request) = 0;
+      google::cloud::cpp::compute::regions::v1::ListRegionsRequest const&
+          request) = 0;
 };
 
 class DefaultRegionsRestStub : public RegionsRestStub {
@@ -50,17 +52,18 @@ class DefaultRegionsRestStub : public RegionsRestStub {
   ~DefaultRegionsRestStub() override = default;
 
   explicit DefaultRegionsRestStub(Options options);
-  DefaultRegionsRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+  DefaultRegionsRestStub(std::shared_ptr<rest_internal::RestClient> service,
+                         Options options);
 
   StatusOr<google::cloud::cpp::compute::v1::Region> GetRegions(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regions::v1::GetRegionsRequest const& request) override;
+      google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RegionList> ListRegions(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regions::v1::ListRegionsRequest const& request) override;
+      google::cloud::cpp::compute::regions::v1::ListRegionsRequest const&
+          request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

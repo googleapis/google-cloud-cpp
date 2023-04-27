@@ -38,48 +38,61 @@ class RoutersRestLogging : public RoutersRestStub {
  public:
   ~RoutersRestLogging() override = default;
   RoutersRestLogging(std::shared_ptr<RoutersRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                     TracingOptions tracing_options,
+                     std::set<std::string> components);
 
-  StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList> AggregatedListRouters(
+  StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
+  AggregatedListRouters(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest const& request) override;
+      google::cloud::cpp::compute::routers::v1::
+          AggregatedListRoutersRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRouters(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const& request) override;
+      google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Router> GetRouters(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::GetRoutersRequest const& request) override;
+      google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList> GetNatMappingInfo(
+  StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
+  GetNatMappingInfo(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const& request) override;
+      google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse> GetRouterStatus(
+  StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
+  GetRouterStatus(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const& request) override;
+      google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRouters(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const& request) override;
+      google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RouterList> ListRouters(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::ListRoutersRequest const& request) override;
+      google::cloud::cpp::compute::routers::v1::ListRoutersRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRouters(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const& request) override;
+      google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse> Preview(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::PreviewRequest const& request) override;
+      google::cloud::cpp::compute::routers::v1::PreviewRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRouters(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const& request) override;
+      google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&
+          request) override;
 
  private:
   std::shared_ptr<RoutersRestStub> child_;

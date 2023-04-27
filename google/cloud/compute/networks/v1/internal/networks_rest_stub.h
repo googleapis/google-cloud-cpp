@@ -38,47 +38,60 @@ class NetworksRestStub {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddPeering(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::AddPeeringRequest const& request) = 0;
+      google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetworks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const& request) = 0;
+      google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Network> GetNetworks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::GetNetworksRequest const& request) = 0;
+      google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse> GetEffectiveFirewalls(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::GetEffectiveFirewallsRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>
+  GetEffectiveFirewalls(google::cloud::rest_internal::RestContext& rest_context,
+                        google::cloud::cpp::compute::networks::v1::
+                            GetEffectiveFirewallsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNetworks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const& request) = 0;
+      google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NetworkList> ListNetworks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::ListNetworksRequest const& request) = 0;
+      google::cloud::cpp::compute::networks::v1::ListNetworksRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::ExchangedPeeringRoutesList> ListPeeringRoutes(
+  virtual StatusOr<google::cloud::cpp::compute::v1::ExchangedPeeringRoutesList>
+  ListPeeringRoutes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest const& request) = 0;
+      google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNetworks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const& request) = 0;
+      google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> RemovePeering(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const& request) = 0;
+      google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SwitchToCustomMode(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SwitchToCustomMode(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::networks::v1::
+                         SwitchToCustomModeRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdatePeering(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const& request) = 0;
+      google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
+          request) = 0;
 };
 
 class DefaultNetworksRestStub : public NetworksRestStub {
@@ -86,53 +99,66 @@ class DefaultNetworksRestStub : public NetworksRestStub {
   ~DefaultNetworksRestStub() override = default;
 
   explicit DefaultNetworksRestStub(Options options);
-  DefaultNetworksRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+  DefaultNetworksRestStub(std::shared_ptr<rest_internal::RestClient> service,
+                          Options options);
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddPeering(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::AddPeeringRequest const& request) override;
+      google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetworks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const& request) override;
+      google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Network> GetNetworks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::GetNetworksRequest const& request) override;
+      google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse> GetEffectiveFirewalls(
+  StatusOr<
+      google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>
+  GetEffectiveFirewalls(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::GetEffectiveFirewallsRequest const& request) override;
+      google::cloud::cpp::compute::networks::v1::
+          GetEffectiveFirewallsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNetworks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const& request) override;
+      google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkList> ListNetworks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::ListNetworksRequest const& request) override;
+      google::cloud::cpp::compute::networks::v1::ListNetworksRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::ExchangedPeeringRoutesList> ListPeeringRoutes(
+  StatusOr<google::cloud::cpp::compute::v1::ExchangedPeeringRoutesList>
+  ListPeeringRoutes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest const& request) override;
+      google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNetworks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const& request) override;
+      google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemovePeering(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const& request) override;
+      google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SwitchToCustomMode(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const& request) override;
+      google::cloud::cpp::compute::networks::v1::
+          SwitchToCustomModeRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdatePeering(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const& request) override;
+      google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
+          request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `NetworkAttachmentsConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `NetworkAttachmentsClient`. To do so,
- * construct an object of type `NetworkAttachmentsClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * including errors, from an object of type `NetworkAttachmentsClient`. To do
+ * so, construct an object of type `NetworkAttachmentsClient` with an instance
+ * of this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,41 +42,59 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockNetworkAttachmentsConnection : public compute_network_attachments_v1::NetworkAttachmentsConnection {
+class MockNetworkAttachmentsConnection
+    : public compute_network_attachments_v1::NetworkAttachmentsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>,
-  AggregatedListNetworkAttachments,
-  (google::cloud::cpp::compute::networkAttachments::v1::AggregatedListNetworkAttachmentsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<
+          google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>,
+      AggregatedListNetworkAttachments,
+      (google::cloud::cpp::compute::networkAttachments::v1::
+           AggregatedListNetworkAttachmentsRequest const& request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteNetworkAttachments,
-  (google::cloud::cpp::compute::networkAttachments::v1::DeleteNetworkAttachmentsRequest const& request), (override));
+              DeleteNetworkAttachments,
+              (google::cloud::cpp::compute::networkAttachments::v1::
+                   DeleteNetworkAttachmentsRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>,
-  GetNetworkAttachments,
-  (google::cloud::cpp::compute::networkAttachments::v1::GetNetworkAttachmentsRequest const& request), (override));
+              GetNetworkAttachments,
+              (google::cloud::cpp::compute::networkAttachments::v1::
+                   GetNetworkAttachmentsRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  GetIamPolicy,
-  (google::cloud::cpp::compute::networkAttachments::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+              (google::cloud::cpp::compute::networkAttachments::v1::
+                   GetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertNetworkAttachments,
-  (google::cloud::cpp::compute::networkAttachments::v1::InsertNetworkAttachmentsRequest const& request), (override));
+              InsertNetworkAttachments,
+              (google::cloud::cpp::compute::networkAttachments::v1::
+                   InsertNetworkAttachmentsRequest const& request),
+              (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>,
-  ListNetworkAttachments,
-  (google::cloud::cpp::compute::networkAttachments::v1::ListNetworkAttachmentsRequest request), (override));
+              ListNetworkAttachments,
+              (google::cloud::cpp::compute::networkAttachments::v1::
+                   ListNetworkAttachmentsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  SetIamPolicy,
-  (google::cloud::cpp::compute::networkAttachments::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+              (google::cloud::cpp::compute::networkAttachments::v1::
+                   SetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
-  TestIamPermissions,
-  (google::cloud::cpp::compute::networkAttachments::v1::TestIamPermissionsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      TestIamPermissions,
+      (google::cloud::cpp::compute::networkAttachments::v1::
+           TestIamPermissionsRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

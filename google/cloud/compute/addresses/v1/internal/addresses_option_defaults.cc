@@ -34,24 +34,28 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options AddressesDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_ADDRESSES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_ADDRESSES_AUTHORITY",
-      "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
+      std::move(options), "GOOGLE_CLOUD_CPP_ADDRESSES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_ADDRESSES_AUTHORITY", "compute.googleapis.com");
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<compute_addresses_v1::AddressesRetryPolicyOption>()) {
     options.set<compute_addresses_v1::AddressesRetryPolicyOption>(
         compute_addresses_v1::AddressesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<compute_addresses_v1::AddressesBackoffPolicyOption>()) {
     options.set<compute_addresses_v1::AddressesBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
-  if (!options.has<compute_addresses_v1::AddressesConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_addresses_v1::AddressesConnectionIdempotencyPolicyOption>(
-        compute_addresses_v1::MakeDefaultAddressesConnectionIdempotencyPolicy());
+  if (!options.has<
+          compute_addresses_v1::AddressesConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<compute_addresses_v1::AddressesConnectionIdempotencyPolicyOption>(
+            compute_addresses_v1::
+                MakeDefaultAddressesConnectionIdempotencyPolicy());
   }
 
   return options;

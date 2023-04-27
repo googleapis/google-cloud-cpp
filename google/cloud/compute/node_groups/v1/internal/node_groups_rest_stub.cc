@@ -35,40 +35,45 @@ DefaultNodeGroupsRestStub::DefaultNodeGroupsRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultNodeGroupsRestStub::DefaultNodeGroupsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultNodeGroupsRestStub::AddNodes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::AddNodesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::nodeGroups::v1::AddNodesRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{node_group}/addNodes");
+      "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{node_group}/"
+      "addNodes");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
 DefaultNodeGroupsRestStub::AggregatedListNodeGroups(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::AggregatedListNodeGroupsRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::nodeGroups::v1::
+        AggregatedListNodeGroupsRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::NodeGroupAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/nodeGroups",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultNodeGroupsRestStub::DeleteNodeGroups(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::DeleteNodeGroupsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::nodeGroups::v1::DeleteNodeGroupsRequest const&
+        request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{node_group}");
@@ -76,17 +81,20 @@ DefaultNodeGroupsRestStub::DeleteNodeGroups(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultNodeGroupsRestStub::DeleteNodes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::DeleteNodesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::nodeGroups::v1::DeleteNodesRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{node_group}/deleteNodes");
+      "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{node_group}/"
+      "deleteNodes");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroup>
 DefaultNodeGroupsRestStub::GetNodeGroups(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::GetNodeGroupsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::nodeGroups::v1::GetNodeGroupsRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeGroup>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{node_group}",
@@ -97,12 +105,16 @@ DefaultNodeGroupsRestStub::GetNodeGroups(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultNodeGroupsRestStub::GetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::GetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::nodeGroups::v1::GetIamPolicyRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{resource}/getIamPolicy",
-      {std::make_pair("options_requested_policy_version", std::to_string(request.options_requested_policy_version())),
+      "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{resource}/"
+      "getIamPolicy",
+      {std::make_pair(
+           "options_requested_policy_version",
+           std::to_string(request.options_requested_policy_version())),
        std::make_pair("project", request.project()),
        std::make_pair("resource", request.resource()),
        std::make_pair("zone", request.zone())});
@@ -110,8 +122,9 @@ DefaultNodeGroupsRestStub::GetIamPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultNodeGroupsRestStub::InsertNodeGroups(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::InsertNodeGroupsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::nodeGroups::v1::InsertNodeGroupsRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/nodeGroups");
@@ -119,8 +132,9 @@ DefaultNodeGroupsRestStub::InsertNodeGroups(
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupList>
 DefaultNodeGroupsRestStub::ListNodeGroups(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::ListNodeGroupsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::nodeGroups::v1::ListNodeGroupsRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeGroupList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/nodeGroups",
@@ -129,23 +143,28 @@ DefaultNodeGroupsRestStub::ListNodeGroups(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success())),
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success())),
        std::make_pair("zone", request.zone())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupsListNodes>
 DefaultNodeGroupsRestStub::ListNodes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::NodeGroupsListNodes>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest const&
+        request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::NodeGroupsListNodes>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{node_group}/listNodes");
+      "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{node_group}/"
+      "listNodes");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultNodeGroupsRestStub::PatchNodeGroups(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::PatchNodeGroupsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::nodeGroups::v1::PatchNodeGroupsRequest const&
+        request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{node_group}");
@@ -153,29 +172,36 @@ DefaultNodeGroupsRestStub::PatchNodeGroups(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultNodeGroupsRestStub::SetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::SetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::nodeGroups::v1::SetIamPolicyRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{resource}/setIamPolicy");
+      "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{resource}/"
+      "setIamPolicy");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultNodeGroupsRestStub::SetNodeTemplate(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::SetNodeTemplateRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::nodeGroups::v1::SetNodeTemplateRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{node_group}/setNodeTemplate");
+      "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{node_group}/"
+      "setNodeTemplate");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultNodeGroupsRestStub::TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::TestIamPermissionsRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::nodeGroups::v1::
+        TestIamPermissionsRequest const& request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{resource}/testIamPermissions");
+      "/compute/v1/projects/{project}/zones/{zone}/nodeGroups/{resource}/"
+      "testIamPermissions");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

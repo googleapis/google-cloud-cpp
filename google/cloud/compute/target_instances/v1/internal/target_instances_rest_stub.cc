@@ -35,43 +35,49 @@ DefaultTargetInstancesRestStub::DefaultTargetInstancesRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultTargetInstancesRestStub::DefaultTargetInstancesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
 DefaultTargetInstancesRestStub::AggregatedListTargetInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetInstances::v1::AggregatedListTargetInstancesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetInstances::v1::
+        AggregatedListTargetInstancesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/targetInstances",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetInstancesRestStub::DeleteTargetInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetInstances::v1::DeleteTargetInstancesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetInstances::v1::
+        DeleteTargetInstancesRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/targetInstances/{target_instance}");
+      "/compute/v1/projects/{project}/zones/{zone}/targetInstances/"
+      "{target_instance}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
 DefaultTargetInstancesRestStub::GetTargetInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetInstances::v1::GetTargetInstancesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetInstances::v1::
+        GetTargetInstancesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetInstance>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/targetInstances/{target_instance}",
+      "/compute/v1/projects/{project}/zones/{zone}/targetInstances/"
+      "{target_instance}",
       {std::make_pair("project", request.project()),
        std::make_pair("target_instance", request.target_instance()),
        std::make_pair("zone", request.zone())});
@@ -79,8 +85,9 @@ DefaultTargetInstancesRestStub::GetTargetInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetInstancesRestStub::InsertTargetInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetInstances::v1::InsertTargetInstancesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetInstances::v1::
+        InsertTargetInstancesRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/targetInstances");
@@ -88,9 +95,11 @@ DefaultTargetInstancesRestStub::InsertTargetInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::TargetInstanceList>
 DefaultTargetInstancesRestStub::ListTargetInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetInstances::v1::ListTargetInstancesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::TargetInstanceList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetInstances::v1::
+        ListTargetInstancesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::TargetInstanceList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/targetInstances",
       {std::make_pair("filter", request.filter()),
@@ -98,7 +107,8 @@ DefaultTargetInstancesRestStub::ListTargetInstances(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success())),
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success())),
        std::make_pair("zone", request.zone())});
 }
 

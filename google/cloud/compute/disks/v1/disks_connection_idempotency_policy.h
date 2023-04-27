@@ -37,51 +37,61 @@ class DisksConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<DisksConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  AddResourcePolicies(google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const& request);
+  virtual google::cloud::Idempotency AddResourcePolicies(
+      google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  AggregatedListDisks(google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const& request);
+  virtual google::cloud::Idempotency AggregatedListDisks(
+      google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  CreateSnapshot(google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const& request);
+  virtual google::cloud::Idempotency CreateSnapshot(
+      google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  DeleteDisks(google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const& request);
+  virtual google::cloud::Idempotency DeleteDisks(
+      google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetDisks(google::cloud::cpp::compute::disks::v1::GetDisksRequest const& request);
+  virtual google::cloud::Idempotency GetDisks(
+      google::cloud::cpp::compute::disks::v1::GetDisksRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  InsertDisks(google::cloud::cpp::compute::disks::v1::InsertDisksRequest const& request);
+  virtual google::cloud::Idempotency InsertDisks(
+      google::cloud::cpp::compute::disks::v1::InsertDisksRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListDisks(google::cloud::cpp::compute::disks::v1::ListDisksRequest request);
+  virtual google::cloud::Idempotency ListDisks(
+      google::cloud::cpp::compute::disks::v1::ListDisksRequest request);
 
-  virtual google::cloud::Idempotency
-  RemoveResourcePolicies(google::cloud::cpp::compute::disks::v1::RemoveResourcePoliciesRequest const& request);
+  virtual google::cloud::Idempotency RemoveResourcePolicies(
+      google::cloud::cpp::compute::disks::v1::
+          RemoveResourcePoliciesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  Resize(google::cloud::cpp::compute::disks::v1::ResizeRequest const& request);
+  virtual google::cloud::Idempotency Resize(
+      google::cloud::cpp::compute::disks::v1::ResizeRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::cloud::cpp::compute::disks::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::cloud::cpp::compute::disks::v1::SetIamPolicyRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  SetLabels(google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request);
+  virtual google::cloud::Idempotency SetLabels(
+      google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::cloud::cpp::compute::disks::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::disks::v1::TestIamPermissionsRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateDisks(google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const& request);
+  virtual google::cloud::Idempotency UpdateDisks(
+      google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const&
+          request);
 };
 
 std::unique_ptr<DisksConnectionIdempotencyPolicy>
-    MakeDefaultDisksConnectionIdempotencyPolicy();
+MakeDefaultDisksConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_disks_v1

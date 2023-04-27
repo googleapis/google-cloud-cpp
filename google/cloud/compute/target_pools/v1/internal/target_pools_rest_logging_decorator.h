@@ -38,52 +38,64 @@ class TargetPoolsRestLogging : public TargetPoolsRestStub {
  public:
   ~TargetPoolsRestLogging() override = default;
   TargetPoolsRestLogging(std::shared_ptr<TargetPoolsRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                         TracingOptions tracing_options,
+                         std::set<std::string> components);
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddHealthCheck(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetPools::v1::AddHealthCheckRequest const& request) override;
+      google::cloud::cpp::compute::targetPools::v1::AddHealthCheckRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddInstance(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetPools::v1::AddInstanceRequest const& request) override;
+      google::cloud::cpp::compute::targetPools::v1::AddInstanceRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetPoolAggregatedList> AggregatedListTargetPools(
+  StatusOr<google::cloud::cpp::compute::v1::TargetPoolAggregatedList>
+  AggregatedListTargetPools(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetPools::v1::AggregatedListTargetPoolsRequest const& request) override;
+      google::cloud::cpp::compute::targetPools::v1::
+          AggregatedListTargetPoolsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetPools(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetPools::v1::DeleteTargetPoolsRequest const& request) override;
+      google::cloud::cpp::compute::targetPools::v1::
+          DeleteTargetPoolsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPools(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetPools::v1::GetTargetPoolsRequest const& request) override;
+      google::cloud::cpp::compute::targetPools::v1::GetTargetPoolsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth> GetHealth(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetPools::v1::GetHealthRequest const& request) override;
+      google::cloud::cpp::compute::targetPools::v1::GetHealthRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetPools(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetPools::v1::InsertTargetPoolsRequest const& request) override;
+      google::cloud::cpp::compute::targetPools::v1::
+          InsertTargetPoolsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetPoolList> ListTargetPools(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetPools::v1::ListTargetPoolsRequest const& request) override;
+      google::cloud::cpp::compute::targetPools::v1::
+          ListTargetPoolsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveHealthCheck(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetPools::v1::RemoveHealthCheckRequest const& request) override;
+      google::cloud::cpp::compute::targetPools::v1::
+          RemoveHealthCheckRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveInstance(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetPools::v1::RemoveInstanceRequest const& request) override;
+      google::cloud::cpp::compute::targetPools::v1::RemoveInstanceRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetBackup(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetPools::v1::SetBackupRequest const& request) override;
+      google::cloud::cpp::compute::targetPools::v1::SetBackupRequest const&
+          request) override;
 
  private:
   std::shared_ptr<TargetPoolsRestStub> child_;

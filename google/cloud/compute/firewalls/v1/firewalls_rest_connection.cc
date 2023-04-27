@@ -17,11 +17,11 @@
 // source: google/cloud/compute/firewalls/v1/firewalls.proto
 
 #include "google/cloud/compute/firewalls/v1/firewalls_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/firewalls/v1/firewalls_options.h"
 #include "google/cloud/compute/firewalls/v1/internal/firewalls_option_defaults.h"
 #include "google/cloud/compute/firewalls/v1/internal/firewalls_rest_connection_impl.h"
 #include "google/cloud/compute/firewalls/v1/internal/firewalls_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include <memory>
@@ -34,15 +34,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<FirewallsConnection> MakeFirewallsConnectionRest(
     ExperimentalTag, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList,
-      FirewallsPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 FirewallsPolicyOptionList>(options, __func__);
   options = compute_firewalls_v1_internal::FirewallsDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_firewalls_v1_internal::CreateDefaultFirewallsRestStub(
-    options);
-  return std::make_shared<compute_firewalls_v1_internal::FirewallsRestConnectionImpl>(
+  auto stub =
+      compute_firewalls_v1_internal::CreateDefaultFirewallsRestStub(options);
+  return std::make_shared<
+      compute_firewalls_v1_internal::FirewallsRestConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 

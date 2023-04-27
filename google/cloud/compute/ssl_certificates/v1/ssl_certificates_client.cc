@@ -24,82 +24,113 @@ namespace cloud {
 namespace compute_ssl_certificates_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-SslCertificatesClient::SslCertificatesClient(ExperimentalTag,
-    std::shared_ptr<SslCertificatesConnection> connection, Options opts)
+SslCertificatesClient::SslCertificatesClient(
+    ExperimentalTag, std::shared_ptr<SslCertificatesConnection> connection,
+    Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 SslCertificatesClient::~SslCertificatesClient() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
-SslCertificatesClient::AggregatedListSslCertificates(std::string const& project, Options opts) {
+SslCertificatesClient::AggregatedListSslCertificates(std::string const& project,
+                                                     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::sslCertificates::v1::AggregatedListSslCertificatesRequest request;
+  google::cloud::cpp::compute::sslCertificates::v1::
+      AggregatedListSslCertificatesRequest request;
   request.set_project(project);
   return connection_->AggregatedListSslCertificates(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
-SslCertificatesClient::AggregatedListSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::AggregatedListSslCertificatesRequest const& request, Options opts) {
+SslCertificatesClient::AggregatedListSslCertificates(
+    google::cloud::cpp::compute::sslCertificates::v1::
+        AggregatedListSslCertificatesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AggregatedListSslCertificates(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SslCertificatesClient::DeleteSslCertificates(std::string const& project, std::string const& ssl_certificate, Options opts) {
+SslCertificatesClient::DeleteSslCertificates(std::string const& project,
+                                             std::string const& ssl_certificate,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::sslCertificates::v1::DeleteSslCertificatesRequest request;
+  google::cloud::cpp::compute::sslCertificates::v1::DeleteSslCertificatesRequest
+      request;
   request.set_project(project);
   request.set_ssl_certificate(ssl_certificate);
   return connection_->DeleteSslCertificates(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SslCertificatesClient::DeleteSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::DeleteSslCertificatesRequest const& request, Options opts) {
+SslCertificatesClient::DeleteSslCertificates(
+    google::cloud::cpp::compute::sslCertificates::v1::
+        DeleteSslCertificatesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSslCertificates(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-SslCertificatesClient::GetSslCertificates(std::string const& project, std::string const& ssl_certificate, Options opts) {
+SslCertificatesClient::GetSslCertificates(std::string const& project,
+                                          std::string const& ssl_certificate,
+                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::sslCertificates::v1::GetSslCertificatesRequest request;
+  google::cloud::cpp::compute::sslCertificates::v1::GetSslCertificatesRequest
+      request;
   request.set_project(project);
   request.set_ssl_certificate(ssl_certificate);
   return connection_->GetSslCertificates(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-SslCertificatesClient::GetSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::GetSslCertificatesRequest const& request, Options opts) {
+SslCertificatesClient::GetSslCertificates(
+    google::cloud::cpp::compute::sslCertificates::v1::
+        GetSslCertificatesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSslCertificates(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SslCertificatesClient::InsertSslCertificates(std::string const& project, google::cloud::cpp::compute::v1::SslCertificate const& ssl_certificate_resource, Options opts) {
+SslCertificatesClient::InsertSslCertificates(
+    std::string const& project,
+    google::cloud::cpp::compute::v1::SslCertificate const&
+        ssl_certificate_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::sslCertificates::v1::InsertSslCertificatesRequest request;
+  google::cloud::cpp::compute::sslCertificates::v1::InsertSslCertificatesRequest
+      request;
   request.set_project(project);
   *request.mutable_ssl_certificate_resource() = ssl_certificate_resource;
   return connection_->InsertSslCertificates(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SslCertificatesClient::InsertSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::InsertSslCertificatesRequest const& request, Options opts) {
+SslCertificatesClient::InsertSslCertificates(
+    google::cloud::cpp::compute::sslCertificates::v1::
+        InsertSslCertificatesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertSslCertificates(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
-SslCertificatesClient::ListSslCertificates(std::string const& project, Options opts) {
+SslCertificatesClient::ListSslCertificates(std::string const& project,
+                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::sslCertificates::v1::ListSslCertificatesRequest request;
+  google::cloud::cpp::compute::sslCertificates::v1::ListSslCertificatesRequest
+      request;
   request.set_project(project);
   return connection_->ListSslCertificates(request);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
-SslCertificatesClient::ListSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::ListSslCertificatesRequest request, Options opts) {
+SslCertificatesClient::ListSslCertificates(
+    google::cloud::cpp::compute::sslCertificates::v1::ListSslCertificatesRequest
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSslCertificates(std::move(request));
 }

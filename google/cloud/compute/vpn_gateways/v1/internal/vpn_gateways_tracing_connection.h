@@ -36,33 +36,43 @@ class VpnGatewaysTracingConnection
   ~VpnGatewaysTracingConnection() override = default;
 
   explicit VpnGatewaysTracingConnection(
-    std::shared_ptr<compute_vpn_gateways_v1::VpnGatewaysConnection> child);
+      std::shared_ptr<compute_vpn_gateways_v1::VpnGatewaysConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::compute::v1::VpnGatewayAggregatedList>
-  AggregatedListVpnGateways(google::cloud::cpp::compute::vpnGateways::v1::AggregatedListVpnGatewaysRequest const& request) override;
+  AggregatedListVpnGateways(
+      google::cloud::cpp::compute::vpnGateways::v1::
+          AggregatedListVpnGatewaysRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteVpnGateways(google::cloud::cpp::compute::vpnGateways::v1::DeleteVpnGatewaysRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteVpnGateways(
+      google::cloud::cpp::compute::vpnGateways::v1::
+          DeleteVpnGatewaysRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::VpnGateway>
-  GetVpnGateways(google::cloud::cpp::compute::vpnGateways::v1::GetVpnGatewaysRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::VpnGateway> GetVpnGateways(
+      google::cloud::cpp::compute::vpnGateways::v1::GetVpnGatewaysRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse>
-  GetStatus(google::cloud::cpp::compute::vpnGateways::v1::GetStatusRequest const& request) override;
+  GetStatus(
+      google::cloud::cpp::compute::vpnGateways::v1::GetStatusRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertVpnGateways(google::cloud::cpp::compute::vpnGateways::v1::InsertVpnGatewaysRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertVpnGateways(
+      google::cloud::cpp::compute::vpnGateways::v1::
+          InsertVpnGatewaysRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::VpnGateway>
-  ListVpnGateways(google::cloud::cpp::compute::vpnGateways::v1::ListVpnGatewaysRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::VpnGateway> ListVpnGateways(
+      google::cloud::cpp::compute::vpnGateways::v1::ListVpnGatewaysRequest
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(google::cloud::cpp::compute::vpnGateways::v1::SetLabelsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::cpp::compute::vpnGateways::v1::SetLabelsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::vpnGateways::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::vpnGateways::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<compute_vpn_gateways_v1::VpnGatewaysConnection> child_;

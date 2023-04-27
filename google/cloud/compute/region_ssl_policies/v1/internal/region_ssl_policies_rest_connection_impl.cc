@@ -17,8 +17,8 @@
 // source: google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto
 
 #include "google/cloud/compute/region_ssl_policies/v1/internal/region_ssl_policies_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/region_ssl_policies/v1/internal/region_ssl_policies_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -32,95 +32,122 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionSslPoliciesRestConnectionImpl::RegionSslPoliciesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_region_ssl_policies_v1_internal::RegionSslPoliciesRestStub> stub,
+    std::shared_ptr<
+        compute_region_ssl_policies_v1_internal::RegionSslPoliciesRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        RegionSslPoliciesConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), RegionSslPoliciesConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionSslPoliciesRestConnectionImpl::DeleteRegionSslPolicies(google::cloud::cpp::compute::regionSslPolicies::v1::DeleteRegionSslPoliciesRequest const& request) {
+RegionSslPoliciesRestConnectionImpl::DeleteRegionSslPolicies(
+    google::cloud::cpp::compute::regionSslPolicies::v1::
+        DeleteRegionSslPoliciesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteRegionSslPolicies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::regionSslPolicies::v1::DeleteRegionSslPoliciesRequest const& request) {
+             google::cloud::cpp::compute::regionSslPolicies::v1::
+                 DeleteRegionSslPoliciesRequest const& request) {
         return stub_->DeleteRegionSslPolicies(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-RegionSslPoliciesRestConnectionImpl::GetRegionSslPolicies(google::cloud::cpp::compute::regionSslPolicies::v1::GetRegionSslPoliciesRequest const& request) {
+RegionSslPoliciesRestConnectionImpl::GetRegionSslPolicies(
+    google::cloud::cpp::compute::regionSslPolicies::v1::
+        GetRegionSslPoliciesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetRegionSslPolicies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::regionSslPolicies::v1::GetRegionSslPoliciesRequest const& request) {
+             google::cloud::cpp::compute::regionSslPolicies::v1::
+                 GetRegionSslPoliciesRequest const& request) {
         return stub_->GetRegionSslPolicies(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionSslPoliciesRestConnectionImpl::InsertRegionSslPolicies(google::cloud::cpp::compute::regionSslPolicies::v1::InsertRegionSslPoliciesRequest const& request) {
+RegionSslPoliciesRestConnectionImpl::InsertRegionSslPolicies(
+    google::cloud::cpp::compute::regionSslPolicies::v1::
+        InsertRegionSslPoliciesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->InsertRegionSslPolicies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::regionSslPolicies::v1::InsertRegionSslPoliciesRequest const& request) {
+             google::cloud::cpp::compute::regionSslPolicies::v1::
+                 InsertRegionSslPoliciesRequest const& request) {
         return stub_->InsertRegionSslPolicies(rest_context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
-RegionSslPoliciesRestConnectionImpl::ListRegionSslPolicies(google::cloud::cpp::compute::regionSslPolicies::v1::ListRegionSslPoliciesRequest request) {
+RegionSslPoliciesRestConnectionImpl::ListRegionSslPolicies(
+    google::cloud::cpp::compute::regionSslPolicies::v1::
+        ListRegionSslPoliciesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_region_ssl_policies_v1::RegionSslPoliciesRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<
+      compute_region_ssl_policies_v1::RegionSslPoliciesRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListRegionSslPolicies(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::SslPolicy>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::SslPolicy>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::regionSslPolicies::v1::ListRegionSslPoliciesRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::regionSslPolicies::v1::
+                          ListRegionSslPoliciesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::regionSslPolicies::v1::ListRegionSslPoliciesRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::regionSslPolicies::v1::
+                       ListRegionSslPoliciesRequest const& request) {
               return stub->ListRegionSslPolicies(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::SslPoliciesList r) {
-        std::vector<google::cloud::cpp::compute::v1::SslPolicy> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::SslPolicy> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
-RegionSslPoliciesRestConnectionImpl::ListAvailableFeatures(google::cloud::cpp::compute::regionSslPolicies::v1::ListAvailableFeaturesRequest const& request) {
+StatusOr<
+    google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+RegionSslPoliciesRestConnectionImpl::ListAvailableFeatures(
+    google::cloud::cpp::compute::regionSslPolicies::v1::
+        ListAvailableFeaturesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->ListAvailableFeatures(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::regionSslPolicies::v1::ListAvailableFeaturesRequest const& request) {
+             google::cloud::cpp::compute::regionSslPolicies::v1::
+                 ListAvailableFeaturesRequest const& request) {
         return stub_->ListAvailableFeatures(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionSslPoliciesRestConnectionImpl::PatchRegionSslPolicies(google::cloud::cpp::compute::regionSslPolicies::v1::PatchRegionSslPoliciesRequest const& request) {
+RegionSslPoliciesRestConnectionImpl::PatchRegionSslPolicies(
+    google::cloud::cpp::compute::regionSslPolicies::v1::
+        PatchRegionSslPoliciesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->PatchRegionSslPolicies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::regionSslPolicies::v1::PatchRegionSslPoliciesRequest const& request) {
+             google::cloud::cpp::compute::regionSslPolicies::v1::
+                 PatchRegionSslPoliciesRequest const& request) {
         return stub_->PatchRegionSslPolicies(rest_context, request);
       },
       request, __func__);

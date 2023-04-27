@@ -17,8 +17,8 @@
 // source: google/cloud/compute/firewalls/v1/firewalls.proto
 
 #include "google/cloud/compute/firewalls/v1/internal/firewalls_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/firewalls/v1/internal/firewalls_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -34,68 +34,84 @@ FirewallsRestConnectionImpl::FirewallsRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<compute_firewalls_v1_internal::FirewallsRestStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        FirewallsConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      FirewallsConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-FirewallsRestConnectionImpl::DeleteFirewalls(google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const& request) {
+FirewallsRestConnectionImpl::DeleteFirewalls(
+    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteFirewalls(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const& request) {
+             google::cloud::cpp::compute::firewalls::v1::
+                 DeleteFirewallsRequest const& request) {
         return stub_->DeleteFirewalls(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Firewall>
-FirewallsRestConnectionImpl::GetFirewalls(google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const& request) {
+FirewallsRestConnectionImpl::GetFirewalls(
+    google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetFirewalls(request),
-      [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const& request) {
-        return stub_->GetFirewalls(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&
+              request) { return stub_->GetFirewalls(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-FirewallsRestConnectionImpl::InsertFirewalls(google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const& request) {
+FirewallsRestConnectionImpl::InsertFirewalls(
+    google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->InsertFirewalls(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const& request) {
+             google::cloud::cpp::compute::firewalls::v1::
+                 InsertFirewallsRequest const& request) {
         return stub_->InsertFirewalls(rest_context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Firewall>
-FirewallsRestConnectionImpl::ListFirewalls(google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest request) {
+FirewallsRestConnectionImpl::ListFirewalls(
+    google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_firewalls_v1::FirewallsRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<compute_firewalls_v1::FirewallsRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListFirewalls(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::Firewall>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::Firewall>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::firewalls::v1::
+                          ListFirewallsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::firewalls::v1::
+                       ListFirewallsRequest const& request) {
               return stub->ListFirewalls(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::FirewallList r) {
-        std::vector<google::cloud::cpp::compute::v1::Firewall> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::Firewall> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -103,24 +119,30 @@ FirewallsRestConnectionImpl::ListFirewalls(google::cloud::cpp::compute::firewall
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-FirewallsRestConnectionImpl::PatchFirewalls(google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const& request) {
+FirewallsRestConnectionImpl::PatchFirewalls(
+    google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->PatchFirewalls(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const& request) {
+             google::cloud::cpp::compute::firewalls::v1::
+                 PatchFirewallsRequest const& request) {
         return stub_->PatchFirewalls(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-FirewallsRestConnectionImpl::UpdateFirewalls(google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const& request) {
+FirewallsRestConnectionImpl::UpdateFirewalls(
+    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateFirewalls(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const& request) {
+             google::cloud::cpp::compute::firewalls::v1::
+                 UpdateFirewallsRequest const& request) {
         return stub_->UpdateFirewalls(rest_context, request);
       },
       request, __func__);

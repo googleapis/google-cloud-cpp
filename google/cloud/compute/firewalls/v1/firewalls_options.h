@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FIREWALLS_V1_FIREWALLS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FIREWALLS_V1_FIREWALLS_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/firewalls/v1/firewalls_connection.h"
 #include "google/cloud/compute/firewalls/v1/firewalls_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,8 +64,7 @@ struct FirewallsConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-compute-options
  */
 using FirewallsPolicyOptionList =
-    OptionList<FirewallsRetryPolicyOption,
-               FirewallsBackoffPolicyOption,
+    OptionList<FirewallsRetryPolicyOption, FirewallsBackoffPolicyOption,
                FirewallsConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

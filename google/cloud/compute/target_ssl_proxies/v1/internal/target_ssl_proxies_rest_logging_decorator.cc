@@ -28,18 +28,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TargetSslProxiesRestLogging::TargetSslProxiesRestLogging(
     std::shared_ptr<TargetSslProxiesRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesRestLogging::DeleteTargetSslProxies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetSslProxies::v1::DeleteTargetSslProxiesRequest const& request) {
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        DeleteTargetSslProxiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetSslProxies::v1::DeleteTargetSslProxiesRequest const& request) {
+             google::cloud::cpp::compute::targetSslProxies::v1::
+                 DeleteTargetSslProxiesRequest const& request) {
         return child_->DeleteTargetSslProxies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,10 +50,12 @@ TargetSslProxiesRestLogging::DeleteTargetSslProxies(
 StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>
 TargetSslProxiesRestLogging::GetTargetSslProxies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetSslProxies::v1::GetTargetSslProxiesRequest const& request) {
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        GetTargetSslProxiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetSslProxies::v1::GetTargetSslProxiesRequest const& request) {
+             google::cloud::cpp::compute::targetSslProxies::v1::
+                 GetTargetSslProxiesRequest const& request) {
         return child_->GetTargetSslProxies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -60,10 +64,12 @@ TargetSslProxiesRestLogging::GetTargetSslProxies(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesRestLogging::InsertTargetSslProxies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetSslProxies::v1::InsertTargetSslProxiesRequest const& request) {
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        InsertTargetSslProxiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetSslProxies::v1::InsertTargetSslProxiesRequest const& request) {
+             google::cloud::cpp::compute::targetSslProxies::v1::
+                 InsertTargetSslProxiesRequest const& request) {
         return child_->InsertTargetSslProxies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -72,10 +78,12 @@ TargetSslProxiesRestLogging::InsertTargetSslProxies(
 StatusOr<google::cloud::cpp::compute::v1::TargetSslProxyList>
 TargetSslProxiesRestLogging::ListTargetSslProxies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetSslProxies::v1::ListTargetSslProxiesRequest const& request) {
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        ListTargetSslProxiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetSslProxies::v1::ListTargetSslProxiesRequest const& request) {
+             google::cloud::cpp::compute::targetSslProxies::v1::
+                 ListTargetSslProxiesRequest const& request) {
         return child_->ListTargetSslProxies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -84,10 +92,12 @@ TargetSslProxiesRestLogging::ListTargetSslProxies(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesRestLogging::SetBackendService(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetSslProxies::v1::SetBackendServiceRequest const& request) {
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        SetBackendServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetSslProxies::v1::SetBackendServiceRequest const& request) {
+             google::cloud::cpp::compute::targetSslProxies::v1::
+                 SetBackendServiceRequest const& request) {
         return child_->SetBackendService(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -96,10 +106,12 @@ TargetSslProxiesRestLogging::SetBackendService(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesRestLogging::SetCertificateMap(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetSslProxies::v1::SetCertificateMapRequest const& request) {
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        SetCertificateMapRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetSslProxies::v1::SetCertificateMapRequest const& request) {
+             google::cloud::cpp::compute::targetSslProxies::v1::
+                 SetCertificateMapRequest const& request) {
         return child_->SetCertificateMap(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -108,10 +120,12 @@ TargetSslProxiesRestLogging::SetCertificateMap(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesRestLogging::SetProxyHeader(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetSslProxies::v1::SetProxyHeaderRequest const& request) {
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        SetProxyHeaderRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetSslProxies::v1::SetProxyHeaderRequest const& request) {
+             google::cloud::cpp::compute::targetSslProxies::v1::
+                 SetProxyHeaderRequest const& request) {
         return child_->SetProxyHeader(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -120,10 +134,12 @@ TargetSslProxiesRestLogging::SetProxyHeader(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesRestLogging::SetSslCertificates(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetSslProxies::v1::SetSslCertificatesRequest const& request) {
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        SetSslCertificatesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetSslProxies::v1::SetSslCertificatesRequest const& request) {
+             google::cloud::cpp::compute::targetSslProxies::v1::
+                 SetSslCertificatesRequest const& request) {
         return child_->SetSslCertificates(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -132,10 +148,12 @@ TargetSslProxiesRestLogging::SetSslCertificates(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesRestLogging::SetSslPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetSslProxies::v1::SetSslPolicyRequest const& request) {
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        SetSslPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetSslProxies::v1::SetSslPolicyRequest const& request) {
+             google::cloud::cpp::compute::targetSslProxies::v1::
+                 SetSslPolicyRequest const& request) {
         return child_->SetSslPolicy(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);

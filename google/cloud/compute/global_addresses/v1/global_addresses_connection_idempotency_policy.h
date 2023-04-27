@@ -35,26 +35,32 @@ class GlobalAddressesConnectionIdempotencyPolicy {
   virtual ~GlobalAddressesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<GlobalAddressesConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<GlobalAddressesConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  DeleteGlobalAddresses(google::cloud::cpp::compute::globalAddresses::v1::DeleteGlobalAddressesRequest const& request);
+  virtual google::cloud::Idempotency DeleteGlobalAddresses(
+      google::cloud::cpp::compute::globalAddresses::v1::
+          DeleteGlobalAddressesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetGlobalAddresses(google::cloud::cpp::compute::globalAddresses::v1::GetGlobalAddressesRequest const& request);
+  virtual google::cloud::Idempotency GetGlobalAddresses(
+      google::cloud::cpp::compute::globalAddresses::v1::
+          GetGlobalAddressesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  InsertGlobalAddresses(google::cloud::cpp::compute::globalAddresses::v1::InsertGlobalAddressesRequest const& request);
+  virtual google::cloud::Idempotency InsertGlobalAddresses(
+      google::cloud::cpp::compute::globalAddresses::v1::
+          InsertGlobalAddressesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListGlobalAddresses(google::cloud::cpp::compute::globalAddresses::v1::ListGlobalAddressesRequest request);
+  virtual google::cloud::Idempotency ListGlobalAddresses(
+      google::cloud::cpp::compute::globalAddresses::v1::
+          ListGlobalAddressesRequest request);
 
-  virtual google::cloud::Idempotency
-  SetLabels(google::cloud::cpp::compute::globalAddresses::v1::SetLabelsRequest const& request);
+  virtual google::cloud::Idempotency SetLabels(
+      google::cloud::cpp::compute::globalAddresses::v1::SetLabelsRequest const&
+          request);
 };
 
 std::unique_ptr<GlobalAddressesConnectionIdempotencyPolicy>
-    MakeDefaultGlobalAddressesConnectionIdempotencyPolicy();
+MakeDefaultGlobalAddressesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_global_addresses_v1

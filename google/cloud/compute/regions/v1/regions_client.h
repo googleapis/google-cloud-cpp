@@ -62,7 +62,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RegionsClient {
  public:
-  explicit RegionsClient(ExperimentalTag, std::shared_ptr<RegionsConnection> connection, Options opts = {});
+  explicit RegionsClient(ExperimentalTag,
+                         std::shared_ptr<RegionsConnection> connection,
+                         Options opts = {});
   ~RegionsClient();
 
   ///@{
@@ -84,45 +86,54 @@ class RegionsClient {
   ///@}
 
   ///
-  /// Returns the specified Region resource. To decrease latency for this method,
-  /// you can optionally omit any unneeded information from the response by using
-  /// a field mask. This practice is especially recommended for unused quota
-  /// information (the `quotas` field). To exclude one or more fields, set your
-  /// request's `fields` query parameter to only include the fields you need. For
-  /// example, to only include the `id` and `selfLink` fields, add the query
-  /// parameter `?fields=id,selfLink` to your request.
+  /// Returns the specified Region resource. To decrease latency for this
+  /// method, you can optionally omit any unneeded information from the response
+  /// by using a field mask. This practice is especially recommended for unused
+  /// quota information (the `quotas` field). To exclude one or more fields, set
+  /// your request's `fields` query parameter to only include the fields you
+  /// need. For example, to only include the `id` and `selfLink` fields, add the
+  /// query parameter `?fields=id,selfLink` to your request.
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region resource to return.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Region,google/cloud/compute/v1/internal/common.proto#L19649}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Region,google/cloud/compute/v1/internal/common.proto#L19649}
   ///
-  /// [google.cloud.cpp.compute.regions.v1.GetRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L64}
-  /// [google.cloud.cpp.compute.v1.Region]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19649}
+  /// [google.cloud.cpp.compute.regions.v1.GetRegionsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L64}
+  /// [google.cloud.cpp.compute.v1.Region]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19649}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Region>
-  GetRegions(std::string const& project, std::string const& region, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Region> GetRegions(
+      std::string const& project, std::string const& region, Options opts = {});
 
   ///
-  /// Returns the specified Region resource. To decrease latency for this method,
-  /// you can optionally omit any unneeded information from the response by using
-  /// a field mask. This practice is especially recommended for unused quota
-  /// information (the `quotas` field). To exclude one or more fields, set your
-  /// request's `fields` query parameter to only include the fields you need. For
-  /// example, to only include the `id` and `selfLink` fields, add the query
-  /// parameter `?fields=id,selfLink` to your request.
+  /// Returns the specified Region resource. To decrease latency for this
+  /// method, you can optionally omit any unneeded information from the response
+  /// by using a field mask. This practice is especially recommended for unused
+  /// quota information (the `quotas` field). To exclude one or more fields, set
+  /// your request's `fields` query parameter to only include the fields you
+  /// need. For example, to only include the `id` and `selfLink` fields, add the
+  /// query parameter `?fields=id,selfLink` to your request.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::regions::v1::GetRegionsRequest,google/cloud/compute/regions/v1/regions.proto#L64}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::regions::v1::GetRegionsRequest,google/cloud/compute/regions/v1/regions.proto#L64}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Region,google/cloud/compute/v1/internal/common.proto#L19649}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Region,google/cloud/compute/v1/internal/common.proto#L19649}
   ///
-  /// [google.cloud.cpp.compute.regions.v1.GetRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L64}
-  /// [google.cloud.cpp.compute.v1.Region]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19649}
+  /// [google.cloud.cpp.compute.regions.v1.GetRegionsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L64}
+  /// [google.cloud.cpp.compute.v1.Region]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19649}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Region>
-  GetRegions(google::cloud::cpp::compute::regions::v1::GetRegionsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Region> GetRegions(
+      google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Retrieves the list of region resources available to the specified project.
@@ -130,20 +141,23 @@ class RegionsClient {
   /// information from the response by using a field mask. This practice is
   /// especially recommended for unused quota information (the `items.quotas`
   /// field). To exclude one or more fields, set your request's `fields` query
-  /// parameter to only include the fields you need. For example, to only include
-  /// the `id` and `selfLink` fields, add the query parameter
+  /// parameter to only include the fields you need. For example, to only
+  /// include the `id` and `selfLink` fields, add the query parameter
   /// `?fields=id,selfLink` to your request.
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Region,google/cloud/compute/v1/internal/common.proto#L19649}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Region,google/cloud/compute/v1/internal/common.proto#L19649}
   ///
-  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L73}
-  /// [google.cloud.cpp.compute.v1.Region]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19649}
+  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L73}
+  /// [google.cloud.cpp.compute.v1.Region]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19649}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::Region>
-  ListRegions(std::string const& project, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Region> ListRegions(
+      std::string const& project, Options opts = {});
 
   ///
   /// Retrieves the list of region resources available to the specified project.
@@ -151,20 +165,25 @@ class RegionsClient {
   /// information from the response by using a field mask. This practice is
   /// especially recommended for unused quota information (the `items.quotas`
   /// field). To exclude one or more fields, set your request's `fields` query
-  /// parameter to only include the fields you need. For example, to only include
-  /// the `id` and `selfLink` fields, add the query parameter
+  /// parameter to only include the fields you need. For example, to only
+  /// include the `id` and `selfLink` fields, add the query parameter
   /// `?fields=id,selfLink` to your request.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::regions::v1::ListRegionsRequest,google/cloud/compute/regions/v1/regions.proto#L73}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::regions::v1::ListRegionsRequest,google/cloud/compute/regions/v1/regions.proto#L73}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Region,google/cloud/compute/v1/internal/common.proto#L19649}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Region,google/cloud/compute/v1/internal/common.proto#L19649}
   ///
-  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L73}
-  /// [google.cloud.cpp.compute.v1.Region]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19649}
+  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L73}
+  /// [google.cloud.cpp.compute.v1.Region]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19649}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::Region>
-  ListRegions(google::cloud::cpp::compute::regions::v1::ListRegionsRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Region> ListRegions(
+      google::cloud::cpp::compute::regions::v1::ListRegionsRequest request,
+      Options opts = {});
 
  private:
   std::shared_ptr<RegionsConnection> connection_;

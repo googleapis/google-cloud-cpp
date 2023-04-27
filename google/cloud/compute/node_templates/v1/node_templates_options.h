@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_TEMPLATES_V1_NODE_TEMPLATES_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_TEMPLATES_V1_NODE_TEMPLATES_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/node_templates/v1/node_templates_connection.h"
 #include "google/cloud/compute/node_templates/v1/node_templates_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,8 +64,7 @@ struct NodeTemplatesConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-compute-options
  */
 using NodeTemplatesPolicyOptionList =
-    OptionList<NodeTemplatesRetryPolicyOption,
-               NodeTemplatesBackoffPolicyOption,
+    OptionList<NodeTemplatesRetryPolicyOption, NodeTemplatesBackoffPolicyOption,
                NodeTemplatesConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

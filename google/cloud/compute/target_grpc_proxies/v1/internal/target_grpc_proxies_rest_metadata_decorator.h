@@ -35,27 +35,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TargetGrpcProxiesRestMetadata : public TargetGrpcProxiesRestStub {
  public:
   ~TargetGrpcProxiesRestMetadata() override = default;
-  explicit TargetGrpcProxiesRestMetadata(std::shared_ptr<TargetGrpcProxiesRestStub> child);
+  explicit TargetGrpcProxiesRestMetadata(
+      std::shared_ptr<TargetGrpcProxiesRestStub> child);
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetGrpcProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetGrpcProxies::v1::DeleteTargetGrpcProxiesRequest const& request) override;
+      google::cloud::cpp::compute::targetGrpcProxies::v1::
+          DeleteTargetGrpcProxiesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy> GetTargetGrpcProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetGrpcProxies::v1::GetTargetGrpcProxiesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
+  GetTargetGrpcProxies(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::targetGrpcProxies::v1::
+                           GetTargetGrpcProxiesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetGrpcProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetGrpcProxies::v1::InsertTargetGrpcProxiesRequest const& request) override;
+      google::cloud::cpp::compute::targetGrpcProxies::v1::
+          InsertTargetGrpcProxiesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxyList> ListTargetGrpcProxies(
+  StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxyList>
+  ListTargetGrpcProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetGrpcProxies::v1::ListTargetGrpcProxiesRequest const& request) override;
+      google::cloud::cpp::compute::targetGrpcProxies::v1::
+          ListTargetGrpcProxiesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchTargetGrpcProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetGrpcProxies::v1::PatchTargetGrpcProxiesRequest const& request) override;
+      google::cloud::cpp::compute::targetGrpcProxies::v1::
+          PatchTargetGrpcProxiesRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

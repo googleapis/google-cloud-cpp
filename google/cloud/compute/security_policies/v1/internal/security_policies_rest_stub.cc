@@ -29,69 +29,81 @@ namespace cloud {
 namespace compute_security_policies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultSecurityPoliciesRestStub::DefaultSecurityPoliciesRestStub(Options options)
+DefaultSecurityPoliciesRestStub::DefaultSecurityPoliciesRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       options_(std::move(options)) {}
 
 DefaultSecurityPoliciesRestStub::DefaultSecurityPoliciesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultSecurityPoliciesRestStub::AddRule(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::AddRuleRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::securityPolicies::v1::AddRuleRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/securityPolicies/{security_policy}/addRule");
+      "/compute/v1/projects/{project}/global/securityPolicies/"
+      "{security_policy}/addRule");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>
 DefaultSecurityPoliciesRestStub::AggregatedListSecurityPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::AggregatedListSecurityPoliciesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::securityPolicies::v1::
+        AggregatedListSecurityPoliciesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/securityPolicies",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultSecurityPoliciesRestStub::DeleteSecurityPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::DeleteSecurityPoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::securityPolicies::v1::
+        DeleteSecurityPoliciesRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/securityPolicies/{security_policy}");
+      "/compute/v1/projects/{project}/global/securityPolicies/"
+      "{security_policy}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
 DefaultSecurityPoliciesRestStub::GetSecurityPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::GetSecurityPoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::securityPolicies::v1::
+        GetSecurityPoliciesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SecurityPolicy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/securityPolicies/{security_policy}",
+      "/compute/v1/projects/{project}/global/securityPolicies/"
+      "{security_policy}",
       {std::make_pair("project", request.project()),
        std::make_pair("security_policy", request.security_policy())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>
 DefaultSecurityPoliciesRestStub::GetRule(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::GetRuleRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::SecurityPolicyRule>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::securityPolicies::v1::GetRuleRequest const&
+        request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::SecurityPolicyRule>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/securityPolicies/{security_policy}/getRule",
+      "/compute/v1/projects/{project}/global/securityPolicies/"
+      "{security_policy}/getRule",
       {std::make_pair("priority", std::to_string(request.priority())),
        std::make_pair("project", request.project()),
        std::make_pair("security_policy", request.security_policy())});
@@ -99,8 +111,9 @@ DefaultSecurityPoliciesRestStub::GetRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultSecurityPoliciesRestStub::InsertSecurityPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::InsertSecurityPoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::securityPolicies::v1::
+        InsertSecurityPoliciesRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/securityPolicies");
@@ -108,9 +121,11 @@ DefaultSecurityPoliciesRestStub::InsertSecurityPolicies(
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyList>
 DefaultSecurityPoliciesRestStub::ListSecurityPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::ListSecurityPoliciesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::SecurityPolicyList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::securityPolicies::v1::
+        ListSecurityPoliciesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::SecurityPolicyList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/securityPolicies",
       {std::make_pair("filter", request.filter()),
@@ -118,58 +133,73 @@ DefaultSecurityPoliciesRestStub::ListSecurityPolicies(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
-StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesListPreconfiguredExpressionSetsResponse>
+StatusOr<google::cloud::cpp::compute::v1::
+             SecurityPoliciesListPreconfiguredExpressionSetsResponse>
 DefaultSecurityPoliciesRestStub::ListPreconfiguredExpressionSets(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::ListPreconfiguredExpressionSetsRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::SecurityPoliciesListPreconfiguredExpressionSetsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::securityPolicies::v1::
+        ListPreconfiguredExpressionSetsRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::
+          SecurityPoliciesListPreconfiguredExpressionSetsResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/securityPolicies/listPreconfiguredExpressionSets",
+      "/compute/v1/projects/{project}/global/securityPolicies/"
+      "listPreconfiguredExpressionSets",
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultSecurityPoliciesRestStub::PatchSecurityPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::PatchSecurityPoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::securityPolicies::v1::
+        PatchSecurityPoliciesRequest const& request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/securityPolicies/{security_policy}");
+      "/compute/v1/projects/{project}/global/securityPolicies/"
+      "{security_policy}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultSecurityPoliciesRestStub::PatchRule(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::PatchRuleRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::securityPolicies::v1::PatchRuleRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/securityPolicies/{security_policy}/patchRule");
+      "/compute/v1/projects/{project}/global/securityPolicies/"
+      "{security_policy}/patchRule");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultSecurityPoliciesRestStub::RemoveRule(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::RemoveRuleRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::securityPolicies::v1::RemoveRuleRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/securityPolicies/{security_policy}/removeRule");
+      "/compute/v1/projects/{project}/global/securityPolicies/"
+      "{security_policy}/removeRule");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultSecurityPoliciesRestStub::SetLabels(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::securityPolicies::v1::SetLabelsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::securityPolicies::v1::SetLabelsRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/securityPolicies/{resource}/setLabels");
+      "/compute/v1/projects/{project}/global/securityPolicies/{resource}/"
+      "setLabels");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

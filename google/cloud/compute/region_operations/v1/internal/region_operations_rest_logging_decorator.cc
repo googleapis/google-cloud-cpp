@@ -28,18 +28,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionOperationsRestLogging::RegionOperationsRestLogging(
     std::shared_ptr<RegionOperationsRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
-Status
-RegionOperationsRestLogging::DeleteRegionOperations(
+Status RegionOperationsRestLogging::DeleteRegionOperations(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionOperations::v1::DeleteRegionOperationsRequest const& request) {
+    google::cloud::cpp::compute::regionOperations::v1::
+        DeleteRegionOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::regionOperations::v1::DeleteRegionOperationsRequest const& request) {
+             google::cloud::cpp::compute::regionOperations::v1::
+                 DeleteRegionOperationsRequest const& request) {
         return child_->DeleteRegionOperations(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,10 +49,12 @@ RegionOperationsRestLogging::DeleteRegionOperations(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionOperationsRestLogging::GetRegionOperations(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionOperations::v1::GetRegionOperationsRequest const& request) {
+    google::cloud::cpp::compute::regionOperations::v1::
+        GetRegionOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::regionOperations::v1::GetRegionOperationsRequest const& request) {
+             google::cloud::cpp::compute::regionOperations::v1::
+                 GetRegionOperationsRequest const& request) {
         return child_->GetRegionOperations(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -60,10 +63,12 @@ RegionOperationsRestLogging::GetRegionOperations(
 StatusOr<google::cloud::cpp::compute::v1::OperationList>
 RegionOperationsRestLogging::ListRegionOperations(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionOperations::v1::ListRegionOperationsRequest const& request) {
+    google::cloud::cpp::compute::regionOperations::v1::
+        ListRegionOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::regionOperations::v1::ListRegionOperationsRequest const& request) {
+             google::cloud::cpp::compute::regionOperations::v1::
+                 ListRegionOperationsRequest const& request) {
         return child_->ListRegionOperations(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -72,12 +77,13 @@ RegionOperationsRestLogging::ListRegionOperations(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionOperationsRestLogging::Wait(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionOperations::v1::WaitRequest const& request) {
+    google::cloud::cpp::compute::regionOperations::v1::WaitRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::regionOperations::v1::WaitRequest const& request) {
-        return child_->Wait(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::regionOperations::v1::WaitRequest const&
+              request) { return child_->Wait(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 

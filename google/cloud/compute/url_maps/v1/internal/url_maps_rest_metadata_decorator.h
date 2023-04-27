@@ -37,41 +37,51 @@ class UrlMapsRestMetadata : public UrlMapsRestStub {
   ~UrlMapsRestMetadata() override = default;
   explicit UrlMapsRestMetadata(std::shared_ptr<UrlMapsRestStub> child);
 
-  StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList> AggregatedListUrlMaps(
+  StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
+  AggregatedListUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::AggregatedListUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::urlMaps::v1::
+          AggregatedListUrlMapsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::DeleteUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::urlMaps::v1::DeleteUrlMapsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::GetUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::urlMaps::v1::GetUrlMapsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::InsertUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::urlMaps::v1::InsertUrlMapsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InvalidateCache(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::InvalidateCacheRequest const& request) override;
+      google::cloud::cpp::compute::urlMaps::v1::InvalidateCacheRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMapList> ListUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::ListUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::urlMaps::v1::ListUrlMapsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::PatchUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::urlMaps::v1::PatchUrlMapsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::UpdateUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::urlMaps::v1::UpdateUrlMapsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse> Validate(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::urlMaps::v1::ValidateRequest const& request) override;
+      google::cloud::cpp::compute::urlMaps::v1::ValidateRequest const& request)
+      override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

@@ -17,11 +17,11 @@
 // source: google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto
 
 #include "google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/target_ssl_proxies/v1/internal/target_ssl_proxies_option_defaults.h"
 #include "google/cloud/compute/target_ssl_proxies/v1/internal/target_ssl_proxies_tracing_connection.h"
 #include "google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,55 +36,65 @@ TargetSslProxiesConnection::~TargetSslProxiesConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesConnection::DeleteTargetSslProxies(
-    google::cloud::cpp::compute::targetSslProxies::v1::DeleteTargetSslProxiesRequest const&) {
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        DeleteTargetSslProxiesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>
 TargetSslProxiesConnection::GetTargetSslProxies(
-    google::cloud::cpp::compute::targetSslProxies::v1::GetTargetSslProxiesRequest const&) {
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        GetTargetSslProxiesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesConnection::InsertTargetSslProxies(
-    google::cloud::cpp::compute::targetSslProxies::v1::InsertTargetSslProxiesRequest const&) {
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        InsertTargetSslProxiesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy> TargetSslProxiesConnection::ListTargetSslProxies(
-    google::cloud::cpp::compute::targetSslProxies::v1::ListTargetSslProxiesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>
+TargetSslProxiesConnection::ListTargetSslProxies(
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        ListTargetSslProxiesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesConnection::SetBackendService(
-    google::cloud::cpp::compute::targetSslProxies::v1::SetBackendServiceRequest const&) {
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        SetBackendServiceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesConnection::SetCertificateMap(
-    google::cloud::cpp::compute::targetSslProxies::v1::SetCertificateMapRequest const&) {
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        SetCertificateMapRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesConnection::SetProxyHeader(
-    google::cloud::cpp::compute::targetSslProxies::v1::SetProxyHeaderRequest const&) {
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        SetProxyHeaderRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesConnection::SetSslCertificates(
-    google::cloud::cpp::compute::targetSslProxies::v1::SetSslCertificatesRequest const&) {
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        SetSslCertificatesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesConnection::SetSslPolicy(
-    google::cloud::cpp::compute::targetSslProxies::v1::SetSslPolicyRequest const&) {
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        SetSslPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

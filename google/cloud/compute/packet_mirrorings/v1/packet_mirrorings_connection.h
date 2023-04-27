@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_PACKET_MIRRORINGS_V1_PACKET_MIRRORINGS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_PACKET_MIRRORINGS_V1_PACKET_MIRRORINGS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/packet_mirrorings/v1/internal/packet_mirrorings_retry_traits.h"
 #include "google/cloud/compute/packet_mirrorings/v1/packet_mirrorings_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -35,11 +35,13 @@ namespace cloud {
 namespace compute_packet_mirrorings_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using PacketMirroringsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_packet_mirrorings_v1_internal::PacketMirroringsRetryTraits>;
+using PacketMirroringsRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_packet_mirrorings_v1_internal::PacketMirroringsRetryTraits>;
 
-using PacketMirroringsLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_packet_mirrorings_v1_internal::PacketMirroringsRetryTraits>;
+using PacketMirroringsLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_packet_mirrorings_v1_internal::PacketMirroringsRetryTraits>;
 
 using PacketMirroringsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -55,7 +57,8 @@ using PacketMirroringsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakePacketMirroringsConnection()`.
  *
- * For mocking, see `compute_packet_mirrorings_v1_mocks::MockPacketMirroringsConnection`.
+ * For mocking, see
+ * `compute_packet_mirrorings_v1_mocks::MockPacketMirroringsConnection`.
  */
 class PacketMirroringsConnection {
  public:
@@ -63,26 +66,35 @@ class PacketMirroringsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
-  AggregatedListPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::AggregatedListPacketMirroringsRequest const& request);
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
+  AggregatedListPacketMirrorings(
+      google::cloud::cpp::compute::packetMirrorings::v1::
+          AggregatedListPacketMirroringsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeletePacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::DeletePacketMirroringsRequest const& request);
+  DeletePacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::
+                             DeletePacketMirroringsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
-  GetPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::GetPacketMirroringsRequest const& request);
+  GetPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::
+                          GetPacketMirroringsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::InsertPacketMirroringsRequest const& request);
+  InsertPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::
+                             InsertPacketMirroringsRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>
-  ListPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::ListPacketMirroringsRequest request);
+  ListPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::
+                           ListPacketMirroringsRequest request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::PatchPacketMirroringsRequest const& request);
+  PatchPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::
+                            PatchPacketMirroringsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::packetMirrorings::v1::TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::packetMirrorings::v1::
+                         TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

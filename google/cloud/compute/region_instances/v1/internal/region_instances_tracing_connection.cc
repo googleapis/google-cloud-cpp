@@ -28,12 +28,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 RegionInstancesTracingConnection::RegionInstancesTracingConnection(
-    std::shared_ptr<compute_region_instances_v1::RegionInstancesConnection> child)
+    std::shared_ptr<compute_region_instances_v1::RegionInstancesConnection>
+        child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionInstancesTracingConnection::BulkInsert(google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const& request) {
-  auto span = internal::MakeSpan("compute_region_instances_v1::RegionInstancesConnection::BulkInsert");
+RegionInstancesTracingConnection::BulkInsert(
+    google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_region_instances_v1::RegionInstancesConnection::BulkInsert");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->BulkInsert(request));
 }
@@ -42,7 +46,8 @@ RegionInstancesTracingConnection::BulkInsert(google::cloud::cpp::compute::region
 
 std::shared_ptr<compute_region_instances_v1::RegionInstancesConnection>
 MakeRegionInstancesTracingConnection(
-    std::shared_ptr<compute_region_instances_v1::RegionInstancesConnection> conn) {
+    std::shared_ptr<compute_region_instances_v1::RegionInstancesConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<RegionInstancesTracingConnection>(std::move(conn));

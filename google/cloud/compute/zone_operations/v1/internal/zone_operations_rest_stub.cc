@@ -35,14 +35,13 @@ DefaultZoneOperationsRestStub::DefaultZoneOperationsRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultZoneOperationsRestStub::DefaultZoneOperationsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 Status DefaultZoneOperationsRestStub::DeleteZoneOperations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::zoneOperations::v1::DeleteZoneOperationsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::zoneOperations::v1::
+        DeleteZoneOperationsRequest const& request) {
   return rest_internal::Delete(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/operations/{operation}");
@@ -50,8 +49,9 @@ Status DefaultZoneOperationsRestStub::DeleteZoneOperations(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultZoneOperationsRestStub::GetZoneOperations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::zoneOperations::v1::GetZoneOperationsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::zoneOperations::v1::
+        GetZoneOperationsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/operations/{operation}",
@@ -62,8 +62,9 @@ DefaultZoneOperationsRestStub::GetZoneOperations(
 
 StatusOr<google::cloud::cpp::compute::v1::OperationList>
 DefaultZoneOperationsRestStub::ListZoneOperations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::zoneOperations::v1::ListZoneOperationsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::zoneOperations::v1::
+        ListZoneOperationsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::OperationList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/operations",
@@ -72,17 +73,20 @@ DefaultZoneOperationsRestStub::ListZoneOperations(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success())),
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success())),
        std::make_pair("zone", request.zone())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultZoneOperationsRestStub::Wait(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::zoneOperations::v1::WaitRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::zoneOperations::v1::WaitRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/operations/{operation}/wait");
+      "/compute/v1/projects/{project}/zones/{zone}/operations/{operation}/"
+      "wait");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

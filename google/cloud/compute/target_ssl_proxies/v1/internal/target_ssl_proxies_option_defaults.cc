@@ -34,24 +34,33 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options TargetSslProxiesDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_TARGET_SSL_PROXIES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_TARGET_SSL_PROXIES_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_TARGET_SSL_PROXIES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_TARGET_SSL_PROXIES_AUTHORITY",
       "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
-  if (!options.has<compute_target_ssl_proxies_v1::TargetSslProxiesRetryPolicyOption>()) {
-    options.set<compute_target_ssl_proxies_v1::TargetSslProxiesRetryPolicyOption>(
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  if (!options.has<
+          compute_target_ssl_proxies_v1::TargetSslProxiesRetryPolicyOption>()) {
+    options.set<
+        compute_target_ssl_proxies_v1::TargetSslProxiesRetryPolicyOption>(
         compute_target_ssl_proxies_v1::TargetSslProxiesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_target_ssl_proxies_v1::TargetSslProxiesBackoffPolicyOption>()) {
-    options.set<compute_target_ssl_proxies_v1::TargetSslProxiesBackoffPolicyOption>(
+  if (!options.has<compute_target_ssl_proxies_v1::
+                       TargetSslProxiesBackoffPolicyOption>()) {
+    options.set<
+        compute_target_ssl_proxies_v1::TargetSslProxiesBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
-  if (!options.has<compute_target_ssl_proxies_v1::TargetSslProxiesConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_target_ssl_proxies_v1::TargetSslProxiesConnectionIdempotencyPolicyOption>(
-        compute_target_ssl_proxies_v1::MakeDefaultTargetSslProxiesConnectionIdempotencyPolicy());
+  if (!options.has<compute_target_ssl_proxies_v1::
+                       TargetSslProxiesConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_target_ssl_proxies_v1::
+                    TargetSslProxiesConnectionIdempotencyPolicyOption>(
+        compute_target_ssl_proxies_v1::
+            MakeDefaultTargetSslProxiesConnectionIdempotencyPolicy());
   }
 
   return options;

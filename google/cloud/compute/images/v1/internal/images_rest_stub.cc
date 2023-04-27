@@ -35,15 +35,14 @@ DefaultImagesRestStub::DefaultImagesRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultImagesRestStub::DefaultImagesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultImagesRestStub::DeleteImages(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::images::v1::DeleteImagesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::images::v1::DeleteImagesRequest const&
+        request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/images/{image}");
@@ -51,8 +50,8 @@ DefaultImagesRestStub::DeleteImages(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultImagesRestStub::Deprecate(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/images/{image}/deprecate");
@@ -60,8 +59,8 @@ DefaultImagesRestStub::Deprecate(
 
 StatusOr<google::cloud::cpp::compute::v1::Image>
 DefaultImagesRestStub::GetImages(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::images::v1::GetImagesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::images::v1::GetImagesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Image>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/images/{image}",
@@ -71,8 +70,9 @@ DefaultImagesRestStub::GetImages(
 
 StatusOr<google::cloud::cpp::compute::v1::Image>
 DefaultImagesRestStub::GetFromFamily(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Image>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/images/family/{family}",
@@ -82,20 +82,24 @@ DefaultImagesRestStub::GetFromFamily(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultImagesRestStub::GetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/images/{resource}/getIamPolicy",
-      {std::make_pair("options_requested_policy_version", std::to_string(request.options_requested_policy_version())),
+      {std::make_pair(
+           "options_requested_policy_version",
+           std::to_string(request.options_requested_policy_version())),
        std::make_pair("project", request.project()),
        std::make_pair("resource", request.resource())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultImagesRestStub::InsertImages(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::images::v1::InsertImagesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::images::v1::InsertImagesRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/images");
@@ -103,8 +107,8 @@ DefaultImagesRestStub::InsertImages(
 
 StatusOr<google::cloud::cpp::compute::v1::ImageList>
 DefaultImagesRestStub::ListImages(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::images::v1::ListImagesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::images::v1::ListImagesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::ImageList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/images",
@@ -113,13 +117,15 @@ DefaultImagesRestStub::ListImages(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultImagesRestStub::PatchImages(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::images::v1::PatchImagesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::images::v1::PatchImagesRequest const&
+        request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/images/{image}");
@@ -127,8 +133,9 @@ DefaultImagesRestStub::PatchImages(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultImagesRestStub::SetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/images/{resource}/setIamPolicy");
@@ -136,8 +143,8 @@ DefaultImagesRestStub::SetIamPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultImagesRestStub::SetLabels(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/images/{resource}/setLabels");
@@ -145,11 +152,14 @@ DefaultImagesRestStub::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultImagesRestStub::TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const&
+        request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/images/{resource}/testIamPermissions");
+      "/compute/v1/projects/{project}/global/images/{resource}/"
+      "testIamPermissions");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

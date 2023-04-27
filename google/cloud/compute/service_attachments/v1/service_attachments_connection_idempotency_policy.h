@@ -35,38 +35,48 @@ class ServiceAttachmentsConnectionIdempotencyPolicy {
   virtual ~ServiceAttachmentsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ServiceAttachmentsConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ServiceAttachmentsConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  AggregatedListServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::AggregatedListServiceAttachmentsRequest const& request);
+  virtual google::cloud::Idempotency AggregatedListServiceAttachments(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          AggregatedListServiceAttachmentsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::DeleteServiceAttachmentsRequest const& request);
+  virtual google::cloud::Idempotency DeleteServiceAttachments(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          DeleteServiceAttachmentsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::GetServiceAttachmentsRequest const& request);
+  virtual google::cloud::Idempotency GetServiceAttachments(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          GetServiceAttachmentsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::cloud::cpp::compute::serviceAttachments::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  InsertServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::InsertServiceAttachmentsRequest const& request);
+  virtual google::cloud::Idempotency InsertServiceAttachments(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          InsertServiceAttachmentsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::ListServiceAttachmentsRequest request);
+  virtual google::cloud::Idempotency ListServiceAttachments(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          ListServiceAttachmentsRequest request);
 
-  virtual google::cloud::Idempotency
-  PatchServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::PatchServiceAttachmentsRequest const& request);
+  virtual google::cloud::Idempotency PatchServiceAttachments(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          PatchServiceAttachmentsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::cloud::cpp::compute::serviceAttachments::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::cloud::cpp::compute::serviceAttachments::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<ServiceAttachmentsConnectionIdempotencyPolicy>
-    MakeDefaultServiceAttachmentsConnectionIdempotencyPolicy();
+MakeDefaultServiceAttachmentsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_service_attachments_v1

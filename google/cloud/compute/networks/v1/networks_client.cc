@@ -25,30 +25,37 @@ namespace compute_networks_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 NetworksClient::NetworksClient(ExperimentalTag,
-    std::shared_ptr<NetworksConnection> connection, Options opts)
+                               std::shared_ptr<NetworksConnection> connection,
+                               Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 NetworksClient::~NetworksClient() = default;
 
-StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworksClient::AddPeering(std::string const& project, std::string const& network, google::cloud::cpp::compute::v1::NetworksAddPeeringRequest const& networks_add_peering_request_resource, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Operation> NetworksClient::AddPeering(
+    std::string const& project, std::string const& network,
+    google::cloud::cpp::compute::v1::NetworksAddPeeringRequest const&
+        networks_add_peering_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::networks::v1::AddPeeringRequest request;
   request.set_project(project);
   request.set_network(network);
-  *request.mutable_networks_add_peering_request_resource() = networks_add_peering_request_resource;
+  *request.mutable_networks_add_peering_request_resource() =
+      networks_add_peering_request_resource;
   return connection_->AddPeering(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworksClient::AddPeering(google::cloud::cpp::compute::networks::v1::AddPeeringRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Operation> NetworksClient::AddPeering(
+    google::cloud::cpp::compute::networks::v1::AddPeeringRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddPeering(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworksClient::DeleteNetworks(std::string const& project, std::string const& network, Options opts) {
+NetworksClient::DeleteNetworks(std::string const& project,
+                               std::string const& network, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest request;
   request.set_project(project);
@@ -57,13 +64,16 @@ NetworksClient::DeleteNetworks(std::string const& project, std::string const& ne
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworksClient::DeleteNetworks(google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const& request, Options opts) {
+NetworksClient::DeleteNetworks(
+    google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNetworks(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Network>
-NetworksClient::GetNetworks(std::string const& project, std::string const& network, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Network> NetworksClient::GetNetworks(
+    std::string const& project, std::string const& network, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::networks::v1::GetNetworksRequest request;
   request.set_project(project);
@@ -71,29 +81,40 @@ NetworksClient::GetNetworks(std::string const& project, std::string const& netwo
   return connection_->GetNetworks(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Network>
-NetworksClient::GetNetworks(google::cloud::cpp::compute::networks::v1::GetNetworksRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Network> NetworksClient::GetNetworks(
+    google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNetworks(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>
-NetworksClient::GetEffectiveFirewalls(std::string const& project, std::string const& network, Options opts) {
+NetworksClient::GetEffectiveFirewalls(std::string const& project,
+                                      std::string const& network,
+                                      Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::networks::v1::GetEffectiveFirewallsRequest request;
+  google::cloud::cpp::compute::networks::v1::GetEffectiveFirewallsRequest
+      request;
   request.set_project(project);
   request.set_network(network);
   return connection_->GetEffectiveFirewalls(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>
-NetworksClient::GetEffectiveFirewalls(google::cloud::cpp::compute::networks::v1::GetEffectiveFirewallsRequest const& request, Options opts) {
+NetworksClient::GetEffectiveFirewalls(
+    google::cloud::cpp::compute::networks::v1::
+        GetEffectiveFirewallsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetEffectiveFirewalls(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworksClient::InsertNetworks(std::string const& project, google::cloud::cpp::compute::v1::Network const& network_resource, Options opts) {
+NetworksClient::InsertNetworks(
+    std::string const& project,
+    google::cloud::cpp::compute::v1::Network const& network_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::networks::v1::InsertNetworksRequest request;
   request.set_project(project);
@@ -102,7 +123,10 @@ NetworksClient::InsertNetworks(std::string const& project, google::cloud::cpp::c
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworksClient::InsertNetworks(google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const& request, Options opts) {
+NetworksClient::InsertNetworks(
+    google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertNetworks(request);
 }
@@ -116,13 +140,16 @@ NetworksClient::ListNetworks(std::string const& project, Options opts) {
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Network>
-NetworksClient::ListNetworks(google::cloud::cpp::compute::networks::v1::ListNetworksRequest request, Options opts) {
+NetworksClient::ListNetworks(
+    google::cloud::cpp::compute::networks::v1::ListNetworksRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListNetworks(std::move(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>
-NetworksClient::ListPeeringRoutes(std::string const& project, std::string const& network, Options opts) {
+NetworksClient::ListPeeringRoutes(std::string const& project,
+                                  std::string const& network, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest request;
   request.set_project(project);
@@ -131,13 +158,18 @@ NetworksClient::ListPeeringRoutes(std::string const& project, std::string const&
 }
 
 StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>
-NetworksClient::ListPeeringRoutes(google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest request, Options opts) {
+NetworksClient::ListPeeringRoutes(
+    google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListPeeringRoutes(std::move(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworksClient::PatchNetworks(std::string const& project, std::string const& network, google::cloud::cpp::compute::v1::Network const& network_resource, Options opts) {
+NetworksClient::PatchNetworks(
+    std::string const& project, std::string const& network,
+    google::cloud::cpp::compute::v1::Network const& network_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::networks::v1::PatchNetworksRequest request;
   request.set_project(project);
@@ -147,29 +179,41 @@ NetworksClient::PatchNetworks(std::string const& project, std::string const& net
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworksClient::PatchNetworks(google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const& request, Options opts) {
+NetworksClient::PatchNetworks(
+    google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchNetworks(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworksClient::RemovePeering(std::string const& project, std::string const& network, google::cloud::cpp::compute::v1::NetworksRemovePeeringRequest const& networks_remove_peering_request_resource, Options opts) {
+NetworksClient::RemovePeering(
+    std::string const& project, std::string const& network,
+    google::cloud::cpp::compute::v1::NetworksRemovePeeringRequest const&
+        networks_remove_peering_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::networks::v1::RemovePeeringRequest request;
   request.set_project(project);
   request.set_network(network);
-  *request.mutable_networks_remove_peering_request_resource() = networks_remove_peering_request_resource;
+  *request.mutable_networks_remove_peering_request_resource() =
+      networks_remove_peering_request_resource;
   return connection_->RemovePeering(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworksClient::RemovePeering(google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const& request, Options opts) {
+NetworksClient::RemovePeering(
+    google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemovePeering(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworksClient::SwitchToCustomMode(std::string const& project, std::string const& network, Options opts) {
+NetworksClient::SwitchToCustomMode(std::string const& project,
+                                   std::string const& network, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest request;
   request.set_project(project);
@@ -178,23 +222,34 @@ NetworksClient::SwitchToCustomMode(std::string const& project, std::string const
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworksClient::SwitchToCustomMode(google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const& request, Options opts) {
+NetworksClient::SwitchToCustomMode(
+    google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SwitchToCustomMode(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworksClient::UpdatePeering(std::string const& project, std::string const& network, google::cloud::cpp::compute::v1::NetworksUpdatePeeringRequest const& networks_update_peering_request_resource, Options opts) {
+NetworksClient::UpdatePeering(
+    std::string const& project, std::string const& network,
+    google::cloud::cpp::compute::v1::NetworksUpdatePeeringRequest const&
+        networks_update_peering_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest request;
   request.set_project(project);
   request.set_network(network);
-  *request.mutable_networks_update_peering_request_resource() = networks_update_peering_request_resource;
+  *request.mutable_networks_update_peering_request_resource() =
+      networks_update_peering_request_resource;
   return connection_->UpdatePeering(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NetworksClient::UpdatePeering(google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const& request, Options opts) {
+NetworksClient::UpdatePeering(
+    google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePeering(request);
 }

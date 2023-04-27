@@ -33,80 +33,115 @@ TargetPoolsTracingConnection::TargetPoolsTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetPoolsTracingConnection::AddHealthCheck(google::cloud::cpp::compute::targetPools::v1::AddHealthCheckRequest const& request) {
-  auto span = internal::MakeSpan("compute_target_pools_v1::TargetPoolsConnection::AddHealthCheck");
+TargetPoolsTracingConnection::AddHealthCheck(
+    google::cloud::cpp::compute::targetPools::v1::AddHealthCheckRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_target_pools_v1::TargetPoolsConnection::AddHealthCheck");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AddHealthCheck(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetPoolsTracingConnection::AddInstance(google::cloud::cpp::compute::targetPools::v1::AddInstanceRequest const& request) {
-  auto span = internal::MakeSpan("compute_target_pools_v1::TargetPoolsConnection::AddInstance");
+TargetPoolsTracingConnection::AddInstance(
+    google::cloud::cpp::compute::targetPools::v1::AddInstanceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_target_pools_v1::TargetPoolsConnection::AddInstance");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AddInstance(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolAggregatedList>
-TargetPoolsTracingConnection::AggregatedListTargetPools(google::cloud::cpp::compute::targetPools::v1::AggregatedListTargetPoolsRequest const& request) {
-  auto span = internal::MakeSpan("compute_target_pools_v1::TargetPoolsConnection::AggregatedListTargetPools");
+TargetPoolsTracingConnection::AggregatedListTargetPools(
+    google::cloud::cpp::compute::targetPools::v1::
+        AggregatedListTargetPoolsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_target_pools_v1::TargetPoolsConnection::"
+      "AggregatedListTargetPools");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AggregatedListTargetPools(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetPoolsTracingConnection::DeleteTargetPools(google::cloud::cpp::compute::targetPools::v1::DeleteTargetPoolsRequest const& request) {
-  auto span = internal::MakeSpan("compute_target_pools_v1::TargetPoolsConnection::DeleteTargetPools");
+TargetPoolsTracingConnection::DeleteTargetPools(
+    google::cloud::cpp::compute::targetPools::v1::
+        DeleteTargetPoolsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_target_pools_v1::TargetPoolsConnection::DeleteTargetPools");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteTargetPools(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPool>
-TargetPoolsTracingConnection::GetTargetPools(google::cloud::cpp::compute::targetPools::v1::GetTargetPoolsRequest const& request) {
-  auto span = internal::MakeSpan("compute_target_pools_v1::TargetPoolsConnection::GetTargetPools");
+TargetPoolsTracingConnection::GetTargetPools(
+    google::cloud::cpp::compute::targetPools::v1::GetTargetPoolsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_target_pools_v1::TargetPoolsConnection::GetTargetPools");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTargetPools(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>
-TargetPoolsTracingConnection::GetHealth(google::cloud::cpp::compute::targetPools::v1::GetHealthRequest const& request) {
-  auto span = internal::MakeSpan("compute_target_pools_v1::TargetPoolsConnection::GetHealth");
+TargetPoolsTracingConnection::GetHealth(
+    google::cloud::cpp::compute::targetPools::v1::GetHealthRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_target_pools_v1::TargetPoolsConnection::GetHealth");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetHealth(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetPoolsTracingConnection::InsertTargetPools(google::cloud::cpp::compute::targetPools::v1::InsertTargetPoolsRequest const& request) {
-  auto span = internal::MakeSpan("compute_target_pools_v1::TargetPoolsConnection::InsertTargetPools");
+TargetPoolsTracingConnection::InsertTargetPools(
+    google::cloud::cpp::compute::targetPools::v1::
+        InsertTargetPoolsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_target_pools_v1::TargetPoolsConnection::InsertTargetPools");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->InsertTargetPools(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetPool>
-TargetPoolsTracingConnection::ListTargetPools(google::cloud::cpp::compute::targetPools::v1::ListTargetPoolsRequest request) {
-  auto span = internal::MakeSpan("compute_target_pools_v1::TargetPoolsConnection::ListTargetPools");
+TargetPoolsTracingConnection::ListTargetPools(
+    google::cloud::cpp::compute::targetPools::v1::ListTargetPoolsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_target_pools_v1::TargetPoolsConnection::ListTargetPools");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListTargetPools(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::TargetPool>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::TargetPool>(std::move(span),
+                                                   std::move(sr));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetPoolsTracingConnection::RemoveHealthCheck(google::cloud::cpp::compute::targetPools::v1::RemoveHealthCheckRequest const& request) {
-  auto span = internal::MakeSpan("compute_target_pools_v1::TargetPoolsConnection::RemoveHealthCheck");
+TargetPoolsTracingConnection::RemoveHealthCheck(
+    google::cloud::cpp::compute::targetPools::v1::
+        RemoveHealthCheckRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_target_pools_v1::TargetPoolsConnection::RemoveHealthCheck");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RemoveHealthCheck(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetPoolsTracingConnection::RemoveInstance(google::cloud::cpp::compute::targetPools::v1::RemoveInstanceRequest const& request) {
-  auto span = internal::MakeSpan("compute_target_pools_v1::TargetPoolsConnection::RemoveInstance");
+TargetPoolsTracingConnection::RemoveInstance(
+    google::cloud::cpp::compute::targetPools::v1::RemoveInstanceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_target_pools_v1::TargetPoolsConnection::RemoveInstance");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RemoveInstance(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetPoolsTracingConnection::SetBackup(google::cloud::cpp::compute::targetPools::v1::SetBackupRequest const& request) {
-  auto span = internal::MakeSpan("compute_target_pools_v1::TargetPoolsConnection::SetBackup");
+TargetPoolsTracingConnection::SetBackup(
+    google::cloud::cpp::compute::targetPools::v1::SetBackupRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_target_pools_v1::TargetPoolsConnection::SetBackup");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetBackup(request));
 }

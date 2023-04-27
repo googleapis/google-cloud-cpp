@@ -62,7 +62,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class HttpHealthChecksClient {
  public:
-  explicit HttpHealthChecksClient(ExperimentalTag, std::shared_ptr<HttpHealthChecksConnection> connection, Options opts = {});
+  explicit HttpHealthChecksClient(
+      ExperimentalTag, std::shared_ptr<HttpHealthChecksConnection> connection,
+      Options opts = {});
   ~HttpHealthChecksClient();
 
   ///@{
@@ -75,10 +77,12 @@ class HttpHealthChecksClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(HttpHealthChecksClient const& a, HttpHealthChecksClient const& b) {
+  friend bool operator==(HttpHealthChecksClient const& a,
+                         HttpHealthChecksClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(HttpHealthChecksClient const& a, HttpHealthChecksClient const& b) {
+  friend bool operator!=(HttpHealthChecksClient const& a,
+                         HttpHealthChecksClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -90,27 +94,37 @@ class HttpHealthChecksClient {
   /// @param http_health_check  Name of the HttpHealthCheck resource to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.httpHealthChecks.v1.DeleteHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L96}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.httpHealthChecks.v1.DeleteHttpHealthChecksRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L96}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteHttpHealthChecks(std::string const& project, std::string const& http_health_check, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHttpHealthChecks(
+      std::string const& project, std::string const& http_health_check,
+      Options opts = {});
 
   ///
   /// Deletes the specified HttpHealthCheck resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::httpHealthChecks::v1::DeleteHttpHealthChecksRequest,google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L96}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::httpHealthChecks::v1::DeleteHttpHealthChecksRequest,google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L96}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.httpHealthChecks.v1.DeleteHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L96}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.httpHealthChecks.v1.DeleteHttpHealthChecksRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L96}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::DeleteHttpHealthChecksRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHttpHealthChecks(
+      google::cloud::cpp::compute::httpHealthChecks::v1::
+          DeleteHttpHealthChecksRequest const& request,
+      Options opts = {});
 
   ///
   /// Returns the specified HttpHealthCheck resource.
@@ -119,27 +133,37 @@ class HttpHealthChecksClient {
   /// @param http_health_check  Name of the HttpHealthCheck resource to return.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::HttpHealthCheck,google/cloud/compute/v1/internal/common.proto#L8134}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::HttpHealthCheck,google/cloud/compute/v1/internal/common.proto#L8134}
   ///
-  /// [google.cloud.cpp.compute.httpHealthChecks.v1.GetHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L117}
-  /// [google.cloud.cpp.compute.v1.HttpHealthCheck]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L8134}
+  /// [google.cloud.cpp.compute.httpHealthChecks.v1.GetHttpHealthChecksRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L117}
+  /// [google.cloud.cpp.compute.v1.HttpHealthCheck]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L8134}
   ///
   StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck>
-  GetHttpHealthChecks(std::string const& project, std::string const& http_health_check, Options opts = {});
+  GetHttpHealthChecks(std::string const& project,
+                      std::string const& http_health_check, Options opts = {});
 
   ///
   /// Returns the specified HttpHealthCheck resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::httpHealthChecks::v1::GetHttpHealthChecksRequest,google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L117}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::httpHealthChecks::v1::GetHttpHealthChecksRequest,google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L117}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::HttpHealthCheck,google/cloud/compute/v1/internal/common.proto#L8134}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::HttpHealthCheck,google/cloud/compute/v1/internal/common.proto#L8134}
   ///
-  /// [google.cloud.cpp.compute.httpHealthChecks.v1.GetHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L117}
-  /// [google.cloud.cpp.compute.v1.HttpHealthCheck]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L8134}
+  /// [google.cloud.cpp.compute.httpHealthChecks.v1.GetHttpHealthChecksRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L117}
+  /// [google.cloud.cpp.compute.v1.HttpHealthCheck]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L8134}
   ///
   StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck>
-  GetHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::GetHttpHealthChecksRequest const& request, Options opts = {});
+  GetHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::
+                          GetHttpHealthChecksRequest const& request,
+                      Options opts = {});
 
   ///
   /// Creates a HttpHealthCheck resource in the specified project using the data
@@ -149,28 +173,40 @@ class HttpHealthChecksClient {
   /// @param http_health_check_resource  The HttpHealthCheck for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.httpHealthChecks.v1.InsertHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L126}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.httpHealthChecks.v1.InsertHttpHealthChecksRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L126}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertHttpHealthChecks(std::string const& project, google::cloud::cpp::compute::v1::HttpHealthCheck const& http_health_check_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHttpHealthChecks(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::HttpHealthCheck const&
+          http_health_check_resource,
+      Options opts = {});
 
   ///
   /// Creates a HttpHealthCheck resource in the specified project using the data
   /// included in the request.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::httpHealthChecks::v1::InsertHttpHealthChecksRequest,google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L126}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::httpHealthChecks::v1::InsertHttpHealthChecksRequest,google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L126}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.httpHealthChecks.v1.InsertHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L126}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.httpHealthChecks.v1.InsertHttpHealthChecksRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L126}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::InsertHttpHealthChecksRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHttpHealthChecks(
+      google::cloud::cpp::compute::httpHealthChecks::v1::
+          InsertHttpHealthChecksRequest const& request,
+      Options opts = {});
 
   ///
   /// Retrieves the list of HttpHealthCheck resources available to the specified
@@ -179,10 +215,13 @@ class HttpHealthChecksClient {
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::HttpHealthCheck,google/cloud/compute/v1/internal/common.proto#L8134}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::HttpHealthCheck,google/cloud/compute/v1/internal/common.proto#L8134}
   ///
-  /// [google.cloud.cpp.compute.httpHealthChecks.v1.ListHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L147}
-  /// [google.cloud.cpp.compute.v1.HttpHealthCheck]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L8134}
+  /// [google.cloud.cpp.compute.httpHealthChecks.v1.ListHttpHealthChecksRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L147}
+  /// [google.cloud.cpp.compute.v1.HttpHealthCheck]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L8134}
   ///
   StreamRange<google::cloud::cpp::compute::v1::HttpHealthCheck>
   ListHttpHealthChecks(std::string const& project, Options opts = {});
@@ -191,16 +230,22 @@ class HttpHealthChecksClient {
   /// Retrieves the list of HttpHealthCheck resources available to the specified
   /// project.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::httpHealthChecks::v1::ListHttpHealthChecksRequest,google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L147}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::httpHealthChecks::v1::ListHttpHealthChecksRequest,google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L147}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::HttpHealthCheck,google/cloud/compute/v1/internal/common.proto#L8134}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::HttpHealthCheck,google/cloud/compute/v1/internal/common.proto#L8134}
   ///
-  /// [google.cloud.cpp.compute.httpHealthChecks.v1.ListHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L147}
-  /// [google.cloud.cpp.compute.v1.HttpHealthCheck]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L8134}
+  /// [google.cloud.cpp.compute.httpHealthChecks.v1.ListHttpHealthChecksRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L147}
+  /// [google.cloud.cpp.compute.v1.HttpHealthCheck]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L8134}
   ///
   StreamRange<google::cloud::cpp::compute::v1::HttpHealthCheck>
-  ListHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::ListHttpHealthChecksRequest request, Options opts = {});
+  ListHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::
+                           ListHttpHealthChecksRequest request,
+                       Options opts = {});
 
   ///
   /// Updates a HttpHealthCheck resource in the specified project using the data
@@ -212,29 +257,41 @@ class HttpHealthChecksClient {
   /// @param http_health_check_resource  The HttpHealthCheck for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.httpHealthChecks.v1.PatchHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L212}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.httpHealthChecks.v1.PatchHttpHealthChecksRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L212}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchHttpHealthChecks(std::string const& project, std::string const& http_health_check, google::cloud::cpp::compute::v1::HttpHealthCheck const& http_health_check_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHttpHealthChecks(
+      std::string const& project, std::string const& http_health_check,
+      google::cloud::cpp::compute::v1::HttpHealthCheck const&
+          http_health_check_resource,
+      Options opts = {});
 
   ///
   /// Updates a HttpHealthCheck resource in the specified project using the data
   /// included in the request. This method supports PATCH semantics and uses the
   /// JSON merge patch format and processing rules.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::httpHealthChecks::v1::PatchHttpHealthChecksRequest,google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L212}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::httpHealthChecks::v1::PatchHttpHealthChecksRequest,google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L212}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.httpHealthChecks.v1.PatchHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L212}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.httpHealthChecks.v1.PatchHttpHealthChecksRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L212}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::PatchHttpHealthChecksRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHttpHealthChecks(
+      google::cloud::cpp::compute::httpHealthChecks::v1::
+          PatchHttpHealthChecksRequest const& request,
+      Options opts = {});
 
   ///
   /// Updates a HttpHealthCheck resource in the specified project using the data
@@ -245,28 +302,40 @@ class HttpHealthChecksClient {
   /// @param http_health_check_resource  The HttpHealthCheck for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.httpHealthChecks.v1.UpdateHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L236}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.httpHealthChecks.v1.UpdateHttpHealthChecksRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L236}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateHttpHealthChecks(std::string const& project, std::string const& http_health_check, google::cloud::cpp::compute::v1::HttpHealthCheck const& http_health_check_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateHttpHealthChecks(
+      std::string const& project, std::string const& http_health_check,
+      google::cloud::cpp::compute::v1::HttpHealthCheck const&
+          http_health_check_resource,
+      Options opts = {});
 
   ///
   /// Updates a HttpHealthCheck resource in the specified project using the data
   /// included in the request.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::httpHealthChecks::v1::UpdateHttpHealthChecksRequest,google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L236}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::httpHealthChecks::v1::UpdateHttpHealthChecksRequest,google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L236}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.httpHealthChecks.v1.UpdateHttpHealthChecksRequest]: @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L236}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.httpHealthChecks.v1.UpdateHttpHealthChecksRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/http_health_checks/v1/http_health_checks.proto#L236}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::UpdateHttpHealthChecksRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateHttpHealthChecks(
+      google::cloud::cpp::compute::httpHealthChecks::v1::
+          UpdateHttpHealthChecksRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<HttpHealthChecksConnection> connection_;

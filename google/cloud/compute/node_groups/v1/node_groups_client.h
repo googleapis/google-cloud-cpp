@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class NodeGroupsClient {
  public:
-  explicit NodeGroupsClient(ExperimentalTag, std::shared_ptr<NodeGroupsConnection> connection, Options opts = {});
+  explicit NodeGroupsClient(ExperimentalTag,
+                            std::shared_ptr<NodeGroupsConnection> connection,
+                            Options opts = {});
   ~NodeGroupsClient();
 
   ///@{
@@ -90,60 +92,83 @@ class NodeGroupsClient {
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
   /// @param node_group  Name of the NodeGroup resource.
-  /// @param node_groups_add_nodes_request_resource  The NodeGroupsAddNodesRequest for this request.
+  /// @param node_groups_add_nodes_request_resource  The
+  /// NodeGroupsAddNodesRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.AddNodesRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L161}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.AddNodesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L161}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddNodes(std::string const& project, std::string const& zone, std::string const& node_group, google::cloud::cpp::compute::v1::NodeGroupsAddNodesRequest const& node_groups_add_nodes_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddNodes(
+      std::string const& project, std::string const& zone,
+      std::string const& node_group,
+      google::cloud::cpp::compute::v1::NodeGroupsAddNodesRequest const&
+          node_groups_add_nodes_request_resource,
+      Options opts = {});
 
   ///
   /// Adds specified number of nodes to the node group.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::AddNodesRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L161}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::AddNodesRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L161}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.AddNodesRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L161}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.AddNodesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L161}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddNodes(google::cloud::cpp::compute::nodeGroups::v1::AddNodesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddNodes(
+      google::cloud::cpp::compute::nodeGroups::v1::AddNodesRequest const&
+          request,
+      Options opts = {});
 
   ///
-  /// Retrieves an aggregated list of node groups. Note: use nodeGroups.listNodes
-  /// for more details about each group.
+  /// Retrieves an aggregated list of node groups. Note: use
+  /// nodeGroups.listNodes for more details about each group.
   ///
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::NodeGroupAggregatedList,google/cloud/compute/v1/internal/common.proto#L16020}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NodeGroupAggregatedList,google/cloud/compute/v1/internal/common.proto#L16020}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.AggregatedListNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L188}
-  /// [google.cloud.cpp.compute.v1.NodeGroupAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16020}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.AggregatedListNodeGroupsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L188}
+  /// [google.cloud.cpp.compute.v1.NodeGroupAggregatedList]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16020}
   ///
   StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
   AggregatedListNodeGroups(std::string const& project, Options opts = {});
 
   ///
-  /// Retrieves an aggregated list of node groups. Note: use nodeGroups.listNodes
-  /// for more details about each group.
+  /// Retrieves an aggregated list of node groups. Note: use
+  /// nodeGroups.listNodes for more details about each group.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::AggregatedListNodeGroupsRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L188}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::AggregatedListNodeGroupsRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L188}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::NodeGroupAggregatedList,google/cloud/compute/v1/internal/common.proto#L16020}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NodeGroupAggregatedList,google/cloud/compute/v1/internal/common.proto#L16020}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.AggregatedListNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L188}
-  /// [google.cloud.cpp.compute.v1.NodeGroupAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16020}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.AggregatedListNodeGroupsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L188}
+  /// [google.cloud.cpp.compute.v1.NodeGroupAggregatedList]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16020}
   ///
   StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
-  AggregatedListNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::AggregatedListNodeGroupsRequest const& request, Options opts = {});
+  AggregatedListNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::
+                               AggregatedListNodeGroupsRequest const& request,
+                           Options opts = {});
 
   ///
   /// Deletes the specified NodeGroup resource.
@@ -153,58 +178,83 @@ class NodeGroupsClient {
   /// @param node_group  Name of the NodeGroup resource to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.DeleteNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L262}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.DeleteNodeGroupsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L262}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteNodeGroups(std::string const& project, std::string const& zone, std::string const& node_group, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeGroups(
+      std::string const& project, std::string const& zone,
+      std::string const& node_group, Options opts = {});
 
   ///
   /// Deletes the specified NodeGroup resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::DeleteNodeGroupsRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L262}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::DeleteNodeGroupsRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L262}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.DeleteNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L262}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.DeleteNodeGroupsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L262}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::DeleteNodeGroupsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeGroups(
+      google::cloud::cpp::compute::nodeGroups::v1::
+          DeleteNodeGroupsRequest const& request,
+      Options opts = {});
 
   ///
   /// Deletes specified nodes from the node group.
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
-  /// @param node_group  Name of the NodeGroup resource whose nodes will be deleted.
-  /// @param node_groups_delete_nodes_request_resource  The NodeGroupsDeleteNodesRequest for this request.
+  /// @param node_group  Name of the NodeGroup resource whose nodes will be
+  /// deleted.
+  /// @param node_groups_delete_nodes_request_resource  The
+  /// NodeGroupsDeleteNodesRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.DeleteNodesRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L286}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.DeleteNodesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L286}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteNodes(std::string const& project, std::string const& zone, std::string const& node_group, google::cloud::cpp::compute::v1::NodeGroupsDeleteNodesRequest const& node_groups_delete_nodes_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodes(
+      std::string const& project, std::string const& zone,
+      std::string const& node_group,
+      google::cloud::cpp::compute::v1::NodeGroupsDeleteNodesRequest const&
+          node_groups_delete_nodes_request_resource,
+      Options opts = {});
 
   ///
   /// Deletes specified nodes from the node group.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::DeleteNodesRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L286}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::DeleteNodesRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L286}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.DeleteNodesRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L286}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.DeleteNodesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L286}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteNodes(google::cloud::cpp::compute::nodeGroups::v1::DeleteNodesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodes(
+      google::cloud::cpp::compute::nodeGroups::v1::DeleteNodesRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Returns the specified NodeGroup. Get a list of available NodeGroups by
@@ -216,29 +266,39 @@ class NodeGroupsClient {
   /// @param node_group  Name of the node group to return.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::NodeGroup,google/cloud/compute/v1/internal/common.proto#L15942}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NodeGroup,google/cloud/compute/v1/internal/common.proto#L15942}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.GetNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L328}
-  /// [google.cloud.cpp.compute.v1.NodeGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L15942}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.GetNodeGroupsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L328}
+  /// [google.cloud.cpp.compute.v1.NodeGroup]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L15942}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::NodeGroup>
-  GetNodeGroups(std::string const& project, std::string const& zone, std::string const& node_group, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroups(
+      std::string const& project, std::string const& zone,
+      std::string const& node_group, Options opts = {});
 
   ///
   /// Returns the specified NodeGroup. Get a list of available NodeGroups by
   /// making a list() request. Note: the "nodes" field should not be used. Use
   /// nodeGroups.listNodes instead.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::GetNodeGroupsRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L328}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::GetNodeGroupsRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L328}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::NodeGroup,google/cloud/compute/v1/internal/common.proto#L15942}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NodeGroup,google/cloud/compute/v1/internal/common.proto#L15942}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.GetNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L328}
-  /// [google.cloud.cpp.compute.v1.NodeGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L15942}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.GetNodeGroupsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L328}
+  /// [google.cloud.cpp.compute.v1.NodeGroup]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L15942}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::NodeGroup>
-  GetNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::GetNodeGroupsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroups(
+      google::cloud::cpp::compute::nodeGroups::v1::GetNodeGroupsRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Gets the access control policy for a resource. May be empty if no such
@@ -249,28 +309,38 @@ class NodeGroupsClient {
   /// @param resource  Name or id of the resource for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L313}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L313}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(std::string const& project, std::string const& zone, std::string const& resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      std::string const& project, std::string const& zone,
+      std::string const& resource, Options opts = {});
 
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::GetIamPolicyRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L313}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::GetIamPolicyRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L313}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L313}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L313}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::nodeGroups::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::nodeGroups::v1::GetIamPolicyRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Creates a NodeGroup resource in the specified project using the data
@@ -282,28 +352,40 @@ class NodeGroupsClient {
   /// @param node_group_resource  The NodeGroup for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.InsertNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L340}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.InsertNodeGroupsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L340}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertNodeGroups(std::string const& project, std::string const& zone, std::int32_t initial_node_count, google::cloud::cpp::compute::v1::NodeGroup const& node_group_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeGroups(
+      std::string const& project, std::string const& zone,
+      std::int32_t initial_node_count,
+      google::cloud::cpp::compute::v1::NodeGroup const& node_group_resource,
+      Options opts = {});
 
   ///
   /// Creates a NodeGroup resource in the specified project using the data
   /// included in the request.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::InsertNodeGroupsRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L340}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::InsertNodeGroupsRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L340}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.InsertNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L340}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.InsertNodeGroupsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L340}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::InsertNodeGroupsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeGroups(
+      google::cloud::cpp::compute::nodeGroups::v1::
+          InsertNodeGroupsRequest const& request,
+      Options opts = {});
 
   ///
   /// Retrieves a list of node groups available to the specified project. Note:
@@ -313,58 +395,77 @@ class NodeGroupsClient {
   /// @param zone  The name of the zone for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::NodeGroup,google/cloud/compute/v1/internal/common.proto#L15942}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NodeGroup,google/cloud/compute/v1/internal/common.proto#L15942}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.ListNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L367}
-  /// [google.cloud.cpp.compute.v1.NodeGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L15942}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.ListNodeGroupsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L367}
+  /// [google.cloud.cpp.compute.v1.NodeGroup]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L15942}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::NodeGroup>
-  ListNodeGroups(std::string const& project, std::string const& zone, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::NodeGroup> ListNodeGroups(
+      std::string const& project, std::string const& zone, Options opts = {});
 
   ///
   /// Retrieves a list of node groups available to the specified project. Note:
   /// use nodeGroups.listNodes for more details about each group.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::ListNodeGroupsRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L367}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::ListNodeGroupsRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L367}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::NodeGroup,google/cloud/compute/v1/internal/common.proto#L15942}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NodeGroup,google/cloud/compute/v1/internal/common.proto#L15942}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.ListNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L367}
-  /// [google.cloud.cpp.compute.v1.NodeGroup]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L15942}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.ListNodeGroupsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L367}
+  /// [google.cloud.cpp.compute.v1.NodeGroup]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L15942}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::NodeGroup>
-  ListNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::ListNodeGroupsRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::NodeGroup> ListNodeGroups(
+      google::cloud::cpp::compute::nodeGroups::v1::ListNodeGroupsRequest
+          request,
+      Options opts = {});
 
   ///
   /// Lists nodes in the node group.
   ///
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
-  /// @param node_group  Name of the NodeGroup resource whose nodes you want to list.
+  /// @param node_group  Name of the NodeGroup resource whose nodes you want to
+  /// list.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::NodeGroupNode,google/cloud/compute/v1/internal/common.proto#L16260}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NodeGroupNode,google/cloud/compute/v1/internal/common.proto#L16260}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.ListNodesRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L435}
-  /// [google.cloud.cpp.compute.v1.NodeGroupNode]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16260}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.ListNodesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L435}
+  /// [google.cloud.cpp.compute.v1.NodeGroupNode]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16260}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode>
-  ListNodes(std::string const& project, std::string const& zone, std::string const& node_group, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode> ListNodes(
+      std::string const& project, std::string const& zone,
+      std::string const& node_group, Options opts = {});
 
   ///
   /// Lists nodes in the node group.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L435}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L435}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::NodeGroupNode,google/cloud/compute/v1/internal/common.proto#L16260}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NodeGroupNode,google/cloud/compute/v1/internal/common.proto#L16260}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.ListNodesRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L435}
-  /// [google.cloud.cpp.compute.v1.NodeGroupNode]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16260}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.ListNodesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L435}
+  /// [google.cloud.cpp.compute.v1.NodeGroupNode]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16260}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode>
-  ListNodes(google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode> ListNodes(
+      google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest request,
+      Options opts = {});
 
   ///
   /// Updates the specified node group.
@@ -375,27 +476,39 @@ class NodeGroupsClient {
   /// @param node_group_resource  The NodeGroup for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.PatchNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L506}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.PatchNodeGroupsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L506}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchNodeGroups(std::string const& project, std::string const& zone, std::string const& node_group, google::cloud::cpp::compute::v1::NodeGroup const& node_group_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNodeGroups(
+      std::string const& project, std::string const& zone,
+      std::string const& node_group,
+      google::cloud::cpp::compute::v1::NodeGroup const& node_group_resource,
+      Options opts = {});
 
   ///
   /// Updates the specified node group.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::PatchNodeGroupsRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L506}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::PatchNodeGroupsRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L506}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.PatchNodeGroupsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L506}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.PatchNodeGroupsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L506}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::PatchNodeGroupsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNodeGroups(
+      google::cloud::cpp::compute::nodeGroups::v1::PatchNodeGroupsRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Sets the access control policy on the specified resource. Replaces any
@@ -404,31 +517,45 @@ class NodeGroupsClient {
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
   /// @param resource  Name or id of the resource for this request.
-  /// @param zone_set_policy_request_resource  The ZoneSetPolicyRequest for this request.
+  /// @param zone_set_policy_request_resource  The ZoneSetPolicyRequest for this
+  /// request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L533}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L533}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(std::string const& project, std::string const& zone, std::string const& resource, google::cloud::cpp::compute::v1::ZoneSetPolicyRequest const& zone_set_policy_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      std::string const& project, std::string const& zone,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::ZoneSetPolicyRequest const&
+          zone_set_policy_request_resource,
+      Options opts = {});
 
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::SetIamPolicyRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L533}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::SetIamPolicyRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L533}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L533}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L533}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::nodeGroups::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::nodeGroups::v1::SetIamPolicyRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Updates the node template of the node group.
@@ -436,30 +563,44 @@ class NodeGroupsClient {
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
   /// @param node_group  Name of the NodeGroup resource to update.
-  /// @param node_groups_set_node_template_request_resource  The NodeGroupsSetNodeTemplateRequest for this request.
+  /// @param node_groups_set_node_template_request_resource  The
+  /// NodeGroupsSetNodeTemplateRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.SetNodeTemplateRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L548}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.SetNodeTemplateRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L548}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetNodeTemplate(std::string const& project, std::string const& zone, std::string const& node_group, google::cloud::cpp::compute::v1::NodeGroupsSetNodeTemplateRequest const& node_groups_set_node_template_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetNodeTemplate(
+      std::string const& project, std::string const& zone,
+      std::string const& node_group,
+      google::cloud::cpp::compute::v1::NodeGroupsSetNodeTemplateRequest const&
+          node_groups_set_node_template_request_resource,
+      Options opts = {});
 
   ///
   /// Updates the node template of the node group.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::SetNodeTemplateRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L548}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::SetNodeTemplateRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L548}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.SetNodeTemplateRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L548}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.SetNodeTemplateRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L548}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetNodeTemplate(google::cloud::cpp::compute::nodeGroups::v1::SetNodeTemplateRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetNodeTemplate(
+      google::cloud::cpp::compute::nodeGroups::v1::SetNodeTemplateRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Returns permissions that a caller has on the specified resource.
@@ -467,30 +608,45 @@ class NodeGroupsClient {
   /// @param project  Project ID for this request.
   /// @param zone  The name of the zone for this request.
   /// @param resource  Name or id of the resource for this request.
-  /// @param test_permissions_request_resource  The TestPermissionsRequest for this request.
+  /// @param test_permissions_request_resource  The TestPermissionsRequest for
+  /// this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L575}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L575}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(std::string const& project, std::string const& zone, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
+  TestIamPermissions(
+      std::string const& project, std::string const& zone,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
 
   ///
   /// Returns permissions that a caller has on the specified resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::TestIamPermissionsRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L575}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeGroups::v1::TestIamPermissionsRequest,google/cloud/compute/node_groups/v1/node_groups.proto#L575}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
   ///
-  /// [google.cloud.cpp.compute.nodeGroups.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L575}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// [google.cloud.cpp.compute.nodeGroups.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_groups/v1/node_groups.proto#L575}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::nodeGroups::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::nodeGroups::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
  private:
   std::shared_ptr<NodeGroupsConnection> connection_;

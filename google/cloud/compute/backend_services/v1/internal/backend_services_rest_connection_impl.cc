@@ -17,8 +17,8 @@
 // source: google/cloud/compute/backend_services/v1/backend_services.proto
 
 #include "google/cloud/compute/backend_services/v1/internal/backend_services_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/backend_services/v1/internal/backend_services_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -32,130 +32,165 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BackendServicesRestConnectionImpl::BackendServicesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_backend_services_v1_internal::BackendServicesRestStub> stub,
+    std::shared_ptr<
+        compute_backend_services_v1_internal::BackendServicesRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        BackendServicesConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      BackendServicesConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesRestConnectionImpl::AddSignedUrlKey(google::cloud::cpp::compute::backendServices::v1::AddSignedUrlKeyRequest const& request) {
+BackendServicesRestConnectionImpl::AddSignedUrlKey(
+    google::cloud::cpp::compute::backendServices::v1::
+        AddSignedUrlKeyRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AddSignedUrlKey(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::backendServices::v1::AddSignedUrlKeyRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 AddSignedUrlKeyRequest const& request) {
         return stub_->AddSignedUrlKey(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceAggregatedList>
-BackendServicesRestConnectionImpl::AggregatedListBackendServices(google::cloud::cpp::compute::backendServices::v1::AggregatedListBackendServicesRequest const& request) {
+BackendServicesRestConnectionImpl::AggregatedListBackendServices(
+    google::cloud::cpp::compute::backendServices::v1::
+        AggregatedListBackendServicesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AggregatedListBackendServices(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::backendServices::v1::AggregatedListBackendServicesRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 AggregatedListBackendServicesRequest const& request) {
         return stub_->AggregatedListBackendServices(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesRestConnectionImpl::DeleteBackendServices(google::cloud::cpp::compute::backendServices::v1::DeleteBackendServicesRequest const& request) {
+BackendServicesRestConnectionImpl::DeleteBackendServices(
+    google::cloud::cpp::compute::backendServices::v1::
+        DeleteBackendServicesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteBackendServices(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::backendServices::v1::DeleteBackendServicesRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 DeleteBackendServicesRequest const& request) {
         return stub_->DeleteBackendServices(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesRestConnectionImpl::DeleteSignedUrlKey(google::cloud::cpp::compute::backendServices::v1::DeleteSignedUrlKeyRequest const& request) {
+BackendServicesRestConnectionImpl::DeleteSignedUrlKey(
+    google::cloud::cpp::compute::backendServices::v1::
+        DeleteSignedUrlKeyRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteSignedUrlKey(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::backendServices::v1::DeleteSignedUrlKeyRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 DeleteSignedUrlKeyRequest const& request) {
         return stub_->DeleteSignedUrlKey(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendService>
-BackendServicesRestConnectionImpl::GetBackendServices(google::cloud::cpp::compute::backendServices::v1::GetBackendServicesRequest const& request) {
+BackendServicesRestConnectionImpl::GetBackendServices(
+    google::cloud::cpp::compute::backendServices::v1::
+        GetBackendServicesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetBackendServices(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::backendServices::v1::GetBackendServicesRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 GetBackendServicesRequest const& request) {
         return stub_->GetBackendServices(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
-BackendServicesRestConnectionImpl::GetHealth(google::cloud::cpp::compute::backendServices::v1::GetHealthRequest const& request) {
+BackendServicesRestConnectionImpl::GetHealth(
+    google::cloud::cpp::compute::backendServices::v1::GetHealthRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetHealth(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::backendServices::v1::GetHealthRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 GetHealthRequest const& request) {
         return stub_->GetHealth(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-BackendServicesRestConnectionImpl::GetIamPolicy(google::cloud::cpp::compute::backendServices::v1::GetIamPolicyRequest const& request) {
+BackendServicesRestConnectionImpl::GetIamPolicy(
+    google::cloud::cpp::compute::backendServices::v1::GetIamPolicyRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::backendServices::v1::GetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 GetIamPolicyRequest const& request) {
         return stub_->GetIamPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesRestConnectionImpl::InsertBackendServices(google::cloud::cpp::compute::backendServices::v1::InsertBackendServicesRequest const& request) {
+BackendServicesRestConnectionImpl::InsertBackendServices(
+    google::cloud::cpp::compute::backendServices::v1::
+        InsertBackendServicesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->InsertBackendServices(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::backendServices::v1::InsertBackendServicesRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 InsertBackendServicesRequest const& request) {
         return stub_->InsertBackendServices(rest_context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::BackendService>
-BackendServicesRestConnectionImpl::ListBackendServices(google::cloud::cpp::compute::backendServices::v1::ListBackendServicesRequest request) {
+BackendServicesRestConnectionImpl::ListBackendServices(
+    google::cloud::cpp::compute::backendServices::v1::ListBackendServicesRequest
+        request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_backend_services_v1::BackendServicesRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<
+      compute_backend_services_v1::BackendServicesRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListBackendServices(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::BackendService>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::BackendService>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::backendServices::v1::ListBackendServicesRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::backendServices::v1::
+                          ListBackendServicesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::backendServices::v1::ListBackendServicesRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::backendServices::v1::
+                       ListBackendServicesRequest const& request) {
               return stub->ListBackendServices(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::BackendServiceList r) {
-        std::vector<google::cloud::cpp::compute::v1::BackendService> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::BackendService> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -163,60 +198,75 @@ BackendServicesRestConnectionImpl::ListBackendServices(google::cloud::cpp::compu
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesRestConnectionImpl::PatchBackendServices(google::cloud::cpp::compute::backendServices::v1::PatchBackendServicesRequest const& request) {
+BackendServicesRestConnectionImpl::PatchBackendServices(
+    google::cloud::cpp::compute::backendServices::v1::
+        PatchBackendServicesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->PatchBackendServices(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::backendServices::v1::PatchBackendServicesRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 PatchBackendServicesRequest const& request) {
         return stub_->PatchBackendServices(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesRestConnectionImpl::SetEdgeSecurityPolicy(google::cloud::cpp::compute::backendServices::v1::SetEdgeSecurityPolicyRequest const& request) {
+BackendServicesRestConnectionImpl::SetEdgeSecurityPolicy(
+    google::cloud::cpp::compute::backendServices::v1::
+        SetEdgeSecurityPolicyRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetEdgeSecurityPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::backendServices::v1::SetEdgeSecurityPolicyRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 SetEdgeSecurityPolicyRequest const& request) {
         return stub_->SetEdgeSecurityPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-BackendServicesRestConnectionImpl::SetIamPolicy(google::cloud::cpp::compute::backendServices::v1::SetIamPolicyRequest const& request) {
+BackendServicesRestConnectionImpl::SetIamPolicy(
+    google::cloud::cpp::compute::backendServices::v1::SetIamPolicyRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::backendServices::v1::SetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 SetIamPolicyRequest const& request) {
         return stub_->SetIamPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesRestConnectionImpl::SetSecurityPolicy(google::cloud::cpp::compute::backendServices::v1::SetSecurityPolicyRequest const& request) {
+BackendServicesRestConnectionImpl::SetSecurityPolicy(
+    google::cloud::cpp::compute::backendServices::v1::
+        SetSecurityPolicyRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetSecurityPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::backendServices::v1::SetSecurityPolicyRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 SetSecurityPolicyRequest const& request) {
         return stub_->SetSecurityPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-BackendServicesRestConnectionImpl::UpdateBackendServices(google::cloud::cpp::compute::backendServices::v1::UpdateBackendServicesRequest const& request) {
+BackendServicesRestConnectionImpl::UpdateBackendServices(
+    google::cloud::cpp::compute::backendServices::v1::
+        UpdateBackendServicesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateBackendServices(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::backendServices::v1::UpdateBackendServicesRequest const& request) {
+             google::cloud::cpp::compute::backendServices::v1::
+                 UpdateBackendServicesRequest const& request) {
         return stub_->UpdateBackendServices(rest_context, request);
       },
       request, __func__);

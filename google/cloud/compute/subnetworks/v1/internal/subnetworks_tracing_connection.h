@@ -36,45 +36,58 @@ class SubnetworksTracingConnection
   ~SubnetworksTracingConnection() override = default;
 
   explicit SubnetworksTracingConnection(
-    std::shared_ptr<compute_subnetworks_v1::SubnetworksConnection> child);
+      std::shared_ptr<compute_subnetworks_v1::SubnetworksConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::compute::v1::SubnetworkAggregatedList>
-  AggregatedListSubnetworks(google::cloud::cpp::compute::subnetworks::v1::AggregatedListSubnetworksRequest const& request) override;
+  AggregatedListSubnetworks(
+      google::cloud::cpp::compute::subnetworks::v1::
+          AggregatedListSubnetworksRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteSubnetworks(google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworksRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSubnetworks(
+      google::cloud::cpp::compute::subnetworks::v1::
+          DeleteSubnetworksRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  ExpandIpCidrRange(google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> ExpandIpCidrRange(
+      google::cloud::cpp::compute::subnetworks::v1::
+          ExpandIpCidrRangeRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Subnetwork>
-  GetSubnetworks(google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Subnetwork> GetSubnetworks(
+      google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertSubnetworks(google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworksRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSubnetworks(
+      google::cloud::cpp::compute::subnetworks::v1::
+          InsertSubnetworksRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Subnetwork>
-  ListSubnetworks(google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Subnetwork> ListSubnetworks(
+      google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest
+          request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork>
-  ListUsable(google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork> ListUsable(
+      google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchSubnetworks(google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworksRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSubnetworks(
+      google::cloud::cpp::compute::subnetworks::v1::
+          PatchSubnetworksRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetPrivateIpGoogleAccess(google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetPrivateIpGoogleAccess(
+      google::cloud::cpp::compute::subnetworks::v1::
+          SetPrivateIpGoogleAccessRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::subnetworks::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::subnetworks::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<compute_subnetworks_v1::SubnetworksConnection> child_;

@@ -62,7 +62,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RegionDiskTypesClient {
  public:
-  explicit RegionDiskTypesClient(ExperimentalTag, std::shared_ptr<RegionDiskTypesConnection> connection, Options opts = {});
+  explicit RegionDiskTypesClient(
+      ExperimentalTag, std::shared_ptr<RegionDiskTypesConnection> connection,
+      Options opts = {});
   ~RegionDiskTypesClient();
 
   ///@{
@@ -75,10 +77,12 @@ class RegionDiskTypesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(RegionDiskTypesClient const& a, RegionDiskTypesClient const& b) {
+  friend bool operator==(RegionDiskTypesClient const& a,
+                         RegionDiskTypesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RegionDiskTypesClient const& a, RegionDiskTypesClient const& b) {
+  friend bool operator!=(RegionDiskTypesClient const& a,
+                         RegionDiskTypesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -91,56 +95,77 @@ class RegionDiskTypesClient {
   /// @param disk_type  Name of the disk type to return.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::DiskType,google/cloud/compute/v1/internal/common.proto#L4798}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::DiskType,google/cloud/compute/v1/internal/common.proto#L4798}
   ///
-  /// [google.cloud.cpp.compute.regionDiskTypes.v1.GetRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L51}
-  /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4798}
+  /// [google.cloud.cpp.compute.regionDiskTypes.v1.GetRegionDiskTypesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L51}
+  /// [google.cloud.cpp.compute.v1.DiskType]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4798}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::DiskType>
-  GetRegionDiskTypes(std::string const& project, std::string const& region, std::string const& disk_type, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::DiskType> GetRegionDiskTypes(
+      std::string const& project, std::string const& region,
+      std::string const& disk_type, Options opts = {});
 
   ///
   /// Returns the specified regional disk type.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::regionDiskTypes::v1::GetRegionDiskTypesRequest,google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L51}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::regionDiskTypes::v1::GetRegionDiskTypesRequest,google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L51}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::DiskType,google/cloud/compute/v1/internal/common.proto#L4798}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::DiskType,google/cloud/compute/v1/internal/common.proto#L4798}
   ///
-  /// [google.cloud.cpp.compute.regionDiskTypes.v1.GetRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L51}
-  /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4798}
+  /// [google.cloud.cpp.compute.regionDiskTypes.v1.GetRegionDiskTypesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L51}
+  /// [google.cloud.cpp.compute.v1.DiskType]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4798}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::DiskType>
-  GetRegionDiskTypes(google::cloud::cpp::compute::regionDiskTypes::v1::GetRegionDiskTypesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::DiskType> GetRegionDiskTypes(
+      google::cloud::cpp::compute::regionDiskTypes::v1::
+          GetRegionDiskTypesRequest const& request,
+      Options opts = {});
 
   ///
-  /// Retrieves a list of regional disk types available to the specified project.
+  /// Retrieves a list of regional disk types available to the specified
+  /// project.
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::DiskType,google/cloud/compute/v1/internal/common.proto#L4798}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::DiskType,google/cloud/compute/v1/internal/common.proto#L4798}
   ///
-  /// [google.cloud.cpp.compute.regionDiskTypes.v1.ListRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L63}
-  /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4798}
+  /// [google.cloud.cpp.compute.regionDiskTypes.v1.ListRegionDiskTypesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L63}
+  /// [google.cloud.cpp.compute.v1.DiskType]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4798}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::DiskType>
-  ListRegionDiskTypes(std::string const& project, std::string const& region, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::DiskType> ListRegionDiskTypes(
+      std::string const& project, std::string const& region, Options opts = {});
 
   ///
-  /// Retrieves a list of regional disk types available to the specified project.
+  /// Retrieves a list of regional disk types available to the specified
+  /// project.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::regionDiskTypes::v1::ListRegionDiskTypesRequest,google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L63}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::regionDiskTypes::v1::ListRegionDiskTypesRequest,google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L63}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::DiskType,google/cloud/compute/v1/internal/common.proto#L4798}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::DiskType,google/cloud/compute/v1/internal/common.proto#L4798}
   ///
-  /// [google.cloud.cpp.compute.regionDiskTypes.v1.ListRegionDiskTypesRequest]: @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L63}
-  /// [google.cloud.cpp.compute.v1.DiskType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4798}
+  /// [google.cloud.cpp.compute.regionDiskTypes.v1.ListRegionDiskTypesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_disk_types/v1/region_disk_types.proto#L63}
+  /// [google.cloud.cpp.compute.v1.DiskType]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4798}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::DiskType>
-  ListRegionDiskTypes(google::cloud::cpp::compute::regionDiskTypes::v1::ListRegionDiskTypesRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::DiskType> ListRegionDiskTypes(
+      google::cloud::cpp::compute::regionDiskTypes::v1::
+          ListRegionDiskTypesRequest request,
+      Options opts = {});
 
  private:
   std::shared_ptr<RegionDiskTypesConnection> connection_;

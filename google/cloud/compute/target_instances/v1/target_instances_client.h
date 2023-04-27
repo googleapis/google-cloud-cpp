@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TargetInstancesClient {
  public:
-  explicit TargetInstancesClient(ExperimentalTag, std::shared_ptr<TargetInstancesConnection> connection, Options opts = {});
+  explicit TargetInstancesClient(
+      ExperimentalTag, std::shared_ptr<TargetInstancesConnection> connection,
+      Options opts = {});
   ~TargetInstancesClient();
 
   ///@{
@@ -76,10 +78,12 @@ class TargetInstancesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(TargetInstancesClient const& a, TargetInstancesClient const& b) {
+  friend bool operator==(TargetInstancesClient const& a,
+                         TargetInstancesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(TargetInstancesClient const& a, TargetInstancesClient const& b) {
+  friend bool operator!=(TargetInstancesClient const& a,
+                         TargetInstancesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -90,10 +94,13 @@ class TargetInstancesClient {
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TargetInstanceAggregatedList,google/cloud/compute/v1/internal/common.proto#L27215}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetInstanceAggregatedList,google/cloud/compute/v1/internal/common.proto#L27215}
   ///
-  /// [google.cloud.cpp.compute.targetInstances.v1.AggregatedListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L81}
-  /// [google.cloud.cpp.compute.v1.TargetInstanceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27215}
+  /// [google.cloud.cpp.compute.targetInstances.v1.AggregatedListTargetInstancesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L81}
+  /// [google.cloud.cpp.compute.v1.TargetInstanceAggregatedList]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27215}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
   AggregatedListTargetInstances(std::string const& project, Options opts = {});
@@ -101,16 +108,23 @@ class TargetInstancesClient {
   ///
   /// Retrieves an aggregated list of target instances.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::targetInstances::v1::AggregatedListTargetInstancesRequest,google/cloud/compute/target_instances/v1/target_instances.proto#L81}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::targetInstances::v1::AggregatedListTargetInstancesRequest,google/cloud/compute/target_instances/v1/target_instances.proto#L81}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TargetInstanceAggregatedList,google/cloud/compute/v1/internal/common.proto#L27215}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetInstanceAggregatedList,google/cloud/compute/v1/internal/common.proto#L27215}
   ///
-  /// [google.cloud.cpp.compute.targetInstances.v1.AggregatedListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L81}
-  /// [google.cloud.cpp.compute.v1.TargetInstanceAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27215}
+  /// [google.cloud.cpp.compute.targetInstances.v1.AggregatedListTargetInstancesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L81}
+  /// [google.cloud.cpp.compute.v1.TargetInstanceAggregatedList]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27215}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
-  AggregatedListTargetInstances(google::cloud::cpp::compute::targetInstances::v1::AggregatedListTargetInstancesRequest const& request, Options opts = {});
+  AggregatedListTargetInstances(
+      google::cloud::cpp::compute::targetInstances::v1::
+          AggregatedListTargetInstancesRequest const& request,
+      Options opts = {});
 
   ///
   /// Deletes the specified TargetInstance resource.
@@ -120,27 +134,37 @@ class TargetInstancesClient {
   /// @param target_instance  Name of the TargetInstance resource to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.targetInstances.v1.DeleteTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L155}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.targetInstances.v1.DeleteTargetInstancesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L155}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteTargetInstances(std::string const& project, std::string const& zone, std::string const& target_instance, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetInstances(
+      std::string const& project, std::string const& zone,
+      std::string const& target_instance, Options opts = {});
 
   ///
   /// Deletes the specified TargetInstance resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::targetInstances::v1::DeleteTargetInstancesRequest,google/cloud/compute/target_instances/v1/target_instances.proto#L155}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::targetInstances::v1::DeleteTargetInstancesRequest,google/cloud/compute/target_instances/v1/target_instances.proto#L155}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.targetInstances.v1.DeleteTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L155}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.targetInstances.v1.DeleteTargetInstancesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L155}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteTargetInstances(google::cloud::cpp::compute::targetInstances::v1::DeleteTargetInstancesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetInstances(
+      google::cloud::cpp::compute::targetInstances::v1::
+          DeleteTargetInstancesRequest const& request,
+      Options opts = {});
 
   ///
   /// Returns the specified TargetInstance resource.
@@ -150,27 +174,37 @@ class TargetInstancesClient {
   /// @param target_instance  Name of the TargetInstance resource to return.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TargetInstance,google/cloud/compute/v1/internal/common.proto#L27161}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetInstance,google/cloud/compute/v1/internal/common.proto#L27161}
   ///
-  /// [google.cloud.cpp.compute.targetInstances.v1.GetTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L179}
-  /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27161}
+  /// [google.cloud.cpp.compute.targetInstances.v1.GetTargetInstancesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L179}
+  /// [google.cloud.cpp.compute.v1.TargetInstance]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27161}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
-  GetTargetInstances(std::string const& project, std::string const& zone, std::string const& target_instance, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstances(
+      std::string const& project, std::string const& zone,
+      std::string const& target_instance, Options opts = {});
 
   ///
   /// Returns the specified TargetInstance resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::targetInstances::v1::GetTargetInstancesRequest,google/cloud/compute/target_instances/v1/target_instances.proto#L179}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::targetInstances::v1::GetTargetInstancesRequest,google/cloud/compute/target_instances/v1/target_instances.proto#L179}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TargetInstance,google/cloud/compute/v1/internal/common.proto#L27161}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetInstance,google/cloud/compute/v1/internal/common.proto#L27161}
   ///
-  /// [google.cloud.cpp.compute.targetInstances.v1.GetTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L179}
-  /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27161}
+  /// [google.cloud.cpp.compute.targetInstances.v1.GetTargetInstancesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L179}
+  /// [google.cloud.cpp.compute.v1.TargetInstance]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27161}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
-  GetTargetInstances(google::cloud::cpp::compute::targetInstances::v1::GetTargetInstancesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstances(
+      google::cloud::cpp::compute::targetInstances::v1::
+          GetTargetInstancesRequest const& request,
+      Options opts = {});
 
   ///
   /// Creates a TargetInstance resource in the specified project and zone using
@@ -181,28 +215,40 @@ class TargetInstancesClient {
   /// @param target_instance_resource  The TargetInstance for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.targetInstances.v1.InsertTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L191}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.targetInstances.v1.InsertTargetInstancesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L191}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertTargetInstances(std::string const& project, std::string const& zone, google::cloud::cpp::compute::v1::TargetInstance const& target_instance_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetInstances(
+      std::string const& project, std::string const& zone,
+      google::cloud::cpp::compute::v1::TargetInstance const&
+          target_instance_resource,
+      Options opts = {});
 
   ///
   /// Creates a TargetInstance resource in the specified project and zone using
   /// the data included in the request.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::targetInstances::v1::InsertTargetInstancesRequest,google/cloud/compute/target_instances/v1/target_instances.proto#L191}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::targetInstances::v1::InsertTargetInstancesRequest,google/cloud/compute/target_instances/v1/target_instances.proto#L191}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.targetInstances.v1.InsertTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L191}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.targetInstances.v1.InsertTargetInstancesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L191}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertTargetInstances(google::cloud::cpp::compute::targetInstances::v1::InsertTargetInstancesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetInstances(
+      google::cloud::cpp::compute::targetInstances::v1::
+          InsertTargetInstancesRequest const& request,
+      Options opts = {});
 
   ///
   /// Retrieves a list of TargetInstance resources available to the specified
@@ -212,28 +258,38 @@ class TargetInstancesClient {
   /// @param zone  Name of the zone scoping this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TargetInstance,google/cloud/compute/v1/internal/common.proto#L27161}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetInstance,google/cloud/compute/v1/internal/common.proto#L27161}
   ///
-  /// [google.cloud.cpp.compute.targetInstances.v1.ListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L215}
-  /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27161}
+  /// [google.cloud.cpp.compute.targetInstances.v1.ListTargetInstancesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L215}
+  /// [google.cloud.cpp.compute.v1.TargetInstance]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27161}
   ///
   StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
-  ListTargetInstances(std::string const& project, std::string const& zone, Options opts = {});
+  ListTargetInstances(std::string const& project, std::string const& zone,
+                      Options opts = {});
 
   ///
   /// Retrieves a list of TargetInstance resources available to the specified
   /// project and zone.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::targetInstances::v1::ListTargetInstancesRequest,google/cloud/compute/target_instances/v1/target_instances.proto#L215}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::targetInstances::v1::ListTargetInstancesRequest,google/cloud/compute/target_instances/v1/target_instances.proto#L215}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TargetInstance,google/cloud/compute/v1/internal/common.proto#L27161}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetInstance,google/cloud/compute/v1/internal/common.proto#L27161}
   ///
-  /// [google.cloud.cpp.compute.targetInstances.v1.ListTargetInstancesRequest]: @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L215}
-  /// [google.cloud.cpp.compute.v1.TargetInstance]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27161}
+  /// [google.cloud.cpp.compute.targetInstances.v1.ListTargetInstancesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L215}
+  /// [google.cloud.cpp.compute.v1.TargetInstance]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27161}
   ///
   StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
-  ListTargetInstances(google::cloud::cpp::compute::targetInstances::v1::ListTargetInstancesRequest request, Options opts = {});
+  ListTargetInstances(google::cloud::cpp::compute::targetInstances::v1::
+                          ListTargetInstancesRequest request,
+                      Options opts = {});
 
  private:
   std::shared_ptr<TargetInstancesConnection> connection_;

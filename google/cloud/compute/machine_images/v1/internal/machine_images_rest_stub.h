@@ -36,33 +36,40 @@ class MachineImagesRestStub {
  public:
   virtual ~MachineImagesRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteMachineImages(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineImages::v1::DeleteMachineImagesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteMachineImages(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::machineImages::v1::
+                          DeleteMachineImagesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::MachineImage> GetMachineImages(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineImages::v1::GetMachineImagesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::MachineImage>
+  GetMachineImages(google::cloud::rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::machineImages::v1::
+                       GetMachineImagesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineImages::v1::GetIamPolicyRequest const& request) = 0;
+      google::cloud::cpp::compute::machineImages::v1::GetIamPolicyRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertMachineImages(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineImages::v1::InsertMachineImagesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertMachineImages(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::machineImages::v1::
+                          InsertMachineImagesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::MachineImageList> ListMachineImages(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineImages::v1::ListMachineImagesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::MachineImageList>
+  ListMachineImages(google::cloud::rest_internal::RestContext& rest_context,
+                    google::cloud::cpp::compute::machineImages::v1::
+                        ListMachineImagesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineImages::v1::SetIamPolicyRequest const& request) = 0;
+      google::cloud::cpp::compute::machineImages::v1::SetIamPolicyRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineImages::v1::TestIamPermissionsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::machineImages::v1::
+                         TestIamPermissionsRequest const& request) = 0;
 };
 
 class DefaultMachineImagesRestStub : public MachineImagesRestStub {
@@ -71,36 +78,42 @@ class DefaultMachineImagesRestStub : public MachineImagesRestStub {
 
   explicit DefaultMachineImagesRestStub(Options options);
   DefaultMachineImagesRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteMachineImages(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineImages::v1::DeleteMachineImagesRequest const& request) override;
+      google::cloud::cpp::compute::machineImages::v1::
+          DeleteMachineImagesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::MachineImage> GetMachineImages(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineImages::v1::GetMachineImagesRequest const& request) override;
+      google::cloud::cpp::compute::machineImages::v1::
+          GetMachineImagesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineImages::v1::GetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::machineImages::v1::GetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertMachineImages(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineImages::v1::InsertMachineImagesRequest const& request) override;
+      google::cloud::cpp::compute::machineImages::v1::
+          InsertMachineImagesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::MachineImageList> ListMachineImages(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineImages::v1::ListMachineImagesRequest const& request) override;
+      google::cloud::cpp::compute::machineImages::v1::
+          ListMachineImagesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineImages::v1::SetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::machineImages::v1::SetIamPolicyRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineImages::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::machineImages::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

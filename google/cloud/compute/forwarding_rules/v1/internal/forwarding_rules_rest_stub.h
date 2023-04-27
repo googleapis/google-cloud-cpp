@@ -36,37 +36,47 @@ class ForwardingRulesRestStub {
  public:
   virtual ~ForwardingRulesRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList> AggregatedListForwardingRules(
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>
+  AggregatedListForwardingRules(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::AggregatedListForwardingRulesRequest const& request) = 0;
+      google::cloud::cpp::compute::forwardingRules::v1::
+          AggregatedListForwardingRulesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteForwardingRules(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::DeleteForwardingRulesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteForwardingRules(google::cloud::rest_internal::RestContext& rest_context,
+                        google::cloud::cpp::compute::forwardingRules::v1::
+                            DeleteForwardingRulesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::ForwardingRule> GetForwardingRules(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::GetForwardingRulesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
+  GetForwardingRules(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::forwardingRules::v1::
+                         GetForwardingRulesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertForwardingRules(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::InsertForwardingRulesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertForwardingRules(google::cloud::rest_internal::RestContext& rest_context,
+                        google::cloud::cpp::compute::forwardingRules::v1::
+                            InsertForwardingRulesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleList> ListForwardingRules(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::ListForwardingRulesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleList>
+  ListForwardingRules(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::forwardingRules::v1::
+                          ListForwardingRulesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchForwardingRules(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::PatchForwardingRulesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchForwardingRules(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::forwardingRules::v1::
+                           PatchForwardingRulesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::SetLabelsRequest const& request) = 0;
+      google::cloud::cpp::compute::forwardingRules::v1::SetLabelsRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetTarget(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::SetTargetRequest const& request) = 0;
+      google::cloud::cpp::compute::forwardingRules::v1::SetTargetRequest const&
+          request) = 0;
 };
 
 class DefaultForwardingRulesRestStub : public ForwardingRulesRestStub {
@@ -75,40 +85,48 @@ class DefaultForwardingRulesRestStub : public ForwardingRulesRestStub {
 
   explicit DefaultForwardingRulesRestStub(Options options);
   DefaultForwardingRulesRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList> AggregatedListForwardingRules(
+  StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>
+  AggregatedListForwardingRules(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::AggregatedListForwardingRulesRequest const& request) override;
+      google::cloud::cpp::compute::forwardingRules::v1::
+          AggregatedListForwardingRulesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteForwardingRules(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::DeleteForwardingRulesRequest const& request) override;
+      google::cloud::cpp::compute::forwardingRules::v1::
+          DeleteForwardingRulesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ForwardingRule> GetForwardingRules(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::GetForwardingRulesRequest const& request) override;
+      google::cloud::cpp::compute::forwardingRules::v1::
+          GetForwardingRulesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertForwardingRules(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::InsertForwardingRulesRequest const& request) override;
+      google::cloud::cpp::compute::forwardingRules::v1::
+          InsertForwardingRulesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleList> ListForwardingRules(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::ListForwardingRulesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleList>
+  ListForwardingRules(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::forwardingRules::v1::
+                          ListForwardingRulesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchForwardingRules(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::PatchForwardingRulesRequest const& request) override;
+      google::cloud::cpp::compute::forwardingRules::v1::
+          PatchForwardingRulesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::SetLabelsRequest const& request) override;
+      google::cloud::cpp::compute::forwardingRules::v1::SetLabelsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetTarget(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::SetTargetRequest const& request) override;
+      google::cloud::cpp::compute::forwardingRules::v1::SetTargetRequest const&
+          request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

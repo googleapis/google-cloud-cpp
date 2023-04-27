@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/projects/v1/projects.proto
 
-
 #include "google/cloud/compute/projects/v1/internal/projects_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,12 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ProjectsRestMetadata::ProjectsRestMetadata(
     std::shared_ptr<ProjectsRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestMetadata::DisableXpnHost(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const& request) {
+    google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->DisableXpnHost(rest_context, request);
 }
@@ -47,7 +48,8 @@ ProjectsRestMetadata::DisableXpnHost(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestMetadata::DisableXpnResource(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const& request) {
+    google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->DisableXpnResource(rest_context, request);
 }
@@ -55,7 +57,8 @@ ProjectsRestMetadata::DisableXpnResource(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestMetadata::EnableXpnHost(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const& request) {
+    google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->EnableXpnHost(rest_context, request);
 }
@@ -63,7 +66,8 @@ ProjectsRestMetadata::EnableXpnHost(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestMetadata::EnableXpnResource(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const& request) {
+    google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->EnableXpnResource(rest_context, request);
 }
@@ -71,7 +75,8 @@ ProjectsRestMetadata::EnableXpnResource(
 StatusOr<google::cloud::cpp::compute::v1::Project>
 ProjectsRestMetadata::GetProjects(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::projects::v1::GetProjectsRequest const& request) {
+    google::cloud::cpp::compute::projects::v1::GetProjectsRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->GetProjects(rest_context, request);
 }
@@ -79,7 +84,8 @@ ProjectsRestMetadata::GetProjects(
 StatusOr<google::cloud::cpp::compute::v1::Project>
 ProjectsRestMetadata::GetXpnHost(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const& request) {
+    google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->GetXpnHost(rest_context, request);
 }
@@ -87,7 +93,8 @@ ProjectsRestMetadata::GetXpnHost(
 StatusOr<google::cloud::cpp::compute::v1::ProjectsGetXpnResources>
 ProjectsRestMetadata::GetXpnResources(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const& request) {
+    google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->GetXpnResources(rest_context, request);
 }
@@ -95,7 +102,8 @@ ProjectsRestMetadata::GetXpnResources(
 StatusOr<google::cloud::cpp::compute::v1::XpnHostList>
 ProjectsRestMetadata::ListXpnHosts(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest const& request) {
+    google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->ListXpnHosts(rest_context, request);
 }
@@ -111,7 +119,8 @@ ProjectsRestMetadata::MoveDisk(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestMetadata::MoveInstance(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const& request) {
+    google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->MoveInstance(rest_context, request);
 }
@@ -119,7 +128,8 @@ ProjectsRestMetadata::MoveInstance(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestMetadata::SetCommonInstanceMetadata(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const& request) {
+    google::cloud::cpp::compute::projects::v1::
+        SetCommonInstanceMetadataRequest const& request) {
   SetMetadata(rest_context);
   return child_->SetCommonInstanceMetadata(rest_context, request);
 }
@@ -127,7 +137,8 @@ ProjectsRestMetadata::SetCommonInstanceMetadata(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestMetadata::SetDefaultNetworkTier(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const& request) {
+    google::cloud::cpp::compute::projects::v1::
+        SetDefaultNetworkTierRequest const& request) {
   SetMetadata(rest_context);
   return child_->SetDefaultNetworkTier(rest_context, request);
 }
@@ -135,33 +146,33 @@ ProjectsRestMetadata::SetDefaultNetworkTier(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestMetadata::SetUsageExportBucket(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const& request) {
+    google::cloud::cpp::compute::projects::v1::
+        SetUsageExportBucketRequest const& request) {
   SetMetadata(rest_context);
   return child_->SetUsageExportBucket(rest_context, request);
 }
 
-void ProjectsRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+void ProjectsRestMetadata::SetMetadata(rest_internal::RestContext& rest_context,
+                                       std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

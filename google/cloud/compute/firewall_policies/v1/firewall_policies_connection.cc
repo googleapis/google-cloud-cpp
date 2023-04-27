@@ -17,11 +17,11 @@
 // source: google/cloud/compute/firewall_policies/v1/firewall_policies.proto
 
 #include "google/cloud/compute/firewall_policies/v1/firewall_policies_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/firewall_policies/v1/firewall_policies_options.h"
 #include "google/cloud/compute/firewall_policies/v1/internal/firewall_policies_option_defaults.h"
 #include "google/cloud/compute/firewall_policies/v1/internal/firewall_policies_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,7 +36,8 @@ FirewallPoliciesConnection::~FirewallPoliciesConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesConnection::AddAssociation(
-    google::cloud::cpp::compute::firewallPolicies::v1::AddAssociationRequest const&) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        AddAssociationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -48,31 +49,36 @@ FirewallPoliciesConnection::AddRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesConnection::CloneRules(
-    google::cloud::cpp::compute::firewallPolicies::v1::CloneRulesRequest const&) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        CloneRulesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesConnection::DeleteFirewallPolicies(
-    google::cloud::cpp::compute::firewallPolicies::v1::DeleteFirewallPoliciesRequest const&) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        DeleteFirewallPoliciesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
 FirewallPoliciesConnection::GetFirewallPolicies(
-    google::cloud::cpp::compute::firewallPolicies::v1::GetFirewallPoliciesRequest const&) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        GetFirewallPoliciesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
 FirewallPoliciesConnection::GetAssociation(
-    google::cloud::cpp::compute::firewallPolicies::v1::GetAssociationRequest const&) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        GetAssociationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 FirewallPoliciesConnection::GetIamPolicy(
-    google::cloud::cpp::compute::firewallPolicies::v1::GetIamPolicyRequest const&) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -84,19 +90,24 @@ FirewallPoliciesConnection::GetRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesConnection::InsertFirewallPolicies(
-    google::cloud::cpp::compute::firewallPolicies::v1::InsertFirewallPoliciesRequest const&) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        InsertFirewallPoliciesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy> FirewallPoliciesConnection::ListFirewallPolicies(
-    google::cloud::cpp::compute::firewallPolicies::v1::ListFirewallPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>
+FirewallPoliciesConnection::ListFirewallPolicies(
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        ListFirewallPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>>();
 }
 
-StatusOr<google::cloud::cpp::compute::v1::FirewallPoliciesListAssociationsResponse>
+StatusOr<
+    google::cloud::cpp::compute::v1::FirewallPoliciesListAssociationsResponse>
 FirewallPoliciesConnection::ListAssociations(
-    google::cloud::cpp::compute::firewallPolicies::v1::ListAssociationsRequest const&) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        ListAssociationsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -108,37 +119,43 @@ FirewallPoliciesConnection::Move(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesConnection::PatchFirewallPolicies(
-    google::cloud::cpp::compute::firewallPolicies::v1::PatchFirewallPoliciesRequest const&) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        PatchFirewallPoliciesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesConnection::PatchRule(
-    google::cloud::cpp::compute::firewallPolicies::v1::PatchRuleRequest const&) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        PatchRuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesConnection::RemoveAssociation(
-    google::cloud::cpp::compute::firewallPolicies::v1::RemoveAssociationRequest const&) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        RemoveAssociationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesConnection::RemoveRule(
-    google::cloud::cpp::compute::firewallPolicies::v1::RemoveRuleRequest const&) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        RemoveRuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 FirewallPoliciesConnection::SetIamPolicy(
-    google::cloud::cpp::compute::firewallPolicies::v1::SetIamPolicyRequest const&) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 FirewallPoliciesConnection::TestIamPermissions(
-    google::cloud::cpp::compute::firewallPolicies::v1::TestIamPermissionsRequest const&) {
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

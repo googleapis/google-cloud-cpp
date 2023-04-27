@@ -17,8 +17,8 @@
 // source: google/cloud/compute/snapshots/v1/snapshots.proto
 
 #include "google/cloud/compute/snapshots/v1/internal/snapshots_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/snapshots/v1/internal/snapshots_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -34,80 +34,98 @@ SnapshotsRestConnectionImpl::SnapshotsRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<compute_snapshots_v1_internal::SnapshotsRestStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        SnapshotsConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      SnapshotsConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SnapshotsRestConnectionImpl::DeleteSnapshots(google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const& request) {
+SnapshotsRestConnectionImpl::DeleteSnapshots(
+    google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteSnapshots(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const& request) {
+             google::cloud::cpp::compute::snapshots::v1::
+                 DeleteSnapshotsRequest const& request) {
         return stub_->DeleteSnapshots(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Snapshot>
-SnapshotsRestConnectionImpl::GetSnapshots(google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const& request) {
+SnapshotsRestConnectionImpl::GetSnapshots(
+    google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetSnapshots(request),
-      [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const& request) {
-        return stub_->GetSnapshots(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const&
+              request) { return stub_->GetSnapshots(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-SnapshotsRestConnectionImpl::GetIamPolicy(google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const& request) {
+SnapshotsRestConnectionImpl::GetIamPolicy(
+    google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetIamPolicy(request),
-      [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const& request) {
-        return stub_->GetIamPolicy(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const&
+              request) { return stub_->GetIamPolicy(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SnapshotsRestConnectionImpl::InsertSnapshots(google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const& request) {
+SnapshotsRestConnectionImpl::InsertSnapshots(
+    google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->InsertSnapshots(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const& request) {
+             google::cloud::cpp::compute::snapshots::v1::
+                 InsertSnapshotsRequest const& request) {
         return stub_->InsertSnapshots(rest_context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Snapshot>
-SnapshotsRestConnectionImpl::ListSnapshots(google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest request) {
+SnapshotsRestConnectionImpl::ListSnapshots(
+    google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_snapshots_v1::SnapshotsRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<compute_snapshots_v1::SnapshotsRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListSnapshots(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::Snapshot>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::Snapshot>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::snapshots::v1::
+                          ListSnapshotsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::snapshots::v1::
+                       ListSnapshotsRequest const& request) {
               return stub->ListSnapshots(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::SnapshotList r) {
-        std::vector<google::cloud::cpp::compute::v1::Snapshot> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::Snapshot> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -115,36 +133,42 @@ SnapshotsRestConnectionImpl::ListSnapshots(google::cloud::cpp::compute::snapshot
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-SnapshotsRestConnectionImpl::SetIamPolicy(google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const& request) {
+SnapshotsRestConnectionImpl::SetIamPolicy(
+    google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetIamPolicy(request),
-      [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const& request) {
-        return stub_->SetIamPolicy(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const&
+              request) { return stub_->SetIamPolicy(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SnapshotsRestConnectionImpl::SetLabels(google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request) {
+SnapshotsRestConnectionImpl::SetLabels(
+    google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetLabels(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request) {
-        return stub_->SetLabels(rest_context, request);
-      },
+             google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+                 request) { return stub_->SetLabels(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-SnapshotsRestConnectionImpl::TestIamPermissions(google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const& request) {
+SnapshotsRestConnectionImpl::TestIamPermissions(
+    google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->TestIamPermissions(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const& request) {
+             google::cloud::cpp::compute::snapshots::v1::
+                 TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(rest_context, request);
       },
       request, __func__);

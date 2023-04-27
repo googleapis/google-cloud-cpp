@@ -37,39 +37,47 @@ class RoutersConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<RoutersConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  AggregatedListRouters(google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest const& request);
+  virtual google::cloud::Idempotency AggregatedListRouters(
+      google::cloud::cpp::compute::routers::v1::
+          AggregatedListRoutersRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteRouters(google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const& request);
+  virtual google::cloud::Idempotency DeleteRouters(
+      google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetRouters(google::cloud::cpp::compute::routers::v1::GetRoutersRequest const& request);
+  virtual google::cloud::Idempotency GetRouters(
+      google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetNatMappingInfo(google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const& request);
+  virtual google::cloud::Idempotency GetNatMappingInfo(
+      google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetRouterStatus(google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const& request);
+  virtual google::cloud::Idempotency GetRouterStatus(
+      google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  InsertRouters(google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const& request);
+  virtual google::cloud::Idempotency InsertRouters(
+      google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListRouters(google::cloud::cpp::compute::routers::v1::ListRoutersRequest request);
+  virtual google::cloud::Idempotency ListRouters(
+      google::cloud::cpp::compute::routers::v1::ListRoutersRequest request);
 
-  virtual google::cloud::Idempotency
-  PatchRouters(google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const& request);
+  virtual google::cloud::Idempotency PatchRouters(
+      google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  Preview(google::cloud::cpp::compute::routers::v1::PreviewRequest const& request);
+  virtual google::cloud::Idempotency Preview(
+      google::cloud::cpp::compute::routers::v1::PreviewRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateRouters(google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const& request);
+  virtual google::cloud::Idempotency UpdateRouters(
+      google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&
+          request);
 };
 
 std::unique_ptr<RoutersConnectionIdempotencyPolicy>
-    MakeDefaultRoutersConnectionIdempotencyPolicy();
+MakeDefaultRoutersConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_routers_v1

@@ -35,43 +35,49 @@ DefaultForwardingRulesRestStub::DefaultForwardingRulesRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultForwardingRulesRestStub::DefaultForwardingRulesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>
 DefaultForwardingRulesRestStub::AggregatedListForwardingRules(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::AggregatedListForwardingRulesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::forwardingRules::v1::
+        AggregatedListForwardingRulesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/forwardingRules",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultForwardingRulesRestStub::DeleteForwardingRules(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::DeleteForwardingRulesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::forwardingRules::v1::
+        DeleteForwardingRulesRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/forwardingRules/{forwarding_rule}");
+      "/compute/v1/projects/{project}/regions/{region}/forwardingRules/"
+      "{forwarding_rule}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
 DefaultForwardingRulesRestStub::GetForwardingRules(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::GetForwardingRulesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::forwardingRules::v1::
+        GetForwardingRulesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::ForwardingRule>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/forwardingRules/{forwarding_rule}",
+      "/compute/v1/projects/{project}/regions/{region}/forwardingRules/"
+      "{forwarding_rule}",
       {std::make_pair("forwarding_rule", request.forwarding_rule()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region())});
@@ -79,8 +85,9 @@ DefaultForwardingRulesRestStub::GetForwardingRules(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultForwardingRulesRestStub::InsertForwardingRules(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::InsertForwardingRulesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::forwardingRules::v1::
+        InsertForwardingRulesRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/forwardingRules");
@@ -88,9 +95,11 @@ DefaultForwardingRulesRestStub::InsertForwardingRules(
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleList>
 DefaultForwardingRulesRestStub::ListForwardingRules(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::ListForwardingRulesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::ForwardingRuleList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::forwardingRules::v1::
+        ListForwardingRulesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::ForwardingRuleList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/forwardingRules",
       {std::make_pair("filter", request.filter()),
@@ -99,34 +108,41 @@ DefaultForwardingRulesRestStub::ListForwardingRules(
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultForwardingRulesRestStub::PatchForwardingRules(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::PatchForwardingRulesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::forwardingRules::v1::
+        PatchForwardingRulesRequest const& request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/forwardingRules/{forwarding_rule}");
+      "/compute/v1/projects/{project}/regions/{region}/forwardingRules/"
+      "{forwarding_rule}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultForwardingRulesRestStub::SetLabels(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::SetLabelsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::forwardingRules::v1::SetLabelsRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/forwardingRules/{resource}/setLabels");
+      "/compute/v1/projects/{project}/regions/{region}/forwardingRules/"
+      "{resource}/setLabels");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultForwardingRulesRestStub::SetTarget(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::forwardingRules::v1::SetTargetRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::forwardingRules::v1::SetTargetRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/forwardingRules/{forwarding_rule}/setTarget");
+      "/compute/v1/projects/{project}/regions/{region}/forwardingRules/"
+      "{forwarding_rule}/setTarget");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

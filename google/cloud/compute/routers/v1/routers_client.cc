@@ -25,28 +25,35 @@ namespace compute_routers_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RoutersClient::RoutersClient(ExperimentalTag,
-    std::shared_ptr<RoutersConnection> connection, Options opts)
+                             std::shared_ptr<RoutersConnection> connection,
+                             Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 RoutersClient::~RoutersClient() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
 RoutersClient::AggregatedListRouters(std::string const& project, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest request;
+  google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest
+      request;
   request.set_project(project);
   return connection_->AggregatedListRouters(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
-RoutersClient::AggregatedListRouters(google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest const& request, Options opts) {
+RoutersClient::AggregatedListRouters(
+    google::cloud::cpp::compute::routers::v1::
+        AggregatedListRoutersRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AggregatedListRouters(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RoutersClient::DeleteRouters(std::string const& project, std::string const& region, std::string const& router, Options opts) {
+RoutersClient::DeleteRouters(std::string const& project,
+                             std::string const& region,
+                             std::string const& router, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest request;
   request.set_project(project);
@@ -56,13 +63,17 @@ RoutersClient::DeleteRouters(std::string const& project, std::string const& regi
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RoutersClient::DeleteRouters(google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const& request, Options opts) {
+RoutersClient::DeleteRouters(
+    google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRouters(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Router>
-RoutersClient::GetRouters(std::string const& project, std::string const& region, std::string const& router, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Router> RoutersClient::GetRouters(
+    std::string const& project, std::string const& region,
+    std::string const& router, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::routers::v1::GetRoutersRequest request;
   request.set_project(project);
@@ -71,14 +82,17 @@ RoutersClient::GetRouters(std::string const& project, std::string const& region,
   return connection_->GetRouters(request);
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Router>
-RoutersClient::GetRouters(google::cloud::cpp::compute::routers::v1::GetRoutersRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::compute::v1::Router> RoutersClient::GetRouters(
+    google::cloud::cpp::compute::routers::v1::GetRoutersRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRouters(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
-RoutersClient::GetNatMappingInfo(std::string const& project, std::string const& region, std::string const& router, Options opts) {
+RoutersClient::GetNatMappingInfo(std::string const& project,
+                                 std::string const& region,
+                                 std::string const& router, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest request;
   request.set_project(project);
@@ -88,13 +102,18 @@ RoutersClient::GetNatMappingInfo(std::string const& project, std::string const& 
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
-RoutersClient::GetNatMappingInfo(google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const& request, Options opts) {
+RoutersClient::GetNatMappingInfo(
+    google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetNatMappingInfo(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
-RoutersClient::GetRouterStatus(std::string const& project, std::string const& region, std::string const& router, Options opts) {
+RoutersClient::GetRouterStatus(std::string const& project,
+                               std::string const& region,
+                               std::string const& router, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest request;
   request.set_project(project);
@@ -104,13 +123,19 @@ RoutersClient::GetRouterStatus(std::string const& project, std::string const& re
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
-RoutersClient::GetRouterStatus(google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const& request, Options opts) {
+RoutersClient::GetRouterStatus(
+    google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRouterStatus(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RoutersClient::InsertRouters(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::Router const& router_resource, Options opts) {
+RoutersClient::InsertRouters(
+    std::string const& project, std::string const& region,
+    google::cloud::cpp::compute::v1::Router const& router_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::routers::v1::InsertRoutersRequest request;
   request.set_project(project);
@@ -120,13 +145,16 @@ RoutersClient::InsertRouters(std::string const& project, std::string const& regi
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RoutersClient::InsertRouters(google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const& request, Options opts) {
+RoutersClient::InsertRouters(
+    google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertRouters(request);
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Router>
-RoutersClient::ListRouters(std::string const& project, std::string const& region, Options opts) {
+StreamRange<google::cloud::cpp::compute::v1::Router> RoutersClient::ListRouters(
+    std::string const& project, std::string const& region, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::routers::v1::ListRoutersRequest request;
   request.set_project(project);
@@ -134,14 +162,19 @@ RoutersClient::ListRouters(std::string const& project, std::string const& region
   return connection_->ListRouters(request);
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Router>
-RoutersClient::ListRouters(google::cloud::cpp::compute::routers::v1::ListRoutersRequest request, Options opts) {
+StreamRange<google::cloud::cpp::compute::v1::Router> RoutersClient::ListRouters(
+    google::cloud::cpp::compute::routers::v1::ListRoutersRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRouters(std::move(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RoutersClient::PatchRouters(std::string const& project, std::string const& region, std::string const& router, google::cloud::cpp::compute::v1::Router const& router_resource, Options opts) {
+RoutersClient::PatchRouters(
+    std::string const& project, std::string const& region,
+    std::string const& router,
+    google::cloud::cpp::compute::v1::Router const& router_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::routers::v1::PatchRoutersRequest request;
   request.set_project(project);
@@ -152,13 +185,20 @@ RoutersClient::PatchRouters(std::string const& project, std::string const& regio
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RoutersClient::PatchRouters(google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const& request, Options opts) {
+RoutersClient::PatchRouters(
+    google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchRouters(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
-RoutersClient::Preview(std::string const& project, std::string const& region, std::string const& router, google::cloud::cpp::compute::v1::Router const& router_resource, Options opts) {
+RoutersClient::Preview(
+    std::string const& project, std::string const& region,
+    std::string const& router,
+    google::cloud::cpp::compute::v1::Router const& router_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::routers::v1::PreviewRequest request;
   request.set_project(project);
@@ -169,13 +209,19 @@ RoutersClient::Preview(std::string const& project, std::string const& region, st
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
-RoutersClient::Preview(google::cloud::cpp::compute::routers::v1::PreviewRequest const& request, Options opts) {
+RoutersClient::Preview(
+    google::cloud::cpp::compute::routers::v1::PreviewRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Preview(request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RoutersClient::UpdateRouters(std::string const& project, std::string const& region, std::string const& router, google::cloud::cpp::compute::v1::Router const& router_resource, Options opts) {
+RoutersClient::UpdateRouters(
+    std::string const& project, std::string const& region,
+    std::string const& router,
+    google::cloud::cpp::compute::v1::Router const& router_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest request;
   request.set_project(project);
@@ -186,7 +232,10 @@ RoutersClient::UpdateRouters(std::string const& project, std::string const& regi
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RoutersClient::UpdateRouters(google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const& request, Options opts) {
+RoutersClient::UpdateRouters(
+    google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRouters(request);
 }

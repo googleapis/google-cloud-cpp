@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SslPoliciesClient {
  public:
-  explicit SslPoliciesClient(ExperimentalTag, std::shared_ptr<SslPoliciesConnection> connection, Options opts = {});
+  explicit SslPoliciesClient(ExperimentalTag,
+                             std::shared_ptr<SslPoliciesConnection> connection,
+                             Options opts = {});
   ~SslPoliciesClient();
 
   ///@{
@@ -76,10 +78,12 @@ class SslPoliciesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(SslPoliciesClient const& a, SslPoliciesClient const& b) {
+  friend bool operator==(SslPoliciesClient const& a,
+                         SslPoliciesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SslPoliciesClient const& a, SslPoliciesClient const& b) {
+  friend bool operator!=(SslPoliciesClient const& a,
+                         SslPoliciesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -91,10 +95,13 @@ class SslPoliciesClient {
   /// @param project  Name of the project scoping this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::SslPoliciesAggregatedList,google/cloud/compute/v1/internal/common.proto#L25177}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslPoliciesAggregatedList,google/cloud/compute/v1/internal/common.proto#L25177}
   ///
-  /// [google.cloud.cpp.compute.sslPolicies.v1.AggregatedListSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L102}
-  /// [google.cloud.cpp.compute.v1.SslPoliciesAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25177}
+  /// [google.cloud.cpp.compute.sslPolicies.v1.AggregatedListSslPoliciesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L102}
+  /// [google.cloud.cpp.compute.v1.SslPoliciesAggregatedList]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25177}
   ///
   StatusOr<google::cloud::cpp::compute::v1::SslPoliciesAggregatedList>
   AggregatedListSslPolicies(std::string const& project, Options opts = {});
@@ -103,16 +110,22 @@ class SslPoliciesClient {
   /// Retrieves the list of all SslPolicy resources, regional and global,
   /// available to the specified project.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::sslPolicies::v1::AggregatedListSslPoliciesRequest,google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L102}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::sslPolicies::v1::AggregatedListSslPoliciesRequest,google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L102}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::SslPoliciesAggregatedList,google/cloud/compute/v1/internal/common.proto#L25177}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslPoliciesAggregatedList,google/cloud/compute/v1/internal/common.proto#L25177}
   ///
-  /// [google.cloud.cpp.compute.sslPolicies.v1.AggregatedListSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L102}
-  /// [google.cloud.cpp.compute.v1.SslPoliciesAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25177}
+  /// [google.cloud.cpp.compute.sslPolicies.v1.AggregatedListSslPoliciesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L102}
+  /// [google.cloud.cpp.compute.v1.SslPoliciesAggregatedList]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25177}
   ///
   StatusOr<google::cloud::cpp::compute::v1::SslPoliciesAggregatedList>
-  AggregatedListSslPolicies(google::cloud::cpp::compute::sslPolicies::v1::AggregatedListSslPoliciesRequest const& request, Options opts = {});
+  AggregatedListSslPolicies(google::cloud::cpp::compute::sslPolicies::v1::
+                                AggregatedListSslPoliciesRequest const& request,
+                            Options opts = {});
 
   ///
   /// Deletes the specified SSL policy. The SSL policy resource can be deleted
@@ -120,63 +133,85 @@ class SslPoliciesClient {
   /// resources.
   ///
   /// @param project  Project ID for this request.
-  /// @param ssl_policy  Name of the SSL policy to delete. The name must be 1-63 characters long,
+  /// @param ssl_policy  Name of the SSL policy to delete. The name must be 1-63
+  /// characters long,
   ///  and comply with RFC1035.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.sslPolicies.v1.DeleteSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L176}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.sslPolicies.v1.DeleteSslPoliciesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L176}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteSslPolicies(std::string const& project, std::string const& ssl_policy, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslPolicies(
+      std::string const& project, std::string const& ssl_policy,
+      Options opts = {});
 
   ///
   /// Deletes the specified SSL policy. The SSL policy resource can be deleted
   /// only if it is not in use by any TargetHttpsProxy or TargetSslProxy
   /// resources.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::sslPolicies::v1::DeleteSslPoliciesRequest,google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L176}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::sslPolicies::v1::DeleteSslPoliciesRequest,google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L176}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.sslPolicies.v1.DeleteSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L176}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.sslPolicies.v1.DeleteSslPoliciesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L176}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteSslPolicies(google::cloud::cpp::compute::sslPolicies::v1::DeleteSslPoliciesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslPolicies(
+      google::cloud::cpp::compute::sslPolicies::v1::
+          DeleteSslPoliciesRequest const& request,
+      Options opts = {});
 
   ///
   /// Lists all of the ordered rules present in a single specified policy.
   ///
   /// @param project  Project ID for this request.
-  /// @param ssl_policy  Name of the SSL policy to update. The name must be 1-63 characters long,
+  /// @param ssl_policy  Name of the SSL policy to update. The name must be 1-63
+  /// characters long,
   ///  and comply with RFC1035.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::SslPolicy,google/cloud/compute/v1/internal/common.proto#L25482}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslPolicy,google/cloud/compute/v1/internal/common.proto#L25482}
   ///
-  /// [google.cloud.cpp.compute.sslPolicies.v1.GetSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L198}
-  /// [google.cloud.cpp.compute.v1.SslPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25482}
+  /// [google.cloud.cpp.compute.sslPolicies.v1.GetSslPoliciesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L198}
+  /// [google.cloud.cpp.compute.v1.SslPolicy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25482}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-  GetSslPolicies(std::string const& project, std::string const& ssl_policy, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicies(
+      std::string const& project, std::string const& ssl_policy,
+      Options opts = {});
 
   ///
   /// Lists all of the ordered rules present in a single specified policy.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::sslPolicies::v1::GetSslPoliciesRequest,google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L198}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::sslPolicies::v1::GetSslPoliciesRequest,google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L198}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::SslPolicy,google/cloud/compute/v1/internal/common.proto#L25482}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslPolicy,google/cloud/compute/v1/internal/common.proto#L25482}
   ///
-  /// [google.cloud.cpp.compute.sslPolicies.v1.GetSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L198}
-  /// [google.cloud.cpp.compute.v1.SslPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25482}
+  /// [google.cloud.cpp.compute.sslPolicies.v1.GetSslPoliciesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L198}
+  /// [google.cloud.cpp.compute.v1.SslPolicy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25482}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-  GetSslPolicies(google::cloud::cpp::compute::sslPolicies::v1::GetSslPoliciesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicies(
+      google::cloud::cpp::compute::sslPolicies::v1::GetSslPoliciesRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Returns the specified SSL policy resource.
@@ -185,27 +220,38 @@ class SslPoliciesClient {
   /// @param ssl_policy_resource  The SslPolicy for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.sslPolicies.v1.InsertSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L208}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.sslPolicies.v1.InsertSslPoliciesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L208}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertSslPolicies(std::string const& project, google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslPolicies(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
+      Options opts = {});
 
   ///
   /// Returns the specified SSL policy resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::sslPolicies::v1::InsertSslPoliciesRequest,google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L208}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::sslPolicies::v1::InsertSslPoliciesRequest,google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L208}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.sslPolicies.v1.InsertSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L208}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.sslPolicies.v1.InsertSslPoliciesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L208}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertSslPolicies(google::cloud::cpp::compute::sslPolicies::v1::InsertSslPoliciesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslPolicies(
+      google::cloud::cpp::compute::sslPolicies::v1::
+          InsertSslPoliciesRequest const& request,
+      Options opts = {});
 
   ///
   /// Lists all the SSL policies that have been configured for the specified
@@ -214,28 +260,37 @@ class SslPoliciesClient {
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::SslPolicy,google/cloud/compute/v1/internal/common.proto#L25482}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslPolicy,google/cloud/compute/v1/internal/common.proto#L25482}
   ///
-  /// [google.cloud.cpp.compute.sslPolicies.v1.ListSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L294}
-  /// [google.cloud.cpp.compute.v1.SslPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25482}
+  /// [google.cloud.cpp.compute.sslPolicies.v1.ListSslPoliciesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L294}
+  /// [google.cloud.cpp.compute.v1.SslPolicy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25482}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
-  ListSslPolicies(std::string const& project, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::SslPolicy> ListSslPolicies(
+      std::string const& project, Options opts = {});
 
   ///
   /// Lists all the SSL policies that have been configured for the specified
   /// project.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::sslPolicies::v1::ListSslPoliciesRequest,google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L294}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::sslPolicies::v1::ListSslPoliciesRequest,google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L294}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::SslPolicy,google/cloud/compute/v1/internal/common.proto#L25482}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslPolicy,google/cloud/compute/v1/internal/common.proto#L25482}
   ///
-  /// [google.cloud.cpp.compute.sslPolicies.v1.ListSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L294}
-  /// [google.cloud.cpp.compute.v1.SslPolicy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25482}
+  /// [google.cloud.cpp.compute.sslPolicies.v1.ListSslPoliciesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L294}
+  /// [google.cloud.cpp.compute.v1.SslPolicy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25482}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
-  ListSslPolicies(google::cloud::cpp::compute::sslPolicies::v1::ListSslPoliciesRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::SslPolicy> ListSslPolicies(
+      google::cloud::cpp::compute::sslPolicies::v1::ListSslPoliciesRequest
+          request,
+      Options opts = {});
 
   ///
   /// Lists all features that can be specified in the SSL policy when using
@@ -244,59 +299,82 @@ class SslPoliciesClient {
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse,google/cloud/compute/v1/internal/common.proto#L25388}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse,google/cloud/compute/v1/internal/common.proto#L25388}
   ///
-  /// [google.cloud.cpp.compute.sslPolicies.v1.ListAvailableFeaturesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L229}
-  /// [google.cloud.cpp.compute.v1.SslPoliciesListAvailableFeaturesResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25388}
+  /// [google.cloud.cpp.compute.sslPolicies.v1.ListAvailableFeaturesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L229}
+  /// [google.cloud.cpp.compute.v1.SslPoliciesListAvailableFeaturesResponse]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25388}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+  StatusOr<
+      google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
   ListAvailableFeatures(std::string const& project, Options opts = {});
 
   ///
   /// Lists all features that can be specified in the SSL policy when using
   /// custom profile.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::sslPolicies::v1::ListAvailableFeaturesRequest,google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L229}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::sslPolicies::v1::ListAvailableFeaturesRequest,google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L229}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse,google/cloud/compute/v1/internal/common.proto#L25388}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse,google/cloud/compute/v1/internal/common.proto#L25388}
   ///
-  /// [google.cloud.cpp.compute.sslPolicies.v1.ListAvailableFeaturesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L229}
-  /// [google.cloud.cpp.compute.v1.SslPoliciesListAvailableFeaturesResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25388}
+  /// [google.cloud.cpp.compute.sslPolicies.v1.ListAvailableFeaturesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L229}
+  /// [google.cloud.cpp.compute.v1.SslPoliciesListAvailableFeaturesResponse]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25388}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
-  ListAvailableFeatures(google::cloud::cpp::compute::sslPolicies::v1::ListAvailableFeaturesRequest const& request, Options opts = {});
+  StatusOr<
+      google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+  ListAvailableFeatures(google::cloud::cpp::compute::sslPolicies::v1::
+                            ListAvailableFeaturesRequest const& request,
+                        Options opts = {});
 
   ///
   /// Patches the specified SSL policy with the data included in the request.
   ///
   /// @param project  Project ID for this request.
-  /// @param ssl_policy  Name of the SSL policy to update. The name must be 1-63 characters long,
+  /// @param ssl_policy  Name of the SSL policy to update. The name must be 1-63
+  /// characters long,
   ///  and comply with RFC1035.
   /// @param ssl_policy_resource  The SslPolicy for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.sslPolicies.v1.PatchSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L359}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.sslPolicies.v1.PatchSslPoliciesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L359}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchSslPolicies(std::string const& project, std::string const& ssl_policy, google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSslPolicies(
+      std::string const& project, std::string const& ssl_policy,
+      google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
+      Options opts = {});
 
   ///
   /// Patches the specified SSL policy with the data included in the request.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::sslPolicies::v1::PatchSslPoliciesRequest,google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L359}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::sslPolicies::v1::PatchSslPoliciesRequest,google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L359}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.sslPolicies.v1.PatchSslPoliciesRequest]: @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L359}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.sslPolicies.v1.PatchSslPoliciesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/ssl_policies/v1/ssl_policies.proto#L359}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchSslPolicies(google::cloud::cpp::compute::sslPolicies::v1::PatchSslPoliciesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSslPolicies(
+      google::cloud::cpp::compute::sslPolicies::v1::
+          PatchSslPoliciesRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<SslPoliciesConnection> connection_;

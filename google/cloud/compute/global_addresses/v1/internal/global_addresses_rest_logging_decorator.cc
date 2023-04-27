@@ -28,18 +28,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GlobalAddressesRestLogging::GlobalAddressesRestLogging(
     std::shared_ptr<GlobalAddressesRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalAddressesRestLogging::DeleteGlobalAddresses(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::globalAddresses::v1::DeleteGlobalAddressesRequest const& request) {
+    google::cloud::cpp::compute::globalAddresses::v1::
+        DeleteGlobalAddressesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::globalAddresses::v1::DeleteGlobalAddressesRequest const& request) {
+             google::cloud::cpp::compute::globalAddresses::v1::
+                 DeleteGlobalAddressesRequest const& request) {
         return child_->DeleteGlobalAddresses(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,10 +50,12 @@ GlobalAddressesRestLogging::DeleteGlobalAddresses(
 StatusOr<google::cloud::cpp::compute::v1::Address>
 GlobalAddressesRestLogging::GetGlobalAddresses(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::globalAddresses::v1::GetGlobalAddressesRequest const& request) {
+    google::cloud::cpp::compute::globalAddresses::v1::
+        GetGlobalAddressesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::globalAddresses::v1::GetGlobalAddressesRequest const& request) {
+             google::cloud::cpp::compute::globalAddresses::v1::
+                 GetGlobalAddressesRequest const& request) {
         return child_->GetGlobalAddresses(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -60,10 +64,12 @@ GlobalAddressesRestLogging::GetGlobalAddresses(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalAddressesRestLogging::InsertGlobalAddresses(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::globalAddresses::v1::InsertGlobalAddressesRequest const& request) {
+    google::cloud::cpp::compute::globalAddresses::v1::
+        InsertGlobalAddressesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::globalAddresses::v1::InsertGlobalAddressesRequest const& request) {
+             google::cloud::cpp::compute::globalAddresses::v1::
+                 InsertGlobalAddressesRequest const& request) {
         return child_->InsertGlobalAddresses(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -72,10 +78,12 @@ GlobalAddressesRestLogging::InsertGlobalAddresses(
 StatusOr<google::cloud::cpp::compute::v1::AddressList>
 GlobalAddressesRestLogging::ListGlobalAddresses(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::globalAddresses::v1::ListGlobalAddressesRequest const& request) {
+    google::cloud::cpp::compute::globalAddresses::v1::
+        ListGlobalAddressesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::globalAddresses::v1::ListGlobalAddressesRequest const& request) {
+             google::cloud::cpp::compute::globalAddresses::v1::
+                 ListGlobalAddressesRequest const& request) {
         return child_->ListGlobalAddresses(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -84,10 +92,12 @@ GlobalAddressesRestLogging::ListGlobalAddresses(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalAddressesRestLogging::SetLabels(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::globalAddresses::v1::SetLabelsRequest const& request) {
+    google::cloud::cpp::compute::globalAddresses::v1::SetLabelsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::globalAddresses::v1::SetLabelsRequest const& request) {
+             google::cloud::cpp::compute::globalAddresses::v1::
+                 SetLabelsRequest const& request) {
         return child_->SetLabels(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);

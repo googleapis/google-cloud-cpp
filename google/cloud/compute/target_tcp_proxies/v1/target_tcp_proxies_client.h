@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TargetTcpProxiesClient {
  public:
-  explicit TargetTcpProxiesClient(ExperimentalTag, std::shared_ptr<TargetTcpProxiesConnection> connection, Options opts = {});
+  explicit TargetTcpProxiesClient(
+      ExperimentalTag, std::shared_ptr<TargetTcpProxiesConnection> connection,
+      Options opts = {});
   ~TargetTcpProxiesClient();
 
   ///@{
@@ -76,10 +78,12 @@ class TargetTcpProxiesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(TargetTcpProxiesClient const& a, TargetTcpProxiesClient const& b) {
+  friend bool operator==(TargetTcpProxiesClient const& a,
+                         TargetTcpProxiesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(TargetTcpProxiesClient const& a, TargetTcpProxiesClient const& b) {
+  friend bool operator!=(TargetTcpProxiesClient const& a,
+                         TargetTcpProxiesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -91,10 +95,13 @@ class TargetTcpProxiesClient {
   /// @param project  Name of the project scoping this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList,google/cloud/compute/v1/internal/common.proto#L28296}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList,google/cloud/compute/v1/internal/common.proto#L28296}
   ///
-  /// [google.cloud.cpp.compute.targetTcpProxies.v1.AggregatedListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L102}
-  /// [google.cloud.cpp.compute.v1.TargetTcpProxyAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28296}
+  /// [google.cloud.cpp.compute.targetTcpProxies.v1.AggregatedListTargetTcpProxiesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L102}
+  /// [google.cloud.cpp.compute.v1.TargetTcpProxyAggregatedList]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28296}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>
   AggregatedListTargetTcpProxies(std::string const& project, Options opts = {});
@@ -103,16 +110,23 @@ class TargetTcpProxiesClient {
   /// Retrieves the list of all TargetTcpProxy resources, regional and global,
   /// available to the specified project.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::targetTcpProxies::v1::AggregatedListTargetTcpProxiesRequest,google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L102}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::targetTcpProxies::v1::AggregatedListTargetTcpProxiesRequest,google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L102}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList,google/cloud/compute/v1/internal/common.proto#L28296}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList,google/cloud/compute/v1/internal/common.proto#L28296}
   ///
-  /// [google.cloud.cpp.compute.targetTcpProxies.v1.AggregatedListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L102}
-  /// [google.cloud.cpp.compute.v1.TargetTcpProxyAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28296}
+  /// [google.cloud.cpp.compute.targetTcpProxies.v1.AggregatedListTargetTcpProxiesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L102}
+  /// [google.cloud.cpp.compute.v1.TargetTcpProxyAggregatedList]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28296}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>
-  AggregatedListTargetTcpProxies(google::cloud::cpp::compute::targetTcpProxies::v1::AggregatedListTargetTcpProxiesRequest const& request, Options opts = {});
+  AggregatedListTargetTcpProxies(
+      google::cloud::cpp::compute::targetTcpProxies::v1::
+          AggregatedListTargetTcpProxiesRequest const& request,
+      Options opts = {});
 
   ///
   /// Deletes the specified TargetTcpProxy resource.
@@ -121,27 +135,37 @@ class TargetTcpProxiesClient {
   /// @param target_tcp_proxy  Name of the TargetTcpProxy resource to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.targetTcpProxies.v1.DeleteTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L176}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.targetTcpProxies.v1.DeleteTargetTcpProxiesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L176}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteTargetTcpProxies(std::string const& project, std::string const& target_tcp_proxy, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetTcpProxies(
+      std::string const& project, std::string const& target_tcp_proxy,
+      Options opts = {});
 
   ///
   /// Deletes the specified TargetTcpProxy resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::targetTcpProxies::v1::DeleteTargetTcpProxiesRequest,google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L176}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::targetTcpProxies::v1::DeleteTargetTcpProxiesRequest,google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L176}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.targetTcpProxies.v1.DeleteTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L176}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.targetTcpProxies.v1.DeleteTargetTcpProxiesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L176}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteTargetTcpProxies(google::cloud::cpp::compute::targetTcpProxies::v1::DeleteTargetTcpProxiesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetTcpProxies(
+      google::cloud::cpp::compute::targetTcpProxies::v1::
+          DeleteTargetTcpProxiesRequest const& request,
+      Options opts = {});
 
   ///
   /// Returns the specified TargetTcpProxy resource.
@@ -150,27 +174,37 @@ class TargetTcpProxiesClient {
   /// @param target_tcp_proxy  Name of the TargetTcpProxy resource to return.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TargetTcpProxy,google/cloud/compute/v1/internal/common.proto#L28244}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetTcpProxy,google/cloud/compute/v1/internal/common.proto#L28244}
   ///
-  /// [google.cloud.cpp.compute.targetTcpProxies.v1.GetTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L197}
-  /// [google.cloud.cpp.compute.v1.TargetTcpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28244}
+  /// [google.cloud.cpp.compute.targetTcpProxies.v1.GetTargetTcpProxiesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L197}
+  /// [google.cloud.cpp.compute.v1.TargetTcpProxy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28244}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
-  GetTargetTcpProxies(std::string const& project, std::string const& target_tcp_proxy, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy> GetTargetTcpProxies(
+      std::string const& project, std::string const& target_tcp_proxy,
+      Options opts = {});
 
   ///
   /// Returns the specified TargetTcpProxy resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::targetTcpProxies::v1::GetTargetTcpProxiesRequest,google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L197}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::targetTcpProxies::v1::GetTargetTcpProxiesRequest,google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L197}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TargetTcpProxy,google/cloud/compute/v1/internal/common.proto#L28244}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetTcpProxy,google/cloud/compute/v1/internal/common.proto#L28244}
   ///
-  /// [google.cloud.cpp.compute.targetTcpProxies.v1.GetTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L197}
-  /// [google.cloud.cpp.compute.v1.TargetTcpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28244}
+  /// [google.cloud.cpp.compute.targetTcpProxies.v1.GetTargetTcpProxiesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L197}
+  /// [google.cloud.cpp.compute.v1.TargetTcpProxy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28244}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
-  GetTargetTcpProxies(google::cloud::cpp::compute::targetTcpProxies::v1::GetTargetTcpProxiesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy> GetTargetTcpProxies(
+      google::cloud::cpp::compute::targetTcpProxies::v1::
+          GetTargetTcpProxiesRequest const& request,
+      Options opts = {});
 
   ///
   /// Creates a TargetTcpProxy resource in the specified project using the data
@@ -180,28 +214,40 @@ class TargetTcpProxiesClient {
   /// @param target_tcp_proxy_resource  The TargetTcpProxy for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.targetTcpProxies.v1.InsertTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L206}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.targetTcpProxies.v1.InsertTargetTcpProxiesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L206}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertTargetTcpProxies(std::string const& project, google::cloud::cpp::compute::v1::TargetTcpProxy const& target_tcp_proxy_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetTcpProxies(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::TargetTcpProxy const&
+          target_tcp_proxy_resource,
+      Options opts = {});
 
   ///
   /// Creates a TargetTcpProxy resource in the specified project using the data
   /// included in the request.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::targetTcpProxies::v1::InsertTargetTcpProxiesRequest,google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L206}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::targetTcpProxies::v1::InsertTargetTcpProxiesRequest,google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L206}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.targetTcpProxies.v1.InsertTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L206}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.targetTcpProxies.v1.InsertTargetTcpProxiesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L206}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertTargetTcpProxies(google::cloud::cpp::compute::targetTcpProxies::v1::InsertTargetTcpProxiesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetTcpProxies(
+      google::cloud::cpp::compute::targetTcpProxies::v1::
+          InsertTargetTcpProxiesRequest const& request,
+      Options opts = {});
 
   ///
   /// Retrieves the list of TargetTcpProxy resources available to the specified
@@ -210,10 +256,13 @@ class TargetTcpProxiesClient {
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TargetTcpProxy,google/cloud/compute/v1/internal/common.proto#L28244}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetTcpProxy,google/cloud/compute/v1/internal/common.proto#L28244}
   ///
-  /// [google.cloud.cpp.compute.targetTcpProxies.v1.ListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L227}
-  /// [google.cloud.cpp.compute.v1.TargetTcpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28244}
+  /// [google.cloud.cpp.compute.targetTcpProxies.v1.ListTargetTcpProxiesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L227}
+  /// [google.cloud.cpp.compute.v1.TargetTcpProxy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28244}
   ///
   StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>
   ListTargetTcpProxies(std::string const& project, Options opts = {});
@@ -222,77 +271,113 @@ class TargetTcpProxiesClient {
   /// Retrieves the list of TargetTcpProxy resources available to the specified
   /// project.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::targetTcpProxies::v1::ListTargetTcpProxiesRequest,google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L227}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::targetTcpProxies::v1::ListTargetTcpProxiesRequest,google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L227}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TargetTcpProxy,google/cloud/compute/v1/internal/common.proto#L28244}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetTcpProxy,google/cloud/compute/v1/internal/common.proto#L28244}
   ///
-  /// [google.cloud.cpp.compute.targetTcpProxies.v1.ListTargetTcpProxiesRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L227}
-  /// [google.cloud.cpp.compute.v1.TargetTcpProxy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28244}
+  /// [google.cloud.cpp.compute.targetTcpProxies.v1.ListTargetTcpProxiesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L227}
+  /// [google.cloud.cpp.compute.v1.TargetTcpProxy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28244}
   ///
   StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>
-  ListTargetTcpProxies(google::cloud::cpp::compute::targetTcpProxies::v1::ListTargetTcpProxiesRequest request, Options opts = {});
+  ListTargetTcpProxies(google::cloud::cpp::compute::targetTcpProxies::v1::
+                           ListTargetTcpProxiesRequest request,
+                       Options opts = {});
 
   ///
   /// Changes the BackendService for TargetTcpProxy.
   ///
   /// @param project  Project ID for this request.
-  /// @param target_tcp_proxy  Name of the TargetTcpProxy resource whose BackendService resource is to be
+  /// @param target_tcp_proxy  Name of the TargetTcpProxy resource whose
+  /// BackendService resource is to be
   ///  set.
-  /// @param target_tcp_proxies_set_backend_service_request_resource  The TargetTcpProxiesSetBackendServiceRequest for this request.
+  /// @param target_tcp_proxies_set_backend_service_request_resource  The
+  /// TargetTcpProxiesSetBackendServiceRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.targetTcpProxies.v1.SetBackendServiceRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L292}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.targetTcpProxies.v1.SetBackendServiceRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L292}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetBackendService(std::string const& project, std::string const& target_tcp_proxy, google::cloud::cpp::compute::v1::TargetTcpProxiesSetBackendServiceRequest const& target_tcp_proxies_set_backend_service_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetBackendService(
+      std::string const& project, std::string const& target_tcp_proxy,
+      google::cloud::cpp::compute::v1::
+          TargetTcpProxiesSetBackendServiceRequest const&
+              target_tcp_proxies_set_backend_service_request_resource,
+      Options opts = {});
 
   ///
   /// Changes the BackendService for TargetTcpProxy.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::targetTcpProxies::v1::SetBackendServiceRequest,google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L292}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::targetTcpProxies::v1::SetBackendServiceRequest,google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L292}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.targetTcpProxies.v1.SetBackendServiceRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L292}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.targetTcpProxies.v1.SetBackendServiceRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L292}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetBackendService(google::cloud::cpp::compute::targetTcpProxies::v1::SetBackendServiceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetBackendService(
+      google::cloud::cpp::compute::targetTcpProxies::v1::
+          SetBackendServiceRequest const& request,
+      Options opts = {});
 
   ///
   /// Changes the ProxyHeaderType for TargetTcpProxy.
   ///
   /// @param project  Project ID for this request.
-  /// @param target_tcp_proxy  Name of the TargetTcpProxy resource whose ProxyHeader is to be set.
-  /// @param target_tcp_proxies_set_proxy_header_request_resource  The TargetTcpProxiesSetProxyHeaderRequest for this request.
+  /// @param target_tcp_proxy  Name of the TargetTcpProxy resource whose
+  /// ProxyHeader is to be set.
+  /// @param target_tcp_proxies_set_proxy_header_request_resource  The
+  /// TargetTcpProxiesSetProxyHeaderRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.targetTcpProxies.v1.SetProxyHeaderRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L317}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.targetTcpProxies.v1.SetProxyHeaderRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L317}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetProxyHeader(std::string const& project, std::string const& target_tcp_proxy, google::cloud::cpp::compute::v1::TargetTcpProxiesSetProxyHeaderRequest const& target_tcp_proxies_set_proxy_header_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetProxyHeader(
+      std::string const& project, std::string const& target_tcp_proxy,
+      google::cloud::cpp::compute::v1::
+          TargetTcpProxiesSetProxyHeaderRequest const&
+              target_tcp_proxies_set_proxy_header_request_resource,
+      Options opts = {});
 
   ///
   /// Changes the ProxyHeaderType for TargetTcpProxy.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::targetTcpProxies::v1::SetProxyHeaderRequest,google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L317}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::targetTcpProxies::v1::SetProxyHeaderRequest,google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L317}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.targetTcpProxies.v1.SetProxyHeaderRequest]: @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L317}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.targetTcpProxies.v1.SetProxyHeaderRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto#L317}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetProxyHeader(google::cloud::cpp::compute::targetTcpProxies::v1::SetProxyHeaderRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetProxyHeader(
+      google::cloud::cpp::compute::targetTcpProxies::v1::
+          SetProxyHeaderRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<TargetTcpProxiesConnection> connection_;

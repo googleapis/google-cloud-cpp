@@ -36,48 +36,63 @@ class ProjectsTracingConnection
   ~ProjectsTracingConnection() override = default;
 
   explicit ProjectsTracingConnection(
-    std::shared_ptr<compute_projects_v1::ProjectsConnection> child);
+      std::shared_ptr<compute_projects_v1::ProjectsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DisableXpnHost(google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnHost(
+      google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DisableXpnResource(google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnResource(
+      google::cloud::cpp::compute::projects::v1::
+          DisableXpnResourceRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  EnableXpnHost(google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnHost(
+      google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  EnableXpnResource(google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnResource(
+      google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Project>
-  GetProjects(google::cloud::cpp::compute::projects::v1::GetProjectsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Project> GetProjects(
+      google::cloud::cpp::compute::projects::v1::GetProjectsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Project>
-  GetXpnHost(google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Project> GetXpnHost(
+      google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ProjectsGetXpnResources>
-  GetXpnResources(google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const& request) override;
+  GetXpnResources(
+      google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const&
+          request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Project>
-  ListXpnHosts(google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Project> ListXpnHosts(
+      google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest request)
+      override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> MoveDisk(
+      google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request)
+      override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> MoveInstance(
+      google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
-  MoveDisk(google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request) override;
+  SetCommonInstanceMetadata(
+      google::cloud::cpp::compute::projects::v1::
+          SetCommonInstanceMetadataRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  MoveInstance(google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetDefaultNetworkTier(
+      google::cloud::cpp::compute::projects::v1::
+          SetDefaultNetworkTierRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetCommonInstanceMetadata(google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const& request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetDefaultNetworkTier(google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const& request) override;
-
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetUsageExportBucket(google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetUsageExportBucket(
+      google::cloud::cpp::compute::projects::v1::
+          SetUsageExportBucketRequest const& request) override;
 
  private:
   std::shared_ptr<compute_projects_v1::ProjectsConnection> child_;

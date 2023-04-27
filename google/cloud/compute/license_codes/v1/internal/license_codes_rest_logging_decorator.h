@@ -38,16 +38,18 @@ class LicenseCodesRestLogging : public LicenseCodesRestStub {
  public:
   ~LicenseCodesRestLogging() override = default;
   LicenseCodesRestLogging(std::shared_ptr<LicenseCodesRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                          TracingOptions tracing_options,
+                          std::set<std::string> components);
 
   StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCodes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenseCodes::v1::GetLicenseCodesRequest const& request) override;
+      google::cloud::cpp::compute::licenseCodes::v1::
+          GetLicenseCodesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenseCodes::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::licenseCodes::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<LicenseCodesRestStub> child_;

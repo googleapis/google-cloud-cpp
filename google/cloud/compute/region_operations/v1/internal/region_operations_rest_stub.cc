@@ -29,20 +29,20 @@ namespace cloud {
 namespace compute_region_operations_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultRegionOperationsRestStub::DefaultRegionOperationsRestStub(Options options)
+DefaultRegionOperationsRestStub::DefaultRegionOperationsRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       options_(std::move(options)) {}
 
 DefaultRegionOperationsRestStub::DefaultRegionOperationsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 Status DefaultRegionOperationsRestStub::DeleteRegionOperations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionOperations::v1::DeleteRegionOperationsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionOperations::v1::
+        DeleteRegionOperationsRequest const& request) {
   return rest_internal::Delete(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/operations/{operation}");
@@ -50,8 +50,9 @@ Status DefaultRegionOperationsRestStub::DeleteRegionOperations(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionOperationsRestStub::GetRegionOperations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionOperations::v1::GetRegionOperationsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionOperations::v1::
+        GetRegionOperationsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/operations/{operation}",
@@ -62,8 +63,9 @@ DefaultRegionOperationsRestStub::GetRegionOperations(
 
 StatusOr<google::cloud::cpp::compute::v1::OperationList>
 DefaultRegionOperationsRestStub::ListRegionOperations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionOperations::v1::ListRegionOperationsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionOperations::v1::
+        ListRegionOperationsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::OperationList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/operations",
@@ -73,16 +75,19 @@ DefaultRegionOperationsRestStub::ListRegionOperations(
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionOperationsRestStub::Wait(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionOperations::v1::WaitRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionOperations::v1::WaitRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/operations/{operation}/wait");
+      "/compute/v1/projects/{project}/regions/{region}/operations/{operation}/"
+      "wait");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

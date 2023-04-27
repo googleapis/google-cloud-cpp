@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SnapshotsClient {
  public:
-  explicit SnapshotsClient(ExperimentalTag, std::shared_ptr<SnapshotsConnection> connection, Options opts = {});
+  explicit SnapshotsClient(ExperimentalTag,
+                           std::shared_ptr<SnapshotsConnection> connection,
+                           Options opts = {});
   ~SnapshotsClient();
 
   ///@{
@@ -86,40 +88,50 @@ class SnapshotsClient {
 
   ///
   /// Deletes the specified Snapshot resource. Keep in mind that deleting a
-  /// single snapshot might not necessarily delete all the data on that snapshot.
-  /// If any data on the snapshot that is marked for deletion is needed for
-  /// subsequent snapshots, the data will be moved to the next corresponding
-  /// snapshot. For more information, see Deleting snapshots.
+  /// single snapshot might not necessarily delete all the data on that
+  /// snapshot. If any data on the snapshot that is marked for deletion is
+  /// needed for subsequent snapshots, the data will be moved to the next
+  /// corresponding snapshot. For more information, see Deleting snapshots.
   ///
   /// @param project  Project ID for this request.
   /// @param snapshot  Name of the Snapshot resource to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L118}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L118}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteSnapshots(std::string const& project, std::string const& snapshot, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSnapshots(
+      std::string const& project, std::string const& snapshot,
+      Options opts = {});
 
   ///
   /// Deletes the specified Snapshot resource. Keep in mind that deleting a
-  /// single snapshot might not necessarily delete all the data on that snapshot.
-  /// If any data on the snapshot that is marked for deletion is needed for
-  /// subsequent snapshots, the data will be moved to the next corresponding
-  /// snapshot. For more information, see Deleting snapshots.
+  /// single snapshot might not necessarily delete all the data on that
+  /// snapshot. If any data on the snapshot that is marked for deletion is
+  /// needed for subsequent snapshots, the data will be moved to the next
+  /// corresponding snapshot. For more information, see Deleting snapshots.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest,google/cloud/compute/snapshots/v1/snapshots.proto#L118}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest,google/cloud/compute/snapshots/v1/snapshots.proto#L118}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L118}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.snapshots.v1.DeleteSnapshotsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L118}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteSnapshots(google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSnapshots(
+      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Returns the specified Snapshot resource.
@@ -128,27 +140,37 @@ class SnapshotsClient {
   /// @param snapshot  Name of the Snapshot resource to return.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Snapshot,google/cloud/compute/v1/internal/common.proto#L24412}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Snapshot,google/cloud/compute/v1/internal/common.proto#L24412}
   ///
-  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L151}
-  /// [google.cloud.cpp.compute.v1.Snapshot]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24412}
+  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L151}
+  /// [google.cloud.cpp.compute.v1.Snapshot]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24412}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Snapshot>
-  GetSnapshots(std::string const& project, std::string const& snapshot, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshots(
+      std::string const& project, std::string const& snapshot,
+      Options opts = {});
 
   ///
   /// Returns the specified Snapshot resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest,google/cloud/compute/snapshots/v1/snapshots.proto#L151}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest,google/cloud/compute/snapshots/v1/snapshots.proto#L151}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Snapshot,google/cloud/compute/v1/internal/common.proto#L24412}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Snapshot,google/cloud/compute/v1/internal/common.proto#L24412}
   ///
-  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L151}
-  /// [google.cloud.cpp.compute.v1.Snapshot]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24412}
+  /// [google.cloud.cpp.compute.snapshots.v1.GetSnapshotsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L151}
+  /// [google.cloud.cpp.compute.v1.Snapshot]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24412}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Snapshot>
-  GetSnapshots(google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshots(
+      google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Gets the access control policy for a resource. May be empty if no such
@@ -158,28 +180,38 @@ class SnapshotsClient {
   /// @param resource  Name or id of the resource for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.snapshots.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L139}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.snapshots.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L139}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(std::string const& project, std::string const& resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      std::string const& project, std::string const& resource,
+      Options opts = {});
 
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest,google/cloud/compute/snapshots/v1/snapshots.proto#L139}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest,google/cloud/compute/snapshots/v1/snapshots.proto#L139}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.snapshots.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L139}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.snapshots.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L139}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Creates a snapshot in the specified project using the data included in the
@@ -191,13 +223,18 @@ class SnapshotsClient {
   /// @param snapshot_resource  The Snapshot for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L160}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L160}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertSnapshots(std::string const& project, google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSnapshots(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource,
+      Options opts = {});
 
   ///
   /// Creates a snapshot in the specified project using the data included in the
@@ -205,16 +242,22 @@ class SnapshotsClient {
   /// of disks.createSnapshot, as this method supports more features, such as
   /// creating snapshots in a project different from the source disk project.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest,google/cloud/compute/snapshots/v1/snapshots.proto#L160}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest,google/cloud/compute/snapshots/v1/snapshots.proto#L160}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L160}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.snapshots.v1.InsertSnapshotsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L160}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertSnapshots(google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSnapshots(
+      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Retrieves the list of Snapshot resources contained within the specified
@@ -223,28 +266,36 @@ class SnapshotsClient {
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Snapshot,google/cloud/compute/v1/internal/common.proto#L24412}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Snapshot,google/cloud/compute/v1/internal/common.proto#L24412}
   ///
-  /// [google.cloud.cpp.compute.snapshots.v1.ListSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L181}
-  /// [google.cloud.cpp.compute.v1.Snapshot]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24412}
+  /// [google.cloud.cpp.compute.snapshots.v1.ListSnapshotsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L181}
+  /// [google.cloud.cpp.compute.v1.Snapshot]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24412}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::Snapshot>
-  ListSnapshots(std::string const& project, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Snapshot> ListSnapshots(
+      std::string const& project, Options opts = {});
 
   ///
   /// Retrieves the list of Snapshot resources contained within the specified
   /// project.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest,google/cloud/compute/snapshots/v1/snapshots.proto#L181}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest,google/cloud/compute/snapshots/v1/snapshots.proto#L181}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Snapshot,google/cloud/compute/v1/internal/common.proto#L24412}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Snapshot,google/cloud/compute/v1/internal/common.proto#L24412}
   ///
-  /// [google.cloud.cpp.compute.snapshots.v1.ListSnapshotsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L181}
-  /// [google.cloud.cpp.compute.v1.Snapshot]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24412}
+  /// [google.cloud.cpp.compute.snapshots.v1.ListSnapshotsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L181}
+  /// [google.cloud.cpp.compute.v1.Snapshot]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24412}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::Snapshot>
-  ListSnapshots(google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Snapshot> ListSnapshots(
+      google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest request,
+      Options opts = {});
 
   ///
   /// Sets the access control policy on the specified resource. Replaces any
@@ -252,31 +303,44 @@ class SnapshotsClient {
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
-  /// @param global_set_policy_request_resource  The GlobalSetPolicyRequest for this request.
+  /// @param global_set_policy_request_resource  The GlobalSetPolicyRequest for
+  /// this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.snapshots.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L246}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.snapshots.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L246}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const& global_set_policy_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::GlobalSetPolicyRequest const&
+          global_set_policy_request_resource,
+      Options opts = {});
 
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest,google/cloud/compute/snapshots/v1/snapshots.proto#L246}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest,google/cloud/compute/snapshots/v1/snapshots.proto#L246}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.snapshots.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L246}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.snapshots.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L246}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Sets the labels on a snapshot. To learn more about labels, read the
@@ -284,61 +348,88 @@ class SnapshotsClient {
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
-  /// @param global_set_labels_request_resource  The GlobalSetLabelsRequest for this request.
+  /// @param global_set_labels_request_resource  The GlobalSetLabelsRequest for
+  /// this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.snapshots.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L258}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.snapshots.v1.SetLabelsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L258}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const& global_set_labels_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
+          global_set_labels_request_resource,
+      Options opts = {});
 
   ///
   /// Sets the labels on a snapshot. To learn more about labels, read the
   /// Labeling Resources documentation.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest,google/cloud/compute/snapshots/v1/snapshots.proto#L258}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest,google/cloud/compute/snapshots/v1/snapshots.proto#L258}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.snapshots.v1.SetLabelsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L258}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.snapshots.v1.SetLabelsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L258}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Returns permissions that a caller has on the specified resource.
   ///
   /// @param project  Project ID for this request.
   /// @param resource  Name or id of the resource for this request.
-  /// @param test_permissions_request_resource  The TestPermissionsRequest for this request.
+  /// @param test_permissions_request_resource  The TestPermissionsRequest for
+  /// this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
   ///
-  /// [google.cloud.cpp.compute.snapshots.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L270}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// [google.cloud.cpp.compute.snapshots.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L270}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(std::string const& project, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
+  TestIamPermissions(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
 
   ///
   /// Returns permissions that a caller has on the specified resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest,google/cloud/compute/snapshots/v1/snapshots.proto#L270}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest,google/cloud/compute/snapshots/v1/snapshots.proto#L270}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
   ///
-  /// [google.cloud.cpp.compute.snapshots.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L270}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// [google.cloud.cpp.compute.snapshots.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/snapshots/v1/snapshots.proto#L270}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::snapshots::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
  private:
   std::shared_ptr<SnapshotsConnection> connection_;

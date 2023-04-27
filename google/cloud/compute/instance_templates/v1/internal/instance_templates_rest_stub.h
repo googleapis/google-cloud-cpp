@@ -36,37 +36,49 @@ class InstanceTemplatesRestStub {
  public:
   virtual ~InstanceTemplatesRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList> AggregatedListInstanceTemplates(
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
+  AggregatedListInstanceTemplates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::AggregatedListInstanceTemplatesRequest const& request) = 0;
+      google::cloud::cpp::compute::instanceTemplates::v1::
+          AggregatedListInstanceTemplatesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceTemplates(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteInstanceTemplates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::DeleteInstanceTemplatesRequest const& request) = 0;
+      google::cloud::cpp::compute::instanceTemplates::v1::
+          DeleteInstanceTemplatesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate> GetInstanceTemplates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::GetInstanceTemplatesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
+  GetInstanceTemplates(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::instanceTemplates::v1::
+                           GetInstanceTemplatesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::GetIamPolicyRequest const& request) = 0;
+      google::cloud::cpp::compute::instanceTemplates::v1::
+          GetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceTemplates(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertInstanceTemplates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::InsertInstanceTemplatesRequest const& request) = 0;
+      google::cloud::cpp::compute::instanceTemplates::v1::
+          InsertInstanceTemplatesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateList> ListInstanceTemplates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::ListInstanceTemplatesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateList>
+  ListInstanceTemplates(google::cloud::rest_internal::RestContext& rest_context,
+                        google::cloud::cpp::compute::instanceTemplates::v1::
+                            ListInstanceTemplatesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::SetIamPolicyRequest const& request) = 0;
+      google::cloud::cpp::compute::instanceTemplates::v1::
+          SetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::TestIamPermissionsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::instanceTemplates::v1::
+                         TestIamPermissionsRequest const& request) = 0;
 };
 
 class DefaultInstanceTemplatesRestStub : public InstanceTemplatesRestStub {
@@ -75,40 +87,49 @@ class DefaultInstanceTemplatesRestStub : public InstanceTemplatesRestStub {
 
   explicit DefaultInstanceTemplatesRestStub(Options options);
   DefaultInstanceTemplatesRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList> AggregatedListInstanceTemplates(
+  StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
+  AggregatedListInstanceTemplates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::AggregatedListInstanceTemplatesRequest const& request) override;
+      google::cloud::cpp::compute::instanceTemplates::v1::
+          AggregatedListInstanceTemplatesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceTemplates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::DeleteInstanceTemplatesRequest const& request) override;
+      google::cloud::cpp::compute::instanceTemplates::v1::
+          DeleteInstanceTemplatesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate> GetInstanceTemplates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::GetInstanceTemplatesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
+  GetInstanceTemplates(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::instanceTemplates::v1::
+                           GetInstanceTemplatesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::GetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::instanceTemplates::v1::
+          GetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceTemplates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::InsertInstanceTemplatesRequest const& request) override;
+      google::cloud::cpp::compute::instanceTemplates::v1::
+          InsertInstanceTemplatesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateList> ListInstanceTemplates(
+  StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateList>
+  ListInstanceTemplates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::ListInstanceTemplatesRequest const& request) override;
+      google::cloud::cpp::compute::instanceTemplates::v1::
+          ListInstanceTemplatesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::SetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::instanceTemplates::v1::
+          SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceTemplates::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::instanceTemplates::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

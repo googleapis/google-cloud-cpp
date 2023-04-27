@@ -17,11 +17,11 @@
 // source: google/cloud/compute/disks/v1/disks.proto
 
 #include "google/cloud/compute/disks/v1/disks_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/disks/v1/disks_options.h"
 #include "google/cloud/compute/disks/v1/internal/disks_option_defaults.h"
 #include "google/cloud/compute/disks/v1/internal/disks_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -58,14 +58,12 @@ DisksConnection::DeleteDisks(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Disk>
-DisksConnection::GetDisks(
+StatusOr<google::cloud::cpp::compute::v1::Disk> DisksConnection::GetDisks(
     google::cloud::cpp::compute::disks::v1::GetDisksRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Policy>
-DisksConnection::GetIamPolicy(
+StatusOr<google::cloud::cpp::compute::v1::Policy> DisksConnection::GetIamPolicy(
     google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -77,31 +75,30 @@ DisksConnection::InsertDisks(
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Disk> DisksConnection::ListDisks(
-    google::cloud::cpp::compute::disks::v1::ListDisksRequest) {  // NOLINT(performance-unnecessary-value-param)
+    google::cloud::cpp::compute::disks::v1::
+        ListDisksRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Disk>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksConnection::RemoveResourcePolicies(
-    google::cloud::cpp::compute::disks::v1::RemoveResourcePoliciesRequest const&) {
+    google::cloud::cpp::compute::disks::v1::
+        RemoveResourcePoliciesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Operation>
-DisksConnection::Resize(
+StatusOr<google::cloud::cpp::compute::v1::Operation> DisksConnection::Resize(
     google::cloud::cpp::compute::disks::v1::ResizeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Policy>
-DisksConnection::SetIamPolicy(
+StatusOr<google::cloud::cpp::compute::v1::Policy> DisksConnection::SetIamPolicy(
     google::cloud::cpp::compute::disks::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Operation>
-DisksConnection::SetLabels(
+StatusOr<google::cloud::cpp::compute::v1::Operation> DisksConnection::SetLabels(
     google::cloud::cpp::compute::disks::v1::SetLabelsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }

@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class NodeTemplatesClient {
  public:
-  explicit NodeTemplatesClient(ExperimentalTag, std::shared_ptr<NodeTemplatesConnection> connection, Options opts = {});
+  explicit NodeTemplatesClient(
+      ExperimentalTag, std::shared_ptr<NodeTemplatesConnection> connection,
+      Options opts = {});
   ~NodeTemplatesClient();
 
   ///@{
@@ -76,10 +78,12 @@ class NodeTemplatesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(NodeTemplatesClient const& a, NodeTemplatesClient const& b) {
+  friend bool operator==(NodeTemplatesClient const& a,
+                         NodeTemplatesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(NodeTemplatesClient const& a, NodeTemplatesClient const& b) {
+  friend bool operator!=(NodeTemplatesClient const& a,
+                         NodeTemplatesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -90,10 +94,13 @@ class NodeTemplatesClient {
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::NodeTemplateAggregatedList,google/cloud/compute/v1/internal/common.proto#L16588}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NodeTemplateAggregatedList,google/cloud/compute/v1/internal/common.proto#L16588}
   ///
-  /// [google.cloud.cpp.compute.nodeTemplates.v1.AggregatedListNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L108}
-  /// [google.cloud.cpp.compute.v1.NodeTemplateAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16588}
+  /// [google.cloud.cpp.compute.nodeTemplates.v1.AggregatedListNodeTemplatesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L108}
+  /// [google.cloud.cpp.compute.v1.NodeTemplateAggregatedList]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16588}
   ///
   StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>
   AggregatedListNodeTemplates(std::string const& project, Options opts = {});
@@ -101,16 +108,23 @@ class NodeTemplatesClient {
   ///
   /// Retrieves an aggregated list of node templates.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeTemplates::v1::AggregatedListNodeTemplatesRequest,google/cloud/compute/node_templates/v1/node_templates.proto#L108}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeTemplates::v1::AggregatedListNodeTemplatesRequest,google/cloud/compute/node_templates/v1/node_templates.proto#L108}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::NodeTemplateAggregatedList,google/cloud/compute/v1/internal/common.proto#L16588}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NodeTemplateAggregatedList,google/cloud/compute/v1/internal/common.proto#L16588}
   ///
-  /// [google.cloud.cpp.compute.nodeTemplates.v1.AggregatedListNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L108}
-  /// [google.cloud.cpp.compute.v1.NodeTemplateAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16588}
+  /// [google.cloud.cpp.compute.nodeTemplates.v1.AggregatedListNodeTemplatesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L108}
+  /// [google.cloud.cpp.compute.v1.NodeTemplateAggregatedList]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16588}
   ///
   StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>
-  AggregatedListNodeTemplates(google::cloud::cpp::compute::nodeTemplates::v1::AggregatedListNodeTemplatesRequest const& request, Options opts = {});
+  AggregatedListNodeTemplates(
+      google::cloud::cpp::compute::nodeTemplates::v1::
+          AggregatedListNodeTemplatesRequest const& request,
+      Options opts = {});
 
   ///
   /// Deletes the specified NodeTemplate resource.
@@ -120,27 +134,37 @@ class NodeTemplatesClient {
   /// @param node_template  Name of the NodeTemplate resource to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.nodeTemplates.v1.DeleteNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L182}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.nodeTemplates.v1.DeleteNodeTemplatesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L182}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteNodeTemplates(std::string const& project, std::string const& region, std::string const& node_template, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeTemplates(
+      std::string const& project, std::string const& region,
+      std::string const& node_template, Options opts = {});
 
   ///
   /// Deletes the specified NodeTemplate resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeTemplates::v1::DeleteNodeTemplatesRequest,google/cloud/compute/node_templates/v1/node_templates.proto#L182}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeTemplates::v1::DeleteNodeTemplatesRequest,google/cloud/compute/node_templates/v1/node_templates.proto#L182}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.nodeTemplates.v1.DeleteNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L182}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.nodeTemplates.v1.DeleteNodeTemplatesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L182}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteNodeTemplates(google::cloud::cpp::compute::nodeTemplates::v1::DeleteNodeTemplatesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeTemplates(
+      google::cloud::cpp::compute::nodeTemplates::v1::
+          DeleteNodeTemplatesRequest const& request,
+      Options opts = {});
 
   ///
   /// Returns the specified node template.
@@ -150,27 +174,37 @@ class NodeTemplatesClient {
   /// @param node_template  Name of the node template to return.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::NodeTemplate,google/cloud/compute/v1/internal/common.proto#L16518}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NodeTemplate,google/cloud/compute/v1/internal/common.proto#L16518}
   ///
-  /// [google.cloud.cpp.compute.nodeTemplates.v1.GetNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L221}
-  /// [google.cloud.cpp.compute.v1.NodeTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16518}
+  /// [google.cloud.cpp.compute.nodeTemplates.v1.GetNodeTemplatesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L221}
+  /// [google.cloud.cpp.compute.v1.NodeTemplate]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16518}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
-  GetNodeTemplates(std::string const& project, std::string const& region, std::string const& node_template, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::NodeTemplate> GetNodeTemplates(
+      std::string const& project, std::string const& region,
+      std::string const& node_template, Options opts = {});
 
   ///
   /// Returns the specified node template.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeTemplates::v1::GetNodeTemplatesRequest,google/cloud/compute/node_templates/v1/node_templates.proto#L221}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeTemplates::v1::GetNodeTemplatesRequest,google/cloud/compute/node_templates/v1/node_templates.proto#L221}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::NodeTemplate,google/cloud/compute/v1/internal/common.proto#L16518}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NodeTemplate,google/cloud/compute/v1/internal/common.proto#L16518}
   ///
-  /// [google.cloud.cpp.compute.nodeTemplates.v1.GetNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L221}
-  /// [google.cloud.cpp.compute.v1.NodeTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16518}
+  /// [google.cloud.cpp.compute.nodeTemplates.v1.GetNodeTemplatesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L221}
+  /// [google.cloud.cpp.compute.v1.NodeTemplate]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16518}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
-  GetNodeTemplates(google::cloud::cpp::compute::nodeTemplates::v1::GetNodeTemplatesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::NodeTemplate> GetNodeTemplates(
+      google::cloud::cpp::compute::nodeTemplates::v1::
+          GetNodeTemplatesRequest const& request,
+      Options opts = {});
 
   ///
   /// Gets the access control policy for a resource. May be empty if no such
@@ -181,28 +215,38 @@ class NodeTemplatesClient {
   /// @param resource  Name or id of the resource for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.nodeTemplates.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L206}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.nodeTemplates.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L206}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(std::string const& project, std::string const& region, std::string const& resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      std::string const& project, std::string const& region,
+      std::string const& resource, Options opts = {});
 
   ///
   /// Gets the access control policy for a resource. May be empty if no such
   /// policy or resource exists.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeTemplates::v1::GetIamPolicyRequest,google/cloud/compute/node_templates/v1/node_templates.proto#L206}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeTemplates::v1::GetIamPolicyRequest,google/cloud/compute/node_templates/v1/node_templates.proto#L206}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.nodeTemplates.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L206}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.nodeTemplates.v1.GetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L206}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::nodeTemplates::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::nodeTemplates::v1::GetIamPolicyRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Creates a NodeTemplate resource in the specified project using the data
@@ -213,28 +257,40 @@ class NodeTemplatesClient {
   /// @param node_template_resource  The NodeTemplate for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.nodeTemplates.v1.InsertNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L233}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.nodeTemplates.v1.InsertNodeTemplatesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L233}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertNodeTemplates(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::NodeTemplate const& node_template_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeTemplates(
+      std::string const& project, std::string const& region,
+      google::cloud::cpp::compute::v1::NodeTemplate const&
+          node_template_resource,
+      Options opts = {});
 
   ///
   /// Creates a NodeTemplate resource in the specified project using the data
   /// included in the request.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeTemplates::v1::InsertNodeTemplatesRequest,google/cloud/compute/node_templates/v1/node_templates.proto#L233}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeTemplates::v1::InsertNodeTemplatesRequest,google/cloud/compute/node_templates/v1/node_templates.proto#L233}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.nodeTemplates.v1.InsertNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L233}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.nodeTemplates.v1.InsertNodeTemplatesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L233}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertNodeTemplates(google::cloud::cpp::compute::nodeTemplates::v1::InsertNodeTemplatesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeTemplates(
+      google::cloud::cpp::compute::nodeTemplates::v1::
+          InsertNodeTemplatesRequest const& request,
+      Options opts = {});
 
   ///
   /// Retrieves a list of node templates available to the specified project.
@@ -243,27 +299,36 @@ class NodeTemplatesClient {
   /// @param region  The name of the region for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::NodeTemplate,google/cloud/compute/v1/internal/common.proto#L16518}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NodeTemplate,google/cloud/compute/v1/internal/common.proto#L16518}
   ///
-  /// [google.cloud.cpp.compute.nodeTemplates.v1.ListNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L257}
-  /// [google.cloud.cpp.compute.v1.NodeTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16518}
+  /// [google.cloud.cpp.compute.nodeTemplates.v1.ListNodeTemplatesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L257}
+  /// [google.cloud.cpp.compute.v1.NodeTemplate]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16518}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>
-  ListNodeTemplates(std::string const& project, std::string const& region, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::NodeTemplate> ListNodeTemplates(
+      std::string const& project, std::string const& region, Options opts = {});
 
   ///
   /// Retrieves a list of node templates available to the specified project.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeTemplates::v1::ListNodeTemplatesRequest,google/cloud/compute/node_templates/v1/node_templates.proto#L257}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeTemplates::v1::ListNodeTemplatesRequest,google/cloud/compute/node_templates/v1/node_templates.proto#L257}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::NodeTemplate,google/cloud/compute/v1/internal/common.proto#L16518}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NodeTemplate,google/cloud/compute/v1/internal/common.proto#L16518}
   ///
-  /// [google.cloud.cpp.compute.nodeTemplates.v1.ListNodeTemplatesRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L257}
-  /// [google.cloud.cpp.compute.v1.NodeTemplate]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16518}
+  /// [google.cloud.cpp.compute.nodeTemplates.v1.ListNodeTemplatesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L257}
+  /// [google.cloud.cpp.compute.v1.NodeTemplate]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16518}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>
-  ListNodeTemplates(google::cloud::cpp::compute::nodeTemplates::v1::ListNodeTemplatesRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::NodeTemplate> ListNodeTemplates(
+      google::cloud::cpp::compute::nodeTemplates::v1::ListNodeTemplatesRequest
+          request,
+      Options opts = {});
 
   ///
   /// Sets the access control policy on the specified resource. Replaces any
@@ -272,31 +337,45 @@ class NodeTemplatesClient {
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
   /// @param resource  Name or id of the resource for this request.
-  /// @param region_set_policy_request_resource  The RegionSetPolicyRequest for this request.
+  /// @param region_set_policy_request_resource  The RegionSetPolicyRequest for
+  /// this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.nodeTemplates.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L325}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.nodeTemplates.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L325}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::RegionSetPolicyRequest const& region_set_policy_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::RegionSetPolicyRequest const&
+          region_set_policy_request_resource,
+      Options opts = {});
 
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeTemplates::v1::SetIamPolicyRequest,google/cloud/compute/node_templates/v1/node_templates.proto#L325}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeTemplates::v1::SetIamPolicyRequest,google/cloud/compute/node_templates/v1/node_templates.proto#L325}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  /// [google.cloud.cpp.compute.nodeTemplates.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L325}
-  /// [google.cloud.cpp.compute.v1.Policy]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// [google.cloud.cpp.compute.nodeTemplates.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L325}
+  /// [google.cloud.cpp.compute.v1.Policy]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::nodeTemplates::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::nodeTemplates::v1::SetIamPolicyRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Returns permissions that a caller has on the specified resource.
@@ -304,30 +383,45 @@ class NodeTemplatesClient {
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
   /// @param resource  Name or id of the resource for this request.
-  /// @param test_permissions_request_resource  The TestPermissionsRequest for this request.
+  /// @param test_permissions_request_resource  The TestPermissionsRequest for
+  /// this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
   ///
-  /// [google.cloud.cpp.compute.nodeTemplates.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L340}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// [google.cloud.cpp.compute.nodeTemplates.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L340}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(std::string const& project, std::string const& region, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
+  TestIamPermissions(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
 
   ///
   /// Returns permissions that a caller has on the specified resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeTemplates::v1::TestIamPermissionsRequest,google/cloud/compute/node_templates/v1/node_templates.proto#L340}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeTemplates::v1::TestIamPermissionsRequest,google/cloud/compute/node_templates/v1/node_templates.proto#L340}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
   ///
-  /// [google.cloud.cpp.compute.nodeTemplates.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L340}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// [google.cloud.cpp.compute.nodeTemplates.v1.TestIamPermissionsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_templates/v1/node_templates.proto#L340}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::nodeTemplates::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::nodeTemplates::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
  private:
   std::shared_ptr<NodeTemplatesConnection> connection_;

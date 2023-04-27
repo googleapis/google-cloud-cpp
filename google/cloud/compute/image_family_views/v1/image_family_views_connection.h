@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_IMAGE_FAMILY_VIEWS_V1_IMAGE_FAMILY_VIEWS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_IMAGE_FAMILY_VIEWS_V1_IMAGE_FAMILY_VIEWS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/image_family_views/v1/image_family_views_connection_idempotency_policy.h"
 #include "google/cloud/compute/image_family_views/v1/internal/image_family_views_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -34,11 +34,13 @@ namespace cloud {
 namespace compute_image_family_views_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ImageFamilyViewsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_image_family_views_v1_internal::ImageFamilyViewsRetryTraits>;
+using ImageFamilyViewsRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_image_family_views_v1_internal::ImageFamilyViewsRetryTraits>;
 
-using ImageFamilyViewsLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_image_family_views_v1_internal::ImageFamilyViewsRetryTraits>;
+using ImageFamilyViewsLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_image_family_views_v1_internal::ImageFamilyViewsRetryTraits>;
 
 using ImageFamilyViewsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -54,7 +56,8 @@ using ImageFamilyViewsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeImageFamilyViewsConnection()`.
  *
- * For mocking, see `compute_image_family_views_v1_mocks::MockImageFamilyViewsConnection`.
+ * For mocking, see
+ * `compute_image_family_views_v1_mocks::MockImageFamilyViewsConnection`.
  */
 class ImageFamilyViewsConnection {
  public:
@@ -63,7 +66,8 @@ class ImageFamilyViewsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-  GetImageFamilyViews(google::cloud::cpp::compute::imageFamilyViews::v1::GetImageFamilyViewsRequest const& request);
+  GetImageFamilyViews(google::cloud::cpp::compute::imageFamilyViews::v1::
+                          GetImageFamilyViewsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

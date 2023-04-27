@@ -35,58 +35,67 @@ DefaultInstancesRestStub::DefaultInstancesRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultInstancesRestStub::DefaultInstancesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::AddAccessConfig(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/addAccessConfig");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "addAccessConfig");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::AddResourcePolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::AddResourcePoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::
+        AddResourcePoliciesRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/addResourcePolicies");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "addResourcePolicies");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList>
 DefaultInstancesRestStub::AggregatedListInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::AggregatedListInstancesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::
+        AggregatedListInstancesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::InstanceAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/instances",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::AttachDisk(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::AttachDiskRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/attachDisk");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "attachDisk");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::BulkInsert(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::BulkInsertRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/instances/bulkInsert");
@@ -94,8 +103,9 @@ DefaultInstancesRestStub::BulkInsert(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::DeleteInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest const&
+        request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}");
@@ -103,26 +113,31 @@ DefaultInstancesRestStub::DeleteInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::DeleteAccessConfig(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::DeleteAccessConfigRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::DeleteAccessConfigRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/deleteAccessConfig");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "deleteAccessConfig");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::DetachDisk(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::DetachDiskRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/detachDisk");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "detachDisk");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Instance>
 DefaultInstancesRestStub::GetInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetInstancesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::GetInstancesRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Instance>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}",
@@ -131,13 +146,17 @@ DefaultInstancesRestStub::GetInstances(
        std::make_pair("zone", request.zone())});
 }
 
-StatusOr<google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>
+StatusOr<
+    google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>
 DefaultInstancesRestStub::GetEffectiveFirewalls(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetEffectiveFirewallsRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::
+        GetEffectiveFirewallsRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/getEffectiveFirewalls",
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "getEffectiveFirewalls",
       {std::make_pair("instance", request.instance()),
        std::make_pair("network_interface", request.network_interface()),
        std::make_pair("project", request.project()),
@@ -146,11 +165,13 @@ DefaultInstancesRestStub::GetEffectiveFirewalls(
 
 StatusOr<google::cloud::cpp::compute::v1::GuestAttributes>
 DefaultInstancesRestStub::GetGuestAttributes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetGuestAttributesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::GetGuestAttributesRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::GuestAttributes>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/getGuestAttributes",
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "getGuestAttributes",
       {std::make_pair("instance", request.instance()),
        std::make_pair("project", request.project()),
        std::make_pair("query_path", request.query_path()),
@@ -160,12 +181,16 @@ DefaultInstancesRestStub::GetGuestAttributes(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultInstancesRestStub::GetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{resource}/getIamPolicy",
-      {std::make_pair("options_requested_policy_version", std::to_string(request.options_requested_policy_version())),
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{resource}/"
+      "getIamPolicy",
+      {std::make_pair(
+           "options_requested_policy_version",
+           std::to_string(request.options_requested_policy_version())),
        std::make_pair("project", request.project()),
        std::make_pair("resource", request.resource()),
        std::make_pair("zone", request.zone())});
@@ -173,11 +198,13 @@ DefaultInstancesRestStub::GetIamPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Screenshot>
 DefaultInstancesRestStub::GetScreenshot(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Screenshot>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/screenshot",
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "screenshot",
       {std::make_pair("instance", request.instance()),
        std::make_pair("project", request.project()),
        std::make_pair("zone", request.zone())});
@@ -185,11 +212,13 @@ DefaultInstancesRestStub::GetScreenshot(
 
 StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput>
 DefaultInstancesRestStub::GetSerialPortOutput(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetSerialPortOutputRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::
+        GetSerialPortOutputRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SerialPortOutput>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/serialPort",
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "serialPort",
       {std::make_pair("instance", request.instance()),
        std::make_pair("port", std::to_string(request.port())),
        std::make_pair("project", request.project()),
@@ -199,11 +228,14 @@ DefaultInstancesRestStub::GetSerialPortOutput(
 
 StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>
 DefaultInstancesRestStub::GetShieldedInstanceIdentity(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::GetShieldedInstanceIdentityRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::
+        GetShieldedInstanceIdentityRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/getShieldedInstanceIdentity",
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "getShieldedInstanceIdentity",
       {std::make_pair("instance", request.instance()),
        std::make_pair("project", request.project()),
        std::make_pair("zone", request.zone())});
@@ -211,8 +243,9 @@ DefaultInstancesRestStub::GetShieldedInstanceIdentity(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::InsertInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::InsertInstancesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::InsertInstancesRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/instances");
@@ -220,8 +253,9 @@ DefaultInstancesRestStub::InsertInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceList>
 DefaultInstancesRestStub::ListInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::ListInstancesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::ListInstancesRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/instances",
@@ -230,40 +264,47 @@ DefaultInstancesRestStub::ListInstances(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success())),
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success())),
        std::make_pair("zone", request.zone())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceListReferrers>
 DefaultInstancesRestStub::ListReferrers(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::ListReferrersRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceListReferrers>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::ListReferrersRequest const&
+        request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::InstanceListReferrers>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/referrers",
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "referrers",
       {std::make_pair("filter", request.filter()),
        std::make_pair("instance", request.instance()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success())),
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success())),
        std::make_pair("zone", request.zone())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::RemoveResourcePolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::RemoveResourcePoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::
+        RemoveResourcePoliciesRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/removeResourcePolicies");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "removeResourcePolicies");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::Reset(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::ResetRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::ResetRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/reset");
@@ -271,151 +312,179 @@ DefaultInstancesRestStub::Reset(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::Resume(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::ResumeRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::ResumeRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/resume");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "resume");
 }
 
 Status DefaultInstancesRestStub::SendDiagnosticInterrupt(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SendDiagnosticInterruptRequest const& request) {
-  return rest_internal::Post(
-      *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/sendDiagnosticInterrupt");
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::
+        SendDiagnosticInterruptRequest const& request) {
+  return rest_internal::Post(*service_, rest_context, request,
+                             "/compute/v1/projects/{project}/zones/{zone}/"
+                             "instances/{instance}/sendDiagnosticInterrupt");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::SetDeletionProtection(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetDeletionProtectionRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::
+        SetDeletionProtectionRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{resource}/setDeletionProtection");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{resource}/"
+      "setDeletionProtection");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::SetDiskAutoDelete(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetDiskAutoDeleteRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::SetDiskAutoDeleteRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setDiskAutoDelete");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "setDiskAutoDelete");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultInstancesRestStub::SetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{resource}/setIamPolicy");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{resource}/"
+      "setIamPolicy");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::SetLabels(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetLabelsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setLabels");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "setLabels");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::SetMachineResources(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetMachineResourcesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::
+        SetMachineResourcesRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setMachineResources");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "setMachineResources");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::SetMachineType(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setMachineType");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "setMachineType");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::SetMetadata(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetMetadataRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setMetadata");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "setMetadata");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::SetMinCpuPlatform(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetMinCpuPlatformRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::SetMinCpuPlatformRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setMinCpuPlatform");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "setMinCpuPlatform");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::SetName(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetNameRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::SetNameRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setName");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "setName");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::SetScheduling(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setScheduling");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "setScheduling");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::SetServiceAccount(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetServiceAccountRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::SetServiceAccountRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setServiceAccount");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "setServiceAccount");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::SetShieldedInstanceIntegrityPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetShieldedInstanceIntegrityPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::
+        SetShieldedInstanceIntegrityPolicyRequest const& request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setShieldedInstanceIntegrityPolicy");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "setShieldedInstanceIntegrityPolicy");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::SetTags(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setTags");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "setTags");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::SimulateMaintenanceEvent(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SimulateMaintenanceEventRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::
+        SimulateMaintenanceEventRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/simulateMaintenanceEvent");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "simulateMaintenanceEvent");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::Start(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::StartRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::StartRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/start");
@@ -423,17 +492,19 @@ DefaultInstancesRestStub::Start(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::StartWithEncryptionKey(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::StartWithEncryptionKeyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::
+        StartWithEncryptionKeyRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/startWithEncryptionKey");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "startWithEncryptionKey");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::Stop(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::StopRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::StopRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/stop");
@@ -441,26 +512,31 @@ DefaultInstancesRestStub::Stop(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::Suspend(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::SuspendRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::SuspendRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/suspend");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "suspend");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultInstancesRestStub::TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::TestIamPermissionsRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::TestIamPermissionsRequest const&
+        request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{resource}/testIamPermissions");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{resource}/"
+      "testIamPermissions");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::UpdateInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest const&
+        request) {
   return rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}");
@@ -468,38 +544,46 @@ DefaultInstancesRestStub::UpdateInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::UpdateAccessConfig(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateAccessConfigRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::UpdateAccessConfigRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/updateAccessConfig");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "updateAccessConfig");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::UpdateDisplayDevice(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateDisplayDeviceRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::
+        UpdateDisplayDeviceRequest const& request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/updateDisplayDevice");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "updateDisplayDevice");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::UpdateNetworkInterface(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateNetworkInterfaceRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::
+        UpdateNetworkInterfaceRequest const& request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/updateNetworkInterface");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "updateNetworkInterface");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstancesRestStub::UpdateShieldedInstanceConfig(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instances::v1::UpdateShieldedInstanceConfigRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instances::v1::
+        UpdateShieldedInstanceConfigRequest const& request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/updateShieldedInstanceConfig");
+      "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/"
+      "updateShieldedInstanceConfig");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

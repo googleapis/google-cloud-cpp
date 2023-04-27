@@ -34,24 +34,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options FirewallPoliciesDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_FIREWALL_POLICIES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_FIREWALL_POLICIES_AUTHORITY",
-      "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
-  if (!options.has<compute_firewall_policies_v1::FirewallPoliciesRetryPolicyOption>()) {
-    options.set<compute_firewall_policies_v1::FirewallPoliciesRetryPolicyOption>(
+      std::move(options), "GOOGLE_CLOUD_CPP_FIREWALL_POLICIES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_FIREWALL_POLICIES_AUTHORITY", "compute.googleapis.com");
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  if (!options.has<
+          compute_firewall_policies_v1::FirewallPoliciesRetryPolicyOption>()) {
+    options.set<
+        compute_firewall_policies_v1::FirewallPoliciesRetryPolicyOption>(
         compute_firewall_policies_v1::FirewallPoliciesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_firewall_policies_v1::FirewallPoliciesBackoffPolicyOption>()) {
-    options.set<compute_firewall_policies_v1::FirewallPoliciesBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+  if (!options.has<compute_firewall_policies_v1::
+                       FirewallPoliciesBackoffPolicyOption>()) {
+    options
+        .set<compute_firewall_policies_v1::FirewallPoliciesBackoffPolicyOption>(
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone());
   }
-  if (!options.has<compute_firewall_policies_v1::FirewallPoliciesConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_firewall_policies_v1::FirewallPoliciesConnectionIdempotencyPolicyOption>(
-        compute_firewall_policies_v1::MakeDefaultFirewallPoliciesConnectionIdempotencyPolicy());
+  if (!options.has<compute_firewall_policies_v1::
+                       FirewallPoliciesConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_firewall_policies_v1::
+                    FirewallPoliciesConnectionIdempotencyPolicyOption>(
+        compute_firewall_policies_v1::
+            MakeDefaultFirewallPoliciesConnectionIdempotencyPolicy());
   }
 
   return options;

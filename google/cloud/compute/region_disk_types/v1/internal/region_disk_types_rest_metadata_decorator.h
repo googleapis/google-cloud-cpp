@@ -35,15 +35,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RegionDiskTypesRestMetadata : public RegionDiskTypesRestStub {
  public:
   ~RegionDiskTypesRestMetadata() override = default;
-  explicit RegionDiskTypesRestMetadata(std::shared_ptr<RegionDiskTypesRestStub> child);
+  explicit RegionDiskTypesRestMetadata(
+      std::shared_ptr<RegionDiskTypesRestStub> child);
 
   StatusOr<google::cloud::cpp::compute::v1::DiskType> GetRegionDiskTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDiskTypes::v1::GetRegionDiskTypesRequest const& request) override;
+      google::cloud::cpp::compute::regionDiskTypes::v1::
+          GetRegionDiskTypesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::RegionDiskTypeList> ListRegionDiskTypes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDiskTypes::v1::ListRegionDiskTypesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::RegionDiskTypeList>
+  ListRegionDiskTypes(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::regionDiskTypes::v1::
+                          ListRegionDiskTypesRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

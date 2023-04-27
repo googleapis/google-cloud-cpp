@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/url_maps/v1/url_maps.proto
 
-
 #include "google/cloud/compute/url_maps/v1/internal/url_maps_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -31,15 +30,16 @@ namespace cloud {
 namespace compute_url_maps_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-UrlMapsRestMetadata::UrlMapsRestMetadata(
-    std::shared_ptr<UrlMapsRestStub> child)
+UrlMapsRestMetadata::UrlMapsRestMetadata(std::shared_ptr<UrlMapsRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
 UrlMapsRestMetadata::AggregatedListUrlMaps(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::urlMaps::v1::AggregatedListUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::urlMaps::v1::
+        AggregatedListUrlMapsRequest const& request) {
   SetMetadata(rest_context);
   return child_->AggregatedListUrlMaps(rest_context, request);
 }
@@ -47,7 +47,8 @@ UrlMapsRestMetadata::AggregatedListUrlMaps(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 UrlMapsRestMetadata::DeleteUrlMaps(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::urlMaps::v1::DeleteUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::urlMaps::v1::DeleteUrlMapsRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->DeleteUrlMaps(rest_context, request);
 }
@@ -55,7 +56,8 @@ UrlMapsRestMetadata::DeleteUrlMaps(
 StatusOr<google::cloud::cpp::compute::v1::UrlMap>
 UrlMapsRestMetadata::GetUrlMaps(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::urlMaps::v1::GetUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::urlMaps::v1::GetUrlMapsRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->GetUrlMaps(rest_context, request);
 }
@@ -63,7 +65,8 @@ UrlMapsRestMetadata::GetUrlMaps(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 UrlMapsRestMetadata::InsertUrlMaps(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::urlMaps::v1::InsertUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::urlMaps::v1::InsertUrlMapsRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->InsertUrlMaps(rest_context, request);
 }
@@ -71,7 +74,8 @@ UrlMapsRestMetadata::InsertUrlMaps(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 UrlMapsRestMetadata::InvalidateCache(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::urlMaps::v1::InvalidateCacheRequest const& request) {
+    google::cloud::cpp::compute::urlMaps::v1::InvalidateCacheRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->InvalidateCache(rest_context, request);
 }
@@ -79,7 +83,8 @@ UrlMapsRestMetadata::InvalidateCache(
 StatusOr<google::cloud::cpp::compute::v1::UrlMapList>
 UrlMapsRestMetadata::ListUrlMaps(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::urlMaps::v1::ListUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::urlMaps::v1::ListUrlMapsRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->ListUrlMaps(rest_context, request);
 }
@@ -87,7 +92,8 @@ UrlMapsRestMetadata::ListUrlMaps(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 UrlMapsRestMetadata::PatchUrlMaps(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::urlMaps::v1::PatchUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::urlMaps::v1::PatchUrlMapsRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->PatchUrlMaps(rest_context, request);
 }
@@ -95,7 +101,8 @@ UrlMapsRestMetadata::PatchUrlMaps(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 UrlMapsRestMetadata::UpdateUrlMaps(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::urlMaps::v1::UpdateUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::urlMaps::v1::UpdateUrlMapsRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->UpdateUrlMaps(rest_context, request);
 }
@@ -108,28 +115,27 @@ UrlMapsRestMetadata::Validate(
   return child_->Validate(rest_context, request);
 }
 
-void UrlMapsRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+void UrlMapsRestMetadata::SetMetadata(rest_internal::RestContext& rest_context,
+                                      std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

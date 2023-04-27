@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/subnetworks/v1/subnetworks.proto
 
-
 #include "google/cloud/compute/subnetworks/v1/internal/subnetworks_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,12 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SubnetworksRestMetadata::SubnetworksRestMetadata(
     std::shared_ptr<SubnetworksRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::SubnetworkAggregatedList>
 SubnetworksRestMetadata::AggregatedListSubnetworks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::AggregatedListSubnetworksRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::
+        AggregatedListSubnetworksRequest const& request) {
   SetMetadata(rest_context);
   return child_->AggregatedListSubnetworks(rest_context, request);
 }
@@ -47,7 +48,8 @@ SubnetworksRestMetadata::AggregatedListSubnetworks(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksRestMetadata::DeleteSubnetworks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworksRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::
+        DeleteSubnetworksRequest const& request) {
   SetMetadata(rest_context);
   return child_->DeleteSubnetworks(rest_context, request);
 }
@@ -55,7 +57,8 @@ SubnetworksRestMetadata::DeleteSubnetworks(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksRestMetadata::ExpandIpCidrRange(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::
+        ExpandIpCidrRangeRequest const& request) {
   SetMetadata(rest_context);
   return child_->ExpandIpCidrRange(rest_context, request);
 }
@@ -63,7 +66,8 @@ SubnetworksRestMetadata::ExpandIpCidrRange(
 StatusOr<google::cloud::cpp::compute::v1::Subnetwork>
 SubnetworksRestMetadata::GetSubnetworks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->GetSubnetworks(rest_context, request);
 }
@@ -71,7 +75,8 @@ SubnetworksRestMetadata::GetSubnetworks(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 SubnetworksRestMetadata::GetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->GetIamPolicy(rest_context, request);
 }
@@ -79,7 +84,8 @@ SubnetworksRestMetadata::GetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksRestMetadata::InsertSubnetworks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworksRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::
+        InsertSubnetworksRequest const& request) {
   SetMetadata(rest_context);
   return child_->InsertSubnetworks(rest_context, request);
 }
@@ -87,7 +93,8 @@ SubnetworksRestMetadata::InsertSubnetworks(
 StatusOr<google::cloud::cpp::compute::v1::SubnetworkList>
 SubnetworksRestMetadata::ListSubnetworks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->ListSubnetworks(rest_context, request);
 }
@@ -95,7 +102,8 @@ SubnetworksRestMetadata::ListSubnetworks(
 StatusOr<google::cloud::cpp::compute::v1::UsableSubnetworksAggregatedList>
 SubnetworksRestMetadata::ListUsable(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->ListUsable(rest_context, request);
 }
@@ -103,7 +111,8 @@ SubnetworksRestMetadata::ListUsable(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksRestMetadata::PatchSubnetworks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworksRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworksRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->PatchSubnetworks(rest_context, request);
 }
@@ -111,7 +120,8 @@ SubnetworksRestMetadata::PatchSubnetworks(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 SubnetworksRestMetadata::SetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->SetIamPolicy(rest_context, request);
 }
@@ -119,7 +129,8 @@ SubnetworksRestMetadata::SetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksRestMetadata::SetPrivateIpGoogleAccess(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::
+        SetPrivateIpGoogleAccessRequest const& request) {
   SetMetadata(rest_context);
   return child_->SetPrivateIpGoogleAccess(rest_context, request);
 }
@@ -127,33 +138,34 @@ SubnetworksRestMetadata::SetPrivateIpGoogleAccess(
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 SubnetworksRestMetadata::TestIamPermissions(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::TestIamPermissionsRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::
+        TestIamPermissionsRequest const& request) {
   SetMetadata(rest_context);
   return child_->TestIamPermissions(rest_context, request);
 }
 
 void SubnetworksRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+    rest_internal::RestContext& rest_context,
+    std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

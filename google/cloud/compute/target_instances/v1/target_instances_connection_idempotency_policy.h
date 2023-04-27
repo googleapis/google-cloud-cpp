@@ -35,26 +35,32 @@ class TargetInstancesConnectionIdempotencyPolicy {
   virtual ~TargetInstancesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<TargetInstancesConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<TargetInstancesConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  AggregatedListTargetInstances(google::cloud::cpp::compute::targetInstances::v1::AggregatedListTargetInstancesRequest const& request);
+  virtual google::cloud::Idempotency AggregatedListTargetInstances(
+      google::cloud::cpp::compute::targetInstances::v1::
+          AggregatedListTargetInstancesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteTargetInstances(google::cloud::cpp::compute::targetInstances::v1::DeleteTargetInstancesRequest const& request);
+  virtual google::cloud::Idempotency DeleteTargetInstances(
+      google::cloud::cpp::compute::targetInstances::v1::
+          DeleteTargetInstancesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetTargetInstances(google::cloud::cpp::compute::targetInstances::v1::GetTargetInstancesRequest const& request);
+  virtual google::cloud::Idempotency GetTargetInstances(
+      google::cloud::cpp::compute::targetInstances::v1::
+          GetTargetInstancesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  InsertTargetInstances(google::cloud::cpp::compute::targetInstances::v1::InsertTargetInstancesRequest const& request);
+  virtual google::cloud::Idempotency InsertTargetInstances(
+      google::cloud::cpp::compute::targetInstances::v1::
+          InsertTargetInstancesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListTargetInstances(google::cloud::cpp::compute::targetInstances::v1::ListTargetInstancesRequest request);
+  virtual google::cloud::Idempotency ListTargetInstances(
+      google::cloud::cpp::compute::targetInstances::v1::
+          ListTargetInstancesRequest request);
 };
 
 std::unique_ptr<TargetInstancesConnectionIdempotencyPolicy>
-    MakeDefaultTargetInstancesConnectionIdempotencyPolicy();
+MakeDefaultTargetInstancesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_instances_v1

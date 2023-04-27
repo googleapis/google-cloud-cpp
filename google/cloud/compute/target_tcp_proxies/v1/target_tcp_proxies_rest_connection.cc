@@ -17,11 +17,11 @@
 // source: google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto
 
 #include "google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/target_tcp_proxies/v1/internal/target_tcp_proxies_option_defaults.h"
 #include "google/cloud/compute/target_tcp_proxies/v1/internal/target_tcp_proxies_rest_connection_impl.h"
 #include "google/cloud/compute/target_tcp_proxies/v1/internal/target_tcp_proxies_rest_stub_factory.h"
 #include "google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include <memory>
@@ -34,15 +34,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<TargetTcpProxiesConnection> MakeTargetTcpProxiesConnectionRest(
     ExperimentalTag, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList,
-      TargetTcpProxiesPolicyOptionList>(options, __func__);
-  options = compute_target_tcp_proxies_v1_internal::TargetTcpProxiesDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 TargetTcpProxiesPolicyOptionList>(options,
+                                                                   __func__);
+  options =
+      compute_target_tcp_proxies_v1_internal::TargetTcpProxiesDefaultOptions(
+          std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_target_tcp_proxies_v1_internal::CreateDefaultTargetTcpProxiesRestStub(
-    options);
-  return std::make_shared<compute_target_tcp_proxies_v1_internal::TargetTcpProxiesRestConnectionImpl>(
+  auto stub = compute_target_tcp_proxies_v1_internal::
+      CreateDefaultTargetTcpProxiesRestStub(options);
+  return std::make_shared<compute_target_tcp_proxies_v1_internal::
+                              TargetTcpProxiesRestConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 

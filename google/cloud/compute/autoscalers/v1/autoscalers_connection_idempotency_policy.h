@@ -37,30 +37,37 @@ class AutoscalersConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<AutoscalersConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  AggregatedListAutoscalers(google::cloud::cpp::compute::autoscalers::v1::AggregatedListAutoscalersRequest const& request);
+  virtual google::cloud::Idempotency AggregatedListAutoscalers(
+      google::cloud::cpp::compute::autoscalers::v1::
+          AggregatedListAutoscalersRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteAutoscalers(google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalersRequest const& request);
+  virtual google::cloud::Idempotency DeleteAutoscalers(
+      google::cloud::cpp::compute::autoscalers::v1::
+          DeleteAutoscalersRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetAutoscalers(google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest const& request);
+  virtual google::cloud::Idempotency GetAutoscalers(
+      google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  InsertAutoscalers(google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalersRequest const& request);
+  virtual google::cloud::Idempotency InsertAutoscalers(
+      google::cloud::cpp::compute::autoscalers::v1::
+          InsertAutoscalersRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListAutoscalers(google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest request);
+  virtual google::cloud::Idempotency ListAutoscalers(
+      google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest
+          request);
 
-  virtual google::cloud::Idempotency
-  PatchAutoscalers(google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalersRequest const& request);
+  virtual google::cloud::Idempotency PatchAutoscalers(
+      google::cloud::cpp::compute::autoscalers::v1::
+          PatchAutoscalersRequest const& request);
 
-  virtual google::cloud::Idempotency
-  UpdateAutoscalers(google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalersRequest const& request);
+  virtual google::cloud::Idempotency UpdateAutoscalers(
+      google::cloud::cpp::compute::autoscalers::v1::
+          UpdateAutoscalersRequest const& request);
 };
 
 std::unique_ptr<AutoscalersConnectionIdempotencyPolicy>
-    MakeDefaultAutoscalersConnectionIdempotencyPolicy();
+MakeDefaultAutoscalersConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_autoscalers_v1

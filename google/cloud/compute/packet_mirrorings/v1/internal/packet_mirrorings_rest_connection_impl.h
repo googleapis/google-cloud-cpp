@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_PACKET_MIRRORINGS_V1_INTERNAL_PACKET_MIRRORINGS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_PACKET_MIRRORINGS_V1_INTERNAL_PACKET_MIRRORINGS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/packet_mirrorings/v1/internal/packet_mirrorings_rest_stub.h"
 #include "google/cloud/compute/packet_mirrorings/v1/internal/packet_mirrorings_retry_traits.h"
 #include "google/cloud/compute/packet_mirrorings/v1/packet_mirrorings_connection.h"
 #include "google/cloud/compute/packet_mirrorings/v1/packet_mirrorings_connection_idempotency_policy.h"
 #include "google/cloud/compute/packet_mirrorings/v1/packet_mirrorings_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,61 +43,95 @@ class PacketMirroringsRestConnectionImpl
   ~PacketMirroringsRestConnectionImpl() override = default;
 
   PacketMirroringsRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_packet_mirrorings_v1_internal::PacketMirroringsRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_packet_mirrorings_v1_internal::PacketMirroringsRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
-  AggregatedListPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::AggregatedListPacketMirroringsRequest const& request) override;
+  AggregatedListPacketMirrorings(
+      google::cloud::cpp::compute::packetMirrorings::v1::
+          AggregatedListPacketMirroringsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeletePacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::DeletePacketMirroringsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeletePacketMirrorings(
+      google::cloud::cpp::compute::packetMirrorings::v1::
+          DeletePacketMirroringsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
-  GetPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::GetPacketMirroringsRequest const& request) override;
+  GetPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::
+                          GetPacketMirroringsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::InsertPacketMirroringsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertPacketMirrorings(
+      google::cloud::cpp::compute::packetMirrorings::v1::
+          InsertPacketMirroringsRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>
-  ListPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::ListPacketMirroringsRequest request) override;
+  ListPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::
+                           ListPacketMirroringsRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::PatchPacketMirroringsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchPacketMirrorings(
+      google::cloud::cpp::compute::packetMirrorings::v1::
+          PatchPacketMirroringsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::packetMirrorings::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::packetMirrorings::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_packet_mirrorings_v1::PacketMirroringsRetryPolicy> retry_policy() {
+  std::unique_ptr<compute_packet_mirrorings_v1::PacketMirroringsRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_packet_mirrorings_v1::PacketMirroringsRetryPolicyOption>()) {
-      return options.get<compute_packet_mirrorings_v1::PacketMirroringsRetryPolicyOption>()->clone();
+    if (options.has<compute_packet_mirrorings_v1::
+                        PacketMirroringsRetryPolicyOption>()) {
+      return options
+          .get<
+              compute_packet_mirrorings_v1::PacketMirroringsRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_packet_mirrorings_v1::PacketMirroringsRetryPolicyOption>()->clone();
+    return options_
+        .get<compute_packet_mirrorings_v1::PacketMirroringsRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_packet_mirrorings_v1::PacketMirroringsBackoffPolicyOption>()) {
-      return options.get<compute_packet_mirrorings_v1::PacketMirroringsBackoffPolicyOption>()->clone();
+    if (options.has<compute_packet_mirrorings_v1::
+                        PacketMirroringsBackoffPolicyOption>()) {
+      return options
+          .get<compute_packet_mirrorings_v1::
+                   PacketMirroringsBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_packet_mirrorings_v1::PacketMirroringsBackoffPolicyOption>()->clone();
+    return options_
+        .get<
+            compute_packet_mirrorings_v1::PacketMirroringsBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_packet_mirrorings_v1::PacketMirroringsConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<
+      compute_packet_mirrorings_v1::PacketMirroringsConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_packet_mirrorings_v1::PacketMirroringsConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_packet_mirrorings_v1::PacketMirroringsConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<compute_packet_mirrorings_v1::
+                        PacketMirroringsConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_packet_mirrorings_v1::
+                   PacketMirroringsConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_packet_mirrorings_v1::PacketMirroringsConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_packet_mirrorings_v1::
+                 PacketMirroringsConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_packet_mirrorings_v1_internal::PacketMirroringsRestStub> stub_;
+  std::shared_ptr<
+      compute_packet_mirrorings_v1_internal::PacketMirroringsRestStub>
+      stub_;
   Options options_;
 };
 

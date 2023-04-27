@@ -36,25 +36,32 @@ class TargetInstancesRestStub {
  public:
   virtual ~TargetInstancesRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList> AggregatedListTargetInstances(
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
+  AggregatedListTargetInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetInstances::v1::AggregatedListTargetInstancesRequest const& request) = 0;
+      google::cloud::cpp::compute::targetInstances::v1::
+          AggregatedListTargetInstancesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetInstances::v1::DeleteTargetInstancesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteTargetInstances(google::cloud::rest_internal::RestContext& rest_context,
+                        google::cloud::cpp::compute::targetInstances::v1::
+                            DeleteTargetInstancesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetInstances::v1::GetTargetInstancesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
+  GetTargetInstances(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::targetInstances::v1::
+                         GetTargetInstancesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetInstances::v1::InsertTargetInstancesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertTargetInstances(google::cloud::rest_internal::RestContext& rest_context,
+                        google::cloud::cpp::compute::targetInstances::v1::
+                            InsertTargetInstancesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TargetInstanceList> ListTargetInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetInstances::v1::ListTargetInstancesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::TargetInstanceList>
+  ListTargetInstances(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::targetInstances::v1::
+                          ListTargetInstancesRequest const& request) = 0;
 };
 
 class DefaultTargetInstancesRestStub : public TargetInstancesRestStub {
@@ -63,28 +70,33 @@ class DefaultTargetInstancesRestStub : public TargetInstancesRestStub {
 
   explicit DefaultTargetInstancesRestStub(Options options);
   DefaultTargetInstancesRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList> AggregatedListTargetInstances(
+  StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
+  AggregatedListTargetInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetInstances::v1::AggregatedListTargetInstancesRequest const& request) override;
+      google::cloud::cpp::compute::targetInstances::v1::
+          AggregatedListTargetInstancesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetInstances::v1::DeleteTargetInstancesRequest const& request) override;
+      google::cloud::cpp::compute::targetInstances::v1::
+          DeleteTargetInstancesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetInstances::v1::GetTargetInstancesRequest const& request) override;
+      google::cloud::cpp::compute::targetInstances::v1::
+          GetTargetInstancesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetInstances::v1::InsertTargetInstancesRequest const& request) override;
+      google::cloud::cpp::compute::targetInstances::v1::
+          InsertTargetInstancesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetInstanceList> ListTargetInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetInstances::v1::ListTargetInstancesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetInstanceList>
+  ListTargetInstances(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::targetInstances::v1::
+                          ListTargetInstancesRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

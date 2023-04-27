@@ -17,11 +17,11 @@
 // source: google/cloud/compute/instances/v1/instances.proto
 
 #include "google/cloud/compute/instances/v1/instances_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/instances/v1/instances_options.h"
 #include "google/cloud/compute/instances/v1/internal/instances_option_defaults.h"
 #include "google/cloud/compute/instances/v1/internal/instances_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -42,13 +42,15 @@ InstancesConnection::AddAccessConfig(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::AddResourcePolicies(
-    google::cloud::cpp::compute::instances::v1::AddResourcePoliciesRequest const&) {
+    google::cloud::cpp::compute::instances::v1::
+        AddResourcePoliciesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList>
 InstancesConnection::AggregatedListInstances(
-    google::cloud::cpp::compute::instances::v1::AggregatedListInstancesRequest const&) {
+    google::cloud::cpp::compute::instances::v1::
+        AggregatedListInstancesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -72,7 +74,8 @@ InstancesConnection::DeleteInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::DeleteAccessConfig(
-    google::cloud::cpp::compute::instances::v1::DeleteAccessConfigRequest const&) {
+    google::cloud::cpp::compute::instances::v1::
+        DeleteAccessConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -88,15 +91,18 @@ InstancesConnection::GetInstances(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>
+StatusOr<
+    google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>
 InstancesConnection::GetEffectiveFirewalls(
-    google::cloud::cpp::compute::instances::v1::GetEffectiveFirewallsRequest const&) {
+    google::cloud::cpp::compute::instances::v1::
+        GetEffectiveFirewallsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::GuestAttributes>
 InstancesConnection::GetGuestAttributes(
-    google::cloud::cpp::compute::instances::v1::GetGuestAttributesRequest const&) {
+    google::cloud::cpp::compute::instances::v1::
+        GetGuestAttributesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -114,13 +120,15 @@ InstancesConnection::GetScreenshot(
 
 StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput>
 InstancesConnection::GetSerialPortOutput(
-    google::cloud::cpp::compute::instances::v1::GetSerialPortOutputRequest const&) {
+    google::cloud::cpp::compute::instances::v1::
+        GetSerialPortOutputRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>
 InstancesConnection::GetShieldedInstanceIdentity(
-    google::cloud::cpp::compute::instances::v1::GetShieldedInstanceIdentityRequest const&) {
+    google::cloud::cpp::compute::instances::v1::
+        GetShieldedInstanceIdentityRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -130,26 +138,30 @@ InstancesConnection::InsertInstances(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Instance> InstancesConnection::ListInstances(
-    google::cloud::cpp::compute::instances::v1::ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::Instance>
+InstancesConnection::ListInstances(
+    google::cloud::cpp::compute::instances::v1::
+        ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Instance>>();
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Reference> InstancesConnection::ListReferrers(
-    google::cloud::cpp::compute::instances::v1::ListReferrersRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::Reference>
+InstancesConnection::ListReferrers(
+    google::cloud::cpp::compute::instances::v1::
+        ListReferrersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Reference>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::RemoveResourcePolicies(
-    google::cloud::cpp::compute::instances::v1::RemoveResourcePoliciesRequest const&) {
+    google::cloud::cpp::compute::instances::v1::
+        RemoveResourcePoliciesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Operation>
-InstancesConnection::Reset(
+StatusOr<google::cloud::cpp::compute::v1::Operation> InstancesConnection::Reset(
     google::cloud::cpp::compute::instances::v1::ResetRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -160,21 +172,23 @@ InstancesConnection::Resume(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-InstancesConnection::SendDiagnosticInterrupt(
-    google::cloud::cpp::compute::instances::v1::SendDiagnosticInterruptRequest const&) {
+Status InstancesConnection::SendDiagnosticInterrupt(
+    google::cloud::cpp::compute::instances::v1::
+        SendDiagnosticInterruptRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::SetDeletionProtection(
-    google::cloud::cpp::compute::instances::v1::SetDeletionProtectionRequest const&) {
+    google::cloud::cpp::compute::instances::v1::
+        SetDeletionProtectionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::SetDiskAutoDelete(
-    google::cloud::cpp::compute::instances::v1::SetDiskAutoDeleteRequest const&) {
+    google::cloud::cpp::compute::instances::v1::
+        SetDiskAutoDeleteRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -192,7 +206,8 @@ InstancesConnection::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::SetMachineResources(
-    google::cloud::cpp::compute::instances::v1::SetMachineResourcesRequest const&) {
+    google::cloud::cpp::compute::instances::v1::
+        SetMachineResourcesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -210,7 +225,8 @@ InstancesConnection::SetMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::SetMinCpuPlatform(
-    google::cloud::cpp::compute::instances::v1::SetMinCpuPlatformRequest const&) {
+    google::cloud::cpp::compute::instances::v1::
+        SetMinCpuPlatformRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -228,13 +244,15 @@ InstancesConnection::SetScheduling(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::SetServiceAccount(
-    google::cloud::cpp::compute::instances::v1::SetServiceAccountRequest const&) {
+    google::cloud::cpp::compute::instances::v1::
+        SetServiceAccountRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::SetShieldedInstanceIntegrityPolicy(
-    google::cloud::cpp::compute::instances::v1::SetShieldedInstanceIntegrityPolicyRequest const&) {
+    google::cloud::cpp::compute::instances::v1::
+        SetShieldedInstanceIntegrityPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -246,24 +264,24 @@ InstancesConnection::SetTags(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::SimulateMaintenanceEvent(
-    google::cloud::cpp::compute::instances::v1::SimulateMaintenanceEventRequest const&) {
+    google::cloud::cpp::compute::instances::v1::
+        SimulateMaintenanceEventRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Operation>
-InstancesConnection::Start(
+StatusOr<google::cloud::cpp::compute::v1::Operation> InstancesConnection::Start(
     google::cloud::cpp::compute::instances::v1::StartRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::StartWithEncryptionKey(
-    google::cloud::cpp::compute::instances::v1::StartWithEncryptionKeyRequest const&) {
+    google::cloud::cpp::compute::instances::v1::
+        StartWithEncryptionKeyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Operation>
-InstancesConnection::Stop(
+StatusOr<google::cloud::cpp::compute::v1::Operation> InstancesConnection::Stop(
     google::cloud::cpp::compute::instances::v1::StopRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -276,7 +294,8 @@ InstancesConnection::Suspend(
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 InstancesConnection::TestIamPermissions(
-    google::cloud::cpp::compute::instances::v1::TestIamPermissionsRequest const&) {
+    google::cloud::cpp::compute::instances::v1::
+        TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -288,25 +307,29 @@ InstancesConnection::UpdateInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::UpdateAccessConfig(
-    google::cloud::cpp::compute::instances::v1::UpdateAccessConfigRequest const&) {
+    google::cloud::cpp::compute::instances::v1::
+        UpdateAccessConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::UpdateDisplayDevice(
-    google::cloud::cpp::compute::instances::v1::UpdateDisplayDeviceRequest const&) {
+    google::cloud::cpp::compute::instances::v1::
+        UpdateDisplayDeviceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::UpdateNetworkInterface(
-    google::cloud::cpp::compute::instances::v1::UpdateNetworkInterfaceRequest const&) {
+    google::cloud::cpp::compute::instances::v1::
+        UpdateNetworkInterfaceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::UpdateShieldedInstanceConfig(
-    google::cloud::cpp::compute::instances::v1::UpdateShieldedInstanceConfigRequest const&) {
+    google::cloud::cpp::compute::instances::v1::
+        UpdateShieldedInstanceConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

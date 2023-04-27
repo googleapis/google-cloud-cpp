@@ -35,19 +35,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AcceleratorTypesRestMetadata : public AcceleratorTypesRestStub {
  public:
   ~AcceleratorTypesRestMetadata() override = default;
-  explicit AcceleratorTypesRestMetadata(std::shared_ptr<AcceleratorTypesRestStub> child);
+  explicit AcceleratorTypesRestMetadata(
+      std::shared_ptr<AcceleratorTypesRestStub> child);
 
-  StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList> AggregatedListAcceleratorTypes(
+  StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>
+  AggregatedListAcceleratorTypes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::acceleratorTypes::v1::AggregatedListAcceleratorTypesRequest const& request) override;
+      google::cloud::cpp::compute::acceleratorTypes::v1::
+          AggregatedListAcceleratorTypesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::AcceleratorType> GetAcceleratorTypes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::acceleratorTypes::v1::GetAcceleratorTypesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
+  GetAcceleratorTypes(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::acceleratorTypes::v1::
+                          GetAcceleratorTypesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeList> ListAcceleratorTypes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::acceleratorTypes::v1::ListAcceleratorTypesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeList>
+  ListAcceleratorTypes(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::acceleratorTypes::v1::
+                           ListAcceleratorTypesRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

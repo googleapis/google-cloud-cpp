@@ -36,30 +36,39 @@ class RegionAutoscalersTracingConnection
   ~RegionAutoscalersTracingConnection() override = default;
 
   explicit RegionAutoscalersTracingConnection(
-    std::shared_ptr<compute_region_autoscalers_v1::RegionAutoscalersConnection> child);
+      std::shared_ptr<
+          compute_region_autoscalers_v1::RegionAutoscalersConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::DeleteRegionAutoscalersRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRegionAutoscalers(
+      google::cloud::cpp::compute::regionAutoscalers::v1::
+          DeleteRegionAutoscalersRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
-  GetRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::GetRegionAutoscalersRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetRegionAutoscalers(
+      google::cloud::cpp::compute::regionAutoscalers::v1::
+          GetRegionAutoscalersRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::InsertRegionAutoscalersRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionAutoscalers(
+      google::cloud::cpp::compute::regionAutoscalers::v1::
+          InsertRegionAutoscalersRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
-  ListRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::ListRegionAutoscalersRequest request) override;
+  ListRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::
+                            ListRegionAutoscalersRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::PatchRegionAutoscalersRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRegionAutoscalers(
+      google::cloud::cpp::compute::regionAutoscalers::v1::
+          PatchRegionAutoscalersRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::UpdateRegionAutoscalersRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRegionAutoscalers(
+      google::cloud::cpp::compute::regionAutoscalers::v1::
+          UpdateRegionAutoscalersRequest const& request) override;
 
  private:
-  std::shared_ptr<compute_region_autoscalers_v1::RegionAutoscalersConnection> child_;
+  std::shared_ptr<compute_region_autoscalers_v1::RegionAutoscalersConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -72,7 +81,8 @@ class RegionAutoscalersTracingConnection
  */
 std::shared_ptr<compute_region_autoscalers_v1::RegionAutoscalersConnection>
 MakeRegionAutoscalersTracingConnection(
-    std::shared_ptr<compute_region_autoscalers_v1::RegionAutoscalersConnection> conn);
+    std::shared_ptr<compute_region_autoscalers_v1::RegionAutoscalersConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_autoscalers_v1_internal

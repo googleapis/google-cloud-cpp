@@ -36,27 +36,35 @@ class GlobalOperationsTracingConnection
   ~GlobalOperationsTracingConnection() override = default;
 
   explicit GlobalOperationsTracingConnection(
-    std::shared_ptr<compute_global_operations_v1::GlobalOperationsConnection> child);
+      std::shared_ptr<compute_global_operations_v1::GlobalOperationsConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
-  AggregatedListGlobalOperations(google::cloud::cpp::compute::globalOperations::v1::AggregatedListGlobalOperationsRequest const& request) override;
+  AggregatedListGlobalOperations(
+      google::cloud::cpp::compute::globalOperations::v1::
+          AggregatedListGlobalOperationsRequest const& request) override;
 
-  Status
-  DeleteGlobalOperations(google::cloud::cpp::compute::globalOperations::v1::DeleteGlobalOperationsRequest const& request) override;
+  Status DeleteGlobalOperations(
+      google::cloud::cpp::compute::globalOperations::v1::
+          DeleteGlobalOperationsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  GetGlobalOperations(google::cloud::cpp::compute::globalOperations::v1::GetGlobalOperationsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetGlobalOperations(
+      google::cloud::cpp::compute::globalOperations::v1::
+          GetGlobalOperationsRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Operation>
-  ListGlobalOperations(google::cloud::cpp::compute::globalOperations::v1::ListGlobalOperationsRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Operation> ListGlobalOperations(
+      google::cloud::cpp::compute::globalOperations::v1::
+          ListGlobalOperationsRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Wait(google::cloud::cpp::compute::globalOperations::v1::WaitRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
+      google::cloud::cpp::compute::globalOperations::v1::WaitRequest const&
+          request) override;
 
  private:
-  std::shared_ptr<compute_global_operations_v1::GlobalOperationsConnection> child_;
+  std::shared_ptr<compute_global_operations_v1::GlobalOperationsConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -69,7 +77,8 @@ class GlobalOperationsTracingConnection
  */
 std::shared_ptr<compute_global_operations_v1::GlobalOperationsConnection>
 MakeGlobalOperationsTracingConnection(
-    std::shared_ptr<compute_global_operations_v1::GlobalOperationsConnection> conn);
+    std::shared_ptr<compute_global_operations_v1::GlobalOperationsConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_global_operations_v1_internal

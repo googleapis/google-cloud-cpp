@@ -35,31 +35,34 @@ DefaultSslPoliciesRestStub::DefaultSslPoliciesRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultSslPoliciesRestStub::DefaultSslPoliciesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::SslPoliciesAggregatedList>
 DefaultSslPoliciesRestStub::AggregatedListSslPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslPolicies::v1::AggregatedListSslPoliciesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::SslPoliciesAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::sslPolicies::v1::
+        AggregatedListSslPoliciesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::SslPoliciesAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/sslPolicies",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultSslPoliciesRestStub::DeleteSslPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslPolicies::v1::DeleteSslPoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::sslPolicies::v1::
+        DeleteSslPoliciesRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/sslPolicies/{ssl_policy}");
@@ -67,8 +70,9 @@ DefaultSslPoliciesRestStub::DeleteSslPolicies(
 
 StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
 DefaultSslPoliciesRestStub::GetSslPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslPolicies::v1::GetSslPoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::sslPolicies::v1::GetSslPoliciesRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslPolicy>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/sslPolicies/{ssl_policy}",
@@ -78,8 +82,9 @@ DefaultSslPoliciesRestStub::GetSslPolicies(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultSslPoliciesRestStub::InsertSslPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslPolicies::v1::InsertSslPoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::sslPolicies::v1::
+        InsertSslPoliciesRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/sslPolicies");
@@ -87,8 +92,9 @@ DefaultSslPoliciesRestStub::InsertSslPolicies(
 
 StatusOr<google::cloud::cpp::compute::v1::SslPoliciesList>
 DefaultSslPoliciesRestStub::ListSslPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslPolicies::v1::ListSslPoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::sslPolicies::v1::ListSslPoliciesRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslPoliciesList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/sslPolicies",
@@ -97,14 +103,18 @@ DefaultSslPoliciesRestStub::ListSslPolicies(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
-StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+StatusOr<
+    google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
 DefaultSslPoliciesRestStub::ListAvailableFeatures(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslPolicies::v1::ListAvailableFeaturesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::sslPolicies::v1::
+        ListAvailableFeaturesRequest const& request) {
+  return rest_internal::Get<google::cloud::cpp::compute::v1::
+                                SslPoliciesListAvailableFeaturesResponse>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/sslPolicies/listAvailableFeatures",
       {std::make_pair("filter", request.filter()),
@@ -112,13 +122,15 @@ DefaultSslPoliciesRestStub::ListAvailableFeatures(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultSslPoliciesRestStub::PatchSslPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslPolicies::v1::PatchSslPoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::sslPolicies::v1::PatchSslPoliciesRequest const&
+        request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/sslPolicies/{ssl_policy}");

@@ -17,8 +17,8 @@
 // source: google/cloud/compute/http_health_checks/v1/http_health_checks.proto
 
 #include "google/cloud/compute/http_health_checks/v1/internal/http_health_checks_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/http_health_checks/v1/internal/http_health_checks_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -32,70 +32,90 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 HttpHealthChecksRestConnectionImpl::HttpHealthChecksRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_http_health_checks_v1_internal::HttpHealthChecksRestStub> stub,
+    std::shared_ptr<
+        compute_http_health_checks_v1_internal::HttpHealthChecksRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        HttpHealthChecksConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      HttpHealthChecksConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-HttpHealthChecksRestConnectionImpl::DeleteHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::DeleteHttpHealthChecksRequest const& request) {
+HttpHealthChecksRestConnectionImpl::DeleteHttpHealthChecks(
+    google::cloud::cpp::compute::httpHealthChecks::v1::
+        DeleteHttpHealthChecksRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteHttpHealthChecks(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::httpHealthChecks::v1::DeleteHttpHealthChecksRequest const& request) {
+             google::cloud::cpp::compute::httpHealthChecks::v1::
+                 DeleteHttpHealthChecksRequest const& request) {
         return stub_->DeleteHttpHealthChecks(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck>
-HttpHealthChecksRestConnectionImpl::GetHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::GetHttpHealthChecksRequest const& request) {
+HttpHealthChecksRestConnectionImpl::GetHttpHealthChecks(
+    google::cloud::cpp::compute::httpHealthChecks::v1::
+        GetHttpHealthChecksRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetHttpHealthChecks(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::httpHealthChecks::v1::GetHttpHealthChecksRequest const& request) {
+             google::cloud::cpp::compute::httpHealthChecks::v1::
+                 GetHttpHealthChecksRequest const& request) {
         return stub_->GetHttpHealthChecks(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-HttpHealthChecksRestConnectionImpl::InsertHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::InsertHttpHealthChecksRequest const& request) {
+HttpHealthChecksRestConnectionImpl::InsertHttpHealthChecks(
+    google::cloud::cpp::compute::httpHealthChecks::v1::
+        InsertHttpHealthChecksRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->InsertHttpHealthChecks(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::httpHealthChecks::v1::InsertHttpHealthChecksRequest const& request) {
+             google::cloud::cpp::compute::httpHealthChecks::v1::
+                 InsertHttpHealthChecksRequest const& request) {
         return stub_->InsertHttpHealthChecks(rest_context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::HttpHealthCheck>
-HttpHealthChecksRestConnectionImpl::ListHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::ListHttpHealthChecksRequest request) {
+HttpHealthChecksRestConnectionImpl::ListHttpHealthChecks(
+    google::cloud::cpp::compute::httpHealthChecks::v1::
+        ListHttpHealthChecksRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_http_health_checks_v1::HttpHealthChecksRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<
+      compute_http_health_checks_v1::HttpHealthChecksRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListHttpHealthChecks(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::HttpHealthCheck>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::HttpHealthCheck>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::httpHealthChecks::v1::ListHttpHealthChecksRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::httpHealthChecks::v1::
+                          ListHttpHealthChecksRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::httpHealthChecks::v1::ListHttpHealthChecksRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::httpHealthChecks::v1::
+                       ListHttpHealthChecksRequest const& request) {
               return stub->ListHttpHealthChecks(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::HttpHealthCheckList r) {
-        std::vector<google::cloud::cpp::compute::v1::HttpHealthCheck> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::HttpHealthCheck> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -103,24 +123,30 @@ HttpHealthChecksRestConnectionImpl::ListHttpHealthChecks(google::cloud::cpp::com
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-HttpHealthChecksRestConnectionImpl::PatchHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::PatchHttpHealthChecksRequest const& request) {
+HttpHealthChecksRestConnectionImpl::PatchHttpHealthChecks(
+    google::cloud::cpp::compute::httpHealthChecks::v1::
+        PatchHttpHealthChecksRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->PatchHttpHealthChecks(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::httpHealthChecks::v1::PatchHttpHealthChecksRequest const& request) {
+             google::cloud::cpp::compute::httpHealthChecks::v1::
+                 PatchHttpHealthChecksRequest const& request) {
         return stub_->PatchHttpHealthChecks(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-HttpHealthChecksRestConnectionImpl::UpdateHttpHealthChecks(google::cloud::cpp::compute::httpHealthChecks::v1::UpdateHttpHealthChecksRequest const& request) {
+HttpHealthChecksRestConnectionImpl::UpdateHttpHealthChecks(
+    google::cloud::cpp::compute::httpHealthChecks::v1::
+        UpdateHttpHealthChecksRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateHttpHealthChecks(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::httpHealthChecks::v1::UpdateHttpHealthChecksRequest const& request) {
+             google::cloud::cpp::compute::httpHealthChecks::v1::
+                 UpdateHttpHealthChecksRequest const& request) {
         return stub_->UpdateHttpHealthChecks(rest_context, request);
       },
       request, __func__);

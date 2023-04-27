@@ -17,11 +17,11 @@
 // source: google/cloud/compute/interconnects/v1/interconnects.proto
 
 #include "google/cloud/compute/interconnects/v1/interconnects_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/interconnects/v1/interconnects_options.h"
 #include "google/cloud/compute/interconnects/v1/internal/interconnects_option_defaults.h"
 #include "google/cloud/compute/interconnects/v1/internal/interconnects_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,37 +36,44 @@ InterconnectsConnection::~InterconnectsConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectsConnection::DeleteInterconnects(
-    google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectsRequest const&) {
+    google::cloud::cpp::compute::interconnects::v1::
+        DeleteInterconnectsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Interconnect>
 InterconnectsConnection::GetInterconnects(
-    google::cloud::cpp::compute::interconnects::v1::GetInterconnectsRequest const&) {
+    google::cloud::cpp::compute::interconnects::v1::
+        GetInterconnectsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
 InterconnectsConnection::GetDiagnostics(
-    google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest const&) {
+    google::cloud::cpp::compute::interconnects::v1::
+        GetDiagnosticsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectsConnection::InsertInterconnects(
-    google::cloud::cpp::compute::interconnects::v1::InsertInterconnectsRequest const&) {
+    google::cloud::cpp::compute::interconnects::v1::
+        InsertInterconnectsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Interconnect> InterconnectsConnection::ListInterconnects(
-    google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::Interconnect>
+InterconnectsConnection::ListInterconnects(
+    google::cloud::cpp::compute::interconnects::v1::
+        ListInterconnectsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Interconnect>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectsConnection::PatchInterconnects(
-    google::cloud::cpp::compute::interconnects::v1::PatchInterconnectsRequest const&) {
+    google::cloud::cpp::compute::interconnects::v1::
+        PatchInterconnectsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

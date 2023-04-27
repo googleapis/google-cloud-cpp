@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ZONE_OPERATIONS_V1_ZONE_OPERATIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ZONE_OPERATIONS_V1_ZONE_OPERATIONS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/zone_operations/v1/internal/zone_operations_retry_traits.h"
 #include "google/cloud/compute/zone_operations/v1/zone_operations_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -35,11 +35,13 @@ namespace cloud {
 namespace compute_zone_operations_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ZoneOperationsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_zone_operations_v1_internal::ZoneOperationsRetryTraits>;
+using ZoneOperationsRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_zone_operations_v1_internal::ZoneOperationsRetryTraits>;
 
-using ZoneOperationsLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_zone_operations_v1_internal::ZoneOperationsRetryTraits>;
+using ZoneOperationsLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_zone_operations_v1_internal::ZoneOperationsRetryTraits>;
 
 using ZoneOperationsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -55,7 +57,8 @@ using ZoneOperationsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeZoneOperationsConnection()`.
  *
- * For mocking, see `compute_zone_operations_v1_mocks::MockZoneOperationsConnection`.
+ * For mocking, see
+ * `compute_zone_operations_v1_mocks::MockZoneOperationsConnection`.
  */
 class ZoneOperationsConnection {
  public:
@@ -63,17 +66,22 @@ class ZoneOperationsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual Status
-  DeleteZoneOperations(google::cloud::cpp::compute::zoneOperations::v1::DeleteZoneOperationsRequest const& request);
+  virtual Status DeleteZoneOperations(
+      google::cloud::cpp::compute::zoneOperations::v1::
+          DeleteZoneOperationsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  GetZoneOperations(google::cloud::cpp::compute::zoneOperations::v1::GetZoneOperationsRequest const& request);
+  GetZoneOperations(google::cloud::cpp::compute::zoneOperations::v1::
+                        GetZoneOperationsRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Operation>
-  ListZoneOperations(google::cloud::cpp::compute::zoneOperations::v1::ListZoneOperationsRequest request);
+  ListZoneOperations(
+      google::cloud::cpp::compute::zoneOperations::v1::ListZoneOperationsRequest
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Wait(google::cloud::cpp::compute::zoneOperations::v1::WaitRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
+      google::cloud::cpp::compute::zoneOperations::v1::WaitRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

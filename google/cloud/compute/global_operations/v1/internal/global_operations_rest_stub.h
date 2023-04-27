@@ -36,25 +36,31 @@ class GlobalOperationsRestStub {
  public:
   virtual ~GlobalOperationsRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList> AggregatedListGlobalOperations(
+  virtual StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
+  AggregatedListGlobalOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::globalOperations::v1::AggregatedListGlobalOperationsRequest const& request) = 0;
+      google::cloud::cpp::compute::globalOperations::v1::
+          AggregatedListGlobalOperationsRequest const& request) = 0;
 
   virtual Status DeleteGlobalOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::globalOperations::v1::DeleteGlobalOperationsRequest const& request) = 0;
+      google::cloud::cpp::compute::globalOperations::v1::
+          DeleteGlobalOperationsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> GetGlobalOperations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::globalOperations::v1::GetGlobalOperationsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  GetGlobalOperations(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::globalOperations::v1::
+                          GetGlobalOperationsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::OperationList> ListGlobalOperations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::globalOperations::v1::ListGlobalOperationsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::OperationList>
+  ListGlobalOperations(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::globalOperations::v1::
+                           ListGlobalOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::globalOperations::v1::WaitRequest const& request) = 0;
+      google::cloud::cpp::compute::globalOperations::v1::WaitRequest const&
+          request) = 0;
 };
 
 class DefaultGlobalOperationsRestStub : public GlobalOperationsRestStub {
@@ -63,28 +69,33 @@ class DefaultGlobalOperationsRestStub : public GlobalOperationsRestStub {
 
   explicit DefaultGlobalOperationsRestStub(Options options);
   DefaultGlobalOperationsRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList> AggregatedListGlobalOperations(
+  StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
+  AggregatedListGlobalOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::globalOperations::v1::AggregatedListGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::globalOperations::v1::
+          AggregatedListGlobalOperationsRequest const& request) override;
 
   Status DeleteGlobalOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::globalOperations::v1::DeleteGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::globalOperations::v1::
+          DeleteGlobalOperationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetGlobalOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::globalOperations::v1::GetGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::globalOperations::v1::
+          GetGlobalOperationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::OperationList> ListGlobalOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::globalOperations::v1::ListGlobalOperationsRequest const& request) override;
+      google::cloud::cpp::compute::globalOperations::v1::
+          ListGlobalOperationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::globalOperations::v1::WaitRequest const& request) override;
+      google::cloud::cpp::compute::globalOperations::v1::WaitRequest const&
+          request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

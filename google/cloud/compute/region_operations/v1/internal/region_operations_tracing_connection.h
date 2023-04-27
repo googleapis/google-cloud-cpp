@@ -36,24 +36,30 @@ class RegionOperationsTracingConnection
   ~RegionOperationsTracingConnection() override = default;
 
   explicit RegionOperationsTracingConnection(
-    std::shared_ptr<compute_region_operations_v1::RegionOperationsConnection> child);
+      std::shared_ptr<compute_region_operations_v1::RegionOperationsConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  Status
-  DeleteRegionOperations(google::cloud::cpp::compute::regionOperations::v1::DeleteRegionOperationsRequest const& request) override;
+  Status DeleteRegionOperations(
+      google::cloud::cpp::compute::regionOperations::v1::
+          DeleteRegionOperationsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  GetRegionOperations(google::cloud::cpp::compute::regionOperations::v1::GetRegionOperationsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> GetRegionOperations(
+      google::cloud::cpp::compute::regionOperations::v1::
+          GetRegionOperationsRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Operation>
-  ListRegionOperations(google::cloud::cpp::compute::regionOperations::v1::ListRegionOperationsRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Operation> ListRegionOperations(
+      google::cloud::cpp::compute::regionOperations::v1::
+          ListRegionOperationsRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Wait(google::cloud::cpp::compute::regionOperations::v1::WaitRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
+      google::cloud::cpp::compute::regionOperations::v1::WaitRequest const&
+          request) override;
 
  private:
-  std::shared_ptr<compute_region_operations_v1::RegionOperationsConnection> child_;
+  std::shared_ptr<compute_region_operations_v1::RegionOperationsConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -66,7 +72,8 @@ class RegionOperationsTracingConnection
  */
 std::shared_ptr<compute_region_operations_v1::RegionOperationsConnection>
 MakeRegionOperationsTracingConnection(
-    std::shared_ptr<compute_region_operations_v1::RegionOperationsConnection> conn);
+    std::shared_ptr<compute_region_operations_v1::RegionOperationsConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_operations_v1_internal

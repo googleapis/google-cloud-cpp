@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/global_addresses/v1/global_addresses.proto
 
-
 #include "google/cloud/compute/global_addresses/v1/internal/global_addresses_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,12 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GlobalAddressesRestMetadata::GlobalAddressesRestMetadata(
     std::shared_ptr<GlobalAddressesRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalAddressesRestMetadata::DeleteGlobalAddresses(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::globalAddresses::v1::DeleteGlobalAddressesRequest const& request) {
+    google::cloud::cpp::compute::globalAddresses::v1::
+        DeleteGlobalAddressesRequest const& request) {
   SetMetadata(rest_context);
   return child_->DeleteGlobalAddresses(rest_context, request);
 }
@@ -47,7 +48,8 @@ GlobalAddressesRestMetadata::DeleteGlobalAddresses(
 StatusOr<google::cloud::cpp::compute::v1::Address>
 GlobalAddressesRestMetadata::GetGlobalAddresses(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::globalAddresses::v1::GetGlobalAddressesRequest const& request) {
+    google::cloud::cpp::compute::globalAddresses::v1::
+        GetGlobalAddressesRequest const& request) {
   SetMetadata(rest_context);
   return child_->GetGlobalAddresses(rest_context, request);
 }
@@ -55,7 +57,8 @@ GlobalAddressesRestMetadata::GetGlobalAddresses(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalAddressesRestMetadata::InsertGlobalAddresses(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::globalAddresses::v1::InsertGlobalAddressesRequest const& request) {
+    google::cloud::cpp::compute::globalAddresses::v1::
+        InsertGlobalAddressesRequest const& request) {
   SetMetadata(rest_context);
   return child_->InsertGlobalAddresses(rest_context, request);
 }
@@ -63,7 +66,8 @@ GlobalAddressesRestMetadata::InsertGlobalAddresses(
 StatusOr<google::cloud::cpp::compute::v1::AddressList>
 GlobalAddressesRestMetadata::ListGlobalAddresses(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::globalAddresses::v1::ListGlobalAddressesRequest const& request) {
+    google::cloud::cpp::compute::globalAddresses::v1::
+        ListGlobalAddressesRequest const& request) {
   SetMetadata(rest_context);
   return child_->ListGlobalAddresses(rest_context, request);
 }
@@ -71,33 +75,34 @@ GlobalAddressesRestMetadata::ListGlobalAddresses(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalAddressesRestMetadata::SetLabels(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::globalAddresses::v1::SetLabelsRequest const& request) {
+    google::cloud::cpp::compute::globalAddresses::v1::SetLabelsRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->SetLabels(rest_context, request);
 }
 
 void GlobalAddressesRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+    rest_internal::RestContext& rest_context,
+    std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

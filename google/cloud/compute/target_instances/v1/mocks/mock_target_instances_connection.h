@@ -42,29 +42,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockTargetInstancesConnection : public compute_target_instances_v1::TargetInstancesConnection {
+class MockTargetInstancesConnection
+    : public compute_target_instances_v1::TargetInstancesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>,
-  AggregatedListTargetInstances,
-  (google::cloud::cpp::compute::targetInstances::v1::AggregatedListTargetInstancesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>,
+      AggregatedListTargetInstances,
+      (google::cloud::cpp::compute::targetInstances::v1::
+           AggregatedListTargetInstancesRequest const& request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteTargetInstances,
-  (google::cloud::cpp::compute::targetInstances::v1::DeleteTargetInstancesRequest const& request), (override));
+              DeleteTargetInstances,
+              (google::cloud::cpp::compute::targetInstances::v1::
+                   DeleteTargetInstancesRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetInstance>,
-  GetTargetInstances,
-  (google::cloud::cpp::compute::targetInstances::v1::GetTargetInstancesRequest const& request), (override));
+              GetTargetInstances,
+              (google::cloud::cpp::compute::targetInstances::v1::
+                   GetTargetInstancesRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertTargetInstances,
-  (google::cloud::cpp::compute::targetInstances::v1::InsertTargetInstancesRequest const& request), (override));
+              InsertTargetInstances,
+              (google::cloud::cpp::compute::targetInstances::v1::
+                   InsertTargetInstancesRequest const& request),
+              (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::TargetInstance>,
-  ListTargetInstances,
-  (google::cloud::cpp::compute::targetInstances::v1::ListTargetInstancesRequest request), (override));
+              ListTargetInstances,
+              (google::cloud::cpp::compute::targetInstances::v1::
+                   ListTargetInstancesRequest request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,8 +17,8 @@
 // source: google/cloud/compute/global_operations/v1/global_operations.proto
 
 #include "google/cloud/compute/global_operations/v1/internal/global_operations_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/global_operations/v1/internal/global_operations_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -32,70 +32,89 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GlobalOperationsRestConnectionImpl::GlobalOperationsRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_global_operations_v1_internal::GlobalOperationsRestStub> stub,
+    std::shared_ptr<
+        compute_global_operations_v1_internal::GlobalOperationsRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        GlobalOperationsConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      GlobalOperationsConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
-GlobalOperationsRestConnectionImpl::AggregatedListGlobalOperations(google::cloud::cpp::compute::globalOperations::v1::AggregatedListGlobalOperationsRequest const& request) {
+GlobalOperationsRestConnectionImpl::AggregatedListGlobalOperations(
+    google::cloud::cpp::compute::globalOperations::v1::
+        AggregatedListGlobalOperationsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AggregatedListGlobalOperations(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::globalOperations::v1::AggregatedListGlobalOperationsRequest const& request) {
+             google::cloud::cpp::compute::globalOperations::v1::
+                 AggregatedListGlobalOperationsRequest const& request) {
         return stub_->AggregatedListGlobalOperations(rest_context, request);
       },
       request, __func__);
 }
 
-Status
-GlobalOperationsRestConnectionImpl::DeleteGlobalOperations(google::cloud::cpp::compute::globalOperations::v1::DeleteGlobalOperationsRequest const& request) {
+Status GlobalOperationsRestConnectionImpl::DeleteGlobalOperations(
+    google::cloud::cpp::compute::globalOperations::v1::
+        DeleteGlobalOperationsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteGlobalOperations(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::globalOperations::v1::DeleteGlobalOperationsRequest const& request) {
+             google::cloud::cpp::compute::globalOperations::v1::
+                 DeleteGlobalOperationsRequest const& request) {
         return stub_->DeleteGlobalOperations(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-GlobalOperationsRestConnectionImpl::GetGlobalOperations(google::cloud::cpp::compute::globalOperations::v1::GetGlobalOperationsRequest const& request) {
+GlobalOperationsRestConnectionImpl::GetGlobalOperations(
+    google::cloud::cpp::compute::globalOperations::v1::
+        GetGlobalOperationsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetGlobalOperations(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::globalOperations::v1::GetGlobalOperationsRequest const& request) {
+             google::cloud::cpp::compute::globalOperations::v1::
+                 GetGlobalOperationsRequest const& request) {
         return stub_->GetGlobalOperations(rest_context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Operation>
-GlobalOperationsRestConnectionImpl::ListGlobalOperations(google::cloud::cpp::compute::globalOperations::v1::ListGlobalOperationsRequest request) {
+GlobalOperationsRestConnectionImpl::ListGlobalOperations(
+    google::cloud::cpp::compute::globalOperations::v1::
+        ListGlobalOperationsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_global_operations_v1::GlobalOperationsRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<
+      compute_global_operations_v1::GlobalOperationsRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListGlobalOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::Operation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::Operation>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::globalOperations::v1::ListGlobalOperationsRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::globalOperations::v1::
+                          ListGlobalOperationsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::globalOperations::v1::ListGlobalOperationsRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::globalOperations::v1::
+                       ListGlobalOperationsRequest const& request) {
               return stub->ListGlobalOperations(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::OperationList r) {
-        std::vector<google::cloud::cpp::compute::v1::Operation> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::Operation> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -103,14 +122,15 @@ GlobalOperationsRestConnectionImpl::ListGlobalOperations(google::cloud::cpp::com
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-GlobalOperationsRestConnectionImpl::Wait(google::cloud::cpp::compute::globalOperations::v1::WaitRequest const& request) {
+GlobalOperationsRestConnectionImpl::Wait(
+    google::cloud::cpp::compute::globalOperations::v1::WaitRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->Wait(request),
-      [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::globalOperations::v1::WaitRequest const& request) {
-        return stub_->Wait(rest_context, request);
-      },
+      retry_policy(), backoff_policy(), idempotency_policy()->Wait(request),
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::globalOperations::v1::WaitRequest const&
+              request) { return stub_->Wait(rest_context, request); },
       request, __func__);
 }
 

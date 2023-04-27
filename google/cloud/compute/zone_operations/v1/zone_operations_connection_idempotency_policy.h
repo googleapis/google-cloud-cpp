@@ -35,23 +35,28 @@ class ZoneOperationsConnectionIdempotencyPolicy {
   virtual ~ZoneOperationsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ZoneOperationsConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<ZoneOperationsConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  DeleteZoneOperations(google::cloud::cpp::compute::zoneOperations::v1::DeleteZoneOperationsRequest const& request);
+  virtual google::cloud::Idempotency DeleteZoneOperations(
+      google::cloud::cpp::compute::zoneOperations::v1::
+          DeleteZoneOperationsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetZoneOperations(google::cloud::cpp::compute::zoneOperations::v1::GetZoneOperationsRequest const& request);
+  virtual google::cloud::Idempotency GetZoneOperations(
+      google::cloud::cpp::compute::zoneOperations::v1::
+          GetZoneOperationsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListZoneOperations(google::cloud::cpp::compute::zoneOperations::v1::ListZoneOperationsRequest request);
+  virtual google::cloud::Idempotency ListZoneOperations(
+      google::cloud::cpp::compute::zoneOperations::v1::ListZoneOperationsRequest
+          request);
 
-  virtual google::cloud::Idempotency
-  Wait(google::cloud::cpp::compute::zoneOperations::v1::WaitRequest const& request);
+  virtual google::cloud::Idempotency Wait(
+      google::cloud::cpp::compute::zoneOperations::v1::WaitRequest const&
+          request);
 };
 
 std::unique_ptr<ZoneOperationsConnectionIdempotencyPolicy>
-    MakeDefaultZoneOperationsConnectionIdempotencyPolicy();
+MakeDefaultZoneOperationsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_zone_operations_v1

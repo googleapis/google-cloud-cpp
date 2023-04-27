@@ -34,24 +34,33 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options TargetVpnGatewaysDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_TARGET_VPN_GATEWAYS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_TARGET_VPN_GATEWAYS_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_TARGET_VPN_GATEWAYS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_TARGET_VPN_GATEWAYS_AUTHORITY",
       "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
-  if (!options.has<compute_target_vpn_gateways_v1::TargetVpnGatewaysRetryPolicyOption>()) {
-    options.set<compute_target_vpn_gateways_v1::TargetVpnGatewaysRetryPolicyOption>(
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  if (!options.has<compute_target_vpn_gateways_v1::
+                       TargetVpnGatewaysRetryPolicyOption>()) {
+    options.set<
+        compute_target_vpn_gateways_v1::TargetVpnGatewaysRetryPolicyOption>(
         compute_target_vpn_gateways_v1::TargetVpnGatewaysLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_target_vpn_gateways_v1::TargetVpnGatewaysBackoffPolicyOption>()) {
-    options.set<compute_target_vpn_gateways_v1::TargetVpnGatewaysBackoffPolicyOption>(
+  if (!options.has<compute_target_vpn_gateways_v1::
+                       TargetVpnGatewaysBackoffPolicyOption>()) {
+    options.set<
+        compute_target_vpn_gateways_v1::TargetVpnGatewaysBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
-  if (!options.has<compute_target_vpn_gateways_v1::TargetVpnGatewaysConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_target_vpn_gateways_v1::TargetVpnGatewaysConnectionIdempotencyPolicyOption>(
-        compute_target_vpn_gateways_v1::MakeDefaultTargetVpnGatewaysConnectionIdempotencyPolicy());
+  if (!options.has<compute_target_vpn_gateways_v1::
+                       TargetVpnGatewaysConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_target_vpn_gateways_v1::
+                    TargetVpnGatewaysConnectionIdempotencyPolicyOption>(
+        compute_target_vpn_gateways_v1::
+            MakeDefaultTargetVpnGatewaysConnectionIdempotencyPolicy());
   }
 
   return options;

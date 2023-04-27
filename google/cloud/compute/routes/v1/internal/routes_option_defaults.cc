@@ -34,22 +34,24 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options RoutesDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_ROUTES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_ROUTES_AUTHORITY",
-      "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
+      std::move(options), "GOOGLE_CLOUD_CPP_ROUTES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_ROUTES_AUTHORITY", "compute.googleapis.com");
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<compute_routes_v1::RoutesRetryPolicyOption>()) {
     options.set<compute_routes_v1::RoutesRetryPolicyOption>(
         compute_routes_v1::RoutesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<compute_routes_v1::RoutesBackoffPolicyOption>()) {
     options.set<compute_routes_v1::RoutesBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
-  if (!options.has<compute_routes_v1::RoutesConnectionIdempotencyPolicyOption>()) {
+  if (!options
+           .has<compute_routes_v1::RoutesConnectionIdempotencyPolicyOption>()) {
     options.set<compute_routes_v1::RoutesConnectionIdempotencyPolicyOption>(
         compute_routes_v1::MakeDefaultRoutesConnectionIdempotencyPolicy());
   }
