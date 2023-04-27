@@ -19,25 +19,6 @@ which should give you a taste of the Storage Insights API C++ client library API
 
 @snippet quickstart.cc all
 
-## Error Handling
-
-[status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
-
-This library never throws exceptions to signal error, but you can use exceptions
-to detect errors in the returned objects. In general, the library returns a
-[`StatusOr<T>`][status-or-header] if an error is possible. This is an "outcome"
-type, when the operation is successful a `StatusOr<T>` converts to `true` in
-boolean context (and its `.ok()` member function returns `true`), the
-application can then use `operator->` or `operator*` to access the `T` value.
-When the operation fails a `StatusOr<T>` converts to `false` (and `.ok()`
-returns `false`). It is undefined behavior to use the value in this case.
-
-If you prefer to use exceptions on error, you can use the `.value()` accessor.
-It will return the `T` value or throw on error.
-
-For operations that do not return a value the library simply returns
-`google::cloud::Status`.
-
 ## Override the default endpoint
 
 In some cases, you may need to override the default endpoint used by the client
@@ -79,6 +60,9 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
 [cloud-service-docs]: https://cloud.google.com/storage/docs/insights/inventory-reports
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
