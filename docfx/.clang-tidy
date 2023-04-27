@@ -2,4 +2,5 @@
 InheritParentConfig: true
 
 Checks: >
-  -misc-no-recursion
+  -misc-no-recursion,
+  -abseil-string-find-str-contains

@@ -130,7 +130,7 @@ std::vector<TocEntry> PagesToc(Config const& cfg,
     // usually examples showing how to use a specific class. We link such
     // examples from the landing page, and they otherwise clutter the navigation
     // page.
-    if (id.find("::") != std::string_view::npos) continue;  // NOLINT
+    if (id.find("::") != std::string_view::npos) continue;
     std::ostringstream title;
     AppendTitle(title, MarkdownContext{}, page);
     auto filename =
