@@ -278,10 +278,10 @@ cc_library(
 [cc_test(
     name = sample.replace("/", "_").replace(".cc", ""),
     srcs = [sample],
-    tags = ["integration-test"],
     copts = [
         "-I$(BINDIR)",
     ],
+    tags = ["integration-test"],
     deps = [
         "//:experimental-compute",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
