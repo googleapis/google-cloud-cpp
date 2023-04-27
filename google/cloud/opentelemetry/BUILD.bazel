@@ -22,7 +22,7 @@ cc_library(
     name = "google_cloud_cpp_opentelemetry",
     srcs = google_cloud_cpp_opentelemetry_srcs,
     hdrs = google_cloud_cpp_opentelemetry_hdrs,
-    visibility = ["//:__subpackages__"],
+    visibility = ["//:__pkg__"],
     deps = [
         "//:trace",
         "@com_google_googleapis//google/rpc:code_cc_proto",

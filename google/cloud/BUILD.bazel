@@ -30,14 +30,16 @@ capture_build_info(
 config_setting(
     name = "enable_opentelemetry_valid",
     flag_values = {
-        "//:experimental-opentelemetry": "true",
+        "//:enable-experimental-opentelemetry": "true",
         "@io_opentelemetry_cpp//api:with_abseil": "true",
     },
 )
 
 config_setting(
     name = "disable_opentelemetry",
-    flag_values = {"//:experimental-opentelemetry": "false"},
+    flag_values = {
+        "//:enable-experimental-opentelemetry": "false",
+    },
 )
 
 load(":google_cloud_cpp_common.bzl", "google_cloud_cpp_common_hdrs", "google_cloud_cpp_common_srcs")

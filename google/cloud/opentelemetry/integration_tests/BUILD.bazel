@@ -24,7 +24,7 @@ load(":tests.bzl", "opentelemetry_integration_tests")
     srcs = [test],
     tags = ["integration-test"],
     deps = [
-        "//google/cloud/opentelemetry:google_cloud_cpp_opentelemetry",
+        "//:experimental-opentelemetry",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",

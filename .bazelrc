@@ -39,7 +39,7 @@ test --test_env=GTEST_SHUFFLE --test_env=GTEST_RANDOM_SEED
 
 # By default, build the library with OpenTelemetry
 build --@io_opentelemetry_cpp//api:with_abseil
-build --//:experimental-opentelemetry
+build --//:enable-experimental-opentelemetry
 
 # Clang Sanitizers, use with (for example):
 #
