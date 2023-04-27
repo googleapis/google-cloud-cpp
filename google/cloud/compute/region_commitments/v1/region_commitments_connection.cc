@@ -17,11 +17,11 @@
 // source: google/cloud/compute/region_commitments/v1/region_commitments.proto
 
 #include "google/cloud/compute/region_commitments/v1/region_commitments_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/region_commitments/v1/internal/region_commitments_option_defaults.h"
 #include "google/cloud/compute/region_commitments/v1/internal/region_commitments_tracing_connection.h"
 #include "google/cloud/compute/region_commitments/v1/region_commitments_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,31 +36,37 @@ RegionCommitmentsConnection::~RegionCommitmentsConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
 RegionCommitmentsConnection::AggregatedListRegionCommitments(
-    google::cloud::cpp::compute::regionCommitments::v1::AggregatedListRegionCommitmentsRequest const&) {
+    google::cloud::cpp::compute::regionCommitments::v1::
+        AggregatedListRegionCommitmentsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Commitment>
 RegionCommitmentsConnection::GetRegionCommitments(
-    google::cloud::cpp::compute::regionCommitments::v1::GetRegionCommitmentsRequest const&) {
+    google::cloud::cpp::compute::regionCommitments::v1::
+        GetRegionCommitmentsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionCommitmentsConnection::InsertRegionCommitments(
-    google::cloud::cpp::compute::regionCommitments::v1::InsertRegionCommitmentsRequest const&) {
+    google::cloud::cpp::compute::regionCommitments::v1::
+        InsertRegionCommitmentsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Commitment> RegionCommitmentsConnection::ListRegionCommitments(
-    google::cloud::cpp::compute::regionCommitments::v1::ListRegionCommitmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::Commitment>
+RegionCommitmentsConnection::ListRegionCommitments(
+    google::cloud::cpp::compute::regionCommitments::v1::
+        ListRegionCommitmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Commitment>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionCommitmentsConnection::UpdateRegionCommitments(
-    google::cloud::cpp::compute::regionCommitments::v1::UpdateRegionCommitmentsRequest const&) {
+    google::cloud::cpp::compute::regionCommitments::v1::
+        UpdateRegionCommitmentsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

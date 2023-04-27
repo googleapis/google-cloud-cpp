@@ -35,52 +35,60 @@ DefaultInstanceGroupsRestStub::DefaultInstanceGroupsRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultInstanceGroupsRestStub::DefaultInstanceGroupsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstanceGroupsRestStub::AddInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::AddInstancesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instanceGroups::v1::AddInstancesRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instanceGroups/{instance_group}/addInstances");
+      "/compute/v1/projects/{project}/zones/{zone}/instanceGroups/"
+      "{instance_group}/addInstances");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>
 DefaultInstanceGroupsRestStub::AggregatedListInstanceGroups(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::AggregatedListInstanceGroupsRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instanceGroups::v1::
+        AggregatedListInstanceGroupsRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/instanceGroups",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstanceGroupsRestStub::DeleteInstanceGroups(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::DeleteInstanceGroupsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instanceGroups::v1::
+        DeleteInstanceGroupsRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instanceGroups/{instance_group}");
+      "/compute/v1/projects/{project}/zones/{zone}/instanceGroups/"
+      "{instance_group}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
 DefaultInstanceGroupsRestStub::GetInstanceGroups(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::GetInstanceGroupsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instanceGroups::v1::
+        GetInstanceGroupsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceGroup>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instanceGroups/{instance_group}",
+      "/compute/v1/projects/{project}/zones/{zone}/instanceGroups/"
+      "{instance_group}",
       {std::make_pair("instance_group", request.instance_group()),
        std::make_pair("project", request.project()),
        std::make_pair("zone", request.zone())});
@@ -88,8 +96,9 @@ DefaultInstanceGroupsRestStub::GetInstanceGroups(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstanceGroupsRestStub::InsertInstanceGroups(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::InsertInstanceGroupsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instanceGroups::v1::
+        InsertInstanceGroupsRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/instanceGroups");
@@ -97,8 +106,9 @@ DefaultInstanceGroupsRestStub::InsertInstanceGroups(
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupList>
 DefaultInstanceGroupsRestStub::ListInstanceGroups(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::ListInstanceGroupsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instanceGroups::v1::
+        ListInstanceGroupsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceGroupList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/instanceGroups",
@@ -107,35 +117,43 @@ DefaultInstanceGroupsRestStub::ListInstanceGroups(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success())),
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success())),
        std::make_pair("zone", request.zone())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupsListInstances>
 DefaultInstanceGroupsRestStub::ListInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::ListInstancesRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::InstanceGroupsListInstances>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instanceGroups::v1::ListInstancesRequest const&
+        request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::InstanceGroupsListInstances>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instanceGroups/{instance_group}/listInstances");
+      "/compute/v1/projects/{project}/zones/{zone}/instanceGroups/"
+      "{instance_group}/listInstances");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstanceGroupsRestStub::RemoveInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::RemoveInstancesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instanceGroups::v1::
+        RemoveInstancesRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instanceGroups/{instance_group}/removeInstances");
+      "/compute/v1/projects/{project}/zones/{zone}/instanceGroups/"
+      "{instance_group}/removeInstances");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultInstanceGroupsRestStub::SetNamedPorts(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::instanceGroups::v1::SetNamedPortsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::instanceGroups::v1::SetNamedPortsRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/instanceGroups/{instance_group}/setNamedPorts");
+      "/compute/v1/projects/{project}/zones/{zone}/instanceGroups/"
+      "{instance_group}/setNamedPorts");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

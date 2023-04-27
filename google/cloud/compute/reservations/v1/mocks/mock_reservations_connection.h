@@ -42,49 +42,73 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockReservationsConnection : public compute_reservations_v1::ReservationsConnection {
+class MockReservationsConnection
+    : public compute_reservations_v1::ReservationsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>,
-  AggregatedListReservations,
-  (google::cloud::cpp::compute::reservations::v1::AggregatedListReservationsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>,
+      AggregatedListReservations,
+      (google::cloud::cpp::compute::reservations::v1::
+           AggregatedListReservationsRequest const& request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteReservations,
-  (google::cloud::cpp::compute::reservations::v1::DeleteReservationsRequest const& request), (override));
+              DeleteReservations,
+              (google::cloud::cpp::compute::reservations::v1::
+                   DeleteReservationsRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Reservation>,
-  GetReservations,
-  (google::cloud::cpp::compute::reservations::v1::GetReservationsRequest const& request), (override));
+              GetReservations,
+              (google::cloud::cpp::compute::reservations::v1::
+                   GetReservationsRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  GetIamPolicy,
-  (google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertReservations,
-  (google::cloud::cpp::compute::reservations::v1::InsertReservationsRequest const& request), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Reservation>,
-  ListReservations,
-  (google::cloud::cpp::compute::reservations::v1::ListReservationsRequest request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+      (google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  Resize,
-  (google::cloud::cpp::compute::reservations::v1::ResizeRequest const& request), (override));
+              InsertReservations,
+              (google::cloud::cpp::compute::reservations::v1::
+                   InsertReservationsRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  SetIamPolicy,
-  (google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(
+      StreamRange<google::cloud::cpp::compute::v1::Reservation>,
+      ListReservations,
+      (google::cloud::cpp::compute::reservations::v1::ListReservationsRequest
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
-  TestIamPermissions,
-  (google::cloud::cpp::compute::reservations::v1::TestIamPermissionsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, Resize,
+      (google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+      (google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      TestIamPermissions,
+      (google::cloud::cpp::compute::reservations::v1::
+           TestIamPermissionsRequest const& request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  UpdateReservations,
-  (google::cloud::cpp::compute::reservations::v1::UpdateReservationsRequest const& request), (override));
+              UpdateReservations,
+              (google::cloud::cpp::compute::reservations::v1::
+                   UpdateReservationsRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

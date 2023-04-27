@@ -17,8 +17,8 @@
 // source: google/cloud/compute/region_instances/v1/region_instances.proto
 
 #include "google/cloud/compute/region_instances/v1/internal/region_instances_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/region_instances/v1/internal/region_instances_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_retry_loop.h"
 #include "google/cloud/rest_options.h"
@@ -31,20 +31,25 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionInstancesRestConnectionImpl::RegionInstancesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_region_instances_v1_internal::RegionInstancesRestStub> stub,
+    std::shared_ptr<
+        compute_region_instances_v1_internal::RegionInstancesRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        RegionInstancesConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      RegionInstancesConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionInstancesRestConnectionImpl::BulkInsert(google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const& request) {
+RegionInstancesRestConnectionImpl::BulkInsert(
+    google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->BulkInsert(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const& request) {
+             google::cloud::cpp::compute::regionInstances::v1::
+                 BulkInsertRequest const& request) {
         return stub_->BulkInsert(rest_context, request);
       },
       request, __func__);

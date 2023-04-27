@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_ATTACHMENTS_V1_NETWORK_ATTACHMENTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_ATTACHMENTS_V1_NETWORK_ATTACHMENTS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/network_attachments/v1/internal/network_attachments_retry_traits.h"
 #include "google/cloud/compute/network_attachments/v1/network_attachments_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -35,11 +35,13 @@ namespace cloud {
 namespace compute_network_attachments_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using NetworkAttachmentsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_network_attachments_v1_internal::NetworkAttachmentsRetryTraits>;
+using NetworkAttachmentsRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_network_attachments_v1_internal::NetworkAttachmentsRetryTraits>;
 
-using NetworkAttachmentsLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_network_attachments_v1_internal::NetworkAttachmentsRetryTraits>;
+using NetworkAttachmentsLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_network_attachments_v1_internal::NetworkAttachmentsRetryTraits>;
 
 using NetworkAttachmentsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -49,13 +51,14 @@ using NetworkAttachmentsLimitedErrorCountRetryPolicy =
  * The `NetworkAttachmentsConnection` object for `NetworkAttachmentsClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `NetworkAttachmentsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `NetworkAttachmentsClient`.
+ * sets in `NetworkAttachmentsClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `NetworkAttachmentsClient`.
  *
  * To create a concrete instance, see `MakeNetworkAttachmentsConnection()`.
  *
- * For mocking, see `compute_network_attachments_v1_mocks::MockNetworkAttachmentsConnection`.
+ * For mocking, see
+ * `compute_network_attachments_v1_mocks::MockNetworkAttachmentsConnection`.
  */
 class NetworkAttachmentsConnection {
  public:
@@ -63,29 +66,39 @@ class NetworkAttachmentsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>
-  AggregatedListNetworkAttachments(google::cloud::cpp::compute::networkAttachments::v1::AggregatedListNetworkAttachmentsRequest const& request);
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>
+  AggregatedListNetworkAttachments(
+      google::cloud::cpp::compute::networkAttachments::v1::
+          AggregatedListNetworkAttachmentsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteNetworkAttachments(google::cloud::cpp::compute::networkAttachments::v1::DeleteNetworkAttachmentsRequest const& request);
+  DeleteNetworkAttachments(google::cloud::cpp::compute::networkAttachments::v1::
+                               DeleteNetworkAttachmentsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
-  GetNetworkAttachments(google::cloud::cpp::compute::networkAttachments::v1::GetNetworkAttachmentsRequest const& request);
+  GetNetworkAttachments(google::cloud::cpp::compute::networkAttachments::v1::
+                            GetNetworkAttachmentsRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::networkAttachments::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::networkAttachments::v1::
+          GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertNetworkAttachments(google::cloud::cpp::compute::networkAttachments::v1::InsertNetworkAttachmentsRequest const& request);
+  InsertNetworkAttachments(google::cloud::cpp::compute::networkAttachments::v1::
+                               InsertNetworkAttachmentsRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>
-  ListNetworkAttachments(google::cloud::cpp::compute::networkAttachments::v1::ListNetworkAttachmentsRequest request);
+  ListNetworkAttachments(google::cloud::cpp::compute::networkAttachments::v1::
+                             ListNetworkAttachmentsRequest request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::networkAttachments::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::networkAttachments::v1::
+          SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::networkAttachments::v1::TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::networkAttachments::v1::
+                         TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

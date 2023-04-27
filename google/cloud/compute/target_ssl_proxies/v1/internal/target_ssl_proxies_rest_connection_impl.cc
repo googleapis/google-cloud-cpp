@@ -17,8 +17,8 @@
 // source: google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto
 
 #include "google/cloud/compute/target_ssl_proxies/v1/internal/target_ssl_proxies_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/target_ssl_proxies/v1/internal/target_ssl_proxies_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -32,70 +32,90 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TargetSslProxiesRestConnectionImpl::TargetSslProxiesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_target_ssl_proxies_v1_internal::TargetSslProxiesRestStub> stub,
+    std::shared_ptr<
+        compute_target_ssl_proxies_v1_internal::TargetSslProxiesRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        TargetSslProxiesConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      TargetSslProxiesConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetSslProxiesRestConnectionImpl::DeleteTargetSslProxies(google::cloud::cpp::compute::targetSslProxies::v1::DeleteTargetSslProxiesRequest const& request) {
+TargetSslProxiesRestConnectionImpl::DeleteTargetSslProxies(
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        DeleteTargetSslProxiesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteTargetSslProxies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::targetSslProxies::v1::DeleteTargetSslProxiesRequest const& request) {
+             google::cloud::cpp::compute::targetSslProxies::v1::
+                 DeleteTargetSslProxiesRequest const& request) {
         return stub_->DeleteTargetSslProxies(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>
-TargetSslProxiesRestConnectionImpl::GetTargetSslProxies(google::cloud::cpp::compute::targetSslProxies::v1::GetTargetSslProxiesRequest const& request) {
+TargetSslProxiesRestConnectionImpl::GetTargetSslProxies(
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        GetTargetSslProxiesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetTargetSslProxies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::targetSslProxies::v1::GetTargetSslProxiesRequest const& request) {
+             google::cloud::cpp::compute::targetSslProxies::v1::
+                 GetTargetSslProxiesRequest const& request) {
         return stub_->GetTargetSslProxies(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetSslProxiesRestConnectionImpl::InsertTargetSslProxies(google::cloud::cpp::compute::targetSslProxies::v1::InsertTargetSslProxiesRequest const& request) {
+TargetSslProxiesRestConnectionImpl::InsertTargetSslProxies(
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        InsertTargetSslProxiesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->InsertTargetSslProxies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::targetSslProxies::v1::InsertTargetSslProxiesRequest const& request) {
+             google::cloud::cpp::compute::targetSslProxies::v1::
+                 InsertTargetSslProxiesRequest const& request) {
         return stub_->InsertTargetSslProxies(rest_context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>
-TargetSslProxiesRestConnectionImpl::ListTargetSslProxies(google::cloud::cpp::compute::targetSslProxies::v1::ListTargetSslProxiesRequest request) {
+TargetSslProxiesRestConnectionImpl::ListTargetSslProxies(
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        ListTargetSslProxiesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<
+      compute_target_ssl_proxies_v1::TargetSslProxiesRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTargetSslProxies(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::targetSslProxies::v1::ListTargetSslProxiesRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::targetSslProxies::v1::
+                          ListTargetSslProxiesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::targetSslProxies::v1::ListTargetSslProxiesRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::targetSslProxies::v1::
+                       ListTargetSslProxiesRequest const& request) {
               return stub->ListTargetSslProxies(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::TargetSslProxyList r) {
-        std::vector<google::cloud::cpp::compute::v1::TargetSslProxy> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::TargetSslProxy> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -103,60 +123,75 @@ TargetSslProxiesRestConnectionImpl::ListTargetSslProxies(google::cloud::cpp::com
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetSslProxiesRestConnectionImpl::SetBackendService(google::cloud::cpp::compute::targetSslProxies::v1::SetBackendServiceRequest const& request) {
+TargetSslProxiesRestConnectionImpl::SetBackendService(
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        SetBackendServiceRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetBackendService(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::targetSslProxies::v1::SetBackendServiceRequest const& request) {
+             google::cloud::cpp::compute::targetSslProxies::v1::
+                 SetBackendServiceRequest const& request) {
         return stub_->SetBackendService(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetSslProxiesRestConnectionImpl::SetCertificateMap(google::cloud::cpp::compute::targetSslProxies::v1::SetCertificateMapRequest const& request) {
+TargetSslProxiesRestConnectionImpl::SetCertificateMap(
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        SetCertificateMapRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetCertificateMap(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::targetSslProxies::v1::SetCertificateMapRequest const& request) {
+             google::cloud::cpp::compute::targetSslProxies::v1::
+                 SetCertificateMapRequest const& request) {
         return stub_->SetCertificateMap(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetSslProxiesRestConnectionImpl::SetProxyHeader(google::cloud::cpp::compute::targetSslProxies::v1::SetProxyHeaderRequest const& request) {
+TargetSslProxiesRestConnectionImpl::SetProxyHeader(
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        SetProxyHeaderRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetProxyHeader(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::targetSslProxies::v1::SetProxyHeaderRequest const& request) {
+             google::cloud::cpp::compute::targetSslProxies::v1::
+                 SetProxyHeaderRequest const& request) {
         return stub_->SetProxyHeader(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetSslProxiesRestConnectionImpl::SetSslCertificates(google::cloud::cpp::compute::targetSslProxies::v1::SetSslCertificatesRequest const& request) {
+TargetSslProxiesRestConnectionImpl::SetSslCertificates(
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        SetSslCertificatesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetSslCertificates(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::targetSslProxies::v1::SetSslCertificatesRequest const& request) {
+             google::cloud::cpp::compute::targetSslProxies::v1::
+                 SetSslCertificatesRequest const& request) {
         return stub_->SetSslCertificates(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetSslProxiesRestConnectionImpl::SetSslPolicy(google::cloud::cpp::compute::targetSslProxies::v1::SetSslPolicyRequest const& request) {
+TargetSslProxiesRestConnectionImpl::SetSslPolicy(
+    google::cloud::cpp::compute::targetSslProxies::v1::
+        SetSslPolicyRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetSslPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::targetSslProxies::v1::SetSslPolicyRequest const& request) {
+             google::cloud::cpp::compute::targetSslProxies::v1::
+                 SetSslPolicyRequest const& request) {
         return stub_->SetSslPolicy(rest_context, request);
       },
       request, __func__);

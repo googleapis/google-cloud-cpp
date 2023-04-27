@@ -27,19 +27,21 @@ namespace compute_firewalls_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 FirewallsRestLogging::FirewallsRestLogging(
-    std::shared_ptr<FirewallsRestStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<FirewallsRestStub> child, TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsRestLogging::DeleteFirewalls(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const& request) {
+    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const& request) {
+             google::cloud::cpp::compute::firewalls::v1::
+                 DeleteFirewallsRequest const& request) {
         return child_->DeleteFirewalls(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,22 +50,25 @@ FirewallsRestLogging::DeleteFirewalls(
 StatusOr<google::cloud::cpp::compute::v1::Firewall>
 FirewallsRestLogging::GetFirewalls(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const& request) {
+    google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const& request) {
-        return child_->GetFirewalls(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&
+              request) { return child_->GetFirewalls(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsRestLogging::InsertFirewalls(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const& request) {
+    google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const& request) {
+             google::cloud::cpp::compute::firewalls::v1::
+                 InsertFirewallsRequest const& request) {
         return child_->InsertFirewalls(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -72,10 +77,12 @@ FirewallsRestLogging::InsertFirewalls(
 StatusOr<google::cloud::cpp::compute::v1::FirewallList>
 FirewallsRestLogging::ListFirewalls(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest const& request) {
+    google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest const& request) {
+             google::cloud::cpp::compute::firewalls::v1::
+                 ListFirewallsRequest const& request) {
         return child_->ListFirewalls(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -84,10 +91,12 @@ FirewallsRestLogging::ListFirewalls(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsRestLogging::PatchFirewalls(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const& request) {
+    google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const& request) {
+             google::cloud::cpp::compute::firewalls::v1::
+                 PatchFirewallsRequest const& request) {
         return child_->PatchFirewalls(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -96,10 +105,12 @@ FirewallsRestLogging::PatchFirewalls(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsRestLogging::UpdateFirewalls(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const& request) {
+    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const& request) {
+             google::cloud::cpp::compute::firewalls::v1::
+                 UpdateFirewallsRequest const& request) {
         return child_->UpdateFirewalls(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);

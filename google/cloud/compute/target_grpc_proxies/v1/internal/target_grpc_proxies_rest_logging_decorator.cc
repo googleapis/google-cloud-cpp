@@ -28,18 +28,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TargetGrpcProxiesRestLogging::TargetGrpcProxiesRestLogging(
     std::shared_ptr<TargetGrpcProxiesRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetGrpcProxiesRestLogging::DeleteTargetGrpcProxies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetGrpcProxies::v1::DeleteTargetGrpcProxiesRequest const& request) {
+    google::cloud::cpp::compute::targetGrpcProxies::v1::
+        DeleteTargetGrpcProxiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetGrpcProxies::v1::DeleteTargetGrpcProxiesRequest const& request) {
+             google::cloud::cpp::compute::targetGrpcProxies::v1::
+                 DeleteTargetGrpcProxiesRequest const& request) {
         return child_->DeleteTargetGrpcProxies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,10 +50,12 @@ TargetGrpcProxiesRestLogging::DeleteTargetGrpcProxies(
 StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
 TargetGrpcProxiesRestLogging::GetTargetGrpcProxies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetGrpcProxies::v1::GetTargetGrpcProxiesRequest const& request) {
+    google::cloud::cpp::compute::targetGrpcProxies::v1::
+        GetTargetGrpcProxiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetGrpcProxies::v1::GetTargetGrpcProxiesRequest const& request) {
+             google::cloud::cpp::compute::targetGrpcProxies::v1::
+                 GetTargetGrpcProxiesRequest const& request) {
         return child_->GetTargetGrpcProxies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -60,10 +64,12 @@ TargetGrpcProxiesRestLogging::GetTargetGrpcProxies(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetGrpcProxiesRestLogging::InsertTargetGrpcProxies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetGrpcProxies::v1::InsertTargetGrpcProxiesRequest const& request) {
+    google::cloud::cpp::compute::targetGrpcProxies::v1::
+        InsertTargetGrpcProxiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetGrpcProxies::v1::InsertTargetGrpcProxiesRequest const& request) {
+             google::cloud::cpp::compute::targetGrpcProxies::v1::
+                 InsertTargetGrpcProxiesRequest const& request) {
         return child_->InsertTargetGrpcProxies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -72,10 +78,12 @@ TargetGrpcProxiesRestLogging::InsertTargetGrpcProxies(
 StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxyList>
 TargetGrpcProxiesRestLogging::ListTargetGrpcProxies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetGrpcProxies::v1::ListTargetGrpcProxiesRequest const& request) {
+    google::cloud::cpp::compute::targetGrpcProxies::v1::
+        ListTargetGrpcProxiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetGrpcProxies::v1::ListTargetGrpcProxiesRequest const& request) {
+             google::cloud::cpp::compute::targetGrpcProxies::v1::
+                 ListTargetGrpcProxiesRequest const& request) {
         return child_->ListTargetGrpcProxies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -84,10 +92,12 @@ TargetGrpcProxiesRestLogging::ListTargetGrpcProxies(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetGrpcProxiesRestLogging::PatchTargetGrpcProxies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetGrpcProxies::v1::PatchTargetGrpcProxiesRequest const& request) {
+    google::cloud::cpp::compute::targetGrpcProxies::v1::
+        PatchTargetGrpcProxiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::targetGrpcProxies::v1::PatchTargetGrpcProxiesRequest const& request) {
+             google::cloud::cpp::compute::targetGrpcProxies::v1::
+                 PatchTargetGrpcProxiesRequest const& request) {
         return child_->PatchTargetGrpcProxies(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);

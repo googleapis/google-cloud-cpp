@@ -38,28 +38,35 @@ class RegionCommitmentsRestLogging : public RegionCommitmentsRestStub {
  public:
   ~RegionCommitmentsRestLogging() override = default;
   RegionCommitmentsRestLogging(std::shared_ptr<RegionCommitmentsRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                               TracingOptions tracing_options,
+                               std::set<std::string> components);
 
-  StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList> AggregatedListRegionCommitments(
+  StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
+  AggregatedListRegionCommitments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionCommitments::v1::AggregatedListRegionCommitmentsRequest const& request) override;
+      google::cloud::cpp::compute::regionCommitments::v1::
+          AggregatedListRegionCommitmentsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Commitment> GetRegionCommitments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionCommitments::v1::GetRegionCommitmentsRequest const& request) override;
+      google::cloud::cpp::compute::regionCommitments::v1::
+          GetRegionCommitmentsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionCommitments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionCommitments::v1::InsertRegionCommitmentsRequest const& request) override;
+      google::cloud::cpp::compute::regionCommitments::v1::
+          InsertRegionCommitmentsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::CommitmentList> ListRegionCommitments(
+  StatusOr<google::cloud::cpp::compute::v1::CommitmentList>
+  ListRegionCommitments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionCommitments::v1::ListRegionCommitmentsRequest const& request) override;
+      google::cloud::cpp::compute::regionCommitments::v1::
+          ListRegionCommitmentsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRegionCommitments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionCommitments::v1::UpdateRegionCommitmentsRequest const& request) override;
+      google::cloud::cpp::compute::regionCommitments::v1::
+          UpdateRegionCommitmentsRequest const& request) override;
 
  private:
   std::shared_ptr<RegionCommitmentsRestStub> child_;

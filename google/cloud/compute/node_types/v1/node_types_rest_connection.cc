@@ -17,11 +17,11 @@
 // source: google/cloud/compute/node_types/v1/node_types.proto
 
 #include "google/cloud/compute/node_types/v1/node_types_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/node_types/v1/internal/node_types_option_defaults.h"
 #include "google/cloud/compute/node_types/v1/internal/node_types_rest_connection_impl.h"
 #include "google/cloud/compute/node_types/v1/internal/node_types_rest_stub_factory.h"
 #include "google/cloud/compute/node_types/v1/node_types_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include <memory>
@@ -34,15 +34,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<NodeTypesConnection> MakeNodeTypesConnectionRest(
     ExperimentalTag, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList,
-      NodeTypesPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 NodeTypesPolicyOptionList>(options, __func__);
   options = compute_node_types_v1_internal::NodeTypesDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_node_types_v1_internal::CreateDefaultNodeTypesRestStub(
-    options);
-  return std::make_shared<compute_node_types_v1_internal::NodeTypesRestConnectionImpl>(
+  auto stub =
+      compute_node_types_v1_internal::CreateDefaultNodeTypesRestStub(options);
+  return std::make_shared<
+      compute_node_types_v1_internal::NodeTypesRestConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 

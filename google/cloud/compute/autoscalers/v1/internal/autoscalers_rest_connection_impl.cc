@@ -17,8 +17,8 @@
 // source: google/cloud/compute/autoscalers/v1/autoscalers.proto
 
 #include "google/cloud/compute/autoscalers/v1/internal/autoscalers_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/autoscalers/v1/internal/autoscalers_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -34,80 +34,101 @@ AutoscalersRestConnectionImpl::AutoscalersRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<compute_autoscalers_v1_internal::AutoscalersRestStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        AutoscalersConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      AutoscalersConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>
-AutoscalersRestConnectionImpl::AggregatedListAutoscalers(google::cloud::cpp::compute::autoscalers::v1::AggregatedListAutoscalersRequest const& request) {
+AutoscalersRestConnectionImpl::AggregatedListAutoscalers(
+    google::cloud::cpp::compute::autoscalers::v1::
+        AggregatedListAutoscalersRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AggregatedListAutoscalers(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::autoscalers::v1::AggregatedListAutoscalersRequest const& request) {
+             google::cloud::cpp::compute::autoscalers::v1::
+                 AggregatedListAutoscalersRequest const& request) {
         return stub_->AggregatedListAutoscalers(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-AutoscalersRestConnectionImpl::DeleteAutoscalers(google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalersRequest const& request) {
+AutoscalersRestConnectionImpl::DeleteAutoscalers(
+    google::cloud::cpp::compute::autoscalers::v1::
+        DeleteAutoscalersRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteAutoscalers(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalersRequest const& request) {
+             google::cloud::cpp::compute::autoscalers::v1::
+                 DeleteAutoscalersRequest const& request) {
         return stub_->DeleteAutoscalers(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
-AutoscalersRestConnectionImpl::GetAutoscalers(google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest const& request) {
+AutoscalersRestConnectionImpl::GetAutoscalers(
+    google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetAutoscalers(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest const& request) {
+             google::cloud::cpp::compute::autoscalers::v1::
+                 GetAutoscalersRequest const& request) {
         return stub_->GetAutoscalers(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-AutoscalersRestConnectionImpl::InsertAutoscalers(google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalersRequest const& request) {
+AutoscalersRestConnectionImpl::InsertAutoscalers(
+    google::cloud::cpp::compute::autoscalers::v1::
+        InsertAutoscalersRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->InsertAutoscalers(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalersRequest const& request) {
+             google::cloud::cpp::compute::autoscalers::v1::
+                 InsertAutoscalersRequest const& request) {
         return stub_->InsertAutoscalers(rest_context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
-AutoscalersRestConnectionImpl::ListAutoscalers(google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest request) {
+AutoscalersRestConnectionImpl::ListAutoscalers(
+    google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest
+        request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_autoscalers_v1::AutoscalersRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<compute_autoscalers_v1::AutoscalersRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListAutoscalers(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::Autoscaler>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::Autoscaler>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::autoscalers::v1::
+                          ListAutoscalersRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::autoscalers::v1::
+                       ListAutoscalersRequest const& request) {
               return stub->ListAutoscalers(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::AutoscalerList r) {
-        std::vector<google::cloud::cpp::compute::v1::Autoscaler> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::Autoscaler> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -115,24 +136,30 @@ AutoscalersRestConnectionImpl::ListAutoscalers(google::cloud::cpp::compute::auto
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-AutoscalersRestConnectionImpl::PatchAutoscalers(google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalersRequest const& request) {
+AutoscalersRestConnectionImpl::PatchAutoscalers(
+    google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalersRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->PatchAutoscalers(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalersRequest const& request) {
+             google::cloud::cpp::compute::autoscalers::v1::
+                 PatchAutoscalersRequest const& request) {
         return stub_->PatchAutoscalers(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-AutoscalersRestConnectionImpl::UpdateAutoscalers(google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalersRequest const& request) {
+AutoscalersRestConnectionImpl::UpdateAutoscalers(
+    google::cloud::cpp::compute::autoscalers::v1::
+        UpdateAutoscalersRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateAutoscalers(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalersRequest const& request) {
+             google::cloud::cpp::compute::autoscalers::v1::
+                 UpdateAutoscalersRequest const& request) {
         return stub_->UpdateAutoscalers(rest_context, request);
       },
       request, __func__);

@@ -42,37 +42,53 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockRegionUrlMapsConnection : public compute_region_url_maps_v1::RegionUrlMapsConnection {
+class MockRegionUrlMapsConnection
+    : public compute_region_url_maps_v1::RegionUrlMapsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteRegionUrlMaps,
-  (google::cloud::cpp::compute::regionUrlMaps::v1::DeleteRegionUrlMapsRequest const& request), (override));
+              DeleteRegionUrlMaps,
+              (google::cloud::cpp::compute::regionUrlMaps::v1::
+                   DeleteRegionUrlMapsRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::UrlMap>,
-  GetRegionUrlMaps,
-  (google::cloud::cpp::compute::regionUrlMaps::v1::GetRegionUrlMapsRequest const& request), (override));
+              GetRegionUrlMaps,
+              (google::cloud::cpp::compute::regionUrlMaps::v1::
+                   GetRegionUrlMapsRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertRegionUrlMaps,
-  (google::cloud::cpp::compute::regionUrlMaps::v1::InsertRegionUrlMapsRequest const& request), (override));
+              InsertRegionUrlMaps,
+              (google::cloud::cpp::compute::regionUrlMaps::v1::
+                   InsertRegionUrlMapsRequest const& request),
+              (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::UrlMap>,
-  ListRegionUrlMaps,
-  (google::cloud::cpp::compute::regionUrlMaps::v1::ListRegionUrlMapsRequest request), (override));
+  MOCK_METHOD(
+      StreamRange<google::cloud::cpp::compute::v1::UrlMap>, ListRegionUrlMaps,
+      (google::cloud::cpp::compute::regionUrlMaps::v1::ListRegionUrlMapsRequest
+           request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  PatchRegionUrlMaps,
-  (google::cloud::cpp::compute::regionUrlMaps::v1::PatchRegionUrlMapsRequest const& request), (override));
+              PatchRegionUrlMaps,
+              (google::cloud::cpp::compute::regionUrlMaps::v1::
+                   PatchRegionUrlMapsRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  UpdateRegionUrlMaps,
-  (google::cloud::cpp::compute::regionUrlMaps::v1::UpdateRegionUrlMapsRequest const& request), (override));
+              UpdateRegionUrlMaps,
+              (google::cloud::cpp::compute::regionUrlMaps::v1::
+                   UpdateRegionUrlMapsRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>,
-  Validate,
-  (google::cloud::cpp::compute::regionUrlMaps::v1::ValidateRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>,
+      Validate,
+      (google::cloud::cpp::compute::regionUrlMaps::v1::ValidateRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

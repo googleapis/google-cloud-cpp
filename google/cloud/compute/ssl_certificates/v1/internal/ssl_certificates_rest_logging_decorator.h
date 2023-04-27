@@ -38,28 +38,34 @@ class SslCertificatesRestLogging : public SslCertificatesRestStub {
  public:
   ~SslCertificatesRestLogging() override = default;
   SslCertificatesRestLogging(std::shared_ptr<SslCertificatesRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                             TracingOptions tracing_options,
+                             std::set<std::string> components);
 
-  StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList> AggregatedListSslCertificates(
+  StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
+  AggregatedListSslCertificates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslCertificates::v1::AggregatedListSslCertificatesRequest const& request) override;
+      google::cloud::cpp::compute::sslCertificates::v1::
+          AggregatedListSslCertificatesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslCertificates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslCertificates::v1::DeleteSslCertificatesRequest const& request) override;
+      google::cloud::cpp::compute::sslCertificates::v1::
+          DeleteSslCertificatesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslCertificates::v1::GetSslCertificatesRequest const& request) override;
+      google::cloud::cpp::compute::sslCertificates::v1::
+          GetSslCertificatesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslCertificates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslCertificates::v1::InsertSslCertificatesRequest const& request) override;
+      google::cloud::cpp::compute::sslCertificates::v1::
+          InsertSslCertificatesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SslCertificateList> ListSslCertificates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslCertificates::v1::ListSslCertificatesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::SslCertificateList>
+  ListSslCertificates(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::sslCertificates::v1::
+                          ListSslCertificatesRequest const& request) override;
 
  private:
   std::shared_ptr<SslCertificatesRestStub> child_;

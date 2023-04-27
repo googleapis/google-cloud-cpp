@@ -38,60 +38,74 @@ class NodeGroupsRestLogging : public NodeGroupsRestStub {
  public:
   ~NodeGroupsRestLogging() override = default;
   NodeGroupsRestLogging(std::shared_ptr<NodeGroupsRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                        TracingOptions tracing_options,
+                        std::set<std::string> components);
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddNodes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::AddNodesRequest const& request) override;
+      google::cloud::cpp::compute::nodeGroups::v1::AddNodesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList> AggregatedListNodeGroups(
+  StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
+  AggregatedListNodeGroups(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::AggregatedListNodeGroupsRequest const& request) override;
+      google::cloud::cpp::compute::nodeGroups::v1::
+          AggregatedListNodeGroupsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeGroups(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::DeleteNodeGroupsRequest const& request) override;
+      google::cloud::cpp::compute::nodeGroups::v1::
+          DeleteNodeGroupsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::DeleteNodesRequest const& request) override;
+      google::cloud::cpp::compute::nodeGroups::v1::DeleteNodesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroups(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::GetNodeGroupsRequest const& request) override;
+      google::cloud::cpp::compute::nodeGroups::v1::GetNodeGroupsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::GetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::nodeGroups::v1::GetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeGroups(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::InsertNodeGroupsRequest const& request) override;
+      google::cloud::cpp::compute::nodeGroups::v1::
+          InsertNodeGroupsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeGroupList> ListNodeGroups(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::ListNodeGroupsRequest const& request) override;
+      google::cloud::cpp::compute::nodeGroups::v1::ListNodeGroupsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeGroupsListNodes> ListNodes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest const& request) override;
+      google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNodeGroups(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::PatchNodeGroupsRequest const& request) override;
+      google::cloud::cpp::compute::nodeGroups::v1::PatchNodeGroupsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::SetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::nodeGroups::v1::SetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetNodeTemplate(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::SetNodeTemplateRequest const& request) override;
+      google::cloud::cpp::compute::nodeGroups::v1::SetNodeTemplateRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeGroups::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::nodeGroups::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<NodeGroupsRestStub> child_;

@@ -42,33 +42,47 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockVpnTunnelsConnection : public compute_vpn_tunnels_v1::VpnTunnelsConnection {
+class MockVpnTunnelsConnection
+    : public compute_vpn_tunnels_v1::VpnTunnelsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::VpnTunnelAggregatedList>,
-  AggregatedListVpnTunnels,
-  (google::cloud::cpp::compute::vpnTunnels::v1::AggregatedListVpnTunnelsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::VpnTunnelAggregatedList>,
+      AggregatedListVpnTunnels,
+      (google::cloud::cpp::compute::vpnTunnels::v1::
+           AggregatedListVpnTunnelsRequest const& request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteVpnTunnels,
-  (google::cloud::cpp::compute::vpnTunnels::v1::DeleteVpnTunnelsRequest const& request), (override));
+              DeleteVpnTunnels,
+              (google::cloud::cpp::compute::vpnTunnels::v1::
+                   DeleteVpnTunnelsRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>,
-  GetVpnTunnels,
-  (google::cloud::cpp::compute::vpnTunnels::v1::GetVpnTunnelsRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertVpnTunnels,
-  (google::cloud::cpp::compute::vpnTunnels::v1::InsertVpnTunnelsRequest const& request), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::VpnTunnel>,
-  ListVpnTunnels,
-  (google::cloud::cpp::compute::vpnTunnels::v1::ListVpnTunnelsRequest request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>, GetVpnTunnels,
+      (google::cloud::cpp::compute::vpnTunnels::v1::GetVpnTunnelsRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  SetLabels,
-  (google::cloud::cpp::compute::vpnTunnels::v1::SetLabelsRequest const& request), (override));
+              InsertVpnTunnels,
+              (google::cloud::cpp::compute::vpnTunnels::v1::
+                   InsertVpnTunnelsRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      StreamRange<google::cloud::cpp::compute::v1::VpnTunnel>, ListVpnTunnels,
+      (google::cloud::cpp::compute::vpnTunnels::v1::ListVpnTunnelsRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, SetLabels,
+      (google::cloud::cpp::compute::vpnTunnels::v1::SetLabelsRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

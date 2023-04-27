@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_AUTOSCALERS_V1_REGION_AUTOSCALERS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_AUTOSCALERS_V1_REGION_AUTOSCALERS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_autoscalers/v1/internal/region_autoscalers_retry_traits.h"
 #include "google/cloud/compute/region_autoscalers/v1/region_autoscalers_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -35,11 +35,13 @@ namespace cloud {
 namespace compute_region_autoscalers_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using RegionAutoscalersRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_region_autoscalers_v1_internal::RegionAutoscalersRetryTraits>;
+using RegionAutoscalersRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_region_autoscalers_v1_internal::RegionAutoscalersRetryTraits>;
 
-using RegionAutoscalersLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_region_autoscalers_v1_internal::RegionAutoscalersRetryTraits>;
+using RegionAutoscalersLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_region_autoscalers_v1_internal::RegionAutoscalersRetryTraits>;
 
 using RegionAutoscalersLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -49,13 +51,14 @@ using RegionAutoscalersLimitedErrorCountRetryPolicy =
  * The `RegionAutoscalersConnection` object for `RegionAutoscalersClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `RegionAutoscalersClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `RegionAutoscalersClient`.
+ * sets in `RegionAutoscalersClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `RegionAutoscalersClient`.
  *
  * To create a concrete instance, see `MakeRegionAutoscalersConnection()`.
  *
- * For mocking, see `compute_region_autoscalers_v1_mocks::MockRegionAutoscalersConnection`.
+ * For mocking, see
+ * `compute_region_autoscalers_v1_mocks::MockRegionAutoscalersConnection`.
  */
 class RegionAutoscalersConnection {
  public:
@@ -64,22 +67,28 @@ class RegionAutoscalersConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::DeleteRegionAutoscalersRequest const& request);
+  DeleteRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::
+                              DeleteRegionAutoscalersRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
-  GetRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::GetRegionAutoscalersRequest const& request);
+  GetRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::
+                           GetRegionAutoscalersRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::InsertRegionAutoscalersRequest const& request);
+  InsertRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::
+                              InsertRegionAutoscalersRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
-  ListRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::ListRegionAutoscalersRequest request);
+  ListRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::
+                            ListRegionAutoscalersRequest request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::PatchRegionAutoscalersRequest const& request);
+  PatchRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::
+                             PatchRegionAutoscalersRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::UpdateRegionAutoscalersRequest const& request);
+  UpdateRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::
+                              UpdateRegionAutoscalersRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

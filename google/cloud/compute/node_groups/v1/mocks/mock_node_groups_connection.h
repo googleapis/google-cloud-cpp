@@ -42,61 +42,89 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockNodeGroupsConnection : public compute_node_groups_v1::NodeGroupsConnection {
+class MockNodeGroupsConnection
+    : public compute_node_groups_v1::NodeGroupsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  AddNodes,
-  (google::cloud::cpp::compute::nodeGroups::v1::AddNodesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, AddNodes,
+      (google::cloud::cpp::compute::nodeGroups::v1::AddNodesRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>,
-  AggregatedListNodeGroups,
-  (google::cloud::cpp::compute::nodeGroups::v1::AggregatedListNodeGroupsRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteNodeGroups,
-  (google::cloud::cpp::compute::nodeGroups::v1::DeleteNodeGroupsRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteNodes,
-  (google::cloud::cpp::compute::nodeGroups::v1::DeleteNodesRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::NodeGroup>,
-  GetNodeGroups,
-  (google::cloud::cpp::compute::nodeGroups::v1::GetNodeGroupsRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  GetIamPolicy,
-  (google::cloud::cpp::compute::nodeGroups::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>,
+      AggregatedListNodeGroups,
+      (google::cloud::cpp::compute::nodeGroups::v1::
+           AggregatedListNodeGroupsRequest const& request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertNodeGroups,
-  (google::cloud::cpp::compute::nodeGroups::v1::InsertNodeGroupsRequest const& request), (override));
+              DeleteNodeGroups,
+              (google::cloud::cpp::compute::nodeGroups::v1::
+                   DeleteNodeGroupsRequest const& request),
+              (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::NodeGroup>,
-  ListNodeGroups,
-  (google::cloud::cpp::compute::nodeGroups::v1::ListNodeGroupsRequest request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteNodes,
+      (google::cloud::cpp::compute::nodeGroups::v1::DeleteNodesRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode>,
-  ListNodes,
-  (google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::NodeGroup>, GetNodeGroups,
+      (google::cloud::cpp::compute::nodeGroups::v1::GetNodeGroupsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+      (google::cloud::cpp::compute::nodeGroups::v1::GetIamPolicyRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  PatchNodeGroups,
-  (google::cloud::cpp::compute::nodeGroups::v1::PatchNodeGroupsRequest const& request), (override));
+              InsertNodeGroups,
+              (google::cloud::cpp::compute::nodeGroups::v1::
+                   InsertNodeGroupsRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  SetIamPolicy,
-  (google::cloud::cpp::compute::nodeGroups::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(
+      StreamRange<google::cloud::cpp::compute::v1::NodeGroup>, ListNodeGroups,
+      (google::cloud::cpp::compute::nodeGroups::v1::ListNodeGroupsRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode>, ListNodes,
+      (google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  SetNodeTemplate,
-  (google::cloud::cpp::compute::nodeGroups::v1::SetNodeTemplateRequest const& request), (override));
+              PatchNodeGroups,
+              (google::cloud::cpp::compute::nodeGroups::v1::
+                   PatchNodeGroupsRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
-  TestIamPermissions,
-  (google::cloud::cpp::compute::nodeGroups::v1::TestIamPermissionsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+      (google::cloud::cpp::compute::nodeGroups::v1::SetIamPolicyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              SetNodeTemplate,
+              (google::cloud::cpp::compute::nodeGroups::v1::
+                   SetNodeTemplateRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      TestIamPermissions,
+      (google::cloud::cpp::compute::nodeGroups::v1::
+           TestIamPermissionsRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

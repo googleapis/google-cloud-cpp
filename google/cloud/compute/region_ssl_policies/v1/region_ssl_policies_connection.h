@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_SSL_POLICIES_V1_REGION_SSL_POLICIES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_SSL_POLICIES_V1_REGION_SSL_POLICIES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_ssl_policies/v1/internal/region_ssl_policies_retry_traits.h"
 #include "google/cloud/compute/region_ssl_policies/v1/region_ssl_policies_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -35,11 +35,13 @@ namespace cloud {
 namespace compute_region_ssl_policies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using RegionSslPoliciesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_region_ssl_policies_v1_internal::RegionSslPoliciesRetryTraits>;
+using RegionSslPoliciesRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_region_ssl_policies_v1_internal::RegionSslPoliciesRetryTraits>;
 
-using RegionSslPoliciesLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_region_ssl_policies_v1_internal::RegionSslPoliciesRetryTraits>;
+using RegionSslPoliciesLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_region_ssl_policies_v1_internal::RegionSslPoliciesRetryTraits>;
 
 using RegionSslPoliciesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -49,13 +51,14 @@ using RegionSslPoliciesLimitedErrorCountRetryPolicy =
  * The `RegionSslPoliciesConnection` object for `RegionSslPoliciesClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `RegionSslPoliciesClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `RegionSslPoliciesClient`.
+ * sets in `RegionSslPoliciesClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `RegionSslPoliciesClient`.
  *
  * To create a concrete instance, see `MakeRegionSslPoliciesConnection()`.
  *
- * For mocking, see `compute_region_ssl_policies_v1_mocks::MockRegionSslPoliciesConnection`.
+ * For mocking, see
+ * `compute_region_ssl_policies_v1_mocks::MockRegionSslPoliciesConnection`.
  */
 class RegionSslPoliciesConnection {
  public:
@@ -64,22 +67,29 @@ class RegionSslPoliciesConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteRegionSslPolicies(google::cloud::cpp::compute::regionSslPolicies::v1::DeleteRegionSslPoliciesRequest const& request);
+  DeleteRegionSslPolicies(google::cloud::cpp::compute::regionSslPolicies::v1::
+                              DeleteRegionSslPoliciesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-  GetRegionSslPolicies(google::cloud::cpp::compute::regionSslPolicies::v1::GetRegionSslPoliciesRequest const& request);
+  GetRegionSslPolicies(google::cloud::cpp::compute::regionSslPolicies::v1::
+                           GetRegionSslPoliciesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertRegionSslPolicies(google::cloud::cpp::compute::regionSslPolicies::v1::InsertRegionSslPoliciesRequest const& request);
+  InsertRegionSslPolicies(google::cloud::cpp::compute::regionSslPolicies::v1::
+                              InsertRegionSslPoliciesRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
-  ListRegionSslPolicies(google::cloud::cpp::compute::regionSslPolicies::v1::ListRegionSslPoliciesRequest request);
+  ListRegionSslPolicies(google::cloud::cpp::compute::regionSslPolicies::v1::
+                            ListRegionSslPoliciesRequest request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
-  ListAvailableFeatures(google::cloud::cpp::compute::regionSslPolicies::v1::ListAvailableFeaturesRequest const& request);
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+  ListAvailableFeatures(google::cloud::cpp::compute::regionSslPolicies::v1::
+                            ListAvailableFeaturesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchRegionSslPolicies(google::cloud::cpp::compute::regionSslPolicies::v1::PatchRegionSslPoliciesRequest const& request);
+  PatchRegionSslPolicies(google::cloud::cpp::compute::regionSslPolicies::v1::
+                             PatchRegionSslPoliciesRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

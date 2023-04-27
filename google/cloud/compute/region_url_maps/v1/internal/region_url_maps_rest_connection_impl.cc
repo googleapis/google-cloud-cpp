@@ -17,8 +17,8 @@
 // source: google/cloud/compute/region_url_maps/v1/region_url_maps.proto
 
 #include "google/cloud/compute/region_url_maps/v1/internal/region_url_maps_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/region_url_maps/v1/internal/region_url_maps_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -32,70 +32,89 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionUrlMapsRestConnectionImpl::RegionUrlMapsRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_region_url_maps_v1_internal::RegionUrlMapsRestStub> stub,
+    std::shared_ptr<compute_region_url_maps_v1_internal::RegionUrlMapsRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        RegionUrlMapsConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      RegionUrlMapsConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionUrlMapsRestConnectionImpl::DeleteRegionUrlMaps(google::cloud::cpp::compute::regionUrlMaps::v1::DeleteRegionUrlMapsRequest const& request) {
+RegionUrlMapsRestConnectionImpl::DeleteRegionUrlMaps(
+    google::cloud::cpp::compute::regionUrlMaps::v1::
+        DeleteRegionUrlMapsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteRegionUrlMaps(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::regionUrlMaps::v1::DeleteRegionUrlMapsRequest const& request) {
+             google::cloud::cpp::compute::regionUrlMaps::v1::
+                 DeleteRegionUrlMapsRequest const& request) {
         return stub_->DeleteRegionUrlMaps(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMap>
-RegionUrlMapsRestConnectionImpl::GetRegionUrlMaps(google::cloud::cpp::compute::regionUrlMaps::v1::GetRegionUrlMapsRequest const& request) {
+RegionUrlMapsRestConnectionImpl::GetRegionUrlMaps(
+    google::cloud::cpp::compute::regionUrlMaps::v1::
+        GetRegionUrlMapsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetRegionUrlMaps(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::regionUrlMaps::v1::GetRegionUrlMapsRequest const& request) {
+             google::cloud::cpp::compute::regionUrlMaps::v1::
+                 GetRegionUrlMapsRequest const& request) {
         return stub_->GetRegionUrlMaps(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionUrlMapsRestConnectionImpl::InsertRegionUrlMaps(google::cloud::cpp::compute::regionUrlMaps::v1::InsertRegionUrlMapsRequest const& request) {
+RegionUrlMapsRestConnectionImpl::InsertRegionUrlMaps(
+    google::cloud::cpp::compute::regionUrlMaps::v1::
+        InsertRegionUrlMapsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->InsertRegionUrlMaps(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::regionUrlMaps::v1::InsertRegionUrlMapsRequest const& request) {
+             google::cloud::cpp::compute::regionUrlMaps::v1::
+                 InsertRegionUrlMapsRequest const& request) {
         return stub_->InsertRegionUrlMaps(rest_context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::UrlMap>
-RegionUrlMapsRestConnectionImpl::ListRegionUrlMaps(google::cloud::cpp::compute::regionUrlMaps::v1::ListRegionUrlMapsRequest request) {
+RegionUrlMapsRestConnectionImpl::ListRegionUrlMaps(
+    google::cloud::cpp::compute::regionUrlMaps::v1::ListRegionUrlMapsRequest
+        request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_region_url_maps_v1::RegionUrlMapsRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<
+      compute_region_url_maps_v1::RegionUrlMapsRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListRegionUrlMaps(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::UrlMap>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::UrlMap>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::regionUrlMaps::v1::ListRegionUrlMapsRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::regionUrlMaps::v1::
+                          ListRegionUrlMapsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::regionUrlMaps::v1::ListRegionUrlMapsRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::regionUrlMaps::v1::
+                       ListRegionUrlMapsRequest const& request) {
               return stub->ListRegionUrlMaps(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::UrlMapList r) {
-        std::vector<google::cloud::cpp::compute::v1::UrlMap> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::UrlMap> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -103,38 +122,45 @@ RegionUrlMapsRestConnectionImpl::ListRegionUrlMaps(google::cloud::cpp::compute::
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionUrlMapsRestConnectionImpl::PatchRegionUrlMaps(google::cloud::cpp::compute::regionUrlMaps::v1::PatchRegionUrlMapsRequest const& request) {
+RegionUrlMapsRestConnectionImpl::PatchRegionUrlMaps(
+    google::cloud::cpp::compute::regionUrlMaps::v1::
+        PatchRegionUrlMapsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->PatchRegionUrlMaps(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::regionUrlMaps::v1::PatchRegionUrlMapsRequest const& request) {
+             google::cloud::cpp::compute::regionUrlMaps::v1::
+                 PatchRegionUrlMapsRequest const& request) {
         return stub_->PatchRegionUrlMaps(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionUrlMapsRestConnectionImpl::UpdateRegionUrlMaps(google::cloud::cpp::compute::regionUrlMaps::v1::UpdateRegionUrlMapsRequest const& request) {
+RegionUrlMapsRestConnectionImpl::UpdateRegionUrlMaps(
+    google::cloud::cpp::compute::regionUrlMaps::v1::
+        UpdateRegionUrlMapsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateRegionUrlMaps(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::regionUrlMaps::v1::UpdateRegionUrlMapsRequest const& request) {
+             google::cloud::cpp::compute::regionUrlMaps::v1::
+                 UpdateRegionUrlMapsRequest const& request) {
         return stub_->UpdateRegionUrlMaps(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
-RegionUrlMapsRestConnectionImpl::Validate(google::cloud::cpp::compute::regionUrlMaps::v1::ValidateRequest const& request) {
+RegionUrlMapsRestConnectionImpl::Validate(
+    google::cloud::cpp::compute::regionUrlMaps::v1::ValidateRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->Validate(request),
-      [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::regionUrlMaps::v1::ValidateRequest const& request) {
-        return stub_->Validate(rest_context, request);
-      },
+      retry_policy(), backoff_policy(), idempotency_policy()->Validate(request),
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::regionUrlMaps::v1::ValidateRequest const&
+              request) { return stub_->Validate(rest_context, request); },
       request, __func__);
 }
 

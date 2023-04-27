@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/license_codes/v1/license_codes.proto
 
-
 #include "google/cloud/compute/license_codes/v1/internal/license_codes_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,12 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 LicenseCodesRestMetadata::LicenseCodesRestMetadata(
     std::shared_ptr<LicenseCodesRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
 LicenseCodesRestMetadata::GetLicenseCodes(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::licenseCodes::v1::GetLicenseCodesRequest const& request) {
+    google::cloud::cpp::compute::licenseCodes::v1::GetLicenseCodesRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->GetLicenseCodes(rest_context, request);
 }
@@ -47,33 +48,34 @@ LicenseCodesRestMetadata::GetLicenseCodes(
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 LicenseCodesRestMetadata::TestIamPermissions(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::licenseCodes::v1::TestIamPermissionsRequest const& request) {
+    google::cloud::cpp::compute::licenseCodes::v1::
+        TestIamPermissionsRequest const& request) {
   SetMetadata(rest_context);
   return child_->TestIamPermissions(rest_context, request);
 }
 
 void LicenseCodesRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+    rest_internal::RestContext& rest_context,
+    std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

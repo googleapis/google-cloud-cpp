@@ -32,9 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Application developers may want to test their code with simulated responses,
  * including errors, from an object of type `TargetVpnGatewaysClient`. To do so,
- * construct an object of type `TargetVpnGatewaysClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * construct an object of type `TargetVpnGatewaysClient` with an instance of
+ * this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,33 +42,46 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockTargetVpnGatewaysConnection : public compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection {
+class MockTargetVpnGatewaysConnection
+    : public compute_target_vpn_gateways_v1::TargetVpnGatewaysConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>,
-  AggregatedListTargetVpnGateways,
-  (google::cloud::cpp::compute::targetVpnGateways::v1::AggregatedListTargetVpnGatewaysRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>,
+      AggregatedListTargetVpnGateways,
+      (google::cloud::cpp::compute::targetVpnGateways::v1::
+           AggregatedListTargetVpnGatewaysRequest const& request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteTargetVpnGateways,
-  (google::cloud::cpp::compute::targetVpnGateways::v1::DeleteTargetVpnGatewaysRequest const& request), (override));
+              DeleteTargetVpnGateways,
+              (google::cloud::cpp::compute::targetVpnGateways::v1::
+                   DeleteTargetVpnGatewaysRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>,
-  GetTargetVpnGateways,
-  (google::cloud::cpp::compute::targetVpnGateways::v1::GetTargetVpnGatewaysRequest const& request), (override));
+              GetTargetVpnGateways,
+              (google::cloud::cpp::compute::targetVpnGateways::v1::
+                   GetTargetVpnGatewaysRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertTargetVpnGateways,
-  (google::cloud::cpp::compute::targetVpnGateways::v1::InsertTargetVpnGatewaysRequest const& request), (override));
+              InsertTargetVpnGateways,
+              (google::cloud::cpp::compute::targetVpnGateways::v1::
+                   InsertTargetVpnGatewaysRequest const& request),
+              (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::TargetVpnGateway>,
-  ListTargetVpnGateways,
-  (google::cloud::cpp::compute::targetVpnGateways::v1::ListTargetVpnGatewaysRequest request), (override));
+              ListTargetVpnGateways,
+              (google::cloud::cpp::compute::targetVpnGateways::v1::
+                   ListTargetVpnGatewaysRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  SetLabels,
-  (google::cloud::cpp::compute::targetVpnGateways::v1::SetLabelsRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, SetLabels,
+              (google::cloud::cpp::compute::targetVpnGateways::v1::
+                   SetLabelsRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -34,24 +34,33 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options TargetGrpcProxiesDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_TARGET_GRPC_PROXIES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_TARGET_GRPC_PROXIES_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_TARGET_GRPC_PROXIES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_TARGET_GRPC_PROXIES_AUTHORITY",
       "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
-  if (!options.has<compute_target_grpc_proxies_v1::TargetGrpcProxiesRetryPolicyOption>()) {
-    options.set<compute_target_grpc_proxies_v1::TargetGrpcProxiesRetryPolicyOption>(
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  if (!options.has<compute_target_grpc_proxies_v1::
+                       TargetGrpcProxiesRetryPolicyOption>()) {
+    options.set<
+        compute_target_grpc_proxies_v1::TargetGrpcProxiesRetryPolicyOption>(
         compute_target_grpc_proxies_v1::TargetGrpcProxiesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_target_grpc_proxies_v1::TargetGrpcProxiesBackoffPolicyOption>()) {
-    options.set<compute_target_grpc_proxies_v1::TargetGrpcProxiesBackoffPolicyOption>(
+  if (!options.has<compute_target_grpc_proxies_v1::
+                       TargetGrpcProxiesBackoffPolicyOption>()) {
+    options.set<
+        compute_target_grpc_proxies_v1::TargetGrpcProxiesBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
-  if (!options.has<compute_target_grpc_proxies_v1::TargetGrpcProxiesConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_target_grpc_proxies_v1::TargetGrpcProxiesConnectionIdempotencyPolicyOption>(
-        compute_target_grpc_proxies_v1::MakeDefaultTargetGrpcProxiesConnectionIdempotencyPolicy());
+  if (!options.has<compute_target_grpc_proxies_v1::
+                       TargetGrpcProxiesConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_target_grpc_proxies_v1::
+                    TargetGrpcProxiesConnectionIdempotencyPolicyOption>(
+        compute_target_grpc_proxies_v1::
+            MakeDefaultTargetGrpcProxiesConnectionIdempotencyPolicy());
   }
 
   return options;

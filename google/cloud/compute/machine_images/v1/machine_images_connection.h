@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_MACHINE_IMAGES_V1_MACHINE_IMAGES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_MACHINE_IMAGES_V1_MACHINE_IMAGES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/machine_images/v1/internal/machine_images_retry_traits.h"
 #include "google/cloud/compute/machine_images/v1/machine_images_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -35,11 +35,13 @@ namespace cloud {
 namespace compute_machine_images_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using MachineImagesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_machine_images_v1_internal::MachineImagesRetryTraits>;
+using MachineImagesRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_machine_images_v1_internal::MachineImagesRetryTraits>;
 
-using MachineImagesLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_machine_images_v1_internal::MachineImagesRetryTraits>;
+using MachineImagesLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_machine_images_v1_internal::MachineImagesRetryTraits>;
 
 using MachineImagesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -55,7 +57,8 @@ using MachineImagesLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeMachineImagesConnection()`.
  *
- * For mocking, see `compute_machine_images_v1_mocks::MockMachineImagesConnection`.
+ * For mocking, see
+ * `compute_machine_images_v1_mocks::MockMachineImagesConnection`.
  */
 class MachineImagesConnection {
  public:
@@ -64,25 +67,33 @@ class MachineImagesConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteMachineImages(google::cloud::cpp::compute::machineImages::v1::DeleteMachineImagesRequest const& request);
+  DeleteMachineImages(google::cloud::cpp::compute::machineImages::v1::
+                          DeleteMachineImagesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::MachineImage>
-  GetMachineImages(google::cloud::cpp::compute::machineImages::v1::GetMachineImagesRequest const& request);
+  GetMachineImages(google::cloud::cpp::compute::machineImages::v1::
+                       GetMachineImagesRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::machineImages::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::machineImages::v1::GetIamPolicyRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertMachineImages(google::cloud::cpp::compute::machineImages::v1::InsertMachineImagesRequest const& request);
+  InsertMachineImages(google::cloud::cpp::compute::machineImages::v1::
+                          InsertMachineImagesRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::MachineImage>
-  ListMachineImages(google::cloud::cpp::compute::machineImages::v1::ListMachineImagesRequest request);
+  ListMachineImages(
+      google::cloud::cpp::compute::machineImages::v1::ListMachineImagesRequest
+          request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::machineImages::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::machineImages::v1::SetIamPolicyRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::machineImages::v1::TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::machineImages::v1::
+                         TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

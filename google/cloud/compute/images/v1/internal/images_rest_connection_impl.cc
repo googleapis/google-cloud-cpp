@@ -17,8 +17,8 @@
 // source: google/cloud/compute/images/v1/images.proto
 
 #include "google/cloud/compute/images/v1/internal/images_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/images/v1/internal/images_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -34,104 +34,121 @@ ImagesRestConnectionImpl::ImagesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<compute_images_v1_internal::ImagesRestStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        ImagesConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      ImagesConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ImagesRestConnectionImpl::DeleteImages(google::cloud::cpp::compute::images::v1::DeleteImagesRequest const& request) {
+ImagesRestConnectionImpl::DeleteImages(
+    google::cloud::cpp::compute::images::v1::DeleteImagesRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteImages(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::images::v1::DeleteImagesRequest const& request) {
+             google::cloud::cpp::compute::images::v1::DeleteImagesRequest const&
+                 request) {
         return stub_->DeleteImages(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ImagesRestConnectionImpl::Deprecate(google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) {
+ImagesRestConnectionImpl::Deprecate(
+    google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->Deprecate(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) {
-        return stub_->Deprecate(rest_context, request);
-      },
+             google::cloud::cpp::compute::images::v1::DeprecateRequest const&
+                 request) { return stub_->Deprecate(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Image>
-ImagesRestConnectionImpl::GetImages(google::cloud::cpp::compute::images::v1::GetImagesRequest const& request) {
+ImagesRestConnectionImpl::GetImages(
+    google::cloud::cpp::compute::images::v1::GetImagesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetImages(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::images::v1::GetImagesRequest const& request) {
-        return stub_->GetImages(rest_context, request);
-      },
+             google::cloud::cpp::compute::images::v1::GetImagesRequest const&
+                 request) { return stub_->GetImages(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Image>
-ImagesRestConnectionImpl::GetFromFamily(google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const& request) {
+ImagesRestConnectionImpl::GetFromFamily(
+    google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetFromFamily(request),
-      [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const& request) {
-        return stub_->GetFromFamily(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const&
+              request) { return stub_->GetFromFamily(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-ImagesRestConnectionImpl::GetIamPolicy(google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const& request) {
+ImagesRestConnectionImpl::GetIamPolicy(
+    google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::images::v1::GetIamPolicyRequest const&
+                 request) {
         return stub_->GetIamPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ImagesRestConnectionImpl::InsertImages(google::cloud::cpp::compute::images::v1::InsertImagesRequest const& request) {
+ImagesRestConnectionImpl::InsertImages(
+    google::cloud::cpp::compute::images::v1::InsertImagesRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->InsertImages(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::images::v1::InsertImagesRequest const& request) {
+             google::cloud::cpp::compute::images::v1::InsertImagesRequest const&
+                 request) {
         return stub_->InsertImages(rest_context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Image>
-ImagesRestConnectionImpl::ListImages(google::cloud::cpp::compute::images::v1::ListImagesRequest request) {
+ImagesRestConnectionImpl::ListImages(
+    google::cloud::cpp::compute::images::v1::ListImagesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_images_v1::ImagesRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<compute_images_v1::ImagesRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListImages(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::Image>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::Image>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::images::v1::ListImagesRequest const& r) {
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::cpp::compute::images::v1::ListImagesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::images::v1::ListImagesRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::images::v1::
+                       ListImagesRequest const& request) {
               return stub->ListImages(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::ImageList r) {
-        std::vector<google::cloud::cpp::compute::v1::Image> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::Image> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -139,48 +156,55 @@ ImagesRestConnectionImpl::ListImages(google::cloud::cpp::compute::images::v1::Li
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ImagesRestConnectionImpl::PatchImages(google::cloud::cpp::compute::images::v1::PatchImagesRequest const& request) {
+ImagesRestConnectionImpl::PatchImages(
+    google::cloud::cpp::compute::images::v1::PatchImagesRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->PatchImages(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::images::v1::PatchImagesRequest const& request) {
-        return stub_->PatchImages(rest_context, request);
-      },
+             google::cloud::cpp::compute::images::v1::PatchImagesRequest const&
+                 request) { return stub_->PatchImages(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-ImagesRestConnectionImpl::SetIamPolicy(google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const& request) {
+ImagesRestConnectionImpl::SetIamPolicy(
+    google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const&
+                 request) {
         return stub_->SetIamPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ImagesRestConnectionImpl::SetLabels(google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) {
+ImagesRestConnectionImpl::SetLabels(
+    google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetLabels(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) {
-        return stub_->SetLabels(rest_context, request);
-      },
+             google::cloud::cpp::compute::images::v1::SetLabelsRequest const&
+                 request) { return stub_->SetLabels(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-ImagesRestConnectionImpl::TestIamPermissions(google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const& request) {
+ImagesRestConnectionImpl::TestIamPermissions(
+    google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->TestIamPermissions(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const& request) {
+             google::cloud::cpp::compute::images::v1::
+                 TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(rest_context, request);
       },
       request, __func__);

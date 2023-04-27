@@ -28,18 +28,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionCommitmentsRestLogging::RegionCommitmentsRestLogging(
     std::shared_ptr<RegionCommitmentsRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
 RegionCommitmentsRestLogging::AggregatedListRegionCommitments(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionCommitments::v1::AggregatedListRegionCommitmentsRequest const& request) {
+    google::cloud::cpp::compute::regionCommitments::v1::
+        AggregatedListRegionCommitmentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::regionCommitments::v1::AggregatedListRegionCommitmentsRequest const& request) {
+             google::cloud::cpp::compute::regionCommitments::v1::
+                 AggregatedListRegionCommitmentsRequest const& request) {
         return child_->AggregatedListRegionCommitments(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,10 +50,12 @@ RegionCommitmentsRestLogging::AggregatedListRegionCommitments(
 StatusOr<google::cloud::cpp::compute::v1::Commitment>
 RegionCommitmentsRestLogging::GetRegionCommitments(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionCommitments::v1::GetRegionCommitmentsRequest const& request) {
+    google::cloud::cpp::compute::regionCommitments::v1::
+        GetRegionCommitmentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::regionCommitments::v1::GetRegionCommitmentsRequest const& request) {
+             google::cloud::cpp::compute::regionCommitments::v1::
+                 GetRegionCommitmentsRequest const& request) {
         return child_->GetRegionCommitments(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -60,10 +64,12 @@ RegionCommitmentsRestLogging::GetRegionCommitments(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionCommitmentsRestLogging::InsertRegionCommitments(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionCommitments::v1::InsertRegionCommitmentsRequest const& request) {
+    google::cloud::cpp::compute::regionCommitments::v1::
+        InsertRegionCommitmentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::regionCommitments::v1::InsertRegionCommitmentsRequest const& request) {
+             google::cloud::cpp::compute::regionCommitments::v1::
+                 InsertRegionCommitmentsRequest const& request) {
         return child_->InsertRegionCommitments(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -72,10 +78,12 @@ RegionCommitmentsRestLogging::InsertRegionCommitments(
 StatusOr<google::cloud::cpp::compute::v1::CommitmentList>
 RegionCommitmentsRestLogging::ListRegionCommitments(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionCommitments::v1::ListRegionCommitmentsRequest const& request) {
+    google::cloud::cpp::compute::regionCommitments::v1::
+        ListRegionCommitmentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::regionCommitments::v1::ListRegionCommitmentsRequest const& request) {
+             google::cloud::cpp::compute::regionCommitments::v1::
+                 ListRegionCommitmentsRequest const& request) {
         return child_->ListRegionCommitments(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -84,10 +92,12 @@ RegionCommitmentsRestLogging::ListRegionCommitments(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionCommitmentsRestLogging::UpdateRegionCommitments(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionCommitments::v1::UpdateRegionCommitmentsRequest const& request) {
+    google::cloud::cpp::compute::regionCommitments::v1::
+        UpdateRegionCommitmentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::regionCommitments::v1::UpdateRegionCommitmentsRequest const& request) {
+             google::cloud::cpp::compute::regionCommitments::v1::
+                 UpdateRegionCommitmentsRequest const& request) {
         return child_->UpdateRegionCommitments(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);

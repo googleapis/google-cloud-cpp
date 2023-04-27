@@ -38,24 +38,28 @@ class ZoneOperationsRestLogging : public ZoneOperationsRestStub {
  public:
   ~ZoneOperationsRestLogging() override = default;
   ZoneOperationsRestLogging(std::shared_ptr<ZoneOperationsRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                            TracingOptions tracing_options,
+                            std::set<std::string> components);
 
   Status DeleteZoneOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::zoneOperations::v1::DeleteZoneOperationsRequest const& request) override;
+      google::cloud::cpp::compute::zoneOperations::v1::
+          DeleteZoneOperationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetZoneOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::zoneOperations::v1::GetZoneOperationsRequest const& request) override;
+      google::cloud::cpp::compute::zoneOperations::v1::
+          GetZoneOperationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::OperationList> ListZoneOperations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::zoneOperations::v1::ListZoneOperationsRequest const& request) override;
+      google::cloud::cpp::compute::zoneOperations::v1::
+          ListZoneOperationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::zoneOperations::v1::WaitRequest const& request) override;
+      google::cloud::cpp::compute::zoneOperations::v1::WaitRequest const&
+          request) override;
 
  private:
   std::shared_ptr<ZoneOperationsRestStub> child_;

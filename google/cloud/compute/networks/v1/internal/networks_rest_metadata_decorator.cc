@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/networks/v1/networks.proto
 
-
 #include "google/cloud/compute/networks/v1/internal/networks_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,12 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 NetworksRestMetadata::NetworksRestMetadata(
     std::shared_ptr<NetworksRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworksRestMetadata::AddPeering(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::networks::v1::AddPeeringRequest const& request) {
+    google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->AddPeering(rest_context, request);
 }
@@ -47,7 +48,8 @@ NetworksRestMetadata::AddPeering(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworksRestMetadata::DeleteNetworks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const& request) {
+    google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->DeleteNetworks(rest_context, request);
 }
@@ -55,7 +57,8 @@ NetworksRestMetadata::DeleteNetworks(
 StatusOr<google::cloud::cpp::compute::v1::Network>
 NetworksRestMetadata::GetNetworks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::networks::v1::GetNetworksRequest const& request) {
+    google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->GetNetworks(rest_context, request);
 }
@@ -63,7 +66,8 @@ NetworksRestMetadata::GetNetworks(
 StatusOr<google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>
 NetworksRestMetadata::GetEffectiveFirewalls(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::networks::v1::GetEffectiveFirewallsRequest const& request) {
+    google::cloud::cpp::compute::networks::v1::
+        GetEffectiveFirewallsRequest const& request) {
   SetMetadata(rest_context);
   return child_->GetEffectiveFirewalls(rest_context, request);
 }
@@ -71,7 +75,8 @@ NetworksRestMetadata::GetEffectiveFirewalls(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworksRestMetadata::InsertNetworks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const& request) {
+    google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->InsertNetworks(rest_context, request);
 }
@@ -79,7 +84,8 @@ NetworksRestMetadata::InsertNetworks(
 StatusOr<google::cloud::cpp::compute::v1::NetworkList>
 NetworksRestMetadata::ListNetworks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::networks::v1::ListNetworksRequest const& request) {
+    google::cloud::cpp::compute::networks::v1::ListNetworksRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->ListNetworks(rest_context, request);
 }
@@ -87,7 +93,8 @@ NetworksRestMetadata::ListNetworks(
 StatusOr<google::cloud::cpp::compute::v1::ExchangedPeeringRoutesList>
 NetworksRestMetadata::ListPeeringRoutes(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest const& request) {
+    google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->ListPeeringRoutes(rest_context, request);
 }
@@ -95,7 +102,8 @@ NetworksRestMetadata::ListPeeringRoutes(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworksRestMetadata::PatchNetworks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const& request) {
+    google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->PatchNetworks(rest_context, request);
 }
@@ -103,7 +111,8 @@ NetworksRestMetadata::PatchNetworks(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworksRestMetadata::RemovePeering(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const& request) {
+    google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->RemovePeering(rest_context, request);
 }
@@ -111,7 +120,8 @@ NetworksRestMetadata::RemovePeering(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworksRestMetadata::SwitchToCustomMode(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const& request) {
+    google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->SwitchToCustomMode(rest_context, request);
 }
@@ -119,33 +129,33 @@ NetworksRestMetadata::SwitchToCustomMode(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworksRestMetadata::UpdatePeering(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const& request) {
+    google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->UpdatePeering(rest_context, request);
 }
 
-void NetworksRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+void NetworksRestMetadata::SetMetadata(rest_internal::RestContext& rest_context,
+                                       std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

@@ -26,27 +26,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-DiskTypesConnectionIdempotencyPolicy::~DiskTypesConnectionIdempotencyPolicy() = default;
+DiskTypesConnectionIdempotencyPolicy::~DiskTypesConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<DiskTypesConnectionIdempotencyPolicy>
 DiskTypesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<DiskTypesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DiskTypesConnectionIdempotencyPolicy::AggregatedListDiskTypes(google::cloud::cpp::compute::diskTypes::v1::AggregatedListDiskTypesRequest const&) {
+Idempotency DiskTypesConnectionIdempotencyPolicy::AggregatedListDiskTypes(
+    google::cloud::cpp::compute::diskTypes::v1::
+        AggregatedListDiskTypesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DiskTypesConnectionIdempotencyPolicy::GetDiskTypes(google::cloud::cpp::compute::diskTypes::v1::GetDiskTypesRequest const&) {
+Idempotency DiskTypesConnectionIdempotencyPolicy::GetDiskTypes(
+    google::cloud::cpp::compute::diskTypes::v1::GetDiskTypesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DiskTypesConnectionIdempotencyPolicy::ListDiskTypes(google::cloud::cpp::compute::diskTypes::v1::ListDiskTypesRequest) {  // NOLINT
+Idempotency DiskTypesConnectionIdempotencyPolicy::ListDiskTypes(
+    google::cloud::cpp::compute::diskTypes::v1::
+        ListDiskTypesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<DiskTypesConnectionIdempotencyPolicy>
-    MakeDefaultDiskTypesConnectionIdempotencyPolicy() {
+MakeDefaultDiskTypesConnectionIdempotencyPolicy() {
   return std::make_unique<DiskTypesConnectionIdempotencyPolicy>();
 }
 

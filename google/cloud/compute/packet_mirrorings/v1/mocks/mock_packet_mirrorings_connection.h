@@ -42,37 +42,54 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockPacketMirroringsConnection : public compute_packet_mirrorings_v1::PacketMirroringsConnection {
+class MockPacketMirroringsConnection
+    : public compute_packet_mirrorings_v1::PacketMirroringsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>,
-  AggregatedListPacketMirrorings,
-  (google::cloud::cpp::compute::packetMirrorings::v1::AggregatedListPacketMirroringsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>,
+      AggregatedListPacketMirrorings,
+      (google::cloud::cpp::compute::packetMirrorings::v1::
+           AggregatedListPacketMirroringsRequest const& request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeletePacketMirrorings,
-  (google::cloud::cpp::compute::packetMirrorings::v1::DeletePacketMirroringsRequest const& request), (override));
+              DeletePacketMirrorings,
+              (google::cloud::cpp::compute::packetMirrorings::v1::
+                   DeletePacketMirroringsRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>,
-  GetPacketMirrorings,
-  (google::cloud::cpp::compute::packetMirrorings::v1::GetPacketMirroringsRequest const& request), (override));
+              GetPacketMirrorings,
+              (google::cloud::cpp::compute::packetMirrorings::v1::
+                   GetPacketMirroringsRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertPacketMirrorings,
-  (google::cloud::cpp::compute::packetMirrorings::v1::InsertPacketMirroringsRequest const& request), (override));
+              InsertPacketMirrorings,
+              (google::cloud::cpp::compute::packetMirrorings::v1::
+                   InsertPacketMirroringsRequest const& request),
+              (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>,
-  ListPacketMirrorings,
-  (google::cloud::cpp::compute::packetMirrorings::v1::ListPacketMirroringsRequest request), (override));
+              ListPacketMirrorings,
+              (google::cloud::cpp::compute::packetMirrorings::v1::
+                   ListPacketMirroringsRequest request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  PatchPacketMirrorings,
-  (google::cloud::cpp::compute::packetMirrorings::v1::PatchPacketMirroringsRequest const& request), (override));
+              PatchPacketMirrorings,
+              (google::cloud::cpp::compute::packetMirrorings::v1::
+                   PatchPacketMirroringsRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
-  TestIamPermissions,
-  (google::cloud::cpp::compute::packetMirrorings::v1::TestIamPermissionsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      TestIamPermissions,
+      (google::cloud::cpp::compute::packetMirrorings::v1::
+           TestIamPermissionsRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

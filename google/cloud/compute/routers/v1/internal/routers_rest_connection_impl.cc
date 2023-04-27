@@ -17,8 +17,8 @@
 // source: google/cloud/compute/routers/v1/routers.proto
 
 #include "google/cloud/compute/routers/v1/internal/routers_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/routers/v1/internal/routers_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -34,104 +34,125 @@ RoutersRestConnectionImpl::RoutersRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<compute_routers_v1_internal::RoutersRestStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        RoutersConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      RoutersConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
-RoutersRestConnectionImpl::AggregatedListRouters(google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest const& request) {
+RoutersRestConnectionImpl::AggregatedListRouters(
+    google::cloud::cpp::compute::routers::v1::
+        AggregatedListRoutersRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AggregatedListRouters(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest const& request) {
+             google::cloud::cpp::compute::routers::v1::
+                 AggregatedListRoutersRequest const& request) {
         return stub_->AggregatedListRouters(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RoutersRestConnectionImpl::DeleteRouters(google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const& request) {
+RoutersRestConnectionImpl::DeleteRouters(
+    google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteRouters(request),
-      [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const& request) {
-        return stub_->DeleteRouters(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
+              request) { return stub_->DeleteRouters(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Router>
-RoutersRestConnectionImpl::GetRouters(google::cloud::cpp::compute::routers::v1::GetRoutersRequest const& request) {
+RoutersRestConnectionImpl::GetRouters(
+    google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetRouters(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::routers::v1::GetRoutersRequest const& request) {
-        return stub_->GetRouters(rest_context, request);
-      },
+             google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&
+                 request) { return stub_->GetRouters(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
-RoutersRestConnectionImpl::GetNatMappingInfo(google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const& request) {
+RoutersRestConnectionImpl::GetNatMappingInfo(
+    google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetNatMappingInfo(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const& request) {
+             google::cloud::cpp::compute::routers::v1::
+                 GetNatMappingInfoRequest const& request) {
         return stub_->GetNatMappingInfo(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
-RoutersRestConnectionImpl::GetRouterStatus(google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const& request) {
+RoutersRestConnectionImpl::GetRouterStatus(
+    google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetRouterStatus(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const& request) {
+             google::cloud::cpp::compute::routers::v1::
+                 GetRouterStatusRequest const& request) {
         return stub_->GetRouterStatus(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RoutersRestConnectionImpl::InsertRouters(google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const& request) {
+RoutersRestConnectionImpl::InsertRouters(
+    google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->InsertRouters(request),
-      [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const& request) {
-        return stub_->InsertRouters(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
+              request) { return stub_->InsertRouters(rest_context, request); },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Router>
-RoutersRestConnectionImpl::ListRouters(google::cloud::cpp::compute::routers::v1::ListRoutersRequest request) {
+RoutersRestConnectionImpl::ListRouters(
+    google::cloud::cpp::compute::routers::v1::ListRoutersRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_routers_v1::RoutersRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<compute_routers_v1::RoutersRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListRouters(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::Router>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::Router>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::routers::v1::ListRoutersRequest const& r) {
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::cpp::compute::routers::v1::ListRoutersRequest const&
+              r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::routers::v1::ListRoutersRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::routers::v1::
+                       ListRoutersRequest const& request) {
               return stub->ListRouters(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::RouterList r) {
-        std::vector<google::cloud::cpp::compute::v1::Router> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::Router> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -139,38 +160,41 @@ RoutersRestConnectionImpl::ListRouters(google::cloud::cpp::compute::routers::v1:
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RoutersRestConnectionImpl::PatchRouters(google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const& request) {
+RoutersRestConnectionImpl::PatchRouters(
+    google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->PatchRouters(request),
-      [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const& request) {
-        return stub_->PatchRouters(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
+              request) { return stub_->PatchRouters(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
-RoutersRestConnectionImpl::Preview(google::cloud::cpp::compute::routers::v1::PreviewRequest const& request) {
+RoutersRestConnectionImpl::Preview(
+    google::cloud::cpp::compute::routers::v1::PreviewRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->Preview(request),
+      retry_policy(), backoff_policy(), idempotency_policy()->Preview(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::routers::v1::PreviewRequest const& request) {
-        return stub_->Preview(rest_context, request);
-      },
+             google::cloud::cpp::compute::routers::v1::PreviewRequest const&
+                 request) { return stub_->Preview(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RoutersRestConnectionImpl::UpdateRouters(google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const& request) {
+RoutersRestConnectionImpl::UpdateRouters(
+    google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateRouters(request),
-      [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const& request) {
-        return stub_->UpdateRouters(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&
+              request) { return stub_->UpdateRouters(rest_context, request); },
       request, __func__);
 }
 

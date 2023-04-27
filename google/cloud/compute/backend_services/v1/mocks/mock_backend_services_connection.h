@@ -42,65 +42,94 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockBackendServicesConnection : public compute_backend_services_v1::BackendServicesConnection {
+class MockBackendServicesConnection
+    : public compute_backend_services_v1::BackendServicesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  AddSignedUrlKey,
-  (google::cloud::cpp::compute::backendServices::v1::AddSignedUrlKeyRequest const& request), (override));
+              AddSignedUrlKey,
+              (google::cloud::cpp::compute::backendServices::v1::
+                   AddSignedUrlKeyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::BackendServiceAggregatedList>,
-  AggregatedListBackendServices,
-  (google::cloud::cpp::compute::backendServices::v1::AggregatedListBackendServicesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::BackendServiceAggregatedList>,
+      AggregatedListBackendServices,
+      (google::cloud::cpp::compute::backendServices::v1::
+           AggregatedListBackendServicesRequest const& request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteBackendServices,
-  (google::cloud::cpp::compute::backendServices::v1::DeleteBackendServicesRequest const& request), (override));
+              DeleteBackendServices,
+              (google::cloud::cpp::compute::backendServices::v1::
+                   DeleteBackendServicesRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteSignedUrlKey,
-  (google::cloud::cpp::compute::backendServices::v1::DeleteSignedUrlKeyRequest const& request), (override));
+              DeleteSignedUrlKey,
+              (google::cloud::cpp::compute::backendServices::v1::
+                   DeleteSignedUrlKeyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::BackendService>,
-  GetBackendServices,
-  (google::cloud::cpp::compute::backendServices::v1::GetBackendServicesRequest const& request), (override));
+              GetBackendServices,
+              (google::cloud::cpp::compute::backendServices::v1::
+                   GetBackendServicesRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>,
-  GetHealth,
-  (google::cloud::cpp::compute::backendServices::v1::GetHealthRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>,
+      GetHealth,
+      (google::cloud::cpp::compute::backendServices::v1::GetHealthRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  GetIamPolicy,
-  (google::cloud::cpp::compute::backendServices::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+              (google::cloud::cpp::compute::backendServices::v1::
+                   GetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertBackendServices,
-  (google::cloud::cpp::compute::backendServices::v1::InsertBackendServicesRequest const& request), (override));
+              InsertBackendServices,
+              (google::cloud::cpp::compute::backendServices::v1::
+                   InsertBackendServicesRequest const& request),
+              (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::BackendService>,
-  ListBackendServices,
-  (google::cloud::cpp::compute::backendServices::v1::ListBackendServicesRequest request), (override));
+              ListBackendServices,
+              (google::cloud::cpp::compute::backendServices::v1::
+                   ListBackendServicesRequest request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  PatchBackendServices,
-  (google::cloud::cpp::compute::backendServices::v1::PatchBackendServicesRequest const& request), (override));
+              PatchBackendServices,
+              (google::cloud::cpp::compute::backendServices::v1::
+                   PatchBackendServicesRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  SetEdgeSecurityPolicy,
-  (google::cloud::cpp::compute::backendServices::v1::SetEdgeSecurityPolicyRequest const& request), (override));
+              SetEdgeSecurityPolicy,
+              (google::cloud::cpp::compute::backendServices::v1::
+                   SetEdgeSecurityPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  SetIamPolicy,
-  (google::cloud::cpp::compute::backendServices::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+              (google::cloud::cpp::compute::backendServices::v1::
+                   SetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  SetSecurityPolicy,
-  (google::cloud::cpp::compute::backendServices::v1::SetSecurityPolicyRequest const& request), (override));
+              SetSecurityPolicy,
+              (google::cloud::cpp::compute::backendServices::v1::
+                   SetSecurityPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  UpdateBackendServices,
-  (google::cloud::cpp::compute::backendServices::v1::UpdateBackendServicesRequest const& request), (override));
+              UpdateBackendServices,
+              (google::cloud::cpp::compute::backendServices::v1::
+                   UpdateBackendServicesRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

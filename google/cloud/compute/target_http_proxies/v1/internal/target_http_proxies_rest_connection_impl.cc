@@ -17,8 +17,8 @@
 // source: google/cloud/compute/target_http_proxies/v1/target_http_proxies.proto
 
 #include "google/cloud/compute/target_http_proxies/v1/internal/target_http_proxies_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/target_http_proxies/v1/internal/target_http_proxies_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -32,82 +32,105 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TargetHttpProxiesRestConnectionImpl::TargetHttpProxiesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_target_http_proxies_v1_internal::TargetHttpProxiesRestStub> stub,
+    std::shared_ptr<
+        compute_target_http_proxies_v1_internal::TargetHttpProxiesRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        TargetHttpProxiesConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), TargetHttpProxiesConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyAggregatedList>
-TargetHttpProxiesRestConnectionImpl::AggregatedListTargetHttpProxies(google::cloud::cpp::compute::targetHttpProxies::v1::AggregatedListTargetHttpProxiesRequest const& request) {
+TargetHttpProxiesRestConnectionImpl::AggregatedListTargetHttpProxies(
+    google::cloud::cpp::compute::targetHttpProxies::v1::
+        AggregatedListTargetHttpProxiesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AggregatedListTargetHttpProxies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::targetHttpProxies::v1::AggregatedListTargetHttpProxiesRequest const& request) {
+             google::cloud::cpp::compute::targetHttpProxies::v1::
+                 AggregatedListTargetHttpProxiesRequest const& request) {
         return stub_->AggregatedListTargetHttpProxies(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetHttpProxiesRestConnectionImpl::DeleteTargetHttpProxies(google::cloud::cpp::compute::targetHttpProxies::v1::DeleteTargetHttpProxiesRequest const& request) {
+TargetHttpProxiesRestConnectionImpl::DeleteTargetHttpProxies(
+    google::cloud::cpp::compute::targetHttpProxies::v1::
+        DeleteTargetHttpProxiesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteTargetHttpProxies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::targetHttpProxies::v1::DeleteTargetHttpProxiesRequest const& request) {
+             google::cloud::cpp::compute::targetHttpProxies::v1::
+                 DeleteTargetHttpProxiesRequest const& request) {
         return stub_->DeleteTargetHttpProxies(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
-TargetHttpProxiesRestConnectionImpl::GetTargetHttpProxies(google::cloud::cpp::compute::targetHttpProxies::v1::GetTargetHttpProxiesRequest const& request) {
+TargetHttpProxiesRestConnectionImpl::GetTargetHttpProxies(
+    google::cloud::cpp::compute::targetHttpProxies::v1::
+        GetTargetHttpProxiesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetTargetHttpProxies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::targetHttpProxies::v1::GetTargetHttpProxiesRequest const& request) {
+             google::cloud::cpp::compute::targetHttpProxies::v1::
+                 GetTargetHttpProxiesRequest const& request) {
         return stub_->GetTargetHttpProxies(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetHttpProxiesRestConnectionImpl::InsertTargetHttpProxies(google::cloud::cpp::compute::targetHttpProxies::v1::InsertTargetHttpProxiesRequest const& request) {
+TargetHttpProxiesRestConnectionImpl::InsertTargetHttpProxies(
+    google::cloud::cpp::compute::targetHttpProxies::v1::
+        InsertTargetHttpProxiesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->InsertTargetHttpProxies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::targetHttpProxies::v1::InsertTargetHttpProxiesRequest const& request) {
+             google::cloud::cpp::compute::targetHttpProxies::v1::
+                 InsertTargetHttpProxiesRequest const& request) {
         return stub_->InsertTargetHttpProxies(rest_context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>
-TargetHttpProxiesRestConnectionImpl::ListTargetHttpProxies(google::cloud::cpp::compute::targetHttpProxies::v1::ListTargetHttpProxiesRequest request) {
+TargetHttpProxiesRestConnectionImpl::ListTargetHttpProxies(
+    google::cloud::cpp::compute::targetHttpProxies::v1::
+        ListTargetHttpProxiesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_target_http_proxies_v1::TargetHttpProxiesRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<
+      compute_target_http_proxies_v1::TargetHttpProxiesRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTargetHttpProxies(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::targetHttpProxies::v1::ListTargetHttpProxiesRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::targetHttpProxies::v1::
+                          ListTargetHttpProxiesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::targetHttpProxies::v1::ListTargetHttpProxiesRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::targetHttpProxies::v1::
+                       ListTargetHttpProxiesRequest const& request) {
               return stub->ListTargetHttpProxies(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::TargetHttpProxyList r) {
-        std::vector<google::cloud::cpp::compute::v1::TargetHttpProxy> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::TargetHttpProxy> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -115,24 +138,30 @@ TargetHttpProxiesRestConnectionImpl::ListTargetHttpProxies(google::cloud::cpp::c
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetHttpProxiesRestConnectionImpl::PatchTargetHttpProxies(google::cloud::cpp::compute::targetHttpProxies::v1::PatchTargetHttpProxiesRequest const& request) {
+TargetHttpProxiesRestConnectionImpl::PatchTargetHttpProxies(
+    google::cloud::cpp::compute::targetHttpProxies::v1::
+        PatchTargetHttpProxiesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->PatchTargetHttpProxies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::targetHttpProxies::v1::PatchTargetHttpProxiesRequest const& request) {
+             google::cloud::cpp::compute::targetHttpProxies::v1::
+                 PatchTargetHttpProxiesRequest const& request) {
         return stub_->PatchTargetHttpProxies(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-TargetHttpProxiesRestConnectionImpl::SetUrlMap(google::cloud::cpp::compute::targetHttpProxies::v1::SetUrlMapRequest const& request) {
+TargetHttpProxiesRestConnectionImpl::SetUrlMap(
+    google::cloud::cpp::compute::targetHttpProxies::v1::SetUrlMapRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetUrlMap(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::targetHttpProxies::v1::SetUrlMapRequest const& request) {
+             google::cloud::cpp::compute::targetHttpProxies::v1::
+                 SetUrlMapRequest const& request) {
         return stub_->SetUrlMap(rest_context, request);
       },
       request, __func__);

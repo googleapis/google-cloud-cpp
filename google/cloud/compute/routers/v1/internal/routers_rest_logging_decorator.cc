@@ -26,20 +26,22 @@ namespace cloud {
 namespace compute_routers_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-RoutersRestLogging::RoutersRestLogging(
-    std::shared_ptr<RoutersRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+RoutersRestLogging::RoutersRestLogging(std::shared_ptr<RoutersRestStub> child,
+                                       TracingOptions tracing_options,
+                                       std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
 RoutersRestLogging::AggregatedListRouters(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest const& request) {
+    google::cloud::cpp::compute::routers::v1::
+        AggregatedListRoutersRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest const& request) {
+             google::cloud::cpp::compute::routers::v1::
+                 AggregatedListRoutersRequest const& request) {
         return child_->AggregatedListRouters(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,34 +50,37 @@ RoutersRestLogging::AggregatedListRouters(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutersRestLogging::DeleteRouters(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const& request) {
+    google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const& request) {
-        return child_->DeleteRouters(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
+              request) { return child_->DeleteRouters(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Router>
 RoutersRestLogging::GetRouters(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::routers::v1::GetRoutersRequest const& request) {
+    google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::routers::v1::GetRoutersRequest const& request) {
-        return child_->GetRouters(rest_context, request);
-      },
+             google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&
+                 request) { return child_->GetRouters(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
 RoutersRestLogging::GetNatMappingInfo(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const& request) {
+    google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const& request) {
+             google::cloud::cpp::compute::routers::v1::
+                 GetNatMappingInfoRequest const& request) {
         return child_->GetNatMappingInfo(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -84,10 +89,12 @@ RoutersRestLogging::GetNatMappingInfo(
 StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
 RoutersRestLogging::GetRouterStatus(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const& request) {
+    google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const& request) {
+             google::cloud::cpp::compute::routers::v1::
+                 GetRouterStatusRequest const& request) {
         return child_->GetRouterStatus(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -96,22 +103,25 @@ RoutersRestLogging::GetRouterStatus(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutersRestLogging::InsertRouters(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const& request) {
+    google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const& request) {
-        return child_->InsertRouters(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
+              request) { return child_->InsertRouters(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RouterList>
 RoutersRestLogging::ListRouters(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::routers::v1::ListRoutersRequest const& request) {
+    google::cloud::cpp::compute::routers::v1::ListRoutersRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::routers::v1::ListRoutersRequest const& request) {
+             google::cloud::cpp::compute::routers::v1::ListRoutersRequest const&
+                 request) {
         return child_->ListRouters(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -120,12 +130,13 @@ RoutersRestLogging::ListRouters(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutersRestLogging::PatchRouters(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const& request) {
+    google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const& request) {
-        return child_->PatchRouters(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
+              request) { return child_->PatchRouters(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
@@ -135,21 +146,21 @@ RoutersRestLogging::Preview(
     google::cloud::cpp::compute::routers::v1::PreviewRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::routers::v1::PreviewRequest const& request) {
-        return child_->Preview(rest_context, request);
-      },
+             google::cloud::cpp::compute::routers::v1::PreviewRequest const&
+                 request) { return child_->Preview(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutersRestLogging::UpdateRouters(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const& request) {
+    google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const& request) {
-        return child_->UpdateRouters(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&
+              request) { return child_->UpdateRouters(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 

@@ -17,11 +17,11 @@
 // source: google/cloud/compute/zone_operations/v1/zone_operations.proto
 
 #include "google/cloud/compute/zone_operations/v1/zone_operations_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/zone_operations/v1/internal/zone_operations_option_defaults.h"
 #include "google/cloud/compute/zone_operations/v1/internal/zone_operations_tracing_connection.h"
 #include "google/cloud/compute/zone_operations/v1/zone_operations_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -34,20 +34,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ZoneOperationsConnection::~ZoneOperationsConnection() = default;
 
-Status
-ZoneOperationsConnection::DeleteZoneOperations(
-    google::cloud::cpp::compute::zoneOperations::v1::DeleteZoneOperationsRequest const&) {
+Status ZoneOperationsConnection::DeleteZoneOperations(
+    google::cloud::cpp::compute::zoneOperations::v1::
+        DeleteZoneOperationsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ZoneOperationsConnection::GetZoneOperations(
-    google::cloud::cpp::compute::zoneOperations::v1::GetZoneOperationsRequest const&) {
+    google::cloud::cpp::compute::zoneOperations::v1::
+        GetZoneOperationsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Operation> ZoneOperationsConnection::ListZoneOperations(
-    google::cloud::cpp::compute::zoneOperations::v1::ListZoneOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::Operation>
+ZoneOperationsConnection::ListZoneOperations(
+    google::cloud::cpp::compute::zoneOperations::v1::
+        ListZoneOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Operation>>();
 }

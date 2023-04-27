@@ -36,39 +36,53 @@ class ServiceAttachmentsTracingConnection
   ~ServiceAttachmentsTracingConnection() override = default;
 
   explicit ServiceAttachmentsTracingConnection(
-    std::shared_ptr<compute_service_attachments_v1::ServiceAttachmentsConnection> child);
+      std::shared_ptr<
+          compute_service_attachments_v1::ServiceAttachmentsConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>
-  AggregatedListServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::AggregatedListServiceAttachmentsRequest const& request) override;
+  AggregatedListServiceAttachments(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          AggregatedListServiceAttachmentsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::DeleteServiceAttachmentsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteServiceAttachments(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          DeleteServiceAttachmentsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
-  GetServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::GetServiceAttachmentsRequest const& request) override;
+  GetServiceAttachments(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          GetServiceAttachmentsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::serviceAttachments::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          GetIamPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::InsertServiceAttachmentsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertServiceAttachments(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          InsertServiceAttachmentsRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::ServiceAttachment>
-  ListServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::ListServiceAttachmentsRequest request) override;
+  ListServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::
+                             ListServiceAttachmentsRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::PatchServiceAttachmentsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchServiceAttachments(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          PatchServiceAttachmentsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::serviceAttachments::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          SetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::serviceAttachments::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::serviceAttachments::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
-  std::shared_ptr<compute_service_attachments_v1::ServiceAttachmentsConnection> child_;
+  std::shared_ptr<compute_service_attachments_v1::ServiceAttachmentsConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -81,7 +95,9 @@ class ServiceAttachmentsTracingConnection
  */
 std::shared_ptr<compute_service_attachments_v1::ServiceAttachmentsConnection>
 MakeServiceAttachmentsTracingConnection(
-    std::shared_ptr<compute_service_attachments_v1::ServiceAttachmentsConnection> conn);
+    std::shared_ptr<
+        compute_service_attachments_v1::ServiceAttachmentsConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_service_attachments_v1_internal

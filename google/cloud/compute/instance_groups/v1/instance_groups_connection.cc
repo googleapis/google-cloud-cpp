@@ -17,11 +17,11 @@
 // source: google/cloud/compute/instance_groups/v1/instance_groups.proto
 
 #include "google/cloud/compute/instance_groups/v1/instance_groups_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/instance_groups/v1/instance_groups_options.h"
 #include "google/cloud/compute/instance_groups/v1/internal/instance_groups_option_defaults.h"
 #include "google/cloud/compute/instance_groups/v1/internal/instance_groups_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,55 +36,66 @@ InstanceGroupsConnection::~InstanceGroupsConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupsConnection::AddInstances(
-    google::cloud::cpp::compute::instanceGroups::v1::AddInstancesRequest const&) {
+    google::cloud::cpp::compute::instanceGroups::v1::
+        AddInstancesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>
 InstanceGroupsConnection::AggregatedListInstanceGroups(
-    google::cloud::cpp::compute::instanceGroups::v1::AggregatedListInstanceGroupsRequest const&) {
+    google::cloud::cpp::compute::instanceGroups::v1::
+        AggregatedListInstanceGroupsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupsConnection::DeleteInstanceGroups(
-    google::cloud::cpp::compute::instanceGroups::v1::DeleteInstanceGroupsRequest const&) {
+    google::cloud::cpp::compute::instanceGroups::v1::
+        DeleteInstanceGroupsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
 InstanceGroupsConnection::GetInstanceGroups(
-    google::cloud::cpp::compute::instanceGroups::v1::GetInstanceGroupsRequest const&) {
+    google::cloud::cpp::compute::instanceGroups::v1::
+        GetInstanceGroupsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupsConnection::InsertInstanceGroups(
-    google::cloud::cpp::compute::instanceGroups::v1::InsertInstanceGroupsRequest const&) {
+    google::cloud::cpp::compute::instanceGroups::v1::
+        InsertInstanceGroupsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::InstanceGroup> InstanceGroupsConnection::ListInstanceGroups(
-    google::cloud::cpp::compute::instanceGroups::v1::ListInstanceGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
+InstanceGroupsConnection::ListInstanceGroups(
+    google::cloud::cpp::compute::instanceGroups::v1::
+        ListInstanceGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>>();
 }
 
-StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts> InstanceGroupsConnection::ListInstances(
-    google::cloud::cpp::compute::instanceGroups::v1::ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>
+InstanceGroupsConnection::ListInstances(
+    google::cloud::cpp::compute::instanceGroups::v1::
+        ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupsConnection::RemoveInstances(
-    google::cloud::cpp::compute::instanceGroups::v1::RemoveInstancesRequest const&) {
+    google::cloud::cpp::compute::instanceGroups::v1::
+        RemoveInstancesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupsConnection::SetNamedPorts(
-    google::cloud::cpp::compute::instanceGroups::v1::SetNamedPortsRequest const&) {
+    google::cloud::cpp::compute::instanceGroups::v1::
+        SetNamedPortsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

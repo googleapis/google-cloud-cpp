@@ -35,15 +35,14 @@ DefaultProjectsRestStub::DefaultProjectsRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultProjectsRestStub::DefaultProjectsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultProjectsRestStub::DisableXpnHost(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/disableXpnHost");
@@ -51,8 +50,9 @@ DefaultProjectsRestStub::DisableXpnHost(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultProjectsRestStub::DisableXpnResource(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/disableXpnResource");
@@ -60,8 +60,9 @@ DefaultProjectsRestStub::DisableXpnResource(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultProjectsRestStub::EnableXpnHost(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/enableXpnHost");
@@ -69,8 +70,9 @@ DefaultProjectsRestStub::EnableXpnHost(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultProjectsRestStub::EnableXpnResource(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/enableXpnResource");
@@ -78,18 +80,19 @@ DefaultProjectsRestStub::EnableXpnResource(
 
 StatusOr<google::cloud::cpp::compute::v1::Project>
 DefaultProjectsRestStub::GetProjects(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::projects::v1::GetProjectsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::projects::v1::GetProjectsRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Project>(
-      *service_, rest_context, request,
-      "/compute/v1/projects/{project}",
+      *service_, rest_context, request, "/compute/v1/projects/{project}",
       {std::make_pair("project", request.project())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Project>
 DefaultProjectsRestStub::GetXpnHost(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Project>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/getXpnHost",
@@ -98,9 +101,11 @@ DefaultProjectsRestStub::GetXpnHost(
 
 StatusOr<google::cloud::cpp::compute::v1::ProjectsGetXpnResources>
 DefaultProjectsRestStub::GetXpnResources(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::ProjectsGetXpnResources>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const&
+        request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::ProjectsGetXpnResources>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/getXpnResources",
       {std::make_pair("filter", request.filter()),
@@ -108,13 +113,15 @@ DefaultProjectsRestStub::GetXpnResources(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::XpnHostList>
 DefaultProjectsRestStub::ListXpnHosts(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::XpnHostList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/listXpnHosts");
@@ -122,8 +129,8 @@ DefaultProjectsRestStub::ListXpnHosts(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultProjectsRestStub::MoveDisk(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/moveDisk");
@@ -131,8 +138,9 @@ DefaultProjectsRestStub::MoveDisk(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultProjectsRestStub::MoveInstance(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/moveInstance");
@@ -140,8 +148,9 @@ DefaultProjectsRestStub::MoveInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultProjectsRestStub::SetCommonInstanceMetadata(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::projects::v1::
+        SetCommonInstanceMetadataRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/setCommonInstanceMetadata");
@@ -149,8 +158,9 @@ DefaultProjectsRestStub::SetCommonInstanceMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultProjectsRestStub::SetDefaultNetworkTier(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::projects::v1::
+        SetDefaultNetworkTierRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/setDefaultNetworkTier");
@@ -158,8 +168,9 @@ DefaultProjectsRestStub::SetDefaultNetworkTier(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultProjectsRestStub::SetUsageExportBucket(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::projects::v1::
+        SetUsageExportBucketRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/setUsageExportBucket");

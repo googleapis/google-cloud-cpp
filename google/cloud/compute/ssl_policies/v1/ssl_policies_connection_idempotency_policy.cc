@@ -26,43 +26,58 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SslPoliciesConnectionIdempotencyPolicy::~SslPoliciesConnectionIdempotencyPolicy() = default;
+SslPoliciesConnectionIdempotencyPolicy::
+    ~SslPoliciesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SslPoliciesConnectionIdempotencyPolicy>
 SslPoliciesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<SslPoliciesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SslPoliciesConnectionIdempotencyPolicy::AggregatedListSslPolicies(google::cloud::cpp::compute::sslPolicies::v1::AggregatedListSslPoliciesRequest const&) {
+Idempotency SslPoliciesConnectionIdempotencyPolicy::AggregatedListSslPolicies(
+    google::cloud::cpp::compute::sslPolicies::v1::
+        AggregatedListSslPoliciesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SslPoliciesConnectionIdempotencyPolicy::DeleteSslPolicies(google::cloud::cpp::compute::sslPolicies::v1::DeleteSslPoliciesRequest const&) {
+Idempotency SslPoliciesConnectionIdempotencyPolicy::DeleteSslPolicies(
+    google::cloud::cpp::compute::sslPolicies::v1::
+        DeleteSslPoliciesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SslPoliciesConnectionIdempotencyPolicy::GetSslPolicies(google::cloud::cpp::compute::sslPolicies::v1::GetSslPoliciesRequest const&) {
+Idempotency SslPoliciesConnectionIdempotencyPolicy::GetSslPolicies(
+    google::cloud::cpp::compute::sslPolicies::v1::
+        GetSslPoliciesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SslPoliciesConnectionIdempotencyPolicy::InsertSslPolicies(google::cloud::cpp::compute::sslPolicies::v1::InsertSslPoliciesRequest const&) {
+Idempotency SslPoliciesConnectionIdempotencyPolicy::InsertSslPolicies(
+    google::cloud::cpp::compute::sslPolicies::v1::
+        InsertSslPoliciesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SslPoliciesConnectionIdempotencyPolicy::ListSslPolicies(google::cloud::cpp::compute::sslPolicies::v1::ListSslPoliciesRequest) {  // NOLINT
+Idempotency SslPoliciesConnectionIdempotencyPolicy::ListSslPolicies(
+    google::cloud::cpp::compute::sslPolicies::v1::
+        ListSslPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SslPoliciesConnectionIdempotencyPolicy::ListAvailableFeatures(google::cloud::cpp::compute::sslPolicies::v1::ListAvailableFeaturesRequest const&) {
+Idempotency SslPoliciesConnectionIdempotencyPolicy::ListAvailableFeatures(
+    google::cloud::cpp::compute::sslPolicies::v1::
+        ListAvailableFeaturesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SslPoliciesConnectionIdempotencyPolicy::PatchSslPolicies(google::cloud::cpp::compute::sslPolicies::v1::PatchSslPoliciesRequest const&) {
+Idempotency SslPoliciesConnectionIdempotencyPolicy::PatchSslPolicies(
+    google::cloud::cpp::compute::sslPolicies::v1::
+        PatchSslPoliciesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<SslPoliciesConnectionIdempotencyPolicy>
-    MakeDefaultSslPoliciesConnectionIdempotencyPolicy() {
+MakeDefaultSslPoliciesConnectionIdempotencyPolicy() {
   return std::make_unique<SslPoliciesConnectionIdempotencyPolicy>();
 }
 

@@ -17,11 +17,11 @@
 // source: google/cloud/compute/images/v1/images.proto
 
 #include "google/cloud/compute/images/v1/images_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/images/v1/images_options.h"
 #include "google/cloud/compute/images/v1/internal/images_option_defaults.h"
 #include "google/cloud/compute/images/v1/internal/images_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -46,8 +46,7 @@ ImagesConnection::Deprecate(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Image>
-ImagesConnection::GetImages(
+StatusOr<google::cloud::cpp::compute::v1::Image> ImagesConnection::GetImages(
     google::cloud::cpp::compute::images::v1::GetImagesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -70,8 +69,10 @@ ImagesConnection::InsertImages(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Image> ImagesConnection::ListImages(
-    google::cloud::cpp::compute::images::v1::ListImagesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::Image>
+ImagesConnection::ListImages(
+    google::cloud::cpp::compute::images::v1::
+        ListImagesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Image>>();
 }

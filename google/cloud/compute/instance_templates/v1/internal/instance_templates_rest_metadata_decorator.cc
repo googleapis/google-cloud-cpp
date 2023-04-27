@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/instance_templates/v1/instance_templates.proto
 
-
 #include "google/cloud/compute/instance_templates/v1/internal/instance_templates_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,12 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 InstanceTemplatesRestMetadata::InstanceTemplatesRestMetadata(
     std::shared_ptr<InstanceTemplatesRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateAggregatedList>
 InstanceTemplatesRestMetadata::AggregatedListInstanceTemplates(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::instanceTemplates::v1::AggregatedListInstanceTemplatesRequest const& request) {
+    google::cloud::cpp::compute::instanceTemplates::v1::
+        AggregatedListInstanceTemplatesRequest const& request) {
   SetMetadata(rest_context);
   return child_->AggregatedListInstanceTemplates(rest_context, request);
 }
@@ -47,7 +48,8 @@ InstanceTemplatesRestMetadata::AggregatedListInstanceTemplates(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceTemplatesRestMetadata::DeleteInstanceTemplates(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::instanceTemplates::v1::DeleteInstanceTemplatesRequest const& request) {
+    google::cloud::cpp::compute::instanceTemplates::v1::
+        DeleteInstanceTemplatesRequest const& request) {
   SetMetadata(rest_context);
   return child_->DeleteInstanceTemplates(rest_context, request);
 }
@@ -55,7 +57,8 @@ InstanceTemplatesRestMetadata::DeleteInstanceTemplates(
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
 InstanceTemplatesRestMetadata::GetInstanceTemplates(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::instanceTemplates::v1::GetInstanceTemplatesRequest const& request) {
+    google::cloud::cpp::compute::instanceTemplates::v1::
+        GetInstanceTemplatesRequest const& request) {
   SetMetadata(rest_context);
   return child_->GetInstanceTemplates(rest_context, request);
 }
@@ -63,7 +66,8 @@ InstanceTemplatesRestMetadata::GetInstanceTemplates(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 InstanceTemplatesRestMetadata::GetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::instanceTemplates::v1::GetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::instanceTemplates::v1::
+        GetIamPolicyRequest const& request) {
   SetMetadata(rest_context);
   return child_->GetIamPolicy(rest_context, request);
 }
@@ -71,7 +75,8 @@ InstanceTemplatesRestMetadata::GetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceTemplatesRestMetadata::InsertInstanceTemplates(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::instanceTemplates::v1::InsertInstanceTemplatesRequest const& request) {
+    google::cloud::cpp::compute::instanceTemplates::v1::
+        InsertInstanceTemplatesRequest const& request) {
   SetMetadata(rest_context);
   return child_->InsertInstanceTemplates(rest_context, request);
 }
@@ -79,7 +84,8 @@ InstanceTemplatesRestMetadata::InsertInstanceTemplates(
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateList>
 InstanceTemplatesRestMetadata::ListInstanceTemplates(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::instanceTemplates::v1::ListInstanceTemplatesRequest const& request) {
+    google::cloud::cpp::compute::instanceTemplates::v1::
+        ListInstanceTemplatesRequest const& request) {
   SetMetadata(rest_context);
   return child_->ListInstanceTemplates(rest_context, request);
 }
@@ -87,7 +93,8 @@ InstanceTemplatesRestMetadata::ListInstanceTemplates(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 InstanceTemplatesRestMetadata::SetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::instanceTemplates::v1::SetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::instanceTemplates::v1::
+        SetIamPolicyRequest const& request) {
   SetMetadata(rest_context);
   return child_->SetIamPolicy(rest_context, request);
 }
@@ -95,33 +102,34 @@ InstanceTemplatesRestMetadata::SetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 InstanceTemplatesRestMetadata::TestIamPermissions(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::instanceTemplates::v1::TestIamPermissionsRequest const& request) {
+    google::cloud::cpp::compute::instanceTemplates::v1::
+        TestIamPermissionsRequest const& request) {
   SetMetadata(rest_context);
   return child_->TestIamPermissions(rest_context, request);
 }
 
 void InstanceTemplatesRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+    rest_internal::RestContext& rest_context,
+    std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

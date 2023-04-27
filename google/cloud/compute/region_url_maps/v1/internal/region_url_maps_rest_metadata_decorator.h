@@ -35,35 +35,43 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RegionUrlMapsRestMetadata : public RegionUrlMapsRestStub {
  public:
   ~RegionUrlMapsRestMetadata() override = default;
-  explicit RegionUrlMapsRestMetadata(std::shared_ptr<RegionUrlMapsRestStub> child);
+  explicit RegionUrlMapsRestMetadata(
+      std::shared_ptr<RegionUrlMapsRestStub> child);
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRegionUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionUrlMaps::v1::DeleteRegionUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::regionUrlMaps::v1::
+          DeleteRegionUrlMapsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetRegionUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionUrlMaps::v1::GetRegionUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::regionUrlMaps::v1::
+          GetRegionUrlMapsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionUrlMaps::v1::InsertRegionUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::regionUrlMaps::v1::
+          InsertRegionUrlMapsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMapList> ListRegionUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionUrlMaps::v1::ListRegionUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::regionUrlMaps::v1::
+          ListRegionUrlMapsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRegionUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionUrlMaps::v1::PatchRegionUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::regionUrlMaps::v1::
+          PatchRegionUrlMapsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRegionUrlMaps(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionUrlMaps::v1::UpdateRegionUrlMapsRequest const& request) override;
+      google::cloud::cpp::compute::regionUrlMaps::v1::
+          UpdateRegionUrlMapsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse> Validate(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionUrlMaps::v1::ValidateRequest const& request) override;
+      google::cloud::cpp::compute::regionUrlMaps::v1::ValidateRequest const&
+          request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

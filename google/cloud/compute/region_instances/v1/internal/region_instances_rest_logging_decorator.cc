@@ -28,18 +28,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionInstancesRestLogging::RegionInstancesRestLogging(
     std::shared_ptr<RegionInstancesRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstancesRestLogging::BulkInsert(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const& request) {
+    google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const& request) {
+             google::cloud::cpp::compute::regionInstances::v1::
+                 BulkInsertRequest const& request) {
         return child_->BulkInsert(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);

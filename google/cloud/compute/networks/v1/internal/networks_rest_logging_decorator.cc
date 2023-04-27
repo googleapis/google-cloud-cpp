@@ -27,31 +27,33 @@ namespace compute_networks_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 NetworksRestLogging::NetworksRestLogging(
-    std::shared_ptr<NetworksRestStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<NetworksRestStub> child, TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworksRestLogging::AddPeering(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::networks::v1::AddPeeringRequest const& request) {
+    google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::networks::v1::AddPeeringRequest const& request) {
-        return child_->AddPeering(rest_context, request);
-      },
+             google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
+                 request) { return child_->AddPeering(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworksRestLogging::DeleteNetworks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const& request) {
+    google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const& request) {
+             google::cloud::cpp::compute::networks::v1::
+                 DeleteNetworksRequest const& request) {
         return child_->DeleteNetworks(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -60,22 +62,25 @@ NetworksRestLogging::DeleteNetworks(
 StatusOr<google::cloud::cpp::compute::v1::Network>
 NetworksRestLogging::GetNetworks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::networks::v1::GetNetworksRequest const& request) {
+    google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::networks::v1::GetNetworksRequest const& request) {
-        return child_->GetNetworks(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&
+              request) { return child_->GetNetworks(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>
 NetworksRestLogging::GetEffectiveFirewalls(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::networks::v1::GetEffectiveFirewallsRequest const& request) {
+    google::cloud::cpp::compute::networks::v1::
+        GetEffectiveFirewallsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::networks::v1::GetEffectiveFirewallsRequest const& request) {
+             google::cloud::cpp::compute::networks::v1::
+                 GetEffectiveFirewallsRequest const& request) {
         return child_->GetEffectiveFirewalls(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -84,10 +89,12 @@ NetworksRestLogging::GetEffectiveFirewalls(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworksRestLogging::InsertNetworks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const& request) {
+    google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const& request) {
+             google::cloud::cpp::compute::networks::v1::
+                 InsertNetworksRequest const& request) {
         return child_->InsertNetworks(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -96,22 +103,25 @@ NetworksRestLogging::InsertNetworks(
 StatusOr<google::cloud::cpp::compute::v1::NetworkList>
 NetworksRestLogging::ListNetworks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::networks::v1::ListNetworksRequest const& request) {
+    google::cloud::cpp::compute::networks::v1::ListNetworksRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::networks::v1::ListNetworksRequest const& request) {
-        return child_->ListNetworks(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::networks::v1::ListNetworksRequest const&
+              request) { return child_->ListNetworks(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ExchangedPeeringRoutesList>
 NetworksRestLogging::ListPeeringRoutes(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest const& request) {
+    google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest const& request) {
+             google::cloud::cpp::compute::networks::v1::
+                 ListPeeringRoutesRequest const& request) {
         return child_->ListPeeringRoutes(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -120,34 +130,38 @@ NetworksRestLogging::ListPeeringRoutes(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworksRestLogging::PatchNetworks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const& request) {
+    google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const& request) {
-        return child_->PatchNetworks(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&
+              request) { return child_->PatchNetworks(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworksRestLogging::RemovePeering(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const& request) {
+    google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const& request) {
-        return child_->RemovePeering(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
+              request) { return child_->RemovePeering(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworksRestLogging::SwitchToCustomMode(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const& request) {
+    google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const& request) {
+             google::cloud::cpp::compute::networks::v1::
+                 SwitchToCustomModeRequest const& request) {
         return child_->SwitchToCustomMode(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -156,12 +170,13 @@ NetworksRestLogging::SwitchToCustomMode(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworksRestLogging::UpdatePeering(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const& request) {
+    google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const& request) {
-        return child_->UpdatePeering(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
+              request) { return child_->UpdatePeering(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 

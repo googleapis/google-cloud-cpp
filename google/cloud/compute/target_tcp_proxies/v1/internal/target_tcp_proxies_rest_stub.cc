@@ -29,57 +29,65 @@ namespace cloud {
 namespace compute_target_tcp_proxies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultTargetTcpProxiesRestStub::DefaultTargetTcpProxiesRestStub(Options options)
+DefaultTargetTcpProxiesRestStub::DefaultTargetTcpProxiesRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       options_(std::move(options)) {}
 
 DefaultTargetTcpProxiesRestStub::DefaultTargetTcpProxiesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>
 DefaultTargetTcpProxiesRestStub::AggregatedListTargetTcpProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetTcpProxies::v1::AggregatedListTargetTcpProxiesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetTcpProxies::v1::
+        AggregatedListTargetTcpProxiesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::TargetTcpProxyAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/targetTcpProxies",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetTcpProxiesRestStub::DeleteTargetTcpProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetTcpProxies::v1::DeleteTargetTcpProxiesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetTcpProxies::v1::
+        DeleteTargetTcpProxiesRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/targetTcpProxies/{target_tcp_proxy}");
+      "/compute/v1/projects/{project}/global/targetTcpProxies/"
+      "{target_tcp_proxy}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
 DefaultTargetTcpProxiesRestStub::GetTargetTcpProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetTcpProxies::v1::GetTargetTcpProxiesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetTcpProxies::v1::
+        GetTargetTcpProxiesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetTcpProxy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/targetTcpProxies/{target_tcp_proxy}",
+      "/compute/v1/projects/{project}/global/targetTcpProxies/"
+      "{target_tcp_proxy}",
       {std::make_pair("project", request.project()),
        std::make_pair("target_tcp_proxy", request.target_tcp_proxy())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetTcpProxiesRestStub::InsertTargetTcpProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetTcpProxies::v1::InsertTargetTcpProxiesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetTcpProxies::v1::
+        InsertTargetTcpProxiesRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/targetTcpProxies");
@@ -87,9 +95,11 @@ DefaultTargetTcpProxiesRestStub::InsertTargetTcpProxies(
 
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyList>
 DefaultTargetTcpProxiesRestStub::ListTargetTcpProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetTcpProxies::v1::ListTargetTcpProxiesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::TargetTcpProxyList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetTcpProxies::v1::
+        ListTargetTcpProxiesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::TargetTcpProxyList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/targetTcpProxies",
       {std::make_pair("filter", request.filter()),
@@ -97,25 +107,30 @@ DefaultTargetTcpProxiesRestStub::ListTargetTcpProxies(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetTcpProxiesRestStub::SetBackendService(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetTcpProxies::v1::SetBackendServiceRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetTcpProxies::v1::
+        SetBackendServiceRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/targetTcpProxies/{target_tcp_proxy}/setBackendService");
+      "/compute/v1/projects/{project}/global/targetTcpProxies/"
+      "{target_tcp_proxy}/setBackendService");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetTcpProxiesRestStub::SetProxyHeader(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetTcpProxies::v1::SetProxyHeaderRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetTcpProxies::v1::
+        SetProxyHeaderRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/targetTcpProxies/{target_tcp_proxy}/setProxyHeader");
+      "/compute/v1/projects/{project}/global/targetTcpProxies/"
+      "{target_tcp_proxy}/setProxyHeader");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

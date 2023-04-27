@@ -36,57 +36,71 @@ class RegionDisksRestStub {
  public:
   virtual ~RegionDisksRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::AddResourcePoliciesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  AddResourcePolicies(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::regionDisks::v1::
+                          AddResourcePoliciesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> CreateSnapshot(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::CreateSnapshotRequest const& request) = 0;
+      google::cloud::cpp::compute::regionDisks::v1::CreateSnapshotRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRegionDisks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::DeleteRegionDisksRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteRegionDisks(google::cloud::rest_internal::RestContext& rest_context,
+                    google::cloud::cpp::compute::regionDisks::v1::
+                        DeleteRegionDisksRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Disk> GetRegionDisks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::GetRegionDisksRequest const& request) = 0;
+      google::cloud::cpp::compute::regionDisks::v1::GetRegionDisksRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::GetIamPolicyRequest const& request) = 0;
+      google::cloud::cpp::compute::regionDisks::v1::GetIamPolicyRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionDisks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::InsertRegionDisksRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertRegionDisks(google::cloud::rest_internal::RestContext& rest_context,
+                    google::cloud::cpp::compute::regionDisks::v1::
+                        InsertRegionDisksRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::DiskList> ListRegionDisks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::ListRegionDisksRequest const& request) = 0;
+      google::cloud::cpp::compute::regionDisks::v1::
+          ListRegionDisksRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  RemoveResourcePolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::RemoveResourcePoliciesRequest const& request) = 0;
+      google::cloud::cpp::compute::regionDisks::v1::
+          RemoveResourcePoliciesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::ResizeRequest const& request) = 0;
+      google::cloud::cpp::compute::regionDisks::v1::ResizeRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::SetIamPolicyRequest const& request) = 0;
+      google::cloud::cpp::compute::regionDisks::v1::SetIamPolicyRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::SetLabelsRequest const& request) = 0;
+      google::cloud::cpp::compute::regionDisks::v1::SetLabelsRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::TestIamPermissionsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::regionDisks::v1::
+                         TestIamPermissionsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRegionDisks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::UpdateRegionDisksRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateRegionDisks(google::cloud::rest_internal::RestContext& rest_context,
+                    google::cloud::cpp::compute::regionDisks::v1::
+                        UpdateRegionDisksRequest const& request) = 0;
 };
 
 class DefaultRegionDisksRestStub : public RegionDisksRestStub {
@@ -94,61 +108,73 @@ class DefaultRegionDisksRestStub : public RegionDisksRestStub {
   ~DefaultRegionDisksRestStub() override = default;
 
   explicit DefaultRegionDisksRestStub(Options options);
-  DefaultRegionDisksRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+  DefaultRegionDisksRestStub(std::shared_ptr<rest_internal::RestClient> service,
+                             Options options);
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::AddResourcePoliciesRequest const& request) override;
+      google::cloud::cpp::compute::regionDisks::v1::
+          AddResourcePoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> CreateSnapshot(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::CreateSnapshotRequest const& request) override;
+      google::cloud::cpp::compute::regionDisks::v1::CreateSnapshotRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRegionDisks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::DeleteRegionDisksRequest const& request) override;
+      google::cloud::cpp::compute::regionDisks::v1::
+          DeleteRegionDisksRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Disk> GetRegionDisks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::GetRegionDisksRequest const& request) override;
+      google::cloud::cpp::compute::regionDisks::v1::GetRegionDisksRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::GetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::regionDisks::v1::GetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionDisks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::InsertRegionDisksRequest const& request) override;
+      google::cloud::cpp::compute::regionDisks::v1::
+          InsertRegionDisksRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::DiskList> ListRegionDisks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::ListRegionDisksRequest const& request) override;
+      google::cloud::cpp::compute::regionDisks::v1::
+          ListRegionDisksRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::RemoveResourcePoliciesRequest const& request) override;
+      google::cloud::cpp::compute::regionDisks::v1::
+          RemoveResourcePoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::ResizeRequest const& request) override;
+      google::cloud::cpp::compute::regionDisks::v1::ResizeRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::SetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::regionDisks::v1::SetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::SetLabelsRequest const& request) override;
+      google::cloud::cpp::compute::regionDisks::v1::SetLabelsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::regionDisks::v1::
+                         TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRegionDisks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionDisks::v1::UpdateRegionDisksRequest const& request) override;
+      google::cloud::cpp::compute::regionDisks::v1::
+          UpdateRegionDisksRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

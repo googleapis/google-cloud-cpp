@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/routers/v1/routers.proto
 
-
 #include "google/cloud/compute/routers/v1/internal/routers_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -31,15 +30,16 @@ namespace cloud {
 namespace compute_routers_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-RoutersRestMetadata::RoutersRestMetadata(
-    std::shared_ptr<RoutersRestStub> child)
+RoutersRestMetadata::RoutersRestMetadata(std::shared_ptr<RoutersRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
 RoutersRestMetadata::AggregatedListRouters(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest const& request) {
+    google::cloud::cpp::compute::routers::v1::
+        AggregatedListRoutersRequest const& request) {
   SetMetadata(rest_context);
   return child_->AggregatedListRouters(rest_context, request);
 }
@@ -47,7 +47,8 @@ RoutersRestMetadata::AggregatedListRouters(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutersRestMetadata::DeleteRouters(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const& request) {
+    google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->DeleteRouters(rest_context, request);
 }
@@ -55,7 +56,8 @@ RoutersRestMetadata::DeleteRouters(
 StatusOr<google::cloud::cpp::compute::v1::Router>
 RoutersRestMetadata::GetRouters(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::routers::v1::GetRoutersRequest const& request) {
+    google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->GetRouters(rest_context, request);
 }
@@ -63,7 +65,8 @@ RoutersRestMetadata::GetRouters(
 StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
 RoutersRestMetadata::GetNatMappingInfo(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const& request) {
+    google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->GetNatMappingInfo(rest_context, request);
 }
@@ -71,7 +74,8 @@ RoutersRestMetadata::GetNatMappingInfo(
 StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
 RoutersRestMetadata::GetRouterStatus(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const& request) {
+    google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->GetRouterStatus(rest_context, request);
 }
@@ -79,7 +83,8 @@ RoutersRestMetadata::GetRouterStatus(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutersRestMetadata::InsertRouters(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const& request) {
+    google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->InsertRouters(rest_context, request);
 }
@@ -87,7 +92,8 @@ RoutersRestMetadata::InsertRouters(
 StatusOr<google::cloud::cpp::compute::v1::RouterList>
 RoutersRestMetadata::ListRouters(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::routers::v1::ListRoutersRequest const& request) {
+    google::cloud::cpp::compute::routers::v1::ListRoutersRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->ListRouters(rest_context, request);
 }
@@ -95,7 +101,8 @@ RoutersRestMetadata::ListRouters(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutersRestMetadata::PatchRouters(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const& request) {
+    google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->PatchRouters(rest_context, request);
 }
@@ -111,33 +118,33 @@ RoutersRestMetadata::Preview(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutersRestMetadata::UpdateRouters(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const& request) {
+    google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->UpdateRouters(rest_context, request);
 }
 
-void RoutersRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+void RoutersRestMetadata::SetMetadata(rest_internal::RestContext& rest_context,
+                                      std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

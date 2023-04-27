@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ACCELERATOR_TYPES_V1_ACCELERATOR_TYPES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ACCELERATOR_TYPES_V1_ACCELERATOR_TYPES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/accelerator_types/v1/accelerator_types_connection_idempotency_policy.h"
 #include "google/cloud/compute/accelerator_types/v1/internal/accelerator_types_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -35,11 +35,13 @@ namespace cloud {
 namespace compute_accelerator_types_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using AcceleratorTypesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_accelerator_types_v1_internal::AcceleratorTypesRetryTraits>;
+using AcceleratorTypesRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_accelerator_types_v1_internal::AcceleratorTypesRetryTraits>;
 
-using AcceleratorTypesLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_accelerator_types_v1_internal::AcceleratorTypesRetryTraits>;
+using AcceleratorTypesLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_accelerator_types_v1_internal::AcceleratorTypesRetryTraits>;
 
 using AcceleratorTypesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -55,7 +57,8 @@ using AcceleratorTypesLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeAcceleratorTypesConnection()`.
  *
- * For mocking, see `compute_accelerator_types_v1_mocks::MockAcceleratorTypesConnection`.
+ * For mocking, see
+ * `compute_accelerator_types_v1_mocks::MockAcceleratorTypesConnection`.
  */
 class AcceleratorTypesConnection {
  public:
@@ -63,14 +66,19 @@ class AcceleratorTypesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>
-  AggregatedListAcceleratorTypes(google::cloud::cpp::compute::acceleratorTypes::v1::AggregatedListAcceleratorTypesRequest const& request);
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>
+  AggregatedListAcceleratorTypes(
+      google::cloud::cpp::compute::acceleratorTypes::v1::
+          AggregatedListAcceleratorTypesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
-  GetAcceleratorTypes(google::cloud::cpp::compute::acceleratorTypes::v1::GetAcceleratorTypesRequest const& request);
+  GetAcceleratorTypes(google::cloud::cpp::compute::acceleratorTypes::v1::
+                          GetAcceleratorTypesRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::AcceleratorType>
-  ListAcceleratorTypes(google::cloud::cpp::compute::acceleratorTypes::v1::ListAcceleratorTypesRequest request);
+  ListAcceleratorTypes(google::cloud::cpp::compute::acceleratorTypes::v1::
+                           ListAcceleratorTypesRequest request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

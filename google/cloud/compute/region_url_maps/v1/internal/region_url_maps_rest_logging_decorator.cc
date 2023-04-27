@@ -28,18 +28,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionUrlMapsRestLogging::RegionUrlMapsRestLogging(
     std::shared_ptr<RegionUrlMapsRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionUrlMapsRestLogging::DeleteRegionUrlMaps(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionUrlMaps::v1::DeleteRegionUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::regionUrlMaps::v1::
+        DeleteRegionUrlMapsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::regionUrlMaps::v1::DeleteRegionUrlMapsRequest const& request) {
+             google::cloud::cpp::compute::regionUrlMaps::v1::
+                 DeleteRegionUrlMapsRequest const& request) {
         return child_->DeleteRegionUrlMaps(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,10 +50,12 @@ RegionUrlMapsRestLogging::DeleteRegionUrlMaps(
 StatusOr<google::cloud::cpp::compute::v1::UrlMap>
 RegionUrlMapsRestLogging::GetRegionUrlMaps(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionUrlMaps::v1::GetRegionUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::regionUrlMaps::v1::
+        GetRegionUrlMapsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::regionUrlMaps::v1::GetRegionUrlMapsRequest const& request) {
+             google::cloud::cpp::compute::regionUrlMaps::v1::
+                 GetRegionUrlMapsRequest const& request) {
         return child_->GetRegionUrlMaps(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -60,10 +64,12 @@ RegionUrlMapsRestLogging::GetRegionUrlMaps(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionUrlMapsRestLogging::InsertRegionUrlMaps(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionUrlMaps::v1::InsertRegionUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::regionUrlMaps::v1::
+        InsertRegionUrlMapsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::regionUrlMaps::v1::InsertRegionUrlMapsRequest const& request) {
+             google::cloud::cpp::compute::regionUrlMaps::v1::
+                 InsertRegionUrlMapsRequest const& request) {
         return child_->InsertRegionUrlMaps(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -72,10 +78,12 @@ RegionUrlMapsRestLogging::InsertRegionUrlMaps(
 StatusOr<google::cloud::cpp::compute::v1::UrlMapList>
 RegionUrlMapsRestLogging::ListRegionUrlMaps(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionUrlMaps::v1::ListRegionUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::regionUrlMaps::v1::
+        ListRegionUrlMapsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::regionUrlMaps::v1::ListRegionUrlMapsRequest const& request) {
+             google::cloud::cpp::compute::regionUrlMaps::v1::
+                 ListRegionUrlMapsRequest const& request) {
         return child_->ListRegionUrlMaps(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -84,10 +92,12 @@ RegionUrlMapsRestLogging::ListRegionUrlMaps(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionUrlMapsRestLogging::PatchRegionUrlMaps(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionUrlMaps::v1::PatchRegionUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::regionUrlMaps::v1::
+        PatchRegionUrlMapsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::regionUrlMaps::v1::PatchRegionUrlMapsRequest const& request) {
+             google::cloud::cpp::compute::regionUrlMaps::v1::
+                 PatchRegionUrlMapsRequest const& request) {
         return child_->PatchRegionUrlMaps(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -96,10 +106,12 @@ RegionUrlMapsRestLogging::PatchRegionUrlMaps(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionUrlMapsRestLogging::UpdateRegionUrlMaps(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionUrlMaps::v1::UpdateRegionUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::regionUrlMaps::v1::
+        UpdateRegionUrlMapsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::regionUrlMaps::v1::UpdateRegionUrlMapsRequest const& request) {
+             google::cloud::cpp::compute::regionUrlMaps::v1::
+                 UpdateRegionUrlMapsRequest const& request) {
         return child_->UpdateRegionUrlMaps(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -108,12 +120,13 @@ RegionUrlMapsRestLogging::UpdateRegionUrlMaps(
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
 RegionUrlMapsRestLogging::Validate(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionUrlMaps::v1::ValidateRequest const& request) {
+    google::cloud::cpp::compute::regionUrlMaps::v1::ValidateRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::regionUrlMaps::v1::ValidateRequest const& request) {
-        return child_->Validate(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::regionUrlMaps::v1::ValidateRequest const&
+              request) { return child_->Validate(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 

@@ -38,32 +38,38 @@ class HttpHealthChecksRestLogging : public HttpHealthChecksRestStub {
  public:
   ~HttpHealthChecksRestLogging() override = default;
   HttpHealthChecksRestLogging(std::shared_ptr<HttpHealthChecksRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                              TracingOptions tracing_options,
+                              std::set<std::string> components);
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHttpHealthChecks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::httpHealthChecks::v1::DeleteHttpHealthChecksRequest const& request) override;
+      google::cloud::cpp::compute::httpHealthChecks::v1::
+          DeleteHttpHealthChecksRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck> GetHttpHealthChecks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::httpHealthChecks::v1::GetHttpHealthChecksRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheck>
+  GetHttpHealthChecks(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::httpHealthChecks::v1::
+                          GetHttpHealthChecksRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHttpHealthChecks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::httpHealthChecks::v1::InsertHttpHealthChecksRequest const& request) override;
+      google::cloud::cpp::compute::httpHealthChecks::v1::
+          InsertHttpHealthChecksRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheckList> ListHttpHealthChecks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::httpHealthChecks::v1::ListHttpHealthChecksRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::HttpHealthCheckList>
+  ListHttpHealthChecks(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::httpHealthChecks::v1::
+                           ListHttpHealthChecksRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHttpHealthChecks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::httpHealthChecks::v1::PatchHttpHealthChecksRequest const& request) override;
+      google::cloud::cpp::compute::httpHealthChecks::v1::
+          PatchHttpHealthChecksRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateHttpHealthChecks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::httpHealthChecks::v1::UpdateHttpHealthChecksRequest const& request) override;
+      google::cloud::cpp::compute::httpHealthChecks::v1::
+          UpdateHttpHealthChecksRequest const& request) override;
 
  private:
   std::shared_ptr<HttpHealthChecksRestStub> child_;

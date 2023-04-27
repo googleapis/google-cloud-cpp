@@ -35,31 +35,34 @@ DefaultReservationsRestStub::DefaultReservationsRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultReservationsRestStub::DefaultReservationsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>
 DefaultReservationsRestStub::AggregatedListReservations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::AggregatedListReservationsRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::ReservationAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::reservations::v1::
+        AggregatedListReservationsRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::ReservationAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/reservations",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultReservationsRestStub::DeleteReservations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::DeleteReservationsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::reservations::v1::
+        DeleteReservationsRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/reservations/{reservation}");
@@ -67,8 +70,9 @@ DefaultReservationsRestStub::DeleteReservations(
 
 StatusOr<google::cloud::cpp::compute::v1::Reservation>
 DefaultReservationsRestStub::GetReservations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::GetReservationsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::reservations::v1::GetReservationsRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Reservation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/reservations/{reservation}",
@@ -79,12 +83,16 @@ DefaultReservationsRestStub::GetReservations(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultReservationsRestStub::GetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/reservations/{resource}/getIamPolicy",
-      {std::make_pair("options_requested_policy_version", std::to_string(request.options_requested_policy_version())),
+      "/compute/v1/projects/{project}/zones/{zone}/reservations/{resource}/"
+      "getIamPolicy",
+      {std::make_pair(
+           "options_requested_policy_version",
+           std::to_string(request.options_requested_policy_version())),
        std::make_pair("project", request.project()),
        std::make_pair("resource", request.resource()),
        std::make_pair("zone", request.zone())});
@@ -92,8 +100,9 @@ DefaultReservationsRestStub::GetIamPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultReservationsRestStub::InsertReservations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::InsertReservationsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::reservations::v1::
+        InsertReservationsRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/reservations");
@@ -101,8 +110,9 @@ DefaultReservationsRestStub::InsertReservations(
 
 StatusOr<google::cloud::cpp::compute::v1::ReservationList>
 DefaultReservationsRestStub::ListReservations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::ListReservationsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::reservations::v1::
+        ListReservationsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::ReservationList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/reservations",
@@ -111,41 +121,50 @@ DefaultReservationsRestStub::ListReservations(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success())),
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success())),
        std::make_pair("zone", request.zone())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultReservationsRestStub::Resize(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::ResizeRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/reservations/{reservation}/resize");
+      "/compute/v1/projects/{project}/zones/{zone}/reservations/{reservation}/"
+      "resize");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultReservationsRestStub::SetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/reservations/{resource}/setIamPolicy");
+      "/compute/v1/projects/{project}/zones/{zone}/reservations/{resource}/"
+      "setIamPolicy");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultReservationsRestStub::TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::TestIamPermissionsRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::reservations::v1::
+        TestIamPermissionsRequest const& request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/reservations/{resource}/testIamPermissions");
+      "/compute/v1/projects/{project}/zones/{zone}/reservations/{resource}/"
+      "testIamPermissions");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultReservationsRestStub::UpdateReservations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::UpdateReservationsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::reservations::v1::
+        UpdateReservationsRequest const& request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/reservations/{reservation}");

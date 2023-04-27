@@ -35,47 +35,59 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ReservationsRestMetadata : public ReservationsRestStub {
  public:
   ~ReservationsRestMetadata() override = default;
-  explicit ReservationsRestMetadata(std::shared_ptr<ReservationsRestStub> child);
+  explicit ReservationsRestMetadata(
+      std::shared_ptr<ReservationsRestStub> child);
 
-  StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList> AggregatedListReservations(
+  StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>
+  AggregatedListReservations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::AggregatedListReservationsRequest const& request) override;
+      google::cloud::cpp::compute::reservations::v1::
+          AggregatedListReservationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteReservations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::DeleteReservationsRequest const& request) override;
+      google::cloud::cpp::compute::reservations::v1::
+          DeleteReservationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::GetReservationsRequest const& request) override;
+      google::cloud::cpp::compute::reservations::v1::
+          GetReservationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertReservations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::InsertReservationsRequest const& request) override;
+      google::cloud::cpp::compute::reservations::v1::
+          InsertReservationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ReservationList> ListReservations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::ListReservationsRequest const& request) override;
+      google::cloud::cpp::compute::reservations::v1::
+          ListReservationsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::ResizeRequest const& request) override;
+      google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::reservations::v1::
+                         TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateReservations(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::reservations::v1::UpdateReservationsRequest const& request) override;
+      google::cloud::cpp::compute::reservations::v1::
+          UpdateReservationsRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

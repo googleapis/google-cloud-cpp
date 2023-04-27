@@ -17,11 +17,11 @@
 // source: google/cloud/compute/addresses/v1/addresses.proto
 
 #include "google/cloud/compute/addresses/v1/addresses_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/addresses/v1/addresses_options.h"
 #include "google/cloud/compute/addresses/v1/internal/addresses_option_defaults.h"
 #include "google/cloud/compute/addresses/v1/internal/addresses_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,7 +36,8 @@ AddressesConnection::~AddressesConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
 AddressesConnection::AggregatedListAddresses(
-    google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest const&) {
+    google::cloud::cpp::compute::addresses::v1::
+        AggregatedListAddressesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -58,8 +59,10 @@ AddressesConnection::InsertAddresses(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Address> AddressesConnection::ListAddresses(
-    google::cloud::cpp::compute::addresses::v1::ListAddressesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::Address>
+AddressesConnection::ListAddresses(
+    google::cloud::cpp::compute::addresses::v1::
+        ListAddressesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Address>>();
 }

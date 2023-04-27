@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SECURITY_POLICIES_V1_INTERNAL_SECURITY_POLICIES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SECURITY_POLICIES_V1_INTERNAL_SECURITY_POLICIES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/security_policies/v1/internal/security_policies_rest_stub.h"
 #include "google/cloud/compute/security_policies/v1/internal/security_policies_retry_traits.h"
 #include "google/cloud/compute/security_policies/v1/security_policies_connection.h"
 #include "google/cloud/compute/security_policies/v1/security_policies_connection_idempotency_policy.h"
 #include "google/cloud/compute/security_policies/v1/security_policies_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,76 +43,117 @@ class SecurityPoliciesRestConnectionImpl
   ~SecurityPoliciesRestConnectionImpl() override = default;
 
   SecurityPoliciesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_security_policies_v1_internal::SecurityPoliciesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_security_policies_v1_internal::SecurityPoliciesRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddRule(google::cloud::cpp::compute::securityPolicies::v1::AddRuleRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddRule(
+      google::cloud::cpp::compute::securityPolicies::v1::AddRuleRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>
-  AggregatedListSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::AggregatedListSecurityPoliciesRequest const& request) override;
+  AggregatedListSecurityPolicies(
+      google::cloud::cpp::compute::securityPolicies::v1::
+          AggregatedListSecurityPoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::DeleteSecurityPoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSecurityPolicies(
+      google::cloud::cpp::compute::securityPolicies::v1::
+          DeleteSecurityPoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
-  GetSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::GetSecurityPoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicies(
+      google::cloud::cpp::compute::securityPolicies::v1::
+          GetSecurityPoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>
-  GetRule(google::cloud::cpp::compute::securityPolicies::v1::GetRuleRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule> GetRule(
+      google::cloud::cpp::compute::securityPolicies::v1::GetRuleRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::InsertSecurityPoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSecurityPolicies(
+      google::cloud::cpp::compute::securityPolicies::v1::
+          InsertSecurityPoliciesRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
-  ListSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::ListSecurityPoliciesRequest request) override;
+  ListSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::
+                           ListSecurityPoliciesRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesListPreconfiguredExpressionSetsResponse>
-  ListPreconfiguredExpressionSets(google::cloud::cpp::compute::securityPolicies::v1::ListPreconfiguredExpressionSetsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::
+               SecurityPoliciesListPreconfiguredExpressionSetsResponse>
+  ListPreconfiguredExpressionSets(
+      google::cloud::cpp::compute::securityPolicies::v1::
+          ListPreconfiguredExpressionSetsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::PatchSecurityPoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSecurityPolicies(
+      google::cloud::cpp::compute::securityPolicies::v1::
+          PatchSecurityPoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchRule(google::cloud::cpp::compute::securityPolicies::v1::PatchRuleRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRule(
+      google::cloud::cpp::compute::securityPolicies::v1::PatchRuleRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  RemoveRule(google::cloud::cpp::compute::securityPolicies::v1::RemoveRuleRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveRule(
+      google::cloud::cpp::compute::securityPolicies::v1::
+          RemoveRuleRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(google::cloud::cpp::compute::securityPolicies::v1::SetLabelsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::cpp::compute::securityPolicies::v1::SetLabelsRequest const&
+          request) override;
 
  private:
-  std::unique_ptr<compute_security_policies_v1::SecurityPoliciesRetryPolicy> retry_policy() {
+  std::unique_ptr<compute_security_policies_v1::SecurityPoliciesRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_security_policies_v1::SecurityPoliciesRetryPolicyOption>()) {
-      return options.get<compute_security_policies_v1::SecurityPoliciesRetryPolicyOption>()->clone();
+    if (options.has<compute_security_policies_v1::
+                        SecurityPoliciesRetryPolicyOption>()) {
+      return options
+          .get<
+              compute_security_policies_v1::SecurityPoliciesRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_security_policies_v1::SecurityPoliciesRetryPolicyOption>()->clone();
+    return options_
+        .get<compute_security_policies_v1::SecurityPoliciesRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_security_policies_v1::SecurityPoliciesBackoffPolicyOption>()) {
-      return options.get<compute_security_policies_v1::SecurityPoliciesBackoffPolicyOption>()->clone();
+    if (options.has<compute_security_policies_v1::
+                        SecurityPoliciesBackoffPolicyOption>()) {
+      return options
+          .get<compute_security_policies_v1::
+                   SecurityPoliciesBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_security_policies_v1::SecurityPoliciesBackoffPolicyOption>()->clone();
+    return options_
+        .get<
+            compute_security_policies_v1::SecurityPoliciesBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_security_policies_v1::SecurityPoliciesConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<
+      compute_security_policies_v1::SecurityPoliciesConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_security_policies_v1::SecurityPoliciesConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_security_policies_v1::SecurityPoliciesConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<compute_security_policies_v1::
+                        SecurityPoliciesConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_security_policies_v1::
+                   SecurityPoliciesConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_security_policies_v1::SecurityPoliciesConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_security_policies_v1::
+                 SecurityPoliciesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_security_policies_v1_internal::SecurityPoliciesRestStub> stub_;
+  std::shared_ptr<
+      compute_security_policies_v1_internal::SecurityPoliciesRestStub>
+      stub_;
   Options options_;
 };
 

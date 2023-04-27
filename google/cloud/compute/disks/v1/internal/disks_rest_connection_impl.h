@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_DISKS_V1_INTERNAL_DISKS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_DISKS_V1_INTERNAL_DISKS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/disks/v1/disks_connection.h"
 #include "google/cloud/compute/disks/v1/disks_connection_idempotency_policy.h"
 #include "google/cloud/compute/disks/v1/disks_options.h"
 #include "google/cloud/compute/disks/v1/internal/disks_rest_stub.h"
 #include "google/cloud/compute/disks/v1/internal/disks_retry_traits.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -37,59 +37,74 @@ namespace cloud {
 namespace compute_disks_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class DisksRestConnectionImpl
-    : public compute_disks_v1::DisksConnection {
+class DisksRestConnectionImpl : public compute_disks_v1::DisksConnection {
  public:
   ~DisksRestConnectionImpl() override = default;
 
   DisksRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_disks_v1_internal::DisksRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<compute_disks_v1_internal::DisksRestStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddResourcePolicies(google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
+      google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::DiskAggregatedList>
-  AggregatedListDisks(google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const& request) override;
+  AggregatedListDisks(
+      google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  CreateSnapshot(google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> CreateSnapshot(
+      google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteDisks(google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteDisks(
+      google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const& request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Disk>
-  GetDisks(google::cloud::cpp::compute::disks::v1::GetDisksRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisks(
+      google::cloud::cpp::compute::disks::v1::GetDisksRequest const& request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertDisks(google::cloud::cpp::compute::disks::v1::InsertDisksRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertDisks(
+      google::cloud::cpp::compute::disks::v1::InsertDisksRequest const& request)
+      override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Disk>
-  ListDisks(google::cloud::cpp::compute::disks::v1::ListDisksRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Disk> ListDisks(
+      google::cloud::cpp::compute::disks::v1::ListDisksRequest request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  RemoveResourcePolicies(google::cloud::cpp::compute::disks::v1::RemoveResourcePoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
+      google::cloud::cpp::compute::disks::v1::
+          RemoveResourcePoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Resize(google::cloud::cpp::compute::disks::v1::ResizeRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
+      google::cloud::cpp::compute::disks::v1::ResizeRequest const& request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::disks::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::disks::v1::SetIamPolicyRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::disks::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(
+      google::cloud::cpp::compute::disks::v1::TestIamPermissionsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateDisks(google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisks(
+      google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const& request)
+      override;
 
  private:
   std::unique_ptr<compute_disks_v1::DisksRetryPolicy> retry_policy() {
@@ -108,13 +123,18 @@ class DisksRestConnectionImpl
     return options_.get<compute_disks_v1::DisksBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<compute_disks_v1::DisksConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<compute_disks_v1::DisksConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_disks_v1::DisksConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_disks_v1::DisksConnectionIdempotencyPolicyOption>()->clone();
+    if (options
+            .has<compute_disks_v1::DisksConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_disks_v1::DisksConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_disks_v1::DisksConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_disks_v1::DisksConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

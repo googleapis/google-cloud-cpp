@@ -27,19 +27,21 @@ namespace compute_subnetworks_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SubnetworksRestLogging::SubnetworksRestLogging(
-    std::shared_ptr<SubnetworksRestStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<SubnetworksRestStub> child, TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::SubnetworkAggregatedList>
 SubnetworksRestLogging::AggregatedListSubnetworks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::AggregatedListSubnetworksRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::
+        AggregatedListSubnetworksRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::subnetworks::v1::AggregatedListSubnetworksRequest const& request) {
+             google::cloud::cpp::compute::subnetworks::v1::
+                 AggregatedListSubnetworksRequest const& request) {
         return child_->AggregatedListSubnetworks(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,10 +50,12 @@ SubnetworksRestLogging::AggregatedListSubnetworks(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksRestLogging::DeleteSubnetworks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworksRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::
+        DeleteSubnetworksRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworksRequest const& request) {
+             google::cloud::cpp::compute::subnetworks::v1::
+                 DeleteSubnetworksRequest const& request) {
         return child_->DeleteSubnetworks(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -60,10 +64,12 @@ SubnetworksRestLogging::DeleteSubnetworks(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksRestLogging::ExpandIpCidrRange(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::
+        ExpandIpCidrRangeRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest const& request) {
+             google::cloud::cpp::compute::subnetworks::v1::
+                 ExpandIpCidrRangeRequest const& request) {
         return child_->ExpandIpCidrRange(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -72,10 +78,12 @@ SubnetworksRestLogging::ExpandIpCidrRange(
 StatusOr<google::cloud::cpp::compute::v1::Subnetwork>
 SubnetworksRestLogging::GetSubnetworks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const& request) {
+             google::cloud::cpp::compute::subnetworks::v1::
+                 GetSubnetworksRequest const& request) {
         return child_->GetSubnetworks(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -84,10 +92,12 @@ SubnetworksRestLogging::GetSubnetworks(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 SubnetworksRestLogging::GetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::subnetworks::v1::
+                 GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -96,10 +106,12 @@ SubnetworksRestLogging::GetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksRestLogging::InsertSubnetworks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworksRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::
+        InsertSubnetworksRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworksRequest const& request) {
+             google::cloud::cpp::compute::subnetworks::v1::
+                 InsertSubnetworksRequest const& request) {
         return child_->InsertSubnetworks(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -108,10 +120,12 @@ SubnetworksRestLogging::InsertSubnetworks(
 StatusOr<google::cloud::cpp::compute::v1::SubnetworkList>
 SubnetworksRestLogging::ListSubnetworks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest const& request) {
+             google::cloud::cpp::compute::subnetworks::v1::
+                 ListSubnetworksRequest const& request) {
         return child_->ListSubnetworks(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -120,22 +134,25 @@ SubnetworksRestLogging::ListSubnetworks(
 StatusOr<google::cloud::cpp::compute::v1::UsableSubnetworksAggregatedList>
 SubnetworksRestLogging::ListUsable(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest const& request) {
-        return child_->ListUsable(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest const&
+              request) { return child_->ListUsable(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksRestLogging::PatchSubnetworks(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworksRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworksRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworksRequest const& request) {
+             google::cloud::cpp::compute::subnetworks::v1::
+                 PatchSubnetworksRequest const& request) {
         return child_->PatchSubnetworks(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -144,10 +161,12 @@ SubnetworksRestLogging::PatchSubnetworks(
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 SubnetworksRestLogging::SetIamPolicy(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::subnetworks::v1::
+                 SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -156,10 +175,12 @@ SubnetworksRestLogging::SetIamPolicy(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksRestLogging::SetPrivateIpGoogleAccess(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::
+        SetPrivateIpGoogleAccessRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest const& request) {
+             google::cloud::cpp::compute::subnetworks::v1::
+                 SetPrivateIpGoogleAccessRequest const& request) {
         return child_->SetPrivateIpGoogleAccess(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -168,10 +189,12 @@ SubnetworksRestLogging::SetPrivateIpGoogleAccess(
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 SubnetworksRestLogging::TestIamPermissions(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::subnetworks::v1::TestIamPermissionsRequest const& request) {
+    google::cloud::cpp::compute::subnetworks::v1::
+        TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::subnetworks::v1::TestIamPermissionsRequest const& request) {
+             google::cloud::cpp::compute::subnetworks::v1::
+                 TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);

@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_COMMITMENTS_V1_INTERNAL_REGION_COMMITMENTS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_COMMITMENTS_V1_INTERNAL_REGION_COMMITMENTS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_commitments/v1/internal/region_commitments_rest_stub.h"
 #include "google/cloud/compute/region_commitments/v1/internal/region_commitments_retry_traits.h"
 #include "google/cloud/compute/region_commitments/v1/region_commitments_connection.h"
 #include "google/cloud/compute/region_commitments/v1/region_commitments_connection_idempotency_policy.h"
 #include "google/cloud/compute/region_commitments/v1/region_commitments_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,55 +43,88 @@ class RegionCommitmentsRestConnectionImpl
   ~RegionCommitmentsRestConnectionImpl() override = default;
 
   RegionCommitmentsRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_region_commitments_v1_internal::RegionCommitmentsRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_region_commitments_v1_internal::RegionCommitmentsRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
-  AggregatedListRegionCommitments(google::cloud::cpp::compute::regionCommitments::v1::AggregatedListRegionCommitmentsRequest const& request) override;
+  AggregatedListRegionCommitments(
+      google::cloud::cpp::compute::regionCommitments::v1::
+          AggregatedListRegionCommitmentsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Commitment>
-  GetRegionCommitments(google::cloud::cpp::compute::regionCommitments::v1::GetRegionCommitmentsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Commitment> GetRegionCommitments(
+      google::cloud::cpp::compute::regionCommitments::v1::
+          GetRegionCommitmentsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertRegionCommitments(google::cloud::cpp::compute::regionCommitments::v1::InsertRegionCommitmentsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionCommitments(
+      google::cloud::cpp::compute::regionCommitments::v1::
+          InsertRegionCommitmentsRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Commitment>
-  ListRegionCommitments(google::cloud::cpp::compute::regionCommitments::v1::ListRegionCommitmentsRequest request) override;
+  ListRegionCommitments(google::cloud::cpp::compute::regionCommitments::v1::
+                            ListRegionCommitmentsRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateRegionCommitments(google::cloud::cpp::compute::regionCommitments::v1::UpdateRegionCommitmentsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRegionCommitments(
+      google::cloud::cpp::compute::regionCommitments::v1::
+          UpdateRegionCommitmentsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_region_commitments_v1::RegionCommitmentsRetryPolicy> retry_policy() {
+  std::unique_ptr<compute_region_commitments_v1::RegionCommitmentsRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_commitments_v1::RegionCommitmentsRetryPolicyOption>()) {
-      return options.get<compute_region_commitments_v1::RegionCommitmentsRetryPolicyOption>()->clone();
+    if (options.has<compute_region_commitments_v1::
+                        RegionCommitmentsRetryPolicyOption>()) {
+      return options
+          .get<compute_region_commitments_v1::
+                   RegionCommitmentsRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_region_commitments_v1::RegionCommitmentsRetryPolicyOption>()->clone();
+    return options_
+        .get<
+            compute_region_commitments_v1::RegionCommitmentsRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_commitments_v1::RegionCommitmentsBackoffPolicyOption>()) {
-      return options.get<compute_region_commitments_v1::RegionCommitmentsBackoffPolicyOption>()->clone();
+    if (options.has<compute_region_commitments_v1::
+                        RegionCommitmentsBackoffPolicyOption>()) {
+      return options
+          .get<compute_region_commitments_v1::
+                   RegionCommitmentsBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_region_commitments_v1::RegionCommitmentsBackoffPolicyOption>()->clone();
+    return options_
+        .get<compute_region_commitments_v1::
+                 RegionCommitmentsBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_region_commitments_v1::RegionCommitmentsConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<compute_region_commitments_v1::
+                      RegionCommitmentsConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_commitments_v1::RegionCommitmentsConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_region_commitments_v1::RegionCommitmentsConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<compute_region_commitments_v1::
+                        RegionCommitmentsConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_region_commitments_v1::
+                   RegionCommitmentsConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_region_commitments_v1::RegionCommitmentsConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_region_commitments_v1::
+                 RegionCommitmentsConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_region_commitments_v1_internal::RegionCommitmentsRestStub> stub_;
+  std::shared_ptr<
+      compute_region_commitments_v1_internal::RegionCommitmentsRestStub>
+      stub_;
   Options options_;
 };
 

@@ -35,35 +35,44 @@ class NodeTemplatesConnectionIdempotencyPolicy {
   virtual ~NodeTemplatesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<NodeTemplatesConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<NodeTemplatesConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  AggregatedListNodeTemplates(google::cloud::cpp::compute::nodeTemplates::v1::AggregatedListNodeTemplatesRequest const& request);
+  virtual google::cloud::Idempotency AggregatedListNodeTemplates(
+      google::cloud::cpp::compute::nodeTemplates::v1::
+          AggregatedListNodeTemplatesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteNodeTemplates(google::cloud::cpp::compute::nodeTemplates::v1::DeleteNodeTemplatesRequest const& request);
+  virtual google::cloud::Idempotency DeleteNodeTemplates(
+      google::cloud::cpp::compute::nodeTemplates::v1::
+          DeleteNodeTemplatesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetNodeTemplates(google::cloud::cpp::compute::nodeTemplates::v1::GetNodeTemplatesRequest const& request);
+  virtual google::cloud::Idempotency GetNodeTemplates(
+      google::cloud::cpp::compute::nodeTemplates::v1::
+          GetNodeTemplatesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::cloud::cpp::compute::nodeTemplates::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::cloud::cpp::compute::nodeTemplates::v1::GetIamPolicyRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  InsertNodeTemplates(google::cloud::cpp::compute::nodeTemplates::v1::InsertNodeTemplatesRequest const& request);
+  virtual google::cloud::Idempotency InsertNodeTemplates(
+      google::cloud::cpp::compute::nodeTemplates::v1::
+          InsertNodeTemplatesRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListNodeTemplates(google::cloud::cpp::compute::nodeTemplates::v1::ListNodeTemplatesRequest request);
+  virtual google::cloud::Idempotency ListNodeTemplates(
+      google::cloud::cpp::compute::nodeTemplates::v1::ListNodeTemplatesRequest
+          request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::cloud::cpp::compute::nodeTemplates::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::cloud::cpp::compute::nodeTemplates::v1::SetIamPolicyRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::cloud::cpp::compute::nodeTemplates::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::compute::nodeTemplates::v1::
+          TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<NodeTemplatesConnectionIdempotencyPolicy>
-    MakeDefaultNodeTemplatesConnectionIdempotencyPolicy();
+MakeDefaultNodeTemplatesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_node_templates_v1

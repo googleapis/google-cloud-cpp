@@ -38,11 +38,13 @@ class ZonesRestStub {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Zone> GetZones(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request) = 0;
+      google::cloud::cpp::compute::zones::v1::GetZonesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ZoneList> ListZones(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request) = 0;
+      google::cloud::cpp::compute::zones::v1::ListZonesRequest const&
+          request) = 0;
 };
 
 class DefaultZonesRestStub : public ZonesRestStub {
@@ -50,17 +52,18 @@ class DefaultZonesRestStub : public ZonesRestStub {
   ~DefaultZonesRestStub() override = default;
 
   explicit DefaultZonesRestStub(Options options);
-  DefaultZonesRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+  DefaultZonesRestStub(std::shared_ptr<rest_internal::RestClient> service,
+                       Options options);
 
   StatusOr<google::cloud::cpp::compute::v1::Zone> GetZones(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request) override;
+      google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::ZoneList> ListZones(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request) override;
+      google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request)
+      override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

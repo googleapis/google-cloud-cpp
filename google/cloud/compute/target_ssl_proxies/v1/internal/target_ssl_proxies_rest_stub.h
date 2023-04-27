@@ -36,41 +36,52 @@ class TargetSslProxiesRestStub {
  public:
   virtual ~TargetSslProxiesRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetSslProxies(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteTargetSslProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::DeleteTargetSslProxiesRequest const& request) = 0;
+      google::cloud::cpp::compute::targetSslProxies::v1::
+          DeleteTargetSslProxiesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy> GetTargetSslProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::GetTargetSslProxiesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>
+  GetTargetSslProxies(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::targetSslProxies::v1::
+                          GetTargetSslProxiesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetSslProxies(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertTargetSslProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::InsertTargetSslProxiesRequest const& request) = 0;
+      google::cloud::cpp::compute::targetSslProxies::v1::
+          InsertTargetSslProxiesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TargetSslProxyList> ListTargetSslProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::ListTargetSslProxiesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::TargetSslProxyList>
+  ListTargetSslProxies(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::targetSslProxies::v1::
+                           ListTargetSslProxiesRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetBackendService(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::SetBackendServiceRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetBackendService(google::cloud::rest_internal::RestContext& rest_context,
+                    google::cloud::cpp::compute::targetSslProxies::v1::
+                        SetBackendServiceRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetCertificateMap(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::SetCertificateMapRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetCertificateMap(google::cloud::rest_internal::RestContext& rest_context,
+                    google::cloud::cpp::compute::targetSslProxies::v1::
+                        SetCertificateMapRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetProxyHeader(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::SetProxyHeaderRequest const& request) = 0;
+      google::cloud::cpp::compute::targetSslProxies::v1::
+          SetProxyHeaderRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetSslCertificates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::SetSslCertificatesRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetSslCertificates(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::targetSslProxies::v1::
+                         SetSslCertificatesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetSslPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::SetSslPolicyRequest const& request) = 0;
+      google::cloud::cpp::compute::targetSslProxies::v1::
+          SetSslPolicyRequest const& request) = 0;
 };
 
 class DefaultTargetSslProxiesRestStub : public TargetSslProxiesRestStub {
@@ -79,44 +90,52 @@ class DefaultTargetSslProxiesRestStub : public TargetSslProxiesRestStub {
 
   explicit DefaultTargetSslProxiesRestStub(Options options);
   DefaultTargetSslProxiesRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetSslProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::DeleteTargetSslProxiesRequest const& request) override;
+      google::cloud::cpp::compute::targetSslProxies::v1::
+          DeleteTargetSslProxiesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy> GetTargetSslProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::GetTargetSslProxiesRequest const& request) override;
+      google::cloud::cpp::compute::targetSslProxies::v1::
+          GetTargetSslProxiesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetSslProxies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::InsertTargetSslProxiesRequest const& request) override;
+      google::cloud::cpp::compute::targetSslProxies::v1::
+          InsertTargetSslProxiesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetSslProxyList> ListTargetSslProxies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::ListTargetSslProxiesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetSslProxyList>
+  ListTargetSslProxies(google::cloud::rest_internal::RestContext& rest_context,
+                       google::cloud::cpp::compute::targetSslProxies::v1::
+                           ListTargetSslProxiesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetBackendService(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::SetBackendServiceRequest const& request) override;
+      google::cloud::cpp::compute::targetSslProxies::v1::
+          SetBackendServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetCertificateMap(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::SetCertificateMapRequest const& request) override;
+      google::cloud::cpp::compute::targetSslProxies::v1::
+          SetCertificateMapRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetProxyHeader(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::SetProxyHeaderRequest const& request) override;
+      google::cloud::cpp::compute::targetSslProxies::v1::
+          SetProxyHeaderRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetSslCertificates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::SetSslCertificatesRequest const& request) override;
+      google::cloud::cpp::compute::targetSslProxies::v1::
+          SetSslCertificatesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetSslPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetSslProxies::v1::SetSslPolicyRequest const& request) override;
+      google::cloud::cpp::compute::targetSslProxies::v1::
+          SetSslPolicyRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

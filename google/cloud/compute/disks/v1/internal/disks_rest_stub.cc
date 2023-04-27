@@ -35,58 +35,63 @@ DefaultDisksRestStub::DefaultDisksRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultDisksRestStub::DefaultDisksRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultDisksRestStub::AddResourcePolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}/addResourcePolicies");
+      "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}/"
+      "addResourcePolicies");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskAggregatedList>
 DefaultDisksRestStub::AggregatedListDisks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::DiskAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const&
+        request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::DiskAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/disks",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultDisksRestStub::CreateSnapshot(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}/createSnapshot");
+      "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}/"
+      "createSnapshot");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultDisksRestStub::DeleteDisks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}");
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Disk>
-DefaultDisksRestStub::GetDisks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::GetDisksRequest const& request) {
+StatusOr<google::cloud::cpp::compute::v1::Disk> DefaultDisksRestStub::GetDisks(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::disks::v1::GetDisksRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Disk>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}",
@@ -97,12 +102,16 @@ DefaultDisksRestStub::GetDisks(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultDisksRestStub::GetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/disks/{resource}/getIamPolicy",
-      {std::make_pair("options_requested_policy_version", std::to_string(request.options_requested_policy_version())),
+      "/compute/v1/projects/{project}/zones/{zone}/disks/{resource}/"
+      "getIamPolicy",
+      {std::make_pair(
+           "options_requested_policy_version",
+           std::to_string(request.options_requested_policy_version())),
        std::make_pair("project", request.project()),
        std::make_pair("resource", request.resource()),
        std::make_pair("zone", request.zone())});
@@ -110,8 +119,8 @@ DefaultDisksRestStub::GetIamPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultDisksRestStub::InsertDisks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::InsertDisksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::disks::v1::InsertDisksRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/disks");
@@ -119,8 +128,8 @@ DefaultDisksRestStub::InsertDisks(
 
 StatusOr<google::cloud::cpp::compute::v1::DiskList>
 DefaultDisksRestStub::ListDisks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::ListDisksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::disks::v1::ListDisksRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::DiskList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/disks",
@@ -129,23 +138,26 @@ DefaultDisksRestStub::ListDisks(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success())),
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success())),
        std::make_pair("zone", request.zone())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultDisksRestStub::RemoveResourcePolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::RemoveResourcePoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::disks::v1::RemoveResourcePoliciesRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}/removeResourcePolicies");
+      "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}/"
+      "removeResourcePolicies");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultDisksRestStub::Resize(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::ResizeRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::disks::v1::ResizeRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}/resize");
@@ -153,17 +165,19 @@ DefaultDisksRestStub::Resize(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultDisksRestStub::SetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::SetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::disks::v1::SetIamPolicyRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/disks/{resource}/setIamPolicy");
+      "/compute/v1/projects/{project}/zones/{zone}/disks/{resource}/"
+      "setIamPolicy");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultDisksRestStub::SetLabels(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/disks/{resource}/setLabels");
@@ -171,17 +185,20 @@ DefaultDisksRestStub::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultDisksRestStub::TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::TestIamPermissionsRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::disks::v1::TestIamPermissionsRequest const&
+        request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/zones/{zone}/disks/{resource}/testIamPermissions");
+      "/compute/v1/projects/{project}/zones/{zone}/disks/{resource}/"
+      "testIamPermissions");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultDisksRestStub::UpdateDisks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const& request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}");

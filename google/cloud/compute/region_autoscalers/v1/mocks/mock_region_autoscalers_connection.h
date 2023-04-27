@@ -32,9 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Application developers may want to test their code with simulated responses,
  * including errors, from an object of type `RegionAutoscalersClient`. To do so,
- * construct an object of type `RegionAutoscalersClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * construct an object of type `RegionAutoscalersClient` with an instance of
+ * this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,33 +42,46 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockRegionAutoscalersConnection : public compute_region_autoscalers_v1::RegionAutoscalersConnection {
+class MockRegionAutoscalersConnection
+    : public compute_region_autoscalers_v1::RegionAutoscalersConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteRegionAutoscalers,
-  (google::cloud::cpp::compute::regionAutoscalers::v1::DeleteRegionAutoscalersRequest const& request), (override));
+              DeleteRegionAutoscalers,
+              (google::cloud::cpp::compute::regionAutoscalers::v1::
+                   DeleteRegionAutoscalersRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Autoscaler>,
-  GetRegionAutoscalers,
-  (google::cloud::cpp::compute::regionAutoscalers::v1::GetRegionAutoscalersRequest const& request), (override));
+              GetRegionAutoscalers,
+              (google::cloud::cpp::compute::regionAutoscalers::v1::
+                   GetRegionAutoscalersRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertRegionAutoscalers,
-  (google::cloud::cpp::compute::regionAutoscalers::v1::InsertRegionAutoscalersRequest const& request), (override));
+              InsertRegionAutoscalers,
+              (google::cloud::cpp::compute::regionAutoscalers::v1::
+                   InsertRegionAutoscalersRequest const& request),
+              (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Autoscaler>,
-  ListRegionAutoscalers,
-  (google::cloud::cpp::compute::regionAutoscalers::v1::ListRegionAutoscalersRequest request), (override));
+              ListRegionAutoscalers,
+              (google::cloud::cpp::compute::regionAutoscalers::v1::
+                   ListRegionAutoscalersRequest request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  PatchRegionAutoscalers,
-  (google::cloud::cpp::compute::regionAutoscalers::v1::PatchRegionAutoscalersRequest const& request), (override));
+              PatchRegionAutoscalers,
+              (google::cloud::cpp::compute::regionAutoscalers::v1::
+                   PatchRegionAutoscalersRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  UpdateRegionAutoscalers,
-  (google::cloud::cpp::compute::regionAutoscalers::v1::UpdateRegionAutoscalersRequest const& request), (override));
+              UpdateRegionAutoscalers,
+              (google::cloud::cpp::compute::regionAutoscalers::v1::
+                   UpdateRegionAutoscalersRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

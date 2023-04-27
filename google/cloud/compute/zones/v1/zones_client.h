@@ -62,7 +62,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ZonesClient {
  public:
-  explicit ZonesClient(ExperimentalTag, std::shared_ptr<ZonesConnection> connection, Options opts = {});
+  explicit ZonesClient(ExperimentalTag,
+                       std::shared_ptr<ZonesConnection> connection,
+                       Options opts = {});
   ~ZonesClient();
 
   ///@{
@@ -90,27 +92,35 @@ class ZonesClient {
   /// @param zone  Name of the zone resource to return.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Zone,google/cloud/compute/v1/internal/common.proto#L30857}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Zone,google/cloud/compute/v1/internal/common.proto#L30857}
   ///
-  /// [google.cloud.cpp.compute.v1.Zone]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30857}
-  /// [google.cloud.cpp.compute.zones.v1.GetZonesRequest]: @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L51}
+  /// [google.cloud.cpp.compute.v1.Zone]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30857}
+  /// [google.cloud.cpp.compute.zones.v1.GetZonesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L51}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Zone>
-  GetZones(std::string const& project, std::string const& zone, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Zone> GetZones(
+      std::string const& project, std::string const& zone, Options opts = {});
 
   ///
   /// Returns the specified Zone resource.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::zones::v1::GetZonesRequest,google/cloud/compute/zones/v1/zones.proto#L51}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::zones::v1::GetZonesRequest,google/cloud/compute/zones/v1/zones.proto#L51}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Zone,google/cloud/compute/v1/internal/common.proto#L30857}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Zone,google/cloud/compute/v1/internal/common.proto#L30857}
   ///
-  /// [google.cloud.cpp.compute.v1.Zone]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30857}
-  /// [google.cloud.cpp.compute.zones.v1.GetZonesRequest]: @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L51}
+  /// [google.cloud.cpp.compute.v1.Zone]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30857}
+  /// [google.cloud.cpp.compute.zones.v1.GetZonesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L51}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Zone>
-  GetZones(google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Zone> GetZones(
+      google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request,
+      Options opts = {});
 
   ///
   /// Retrieves the list of Zone resources available to the specified project.
@@ -118,27 +128,35 @@ class ZonesClient {
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Zone,google/cloud/compute/v1/internal/common.proto#L30857}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Zone,google/cloud/compute/v1/internal/common.proto#L30857}
   ///
-  /// [google.cloud.cpp.compute.v1.Zone]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30857}
-  /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]: @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L60}
+  /// [google.cloud.cpp.compute.v1.Zone]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30857}
+  /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L60}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::Zone>
-  ListZones(std::string const& project, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Zone> ListZones(
+      std::string const& project, Options opts = {});
 
   ///
   /// Retrieves the list of Zone resources available to the specified project.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::zones::v1::ListZonesRequest,google/cloud/compute/zones/v1/zones.proto#L60}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::zones::v1::ListZonesRequest,google/cloud/compute/zones/v1/zones.proto#L60}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Zone,google/cloud/compute/v1/internal/common.proto#L30857}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Zone,google/cloud/compute/v1/internal/common.proto#L30857}
   ///
-  /// [google.cloud.cpp.compute.v1.Zone]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30857}
-  /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]: @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L60}
+  /// [google.cloud.cpp.compute.v1.Zone]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30857}
+  /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L60}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::Zone>
-  ListZones(google::cloud::cpp::compute::zones::v1::ListZonesRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Zone> ListZones(
+      google::cloud::cpp::compute::zones::v1::ListZonesRequest request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ZonesConnection> connection_;

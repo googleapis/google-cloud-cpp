@@ -34,24 +34,33 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options InstanceTemplatesDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_INSTANCE_TEMPLATES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_INSTANCE_TEMPLATES_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_INSTANCE_TEMPLATES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_INSTANCE_TEMPLATES_AUTHORITY",
       "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
-  if (!options.has<compute_instance_templates_v1::InstanceTemplatesRetryPolicyOption>()) {
-    options.set<compute_instance_templates_v1::InstanceTemplatesRetryPolicyOption>(
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  if (!options.has<compute_instance_templates_v1::
+                       InstanceTemplatesRetryPolicyOption>()) {
+    options.set<
+        compute_instance_templates_v1::InstanceTemplatesRetryPolicyOption>(
         compute_instance_templates_v1::InstanceTemplatesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_instance_templates_v1::InstanceTemplatesBackoffPolicyOption>()) {
-    options.set<compute_instance_templates_v1::InstanceTemplatesBackoffPolicyOption>(
+  if (!options.has<compute_instance_templates_v1::
+                       InstanceTemplatesBackoffPolicyOption>()) {
+    options.set<
+        compute_instance_templates_v1::InstanceTemplatesBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
-  if (!options.has<compute_instance_templates_v1::InstanceTemplatesConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_instance_templates_v1::InstanceTemplatesConnectionIdempotencyPolicyOption>(
-        compute_instance_templates_v1::MakeDefaultInstanceTemplatesConnectionIdempotencyPolicy());
+  if (!options.has<compute_instance_templates_v1::
+                       InstanceTemplatesConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_instance_templates_v1::
+                    InstanceTemplatesConnectionIdempotencyPolicyOption>(
+        compute_instance_templates_v1::
+            MakeDefaultInstanceTemplatesConnectionIdempotencyPolicy());
   }
 
   return options;

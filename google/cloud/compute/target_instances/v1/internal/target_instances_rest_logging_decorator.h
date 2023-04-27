@@ -38,28 +38,34 @@ class TargetInstancesRestLogging : public TargetInstancesRestStub {
  public:
   ~TargetInstancesRestLogging() override = default;
   TargetInstancesRestLogging(std::shared_ptr<TargetInstancesRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                             TracingOptions tracing_options,
+                             std::set<std::string> components);
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList> AggregatedListTargetInstances(
+  StatusOr<google::cloud::cpp::compute::v1::TargetInstanceAggregatedList>
+  AggregatedListTargetInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetInstances::v1::AggregatedListTargetInstancesRequest const& request) override;
+      google::cloud::cpp::compute::targetInstances::v1::
+          AggregatedListTargetInstancesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetInstances::v1::DeleteTargetInstancesRequest const& request) override;
+      google::cloud::cpp::compute::targetInstances::v1::
+          DeleteTargetInstancesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetInstances::v1::GetTargetInstancesRequest const& request) override;
+      google::cloud::cpp::compute::targetInstances::v1::
+          GetTargetInstancesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetInstances(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetInstances::v1::InsertTargetInstancesRequest const& request) override;
+      google::cloud::cpp::compute::targetInstances::v1::
+          InsertTargetInstancesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetInstanceList> ListTargetInstances(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetInstances::v1::ListTargetInstancesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetInstanceList>
+  ListTargetInstances(google::cloud::rest_internal::RestContext& rest_context,
+                      google::cloud::cpp::compute::targetInstances::v1::
+                          ListTargetInstancesRequest const& request) override;
 
  private:
   std::shared_ptr<TargetInstancesRestStub> child_;

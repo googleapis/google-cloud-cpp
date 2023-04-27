@@ -26,43 +26,59 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-PacketMirroringsConnectionIdempotencyPolicy::~PacketMirroringsConnectionIdempotencyPolicy() = default;
+PacketMirroringsConnectionIdempotencyPolicy::
+    ~PacketMirroringsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<PacketMirroringsConnectionIdempotencyPolicy>
 PacketMirroringsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<PacketMirroringsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency PacketMirroringsConnectionIdempotencyPolicy::AggregatedListPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::AggregatedListPacketMirroringsRequest const&) {
+Idempotency
+PacketMirroringsConnectionIdempotencyPolicy::AggregatedListPacketMirrorings(
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        AggregatedListPacketMirroringsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PacketMirroringsConnectionIdempotencyPolicy::DeletePacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::DeletePacketMirroringsRequest const&) {
+Idempotency PacketMirroringsConnectionIdempotencyPolicy::DeletePacketMirrorings(
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        DeletePacketMirroringsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PacketMirroringsConnectionIdempotencyPolicy::GetPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::GetPacketMirroringsRequest const&) {
+Idempotency PacketMirroringsConnectionIdempotencyPolicy::GetPacketMirrorings(
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        GetPacketMirroringsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency PacketMirroringsConnectionIdempotencyPolicy::InsertPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::InsertPacketMirroringsRequest const&) {
+Idempotency PacketMirroringsConnectionIdempotencyPolicy::InsertPacketMirrorings(
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        InsertPacketMirroringsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PacketMirroringsConnectionIdempotencyPolicy::ListPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::ListPacketMirroringsRequest) {  // NOLINT
+Idempotency PacketMirroringsConnectionIdempotencyPolicy::ListPacketMirrorings(
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        ListPacketMirroringsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency PacketMirroringsConnectionIdempotencyPolicy::PatchPacketMirrorings(google::cloud::cpp::compute::packetMirrorings::v1::PatchPacketMirroringsRequest const&) {
+Idempotency PacketMirroringsConnectionIdempotencyPolicy::PatchPacketMirrorings(
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        PatchPacketMirroringsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency PacketMirroringsConnectionIdempotencyPolicy::TestIamPermissions(google::cloud::cpp::compute::packetMirrorings::v1::TestIamPermissionsRequest const&) {
+Idempotency PacketMirroringsConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        TestIamPermissionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<PacketMirroringsConnectionIdempotencyPolicy>
-    MakeDefaultPacketMirroringsConnectionIdempotencyPolicy() {
+MakeDefaultPacketMirroringsConnectionIdempotencyPolicy() {
   return std::make_unique<PacketMirroringsConnectionIdempotencyPolicy>();
 }
 

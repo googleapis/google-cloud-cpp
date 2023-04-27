@@ -35,15 +35,14 @@ DefaultLicenseCodesRestStub::DefaultLicenseCodesRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultLicenseCodesRestStub::DefaultLicenseCodesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
 DefaultLicenseCodesRestStub::GetLicenseCodes(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenseCodes::v1::GetLicenseCodesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::licenseCodes::v1::GetLicenseCodesRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::LicenseCode>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/licenseCodes/{license_code}",
@@ -53,11 +52,14 @@ DefaultLicenseCodesRestStub::GetLicenseCodes(
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultLicenseCodesRestStub::TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::licenseCodes::v1::TestIamPermissionsRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::licenseCodes::v1::
+        TestIamPermissionsRequest const& request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/licenseCodes/{resource}/testIamPermissions");
+      "/compute/v1/projects/{project}/global/licenseCodes/{resource}/"
+      "testIamPermissions");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

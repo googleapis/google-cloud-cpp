@@ -35,26 +35,32 @@ class GlobalOperationsConnectionIdempotencyPolicy {
   virtual ~GlobalOperationsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<GlobalOperationsConnectionIdempotencyPolicy> clone() const;
+  virtual std::unique_ptr<GlobalOperationsConnectionIdempotencyPolicy> clone()
+      const;
 
-  virtual google::cloud::Idempotency
-  AggregatedListGlobalOperations(google::cloud::cpp::compute::globalOperations::v1::AggregatedListGlobalOperationsRequest const& request);
+  virtual google::cloud::Idempotency AggregatedListGlobalOperations(
+      google::cloud::cpp::compute::globalOperations::v1::
+          AggregatedListGlobalOperationsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteGlobalOperations(google::cloud::cpp::compute::globalOperations::v1::DeleteGlobalOperationsRequest const& request);
+  virtual google::cloud::Idempotency DeleteGlobalOperations(
+      google::cloud::cpp::compute::globalOperations::v1::
+          DeleteGlobalOperationsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetGlobalOperations(google::cloud::cpp::compute::globalOperations::v1::GetGlobalOperationsRequest const& request);
+  virtual google::cloud::Idempotency GetGlobalOperations(
+      google::cloud::cpp::compute::globalOperations::v1::
+          GetGlobalOperationsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListGlobalOperations(google::cloud::cpp::compute::globalOperations::v1::ListGlobalOperationsRequest request);
+  virtual google::cloud::Idempotency ListGlobalOperations(
+      google::cloud::cpp::compute::globalOperations::v1::
+          ListGlobalOperationsRequest request);
 
-  virtual google::cloud::Idempotency
-  Wait(google::cloud::cpp::compute::globalOperations::v1::WaitRequest const& request);
+  virtual google::cloud::Idempotency Wait(
+      google::cloud::cpp::compute::globalOperations::v1::WaitRequest const&
+          request);
 };
 
 std::unique_ptr<GlobalOperationsConnectionIdempotencyPolicy>
-    MakeDefaultGlobalOperationsConnectionIdempotencyPolicy();
+MakeDefaultGlobalOperationsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_global_operations_v1

@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto
 
-
 #include "google/cloud/compute/region_autoscalers/v1/internal/region_autoscalers_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,12 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RegionAutoscalersRestMetadata::RegionAutoscalersRestMetadata(
     std::shared_ptr<RegionAutoscalersRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersRestMetadata::DeleteRegionAutoscalers(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionAutoscalers::v1::DeleteRegionAutoscalersRequest const& request) {
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        DeleteRegionAutoscalersRequest const& request) {
   SetMetadata(rest_context);
   return child_->DeleteRegionAutoscalers(rest_context, request);
 }
@@ -47,7 +48,8 @@ RegionAutoscalersRestMetadata::DeleteRegionAutoscalers(
 StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
 RegionAutoscalersRestMetadata::GetRegionAutoscalers(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionAutoscalers::v1::GetRegionAutoscalersRequest const& request) {
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        GetRegionAutoscalersRequest const& request) {
   SetMetadata(rest_context);
   return child_->GetRegionAutoscalers(rest_context, request);
 }
@@ -55,7 +57,8 @@ RegionAutoscalersRestMetadata::GetRegionAutoscalers(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersRestMetadata::InsertRegionAutoscalers(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionAutoscalers::v1::InsertRegionAutoscalersRequest const& request) {
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        InsertRegionAutoscalersRequest const& request) {
   SetMetadata(rest_context);
   return child_->InsertRegionAutoscalers(rest_context, request);
 }
@@ -63,7 +66,8 @@ RegionAutoscalersRestMetadata::InsertRegionAutoscalers(
 StatusOr<google::cloud::cpp::compute::v1::RegionAutoscalerList>
 RegionAutoscalersRestMetadata::ListRegionAutoscalers(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionAutoscalers::v1::ListRegionAutoscalersRequest const& request) {
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        ListRegionAutoscalersRequest const& request) {
   SetMetadata(rest_context);
   return child_->ListRegionAutoscalers(rest_context, request);
 }
@@ -71,7 +75,8 @@ RegionAutoscalersRestMetadata::ListRegionAutoscalers(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersRestMetadata::PatchRegionAutoscalers(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionAutoscalers::v1::PatchRegionAutoscalersRequest const& request) {
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        PatchRegionAutoscalersRequest const& request) {
   SetMetadata(rest_context);
   return child_->PatchRegionAutoscalers(rest_context, request);
 }
@@ -79,33 +84,34 @@ RegionAutoscalersRestMetadata::PatchRegionAutoscalers(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersRestMetadata::UpdateRegionAutoscalers(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::regionAutoscalers::v1::UpdateRegionAutoscalersRequest const& request) {
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        UpdateRegionAutoscalersRequest const& request) {
   SetMetadata(rest_context);
   return child_->UpdateRegionAutoscalers(rest_context, request);
 }
 
 void RegionAutoscalersRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+    rest_internal::RestContext& rest_context,
+    std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

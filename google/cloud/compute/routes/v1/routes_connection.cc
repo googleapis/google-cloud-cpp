@@ -17,11 +17,11 @@
 // source: google/cloud/compute/routes/v1/routes.proto
 
 #include "google/cloud/compute/routes/v1/routes_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/routes/v1/internal/routes_option_defaults.h"
 #include "google/cloud/compute/routes/v1/internal/routes_tracing_connection.h"
 #include "google/cloud/compute/routes/v1/routes_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -40,8 +40,7 @@ RoutesConnection::DeleteRoutes(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::cpp::compute::v1::Route>
-RoutesConnection::GetRoutes(
+StatusOr<google::cloud::cpp::compute::v1::Route> RoutesConnection::GetRoutes(
     google::cloud::cpp::compute::routes::v1::GetRoutesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -52,8 +51,10 @@ RoutesConnection::InsertRoutes(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Route> RoutesConnection::ListRoutes(
-    google::cloud::cpp::compute::routes::v1::ListRoutesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::Route>
+RoutesConnection::ListRoutes(
+    google::cloud::cpp::compute::routes::v1::
+        ListRoutesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Route>>();
 }

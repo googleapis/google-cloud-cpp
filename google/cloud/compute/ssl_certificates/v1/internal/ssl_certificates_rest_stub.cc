@@ -35,40 +35,45 @@ DefaultSslCertificatesRestStub::DefaultSslCertificatesRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultSslCertificatesRestStub::DefaultSslCertificatesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
 DefaultSslCertificatesRestStub::AggregatedListSslCertificates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslCertificates::v1::AggregatedListSslCertificatesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::sslCertificates::v1::
+        AggregatedListSslCertificatesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::SslCertificateAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/sslCertificates",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultSslCertificatesRestStub::DeleteSslCertificates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslCertificates::v1::DeleteSslCertificatesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::sslCertificates::v1::
+        DeleteSslCertificatesRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/sslCertificates/{ssl_certificate}");
+      "/compute/v1/projects/{project}/global/sslCertificates/"
+      "{ssl_certificate}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
 DefaultSslCertificatesRestStub::GetSslCertificates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslCertificates::v1::GetSslCertificatesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::sslCertificates::v1::
+        GetSslCertificatesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslCertificate>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/sslCertificates/{ssl_certificate}",
@@ -78,8 +83,9 @@ DefaultSslCertificatesRestStub::GetSslCertificates(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultSslCertificatesRestStub::InsertSslCertificates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslCertificates::v1::InsertSslCertificatesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::sslCertificates::v1::
+        InsertSslCertificatesRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/sslCertificates");
@@ -87,9 +93,11 @@ DefaultSslCertificatesRestStub::InsertSslCertificates(
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificateList>
 DefaultSslCertificatesRestStub::ListSslCertificates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::sslCertificates::v1::ListSslCertificatesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::SslCertificateList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::sslCertificates::v1::
+        ListSslCertificatesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::SslCertificateList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/sslCertificates",
       {std::make_pair("filter", request.filter()),
@@ -97,7 +105,8 @@ DefaultSslCertificatesRestStub::ListSslCertificates(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

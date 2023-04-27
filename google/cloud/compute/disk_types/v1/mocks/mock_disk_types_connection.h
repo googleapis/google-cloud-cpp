@@ -42,21 +42,28 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockDiskTypesConnection : public compute_disk_types_v1::DiskTypesConnection {
+class MockDiskTypesConnection
+    : public compute_disk_types_v1::DiskTypesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::DiskTypeAggregatedList>,
-  AggregatedListDiskTypes,
-  (google::cloud::cpp::compute::diskTypes::v1::AggregatedListDiskTypesRequest const& request), (override));
+              AggregatedListDiskTypes,
+              (google::cloud::cpp::compute::diskTypes::v1::
+                   AggregatedListDiskTypesRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::DiskType>,
-  GetDiskTypes,
-  (google::cloud::cpp::compute::diskTypes::v1::GetDiskTypesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::DiskType>, GetDiskTypes,
+      (google::cloud::cpp::compute::diskTypes::v1::GetDiskTypesRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::DiskType>,
-  ListDiskTypes,
-  (google::cloud::cpp::compute::diskTypes::v1::ListDiskTypesRequest request), (override));
+              ListDiskTypes,
+              (google::cloud::cpp::compute::diskTypes::v1::ListDiskTypesRequest
+                   request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class NodeTypesClient {
  public:
-  explicit NodeTypesClient(ExperimentalTag, std::shared_ptr<NodeTypesConnection> connection, Options opts = {});
+  explicit NodeTypesClient(ExperimentalTag,
+                           std::shared_ptr<NodeTypesConnection> connection,
+                           Options opts = {});
   ~NodeTypesClient();
 
   ///@{
@@ -90,10 +92,13 @@ class NodeTypesClient {
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::NodeTypeAggregatedList,google/cloud/compute/v1/internal/common.proto#L16941}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NodeTypeAggregatedList,google/cloud/compute/v1/internal/common.proto#L16941}
   ///
-  /// [google.cloud.cpp.compute.nodeTypes.v1.AggregatedListNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L59}
-  /// [google.cloud.cpp.compute.v1.NodeTypeAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16941}
+  /// [google.cloud.cpp.compute.nodeTypes.v1.AggregatedListNodeTypesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L59}
+  /// [google.cloud.cpp.compute.v1.NodeTypeAggregatedList]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16941}
   ///
   StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
   AggregatedListNodeTypes(std::string const& project, Options opts = {});
@@ -101,16 +106,22 @@ class NodeTypesClient {
   ///
   /// Retrieves an aggregated list of node types.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeTypes::v1::AggregatedListNodeTypesRequest,google/cloud/compute/node_types/v1/node_types.proto#L59}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeTypes::v1::AggregatedListNodeTypesRequest,google/cloud/compute/node_types/v1/node_types.proto#L59}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::NodeTypeAggregatedList,google/cloud/compute/v1/internal/common.proto#L16941}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NodeTypeAggregatedList,google/cloud/compute/v1/internal/common.proto#L16941}
   ///
-  /// [google.cloud.cpp.compute.nodeTypes.v1.AggregatedListNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L59}
-  /// [google.cloud.cpp.compute.v1.NodeTypeAggregatedList]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16941}
+  /// [google.cloud.cpp.compute.nodeTypes.v1.AggregatedListNodeTypesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L59}
+  /// [google.cloud.cpp.compute.v1.NodeTypeAggregatedList]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16941}
   ///
   StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
-  AggregatedListNodeTypes(google::cloud::cpp::compute::nodeTypes::v1::AggregatedListNodeTypesRequest const& request, Options opts = {});
+  AggregatedListNodeTypes(google::cloud::cpp::compute::nodeTypes::v1::
+                              AggregatedListNodeTypesRequest const& request,
+                          Options opts = {});
 
   ///
   /// Returns the specified node type.
@@ -120,27 +131,37 @@ class NodeTypesClient {
   /// @param node_type  Name of the node type to return.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::NodeType,google/cloud/compute/v1/internal/common.proto#L16898}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NodeType,google/cloud/compute/v1/internal/common.proto#L16898}
   ///
-  /// [google.cloud.cpp.compute.nodeTypes.v1.GetNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L133}
-  /// [google.cloud.cpp.compute.v1.NodeType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16898}
+  /// [google.cloud.cpp.compute.nodeTypes.v1.GetNodeTypesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L133}
+  /// [google.cloud.cpp.compute.v1.NodeType]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16898}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::NodeType>
-  GetNodeTypes(std::string const& project, std::string const& zone, std::string const& node_type, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeTypes(
+      std::string const& project, std::string const& zone,
+      std::string const& node_type, Options opts = {});
 
   ///
   /// Returns the specified node type.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeTypes::v1::GetNodeTypesRequest,google/cloud/compute/node_types/v1/node_types.proto#L133}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeTypes::v1::GetNodeTypesRequest,google/cloud/compute/node_types/v1/node_types.proto#L133}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::NodeType,google/cloud/compute/v1/internal/common.proto#L16898}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NodeType,google/cloud/compute/v1/internal/common.proto#L16898}
   ///
-  /// [google.cloud.cpp.compute.nodeTypes.v1.GetNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L133}
-  /// [google.cloud.cpp.compute.v1.NodeType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16898}
+  /// [google.cloud.cpp.compute.nodeTypes.v1.GetNodeTypesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L133}
+  /// [google.cloud.cpp.compute.v1.NodeType]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16898}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::NodeType>
-  GetNodeTypes(google::cloud::cpp::compute::nodeTypes::v1::GetNodeTypesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeTypes(
+      google::cloud::cpp::compute::nodeTypes::v1::GetNodeTypesRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Retrieves a list of node types available to the specified project.
@@ -149,27 +170,35 @@ class NodeTypesClient {
   /// @param zone  The name of the zone for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::NodeType,google/cloud/compute/v1/internal/common.proto#L16898}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NodeType,google/cloud/compute/v1/internal/common.proto#L16898}
   ///
-  /// [google.cloud.cpp.compute.nodeTypes.v1.ListNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L145}
-  /// [google.cloud.cpp.compute.v1.NodeType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16898}
+  /// [google.cloud.cpp.compute.nodeTypes.v1.ListNodeTypesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L145}
+  /// [google.cloud.cpp.compute.v1.NodeType]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16898}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::NodeType>
-  ListNodeTypes(std::string const& project, std::string const& zone, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::NodeType> ListNodeTypes(
+      std::string const& project, std::string const& zone, Options opts = {});
 
   ///
   /// Retrieves a list of node types available to the specified project.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::nodeTypes::v1::ListNodeTypesRequest,google/cloud/compute/node_types/v1/node_types.proto#L145}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::nodeTypes::v1::ListNodeTypesRequest,google/cloud/compute/node_types/v1/node_types.proto#L145}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::NodeType,google/cloud/compute/v1/internal/common.proto#L16898}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NodeType,google/cloud/compute/v1/internal/common.proto#L16898}
   ///
-  /// [google.cloud.cpp.compute.nodeTypes.v1.ListNodeTypesRequest]: @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L145}
-  /// [google.cloud.cpp.compute.v1.NodeType]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16898}
+  /// [google.cloud.cpp.compute.nodeTypes.v1.ListNodeTypesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/node_types/v1/node_types.proto#L145}
+  /// [google.cloud.cpp.compute.v1.NodeType]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L16898}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::NodeType>
-  ListNodeTypes(google::cloud::cpp::compute::nodeTypes::v1::ListNodeTypesRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::NodeType> ListNodeTypes(
+      google::cloud::cpp::compute::nodeTypes::v1::ListNodeTypesRequest request,
+      Options opts = {});
 
  private:
   std::shared_ptr<NodeTypesConnection> connection_;

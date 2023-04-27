@@ -39,11 +39,13 @@ class ZonesRestMetadata : public ZonesRestStub {
 
   StatusOr<google::cloud::cpp::compute::v1::Zone> GetZones(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request) override;
+      google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::ZoneList> ListZones(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request) override;
+      google::cloud::cpp::compute::zones::v1::ListZonesRequest const& request)
+      override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

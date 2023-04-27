@@ -26,51 +26,76 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ServiceAttachmentsConnectionIdempotencyPolicy::~ServiceAttachmentsConnectionIdempotencyPolicy() = default;
+ServiceAttachmentsConnectionIdempotencyPolicy::
+    ~ServiceAttachmentsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ServiceAttachmentsConnectionIdempotencyPolicy>
 ServiceAttachmentsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ServiceAttachmentsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ServiceAttachmentsConnectionIdempotencyPolicy::AggregatedListServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::AggregatedListServiceAttachmentsRequest const&) {
+Idempotency
+ServiceAttachmentsConnectionIdempotencyPolicy::AggregatedListServiceAttachments(
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        AggregatedListServiceAttachmentsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServiceAttachmentsConnectionIdempotencyPolicy::DeleteServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::DeleteServiceAttachmentsRequest const&) {
+Idempotency
+ServiceAttachmentsConnectionIdempotencyPolicy::DeleteServiceAttachments(
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        DeleteServiceAttachmentsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ServiceAttachmentsConnectionIdempotencyPolicy::GetServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::GetServiceAttachmentsRequest const&) {
+Idempotency
+ServiceAttachmentsConnectionIdempotencyPolicy::GetServiceAttachments(
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        GetServiceAttachmentsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServiceAttachmentsConnectionIdempotencyPolicy::GetIamPolicy(google::cloud::cpp::compute::serviceAttachments::v1::GetIamPolicyRequest const&) {
+Idempotency ServiceAttachmentsConnectionIdempotencyPolicy::GetIamPolicy(
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServiceAttachmentsConnectionIdempotencyPolicy::InsertServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::InsertServiceAttachmentsRequest const&) {
+Idempotency
+ServiceAttachmentsConnectionIdempotencyPolicy::InsertServiceAttachments(
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        InsertServiceAttachmentsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ServiceAttachmentsConnectionIdempotencyPolicy::ListServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::ListServiceAttachmentsRequest) {  // NOLINT
+Idempotency
+ServiceAttachmentsConnectionIdempotencyPolicy::ListServiceAttachments(
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        ListServiceAttachmentsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ServiceAttachmentsConnectionIdempotencyPolicy::PatchServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::PatchServiceAttachmentsRequest const&) {
+Idempotency
+ServiceAttachmentsConnectionIdempotencyPolicy::PatchServiceAttachments(
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        PatchServiceAttachmentsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ServiceAttachmentsConnectionIdempotencyPolicy::SetIamPolicy(google::cloud::cpp::compute::serviceAttachments::v1::SetIamPolicyRequest const&) {
+Idempotency ServiceAttachmentsConnectionIdempotencyPolicy::SetIamPolicy(
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        SetIamPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ServiceAttachmentsConnectionIdempotencyPolicy::TestIamPermissions(google::cloud::cpp::compute::serviceAttachments::v1::TestIamPermissionsRequest const&) {
+Idempotency ServiceAttachmentsConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::serviceAttachments::v1::
+        TestIamPermissionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ServiceAttachmentsConnectionIdempotencyPolicy>
-    MakeDefaultServiceAttachmentsConnectionIdempotencyPolicy() {
+MakeDefaultServiceAttachmentsConnectionIdempotencyPolicy() {
   return std::make_unique<ServiceAttachmentsConnectionIdempotencyPolicy>();
 }
 

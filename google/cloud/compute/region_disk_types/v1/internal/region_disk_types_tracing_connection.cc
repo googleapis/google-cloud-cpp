@@ -29,30 +29,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 RegionDiskTypesTracingConnection::RegionDiskTypesTracingConnection(
-    std::shared_ptr<compute_region_disk_types_v1::RegionDiskTypesConnection> child)
+    std::shared_ptr<compute_region_disk_types_v1::RegionDiskTypesConnection>
+        child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
-RegionDiskTypesTracingConnection::GetRegionDiskTypes(google::cloud::cpp::compute::regionDiskTypes::v1::GetRegionDiskTypesRequest const& request) {
-  auto span = internal::MakeSpan("compute_region_disk_types_v1::RegionDiskTypesConnection::GetRegionDiskTypes");
+RegionDiskTypesTracingConnection::GetRegionDiskTypes(
+    google::cloud::cpp::compute::regionDiskTypes::v1::
+        GetRegionDiskTypesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_disk_types_v1::RegionDiskTypesConnection::"
+      "GetRegionDiskTypes");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetRegionDiskTypes(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::DiskType>
-RegionDiskTypesTracingConnection::ListRegionDiskTypes(google::cloud::cpp::compute::regionDiskTypes::v1::ListRegionDiskTypesRequest request) {
-  auto span = internal::MakeSpan("compute_region_disk_types_v1::RegionDiskTypesConnection::ListRegionDiskTypes");
+RegionDiskTypesTracingConnection::ListRegionDiskTypes(
+    google::cloud::cpp::compute::regionDiskTypes::v1::ListRegionDiskTypesRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_region_disk_types_v1::RegionDiskTypesConnection::"
+      "ListRegionDiskTypes");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListRegionDiskTypes(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::DiskType>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::DiskType>(std::move(span),
+                                                 std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<compute_region_disk_types_v1::RegionDiskTypesConnection>
 MakeRegionDiskTypesTracingConnection(
-    std::shared_ptr<compute_region_disk_types_v1::RegionDiskTypesConnection> conn) {
+    std::shared_ptr<compute_region_disk_types_v1::RegionDiskTypesConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<RegionDiskTypesTracingConnection>(std::move(conn));

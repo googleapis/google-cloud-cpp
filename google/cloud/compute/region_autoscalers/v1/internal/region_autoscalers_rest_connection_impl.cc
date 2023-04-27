@@ -17,8 +17,8 @@
 // source: google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto
 
 #include "google/cloud/compute/region_autoscalers/v1/internal/region_autoscalers_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/region_autoscalers/v1/internal/region_autoscalers_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -32,70 +32,90 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RegionAutoscalersRestConnectionImpl::RegionAutoscalersRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_region_autoscalers_v1_internal::RegionAutoscalersRestStub> stub,
+    std::shared_ptr<
+        compute_region_autoscalers_v1_internal::RegionAutoscalersRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        RegionAutoscalersConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), RegionAutoscalersConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionAutoscalersRestConnectionImpl::DeleteRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::DeleteRegionAutoscalersRequest const& request) {
+RegionAutoscalersRestConnectionImpl::DeleteRegionAutoscalers(
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        DeleteRegionAutoscalersRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteRegionAutoscalers(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::regionAutoscalers::v1::DeleteRegionAutoscalersRequest const& request) {
+             google::cloud::cpp::compute::regionAutoscalers::v1::
+                 DeleteRegionAutoscalersRequest const& request) {
         return stub_->DeleteRegionAutoscalers(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
-RegionAutoscalersRestConnectionImpl::GetRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::GetRegionAutoscalersRequest const& request) {
+RegionAutoscalersRestConnectionImpl::GetRegionAutoscalers(
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        GetRegionAutoscalersRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetRegionAutoscalers(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::regionAutoscalers::v1::GetRegionAutoscalersRequest const& request) {
+             google::cloud::cpp::compute::regionAutoscalers::v1::
+                 GetRegionAutoscalersRequest const& request) {
         return stub_->GetRegionAutoscalers(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionAutoscalersRestConnectionImpl::InsertRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::InsertRegionAutoscalersRequest const& request) {
+RegionAutoscalersRestConnectionImpl::InsertRegionAutoscalers(
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        InsertRegionAutoscalersRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->InsertRegionAutoscalers(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::regionAutoscalers::v1::InsertRegionAutoscalersRequest const& request) {
+             google::cloud::cpp::compute::regionAutoscalers::v1::
+                 InsertRegionAutoscalersRequest const& request) {
         return stub_->InsertRegionAutoscalers(rest_context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
-RegionAutoscalersRestConnectionImpl::ListRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::ListRegionAutoscalersRequest request) {
+RegionAutoscalersRestConnectionImpl::ListRegionAutoscalers(
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        ListRegionAutoscalersRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_region_autoscalers_v1::RegionAutoscalersRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<
+      compute_region_autoscalers_v1::RegionAutoscalersRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListRegionAutoscalers(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::Autoscaler>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::Autoscaler>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::regionAutoscalers::v1::ListRegionAutoscalersRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::regionAutoscalers::v1::
+                          ListRegionAutoscalersRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::regionAutoscalers::v1::ListRegionAutoscalersRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::regionAutoscalers::v1::
+                       ListRegionAutoscalersRequest const& request) {
               return stub->ListRegionAutoscalers(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::RegionAutoscalerList r) {
-        std::vector<google::cloud::cpp::compute::v1::Autoscaler> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::Autoscaler> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -103,24 +123,30 @@ RegionAutoscalersRestConnectionImpl::ListRegionAutoscalers(google::cloud::cpp::c
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionAutoscalersRestConnectionImpl::PatchRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::PatchRegionAutoscalersRequest const& request) {
+RegionAutoscalersRestConnectionImpl::PatchRegionAutoscalers(
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        PatchRegionAutoscalersRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->PatchRegionAutoscalers(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::regionAutoscalers::v1::PatchRegionAutoscalersRequest const& request) {
+             google::cloud::cpp::compute::regionAutoscalers::v1::
+                 PatchRegionAutoscalersRequest const& request) {
         return stub_->PatchRegionAutoscalers(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionAutoscalersRestConnectionImpl::UpdateRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::UpdateRegionAutoscalersRequest const& request) {
+RegionAutoscalersRestConnectionImpl::UpdateRegionAutoscalers(
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        UpdateRegionAutoscalersRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateRegionAutoscalers(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::regionAutoscalers::v1::UpdateRegionAutoscalersRequest const& request) {
+             google::cloud::cpp::compute::regionAutoscalers::v1::
+                 UpdateRegionAutoscalersRequest const& request) {
         return stub_->UpdateRegionAutoscalers(rest_context, request);
       },
       request, __func__);

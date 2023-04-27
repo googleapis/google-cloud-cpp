@@ -42,41 +42,59 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockNodeTemplatesConnection : public compute_node_templates_v1::NodeTemplatesConnection {
+class MockNodeTemplatesConnection
+    : public compute_node_templates_v1::NodeTemplatesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>,
-  AggregatedListNodeTemplates,
-  (google::cloud::cpp::compute::nodeTemplates::v1::AggregatedListNodeTemplatesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>,
+      AggregatedListNodeTemplates,
+      (google::cloud::cpp::compute::nodeTemplates::v1::
+           AggregatedListNodeTemplatesRequest const& request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteNodeTemplates,
-  (google::cloud::cpp::compute::nodeTemplates::v1::DeleteNodeTemplatesRequest const& request), (override));
+              DeleteNodeTemplates,
+              (google::cloud::cpp::compute::nodeTemplates::v1::
+                   DeleteNodeTemplatesRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>,
-  GetNodeTemplates,
-  (google::cloud::cpp::compute::nodeTemplates::v1::GetNodeTemplatesRequest const& request), (override));
+              GetNodeTemplates,
+              (google::cloud::cpp::compute::nodeTemplates::v1::
+                   GetNodeTemplatesRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  GetIamPolicy,
-  (google::cloud::cpp::compute::nodeTemplates::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+              (google::cloud::cpp::compute::nodeTemplates::v1::
+                   GetIamPolicyRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertNodeTemplates,
-  (google::cloud::cpp::compute::nodeTemplates::v1::InsertNodeTemplatesRequest const& request), (override));
+              InsertNodeTemplates,
+              (google::cloud::cpp::compute::nodeTemplates::v1::
+                   InsertNodeTemplatesRequest const& request),
+              (override));
 
-  MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>,
-  ListNodeTemplates,
-  (google::cloud::cpp::compute::nodeTemplates::v1::ListNodeTemplatesRequest request), (override));
+  MOCK_METHOD(
+      StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>,
+      ListNodeTemplates,
+      (google::cloud::cpp::compute::nodeTemplates::v1::ListNodeTemplatesRequest
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  SetIamPolicy,
-  (google::cloud::cpp::compute::nodeTemplates::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+              (google::cloud::cpp::compute::nodeTemplates::v1::
+                   SetIamPolicyRequest const& request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
-  TestIamPermissions,
-  (google::cloud::cpp::compute::nodeTemplates::v1::TestIamPermissionsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      TestIamPermissions,
+      (google::cloud::cpp::compute::nodeTemplates::v1::
+           TestIamPermissionsRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

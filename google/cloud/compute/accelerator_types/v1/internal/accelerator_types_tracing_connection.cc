@@ -29,37 +29,53 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 AcceleratorTypesTracingConnection::AcceleratorTypesTracingConnection(
-    std::shared_ptr<compute_accelerator_types_v1::AcceleratorTypesConnection> child)
+    std::shared_ptr<compute_accelerator_types_v1::AcceleratorTypesConnection>
+        child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>
-AcceleratorTypesTracingConnection::AggregatedListAcceleratorTypes(google::cloud::cpp::compute::acceleratorTypes::v1::AggregatedListAcceleratorTypesRequest const& request) {
-  auto span = internal::MakeSpan("compute_accelerator_types_v1::AcceleratorTypesConnection::AggregatedListAcceleratorTypes");
+AcceleratorTypesTracingConnection::AggregatedListAcceleratorTypes(
+    google::cloud::cpp::compute::acceleratorTypes::v1::
+        AggregatedListAcceleratorTypesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_accelerator_types_v1::AcceleratorTypesConnection::"
+      "AggregatedListAcceleratorTypes");
   auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->AggregatedListAcceleratorTypes(request));
+  return internal::EndSpan(*span,
+                           child_->AggregatedListAcceleratorTypes(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
-AcceleratorTypesTracingConnection::GetAcceleratorTypes(google::cloud::cpp::compute::acceleratorTypes::v1::GetAcceleratorTypesRequest const& request) {
-  auto span = internal::MakeSpan("compute_accelerator_types_v1::AcceleratorTypesConnection::GetAcceleratorTypes");
+AcceleratorTypesTracingConnection::GetAcceleratorTypes(
+    google::cloud::cpp::compute::acceleratorTypes::v1::
+        GetAcceleratorTypesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_accelerator_types_v1::AcceleratorTypesConnection::"
+      "GetAcceleratorTypes");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetAcceleratorTypes(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::AcceleratorType>
-AcceleratorTypesTracingConnection::ListAcceleratorTypes(google::cloud::cpp::compute::acceleratorTypes::v1::ListAcceleratorTypesRequest request) {
-  auto span = internal::MakeSpan("compute_accelerator_types_v1::AcceleratorTypesConnection::ListAcceleratorTypes");
+AcceleratorTypesTracingConnection::ListAcceleratorTypes(
+    google::cloud::cpp::compute::acceleratorTypes::v1::
+        ListAcceleratorTypesRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_accelerator_types_v1::AcceleratorTypesConnection::"
+      "ListAcceleratorTypes");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListAcceleratorTypes(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::AcceleratorType>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::AcceleratorType>(std::move(span),
+                                                        std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<compute_accelerator_types_v1::AcceleratorTypesConnection>
 MakeAcceleratorTypesTracingConnection(
-    std::shared_ptr<compute_accelerator_types_v1::AcceleratorTypesConnection> conn) {
+    std::shared_ptr<compute_accelerator_types_v1::AcceleratorTypesConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<AcceleratorTypesTracingConnection>(std::move(conn));

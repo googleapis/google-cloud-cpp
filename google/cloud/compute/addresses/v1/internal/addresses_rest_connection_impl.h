@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ADDRESSES_V1_INTERNAL_ADDRESSES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ADDRESSES_V1_INTERNAL_ADDRESSES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/addresses/v1/addresses_connection.h"
 #include "google/cloud/compute/addresses/v1/addresses_connection_idempotency_policy.h"
 #include "google/cloud/compute/addresses/v1/addresses_options.h"
 #include "google/cloud/compute/addresses/v1/internal/addresses_rest_stub.h"
 #include "google/cloud/compute/addresses/v1/internal/addresses_retry_traits.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,54 +43,71 @@ class AddressesRestConnectionImpl
   ~AddressesRestConnectionImpl() override = default;
 
   AddressesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_addresses_v1_internal::AddressesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<compute_addresses_v1_internal::AddressesRestStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
-  AggregatedListAddresses(google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest const& request) override;
+  AggregatedListAddresses(
+      google::cloud::cpp::compute::addresses::v1::
+          AggregatedListAddressesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteAddresses(google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAddresses(
+      google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Address>
-  GetAddresses(google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Address> GetAddresses(
+      google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertAddresses(google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAddresses(
+      google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&
+          request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Address>
-  ListAddresses(google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Address> ListAddresses(
+      google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
+          request) override;
 
  private:
   std::unique_ptr<compute_addresses_v1::AddressesRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<compute_addresses_v1::AddressesRetryPolicyOption>()) {
-      return options.get<compute_addresses_v1::AddressesRetryPolicyOption>()->clone();
+      return options.get<compute_addresses_v1::AddressesRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_addresses_v1::AddressesRetryPolicyOption>()->clone();
+    return options_.get<compute_addresses_v1::AddressesRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<compute_addresses_v1::AddressesBackoffPolicyOption>()) {
-      return options.get<compute_addresses_v1::AddressesBackoffPolicyOption>()->clone();
+      return options.get<compute_addresses_v1::AddressesBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_addresses_v1::AddressesBackoffPolicyOption>()->clone();
+    return options_.get<compute_addresses_v1::AddressesBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_addresses_v1::AddressesConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<compute_addresses_v1::AddressesConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_addresses_v1::AddressesConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_addresses_v1::AddressesConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<compute_addresses_v1::
+                        AddressesConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_addresses_v1::
+                   AddressesConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_addresses_v1::AddressesConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_addresses_v1::AddressesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

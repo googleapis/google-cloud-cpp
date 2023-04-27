@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/node_types/v1/node_types.proto
 
-
 #include "google/cloud/compute/node_types/v1/internal/node_types_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,12 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 NodeTypesRestMetadata::NodeTypesRestMetadata(
     std::shared_ptr<NodeTypesRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
 NodeTypesRestMetadata::AggregatedListNodeTypes(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::nodeTypes::v1::AggregatedListNodeTypesRequest const& request) {
+    google::cloud::cpp::compute::nodeTypes::v1::
+        AggregatedListNodeTypesRequest const& request) {
   SetMetadata(rest_context);
   return child_->AggregatedListNodeTypes(rest_context, request);
 }
@@ -47,7 +48,8 @@ NodeTypesRestMetadata::AggregatedListNodeTypes(
 StatusOr<google::cloud::cpp::compute::v1::NodeType>
 NodeTypesRestMetadata::GetNodeTypes(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::nodeTypes::v1::GetNodeTypesRequest const& request) {
+    google::cloud::cpp::compute::nodeTypes::v1::GetNodeTypesRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->GetNodeTypes(rest_context, request);
 }
@@ -55,33 +57,34 @@ NodeTypesRestMetadata::GetNodeTypes(
 StatusOr<google::cloud::cpp::compute::v1::NodeTypeList>
 NodeTypesRestMetadata::ListNodeTypes(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::nodeTypes::v1::ListNodeTypesRequest const& request) {
+    google::cloud::cpp::compute::nodeTypes::v1::ListNodeTypesRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->ListNodeTypes(rest_context, request);
 }
 
 void NodeTypesRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+    rest_internal::RestContext& rest_context,
+    std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

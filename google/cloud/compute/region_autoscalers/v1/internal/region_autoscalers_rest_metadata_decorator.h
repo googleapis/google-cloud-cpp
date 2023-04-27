@@ -35,31 +35,39 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RegionAutoscalersRestMetadata : public RegionAutoscalersRestStub {
  public:
   ~RegionAutoscalersRestMetadata() override = default;
-  explicit RegionAutoscalersRestMetadata(std::shared_ptr<RegionAutoscalersRestStub> child);
+  explicit RegionAutoscalersRestMetadata(
+      std::shared_ptr<RegionAutoscalersRestStub> child);
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRegionAutoscalers(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionAutoscalers::v1::DeleteRegionAutoscalersRequest const& request) override;
+      google::cloud::cpp::compute::regionAutoscalers::v1::
+          DeleteRegionAutoscalersRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetRegionAutoscalers(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionAutoscalers::v1::GetRegionAutoscalersRequest const& request) override;
+      google::cloud::cpp::compute::regionAutoscalers::v1::
+          GetRegionAutoscalersRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionAutoscalers(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionAutoscalers::v1::InsertRegionAutoscalersRequest const& request) override;
+      google::cloud::cpp::compute::regionAutoscalers::v1::
+          InsertRegionAutoscalersRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::RegionAutoscalerList> ListRegionAutoscalers(
+  StatusOr<google::cloud::cpp::compute::v1::RegionAutoscalerList>
+  ListRegionAutoscalers(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionAutoscalers::v1::ListRegionAutoscalersRequest const& request) override;
+      google::cloud::cpp::compute::regionAutoscalers::v1::
+          ListRegionAutoscalersRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRegionAutoscalers(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionAutoscalers::v1::PatchRegionAutoscalersRequest const& request) override;
+      google::cloud::cpp::compute::regionAutoscalers::v1::
+          PatchRegionAutoscalersRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRegionAutoscalers(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionAutoscalers::v1::UpdateRegionAutoscalersRequest const& request) override;
+      google::cloud::cpp::compute::regionAutoscalers::v1::
+          UpdateRegionAutoscalersRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

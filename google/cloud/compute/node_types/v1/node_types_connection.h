@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_TYPES_V1_NODE_TYPES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_TYPES_V1_NODE_TYPES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/node_types/v1/internal/node_types_retry_traits.h"
 #include "google/cloud/compute/node_types/v1/node_types_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -38,8 +38,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using NodeTypesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     compute_node_types_v1_internal::NodeTypesRetryTraits>;
 
-using NodeTypesLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_node_types_v1_internal::NodeTypesRetryTraits>;
+using NodeTypesLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_node_types_v1_internal::NodeTypesRetryTraits>;
 
 using NodeTypesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -64,13 +65,15 @@ class NodeTypesConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NodeTypeAggregatedList>
-  AggregatedListNodeTypes(google::cloud::cpp::compute::nodeTypes::v1::AggregatedListNodeTypesRequest const& request);
+  AggregatedListNodeTypes(google::cloud::cpp::compute::nodeTypes::v1::
+                              AggregatedListNodeTypesRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::NodeType>
-  GetNodeTypes(google::cloud::cpp::compute::nodeTypes::v1::GetNodeTypesRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::NodeType> GetNodeTypes(
+      google::cloud::cpp::compute::nodeTypes::v1::GetNodeTypesRequest const&
+          request);
 
-  virtual StreamRange<google::cloud::cpp::compute::v1::NodeType>
-  ListNodeTypes(google::cloud::cpp::compute::nodeTypes::v1::ListNodeTypesRequest request);
+  virtual StreamRange<google::cloud::cpp::compute::v1::NodeType> ListNodeTypes(
+      google::cloud::cpp::compute::nodeTypes::v1::ListNodeTypesRequest request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

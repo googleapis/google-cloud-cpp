@@ -29,33 +29,36 @@ namespace cloud {
 namespace compute_region_ssl_policies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultRegionSslPoliciesRestStub::DefaultRegionSslPoliciesRestStub(Options options)
+DefaultRegionSslPoliciesRestStub::DefaultRegionSslPoliciesRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       options_(std::move(options)) {}
 
 DefaultRegionSslPoliciesRestStub::DefaultRegionSslPoliciesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionSslPoliciesRestStub::DeleteRegionSslPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionSslPolicies::v1::DeleteRegionSslPoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionSslPolicies::v1::
+        DeleteRegionSslPoliciesRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/sslPolicies/{ssl_policy}");
+      "/compute/v1/projects/{project}/regions/{region}/sslPolicies/"
+      "{ssl_policy}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
 DefaultRegionSslPoliciesRestStub::GetRegionSslPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionSslPolicies::v1::GetRegionSslPoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionSslPolicies::v1::
+        GetRegionSslPoliciesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslPolicy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/sslPolicies/{ssl_policy}",
+      "/compute/v1/projects/{project}/regions/{region}/sslPolicies/"
+      "{ssl_policy}",
       {std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
        std::make_pair("ssl_policy", request.ssl_policy())});
@@ -63,8 +66,9 @@ DefaultRegionSslPoliciesRestStub::GetRegionSslPolicies(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionSslPoliciesRestStub::InsertRegionSslPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionSslPolicies::v1::InsertRegionSslPoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionSslPolicies::v1::
+        InsertRegionSslPoliciesRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/sslPolicies");
@@ -72,8 +76,9 @@ DefaultRegionSslPoliciesRestStub::InsertRegionSslPolicies(
 
 StatusOr<google::cloud::cpp::compute::v1::SslPoliciesList>
 DefaultRegionSslPoliciesRestStub::ListRegionSslPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionSslPolicies::v1::ListRegionSslPoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionSslPolicies::v1::
+        ListRegionSslPoliciesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslPoliciesList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/sslPolicies",
@@ -83,32 +88,40 @@ DefaultRegionSslPoliciesRestStub::ListRegionSslPolicies(
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
-StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+StatusOr<
+    google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
 DefaultRegionSslPoliciesRestStub::ListAvailableFeatures(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionSslPolicies::v1::ListAvailableFeaturesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionSslPolicies::v1::
+        ListAvailableFeaturesRequest const& request) {
+  return rest_internal::Get<google::cloud::cpp::compute::v1::
+                                SslPoliciesListAvailableFeaturesResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/sslPolicies/listAvailableFeatures",
+      "/compute/v1/projects/{project}/regions/{region}/sslPolicies/"
+      "listAvailableFeatures",
       {std::make_pair("filter", request.filter()),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultRegionSslPoliciesRestStub::PatchRegionSslPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::regionSslPolicies::v1::PatchRegionSslPoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::regionSslPolicies::v1::
+        PatchRegionSslPoliciesRequest const& request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/sslPolicies/{ssl_policy}");
+      "/compute/v1/projects/{project}/regions/{region}/sslPolicies/"
+      "{ssl_policy}");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,11 +17,11 @@
 // source: google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto
 
 #include "google/cloud/compute/ssl_certificates/v1/ssl_certificates_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/ssl_certificates/v1/internal/ssl_certificates_option_defaults.h"
 #include "google/cloud/compute/ssl_certificates/v1/internal/ssl_certificates_tracing_connection.h"
 #include "google/cloud/compute/ssl_certificates/v1/ssl_certificates_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,30 +36,36 @@ SslCertificatesConnection::~SslCertificatesConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
 SslCertificatesConnection::AggregatedListSslCertificates(
-    google::cloud::cpp::compute::sslCertificates::v1::AggregatedListSslCertificatesRequest const&) {
+    google::cloud::cpp::compute::sslCertificates::v1::
+        AggregatedListSslCertificatesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SslCertificatesConnection::DeleteSslCertificates(
-    google::cloud::cpp::compute::sslCertificates::v1::DeleteSslCertificatesRequest const&) {
+    google::cloud::cpp::compute::sslCertificates::v1::
+        DeleteSslCertificatesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
 SslCertificatesConnection::GetSslCertificates(
-    google::cloud::cpp::compute::sslCertificates::v1::GetSslCertificatesRequest const&) {
+    google::cloud::cpp::compute::sslCertificates::v1::
+        GetSslCertificatesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SslCertificatesConnection::InsertSslCertificates(
-    google::cloud::cpp::compute::sslCertificates::v1::InsertSslCertificatesRequest const&) {
+    google::cloud::cpp::compute::sslCertificates::v1::
+        InsertSslCertificatesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::SslCertificate> SslCertificatesConnection::ListSslCertificates(
-    google::cloud::cpp::compute::sslCertificates::v1::ListSslCertificatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
+SslCertificatesConnection::ListSslCertificates(
+    google::cloud::cpp::compute::sslCertificates::v1::
+        ListSslCertificatesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::SslCertificate>>();
 }

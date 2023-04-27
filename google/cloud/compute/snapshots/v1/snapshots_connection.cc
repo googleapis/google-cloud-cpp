@@ -17,11 +17,11 @@
 // source: google/cloud/compute/snapshots/v1/snapshots.proto
 
 #include "google/cloud/compute/snapshots/v1/snapshots_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/snapshots/v1/internal/snapshots_option_defaults.h"
 #include "google/cloud/compute/snapshots/v1/internal/snapshots_tracing_connection.h"
 #include "google/cloud/compute/snapshots/v1/snapshots_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -58,8 +58,10 @@ SnapshotsConnection::InsertSnapshots(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Snapshot> SnapshotsConnection::ListSnapshots(
-    google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::Snapshot>
+SnapshotsConnection::ListSnapshots(
+    google::cloud::cpp::compute::snapshots::v1::
+        ListSnapshotsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Snapshot>>();
 }
@@ -78,7 +80,8 @@ SnapshotsConnection::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 SnapshotsConnection::TestIamPermissions(
-    google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const&) {
+    google::cloud::cpp::compute::snapshots::v1::
+        TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

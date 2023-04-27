@@ -17,11 +17,11 @@
 // source: google/cloud/compute/disk_types/v1/disk_types.proto
 
 #include "google/cloud/compute/disk_types/v1/disk_types_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/disk_types/v1/disk_types_options.h"
 #include "google/cloud/compute/disk_types/v1/internal/disk_types_option_defaults.h"
 #include "google/cloud/compute/disk_types/v1/internal/disk_types_rest_connection_impl.h"
 #include "google/cloud/compute/disk_types/v1/internal/disk_types_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include <memory>
@@ -34,15 +34,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<DiskTypesConnection> MakeDiskTypesConnectionRest(
     ExperimentalTag, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList,
-      DiskTypesPolicyOptionList>(options, __func__);
+                                 UnifiedCredentialsOptionList,
+                                 DiskTypesPolicyOptionList>(options, __func__);
   options = compute_disk_types_v1_internal::DiskTypesDefaultOptions(
       std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_disk_types_v1_internal::CreateDefaultDiskTypesRestStub(
-    options);
-  return std::make_shared<compute_disk_types_v1_internal::DiskTypesRestConnectionImpl>(
+  auto stub =
+      compute_disk_types_v1_internal::CreateDefaultDiskTypesRestStub(options);
+  return std::make_shared<
+      compute_disk_types_v1_internal::DiskTypesRestConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 

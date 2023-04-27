@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto
 
-
 #include "google/cloud/compute/packet_mirrorings/v1/internal/packet_mirrorings_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,12 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 PacketMirroringsRestMetadata::PacketMirroringsRestMetadata(
     std::shared_ptr<PacketMirroringsRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
 PacketMirroringsRestMetadata::AggregatedListPacketMirrorings(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::packetMirrorings::v1::AggregatedListPacketMirroringsRequest const& request) {
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        AggregatedListPacketMirroringsRequest const& request) {
   SetMetadata(rest_context);
   return child_->AggregatedListPacketMirrorings(rest_context, request);
 }
@@ -47,7 +48,8 @@ PacketMirroringsRestMetadata::AggregatedListPacketMirrorings(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsRestMetadata::DeletePacketMirrorings(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::packetMirrorings::v1::DeletePacketMirroringsRequest const& request) {
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        DeletePacketMirroringsRequest const& request) {
   SetMetadata(rest_context);
   return child_->DeletePacketMirrorings(rest_context, request);
 }
@@ -55,7 +57,8 @@ PacketMirroringsRestMetadata::DeletePacketMirrorings(
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
 PacketMirroringsRestMetadata::GetPacketMirrorings(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::packetMirrorings::v1::GetPacketMirroringsRequest const& request) {
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        GetPacketMirroringsRequest const& request) {
   SetMetadata(rest_context);
   return child_->GetPacketMirrorings(rest_context, request);
 }
@@ -63,7 +66,8 @@ PacketMirroringsRestMetadata::GetPacketMirrorings(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsRestMetadata::InsertPacketMirrorings(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::packetMirrorings::v1::InsertPacketMirroringsRequest const& request) {
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        InsertPacketMirroringsRequest const& request) {
   SetMetadata(rest_context);
   return child_->InsertPacketMirrorings(rest_context, request);
 }
@@ -71,7 +75,8 @@ PacketMirroringsRestMetadata::InsertPacketMirrorings(
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroringList>
 PacketMirroringsRestMetadata::ListPacketMirrorings(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::packetMirrorings::v1::ListPacketMirroringsRequest const& request) {
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        ListPacketMirroringsRequest const& request) {
   SetMetadata(rest_context);
   return child_->ListPacketMirrorings(rest_context, request);
 }
@@ -79,7 +84,8 @@ PacketMirroringsRestMetadata::ListPacketMirrorings(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsRestMetadata::PatchPacketMirrorings(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::packetMirrorings::v1::PatchPacketMirroringsRequest const& request) {
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        PatchPacketMirroringsRequest const& request) {
   SetMetadata(rest_context);
   return child_->PatchPacketMirrorings(rest_context, request);
 }
@@ -87,33 +93,34 @@ PacketMirroringsRestMetadata::PatchPacketMirrorings(
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 PacketMirroringsRestMetadata::TestIamPermissions(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::packetMirrorings::v1::TestIamPermissionsRequest const& request) {
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        TestIamPermissionsRequest const& request) {
   SetMetadata(rest_context);
   return child_->TestIamPermissions(rest_context, request);
 }
 
 void PacketMirroringsRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+    rest_internal::RestContext& rest_context,
+    std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

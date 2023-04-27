@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGIONS_V1_REGIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGIONS_V1_REGIONS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/regions/v1/internal/regions_retry_traits.h"
 #include "google/cloud/compute/regions/v1/regions_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -38,8 +38,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using RegionsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
     compute_regions_v1_internal::RegionsRetryTraits>;
 
-using RegionsLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_regions_v1_internal::RegionsRetryTraits>;
+using RegionsLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_regions_v1_internal::RegionsRetryTraits>;
 
 using RegionsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -63,11 +64,12 @@ class RegionsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Region>
-  GetRegions(google::cloud::cpp::compute::regions::v1::GetRegionsRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Region> GetRegions(
+      google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&
+          request);
 
-  virtual StreamRange<google::cloud::cpp::compute::v1::Region>
-  ListRegions(google::cloud::cpp::compute::regions::v1::ListRegionsRequest request);
+  virtual StreamRange<google::cloud::cpp::compute::v1::Region> ListRegions(
+      google::cloud::cpp::compute::regions::v1::ListRegionsRequest request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

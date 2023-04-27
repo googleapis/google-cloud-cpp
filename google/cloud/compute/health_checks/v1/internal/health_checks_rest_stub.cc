@@ -35,31 +35,34 @@ DefaultHealthChecksRestStub::DefaultHealthChecksRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultHealthChecksRestStub::DefaultHealthChecksRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::HealthChecksAggregatedList>
 DefaultHealthChecksRestStub::AggregatedListHealthChecks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::healthChecks::v1::AggregatedListHealthChecksRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::HealthChecksAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::healthChecks::v1::
+        AggregatedListHealthChecksRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::HealthChecksAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/healthChecks",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultHealthChecksRestStub::DeleteHealthChecks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::healthChecks::v1::DeleteHealthChecksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::healthChecks::v1::
+        DeleteHealthChecksRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/healthChecks/{health_check}");
@@ -67,8 +70,9 @@ DefaultHealthChecksRestStub::DeleteHealthChecks(
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheck>
 DefaultHealthChecksRestStub::GetHealthChecks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::healthChecks::v1::GetHealthChecksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::healthChecks::v1::GetHealthChecksRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::HealthCheck>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/healthChecks/{health_check}",
@@ -78,8 +82,9 @@ DefaultHealthChecksRestStub::GetHealthChecks(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultHealthChecksRestStub::InsertHealthChecks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::healthChecks::v1::InsertHealthChecksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::healthChecks::v1::
+        InsertHealthChecksRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/healthChecks");
@@ -87,8 +92,9 @@ DefaultHealthChecksRestStub::InsertHealthChecks(
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheckList>
 DefaultHealthChecksRestStub::ListHealthChecks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::healthChecks::v1::ListHealthChecksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::healthChecks::v1::
+        ListHealthChecksRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::HealthCheckList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/healthChecks",
@@ -97,13 +103,15 @@ DefaultHealthChecksRestStub::ListHealthChecks(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultHealthChecksRestStub::PatchHealthChecks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::healthChecks::v1::PatchHealthChecksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::healthChecks::v1::
+        PatchHealthChecksRequest const& request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/healthChecks/{health_check}");
@@ -111,8 +119,9 @@ DefaultHealthChecksRestStub::PatchHealthChecks(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultHealthChecksRestStub::UpdateHealthChecks(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::healthChecks::v1::UpdateHealthChecksRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::healthChecks::v1::
+        UpdateHealthChecksRequest const& request) {
   return rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/healthChecks/{health_check}");

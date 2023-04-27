@@ -42,41 +42,59 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockSnapshotsConnection : public compute_snapshots_v1::SnapshotsConnection {
+class MockSnapshotsConnection
+    : public compute_snapshots_v1::SnapshotsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteSnapshots,
-  (google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteSnapshots,
+      (google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Snapshot>,
-  GetSnapshots,
-  (google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Snapshot>, GetSnapshots,
+      (google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  GetIamPolicy,
-  (google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Policy>, GetIamPolicy,
+      (google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertSnapshots,
-  (google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertSnapshots,
+      (google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const&
+           request),
+      (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Snapshot>,
-  ListSnapshots,
-  (google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest request), (override));
+              ListSnapshots,
+              (google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest
+                   request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>,
-  SetIamPolicy,
-  (google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
+      (google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  SetLabels,
-  (google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, SetLabels,
+      (google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
-  TestIamPermissions,
-  (google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
+      TestIamPermissions,
+      (google::cloud::cpp::compute::snapshots::v1::
+           TestIamPermissionsRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

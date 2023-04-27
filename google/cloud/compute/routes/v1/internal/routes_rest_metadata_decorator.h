@@ -39,19 +39,23 @@ class RoutesRestMetadata : public RoutesRestStub {
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRoutes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const& request) override;
+      google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Route> GetRoutes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routes::v1::GetRoutesRequest const& request) override;
+      google::cloud::cpp::compute::routes::v1::GetRoutesRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRoutes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const& request) override;
+      google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RouteList> ListRoutes(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::routes::v1::ListRoutesRequest const& request) override;
+      google::cloud::cpp::compute::routes::v1::ListRoutesRequest const& request)
+      override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

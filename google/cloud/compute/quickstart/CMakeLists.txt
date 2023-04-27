@@ -12,8 +12,8 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
-# This file shows how to use the Compute Engine API C++ client library
-# from a larger CMake project.
+# This file shows how to use the Compute Engine API C++ client library from a
+# larger CMake project.
 
 cmake_minimum_required(VERSION 3.10...3.24)
 project(google-cloud-cpp-compute-quickstart CXX)

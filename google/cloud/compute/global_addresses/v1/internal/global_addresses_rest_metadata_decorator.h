@@ -35,27 +35,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GlobalAddressesRestMetadata : public GlobalAddressesRestStub {
  public:
   ~GlobalAddressesRestMetadata() override = default;
-  explicit GlobalAddressesRestMetadata(std::shared_ptr<GlobalAddressesRestStub> child);
+  explicit GlobalAddressesRestMetadata(
+      std::shared_ptr<GlobalAddressesRestStub> child);
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteGlobalAddresses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::globalAddresses::v1::DeleteGlobalAddressesRequest const& request) override;
+      google::cloud::cpp::compute::globalAddresses::v1::
+          DeleteGlobalAddressesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Address> GetGlobalAddresses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::globalAddresses::v1::GetGlobalAddressesRequest const& request) override;
+      google::cloud::cpp::compute::globalAddresses::v1::
+          GetGlobalAddressesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertGlobalAddresses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::globalAddresses::v1::InsertGlobalAddressesRequest const& request) override;
+      google::cloud::cpp::compute::globalAddresses::v1::
+          InsertGlobalAddressesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::AddressList> ListGlobalAddresses(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::globalAddresses::v1::ListGlobalAddressesRequest const& request) override;
+      google::cloud::cpp::compute::globalAddresses::v1::
+          ListGlobalAddressesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::globalAddresses::v1::SetLabelsRequest const& request) override;
+      google::cloud::cpp::compute::globalAddresses::v1::SetLabelsRequest const&
+          request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

@@ -35,15 +35,14 @@ DefaultMachineImagesRestStub::DefaultMachineImagesRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultMachineImagesRestStub::DefaultMachineImagesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultMachineImagesRestStub::DeleteMachineImages(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineImages::v1::DeleteMachineImagesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::machineImages::v1::
+        DeleteMachineImagesRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/machineImages/{machine_image}");
@@ -51,8 +50,9 @@ DefaultMachineImagesRestStub::DeleteMachineImages(
 
 StatusOr<google::cloud::cpp::compute::v1::MachineImage>
 DefaultMachineImagesRestStub::GetMachineImages(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineImages::v1::GetMachineImagesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::machineImages::v1::
+        GetMachineImagesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::MachineImage>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/machineImages/{machine_image}",
@@ -62,20 +62,25 @@ DefaultMachineImagesRestStub::GetMachineImages(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultMachineImagesRestStub::GetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineImages::v1::GetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::machineImages::v1::GetIamPolicyRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/machineImages/{resource}/getIamPolicy",
-      {std::make_pair("options_requested_policy_version", std::to_string(request.options_requested_policy_version())),
+      "/compute/v1/projects/{project}/global/machineImages/{resource}/"
+      "getIamPolicy",
+      {std::make_pair(
+           "options_requested_policy_version",
+           std::to_string(request.options_requested_policy_version())),
        std::make_pair("project", request.project()),
        std::make_pair("resource", request.resource())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultMachineImagesRestStub::InsertMachineImages(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineImages::v1::InsertMachineImagesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::machineImages::v1::
+        InsertMachineImagesRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/machineImages");
@@ -83,8 +88,9 @@ DefaultMachineImagesRestStub::InsertMachineImages(
 
 StatusOr<google::cloud::cpp::compute::v1::MachineImageList>
 DefaultMachineImagesRestStub::ListMachineImages(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineImages::v1::ListMachineImagesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::machineImages::v1::
+        ListMachineImagesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::MachineImageList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/machineImages",
@@ -93,25 +99,31 @@ DefaultMachineImagesRestStub::ListMachineImages(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultMachineImagesRestStub::SetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineImages::v1::SetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::machineImages::v1::SetIamPolicyRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/machineImages/{resource}/setIamPolicy");
+      "/compute/v1/projects/{project}/global/machineImages/{resource}/"
+      "setIamPolicy");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultMachineImagesRestStub::TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::machineImages::v1::TestIamPermissionsRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::machineImages::v1::
+        TestIamPermissionsRequest const& request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/global/machineImages/{resource}/testIamPermissions");
+      "/compute/v1/projects/{project}/global/machineImages/{resource}/"
+      "testIamPermissions");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

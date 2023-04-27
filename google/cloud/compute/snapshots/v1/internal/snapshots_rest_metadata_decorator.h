@@ -39,35 +39,43 @@ class SnapshotsRestMetadata : public SnapshotsRestStub {
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSnapshots(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const& request) override;
+      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshots(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const& request) override;
+      google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSnapshots(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const& request) override;
+      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SnapshotList> ListSnapshots(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest const& request) override;
+      google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request) override;
+      google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::snapshots::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

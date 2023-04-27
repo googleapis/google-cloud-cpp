@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSE_CODES_V1_LICENSE_CODES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSE_CODES_V1_LICENSE_CODES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/license_codes/v1/internal/license_codes_retry_traits.h"
 #include "google/cloud/compute/license_codes/v1/license_codes_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -34,11 +34,13 @@ namespace cloud {
 namespace compute_license_codes_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using LicenseCodesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_license_codes_v1_internal::LicenseCodesRetryTraits>;
+using LicenseCodesRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_license_codes_v1_internal::LicenseCodesRetryTraits>;
 
-using LicenseCodesLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_license_codes_v1_internal::LicenseCodesRetryTraits>;
+using LicenseCodesLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_license_codes_v1_internal::LicenseCodesRetryTraits>;
 
 using LicenseCodesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -54,7 +56,8 @@ using LicenseCodesLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeLicenseCodesConnection()`.
  *
- * For mocking, see `compute_license_codes_v1_mocks::MockLicenseCodesConnection`.
+ * For mocking, see
+ * `compute_license_codes_v1_mocks::MockLicenseCodesConnection`.
  */
 class LicenseCodesConnection {
  public:
@@ -63,10 +66,12 @@ class LicenseCodesConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::compute::v1::LicenseCode>
-  GetLicenseCodes(google::cloud::cpp::compute::licenseCodes::v1::GetLicenseCodesRequest const& request);
+  GetLicenseCodes(google::cloud::cpp::compute::licenseCodes::v1::
+                      GetLicenseCodesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::licenseCodes::v1::TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::licenseCodes::v1::
+                         TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

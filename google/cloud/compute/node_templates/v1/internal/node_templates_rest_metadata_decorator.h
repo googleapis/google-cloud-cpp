@@ -35,39 +35,49 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class NodeTemplatesRestMetadata : public NodeTemplatesRestStub {
  public:
   ~NodeTemplatesRestMetadata() override = default;
-  explicit NodeTemplatesRestMetadata(std::shared_ptr<NodeTemplatesRestStub> child);
+  explicit NodeTemplatesRestMetadata(
+      std::shared_ptr<NodeTemplatesRestStub> child);
 
-  StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList> AggregatedListNodeTemplates(
+  StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>
+  AggregatedListNodeTemplates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeTemplates::v1::AggregatedListNodeTemplatesRequest const& request) override;
+      google::cloud::cpp::compute::nodeTemplates::v1::
+          AggregatedListNodeTemplatesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeTemplates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeTemplates::v1::DeleteNodeTemplatesRequest const& request) override;
+      google::cloud::cpp::compute::nodeTemplates::v1::
+          DeleteNodeTemplatesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeTemplate> GetNodeTemplates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeTemplates::v1::GetNodeTemplatesRequest const& request) override;
+      google::cloud::cpp::compute::nodeTemplates::v1::
+          GetNodeTemplatesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeTemplates::v1::GetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::nodeTemplates::v1::GetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeTemplates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeTemplates::v1::InsertNodeTemplatesRequest const& request) override;
+      google::cloud::cpp::compute::nodeTemplates::v1::
+          InsertNodeTemplatesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeTemplateList> ListNodeTemplates(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeTemplates::v1::ListNodeTemplatesRequest const& request) override;
+      google::cloud::cpp::compute::nodeTemplates::v1::
+          ListNodeTemplatesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeTemplates::v1::SetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::nodeTemplates::v1::SetIamPolicyRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeTemplates::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::nodeTemplates::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

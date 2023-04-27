@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_GROUPS_V1_INTERNAL_NODE_GROUPS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_GROUPS_V1_INTERNAL_NODE_GROUPS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/node_groups/v1/internal/node_groups_rest_stub.h"
 #include "google/cloud/compute/node_groups/v1/internal/node_groups_retry_traits.h"
 #include "google/cloud/compute/node_groups/v1/node_groups_connection.h"
 #include "google/cloud/compute/node_groups/v1/node_groups_connection_idempotency_policy.h"
 #include "google/cloud/compute/node_groups/v1/node_groups_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,75 +43,103 @@ class NodeGroupsRestConnectionImpl
   ~NodeGroupsRestConnectionImpl() override = default;
 
   NodeGroupsRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_node_groups_v1_internal::NodeGroupsRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<compute_node_groups_v1_internal::NodeGroupsRestStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddNodes(google::cloud::cpp::compute::nodeGroups::v1::AddNodesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddNodes(
+      google::cloud::cpp::compute::nodeGroups::v1::AddNodesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
-  AggregatedListNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::AggregatedListNodeGroupsRequest const& request) override;
+  AggregatedListNodeGroups(
+      google::cloud::cpp::compute::nodeGroups::v1::
+          AggregatedListNodeGroupsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::DeleteNodeGroupsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeGroups(
+      google::cloud::cpp::compute::nodeGroups::v1::
+          DeleteNodeGroupsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteNodes(google::cloud::cpp::compute::nodeGroups::v1::DeleteNodesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodes(
+      google::cloud::cpp::compute::nodeGroups::v1::DeleteNodesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::NodeGroup>
-  GetNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::GetNodeGroupsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroups(
+      google::cloud::cpp::compute::nodeGroups::v1::GetNodeGroupsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::nodeGroups::v1::GetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::nodeGroups::v1::GetIamPolicyRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::InsertNodeGroupsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeGroups(
+      google::cloud::cpp::compute::nodeGroups::v1::
+          InsertNodeGroupsRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::NodeGroup>
-  ListNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::ListNodeGroupsRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::NodeGroup> ListNodeGroups(
+      google::cloud::cpp::compute::nodeGroups::v1::ListNodeGroupsRequest
+          request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode>
-  ListNodes(google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode> ListNodes(
+      google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::PatchNodeGroupsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNodeGroups(
+      google::cloud::cpp::compute::nodeGroups::v1::PatchNodeGroupsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::nodeGroups::v1::SetIamPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::nodeGroups::v1::SetIamPolicyRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetNodeTemplate(google::cloud::cpp::compute::nodeGroups::v1::SetNodeTemplateRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetNodeTemplate(
+      google::cloud::cpp::compute::nodeGroups::v1::SetNodeTemplateRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::nodeGroups::v1::TestIamPermissionsRequest const& request) override;
+  TestIamPermissions(google::cloud::cpp::compute::nodeGroups::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_node_groups_v1::NodeGroupsRetryPolicy> retry_policy() {
+  std::unique_ptr<compute_node_groups_v1::NodeGroupsRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<compute_node_groups_v1::NodeGroupsRetryPolicyOption>()) {
-      return options.get<compute_node_groups_v1::NodeGroupsRetryPolicyOption>()->clone();
+      return options.get<compute_node_groups_v1::NodeGroupsRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_node_groups_v1::NodeGroupsRetryPolicyOption>()->clone();
+    return options_.get<compute_node_groups_v1::NodeGroupsRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<compute_node_groups_v1::NodeGroupsBackoffPolicyOption>()) {
-      return options.get<compute_node_groups_v1::NodeGroupsBackoffPolicyOption>()->clone();
+      return options
+          .get<compute_node_groups_v1::NodeGroupsBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_node_groups_v1::NodeGroupsBackoffPolicyOption>()->clone();
+    return options_
+        .get<compute_node_groups_v1::NodeGroupsBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_node_groups_v1::NodeGroupsConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<compute_node_groups_v1::NodeGroupsConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_node_groups_v1::NodeGroupsConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_node_groups_v1::NodeGroupsConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<compute_node_groups_v1::
+                        NodeGroupsConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_node_groups_v1::
+                   NodeGroupsConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_node_groups_v1::NodeGroupsConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_node_groups_v1::
+                 NodeGroupsConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

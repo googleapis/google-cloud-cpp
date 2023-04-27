@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_SSL_POLICIES_V1_INTERNAL_REGION_SSL_POLICIES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_SSL_POLICIES_V1_INTERNAL_REGION_SSL_POLICIES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/region_ssl_policies/v1/internal/region_ssl_policies_rest_stub.h"
 #include "google/cloud/compute/region_ssl_policies/v1/internal/region_ssl_policies_retry_traits.h"
 #include "google/cloud/compute/region_ssl_policies/v1/region_ssl_policies_connection.h"
 #include "google/cloud/compute/region_ssl_policies/v1/region_ssl_policies_connection_idempotency_policy.h"
 #include "google/cloud/compute/region_ssl_policies/v1/region_ssl_policies_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,58 +43,93 @@ class RegionSslPoliciesRestConnectionImpl
   ~RegionSslPoliciesRestConnectionImpl() override = default;
 
   RegionSslPoliciesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_region_ssl_policies_v1_internal::RegionSslPoliciesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_region_ssl_policies_v1_internal::RegionSslPoliciesRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteRegionSslPolicies(google::cloud::cpp::compute::regionSslPolicies::v1::DeleteRegionSslPoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRegionSslPolicies(
+      google::cloud::cpp::compute::regionSslPolicies::v1::
+          DeleteRegionSslPoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
-  GetRegionSslPolicies(google::cloud::cpp::compute::regionSslPolicies::v1::GetRegionSslPoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetRegionSslPolicies(
+      google::cloud::cpp::compute::regionSslPolicies::v1::
+          GetRegionSslPoliciesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertRegionSslPolicies(google::cloud::cpp::compute::regionSslPolicies::v1::InsertRegionSslPoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionSslPolicies(
+      google::cloud::cpp::compute::regionSslPolicies::v1::
+          InsertRegionSslPoliciesRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
-  ListRegionSslPolicies(google::cloud::cpp::compute::regionSslPolicies::v1::ListRegionSslPoliciesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::SslPolicy> ListRegionSslPolicies(
+      google::cloud::cpp::compute::regionSslPolicies::v1::
+          ListRegionSslPoliciesRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
-  ListAvailableFeatures(google::cloud::cpp::compute::regionSslPolicies::v1::ListAvailableFeaturesRequest const& request) override;
+  StatusOr<
+      google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
+  ListAvailableFeatures(
+      google::cloud::cpp::compute::regionSslPolicies::v1::
+          ListAvailableFeaturesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchRegionSslPolicies(google::cloud::cpp::compute::regionSslPolicies::v1::PatchRegionSslPoliciesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRegionSslPolicies(
+      google::cloud::cpp::compute::regionSslPolicies::v1::
+          PatchRegionSslPoliciesRequest const& request) override;
 
  private:
-  std::unique_ptr<compute_region_ssl_policies_v1::RegionSslPoliciesRetryPolicy> retry_policy() {
+  std::unique_ptr<compute_region_ssl_policies_v1::RegionSslPoliciesRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_ssl_policies_v1::RegionSslPoliciesRetryPolicyOption>()) {
-      return options.get<compute_region_ssl_policies_v1::RegionSslPoliciesRetryPolicyOption>()->clone();
+    if (options.has<compute_region_ssl_policies_v1::
+                        RegionSslPoliciesRetryPolicyOption>()) {
+      return options
+          .get<compute_region_ssl_policies_v1::
+                   RegionSslPoliciesRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_region_ssl_policies_v1::RegionSslPoliciesRetryPolicyOption>()->clone();
+    return options_
+        .get<compute_region_ssl_policies_v1::
+                 RegionSslPoliciesRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_ssl_policies_v1::RegionSslPoliciesBackoffPolicyOption>()) {
-      return options.get<compute_region_ssl_policies_v1::RegionSslPoliciesBackoffPolicyOption>()->clone();
+    if (options.has<compute_region_ssl_policies_v1::
+                        RegionSslPoliciesBackoffPolicyOption>()) {
+      return options
+          .get<compute_region_ssl_policies_v1::
+                   RegionSslPoliciesBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_region_ssl_policies_v1::RegionSslPoliciesBackoffPolicyOption>()->clone();
+    return options_
+        .get<compute_region_ssl_policies_v1::
+                 RegionSslPoliciesBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_region_ssl_policies_v1::RegionSslPoliciesConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<compute_region_ssl_policies_v1::
+                      RegionSslPoliciesConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_region_ssl_policies_v1::RegionSslPoliciesConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_region_ssl_policies_v1::RegionSslPoliciesConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<compute_region_ssl_policies_v1::
+                        RegionSslPoliciesConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_region_ssl_policies_v1::
+                   RegionSslPoliciesConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_region_ssl_policies_v1::RegionSslPoliciesConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_region_ssl_policies_v1::
+                 RegionSslPoliciesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_region_ssl_policies_v1_internal::RegionSslPoliciesRestStub> stub_;
+  std::shared_ptr<
+      compute_region_ssl_policies_v1_internal::RegionSslPoliciesRestStub>
+      stub_;
   Options options_;
 };
 

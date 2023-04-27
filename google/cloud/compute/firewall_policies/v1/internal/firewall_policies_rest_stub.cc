@@ -29,48 +29,54 @@ namespace cloud {
 namespace compute_firewall_policies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-DefaultFirewallPoliciesRestStub::DefaultFirewallPoliciesRestStub(Options options)
+DefaultFirewallPoliciesRestStub::DefaultFirewallPoliciesRestStub(
+    Options options)
     : service_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
       options_(std::move(options)) {}
 
 DefaultFirewallPoliciesRestStub::DefaultFirewallPoliciesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultFirewallPoliciesRestStub::AddAssociation(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::AddAssociationRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        AddAssociationRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/addAssociation");
+      "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/"
+      "addAssociation");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultFirewallPoliciesRestStub::AddRule(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::AddRuleRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewallPolicies::v1::AddRuleRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/addRule");
+      "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/"
+      "addRule");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultFirewallPoliciesRestStub::CloneRules(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::CloneRulesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewallPolicies::v1::CloneRulesRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/cloneRules");
+      "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/"
+      "cloneRules");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultFirewallPoliciesRestStub::DeleteFirewallPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::DeleteFirewallPoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        DeleteFirewallPoliciesRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/locations/global/firewallPolicies/{firewall_policy}");
@@ -78,8 +84,9 @@ DefaultFirewallPoliciesRestStub::DeleteFirewallPolicies(
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
 DefaultFirewallPoliciesRestStub::GetFirewallPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::GetFirewallPoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        GetFirewallPoliciesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::FirewallPolicy>(
       *service_, rest_context, request,
       "/compute/v1/locations/global/firewallPolicies/{firewall_policy}",
@@ -88,31 +95,39 @@ DefaultFirewallPoliciesRestStub::GetFirewallPolicies(
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>
 DefaultFirewallPoliciesRestStub::GetAssociation(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::GetAssociationRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::FirewallPolicyAssociation>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        GetAssociationRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::FirewallPolicyAssociation>(
       *service_, rest_context, request,
-      "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/getAssociation",
+      "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/"
+      "getAssociation",
       {std::make_pair("firewall_policy", request.firewall_policy()),
        std::make_pair("name", request.name())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultFirewallPoliciesRestStub::GetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::GetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        GetIamPolicyRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
       "/compute/v1/locations/global/firewallPolicies/{resource}/getIamPolicy",
-      {std::make_pair("options_requested_policy_version", std::to_string(request.options_requested_policy_version())),
+      {std::make_pair(
+           "options_requested_policy_version",
+           std::to_string(request.options_requested_policy_version())),
        std::make_pair("resource", request.resource())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
 DefaultFirewallPoliciesRestStub::GetRule(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::GetRuleRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::FirewallPolicyRule>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewallPolicies::v1::GetRuleRequest const&
+        request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::FirewallPolicyRule>(
       *service_, rest_context, request,
       "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/getRule",
       {std::make_pair("firewall_policy", request.firewall_policy()),
@@ -121,8 +136,9 @@ DefaultFirewallPoliciesRestStub::GetRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultFirewallPoliciesRestStub::InsertFirewallPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::InsertFirewallPoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        InsertFirewallPoliciesRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/locations/global/firewallPolicies");
@@ -130,9 +146,11 @@ DefaultFirewallPoliciesRestStub::InsertFirewallPolicies(
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyList>
 DefaultFirewallPoliciesRestStub::ListFirewallPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::ListFirewallPoliciesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::FirewallPolicyList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        ListFirewallPoliciesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::FirewallPolicyList>(
       *service_, rest_context, request,
       "/compute/v1/locations/global/firewallPolicies",
       {std::make_pair("filter", request.filter()),
@@ -140,14 +158,18 @@ DefaultFirewallPoliciesRestStub::ListFirewallPolicies(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("parent_id", request.parent_id()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
-StatusOr<google::cloud::cpp::compute::v1::FirewallPoliciesListAssociationsResponse>
+StatusOr<
+    google::cloud::cpp::compute::v1::FirewallPoliciesListAssociationsResponse>
 DefaultFirewallPoliciesRestStub::ListAssociations(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::ListAssociationsRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::FirewallPoliciesListAssociationsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        ListAssociationsRequest const& request) {
+  return rest_internal::Get<google::cloud::cpp::compute::v1::
+                                FirewallPoliciesListAssociationsResponse>(
       *service_, rest_context, request,
       "/compute/v1/locations/global/firewallPolicies/listAssociations",
       {std::make_pair("target_resource", request.target_resource())});
@@ -155,8 +177,9 @@ DefaultFirewallPoliciesRestStub::ListAssociations(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultFirewallPoliciesRestStub::Move(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::MoveRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewallPolicies::v1::MoveRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/move");
@@ -164,8 +187,9 @@ DefaultFirewallPoliciesRestStub::Move(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultFirewallPoliciesRestStub::PatchFirewallPolicies(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::PatchFirewallPoliciesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        PatchFirewallPoliciesRequest const& request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/locations/global/firewallPolicies/{firewall_policy}");
@@ -173,35 +197,42 @@ DefaultFirewallPoliciesRestStub::PatchFirewallPolicies(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultFirewallPoliciesRestStub::PatchRule(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::PatchRuleRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewallPolicies::v1::PatchRuleRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/patchRule");
+      "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/"
+      "patchRule");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultFirewallPoliciesRestStub::RemoveAssociation(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::RemoveAssociationRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        RemoveAssociationRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/removeAssociation");
+      "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/"
+      "removeAssociation");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultFirewallPoliciesRestStub::RemoveRule(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::RemoveRuleRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewallPolicies::v1::RemoveRuleRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/removeRule");
+      "/compute/v1/locations/global/firewallPolicies/{firewall_policy}/"
+      "removeRule");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultFirewallPoliciesRestStub::SetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::SetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        SetIamPolicyRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
       "/compute/v1/locations/global/firewallPolicies/{resource}/setIamPolicy");
@@ -209,11 +240,14 @@ DefaultFirewallPoliciesRestStub::SetIamPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultFirewallPoliciesRestStub::TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewallPolicies::v1::TestIamPermissionsRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewallPolicies::v1::
+        TestIamPermissionsRequest const& request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request,
-      "/compute/v1/locations/global/firewallPolicies/{resource}/testIamPermissions");
+      "/compute/v1/locations/global/firewallPolicies/{resource}/"
+      "testIamPermissions");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

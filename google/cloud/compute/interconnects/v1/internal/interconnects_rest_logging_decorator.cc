@@ -28,18 +28,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 InterconnectsRestLogging::InterconnectsRestLogging(
     std::shared_ptr<InterconnectsRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectsRestLogging::DeleteInterconnects(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectsRequest const& request) {
+    google::cloud::cpp::compute::interconnects::v1::
+        DeleteInterconnectsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectsRequest const& request) {
+             google::cloud::cpp::compute::interconnects::v1::
+                 DeleteInterconnectsRequest const& request) {
         return child_->DeleteInterconnects(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,10 +50,12 @@ InterconnectsRestLogging::DeleteInterconnects(
 StatusOr<google::cloud::cpp::compute::v1::Interconnect>
 InterconnectsRestLogging::GetInterconnects(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::interconnects::v1::GetInterconnectsRequest const& request) {
+    google::cloud::cpp::compute::interconnects::v1::
+        GetInterconnectsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::interconnects::v1::GetInterconnectsRequest const& request) {
+             google::cloud::cpp::compute::interconnects::v1::
+                 GetInterconnectsRequest const& request) {
         return child_->GetInterconnects(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -60,10 +64,12 @@ InterconnectsRestLogging::GetInterconnects(
 StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
 InterconnectsRestLogging::GetDiagnostics(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest const& request) {
+    google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest const& request) {
+             google::cloud::cpp::compute::interconnects::v1::
+                 GetDiagnosticsRequest const& request) {
         return child_->GetDiagnostics(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -72,10 +78,12 @@ InterconnectsRestLogging::GetDiagnostics(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectsRestLogging::InsertInterconnects(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::interconnects::v1::InsertInterconnectsRequest const& request) {
+    google::cloud::cpp::compute::interconnects::v1::
+        InsertInterconnectsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::interconnects::v1::InsertInterconnectsRequest const& request) {
+             google::cloud::cpp::compute::interconnects::v1::
+                 InsertInterconnectsRequest const& request) {
         return child_->InsertInterconnects(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -84,10 +92,12 @@ InterconnectsRestLogging::InsertInterconnects(
 StatusOr<google::cloud::cpp::compute::v1::InterconnectList>
 InterconnectsRestLogging::ListInterconnects(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest const& request) {
+    google::cloud::cpp::compute::interconnects::v1::
+        ListInterconnectsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest const& request) {
+             google::cloud::cpp::compute::interconnects::v1::
+                 ListInterconnectsRequest const& request) {
         return child_->ListInterconnects(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -96,10 +106,12 @@ InterconnectsRestLogging::ListInterconnects(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectsRestLogging::PatchInterconnects(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::interconnects::v1::PatchInterconnectsRequest const& request) {
+    google::cloud::cpp::compute::interconnects::v1::
+        PatchInterconnectsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::interconnects::v1::PatchInterconnectsRequest const& request) {
+             google::cloud::cpp::compute::interconnects::v1::
+                 PatchInterconnectsRequest const& request) {
         return child_->PatchInterconnects(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -108,10 +120,12 @@ InterconnectsRestLogging::PatchInterconnects(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectsRestLogging::SetLabels(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const& request) {
+    google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const& request) {
+             google::cloud::cpp::compute::interconnects::v1::
+                 SetLabelsRequest const& request) {
         return child_->SetLabels(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);

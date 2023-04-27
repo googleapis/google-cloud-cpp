@@ -62,7 +62,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ProjectsClient {
  public:
-  explicit ProjectsClient(ExperimentalTag, std::shared_ptr<ProjectsConnection> connection, Options opts = {});
+  explicit ProjectsClient(ExperimentalTag,
+                          std::shared_ptr<ProjectsConnection> connection,
+                          Options opts = {});
   ~ProjectsClient();
 
   ///@{
@@ -89,58 +91,80 @@ class ProjectsClient {
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.DisableXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L181}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.projects.v1.DisableXpnHostRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L181}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DisableXpnHost(std::string const& project, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnHost(
+      std::string const& project, Options opts = {});
 
   ///
   /// Disable this project as a shared VPC host project.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest,google/cloud/compute/projects/v1/projects.proto#L181}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest,google/cloud/compute/projects/v1/projects.proto#L181}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.DisableXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L181}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.projects.v1.DisableXpnHostRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L181}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DisableXpnHost(google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnHost(
+      google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Disable a service resource (also known as service project) associated with
   /// this host project.
   ///
   /// @param project  Project ID for this request.
-  /// @param projects_disable_xpn_resource_request_resource  The ProjectsDisableXpnResourceRequest for this request.
+  /// @param projects_disable_xpn_resource_request_resource  The
+  /// ProjectsDisableXpnResourceRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.DisableXpnResourceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L199}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.projects.v1.DisableXpnResourceRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L199}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DisableXpnResource(std::string const& project, google::cloud::cpp::compute::v1::ProjectsDisableXpnResourceRequest const& projects_disable_xpn_resource_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnResource(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::ProjectsDisableXpnResourceRequest const&
+          projects_disable_xpn_resource_request_resource,
+      Options opts = {});
 
   ///
   /// Disable a service resource (also known as service project) associated with
   /// this host project.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest,google/cloud/compute/projects/v1/projects.proto#L199}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest,google/cloud/compute/projects/v1/projects.proto#L199}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.DisableXpnResourceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L199}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.projects.v1.DisableXpnResourceRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L199}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DisableXpnResource(google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnResource(
+      google::cloud::cpp::compute::projects::v1::
+          DisableXpnResourceRequest const& request,
+      Options opts = {});
 
   ///
   /// Enable this project as a shared VPC host project.
@@ -148,60 +172,82 @@ class ProjectsClient {
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.EnableXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L220}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.projects.v1.EnableXpnHostRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L220}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  EnableXpnHost(std::string const& project, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnHost(
+      std::string const& project, Options opts = {});
 
   ///
   /// Enable this project as a shared VPC host project.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest,google/cloud/compute/projects/v1/projects.proto#L220}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest,google/cloud/compute/projects/v1/projects.proto#L220}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.EnableXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L220}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.projects.v1.EnableXpnHostRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L220}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  EnableXpnHost(google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnHost(
+      google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
+          request,
+      Options opts = {});
 
   ///
-  /// Enable service resource (a.k.a service project) for a host project, so that
-  /// subnets in the host project can be used by instances in the service
+  /// Enable service resource (a.k.a service project) for a host project, so
+  /// that subnets in the host project can be used by instances in the service
   /// project.
   ///
   /// @param project  Project ID for this request.
-  /// @param projects_enable_xpn_resource_request_resource  The ProjectsEnableXpnResourceRequest for this request.
+  /// @param projects_enable_xpn_resource_request_resource  The
+  /// ProjectsEnableXpnResourceRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.EnableXpnResourceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L238}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.projects.v1.EnableXpnResourceRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L238}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  EnableXpnResource(std::string const& project, google::cloud::cpp::compute::v1::ProjectsEnableXpnResourceRequest const& projects_enable_xpn_resource_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnResource(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::ProjectsEnableXpnResourceRequest const&
+          projects_enable_xpn_resource_request_resource,
+      Options opts = {});
 
   ///
-  /// Enable service resource (a.k.a service project) for a host project, so that
-  /// subnets in the host project can be used by instances in the service
+  /// Enable service resource (a.k.a service project) for a host project, so
+  /// that subnets in the host project can be used by instances in the service
   /// project.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest,google/cloud/compute/projects/v1/projects.proto#L238}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest,google/cloud/compute/projects/v1/projects.proto#L238}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.EnableXpnResourceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L238}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.projects.v1.EnableXpnResourceRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L238}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  EnableXpnResource(google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnResource(
+      google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Returns the specified Project resource. To decrease latency for this
@@ -215,13 +261,16 @@ class ProjectsClient {
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Project,google/cloud/compute/v1/internal/common.proto#L18744}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Project,google/cloud/compute/v1/internal/common.proto#L18744}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.GetProjectsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L259}
-  /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18744}
+  /// [google.cloud.cpp.compute.projects.v1.GetProjectsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L259}
+  /// [google.cloud.cpp.compute.v1.Project]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18744}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Project>
-  GetProjects(std::string const& project, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Project> GetProjects(
+      std::string const& project, Options opts = {});
 
   ///
   /// Returns the specified Project resource. To decrease latency for this
@@ -232,16 +281,22 @@ class ProjectsClient {
   /// need. For example, to only include the `id` and `selfLink` fields, add the
   /// query parameter `?fields=id,selfLink` to your request.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::projects::v1::GetProjectsRequest,google/cloud/compute/projects/v1/projects.proto#L259}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::projects::v1::GetProjectsRequest,google/cloud/compute/projects/v1/projects.proto#L259}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Project,google/cloud/compute/v1/internal/common.proto#L18744}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Project,google/cloud/compute/v1/internal/common.proto#L18744}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.GetProjectsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L259}
-  /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18744}
+  /// [google.cloud.cpp.compute.projects.v1.GetProjectsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L259}
+  /// [google.cloud.cpp.compute.v1.Project]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18744}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Project>
-  GetProjects(google::cloud::cpp::compute::projects::v1::GetProjectsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Project> GetProjects(
+      google::cloud::cpp::compute::projects::v1::GetProjectsRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Gets the shared VPC host project that this project links to. May be empty
@@ -250,28 +305,37 @@ class ProjectsClient {
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Project,google/cloud/compute/v1/internal/common.proto#L18744}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Project,google/cloud/compute/v1/internal/common.proto#L18744}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.GetXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L265}
-  /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18744}
+  /// [google.cloud.cpp.compute.projects.v1.GetXpnHostRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L265}
+  /// [google.cloud.cpp.compute.v1.Project]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18744}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Project>
-  GetXpnHost(std::string const& project, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Project> GetXpnHost(
+      std::string const& project, Options opts = {});
 
   ///
   /// Gets the shared VPC host project that this project links to. May be empty
   /// if no link exists.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::projects::v1::GetXpnHostRequest,google/cloud/compute/projects/v1/projects.proto#L265}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::projects::v1::GetXpnHostRequest,google/cloud/compute/projects/v1/projects.proto#L265}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Project,google/cloud/compute/v1/internal/common.proto#L18744}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Project,google/cloud/compute/v1/internal/common.proto#L18744}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.GetXpnHostRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L265}
-  /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18744}
+  /// [google.cloud.cpp.compute.projects.v1.GetXpnHostRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L265}
+  /// [google.cloud.cpp.compute.v1.Project]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18744}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Project>
-  GetXpnHost(google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Project> GetXpnHost(
+      google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Gets service resources (a.k.a service project) associated with this host
@@ -280,10 +344,13 @@ class ProjectsClient {
   /// @param project  Project ID for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::ProjectsGetXpnResources,google/cloud/compute/v1/internal/common.proto#L18821}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ProjectsGetXpnResources,google/cloud/compute/v1/internal/common.proto#L18821}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.GetXpnResourcesRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L271}
-  /// [google.cloud.cpp.compute.v1.ProjectsGetXpnResources]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18821}
+  /// [google.cloud.cpp.compute.projects.v1.GetXpnResourcesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L271}
+  /// [google.cloud.cpp.compute.v1.ProjectsGetXpnResources]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18821}
   ///
   StatusOr<google::cloud::cpp::compute::v1::ProjectsGetXpnResources>
   GetXpnResources(std::string const& project, Options opts = {});
@@ -292,45 +359,64 @@ class ProjectsClient {
   /// Gets service resources (a.k.a service project) associated with this host
   /// project.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest,google/cloud/compute/projects/v1/projects.proto#L271}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest,google/cloud/compute/projects/v1/projects.proto#L271}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::ProjectsGetXpnResources,google/cloud/compute/v1/internal/common.proto#L18821}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ProjectsGetXpnResources,google/cloud/compute/v1/internal/common.proto#L18821}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.GetXpnResourcesRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L271}
-  /// [google.cloud.cpp.compute.v1.ProjectsGetXpnResources]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18821}
+  /// [google.cloud.cpp.compute.projects.v1.GetXpnResourcesRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L271}
+  /// [google.cloud.cpp.compute.v1.ProjectsGetXpnResources]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18821}
   ///
   StatusOr<google::cloud::cpp::compute::v1::ProjectsGetXpnResources>
-  GetXpnResources(google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const& request, Options opts = {});
+  GetXpnResources(
+      google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Lists all shared VPC host projects visible to the user in an organization.
   ///
   /// @param project  Project ID for this request.
-  /// @param projects_list_xpn_hosts_request_resource  The ProjectsListXpnHostsRequest for this request.
+  /// @param projects_list_xpn_hosts_request_resource  The
+  /// ProjectsListXpnHostsRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Project,google/cloud/compute/v1/internal/common.proto#L18744}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Project,google/cloud/compute/v1/internal/common.proto#L18744}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.ListXpnHostsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L336}
-  /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18744}
+  /// [google.cloud.cpp.compute.projects.v1.ListXpnHostsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L336}
+  /// [google.cloud.cpp.compute.v1.Project]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18744}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::Project>
-  ListXpnHosts(std::string const& project, google::cloud::cpp::compute::v1::ProjectsListXpnHostsRequest const& projects_list_xpn_hosts_request_resource, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Project> ListXpnHosts(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::ProjectsListXpnHostsRequest const&
+          projects_list_xpn_hosts_request_resource,
+      Options opts = {});
 
   ///
   /// Lists all shared VPC host projects visible to the user in an organization.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest,google/cloud/compute/projects/v1/projects.proto#L336}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest,google/cloud/compute/projects/v1/projects.proto#L336}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Project,google/cloud/compute/v1/internal/common.proto#L18744}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Project,google/cloud/compute/v1/internal/common.proto#L18744}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.ListXpnHostsRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L336}
-  /// [google.cloud.cpp.compute.v1.Project]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18744}
+  /// [google.cloud.cpp.compute.projects.v1.ListXpnHostsRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L336}
+  /// [google.cloud.cpp.compute.v1.Project]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18744}
   ///
-  StreamRange<google::cloud::cpp::compute::v1::Project>
-  ListXpnHosts(google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Project> ListXpnHosts(
+      google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest request,
+      Options opts = {});
 
   ///
   /// Moves a persistent disk from one zone to another.
@@ -339,27 +425,38 @@ class ProjectsClient {
   /// @param disk_move_request_resource  The DiskMoveRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.MoveDiskRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L404}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.projects.v1.MoveDiskRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L404}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  MoveDisk(std::string const& project, google::cloud::cpp::compute::v1::DiskMoveRequest const& disk_move_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> MoveDisk(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::DiskMoveRequest const&
+          disk_move_request_resource,
+      Options opts = {});
 
   ///
   /// Moves a persistent disk from one zone to another.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::projects::v1::MoveDiskRequest,google/cloud/compute/projects/v1/projects.proto#L404}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::projects::v1::MoveDiskRequest,google/cloud/compute/projects/v1/projects.proto#L404}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.MoveDiskRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L404}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.projects.v1.MoveDiskRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L404}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  MoveDisk(google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> MoveDisk(
+      google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request,
+      Options opts = {});
 
   ///
   /// Moves an instance and its attached persistent disks from one zone to
@@ -368,16 +465,23 @@ class ProjectsClient {
   /// issue](/compute/docs/troubleshooting/known-issues#moving_vms_or_disks_using_the_moveinstance_api_or_the_causes_unexpected_behavior).
   ///
   /// @param project  Project ID for this request.
-  /// @param instance_move_request_resource  The InstanceMoveRequest for this request.
+  /// @param instance_move_request_resource  The InstanceMoveRequest for this
+  /// request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.MoveInstanceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L425}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.projects.v1.MoveInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L425}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  MoveInstance(std::string const& project, google::cloud::cpp::compute::v1::InstanceMoveRequest const& instance_move_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> MoveInstance(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::InstanceMoveRequest const&
+          instance_move_request_resource,
+      Options opts = {});
 
   ///
   /// Moves an instance and its attached persistent disks from one zone to
@@ -385,16 +489,22 @@ class ProjectsClient {
   /// unexpected behavior. For more information, see the [known
   /// issue](/compute/docs/troubleshooting/known-issues#moving_vms_or_disks_using_the_moveinstance_api_or_the_causes_unexpected_behavior).
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::projects::v1::MoveInstanceRequest,google/cloud/compute/projects/v1/projects.proto#L425}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::projects::v1::MoveInstanceRequest,google/cloud/compute/projects/v1/projects.proto#L425}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.MoveInstanceRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L425}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.projects.v1.MoveInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L425}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  MoveInstance(google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> MoveInstance(
+      google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
+          request,
+      Options opts = {});
 
   ///
   /// Sets metadata common to all instances within the specified project using
@@ -404,28 +514,40 @@ class ProjectsClient {
   /// @param metadata_resource  The Metadata for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.SetCommonInstanceMetadataRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L446}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.projects.v1.SetCommonInstanceMetadataRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L446}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetCommonInstanceMetadata(std::string const& project, google::cloud::cpp::compute::v1::Metadata const& metadata_resource, Options opts = {});
+  SetCommonInstanceMetadata(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::Metadata const& metadata_resource,
+      Options opts = {});
 
   ///
   /// Sets metadata common to all instances within the specified project using
   /// the data included in the request.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest,google/cloud/compute/projects/v1/projects.proto#L446}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest,google/cloud/compute/projects/v1/projects.proto#L446}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.SetCommonInstanceMetadataRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L446}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.projects.v1.SetCommonInstanceMetadataRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L446}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetCommonInstanceMetadata(google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const& request, Options opts = {});
+  SetCommonInstanceMetadata(google::cloud::cpp::compute::projects::v1::
+                                SetCommonInstanceMetadataRequest const& request,
+                            Options opts = {});
 
   ///
   /// Sets the default network tier of the project. The default network tier is
@@ -433,65 +555,92 @@ class ProjectsClient {
   /// the network tier field.
   ///
   /// @param project  Project ID for this request.
-  /// @param projects_set_default_network_tier_request_resource  The ProjectsSetDefaultNetworkTierRequest for this request.
+  /// @param projects_set_default_network_tier_request_resource  The
+  /// ProjectsSetDefaultNetworkTierRequest for this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.SetDefaultNetworkTierRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L467}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.projects.v1.SetDefaultNetworkTierRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L467}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetDefaultNetworkTier(std::string const& project, google::cloud::cpp::compute::v1::ProjectsSetDefaultNetworkTierRequest const& projects_set_default_network_tier_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetDefaultNetworkTier(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::
+          ProjectsSetDefaultNetworkTierRequest const&
+              projects_set_default_network_tier_request_resource,
+      Options opts = {});
 
   ///
   /// Sets the default network tier of the project. The default network tier is
   /// used when an address/forwardingRule/instance is created without specifying
   /// the network tier field.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest,google/cloud/compute/projects/v1/projects.proto#L467}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest,google/cloud/compute/projects/v1/projects.proto#L467}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.SetDefaultNetworkTierRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L467}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.projects.v1.SetDefaultNetworkTierRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L467}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetDefaultNetworkTier(google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetDefaultNetworkTier(
+      google::cloud::cpp::compute::projects::v1::
+          SetDefaultNetworkTierRequest const& request,
+      Options opts = {});
 
   ///
   /// Enables the usage export feature and sets the usage export bucket where
-  /// reports are stored. If you provide an empty request body using this method,
-  /// the usage export feature will be disabled.
+  /// reports are stored. If you provide an empty request body using this
+  /// method, the usage export feature will be disabled.
   ///
   /// @param project  Project ID for this request.
-  /// @param usage_export_location_resource  The UsageExportLocation for this request.
+  /// @param usage_export_location_resource  The UsageExportLocation for this
+  /// request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.SetUsageExportBucketRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L488}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.projects.v1.SetUsageExportBucketRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L488}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetUsageExportBucket(std::string const& project, google::cloud::cpp::compute::v1::UsageExportLocation const& usage_export_location_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetUsageExportBucket(
+      std::string const& project,
+      google::cloud::cpp::compute::v1::UsageExportLocation const&
+          usage_export_location_resource,
+      Options opts = {});
 
   ///
   /// Enables the usage export feature and sets the usage export bucket where
-  /// reports are stored. If you provide an empty request body using this method,
-  /// the usage export feature will be disabled.
+  /// reports are stored. If you provide an empty request body using this
+  /// method, the usage export feature will be disabled.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest,google/cloud/compute/projects/v1/projects.proto#L488}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest,google/cloud/compute/projects/v1/projects.proto#L488}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.projects.v1.SetUsageExportBucketRequest]: @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L488}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.projects.v1.SetUsageExportBucketRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/projects/v1/projects.proto#L488}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetUsageExportBucket(google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetUsageExportBucket(
+      google::cloud::cpp::compute::projects::v1::
+          SetUsageExportBucketRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ProjectsConnection> connection_;

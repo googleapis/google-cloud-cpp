@@ -17,11 +17,11 @@
 // source: google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto
 
 #include "google/cloud/compute/region_autoscalers/v1/region_autoscalers_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/region_autoscalers/v1/internal/region_autoscalers_option_defaults.h"
 #include "google/cloud/compute/region_autoscalers/v1/internal/region_autoscalers_tracing_connection.h"
 #include "google/cloud/compute/region_autoscalers/v1/region_autoscalers_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,37 +36,44 @@ RegionAutoscalersConnection::~RegionAutoscalersConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersConnection::DeleteRegionAutoscalers(
-    google::cloud::cpp::compute::regionAutoscalers::v1::DeleteRegionAutoscalersRequest const&) {
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        DeleteRegionAutoscalersRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
 RegionAutoscalersConnection::GetRegionAutoscalers(
-    google::cloud::cpp::compute::regionAutoscalers::v1::GetRegionAutoscalersRequest const&) {
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        GetRegionAutoscalersRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersConnection::InsertRegionAutoscalers(
-    google::cloud::cpp::compute::regionAutoscalers::v1::InsertRegionAutoscalersRequest const&) {
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        InsertRegionAutoscalersRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Autoscaler> RegionAutoscalersConnection::ListRegionAutoscalers(
-    google::cloud::cpp::compute::regionAutoscalers::v1::ListRegionAutoscalersRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
+RegionAutoscalersConnection::ListRegionAutoscalers(
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        ListRegionAutoscalersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Autoscaler>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersConnection::PatchRegionAutoscalers(
-    google::cloud::cpp::compute::regionAutoscalers::v1::PatchRegionAutoscalersRequest const&) {
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        PatchRegionAutoscalersRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersConnection::UpdateRegionAutoscalers(
-    google::cloud::cpp::compute::regionAutoscalers::v1::UpdateRegionAutoscalersRequest const&) {
+    google::cloud::cpp::compute::regionAutoscalers::v1::
+        UpdateRegionAutoscalersRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

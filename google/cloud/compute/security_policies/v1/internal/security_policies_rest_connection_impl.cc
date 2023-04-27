@@ -17,8 +17,8 @@
 // source: google/cloud/compute/security_policies/v1/security_policies.proto
 
 #include "google/cloud/compute/security_policies/v1/internal/security_policies_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/security_policies/v1/internal/security_policies_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -32,167 +32,210 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SecurityPoliciesRestConnectionImpl::SecurityPoliciesRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_security_policies_v1_internal::SecurityPoliciesRestStub> stub,
+    std::shared_ptr<
+        compute_security_policies_v1_internal::SecurityPoliciesRestStub>
+        stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        SecurityPoliciesConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      SecurityPoliciesConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SecurityPoliciesRestConnectionImpl::AddRule(google::cloud::cpp::compute::securityPolicies::v1::AddRuleRequest const& request) {
+SecurityPoliciesRestConnectionImpl::AddRule(
+    google::cloud::cpp::compute::securityPolicies::v1::AddRuleRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AddRule(request),
+      retry_policy(), backoff_policy(), idempotency_policy()->AddRule(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::securityPolicies::v1::AddRuleRequest const& request) {
+             google::cloud::cpp::compute::securityPolicies::v1::
+                 AddRuleRequest const& request) {
         return stub_->AddRule(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>
-SecurityPoliciesRestConnectionImpl::AggregatedListSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::AggregatedListSecurityPoliciesRequest const& request) {
+SecurityPoliciesRestConnectionImpl::AggregatedListSecurityPolicies(
+    google::cloud::cpp::compute::securityPolicies::v1::
+        AggregatedListSecurityPoliciesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AggregatedListSecurityPolicies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::securityPolicies::v1::AggregatedListSecurityPoliciesRequest const& request) {
+             google::cloud::cpp::compute::securityPolicies::v1::
+                 AggregatedListSecurityPoliciesRequest const& request) {
         return stub_->AggregatedListSecurityPolicies(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SecurityPoliciesRestConnectionImpl::DeleteSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::DeleteSecurityPoliciesRequest const& request) {
+SecurityPoliciesRestConnectionImpl::DeleteSecurityPolicies(
+    google::cloud::cpp::compute::securityPolicies::v1::
+        DeleteSecurityPoliciesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteSecurityPolicies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::securityPolicies::v1::DeleteSecurityPoliciesRequest const& request) {
+             google::cloud::cpp::compute::securityPolicies::v1::
+                 DeleteSecurityPoliciesRequest const& request) {
         return stub_->DeleteSecurityPolicies(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
-SecurityPoliciesRestConnectionImpl::GetSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::GetSecurityPoliciesRequest const& request) {
+SecurityPoliciesRestConnectionImpl::GetSecurityPolicies(
+    google::cloud::cpp::compute::securityPolicies::v1::
+        GetSecurityPoliciesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetSecurityPolicies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::securityPolicies::v1::GetSecurityPoliciesRequest const& request) {
+             google::cloud::cpp::compute::securityPolicies::v1::
+                 GetSecurityPoliciesRequest const& request) {
         return stub_->GetSecurityPolicies(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>
-SecurityPoliciesRestConnectionImpl::GetRule(google::cloud::cpp::compute::securityPolicies::v1::GetRuleRequest const& request) {
+SecurityPoliciesRestConnectionImpl::GetRule(
+    google::cloud::cpp::compute::securityPolicies::v1::GetRuleRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->GetRule(request),
+      retry_policy(), backoff_policy(), idempotency_policy()->GetRule(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::securityPolicies::v1::GetRuleRequest const& request) {
+             google::cloud::cpp::compute::securityPolicies::v1::
+                 GetRuleRequest const& request) {
         return stub_->GetRule(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SecurityPoliciesRestConnectionImpl::InsertSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::InsertSecurityPoliciesRequest const& request) {
+SecurityPoliciesRestConnectionImpl::InsertSecurityPolicies(
+    google::cloud::cpp::compute::securityPolicies::v1::
+        InsertSecurityPoliciesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->InsertSecurityPolicies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::securityPolicies::v1::InsertSecurityPoliciesRequest const& request) {
+             google::cloud::cpp::compute::securityPolicies::v1::
+                 InsertSecurityPoliciesRequest const& request) {
         return stub_->InsertSecurityPolicies(rest_context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
-SecurityPoliciesRestConnectionImpl::ListSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::ListSecurityPoliciesRequest request) {
+SecurityPoliciesRestConnectionImpl::ListSecurityPolicies(
+    google::cloud::cpp::compute::securityPolicies::v1::
+        ListSecurityPoliciesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_security_policies_v1::SecurityPoliciesRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<
+      compute_security_policies_v1::SecurityPoliciesRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListSecurityPolicies(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::securityPolicies::v1::ListSecurityPoliciesRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::securityPolicies::v1::
+                          ListSecurityPoliciesRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::securityPolicies::v1::ListSecurityPoliciesRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::securityPolicies::v1::
+                       ListSecurityPoliciesRequest const& request) {
               return stub->ListSecurityPolicies(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::SecurityPolicyList r) {
-        std::vector<google::cloud::cpp::compute::v1::SecurityPolicy> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::SecurityPolicy> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
 }
 
-StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesListPreconfiguredExpressionSetsResponse>
-SecurityPoliciesRestConnectionImpl::ListPreconfiguredExpressionSets(google::cloud::cpp::compute::securityPolicies::v1::ListPreconfiguredExpressionSetsRequest const& request) {
+StatusOr<google::cloud::cpp::compute::v1::
+             SecurityPoliciesListPreconfiguredExpressionSetsResponse>
+SecurityPoliciesRestConnectionImpl::ListPreconfiguredExpressionSets(
+    google::cloud::cpp::compute::securityPolicies::v1::
+        ListPreconfiguredExpressionSetsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->ListPreconfiguredExpressionSets(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::securityPolicies::v1::ListPreconfiguredExpressionSetsRequest const& request) {
+             google::cloud::cpp::compute::securityPolicies::v1::
+                 ListPreconfiguredExpressionSetsRequest const& request) {
         return stub_->ListPreconfiguredExpressionSets(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SecurityPoliciesRestConnectionImpl::PatchSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::PatchSecurityPoliciesRequest const& request) {
+SecurityPoliciesRestConnectionImpl::PatchSecurityPolicies(
+    google::cloud::cpp::compute::securityPolicies::v1::
+        PatchSecurityPoliciesRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->PatchSecurityPolicies(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::securityPolicies::v1::PatchSecurityPoliciesRequest const& request) {
+             google::cloud::cpp::compute::securityPolicies::v1::
+                 PatchSecurityPoliciesRequest const& request) {
         return stub_->PatchSecurityPolicies(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SecurityPoliciesRestConnectionImpl::PatchRule(google::cloud::cpp::compute::securityPolicies::v1::PatchRuleRequest const& request) {
+SecurityPoliciesRestConnectionImpl::PatchRule(
+    google::cloud::cpp::compute::securityPolicies::v1::PatchRuleRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->PatchRule(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::securityPolicies::v1::PatchRuleRequest const& request) {
+             google::cloud::cpp::compute::securityPolicies::v1::
+                 PatchRuleRequest const& request) {
         return stub_->PatchRule(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SecurityPoliciesRestConnectionImpl::RemoveRule(google::cloud::cpp::compute::securityPolicies::v1::RemoveRuleRequest const& request) {
+SecurityPoliciesRestConnectionImpl::RemoveRule(
+    google::cloud::cpp::compute::securityPolicies::v1::RemoveRuleRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->RemoveRule(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::securityPolicies::v1::RemoveRuleRequest const& request) {
+             google::cloud::cpp::compute::securityPolicies::v1::
+                 RemoveRuleRequest const& request) {
         return stub_->RemoveRule(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SecurityPoliciesRestConnectionImpl::SetLabels(google::cloud::cpp::compute::securityPolicies::v1::SetLabelsRequest const& request) {
+SecurityPoliciesRestConnectionImpl::SetLabels(
+    google::cloud::cpp::compute::securityPolicies::v1::SetLabelsRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetLabels(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::securityPolicies::v1::SetLabelsRequest const& request) {
+             google::cloud::cpp::compute::securityPolicies::v1::
+                 SetLabelsRequest const& request) {
         return stub_->SetLabels(rest_context, request);
       },
       request, __func__);

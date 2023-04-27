@@ -34,24 +34,32 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options RegionOperationsDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_REGION_OPERATIONS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_REGION_OPERATIONS_AUTHORITY",
-      "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
-  if (!options.has<compute_region_operations_v1::RegionOperationsRetryPolicyOption>()) {
-    options.set<compute_region_operations_v1::RegionOperationsRetryPolicyOption>(
+      std::move(options), "GOOGLE_CLOUD_CPP_REGION_OPERATIONS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_REGION_OPERATIONS_AUTHORITY", "compute.googleapis.com");
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  if (!options.has<
+          compute_region_operations_v1::RegionOperationsRetryPolicyOption>()) {
+    options.set<
+        compute_region_operations_v1::RegionOperationsRetryPolicyOption>(
         compute_region_operations_v1::RegionOperationsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_region_operations_v1::RegionOperationsBackoffPolicyOption>()) {
-    options.set<compute_region_operations_v1::RegionOperationsBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+  if (!options.has<compute_region_operations_v1::
+                       RegionOperationsBackoffPolicyOption>()) {
+    options
+        .set<compute_region_operations_v1::RegionOperationsBackoffPolicyOption>(
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone());
   }
-  if (!options.has<compute_region_operations_v1::RegionOperationsConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_region_operations_v1::RegionOperationsConnectionIdempotencyPolicyOption>(
-        compute_region_operations_v1::MakeDefaultRegionOperationsConnectionIdempotencyPolicy());
+  if (!options.has<compute_region_operations_v1::
+                       RegionOperationsConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_region_operations_v1::
+                    RegionOperationsConnectionIdempotencyPolicyOption>(
+        compute_region_operations_v1::
+            MakeDefaultRegionOperationsConnectionIdempotencyPolicy());
   }
 
   return options;

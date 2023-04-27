@@ -26,67 +26,88 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-NodeGroupsConnectionIdempotencyPolicy::~NodeGroupsConnectionIdempotencyPolicy() = default;
+NodeGroupsConnectionIdempotencyPolicy::
+    ~NodeGroupsConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<NodeGroupsConnectionIdempotencyPolicy>
 NodeGroupsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<NodeGroupsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency NodeGroupsConnectionIdempotencyPolicy::AddNodes(google::cloud::cpp::compute::nodeGroups::v1::AddNodesRequest const&) {
+Idempotency NodeGroupsConnectionIdempotencyPolicy::AddNodes(
+    google::cloud::cpp::compute::nodeGroups::v1::AddNodesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NodeGroupsConnectionIdempotencyPolicy::AggregatedListNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::AggregatedListNodeGroupsRequest const&) {
+Idempotency NodeGroupsConnectionIdempotencyPolicy::AggregatedListNodeGroups(
+    google::cloud::cpp::compute::nodeGroups::v1::
+        AggregatedListNodeGroupsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NodeGroupsConnectionIdempotencyPolicy::DeleteNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::DeleteNodeGroupsRequest const&) {
+Idempotency NodeGroupsConnectionIdempotencyPolicy::DeleteNodeGroups(
+    google::cloud::cpp::compute::nodeGroups::v1::
+        DeleteNodeGroupsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NodeGroupsConnectionIdempotencyPolicy::DeleteNodes(google::cloud::cpp::compute::nodeGroups::v1::DeleteNodesRequest const&) {
+Idempotency NodeGroupsConnectionIdempotencyPolicy::DeleteNodes(
+    google::cloud::cpp::compute::nodeGroups::v1::DeleteNodesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NodeGroupsConnectionIdempotencyPolicy::GetNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::GetNodeGroupsRequest const&) {
+Idempotency NodeGroupsConnectionIdempotencyPolicy::GetNodeGroups(
+    google::cloud::cpp::compute::nodeGroups::v1::GetNodeGroupsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NodeGroupsConnectionIdempotencyPolicy::GetIamPolicy(google::cloud::cpp::compute::nodeGroups::v1::GetIamPolicyRequest const&) {
+Idempotency NodeGroupsConnectionIdempotencyPolicy::GetIamPolicy(
+    google::cloud::cpp::compute::nodeGroups::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency NodeGroupsConnectionIdempotencyPolicy::InsertNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::InsertNodeGroupsRequest const&) {
+Idempotency NodeGroupsConnectionIdempotencyPolicy::InsertNodeGroups(
+    google::cloud::cpp::compute::nodeGroups::v1::
+        InsertNodeGroupsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NodeGroupsConnectionIdempotencyPolicy::ListNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::ListNodeGroupsRequest) {  // NOLINT
+Idempotency NodeGroupsConnectionIdempotencyPolicy::ListNodeGroups(
+    google::cloud::cpp::compute::nodeGroups::v1::
+        ListNodeGroupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency NodeGroupsConnectionIdempotencyPolicy::ListNodes(google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest) {  // NOLINT
+Idempotency NodeGroupsConnectionIdempotencyPolicy::ListNodes(
+    google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest) {  // NOLINT
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NodeGroupsConnectionIdempotencyPolicy::PatchNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::PatchNodeGroupsRequest const&) {
+Idempotency NodeGroupsConnectionIdempotencyPolicy::PatchNodeGroups(
+    google::cloud::cpp::compute::nodeGroups::v1::
+        PatchNodeGroupsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NodeGroupsConnectionIdempotencyPolicy::SetIamPolicy(google::cloud::cpp::compute::nodeGroups::v1::SetIamPolicyRequest const&) {
+Idempotency NodeGroupsConnectionIdempotencyPolicy::SetIamPolicy(
+    google::cloud::cpp::compute::nodeGroups::v1::SetIamPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NodeGroupsConnectionIdempotencyPolicy::SetNodeTemplate(google::cloud::cpp::compute::nodeGroups::v1::SetNodeTemplateRequest const&) {
+Idempotency NodeGroupsConnectionIdempotencyPolicy::SetNodeTemplate(
+    google::cloud::cpp::compute::nodeGroups::v1::
+        SetNodeTemplateRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency NodeGroupsConnectionIdempotencyPolicy::TestIamPermissions(google::cloud::cpp::compute::nodeGroups::v1::TestIamPermissionsRequest const&) {
+Idempotency NodeGroupsConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::nodeGroups::v1::
+        TestIamPermissionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<NodeGroupsConnectionIdempotencyPolicy>
-    MakeDefaultNodeGroupsConnectionIdempotencyPolicy() {
+MakeDefaultNodeGroupsConnectionIdempotencyPolicy() {
   return std::make_unique<NodeGroupsConnectionIdempotencyPolicy>();
 }
 

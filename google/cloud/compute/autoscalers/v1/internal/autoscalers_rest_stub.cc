@@ -35,31 +35,34 @@ DefaultAutoscalersRestStub::DefaultAutoscalersRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultAutoscalersRestStub::DefaultAutoscalersRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>
 DefaultAutoscalersRestStub::AggregatedListAutoscalers(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::autoscalers::v1::AggregatedListAutoscalersRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::autoscalers::v1::
+        AggregatedListAutoscalersRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::AutoscalerAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/autoscalers",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultAutoscalersRestStub::DeleteAutoscalers(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalersRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::autoscalers::v1::
+        DeleteAutoscalersRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/autoscalers/{autoscaler}");
@@ -67,8 +70,9 @@ DefaultAutoscalersRestStub::DeleteAutoscalers(
 
 StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
 DefaultAutoscalersRestStub::GetAutoscalers(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Autoscaler>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/autoscalers/{autoscaler}",
@@ -79,8 +83,9 @@ DefaultAutoscalersRestStub::GetAutoscalers(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultAutoscalersRestStub::InsertAutoscalers(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalersRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::autoscalers::v1::
+        InsertAutoscalersRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/autoscalers");
@@ -88,8 +93,9 @@ DefaultAutoscalersRestStub::InsertAutoscalers(
 
 StatusOr<google::cloud::cpp::compute::v1::AutoscalerList>
 DefaultAutoscalersRestStub::ListAutoscalers(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::AutoscalerList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/autoscalers",
@@ -98,14 +104,16 @@ DefaultAutoscalersRestStub::ListAutoscalers(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success())),
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success())),
        std::make_pair("zone", request.zone())});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultAutoscalersRestStub::PatchAutoscalers(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalersRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalersRequest const&
+        request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/autoscalers");
@@ -113,8 +121,9 @@ DefaultAutoscalersRestStub::PatchAutoscalers(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultAutoscalersRestStub::UpdateAutoscalers(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalersRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::autoscalers::v1::
+        UpdateAutoscalersRequest const& request) {
   return rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/zones/{zone}/autoscalers");

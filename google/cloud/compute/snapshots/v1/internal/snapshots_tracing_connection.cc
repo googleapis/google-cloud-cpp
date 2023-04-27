@@ -33,59 +33,83 @@ SnapshotsTracingConnection::SnapshotsTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SnapshotsTracingConnection::DeleteSnapshots(google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const& request) {
-  auto span = internal::MakeSpan("compute_snapshots_v1::SnapshotsConnection::DeleteSnapshots");
+SnapshotsTracingConnection::DeleteSnapshots(
+    google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_snapshots_v1::SnapshotsConnection::DeleteSnapshots");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteSnapshots(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Snapshot>
-SnapshotsTracingConnection::GetSnapshots(google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const& request) {
-  auto span = internal::MakeSpan("compute_snapshots_v1::SnapshotsConnection::GetSnapshots");
+SnapshotsTracingConnection::GetSnapshots(
+    google::cloud::cpp::compute::snapshots::v1::GetSnapshotsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_snapshots_v1::SnapshotsConnection::GetSnapshots");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSnapshots(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-SnapshotsTracingConnection::GetIamPolicy(google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("compute_snapshots_v1::SnapshotsConnection::GetIamPolicy");
+SnapshotsTracingConnection::GetIamPolicy(
+    google::cloud::cpp::compute::snapshots::v1::GetIamPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_snapshots_v1::SnapshotsConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SnapshotsTracingConnection::InsertSnapshots(google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const& request) {
-  auto span = internal::MakeSpan("compute_snapshots_v1::SnapshotsConnection::InsertSnapshots");
+SnapshotsTracingConnection::InsertSnapshots(
+    google::cloud::cpp::compute::snapshots::v1::InsertSnapshotsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_snapshots_v1::SnapshotsConnection::InsertSnapshots");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->InsertSnapshots(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Snapshot>
-SnapshotsTracingConnection::ListSnapshots(google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest request) {
-  auto span = internal::MakeSpan("compute_snapshots_v1::SnapshotsConnection::ListSnapshots");
+SnapshotsTracingConnection::ListSnapshots(
+    google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_snapshots_v1::SnapshotsConnection::ListSnapshots");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListSnapshots(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::Snapshot>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::Snapshot>(std::move(span),
+                                                 std::move(sr));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-SnapshotsTracingConnection::SetIamPolicy(google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("compute_snapshots_v1::SnapshotsConnection::SetIamPolicy");
+SnapshotsTracingConnection::SetIamPolicy(
+    google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_snapshots_v1::SnapshotsConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SnapshotsTracingConnection::SetLabels(google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request) {
-  auto span = internal::MakeSpan("compute_snapshots_v1::SnapshotsConnection::SetLabels");
+SnapshotsTracingConnection::SetLabels(
+    google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_snapshots_v1::SnapshotsConnection::SetLabels");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetLabels(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-SnapshotsTracingConnection::TestIamPermissions(google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("compute_snapshots_v1::SnapshotsConnection::TestIamPermissions");
+SnapshotsTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_snapshots_v1::SnapshotsConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }

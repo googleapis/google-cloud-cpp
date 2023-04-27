@@ -30,45 +30,57 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class RoutersTracingConnection
-    : public compute_routers_v1::RoutersConnection {
+class RoutersTracingConnection : public compute_routers_v1::RoutersConnection {
  public:
   ~RoutersTracingConnection() override = default;
 
   explicit RoutersTracingConnection(
-    std::shared_ptr<compute_routers_v1::RoutersConnection> child);
+      std::shared_ptr<compute_routers_v1::RoutersConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
-  AggregatedListRouters(google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest const& request) override;
+  AggregatedListRouters(
+      google::cloud::cpp::compute::routers::v1::
+          AggregatedListRoutersRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteRouters(google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRouters(
+      google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Router>
-  GetRouters(google::cloud::cpp::compute::routers::v1::GetRoutersRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Router> GetRouters(
+      google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
-  GetNatMappingInfo(google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const& request) override;
+  GetNatMappingInfo(
+      google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
-  GetRouterStatus(google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const& request) override;
+  GetRouterStatus(
+      google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertRouters(google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRouters(
+      google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
+          request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Router>
-  ListRouters(google::cloud::cpp::compute::routers::v1::ListRoutersRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Router> ListRouters(
+      google::cloud::cpp::compute::routers::v1::ListRoutersRequest request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchRouters(google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRouters(
+      google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
-  Preview(google::cloud::cpp::compute::routers::v1::PreviewRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse> Preview(
+      google::cloud::cpp::compute::routers::v1::PreviewRequest const& request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateRouters(google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRouters(
+      google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&
+          request) override;
 
  private:
   std::shared_ptr<compute_routers_v1::RoutersConnection> child_;

@@ -36,39 +36,50 @@ class TargetSslProxiesTracingConnection
   ~TargetSslProxiesTracingConnection() override = default;
 
   explicit TargetSslProxiesTracingConnection(
-    std::shared_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesConnection> child);
+      std::shared_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteTargetSslProxies(google::cloud::cpp::compute::targetSslProxies::v1::DeleteTargetSslProxiesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetSslProxies(
+      google::cloud::cpp::compute::targetSslProxies::v1::
+          DeleteTargetSslProxiesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>
-  GetTargetSslProxies(google::cloud::cpp::compute::targetSslProxies::v1::GetTargetSslProxiesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy> GetTargetSslProxies(
+      google::cloud::cpp::compute::targetSslProxies::v1::
+          GetTargetSslProxiesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertTargetSslProxies(google::cloud::cpp::compute::targetSslProxies::v1::InsertTargetSslProxiesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetSslProxies(
+      google::cloud::cpp::compute::targetSslProxies::v1::
+          InsertTargetSslProxiesRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>
-  ListTargetSslProxies(google::cloud::cpp::compute::targetSslProxies::v1::ListTargetSslProxiesRequest request) override;
+  ListTargetSslProxies(google::cloud::cpp::compute::targetSslProxies::v1::
+                           ListTargetSslProxiesRequest request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetBackendService(google::cloud::cpp::compute::targetSslProxies::v1::SetBackendServiceRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetBackendService(
+      google::cloud::cpp::compute::targetSslProxies::v1::
+          SetBackendServiceRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetCertificateMap(google::cloud::cpp::compute::targetSslProxies::v1::SetCertificateMapRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetCertificateMap(
+      google::cloud::cpp::compute::targetSslProxies::v1::
+          SetCertificateMapRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetProxyHeader(google::cloud::cpp::compute::targetSslProxies::v1::SetProxyHeaderRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetProxyHeader(
+      google::cloud::cpp::compute::targetSslProxies::v1::
+          SetProxyHeaderRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetSslCertificates(google::cloud::cpp::compute::targetSslProxies::v1::SetSslCertificatesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSslCertificates(
+      google::cloud::cpp::compute::targetSslProxies::v1::
+          SetSslCertificatesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetSslPolicy(google::cloud::cpp::compute::targetSslProxies::v1::SetSslPolicyRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSslPolicy(
+      google::cloud::cpp::compute::targetSslProxies::v1::
+          SetSslPolicyRequest const& request) override;
 
  private:
-  std::shared_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesConnection> child_;
+  std::shared_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -81,7 +92,8 @@ class TargetSslProxiesTracingConnection
  */
 std::shared_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesConnection>
 MakeTargetSslProxiesTracingConnection(
-    std::shared_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesConnection> conn);
+    std::shared_ptr<compute_target_ssl_proxies_v1::TargetSslProxiesConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_target_ssl_proxies_v1_internal

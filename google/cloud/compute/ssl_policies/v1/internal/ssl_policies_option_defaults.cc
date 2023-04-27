@@ -34,24 +34,28 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options SslPoliciesDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_SSL_POLICIES_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_SSL_POLICIES_AUTHORITY",
-      "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
+      std::move(options), "GOOGLE_CLOUD_CPP_SSL_POLICIES_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_SSL_POLICIES_AUTHORITY", "compute.googleapis.com");
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<compute_ssl_policies_v1::SslPoliciesRetryPolicyOption>()) {
     options.set<compute_ssl_policies_v1::SslPoliciesRetryPolicyOption>(
         compute_ssl_policies_v1::SslPoliciesLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<compute_ssl_policies_v1::SslPoliciesBackoffPolicyOption>()) {
     options.set<compute_ssl_policies_v1::SslPoliciesBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
-  if (!options.has<compute_ssl_policies_v1::SslPoliciesConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_ssl_policies_v1::SslPoliciesConnectionIdempotencyPolicyOption>(
-        compute_ssl_policies_v1::MakeDefaultSslPoliciesConnectionIdempotencyPolicy());
+  if (!options.has<compute_ssl_policies_v1::
+                       SslPoliciesConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        compute_ssl_policies_v1::SslPoliciesConnectionIdempotencyPolicyOption>(
+        compute_ssl_policies_v1::
+            MakeDefaultSslPoliciesConnectionIdempotencyPolicy());
   }
 
   return options;

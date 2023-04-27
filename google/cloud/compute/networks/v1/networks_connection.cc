@@ -17,11 +17,11 @@
 // source: google/cloud/compute/networks/v1/networks.proto
 
 #include "google/cloud/compute/networks/v1/networks_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/networks/v1/internal/networks_option_defaults.h"
 #include "google/cloud/compute/networks/v1/internal/networks_tracing_connection.h"
 #include "google/cloud/compute/networks/v1/networks_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -54,7 +54,8 @@ NetworksConnection::GetNetworks(
 
 StatusOr<google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>
 NetworksConnection::GetEffectiveFirewalls(
-    google::cloud::cpp::compute::networks::v1::GetEffectiveFirewallsRequest const&) {
+    google::cloud::cpp::compute::networks::v1::
+        GetEffectiveFirewallsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -64,14 +65,18 @@ NetworksConnection::InsertNetworks(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::Network> NetworksConnection::ListNetworks(
-    google::cloud::cpp::compute::networks::v1::ListNetworksRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::Network>
+NetworksConnection::ListNetworks(
+    google::cloud::cpp::compute::networks::v1::
+        ListNetworksRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::Network>>();
 }
 
-StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute> NetworksConnection::ListPeeringRoutes(
-    google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>
+NetworksConnection::ListPeeringRoutes(
+    google::cloud::cpp::compute::networks::v1::
+        ListPeeringRoutesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>>();
 }
@@ -90,7 +95,8 @@ NetworksConnection::RemovePeering(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworksConnection::SwitchToCustomMode(
-    google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const&) {
+    google::cloud::cpp::compute::networks::v1::
+        SwitchToCustomModeRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

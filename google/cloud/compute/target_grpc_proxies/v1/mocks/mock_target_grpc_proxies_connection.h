@@ -32,9 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Application developers may want to test their code with simulated responses,
  * including errors, from an object of type `TargetGrpcProxiesClient`. To do so,
- * construct an object of type `TargetGrpcProxiesClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
+ * construct an object of type `TargetGrpcProxiesClient` with an instance of
+ * this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,29 +42,40 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockTargetGrpcProxiesConnection : public compute_target_grpc_proxies_v1::TargetGrpcProxiesConnection {
+class MockTargetGrpcProxiesConnection
+    : public compute_target_grpc_proxies_v1::TargetGrpcProxiesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteTargetGrpcProxies,
-  (google::cloud::cpp::compute::targetGrpcProxies::v1::DeleteTargetGrpcProxiesRequest const& request), (override));
+              DeleteTargetGrpcProxies,
+              (google::cloud::cpp::compute::targetGrpcProxies::v1::
+                   DeleteTargetGrpcProxiesRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>,
-  GetTargetGrpcProxies,
-  (google::cloud::cpp::compute::targetGrpcProxies::v1::GetTargetGrpcProxiesRequest const& request), (override));
+              GetTargetGrpcProxies,
+              (google::cloud::cpp::compute::targetGrpcProxies::v1::
+                   GetTargetGrpcProxiesRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertTargetGrpcProxies,
-  (google::cloud::cpp::compute::targetGrpcProxies::v1::InsertTargetGrpcProxiesRequest const& request), (override));
+              InsertTargetGrpcProxies,
+              (google::cloud::cpp::compute::targetGrpcProxies::v1::
+                   InsertTargetGrpcProxiesRequest const& request),
+              (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>,
-  ListTargetGrpcProxies,
-  (google::cloud::cpp::compute::targetGrpcProxies::v1::ListTargetGrpcProxiesRequest request), (override));
+              ListTargetGrpcProxies,
+              (google::cloud::cpp::compute::targetGrpcProxies::v1::
+                   ListTargetGrpcProxiesRequest request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  PatchTargetGrpcProxies,
-  (google::cloud::cpp::compute::targetGrpcProxies::v1::PatchTargetGrpcProxiesRequest const& request), (override));
+              PatchTargetGrpcProxies,
+              (google::cloud::cpp::compute::targetGrpcProxies::v1::
+                   PatchTargetGrpcProxiesRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

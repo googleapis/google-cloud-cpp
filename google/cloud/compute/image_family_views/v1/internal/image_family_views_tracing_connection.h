@@ -36,15 +36,18 @@ class ImageFamilyViewsTracingConnection
   ~ImageFamilyViewsTracingConnection() override = default;
 
   explicit ImageFamilyViewsTracingConnection(
-    std::shared_ptr<compute_image_family_views_v1::ImageFamilyViewsConnection> child);
+      std::shared_ptr<compute_image_family_views_v1::ImageFamilyViewsConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
-  GetImageFamilyViews(google::cloud::cpp::compute::imageFamilyViews::v1::GetImageFamilyViewsRequest const& request) override;
+  GetImageFamilyViews(google::cloud::cpp::compute::imageFamilyViews::v1::
+                          GetImageFamilyViewsRequest const& request) override;
 
  private:
-  std::shared_ptr<compute_image_family_views_v1::ImageFamilyViewsConnection> child_;
+  std::shared_ptr<compute_image_family_views_v1::ImageFamilyViewsConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -57,7 +60,8 @@ class ImageFamilyViewsTracingConnection
  */
 std::shared_ptr<compute_image_family_views_v1::ImageFamilyViewsConnection>
 MakeImageFamilyViewsTracingConnection(
-    std::shared_ptr<compute_image_family_views_v1::ImageFamilyViewsConnection> conn);
+    std::shared_ptr<compute_image_family_views_v1::ImageFamilyViewsConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_image_family_views_v1_internal

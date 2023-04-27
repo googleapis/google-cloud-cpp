@@ -42,29 +42,40 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockGlobalAddressesConnection : public compute_global_addresses_v1::GlobalAddressesConnection {
+class MockGlobalAddressesConnection
+    : public compute_global_addresses_v1::GlobalAddressesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  DeleteGlobalAddresses,
-  (google::cloud::cpp::compute::globalAddresses::v1::DeleteGlobalAddressesRequest const& request), (override));
+              DeleteGlobalAddresses,
+              (google::cloud::cpp::compute::globalAddresses::v1::
+                   DeleteGlobalAddressesRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Address>,
-  GetGlobalAddresses,
-  (google::cloud::cpp::compute::globalAddresses::v1::GetGlobalAddressesRequest const& request), (override));
+              GetGlobalAddresses,
+              (google::cloud::cpp::compute::globalAddresses::v1::
+                   GetGlobalAddressesRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  InsertGlobalAddresses,
-  (google::cloud::cpp::compute::globalAddresses::v1::InsertGlobalAddressesRequest const& request), (override));
+              InsertGlobalAddresses,
+              (google::cloud::cpp::compute::globalAddresses::v1::
+                   InsertGlobalAddressesRequest const& request),
+              (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Address>,
-  ListGlobalAddresses,
-  (google::cloud::cpp::compute::globalAddresses::v1::ListGlobalAddressesRequest request), (override));
+              ListGlobalAddresses,
+              (google::cloud::cpp::compute::globalAddresses::v1::
+                   ListGlobalAddressesRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  SetLabels,
-  (google::cloud::cpp::compute::globalAddresses::v1::SetLabelsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, SetLabels,
+      (google::cloud::cpp::compute::globalAddresses::v1::SetLabelsRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

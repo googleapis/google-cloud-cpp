@@ -26,20 +26,22 @@ namespace cloud {
 namespace compute_url_maps_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-UrlMapsRestLogging::UrlMapsRestLogging(
-    std::shared_ptr<UrlMapsRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+UrlMapsRestLogging::UrlMapsRestLogging(std::shared_ptr<UrlMapsRestStub> child,
+                                       TracingOptions tracing_options,
+                                       std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
 UrlMapsRestLogging::AggregatedListUrlMaps(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::urlMaps::v1::AggregatedListUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::urlMaps::v1::
+        AggregatedListUrlMapsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::urlMaps::v1::AggregatedListUrlMapsRequest const& request) {
+             google::cloud::cpp::compute::urlMaps::v1::
+                 AggregatedListUrlMapsRequest const& request) {
         return child_->AggregatedListUrlMaps(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,46 +50,50 @@ UrlMapsRestLogging::AggregatedListUrlMaps(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 UrlMapsRestLogging::DeleteUrlMaps(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::urlMaps::v1::DeleteUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::urlMaps::v1::DeleteUrlMapsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::urlMaps::v1::DeleteUrlMapsRequest const& request) {
-        return child_->DeleteUrlMaps(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::urlMaps::v1::DeleteUrlMapsRequest const&
+              request) { return child_->DeleteUrlMaps(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMap>
 UrlMapsRestLogging::GetUrlMaps(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::urlMaps::v1::GetUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::urlMaps::v1::GetUrlMapsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::urlMaps::v1::GetUrlMapsRequest const& request) {
-        return child_->GetUrlMaps(rest_context, request);
-      },
+             google::cloud::cpp::compute::urlMaps::v1::GetUrlMapsRequest const&
+                 request) { return child_->GetUrlMaps(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 UrlMapsRestLogging::InsertUrlMaps(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::urlMaps::v1::InsertUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::urlMaps::v1::InsertUrlMapsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::urlMaps::v1::InsertUrlMapsRequest const& request) {
-        return child_->InsertUrlMaps(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::urlMaps::v1::InsertUrlMapsRequest const&
+              request) { return child_->InsertUrlMaps(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 UrlMapsRestLogging::InvalidateCache(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::urlMaps::v1::InvalidateCacheRequest const& request) {
+    google::cloud::cpp::compute::urlMaps::v1::InvalidateCacheRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::urlMaps::v1::InvalidateCacheRequest const& request) {
+             google::cloud::cpp::compute::urlMaps::v1::
+                 InvalidateCacheRequest const& request) {
         return child_->InvalidateCache(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -96,10 +102,12 @@ UrlMapsRestLogging::InvalidateCache(
 StatusOr<google::cloud::cpp::compute::v1::UrlMapList>
 UrlMapsRestLogging::ListUrlMaps(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::urlMaps::v1::ListUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::urlMaps::v1::ListUrlMapsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::urlMaps::v1::ListUrlMapsRequest const& request) {
+             google::cloud::cpp::compute::urlMaps::v1::ListUrlMapsRequest const&
+                 request) {
         return child_->ListUrlMaps(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -108,24 +116,26 @@ UrlMapsRestLogging::ListUrlMaps(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 UrlMapsRestLogging::PatchUrlMaps(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::urlMaps::v1::PatchUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::urlMaps::v1::PatchUrlMapsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::urlMaps::v1::PatchUrlMapsRequest const& request) {
-        return child_->PatchUrlMaps(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::urlMaps::v1::PatchUrlMapsRequest const&
+              request) { return child_->PatchUrlMaps(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 UrlMapsRestLogging::UpdateUrlMaps(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::urlMaps::v1::UpdateUrlMapsRequest const& request) {
+    google::cloud::cpp::compute::urlMaps::v1::UpdateUrlMapsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::urlMaps::v1::UpdateUrlMapsRequest const& request) {
-        return child_->UpdateUrlMaps(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::urlMaps::v1::UpdateUrlMapsRequest const&
+              request) { return child_->UpdateUrlMaps(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
@@ -135,9 +145,8 @@ UrlMapsRestLogging::Validate(
     google::cloud::cpp::compute::urlMaps::v1::ValidateRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::urlMaps::v1::ValidateRequest const& request) {
-        return child_->Validate(rest_context, request);
-      },
+             google::cloud::cpp::compute::urlMaps::v1::ValidateRequest const&
+                 request) { return child_->Validate(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 

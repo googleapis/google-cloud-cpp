@@ -28,18 +28,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 PacketMirroringsRestLogging::PacketMirroringsRestLogging(
     std::shared_ptr<PacketMirroringsRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroringAggregatedList>
 PacketMirroringsRestLogging::AggregatedListPacketMirrorings(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::packetMirrorings::v1::AggregatedListPacketMirroringsRequest const& request) {
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        AggregatedListPacketMirroringsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::packetMirrorings::v1::AggregatedListPacketMirroringsRequest const& request) {
+             google::cloud::cpp::compute::packetMirrorings::v1::
+                 AggregatedListPacketMirroringsRequest const& request) {
         return child_->AggregatedListPacketMirrorings(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,10 +50,12 @@ PacketMirroringsRestLogging::AggregatedListPacketMirrorings(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsRestLogging::DeletePacketMirrorings(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::packetMirrorings::v1::DeletePacketMirroringsRequest const& request) {
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        DeletePacketMirroringsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::packetMirrorings::v1::DeletePacketMirroringsRequest const& request) {
+             google::cloud::cpp::compute::packetMirrorings::v1::
+                 DeletePacketMirroringsRequest const& request) {
         return child_->DeletePacketMirrorings(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -60,10 +64,12 @@ PacketMirroringsRestLogging::DeletePacketMirrorings(
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
 PacketMirroringsRestLogging::GetPacketMirrorings(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::packetMirrorings::v1::GetPacketMirroringsRequest const& request) {
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        GetPacketMirroringsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::packetMirrorings::v1::GetPacketMirroringsRequest const& request) {
+             google::cloud::cpp::compute::packetMirrorings::v1::
+                 GetPacketMirroringsRequest const& request) {
         return child_->GetPacketMirrorings(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -72,10 +78,12 @@ PacketMirroringsRestLogging::GetPacketMirrorings(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsRestLogging::InsertPacketMirrorings(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::packetMirrorings::v1::InsertPacketMirroringsRequest const& request) {
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        InsertPacketMirroringsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::packetMirrorings::v1::InsertPacketMirroringsRequest const& request) {
+             google::cloud::cpp::compute::packetMirrorings::v1::
+                 InsertPacketMirroringsRequest const& request) {
         return child_->InsertPacketMirrorings(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -84,10 +92,12 @@ PacketMirroringsRestLogging::InsertPacketMirrorings(
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroringList>
 PacketMirroringsRestLogging::ListPacketMirrorings(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::packetMirrorings::v1::ListPacketMirroringsRequest const& request) {
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        ListPacketMirroringsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::packetMirrorings::v1::ListPacketMirroringsRequest const& request) {
+             google::cloud::cpp::compute::packetMirrorings::v1::
+                 ListPacketMirroringsRequest const& request) {
         return child_->ListPacketMirrorings(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -96,10 +106,12 @@ PacketMirroringsRestLogging::ListPacketMirrorings(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsRestLogging::PatchPacketMirrorings(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::packetMirrorings::v1::PatchPacketMirroringsRequest const& request) {
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        PatchPacketMirroringsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::packetMirrorings::v1::PatchPacketMirroringsRequest const& request) {
+             google::cloud::cpp::compute::packetMirrorings::v1::
+                 PatchPacketMirroringsRequest const& request) {
         return child_->PatchPacketMirrorings(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -108,10 +120,12 @@ PacketMirroringsRestLogging::PatchPacketMirrorings(
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 PacketMirroringsRestLogging::TestIamPermissions(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::packetMirrorings::v1::TestIamPermissionsRequest const& request) {
+    google::cloud::cpp::compute::packetMirrorings::v1::
+        TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::packetMirrorings::v1::TestIamPermissionsRequest const& request) {
+             google::cloud::cpp::compute::packetMirrorings::v1::
+                 TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);

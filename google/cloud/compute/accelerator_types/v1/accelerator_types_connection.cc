@@ -17,11 +17,11 @@
 // source: google/cloud/compute/accelerator_types/v1/accelerator_types.proto
 
 #include "google/cloud/compute/accelerator_types/v1/accelerator_types_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/accelerator_types/v1/accelerator_types_options.h"
 #include "google/cloud/compute/accelerator_types/v1/internal/accelerator_types_option_defaults.h"
 #include "google/cloud/compute/accelerator_types/v1/internal/accelerator_types_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,18 +36,22 @@ AcceleratorTypesConnection::~AcceleratorTypesConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList>
 AcceleratorTypesConnection::AggregatedListAcceleratorTypes(
-    google::cloud::cpp::compute::acceleratorTypes::v1::AggregatedListAcceleratorTypesRequest const&) {
+    google::cloud::cpp::compute::acceleratorTypes::v1::
+        AggregatedListAcceleratorTypesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AcceleratorType>
 AcceleratorTypesConnection::GetAcceleratorTypes(
-    google::cloud::cpp::compute::acceleratorTypes::v1::GetAcceleratorTypesRequest const&) {
+    google::cloud::cpp::compute::acceleratorTypes::v1::
+        GetAcceleratorTypesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::AcceleratorType> AcceleratorTypesConnection::ListAcceleratorTypes(
-    google::cloud::cpp::compute::acceleratorTypes::v1::ListAcceleratorTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::AcceleratorType>
+AcceleratorTypesConnection::ListAcceleratorTypes(
+    google::cloud::cpp::compute::acceleratorTypes::v1::
+        ListAcceleratorTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::AcceleratorType>>();
 }

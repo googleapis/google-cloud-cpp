@@ -16,14 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/compute/target_http_proxies/v1/target_http_proxies.proto
 
-
 #include "google/cloud/compute/target_http_proxies/v1/internal/target_http_proxies_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 
 namespace google {
@@ -34,12 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TargetHttpProxiesRestMetadata::TargetHttpProxiesRestMetadata(
     std::shared_ptr<TargetHttpProxiesRestStub> child)
     : child_(std::move(child)),
-      api_client_header_(google::cloud::internal::ApiClientHeader("generator")) {}
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyAggregatedList>
 TargetHttpProxiesRestMetadata::AggregatedListTargetHttpProxies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetHttpProxies::v1::AggregatedListTargetHttpProxiesRequest const& request) {
+    google::cloud::cpp::compute::targetHttpProxies::v1::
+        AggregatedListTargetHttpProxiesRequest const& request) {
   SetMetadata(rest_context);
   return child_->AggregatedListTargetHttpProxies(rest_context, request);
 }
@@ -47,7 +48,8 @@ TargetHttpProxiesRestMetadata::AggregatedListTargetHttpProxies(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesRestMetadata::DeleteTargetHttpProxies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetHttpProxies::v1::DeleteTargetHttpProxiesRequest const& request) {
+    google::cloud::cpp::compute::targetHttpProxies::v1::
+        DeleteTargetHttpProxiesRequest const& request) {
   SetMetadata(rest_context);
   return child_->DeleteTargetHttpProxies(rest_context, request);
 }
@@ -55,7 +57,8 @@ TargetHttpProxiesRestMetadata::DeleteTargetHttpProxies(
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
 TargetHttpProxiesRestMetadata::GetTargetHttpProxies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetHttpProxies::v1::GetTargetHttpProxiesRequest const& request) {
+    google::cloud::cpp::compute::targetHttpProxies::v1::
+        GetTargetHttpProxiesRequest const& request) {
   SetMetadata(rest_context);
   return child_->GetTargetHttpProxies(rest_context, request);
 }
@@ -63,7 +66,8 @@ TargetHttpProxiesRestMetadata::GetTargetHttpProxies(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesRestMetadata::InsertTargetHttpProxies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetHttpProxies::v1::InsertTargetHttpProxiesRequest const& request) {
+    google::cloud::cpp::compute::targetHttpProxies::v1::
+        InsertTargetHttpProxiesRequest const& request) {
   SetMetadata(rest_context);
   return child_->InsertTargetHttpProxies(rest_context, request);
 }
@@ -71,7 +75,8 @@ TargetHttpProxiesRestMetadata::InsertTargetHttpProxies(
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyList>
 TargetHttpProxiesRestMetadata::ListTargetHttpProxies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetHttpProxies::v1::ListTargetHttpProxiesRequest const& request) {
+    google::cloud::cpp::compute::targetHttpProxies::v1::
+        ListTargetHttpProxiesRequest const& request) {
   SetMetadata(rest_context);
   return child_->ListTargetHttpProxies(rest_context, request);
 }
@@ -79,7 +84,8 @@ TargetHttpProxiesRestMetadata::ListTargetHttpProxies(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesRestMetadata::PatchTargetHttpProxies(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetHttpProxies::v1::PatchTargetHttpProxiesRequest const& request) {
+    google::cloud::cpp::compute::targetHttpProxies::v1::
+        PatchTargetHttpProxiesRequest const& request) {
   SetMetadata(rest_context);
   return child_->PatchTargetHttpProxies(rest_context, request);
 }
@@ -87,33 +93,34 @@ TargetHttpProxiesRestMetadata::PatchTargetHttpProxies(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesRestMetadata::SetUrlMap(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::targetHttpProxies::v1::SetUrlMapRequest const& request) {
+    google::cloud::cpp::compute::targetHttpProxies::v1::SetUrlMapRequest const&
+        request) {
   SetMetadata(rest_context);
   return child_->SetUrlMap(rest_context, request);
 }
 
 void TargetHttpProxiesRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      std::vector<std::string> const& params) {
+    rest_internal::RestContext& rest_context,
+    std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

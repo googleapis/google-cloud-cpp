@@ -36,30 +36,38 @@ class HealthChecksTracingConnection
   ~HealthChecksTracingConnection() override = default;
 
   explicit HealthChecksTracingConnection(
-    std::shared_ptr<compute_health_checks_v1::HealthChecksConnection> child);
+      std::shared_ptr<compute_health_checks_v1::HealthChecksConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::compute::v1::HealthChecksAggregatedList>
-  AggregatedListHealthChecks(google::cloud::cpp::compute::healthChecks::v1::AggregatedListHealthChecksRequest const& request) override;
+  AggregatedListHealthChecks(
+      google::cloud::cpp::compute::healthChecks::v1::
+          AggregatedListHealthChecksRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteHealthChecks(google::cloud::cpp::compute::healthChecks::v1::DeleteHealthChecksRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHealthChecks(
+      google::cloud::cpp::compute::healthChecks::v1::
+          DeleteHealthChecksRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::HealthCheck>
-  GetHealthChecks(google::cloud::cpp::compute::healthChecks::v1::GetHealthChecksRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthChecks(
+      google::cloud::cpp::compute::healthChecks::v1::
+          GetHealthChecksRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertHealthChecks(google::cloud::cpp::compute::healthChecks::v1::InsertHealthChecksRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHealthChecks(
+      google::cloud::cpp::compute::healthChecks::v1::
+          InsertHealthChecksRequest const& request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::HealthCheck>
-  ListHealthChecks(google::cloud::cpp::compute::healthChecks::v1::ListHealthChecksRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::HealthCheck> ListHealthChecks(
+      google::cloud::cpp::compute::healthChecks::v1::ListHealthChecksRequest
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchHealthChecks(google::cloud::cpp::compute::healthChecks::v1::PatchHealthChecksRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHealthChecks(
+      google::cloud::cpp::compute::healthChecks::v1::
+          PatchHealthChecksRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateHealthChecks(google::cloud::cpp::compute::healthChecks::v1::UpdateHealthChecksRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateHealthChecks(
+      google::cloud::cpp::compute::healthChecks::v1::
+          UpdateHealthChecksRequest const& request) override;
 
  private:
   std::shared_ptr<compute_health_checks_v1::HealthChecksConnection> child_;

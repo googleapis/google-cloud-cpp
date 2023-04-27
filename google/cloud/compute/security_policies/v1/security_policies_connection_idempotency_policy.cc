@@ -26,63 +26,88 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-SecurityPoliciesConnectionIdempotencyPolicy::~SecurityPoliciesConnectionIdempotencyPolicy() = default;
+SecurityPoliciesConnectionIdempotencyPolicy::
+    ~SecurityPoliciesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<SecurityPoliciesConnectionIdempotencyPolicy>
 SecurityPoliciesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<SecurityPoliciesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency SecurityPoliciesConnectionIdempotencyPolicy::AddRule(google::cloud::cpp::compute::securityPolicies::v1::AddRuleRequest const&) {
+Idempotency SecurityPoliciesConnectionIdempotencyPolicy::AddRule(
+    google::cloud::cpp::compute::securityPolicies::v1::AddRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityPoliciesConnectionIdempotencyPolicy::AggregatedListSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::AggregatedListSecurityPoliciesRequest const&) {
+Idempotency
+SecurityPoliciesConnectionIdempotencyPolicy::AggregatedListSecurityPolicies(
+    google::cloud::cpp::compute::securityPolicies::v1::
+        AggregatedListSecurityPoliciesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityPoliciesConnectionIdempotencyPolicy::DeleteSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::DeleteSecurityPoliciesRequest const&) {
+Idempotency SecurityPoliciesConnectionIdempotencyPolicy::DeleteSecurityPolicies(
+    google::cloud::cpp::compute::securityPolicies::v1::
+        DeleteSecurityPoliciesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityPoliciesConnectionIdempotencyPolicy::GetSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::GetSecurityPoliciesRequest const&) {
+Idempotency SecurityPoliciesConnectionIdempotencyPolicy::GetSecurityPolicies(
+    google::cloud::cpp::compute::securityPolicies::v1::
+        GetSecurityPoliciesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityPoliciesConnectionIdempotencyPolicy::GetRule(google::cloud::cpp::compute::securityPolicies::v1::GetRuleRequest const&) {
+Idempotency SecurityPoliciesConnectionIdempotencyPolicy::GetRule(
+    google::cloud::cpp::compute::securityPolicies::v1::GetRuleRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityPoliciesConnectionIdempotencyPolicy::InsertSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::InsertSecurityPoliciesRequest const&) {
+Idempotency SecurityPoliciesConnectionIdempotencyPolicy::InsertSecurityPolicies(
+    google::cloud::cpp::compute::securityPolicies::v1::
+        InsertSecurityPoliciesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityPoliciesConnectionIdempotencyPolicy::ListSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::ListSecurityPoliciesRequest) {  // NOLINT
+Idempotency SecurityPoliciesConnectionIdempotencyPolicy::ListSecurityPolicies(
+    google::cloud::cpp::compute::securityPolicies::v1::
+        ListSecurityPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityPoliciesConnectionIdempotencyPolicy::ListPreconfiguredExpressionSets(google::cloud::cpp::compute::securityPolicies::v1::ListPreconfiguredExpressionSetsRequest const&) {
+Idempotency
+SecurityPoliciesConnectionIdempotencyPolicy::ListPreconfiguredExpressionSets(
+    google::cloud::cpp::compute::securityPolicies::v1::
+        ListPreconfiguredExpressionSetsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency SecurityPoliciesConnectionIdempotencyPolicy::PatchSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::PatchSecurityPoliciesRequest const&) {
+Idempotency SecurityPoliciesConnectionIdempotencyPolicy::PatchSecurityPolicies(
+    google::cloud::cpp::compute::securityPolicies::v1::
+        PatchSecurityPoliciesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityPoliciesConnectionIdempotencyPolicy::PatchRule(google::cloud::cpp::compute::securityPolicies::v1::PatchRuleRequest const&) {
+Idempotency SecurityPoliciesConnectionIdempotencyPolicy::PatchRule(
+    google::cloud::cpp::compute::securityPolicies::v1::
+        PatchRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityPoliciesConnectionIdempotencyPolicy::RemoveRule(google::cloud::cpp::compute::securityPolicies::v1::RemoveRuleRequest const&) {
+Idempotency SecurityPoliciesConnectionIdempotencyPolicy::RemoveRule(
+    google::cloud::cpp::compute::securityPolicies::v1::
+        RemoveRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency SecurityPoliciesConnectionIdempotencyPolicy::SetLabels(google::cloud::cpp::compute::securityPolicies::v1::SetLabelsRequest const&) {
+Idempotency SecurityPoliciesConnectionIdempotencyPolicy::SetLabels(
+    google::cloud::cpp::compute::securityPolicies::v1::
+        SetLabelsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<SecurityPoliciesConnectionIdempotencyPolicy>
-    MakeDefaultSecurityPoliciesConnectionIdempotencyPolicy() {
+MakeDefaultSecurityPoliciesConnectionIdempotencyPolicy() {
   return std::make_unique<SecurityPoliciesConnectionIdempotencyPolicy>();
 }
 

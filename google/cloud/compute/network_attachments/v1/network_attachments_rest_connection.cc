@@ -17,11 +17,11 @@
 // source: google/cloud/compute/network_attachments/v1/network_attachments.proto
 
 #include "google/cloud/compute/network_attachments/v1/network_attachments_rest_connection.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/network_attachments/v1/internal/network_attachments_option_defaults.h"
 #include "google/cloud/compute/network_attachments/v1/internal/network_attachments_rest_connection_impl.h"
 #include "google/cloud/compute/network_attachments/v1/internal/network_attachments_rest_stub_factory.h"
 #include "google/cloud/compute/network_attachments/v1/network_attachments_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include <memory>
@@ -31,18 +31,21 @@ namespace cloud {
 namespace compute_network_attachments_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<NetworkAttachmentsConnection> MakeNetworkAttachmentsConnectionRest(
-    ExperimentalTag, Options options) {
+std::shared_ptr<NetworkAttachmentsConnection>
+MakeNetworkAttachmentsConnectionRest(ExperimentalTag, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList,
-      NetworkAttachmentsPolicyOptionList>(options, __func__);
-  options = compute_network_attachments_v1_internal::NetworkAttachmentsDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 NetworkAttachmentsPolicyOptionList>(options,
+                                                                     __func__);
+  options =
+      compute_network_attachments_v1_internal::NetworkAttachmentsDefaultOptions(
+          std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = compute_network_attachments_v1_internal::CreateDefaultNetworkAttachmentsRestStub(
-    options);
-  return std::make_shared<compute_network_attachments_v1_internal::NetworkAttachmentsRestConnectionImpl>(
+  auto stub = compute_network_attachments_v1_internal::
+      CreateDefaultNetworkAttachmentsRestStub(options);
+  return std::make_shared<compute_network_attachments_v1_internal::
+                              NetworkAttachmentsRestConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 

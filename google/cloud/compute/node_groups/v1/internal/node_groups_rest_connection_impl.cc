@@ -17,8 +17,8 @@
 // source: google/cloud/compute/node_groups/v1/node_groups.proto
 
 #include "google/cloud/compute/node_groups/v1/internal/node_groups_rest_connection_impl.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/node_groups/v1/internal/node_groups_rest_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -34,116 +34,142 @@ NodeGroupsRestConnectionImpl::NodeGroupsRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<compute_node_groups_v1_internal::NodeGroupsRestStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        NodeGroupsConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      NodeGroupsConnection::options())) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsRestConnectionImpl::AddNodes(google::cloud::cpp::compute::nodeGroups::v1::AddNodesRequest const& request) {
+NodeGroupsRestConnectionImpl::AddNodes(
+    google::cloud::cpp::compute::nodeGroups::v1::AddNodesRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->AddNodes(request),
+      retry_policy(), backoff_policy(), idempotency_policy()->AddNodes(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::nodeGroups::v1::AddNodesRequest const& request) {
-        return stub_->AddNodes(rest_context, request);
-      },
+             google::cloud::cpp::compute::nodeGroups::v1::AddNodesRequest const&
+                 request) { return stub_->AddNodes(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
-NodeGroupsRestConnectionImpl::AggregatedListNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::AggregatedListNodeGroupsRequest const& request) {
+NodeGroupsRestConnectionImpl::AggregatedListNodeGroups(
+    google::cloud::cpp::compute::nodeGroups::v1::
+        AggregatedListNodeGroupsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->AggregatedListNodeGroups(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::nodeGroups::v1::AggregatedListNodeGroupsRequest const& request) {
+             google::cloud::cpp::compute::nodeGroups::v1::
+                 AggregatedListNodeGroupsRequest const& request) {
         return stub_->AggregatedListNodeGroups(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsRestConnectionImpl::DeleteNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::DeleteNodeGroupsRequest const& request) {
+NodeGroupsRestConnectionImpl::DeleteNodeGroups(
+    google::cloud::cpp::compute::nodeGroups::v1::DeleteNodeGroupsRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteNodeGroups(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::nodeGroups::v1::DeleteNodeGroupsRequest const& request) {
+             google::cloud::cpp::compute::nodeGroups::v1::
+                 DeleteNodeGroupsRequest const& request) {
         return stub_->DeleteNodeGroups(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsRestConnectionImpl::DeleteNodes(google::cloud::cpp::compute::nodeGroups::v1::DeleteNodesRequest const& request) {
+NodeGroupsRestConnectionImpl::DeleteNodes(
+    google::cloud::cpp::compute::nodeGroups::v1::DeleteNodesRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteNodes(request),
-      [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::nodeGroups::v1::DeleteNodesRequest const& request) {
-        return stub_->DeleteNodes(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::nodeGroups::v1::DeleteNodesRequest const&
+              request) { return stub_->DeleteNodes(rest_context, request); },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroup>
-NodeGroupsRestConnectionImpl::GetNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::GetNodeGroupsRequest const& request) {
+NodeGroupsRestConnectionImpl::GetNodeGroups(
+    google::cloud::cpp::compute::nodeGroups::v1::GetNodeGroupsRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetNodeGroups(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::nodeGroups::v1::GetNodeGroupsRequest const& request) {
+             google::cloud::cpp::compute::nodeGroups::v1::
+                 GetNodeGroupsRequest const& request) {
         return stub_->GetNodeGroups(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-NodeGroupsRestConnectionImpl::GetIamPolicy(google::cloud::cpp::compute::nodeGroups::v1::GetIamPolicyRequest const& request) {
+NodeGroupsRestConnectionImpl::GetIamPolicy(
+    google::cloud::cpp::compute::nodeGroups::v1::GetIamPolicyRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::nodeGroups::v1::GetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::nodeGroups::v1::
+                 GetIamPolicyRequest const& request) {
         return stub_->GetIamPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsRestConnectionImpl::InsertNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::InsertNodeGroupsRequest const& request) {
+NodeGroupsRestConnectionImpl::InsertNodeGroups(
+    google::cloud::cpp::compute::nodeGroups::v1::InsertNodeGroupsRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->InsertNodeGroups(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::nodeGroups::v1::InsertNodeGroupsRequest const& request) {
+             google::cloud::cpp::compute::nodeGroups::v1::
+                 InsertNodeGroupsRequest const& request) {
         return stub_->InsertNodeGroups(rest_context, request);
       },
       request, __func__);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NodeGroup>
-NodeGroupsRestConnectionImpl::ListNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::ListNodeGroupsRequest request) {
+NodeGroupsRestConnectionImpl::ListNodeGroups(
+    google::cloud::cpp::compute::nodeGroups::v1::ListNodeGroupsRequest
+        request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_node_groups_v1::NodeGroupsRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<compute_node_groups_v1::NodeGroupsRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListNodeGroups(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::NodeGroup>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::NodeGroup>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::nodeGroups::v1::ListNodeGroupsRequest const& r) {
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::cpp::compute::nodeGroups::v1::
+                          ListNodeGroupsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::nodeGroups::v1::ListNodeGroupsRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::nodeGroups::v1::
+                       ListNodeGroupsRequest const& request) {
               return stub->ListNodeGroups(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::NodeGroupList r) {
-        std::vector<google::cloud::cpp::compute::v1::NodeGroup> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::NodeGroup> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -151,26 +177,34 @@ NodeGroupsRestConnectionImpl::ListNodeGroups(google::cloud::cpp::compute::nodeGr
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode>
-NodeGroupsRestConnectionImpl::ListNodes(google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest request) {
+NodeGroupsRestConnectionImpl::ListNodes(
+    google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<compute_node_groups_v1::NodeGroupsRetryPolicy const>(retry_policy());
+  auto retry =
+      std::shared_ptr<compute_node_groups_v1::NodeGroupsRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListNodes(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode>>(
       std::move(request),
-      [stub, retry, backoff, idempotency, function_name]
-        (google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest const& r) {
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest const&
+              r) {
         return google::cloud::rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& rest_context, google::cloud::cpp::compute::nodeGroups::v1::ListNodesRequest const& request) {
+            [stub](rest_internal::RestContext& rest_context,
+                   google::cloud::cpp::compute::nodeGroups::v1::
+                       ListNodesRequest const& request) {
               return stub->ListNodes(rest_context, request);
             },
             r, function_name);
       },
       [](google::cloud::cpp::compute::v1::NodeGroupsListNodes r) {
-        std::vector<google::cloud::cpp::compute::v1::NodeGroupNode> result(r.items().size());
+        std::vector<google::cloud::cpp::compute::v1::NodeGroupNode> result(
+            r.items().size());
         auto& messages = *r.mutable_items();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -178,48 +212,60 @@ NodeGroupsRestConnectionImpl::ListNodes(google::cloud::cpp::compute::nodeGroups:
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsRestConnectionImpl::PatchNodeGroups(google::cloud::cpp::compute::nodeGroups::v1::PatchNodeGroupsRequest const& request) {
+NodeGroupsRestConnectionImpl::PatchNodeGroups(
+    google::cloud::cpp::compute::nodeGroups::v1::PatchNodeGroupsRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->PatchNodeGroups(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::nodeGroups::v1::PatchNodeGroupsRequest const& request) {
+             google::cloud::cpp::compute::nodeGroups::v1::
+                 PatchNodeGroupsRequest const& request) {
         return stub_->PatchNodeGroups(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-NodeGroupsRestConnectionImpl::SetIamPolicy(google::cloud::cpp::compute::nodeGroups::v1::SetIamPolicyRequest const& request) {
+NodeGroupsRestConnectionImpl::SetIamPolicy(
+    google::cloud::cpp::compute::nodeGroups::v1::SetIamPolicyRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetIamPolicy(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::nodeGroups::v1::SetIamPolicyRequest const& request) {
+             google::cloud::cpp::compute::nodeGroups::v1::
+                 SetIamPolicyRequest const& request) {
         return stub_->SetIamPolicy(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsRestConnectionImpl::SetNodeTemplate(google::cloud::cpp::compute::nodeGroups::v1::SetNodeTemplateRequest const& request) {
+NodeGroupsRestConnectionImpl::SetNodeTemplate(
+    google::cloud::cpp::compute::nodeGroups::v1::SetNodeTemplateRequest const&
+        request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetNodeTemplate(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::nodeGroups::v1::SetNodeTemplateRequest const& request) {
+             google::cloud::cpp::compute::nodeGroups::v1::
+                 SetNodeTemplateRequest const& request) {
         return stub_->SetNodeTemplate(rest_context, request);
       },
       request, __func__);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-NodeGroupsRestConnectionImpl::TestIamPermissions(google::cloud::cpp::compute::nodeGroups::v1::TestIamPermissionsRequest const& request) {
+NodeGroupsRestConnectionImpl::TestIamPermissions(
+    google::cloud::cpp::compute::nodeGroups::v1::
+        TestIamPermissionsRequest const& request) {
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->TestIamPermissions(request),
       [this](rest_internal::RestContext& rest_context,
-          google::cloud::cpp::compute::nodeGroups::v1::TestIamPermissionsRequest const& request) {
+             google::cloud::cpp::compute::nodeGroups::v1::
+                 TestIamPermissionsRequest const& request) {
         return stub_->TestIamPermissions(rest_context, request);
       },
       request, __func__);

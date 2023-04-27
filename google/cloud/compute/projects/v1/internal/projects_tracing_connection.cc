@@ -33,94 +33,131 @@ ProjectsTracingConnection::ProjectsTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ProjectsTracingConnection::DisableXpnHost(google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const& request) {
-  auto span = internal::MakeSpan("compute_projects_v1::ProjectsConnection::DisableXpnHost");
+ProjectsTracingConnection::DisableXpnHost(
+    google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::DisableXpnHost");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DisableXpnHost(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ProjectsTracingConnection::DisableXpnResource(google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const& request) {
-  auto span = internal::MakeSpan("compute_projects_v1::ProjectsConnection::DisableXpnResource");
+ProjectsTracingConnection::DisableXpnResource(
+    google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::DisableXpnResource");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DisableXpnResource(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ProjectsTracingConnection::EnableXpnHost(google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const& request) {
-  auto span = internal::MakeSpan("compute_projects_v1::ProjectsConnection::EnableXpnHost");
+ProjectsTracingConnection::EnableXpnHost(
+    google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::EnableXpnHost");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->EnableXpnHost(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ProjectsTracingConnection::EnableXpnResource(google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const& request) {
-  auto span = internal::MakeSpan("compute_projects_v1::ProjectsConnection::EnableXpnResource");
+ProjectsTracingConnection::EnableXpnResource(
+    google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::EnableXpnResource");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->EnableXpnResource(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Project>
-ProjectsTracingConnection::GetProjects(google::cloud::cpp::compute::projects::v1::GetProjectsRequest const& request) {
-  auto span = internal::MakeSpan("compute_projects_v1::ProjectsConnection::GetProjects");
+ProjectsTracingConnection::GetProjects(
+    google::cloud::cpp::compute::projects::v1::GetProjectsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::GetProjects");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetProjects(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Project>
-ProjectsTracingConnection::GetXpnHost(google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const& request) {
-  auto span = internal::MakeSpan("compute_projects_v1::ProjectsConnection::GetXpnHost");
+ProjectsTracingConnection::GetXpnHost(
+    google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("compute_projects_v1::ProjectsConnection::GetXpnHost");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetXpnHost(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ProjectsGetXpnResources>
-ProjectsTracingConnection::GetXpnResources(google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const& request) {
-  auto span = internal::MakeSpan("compute_projects_v1::ProjectsConnection::GetXpnResources");
+ProjectsTracingConnection::GetXpnResources(
+    google::cloud::cpp::compute::projects::v1::GetXpnResourcesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::GetXpnResources");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetXpnResources(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Project>
-ProjectsTracingConnection::ListXpnHosts(google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest request) {
-  auto span = internal::MakeSpan("compute_projects_v1::ProjectsConnection::ListXpnHosts");
+ProjectsTracingConnection::ListXpnHosts(
+    google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::ListXpnHosts");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListXpnHosts(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::Project>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::Project>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ProjectsTracingConnection::MoveDisk(google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request) {
-  auto span = internal::MakeSpan("compute_projects_v1::ProjectsConnection::MoveDisk");
+ProjectsTracingConnection::MoveDisk(
+    google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request) {
+  auto span =
+      internal::MakeSpan("compute_projects_v1::ProjectsConnection::MoveDisk");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->MoveDisk(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ProjectsTracingConnection::MoveInstance(google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const& request) {
-  auto span = internal::MakeSpan("compute_projects_v1::ProjectsConnection::MoveInstance");
+ProjectsTracingConnection::MoveInstance(
+    google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::MoveInstance");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->MoveInstance(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ProjectsTracingConnection::SetCommonInstanceMetadata(google::cloud::cpp::compute::projects::v1::SetCommonInstanceMetadataRequest const& request) {
-  auto span = internal::MakeSpan("compute_projects_v1::ProjectsConnection::SetCommonInstanceMetadata");
+ProjectsTracingConnection::SetCommonInstanceMetadata(
+    google::cloud::cpp::compute::projects::v1::
+        SetCommonInstanceMetadataRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::SetCommonInstanceMetadata");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetCommonInstanceMetadata(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ProjectsTracingConnection::SetDefaultNetworkTier(google::cloud::cpp::compute::projects::v1::SetDefaultNetworkTierRequest const& request) {
-  auto span = internal::MakeSpan("compute_projects_v1::ProjectsConnection::SetDefaultNetworkTier");
+ProjectsTracingConnection::SetDefaultNetworkTier(
+    google::cloud::cpp::compute::projects::v1::
+        SetDefaultNetworkTierRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::SetDefaultNetworkTier");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetDefaultNetworkTier(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ProjectsTracingConnection::SetUsageExportBucket(google::cloud::cpp::compute::projects::v1::SetUsageExportBucketRequest const& request) {
-  auto span = internal::MakeSpan("compute_projects_v1::ProjectsConnection::SetUsageExportBucket");
+ProjectsTracingConnection::SetUsageExportBucket(
+    google::cloud::cpp::compute::projects::v1::
+        SetUsageExportBucketRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::SetUsageExportBucket");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetUsageExportBucket(request));
 }

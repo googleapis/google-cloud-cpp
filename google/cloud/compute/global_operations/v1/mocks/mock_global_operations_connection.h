@@ -42,29 +42,40 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockGlobalOperationsConnection : public compute_global_operations_v1::GlobalOperationsConnection {
+class MockGlobalOperationsConnection
+    : public compute_global_operations_v1::GlobalOperationsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>,
-  AggregatedListGlobalOperations,
-  (google::cloud::cpp::compute::globalOperations::v1::AggregatedListGlobalOperationsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>,
+      AggregatedListGlobalOperations,
+      (google::cloud::cpp::compute::globalOperations::v1::
+           AggregatedListGlobalOperationsRequest const& request),
+      (override));
 
-  MOCK_METHOD(Status,
-  DeleteGlobalOperations,
-  (google::cloud::cpp::compute::globalOperations::v1::DeleteGlobalOperationsRequest const& request), (override));
+  MOCK_METHOD(Status, DeleteGlobalOperations,
+              (google::cloud::cpp::compute::globalOperations::v1::
+                   DeleteGlobalOperationsRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  GetGlobalOperations,
-  (google::cloud::cpp::compute::globalOperations::v1::GetGlobalOperationsRequest const& request), (override));
+              GetGlobalOperations,
+              (google::cloud::cpp::compute::globalOperations::v1::
+                   GetGlobalOperationsRequest const& request),
+              (override));
 
   MOCK_METHOD(StreamRange<google::cloud::cpp::compute::v1::Operation>,
-  ListGlobalOperations,
-  (google::cloud::cpp::compute::globalOperations::v1::ListGlobalOperationsRequest request), (override));
+              ListGlobalOperations,
+              (google::cloud::cpp::compute::globalOperations::v1::
+                   ListGlobalOperationsRequest request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
-  Wait,
-  (google::cloud::cpp::compute::globalOperations::v1::WaitRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, Wait,
+      (google::cloud::cpp::compute::globalOperations::v1::WaitRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

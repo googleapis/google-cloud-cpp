@@ -33,59 +33,87 @@ NodeTemplatesTracingConnection::NodeTemplatesTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>
-NodeTemplatesTracingConnection::AggregatedListNodeTemplates(google::cloud::cpp::compute::nodeTemplates::v1::AggregatedListNodeTemplatesRequest const& request) {
-  auto span = internal::MakeSpan("compute_node_templates_v1::NodeTemplatesConnection::AggregatedListNodeTemplates");
+NodeTemplatesTracingConnection::AggregatedListNodeTemplates(
+    google::cloud::cpp::compute::nodeTemplates::v1::
+        AggregatedListNodeTemplatesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_node_templates_v1::NodeTemplatesConnection::"
+      "AggregatedListNodeTemplates");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AggregatedListNodeTemplates(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeTemplatesTracingConnection::DeleteNodeTemplates(google::cloud::cpp::compute::nodeTemplates::v1::DeleteNodeTemplatesRequest const& request) {
-  auto span = internal::MakeSpan("compute_node_templates_v1::NodeTemplatesConnection::DeleteNodeTemplates");
+NodeTemplatesTracingConnection::DeleteNodeTemplates(
+    google::cloud::cpp::compute::nodeTemplates::v1::
+        DeleteNodeTemplatesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_node_templates_v1::NodeTemplatesConnection::"
+      "DeleteNodeTemplates");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteNodeTemplates(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
-NodeTemplatesTracingConnection::GetNodeTemplates(google::cloud::cpp::compute::nodeTemplates::v1::GetNodeTemplatesRequest const& request) {
-  auto span = internal::MakeSpan("compute_node_templates_v1::NodeTemplatesConnection::GetNodeTemplates");
+NodeTemplatesTracingConnection::GetNodeTemplates(
+    google::cloud::cpp::compute::nodeTemplates::v1::
+        GetNodeTemplatesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_node_templates_v1::NodeTemplatesConnection::GetNodeTemplates");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetNodeTemplates(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-NodeTemplatesTracingConnection::GetIamPolicy(google::cloud::cpp::compute::nodeTemplates::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("compute_node_templates_v1::NodeTemplatesConnection::GetIamPolicy");
+NodeTemplatesTracingConnection::GetIamPolicy(
+    google::cloud::cpp::compute::nodeTemplates::v1::GetIamPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_node_templates_v1::NodeTemplatesConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeTemplatesTracingConnection::InsertNodeTemplates(google::cloud::cpp::compute::nodeTemplates::v1::InsertNodeTemplatesRequest const& request) {
-  auto span = internal::MakeSpan("compute_node_templates_v1::NodeTemplatesConnection::InsertNodeTemplates");
+NodeTemplatesTracingConnection::InsertNodeTemplates(
+    google::cloud::cpp::compute::nodeTemplates::v1::
+        InsertNodeTemplatesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_node_templates_v1::NodeTemplatesConnection::"
+      "InsertNodeTemplates");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->InsertNodeTemplates(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>
-NodeTemplatesTracingConnection::ListNodeTemplates(google::cloud::cpp::compute::nodeTemplates::v1::ListNodeTemplatesRequest request) {
-  auto span = internal::MakeSpan("compute_node_templates_v1::NodeTemplatesConnection::ListNodeTemplates");
+NodeTemplatesTracingConnection::ListNodeTemplates(
+    google::cloud::cpp::compute::nodeTemplates::v1::ListNodeTemplatesRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_node_templates_v1::NodeTemplatesConnection::ListNodeTemplates");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListNodeTemplates(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::NodeTemplate>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::NodeTemplate>(std::move(span),
+                                                     std::move(sr));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
-NodeTemplatesTracingConnection::SetIamPolicy(google::cloud::cpp::compute::nodeTemplates::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("compute_node_templates_v1::NodeTemplatesConnection::SetIamPolicy");
+NodeTemplatesTracingConnection::SetIamPolicy(
+    google::cloud::cpp::compute::nodeTemplates::v1::SetIamPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_node_templates_v1::NodeTemplatesConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-NodeTemplatesTracingConnection::TestIamPermissions(google::cloud::cpp::compute::nodeTemplates::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("compute_node_templates_v1::NodeTemplatesConnection::TestIamPermissions");
+NodeTemplatesTracingConnection::TestIamPermissions(
+    google::cloud::cpp::compute::nodeTemplates::v1::
+        TestIamPermissionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_node_templates_v1::NodeTemplatesConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }

@@ -35,43 +35,49 @@ DefaultNodeTemplatesRestStub::DefaultNodeTemplatesRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultNodeTemplatesRestStub::DefaultNodeTemplatesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>
 DefaultNodeTemplatesRestStub::AggregatedListNodeTemplates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeTemplates::v1::AggregatedListNodeTemplatesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::nodeTemplates::v1::
+        AggregatedListNodeTemplatesRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::NodeTemplateAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/nodeTemplates",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultNodeTemplatesRestStub::DeleteNodeTemplates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeTemplates::v1::DeleteNodeTemplatesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::nodeTemplates::v1::
+        DeleteNodeTemplatesRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/nodeTemplates/{node_template}");
+      "/compute/v1/projects/{project}/regions/{region}/nodeTemplates/"
+      "{node_template}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
 DefaultNodeTemplatesRestStub::GetNodeTemplates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeTemplates::v1::GetNodeTemplatesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::nodeTemplates::v1::
+        GetNodeTemplatesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeTemplate>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/nodeTemplates/{node_template}",
+      "/compute/v1/projects/{project}/regions/{region}/nodeTemplates/"
+      "{node_template}",
       {std::make_pair("node_template", request.node_template()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region())});
@@ -79,12 +85,16 @@ DefaultNodeTemplatesRestStub::GetNodeTemplates(
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultNodeTemplatesRestStub::GetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeTemplates::v1::GetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::nodeTemplates::v1::GetIamPolicyRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/nodeTemplates/{resource}/getIamPolicy",
-      {std::make_pair("options_requested_policy_version", std::to_string(request.options_requested_policy_version())),
+      "/compute/v1/projects/{project}/regions/{region}/nodeTemplates/"
+      "{resource}/getIamPolicy",
+      {std::make_pair(
+           "options_requested_policy_version",
+           std::to_string(request.options_requested_policy_version())),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
        std::make_pair("resource", request.resource())});
@@ -92,8 +102,9 @@ DefaultNodeTemplatesRestStub::GetIamPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultNodeTemplatesRestStub::InsertNodeTemplates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeTemplates::v1::InsertNodeTemplatesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::nodeTemplates::v1::
+        InsertNodeTemplatesRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/nodeTemplates");
@@ -101,8 +112,9 @@ DefaultNodeTemplatesRestStub::InsertNodeTemplates(
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplateList>
 DefaultNodeTemplatesRestStub::ListNodeTemplates(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeTemplates::v1::ListNodeTemplatesRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::nodeTemplates::v1::
+        ListNodeTemplatesRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeTemplateList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/nodeTemplates",
@@ -112,25 +124,31 @@ DefaultNodeTemplatesRestStub::ListNodeTemplates(
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultNodeTemplatesRestStub::SetIamPolicy(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeTemplates::v1::SetIamPolicyRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::nodeTemplates::v1::SetIamPolicyRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/nodeTemplates/{resource}/setIamPolicy");
+      "/compute/v1/projects/{project}/regions/{region}/nodeTemplates/"
+      "{resource}/setIamPolicy");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
 DefaultNodeTemplatesRestStub::TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::nodeTemplates::v1::TestIamPermissionsRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::TestPermissionsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::nodeTemplates::v1::
+        TestIamPermissionsRequest const& request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/nodeTemplates/{resource}/testIamPermissions");
+      "/compute/v1/projects/{project}/regions/{region}/nodeTemplates/"
+      "{resource}/testIamPermissions");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

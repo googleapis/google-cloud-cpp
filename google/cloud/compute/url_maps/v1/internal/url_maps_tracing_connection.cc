@@ -33,66 +33,91 @@ UrlMapsTracingConnection::UrlMapsTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
-UrlMapsTracingConnection::AggregatedListUrlMaps(google::cloud::cpp::compute::urlMaps::v1::AggregatedListUrlMapsRequest const& request) {
-  auto span = internal::MakeSpan("compute_url_maps_v1::UrlMapsConnection::AggregatedListUrlMaps");
+UrlMapsTracingConnection::AggregatedListUrlMaps(
+    google::cloud::cpp::compute::urlMaps::v1::
+        AggregatedListUrlMapsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_url_maps_v1::UrlMapsConnection::AggregatedListUrlMaps");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AggregatedListUrlMaps(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-UrlMapsTracingConnection::DeleteUrlMaps(google::cloud::cpp::compute::urlMaps::v1::DeleteUrlMapsRequest const& request) {
-  auto span = internal::MakeSpan("compute_url_maps_v1::UrlMapsConnection::DeleteUrlMaps");
+UrlMapsTracingConnection::DeleteUrlMaps(
+    google::cloud::cpp::compute::urlMaps::v1::DeleteUrlMapsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_url_maps_v1::UrlMapsConnection::DeleteUrlMaps");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteUrlMaps(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMap>
-UrlMapsTracingConnection::GetUrlMaps(google::cloud::cpp::compute::urlMaps::v1::GetUrlMapsRequest const& request) {
-  auto span = internal::MakeSpan("compute_url_maps_v1::UrlMapsConnection::GetUrlMaps");
+UrlMapsTracingConnection::GetUrlMaps(
+    google::cloud::cpp::compute::urlMaps::v1::GetUrlMapsRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("compute_url_maps_v1::UrlMapsConnection::GetUrlMaps");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetUrlMaps(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-UrlMapsTracingConnection::InsertUrlMaps(google::cloud::cpp::compute::urlMaps::v1::InsertUrlMapsRequest const& request) {
-  auto span = internal::MakeSpan("compute_url_maps_v1::UrlMapsConnection::InsertUrlMaps");
+UrlMapsTracingConnection::InsertUrlMaps(
+    google::cloud::cpp::compute::urlMaps::v1::InsertUrlMapsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_url_maps_v1::UrlMapsConnection::InsertUrlMaps");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->InsertUrlMaps(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-UrlMapsTracingConnection::InvalidateCache(google::cloud::cpp::compute::urlMaps::v1::InvalidateCacheRequest const& request) {
-  auto span = internal::MakeSpan("compute_url_maps_v1::UrlMapsConnection::InvalidateCache");
+UrlMapsTracingConnection::InvalidateCache(
+    google::cloud::cpp::compute::urlMaps::v1::InvalidateCacheRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_url_maps_v1::UrlMapsConnection::InvalidateCache");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->InvalidateCache(request));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::UrlMap>
-UrlMapsTracingConnection::ListUrlMaps(google::cloud::cpp::compute::urlMaps::v1::ListUrlMapsRequest request) {
-  auto span = internal::MakeSpan("compute_url_maps_v1::UrlMapsConnection::ListUrlMaps");
+UrlMapsTracingConnection::ListUrlMaps(
+    google::cloud::cpp::compute::urlMaps::v1::ListUrlMapsRequest request) {
+  auto span =
+      internal::MakeSpan("compute_url_maps_v1::UrlMapsConnection::ListUrlMaps");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListUrlMaps(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::cpp::compute::v1::UrlMap>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::cpp::compute::v1::UrlMap>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-UrlMapsTracingConnection::PatchUrlMaps(google::cloud::cpp::compute::urlMaps::v1::PatchUrlMapsRequest const& request) {
-  auto span = internal::MakeSpan("compute_url_maps_v1::UrlMapsConnection::PatchUrlMaps");
+UrlMapsTracingConnection::PatchUrlMaps(
+    google::cloud::cpp::compute::urlMaps::v1::PatchUrlMapsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_url_maps_v1::UrlMapsConnection::PatchUrlMaps");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->PatchUrlMaps(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-UrlMapsTracingConnection::UpdateUrlMaps(google::cloud::cpp::compute::urlMaps::v1::UpdateUrlMapsRequest const& request) {
-  auto span = internal::MakeSpan("compute_url_maps_v1::UrlMapsConnection::UpdateUrlMaps");
+UrlMapsTracingConnection::UpdateUrlMaps(
+    google::cloud::cpp::compute::urlMaps::v1::UpdateUrlMapsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_url_maps_v1::UrlMapsConnection::UpdateUrlMaps");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateUrlMaps(request));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
-UrlMapsTracingConnection::Validate(google::cloud::cpp::compute::urlMaps::v1::ValidateRequest const& request) {
-  auto span = internal::MakeSpan("compute_url_maps_v1::UrlMapsConnection::Validate");
+UrlMapsTracingConnection::Validate(
+    google::cloud::cpp::compute::urlMaps::v1::ValidateRequest const& request) {
+  auto span =
+      internal::MakeSpan("compute_url_maps_v1::UrlMapsConnection::Validate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Validate(request));
 }

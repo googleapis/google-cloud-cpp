@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SSL_CERTIFICATES_V1_INTERNAL_SSL_CERTIFICATES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SSL_CERTIFICATES_V1_INTERNAL_SSL_CERTIFICATES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/ssl_certificates/v1/internal/ssl_certificates_rest_stub.h"
 #include "google/cloud/compute/ssl_certificates/v1/internal/ssl_certificates_retry_traits.h"
 #include "google/cloud/compute/ssl_certificates/v1/ssl_certificates_connection.h"
 #include "google/cloud/compute/ssl_certificates/v1/ssl_certificates_connection_idempotency_policy.h"
 #include "google/cloud/compute/ssl_certificates/v1/ssl_certificates_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -43,55 +43,84 @@ class SslCertificatesRestConnectionImpl
   ~SslCertificatesRestConnectionImpl() override = default;
 
   SslCertificatesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_ssl_certificates_v1_internal::SslCertificatesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          compute_ssl_certificates_v1_internal::SslCertificatesRestStub>
+          stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
-  AggregatedListSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::AggregatedListSslCertificatesRequest const& request) override;
+  AggregatedListSslCertificates(
+      google::cloud::cpp::compute::sslCertificates::v1::
+          AggregatedListSslCertificatesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::DeleteSslCertificatesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslCertificates(
+      google::cloud::cpp::compute::sslCertificates::v1::
+          DeleteSslCertificatesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
-  GetSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::GetSslCertificatesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificates(
+      google::cloud::cpp::compute::sslCertificates::v1::
+          GetSslCertificatesRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::InsertSslCertificatesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslCertificates(
+      google::cloud::cpp::compute::sslCertificates::v1::
+          InsertSslCertificatesRequest const& request) override;
 
   StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
-  ListSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::ListSslCertificatesRequest request) override;
+  ListSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::
+                          ListSslCertificatesRequest request) override;
 
  private:
-  std::unique_ptr<compute_ssl_certificates_v1::SslCertificatesRetryPolicy> retry_policy() {
+  std::unique_ptr<compute_ssl_certificates_v1::SslCertificatesRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_ssl_certificates_v1::SslCertificatesRetryPolicyOption>()) {
-      return options.get<compute_ssl_certificates_v1::SslCertificatesRetryPolicyOption>()->clone();
+    if (options.has<
+            compute_ssl_certificates_v1::SslCertificatesRetryPolicyOption>()) {
+      return options
+          .get<compute_ssl_certificates_v1::SslCertificatesRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_ssl_certificates_v1::SslCertificatesRetryPolicyOption>()->clone();
+    return options_
+        .get<compute_ssl_certificates_v1::SslCertificatesRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_ssl_certificates_v1::SslCertificatesBackoffPolicyOption>()) {
-      return options.get<compute_ssl_certificates_v1::SslCertificatesBackoffPolicyOption>()->clone();
+    if (options.has<compute_ssl_certificates_v1::
+                        SslCertificatesBackoffPolicyOption>()) {
+      return options
+          .get<
+              compute_ssl_certificates_v1::SslCertificatesBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_ssl_certificates_v1::SslCertificatesBackoffPolicyOption>()->clone();
+    return options_
+        .get<compute_ssl_certificates_v1::SslCertificatesBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_ssl_certificates_v1::SslCertificatesConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<
+      compute_ssl_certificates_v1::SslCertificatesConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_ssl_certificates_v1::SslCertificatesConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_ssl_certificates_v1::SslCertificatesConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<compute_ssl_certificates_v1::
+                        SslCertificatesConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_ssl_certificates_v1::
+                   SslCertificatesConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_ssl_certificates_v1::SslCertificatesConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_ssl_certificates_v1::
+                 SslCertificatesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<compute_ssl_certificates_v1_internal::SslCertificatesRestStub> stub_;
+  std::shared_ptr<compute_ssl_certificates_v1_internal::SslCertificatesRestStub>
+      stub_;
   Options options_;
 };
 

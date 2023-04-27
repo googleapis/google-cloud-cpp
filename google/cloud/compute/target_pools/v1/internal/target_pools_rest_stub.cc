@@ -35,61 +35,71 @@ DefaultTargetPoolsRestStub::DefaultTargetPoolsRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultTargetPoolsRestStub::DefaultTargetPoolsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetPoolsRestStub::AddHealthCheck(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetPools::v1::AddHealthCheckRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetPools::v1::AddHealthCheckRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/targetPools/{target_pool}/addHealthCheck");
+      "/compute/v1/projects/{project}/regions/{region}/targetPools/"
+      "{target_pool}/addHealthCheck");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetPoolsRestStub::AddInstance(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetPools::v1::AddInstanceRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetPools::v1::AddInstanceRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/targetPools/{target_pool}/addInstance");
+      "/compute/v1/projects/{project}/regions/{region}/targetPools/"
+      "{target_pool}/addInstance");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolAggregatedList>
 DefaultTargetPoolsRestStub::AggregatedListTargetPools(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetPools::v1::AggregatedListTargetPoolsRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::compute::v1::TargetPoolAggregatedList>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetPools::v1::
+        AggregatedListTargetPoolsRequest const& request) {
+  return rest_internal::Get<
+      google::cloud::cpp::compute::v1::TargetPoolAggregatedList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/aggregated/targetPools",
       {std::make_pair("filter", request.filter()),
-       std::make_pair("include_all_scopes", std::to_string(request.include_all_scopes())),
+       std::make_pair("include_all_scopes",
+                      std::to_string(request.include_all_scopes())),
        std::make_pair("max_results", std::to_string(request.max_results())),
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetPoolsRestStub::DeleteTargetPools(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetPools::v1::DeleteTargetPoolsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetPools::v1::
+        DeleteTargetPoolsRequest const& request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/targetPools/{target_pool}");
+      "/compute/v1/projects/{project}/regions/{region}/targetPools/"
+      "{target_pool}");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPool>
 DefaultTargetPoolsRestStub::GetTargetPools(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetPools::v1::GetTargetPoolsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetPools::v1::GetTargetPoolsRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetPool>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/targetPools/{target_pool}",
+      "/compute/v1/projects/{project}/regions/{region}/targetPools/"
+      "{target_pool}",
       {std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
        std::make_pair("target_pool", request.target_pool())});
@@ -97,17 +107,21 @@ DefaultTargetPoolsRestStub::GetTargetPools(
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>
 DefaultTargetPoolsRestStub::GetHealth(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetPools::v1::GetHealthRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetPools::v1::GetHealthRequest const&
+        request) {
+  return rest_internal::Post<
+      google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/targetPools/{target_pool}/getHealth");
+      "/compute/v1/projects/{project}/regions/{region}/targetPools/"
+      "{target_pool}/getHealth");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetPoolsRestStub::InsertTargetPools(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetPools::v1::InsertTargetPoolsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetPools::v1::
+        InsertTargetPoolsRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/targetPools");
@@ -115,8 +129,9 @@ DefaultTargetPoolsRestStub::InsertTargetPools(
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPoolList>
 DefaultTargetPoolsRestStub::ListTargetPools(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetPools::v1::ListTargetPoolsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetPools::v1::ListTargetPoolsRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetPoolList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/regions/{region}/targetPools",
@@ -126,34 +141,41 @@ DefaultTargetPoolsRestStub::ListTargetPools(
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
        std::make_pair("region", request.region()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetPoolsRestStub::RemoveHealthCheck(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetPools::v1::RemoveHealthCheckRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetPools::v1::
+        RemoveHealthCheckRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/targetPools/{target_pool}/removeHealthCheck");
+      "/compute/v1/projects/{project}/regions/{region}/targetPools/"
+      "{target_pool}/removeHealthCheck");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetPoolsRestStub::RemoveInstance(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetPools::v1::RemoveInstanceRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetPools::v1::RemoveInstanceRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/targetPools/{target_pool}/removeInstance");
+      "/compute/v1/projects/{project}/regions/{region}/targetPools/"
+      "{target_pool}/removeInstance");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultTargetPoolsRestStub::SetBackup(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::targetPools::v1::SetBackupRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::targetPools::v1::SetBackupRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
-      "/compute/v1/projects/{project}/regions/{region}/targetPools/{target_pool}/setBackup");
+      "/compute/v1/projects/{project}/regions/{region}/targetPools/"
+      "{target_pool}/setBackup");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

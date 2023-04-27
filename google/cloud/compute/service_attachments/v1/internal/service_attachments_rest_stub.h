@@ -36,41 +36,56 @@ class ServiceAttachmentsRestStub {
  public:
   virtual ~ServiceAttachmentsRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList> AggregatedListServiceAttachments(
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>
+  AggregatedListServiceAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::AggregatedListServiceAttachmentsRequest const& request) = 0;
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          AggregatedListServiceAttachmentsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteServiceAttachments(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteServiceAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::DeleteServiceAttachmentsRequest const& request) = 0;
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          DeleteServiceAttachmentsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment> GetServiceAttachments(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::GetServiceAttachmentsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
+  GetServiceAttachments(google::cloud::rest_internal::RestContext& rest_context,
+                        google::cloud::cpp::compute::serviceAttachments::v1::
+                            GetServiceAttachmentsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::GetIamPolicyRequest const& request) = 0;
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          GetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertServiceAttachments(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertServiceAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::InsertServiceAttachmentsRequest const& request) = 0;
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          InsertServiceAttachmentsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentList> ListServiceAttachments(
+  virtual StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentList>
+  ListServiceAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::ListServiceAttachmentsRequest const& request) = 0;
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          ListServiceAttachmentsRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchServiceAttachments(
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchServiceAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::PatchServiceAttachmentsRequest const& request) = 0;
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          PatchServiceAttachmentsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::SetIamPolicyRequest const& request) = 0;
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          SetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::TestIamPermissionsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::serviceAttachments::v1::
+                         TestIamPermissionsRequest const& request) = 0;
 };
 
 class DefaultServiceAttachmentsRestStub : public ServiceAttachmentsRestStub {
@@ -79,44 +94,55 @@ class DefaultServiceAttachmentsRestStub : public ServiceAttachmentsRestStub {
 
   explicit DefaultServiceAttachmentsRestStub(Options options);
   DefaultServiceAttachmentsRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList> AggregatedListServiceAttachments(
+  StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>
+  AggregatedListServiceAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::AggregatedListServiceAttachmentsRequest const& request) override;
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          AggregatedListServiceAttachmentsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteServiceAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::DeleteServiceAttachmentsRequest const& request) override;
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          DeleteServiceAttachmentsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment> GetServiceAttachments(
+  StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
+  GetServiceAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::GetServiceAttachmentsRequest const& request) override;
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          GetServiceAttachmentsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::GetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          GetIamPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertServiceAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::InsertServiceAttachmentsRequest const& request) override;
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          InsertServiceAttachmentsRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentList> ListServiceAttachments(
+  StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentList>
+  ListServiceAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::ListServiceAttachmentsRequest const& request) override;
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          ListServiceAttachmentsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchServiceAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::PatchServiceAttachmentsRequest const& request) override;
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          PatchServiceAttachmentsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::SetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          SetIamPolicyRequest const& request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::serviceAttachments::v1::TestIamPermissionsRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(google::cloud::rest_internal::RestContext& rest_context,
+                     google::cloud::cpp::compute::serviceAttachments::v1::
+                         TestIamPermissionsRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

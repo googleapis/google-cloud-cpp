@@ -27,19 +27,21 @@ namespace compute_addresses_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AddressesRestLogging::AddressesRestLogging(
-    std::shared_ptr<AddressesRestStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<AddressesRestStub> child, TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::AddressAggregatedList>
 AddressesRestLogging::AggregatedListAddresses(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest const& request) {
+    google::cloud::cpp::compute::addresses::v1::
+        AggregatedListAddressesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest const& request) {
+             google::cloud::cpp::compute::addresses::v1::
+                 AggregatedListAddressesRequest const& request) {
         return child_->AggregatedListAddresses(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -48,10 +50,12 @@ AddressesRestLogging::AggregatedListAddresses(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 AddressesRestLogging::DeleteAddresses(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const& request) {
+    google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const& request) {
+             google::cloud::cpp::compute::addresses::v1::
+                 DeleteAddressesRequest const& request) {
         return child_->DeleteAddresses(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -60,22 +64,25 @@ AddressesRestLogging::DeleteAddresses(
 StatusOr<google::cloud::cpp::compute::v1::Address>
 AddressesRestLogging::GetAddresses(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const& request) {
+    google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const& request) {
-        return child_->GetAddresses(rest_context, request);
-      },
+      [this](
+          rest_internal::RestContext& rest_context,
+          google::cloud::cpp::compute::addresses::v1::GetAddressesRequest const&
+              request) { return child_->GetAddresses(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 AddressesRestLogging::InsertAddresses(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const& request) {
+    google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const& request) {
+             google::cloud::cpp::compute::addresses::v1::
+                 InsertAddressesRequest const& request) {
         return child_->InsertAddresses(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -84,10 +91,12 @@ AddressesRestLogging::InsertAddresses(
 StatusOr<google::cloud::cpp::compute::v1::AddressList>
 AddressesRestLogging::ListAddresses(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::addresses::v1::ListAddressesRequest const& request) {
+    google::cloud::cpp::compute::addresses::v1::ListAddressesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::addresses::v1::ListAddressesRequest const& request) {
+             google::cloud::cpp::compute::addresses::v1::
+                 ListAddressesRequest const& request) {
         return child_->ListAddresses(rest_context, request);
       },
       rest_context, request, __func__, tracing_options_);
@@ -96,12 +105,12 @@ AddressesRestLogging::ListAddresses(
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 AddressesRestLogging::SetLabels(
     rest_internal::RestContext& rest_context,
-    google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request) {
+    google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
       [this](rest_internal::RestContext& rest_context,
-             google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const& request) {
-        return child_->SetLabels(rest_context, request);
-      },
+             google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
+                 request) { return child_->SetLabels(rest_context, request); },
       rest_context, request, __func__, tracing_options_);
 }
 

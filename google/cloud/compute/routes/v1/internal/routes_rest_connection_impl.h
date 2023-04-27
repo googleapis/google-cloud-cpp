@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROUTES_V1_INTERNAL_ROUTES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROUTES_V1_INTERNAL_ROUTES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/routes/v1/internal/routes_rest_stub.h"
 #include "google/cloud/compute/routes/v1/internal/routes_retry_traits.h"
 #include "google/cloud/compute/routes/v1/routes_connection.h"
 #include "google/cloud/compute/routes/v1/routes_connection_idempotency_policy.h"
 #include "google/cloud/compute/routes/v1/routes_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -37,29 +37,32 @@ namespace cloud {
 namespace compute_routes_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class RoutesRestConnectionImpl
-    : public compute_routes_v1::RoutesConnection {
+class RoutesRestConnectionImpl : public compute_routes_v1::RoutesConnection {
  public:
   ~RoutesRestConnectionImpl() override = default;
 
   RoutesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<compute_routes_v1_internal::RoutesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<compute_routes_v1_internal::RoutesRestStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteRoutes(google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRoutes(
+      google::cloud::cpp::compute::routes::v1::DeleteRoutesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Route>
-  GetRoutes(google::cloud::cpp::compute::routes::v1::GetRoutesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Route> GetRoutes(
+      google::cloud::cpp::compute::routes::v1::GetRoutesRequest const& request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertRoutes(google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const& request) override;
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRoutes(
+      google::cloud::cpp::compute::routes::v1::InsertRoutesRequest const&
+          request) override;
 
-  StreamRange<google::cloud::cpp::compute::v1::Route>
-  ListRoutes(google::cloud::cpp::compute::routes::v1::ListRoutesRequest request) override;
+  StreamRange<google::cloud::cpp::compute::v1::Route> ListRoutes(
+      google::cloud::cpp::compute::routes::v1::ListRoutesRequest request)
+      override;
 
  private:
   std::unique_ptr<compute_routes_v1::RoutesRetryPolicy> retry_policy() {
@@ -73,18 +76,25 @@ class RoutesRestConnectionImpl
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<compute_routes_v1::RoutesBackoffPolicyOption>()) {
-      return options.get<compute_routes_v1::RoutesBackoffPolicyOption>()->clone();
+      return options.get<compute_routes_v1::RoutesBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_routes_v1::RoutesBackoffPolicyOption>()->clone();
+    return options_.get<compute_routes_v1::RoutesBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<compute_routes_v1::RoutesConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<compute_routes_v1::RoutesConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<compute_routes_v1::RoutesConnectionIdempotencyPolicyOption>()) {
-      return options.get<compute_routes_v1::RoutesConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<
+            compute_routes_v1::RoutesConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<compute_routes_v1::RoutesConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<compute_routes_v1::RoutesConnectionIdempotencyPolicyOption>()->
-clone();
+    return options_
+        .get<compute_routes_v1::RoutesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -34,24 +34,30 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options ZoneOperationsDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_ZONE_OPERATIONS_ENDPOINT",
-      "", "GOOGLE_CLOUD_CPP_ZONE_OPERATIONS_AUTHORITY",
-      "compute.googleapis.com");
-  options = google::cloud::internal::PopulateGrpcOptions(
-      std::move(options), "");
-  if (!options.has<compute_zone_operations_v1::ZoneOperationsRetryPolicyOption>()) {
+      std::move(options), "GOOGLE_CLOUD_CPP_ZONE_OPERATIONS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_ZONE_OPERATIONS_AUTHORITY", "compute.googleapis.com");
+  options =
+      google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
+  if (!options.has<
+          compute_zone_operations_v1::ZoneOperationsRetryPolicyOption>()) {
     options.set<compute_zone_operations_v1::ZoneOperationsRetryPolicyOption>(
         compute_zone_operations_v1::ZoneOperationsLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<compute_zone_operations_v1::ZoneOperationsBackoffPolicyOption>()) {
+  if (!options.has<
+          compute_zone_operations_v1::ZoneOperationsBackoffPolicyOption>()) {
     options.set<compute_zone_operations_v1::ZoneOperationsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling).clone());
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
-  if (!options.has<compute_zone_operations_v1::ZoneOperationsConnectionIdempotencyPolicyOption>()) {
-    options.set<compute_zone_operations_v1::ZoneOperationsConnectionIdempotencyPolicyOption>(
-        compute_zone_operations_v1::MakeDefaultZoneOperationsConnectionIdempotencyPolicy());
+  if (!options.has<compute_zone_operations_v1::
+                       ZoneOperationsConnectionIdempotencyPolicyOption>()) {
+    options.set<compute_zone_operations_v1::
+                    ZoneOperationsConnectionIdempotencyPolicyOption>(
+        compute_zone_operations_v1::
+            MakeDefaultZoneOperationsConnectionIdempotencyPolicy());
   }
 
   return options;

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SERVICE_ATTACHMENTS_V1_SERVICE_ATTACHMENTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SERVICE_ATTACHMENTS_V1_SERVICE_ATTACHMENTS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/compute/service_attachments/v1/internal/service_attachments_retry_traits.h"
 #include "google/cloud/compute/service_attachments/v1/service_attachments_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -35,11 +35,13 @@ namespace cloud {
 namespace compute_service_attachments_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ServiceAttachmentsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    compute_service_attachments_v1_internal::ServiceAttachmentsRetryTraits>;
+using ServiceAttachmentsRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<
+        compute_service_attachments_v1_internal::ServiceAttachmentsRetryTraits>;
 
-using ServiceAttachmentsLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    compute_service_attachments_v1_internal::ServiceAttachmentsRetryTraits>;
+using ServiceAttachmentsLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        compute_service_attachments_v1_internal::ServiceAttachmentsRetryTraits>;
 
 using ServiceAttachmentsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -49,13 +51,14 @@ using ServiceAttachmentsLimitedErrorCountRetryPolicy =
  * The `ServiceAttachmentsConnection` object for `ServiceAttachmentsClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `ServiceAttachmentsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `ServiceAttachmentsClient`.
+ * sets in `ServiceAttachmentsClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ServiceAttachmentsClient`.
  *
  * To create a concrete instance, see `MakeServiceAttachmentsConnection()`.
  *
- * For mocking, see `compute_service_attachments_v1_mocks::MockServiceAttachmentsConnection`.
+ * For mocking, see
+ * `compute_service_attachments_v1_mocks::MockServiceAttachmentsConnection`.
  */
 class ServiceAttachmentsConnection {
  public:
@@ -63,32 +66,43 @@ class ServiceAttachmentsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>
-  AggregatedListServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::AggregatedListServiceAttachmentsRequest const& request);
+  virtual StatusOr<
+      google::cloud::cpp::compute::v1::ServiceAttachmentAggregatedList>
+  AggregatedListServiceAttachments(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          AggregatedListServiceAttachmentsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::DeleteServiceAttachmentsRequest const& request);
+  DeleteServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::
+                               DeleteServiceAttachmentsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
-  GetServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::GetServiceAttachmentsRequest const& request);
+  GetServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::
+                            GetServiceAttachmentsRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::serviceAttachments::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          GetIamPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::InsertServiceAttachmentsRequest const& request);
+  InsertServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::
+                               InsertServiceAttachmentsRequest const& request);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::ServiceAttachment>
-  ListServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::ListServiceAttachmentsRequest request);
+  ListServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::
+                             ListServiceAttachmentsRequest request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::PatchServiceAttachmentsRequest const& request);
+  PatchServiceAttachments(google::cloud::cpp::compute::serviceAttachments::v1::
+                              PatchServiceAttachmentsRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::serviceAttachments::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::serviceAttachments::v1::
+          SetIamPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::serviceAttachments::v1::TestIamPermissionsRequest const& request);
+  TestIamPermissions(google::cloud::cpp::compute::serviceAttachments::v1::
+                         TestIamPermissionsRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

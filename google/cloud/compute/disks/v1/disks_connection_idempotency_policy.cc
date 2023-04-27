@@ -33,64 +33,79 @@ DisksConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<DisksConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency DisksConnectionIdempotencyPolicy::AddResourcePolicies(google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&) {
+Idempotency DisksConnectionIdempotencyPolicy::AddResourcePolicies(
+    google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DisksConnectionIdempotencyPolicy::AggregatedListDisks(google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const&) {
+Idempotency DisksConnectionIdempotencyPolicy::AggregatedListDisks(
+    google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DisksConnectionIdempotencyPolicy::CreateSnapshot(google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&) {
+Idempotency DisksConnectionIdempotencyPolicy::CreateSnapshot(
+    google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DisksConnectionIdempotencyPolicy::DeleteDisks(google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const&) {
+Idempotency DisksConnectionIdempotencyPolicy::DeleteDisks(
+    google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DisksConnectionIdempotencyPolicy::GetDisks(google::cloud::cpp::compute::disks::v1::GetDisksRequest const&) {
+Idempotency DisksConnectionIdempotencyPolicy::GetDisks(
+    google::cloud::cpp::compute::disks::v1::GetDisksRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DisksConnectionIdempotencyPolicy::GetIamPolicy(google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const&) {
+Idempotency DisksConnectionIdempotencyPolicy::GetIamPolicy(
+    google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency DisksConnectionIdempotencyPolicy::InsertDisks(google::cloud::cpp::compute::disks::v1::InsertDisksRequest const&) {
+Idempotency DisksConnectionIdempotencyPolicy::InsertDisks(
+    google::cloud::cpp::compute::disks::v1::InsertDisksRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DisksConnectionIdempotencyPolicy::ListDisks(google::cloud::cpp::compute::disks::v1::ListDisksRequest) {  // NOLINT
+Idempotency DisksConnectionIdempotencyPolicy::ListDisks(
+    google::cloud::cpp::compute::disks::v1::ListDisksRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency DisksConnectionIdempotencyPolicy::RemoveResourcePolicies(google::cloud::cpp::compute::disks::v1::RemoveResourcePoliciesRequest const&) {
+Idempotency DisksConnectionIdempotencyPolicy::RemoveResourcePolicies(
+    google::cloud::cpp::compute::disks::v1::
+        RemoveResourcePoliciesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DisksConnectionIdempotencyPolicy::Resize(google::cloud::cpp::compute::disks::v1::ResizeRequest const&) {
+Idempotency DisksConnectionIdempotencyPolicy::Resize(
+    google::cloud::cpp::compute::disks::v1::ResizeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DisksConnectionIdempotencyPolicy::SetIamPolicy(google::cloud::cpp::compute::disks::v1::SetIamPolicyRequest const&) {
+Idempotency DisksConnectionIdempotencyPolicy::SetIamPolicy(
+    google::cloud::cpp::compute::disks::v1::SetIamPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DisksConnectionIdempotencyPolicy::SetLabels(google::cloud::cpp::compute::disks::v1::SetLabelsRequest const&) {
+Idempotency DisksConnectionIdempotencyPolicy::SetLabels(
+    google::cloud::cpp::compute::disks::v1::SetLabelsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DisksConnectionIdempotencyPolicy::TestIamPermissions(google::cloud::cpp::compute::disks::v1::TestIamPermissionsRequest const&) {
+Idempotency DisksConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::compute::disks::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency DisksConnectionIdempotencyPolicy::UpdateDisks(google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const&) {
+Idempotency DisksConnectionIdempotencyPolicy::UpdateDisks(
+    google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DisksConnectionIdempotencyPolicy>
-    MakeDefaultDisksConnectionIdempotencyPolicy() {
+MakeDefaultDisksConnectionIdempotencyPolicy() {
   return std::make_unique<DisksConnectionIdempotencyPolicy>();
 }
 

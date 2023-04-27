@@ -17,11 +17,11 @@
 // source: google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto
 
 #include "google/cloud/compute/forwarding_rules/v1/forwarding_rules_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/compute/forwarding_rules/v1/forwarding_rules_options.h"
 #include "google/cloud/compute/forwarding_rules/v1/internal/forwarding_rules_option_defaults.h"
 #include "google/cloud/compute/forwarding_rules/v1/internal/forwarding_rules_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
@@ -36,37 +36,44 @@ ForwardingRulesConnection::~ForwardingRulesConnection() = default;
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>
 ForwardingRulesConnection::AggregatedListForwardingRules(
-    google::cloud::cpp::compute::forwardingRules::v1::AggregatedListForwardingRulesRequest const&) {
+    google::cloud::cpp::compute::forwardingRules::v1::
+        AggregatedListForwardingRulesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ForwardingRulesConnection::DeleteForwardingRules(
-    google::cloud::cpp::compute::forwardingRules::v1::DeleteForwardingRulesRequest const&) {
+    google::cloud::cpp::compute::forwardingRules::v1::
+        DeleteForwardingRulesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
 ForwardingRulesConnection::GetForwardingRules(
-    google::cloud::cpp::compute::forwardingRules::v1::GetForwardingRulesRequest const&) {
+    google::cloud::cpp::compute::forwardingRules::v1::
+        GetForwardingRulesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ForwardingRulesConnection::InsertForwardingRules(
-    google::cloud::cpp::compute::forwardingRules::v1::InsertForwardingRulesRequest const&) {
+    google::cloud::cpp::compute::forwardingRules::v1::
+        InsertForwardingRulesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::cpp::compute::v1::ForwardingRule> ForwardingRulesConnection::ListForwardingRules(
-    google::cloud::cpp::compute::forwardingRules::v1::ListForwardingRulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>
+ForwardingRulesConnection::ListForwardingRules(
+    google::cloud::cpp::compute::forwardingRules::v1::
+        ListForwardingRulesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>>();
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ForwardingRulesConnection::PatchForwardingRules(
-    google::cloud::cpp::compute::forwardingRules::v1::PatchForwardingRulesRequest const&) {
+    google::cloud::cpp::compute::forwardingRules::v1::
+        PatchForwardingRulesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

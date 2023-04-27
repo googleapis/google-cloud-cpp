@@ -38,64 +38,80 @@ class DisksRestLogging : public DisksRestStub {
  public:
   ~DisksRestLogging() override = default;
   DisksRestLogging(std::shared_ptr<DisksRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                   TracingOptions tracing_options,
+                   std::set<std::string> components);
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const& request) override;
+      google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::compute::v1::DiskAggregatedList> AggregatedListDisks(
+  StatusOr<google::cloud::cpp::compute::v1::DiskAggregatedList>
+  AggregatedListDisks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const& request) override;
+      google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> CreateSnapshot(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const& request) override;
+      google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteDisks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const& request) override;
+      google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::GetDisksRequest const& request) override;
+      google::cloud::cpp::compute::disks::v1::GetDisksRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertDisks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::InsertDisksRequest const& request) override;
+      google::cloud::cpp::compute::disks::v1::InsertDisksRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::DiskList> ListDisks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::ListDisksRequest const& request) override;
+      google::cloud::cpp::compute::disks::v1::ListDisksRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::RemoveResourcePoliciesRequest const& request) override;
+      google::cloud::cpp::compute::disks::v1::
+          RemoveResourcePoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::ResizeRequest const& request) override;
+      google::cloud::cpp::compute::disks::v1::ResizeRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::SetIamPolicyRequest const& request) override;
+      google::cloud::cpp::compute::disks::v1::SetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request) override;
+      google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request)
+      override;
 
-  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse> TestIamPermissions(
+  StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
+  TestIamPermissions(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::TestIamPermissionsRequest const& request) override;
+      google::cloud::cpp::compute::disks::v1::TestIamPermissionsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisks(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const& request) override;
+      google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const& request)
+      override;
 
  private:
   std::shared_ptr<DisksRestStub> child_;

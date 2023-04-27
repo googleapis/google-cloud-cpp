@@ -36,33 +36,41 @@ class AutoscalersRestStub {
  public:
   virtual ~AutoscalersRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList> AggregatedListAutoscalers(
+  virtual StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>
+  AggregatedListAutoscalers(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::autoscalers::v1::AggregatedListAutoscalersRequest const& request) = 0;
+      google::cloud::cpp::compute::autoscalers::v1::
+          AggregatedListAutoscalersRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAutoscalers(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalersRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteAutoscalers(google::cloud::rest_internal::RestContext& rest_context,
+                    google::cloud::cpp::compute::autoscalers::v1::
+                        DeleteAutoscalersRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscalers(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest const& request) = 0;
+      google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAutoscalers(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalersRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertAutoscalers(google::cloud::rest_internal::RestContext& rest_context,
+                    google::cloud::cpp::compute::autoscalers::v1::
+                        InsertAutoscalersRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::AutoscalerList> ListAutoscalers(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::AutoscalerList>
+  ListAutoscalers(google::cloud::rest_internal::RestContext& rest_context,
+                  google::cloud::cpp::compute::autoscalers::v1::
+                      ListAutoscalersRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchAutoscalers(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalersRequest const& request) = 0;
+      google::cloud::cpp::compute::autoscalers::v1::
+          PatchAutoscalersRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAutoscalers(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalersRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateAutoscalers(google::cloud::rest_internal::RestContext& rest_context,
+                    google::cloud::cpp::compute::autoscalers::v1::
+                        UpdateAutoscalersRequest const& request) = 0;
 };
 
 class DefaultAutoscalersRestStub : public AutoscalersRestStub {
@@ -70,37 +78,44 @@ class DefaultAutoscalersRestStub : public AutoscalersRestStub {
   ~DefaultAutoscalersRestStub() override = default;
 
   explicit DefaultAutoscalersRestStub(Options options);
-  DefaultAutoscalersRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+  DefaultAutoscalersRestStub(std::shared_ptr<rest_internal::RestClient> service,
+                             Options options);
 
-  StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList> AggregatedListAutoscalers(
+  StatusOr<google::cloud::cpp::compute::v1::AutoscalerAggregatedList>
+  AggregatedListAutoscalers(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::autoscalers::v1::AggregatedListAutoscalersRequest const& request) override;
+      google::cloud::cpp::compute::autoscalers::v1::
+          AggregatedListAutoscalersRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAutoscalers(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalersRequest const& request) override;
+      google::cloud::cpp::compute::autoscalers::v1::
+          DeleteAutoscalersRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscalers(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest const& request) override;
+      google::cloud::cpp::compute::autoscalers::v1::GetAutoscalersRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAutoscalers(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalersRequest const& request) override;
+      google::cloud::cpp::compute::autoscalers::v1::
+          InsertAutoscalersRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::AutoscalerList> ListAutoscalers(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::autoscalers::v1::ListAutoscalersRequest const& request) override;
+      google::cloud::cpp::compute::autoscalers::v1::
+          ListAutoscalersRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchAutoscalers(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalersRequest const& request) override;
+      google::cloud::cpp::compute::autoscalers::v1::
+          PatchAutoscalersRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAutoscalers(
       google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalersRequest const& request) override;
+      google::cloud::cpp::compute::autoscalers::v1::
+          UpdateAutoscalersRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

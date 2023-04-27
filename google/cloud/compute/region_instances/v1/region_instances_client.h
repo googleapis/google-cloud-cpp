@@ -62,7 +62,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RegionInstancesClient {
  public:
-  explicit RegionInstancesClient(ExperimentalTag, std::shared_ptr<RegionInstancesConnection> connection, Options opts = {});
+  explicit RegionInstancesClient(
+      ExperimentalTag, std::shared_ptr<RegionInstancesConnection> connection,
+      Options opts = {});
   ~RegionInstancesClient();
 
   ///@{
@@ -75,45 +77,60 @@ class RegionInstancesClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(RegionInstancesClient const& a, RegionInstancesClient const& b) {
+  friend bool operator==(RegionInstancesClient const& a,
+                         RegionInstancesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RegionInstancesClient const& a, RegionInstancesClient const& b) {
+  friend bool operator!=(RegionInstancesClient const& a,
+                         RegionInstancesClient const& b) {
     return !(a == b);
   }
   ///@}
 
   ///
-  /// Creates multiple instances in a given region. Count specifies the number of
-  /// instances to create.
+  /// Creates multiple instances in a given region. Count specifies the number
+  /// of instances to create.
   ///
   /// @param project  Project ID for this request.
   /// @param region  The name of the region for this request.
-  /// @param bulk_insert_instance_resource  The BulkInsertInstanceResource for this request.
+  /// @param bulk_insert_instance_resource  The BulkInsertInstanceResource for
+  /// this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.regionInstances.v1.BulkInsertRequest]: @googleapis_reference_link{google/cloud/compute/region_instances/v1/region_instances.proto#L46}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.regionInstances.v1.BulkInsertRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_instances/v1/region_instances.proto#L46}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  BulkInsert(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::BulkInsertInstanceResource const& bulk_insert_instance_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
+      std::string const& project, std::string const& region,
+      google::cloud::cpp::compute::v1::BulkInsertInstanceResource const&
+          bulk_insert_instance_resource,
+      Options opts = {});
 
   ///
-  /// Creates multiple instances in a given region. Count specifies the number of
-  /// instances to create.
+  /// Creates multiple instances in a given region. Count specifies the number
+  /// of instances to create.
   ///
-  /// @param request @googleapis_link{google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest,google/cloud/compute/region_instances/v1/region_instances.proto#L46}
+  /// @param request
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest,google/cloud/compute/region_instances/v1/region_instances.proto#L46}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @return
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  /// [google.cloud.cpp.compute.regionInstances.v1.BulkInsertRequest]: @googleapis_reference_link{google/cloud/compute/region_instances/v1/region_instances.proto#L46}
-  /// [google.cloud.cpp.compute.v1.Operation]: @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// [google.cloud.cpp.compute.regionInstances.v1.BulkInsertRequest]:
+  /// @googleapis_reference_link{google/cloud/compute/region_instances/v1/region_instances.proto#L46}
+  /// [google.cloud.cpp.compute.v1.Operation]:
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
   ///
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  BulkInsert(google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
+      google::cloud::cpp::compute::regionInstances::v1::BulkInsertRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<RegionInstancesConnection> connection_;

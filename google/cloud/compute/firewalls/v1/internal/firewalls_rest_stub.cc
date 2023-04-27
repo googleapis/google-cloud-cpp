@@ -35,15 +35,14 @@ DefaultFirewallsRestStub::DefaultFirewallsRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultFirewallsRestStub::DefaultFirewallsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultFirewallsRestStub::DeleteFirewalls(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const&
+        request) {
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/firewalls/{firewall}");
@@ -51,8 +50,9 @@ DefaultFirewallsRestStub::DeleteFirewalls(
 
 StatusOr<google::cloud::cpp::compute::v1::Firewall>
 DefaultFirewallsRestStub::GetFirewalls(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::Firewall>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/firewalls/{firewall}",
@@ -62,8 +62,9 @@ DefaultFirewallsRestStub::GetFirewalls(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultFirewallsRestStub::InsertFirewalls(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/firewalls");
@@ -71,8 +72,9 @@ DefaultFirewallsRestStub::InsertFirewalls(
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallList>
 DefaultFirewallsRestStub::ListFirewalls(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::FirewallList>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/firewalls",
@@ -81,13 +83,15 @@ DefaultFirewallsRestStub::ListFirewalls(
        std::make_pair("order_by", request.order_by()),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("project", request.project()),
-       std::make_pair("return_partial_success", std::to_string(request.return_partial_success()))});
+       std::make_pair("return_partial_success",
+                      std::to_string(request.return_partial_success()))});
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultFirewallsRestStub::PatchFirewalls(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const&
+        request) {
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/firewalls/{firewall}");
@@ -95,8 +99,9 @@ DefaultFirewallsRestStub::PatchFirewalls(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DefaultFirewallsRestStub::UpdateFirewalls(
-      google::cloud::rest_internal::RestContext& rest_context,
-      google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const&
+        request) {
   return rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request,
       "/compute/v1/projects/{project}/global/firewalls/{firewall}");
