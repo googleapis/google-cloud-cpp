@@ -78,6 +78,7 @@ can override the default policies.
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
+
 [livestream-service-docs]: https://cloud.google.com/livestream
 [transcoder-service-docs]: https://cloud.google.com/transcoder
 [stitcher-service-docs]: https://cloud.google.com/video-stitcher
