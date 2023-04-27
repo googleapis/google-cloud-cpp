@@ -145,12 +145,9 @@ TEST(ConfigureBasicTracing, RestoresPrevious) {
 
   // Create a test span using the global TracerProvider. The span should get
   // exported to the in-memory exporter; not Cloud Trace.
-  auto generator = google::cloud::internal::MakeDefaultPRNG();
-  auto const name =
-      "span-" + google::cloud::internal::Sample(generator, 32, "0123456789");
-
   auto provider = opentelemetry::trace::Provider::GetTracerProvider();
   auto tracer = provider->GetTracer("gcloud-cpp");
+  auto const name = RandomSpanName();
   auto span = tracer->StartSpan(name);
   span->End();
 
