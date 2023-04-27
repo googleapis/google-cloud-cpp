@@ -140,7 +140,7 @@ The library has been expanded to include the v2 service.
 
 ### [Bigquery](/google/cloud/bigquery/README.md)
 
-* Removed bigquery/v2/model*. There are no plans to implement gRPC endpoints for
+- Removed bigquery/v2/model\*. There are no plans to implement gRPC endpoints for
   this service. Therefore the generated code will never be usable and never has
   been.
 
