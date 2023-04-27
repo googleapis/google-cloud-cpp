@@ -43,6 +43,7 @@ namespace {
 using ::google::cloud::bigtable::testing::RandomInstanceId;
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::ContainsOnce;
+using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
@@ -79,10 +80,14 @@ class InstanceAdminIntegrationTest
     if (!sor) return std::move(sor).status();
     auto resp = *std::move(sor);
 
+    // If either zone_a_ or zone_b_ are in the list of failed locations then we
+    // cannot proceed.
+    EXPECT_THAT(resp.failed_locations(),
+                Not(AnyOf(Contains(project_name + "/locations/" + zone_a_),
+                          Contains(project_name + "/locations/" + zone_b_))));
     std::vector<std::string> names;
     names.reserve(resp.instances_size());
     auto& instances = *resp.mutable_instances();
-    EXPECT_EQ(0, resp.failed_locations_size());
     std::transform(instances.begin(), instances.end(),
                    std::back_inserter(names),
                    [](btadmin::Instance const& i) { return i.name(); });
