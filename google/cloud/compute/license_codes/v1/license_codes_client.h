@@ -99,12 +99,12 @@ class LicenseCodesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::LicenseCode,google/cloud/compute/v1/internal/common.proto#L13082}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::LicenseCode,google/cloud/compute/v1/internal/common.proto#L13102}
   ///
   /// [google.cloud.cpp.compute.licenseCodes.v1.GetLicenseCodesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L57}
+  /// @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L60}
   /// [google.cloud.cpp.compute.v1.LicenseCode]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13082}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13102}
   ///
   StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCodes(
       std::string const& project, std::string const& license_code,
@@ -117,16 +117,16 @@ class LicenseCodesClient {
   /// Cloud Marketplace images.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::licenseCodes::v1::GetLicenseCodesRequest,google/cloud/compute/license_codes/v1/license_codes.proto#L57}
+  /// @googleapis_link{google::cloud::cpp::compute::licenseCodes::v1::GetLicenseCodesRequest,google/cloud/compute/license_codes/v1/license_codes.proto#L60}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::LicenseCode,google/cloud/compute/v1/internal/common.proto#L13082}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::LicenseCode,google/cloud/compute/v1/internal/common.proto#L13102}
   ///
   /// [google.cloud.cpp.compute.licenseCodes.v1.GetLicenseCodesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L57}
+  /// @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L60}
   /// [google.cloud.cpp.compute.v1.LicenseCode]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13082}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13102}
   ///
   StatusOr<google::cloud::cpp::compute::v1::LicenseCode> GetLicenseCodes(
       google::cloud::cpp::compute::licenseCodes::v1::
@@ -145,12 +145,12 @@ class LicenseCodesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   /// [google.cloud.cpp.compute.licenseCodes.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L66}
+  /// @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L69}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(
@@ -165,16 +165,16 @@ class LicenseCodesClient {
   /// creating Cloud Marketplace images.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::licenseCodes::v1::TestIamPermissionsRequest,google/cloud/compute/license_codes/v1/license_codes.proto#L66}
+  /// @googleapis_link{google::cloud::cpp::compute::licenseCodes::v1::TestIamPermissionsRequest,google/cloud/compute/license_codes/v1/license_codes.proto#L69}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   /// [google.cloud.cpp.compute.licenseCodes.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L66}
+  /// @googleapis_reference_link{google/cloud/compute/license_codes/v1/license_codes.proto#L69}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::licenseCodes::v1::

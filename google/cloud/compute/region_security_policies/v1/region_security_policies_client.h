@@ -100,12 +100,12 @@ class RegionSecurityPoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionSecurityPolicies.v1.DeleteRegionSecurityPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L87}
+  /// @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L94}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteRegionSecurityPolicies(std::string const& project,
@@ -117,16 +117,16 @@ class RegionSecurityPoliciesClient {
   /// Deletes the specified policy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionSecurityPolicies::v1::DeleteRegionSecurityPoliciesRequest,google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L87}
+  /// @googleapis_link{google::cloud::cpp::compute::regionSecurityPolicies::v1::DeleteRegionSecurityPoliciesRequest,google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L94}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionSecurityPolicies.v1.DeleteRegionSecurityPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L87}
+  /// @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L94}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteRegionSecurityPolicies(
@@ -143,12 +143,12 @@ class RegionSecurityPoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPolicy,google/cloud/compute/v1/internal/common.proto#L23371}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPolicy,google/cloud/compute/v1/internal/common.proto#L23400}
   ///
   /// [google.cloud.cpp.compute.regionSecurityPolicies.v1.GetRegionSecurityPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L111}
+  /// @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L124}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23371}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23400}
   ///
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
   GetRegionSecurityPolicies(std::string const& project,
@@ -160,16 +160,16 @@ class RegionSecurityPoliciesClient {
   /// List all of the ordered rules present in a single specified policy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionSecurityPolicies::v1::GetRegionSecurityPoliciesRequest,google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L111}
+  /// @googleapis_link{google::cloud::cpp::compute::regionSecurityPolicies::v1::GetRegionSecurityPoliciesRequest,google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L124}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPolicy,google/cloud/compute/v1/internal/common.proto#L23371}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPolicy,google/cloud/compute/v1/internal/common.proto#L23400}
   ///
   /// [google.cloud.cpp.compute.regionSecurityPolicies.v1.GetRegionSecurityPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L111}
+  /// @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L124}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23371}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23400}
   ///
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
   GetRegionSecurityPolicies(
@@ -187,12 +187,12 @@ class RegionSecurityPoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionSecurityPolicies.v1.InsertRegionSecurityPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L123}
+  /// @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L136}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertRegionSecurityPolicies(
@@ -206,16 +206,16 @@ class RegionSecurityPoliciesClient {
   /// the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionSecurityPolicies::v1::InsertRegionSecurityPoliciesRequest,google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L123}
+  /// @googleapis_link{google::cloud::cpp::compute::regionSecurityPolicies::v1::InsertRegionSecurityPoliciesRequest,google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L136}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionSecurityPolicies.v1.InsertRegionSecurityPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L123}
+  /// @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L136}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertRegionSecurityPolicies(
@@ -232,12 +232,12 @@ class RegionSecurityPoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPolicy,google/cloud/compute/v1/internal/common.proto#L23371}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPolicy,google/cloud/compute/v1/internal/common.proto#L23400}
   ///
   /// [google.cloud.cpp.compute.regionSecurityPolicies.v1.ListRegionSecurityPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L150}
+  /// @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L170}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23371}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23400}
   ///
   StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
   ListRegionSecurityPolicies(std::string const& project,
@@ -248,16 +248,16 @@ class RegionSecurityPoliciesClient {
   /// and region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionSecurityPolicies::v1::ListRegionSecurityPoliciesRequest,google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L150}
+  /// @googleapis_link{google::cloud::cpp::compute::regionSecurityPolicies::v1::ListRegionSecurityPoliciesRequest,google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L170}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPolicy,google/cloud/compute/v1/internal/common.proto#L23371}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPolicy,google/cloud/compute/v1/internal/common.proto#L23400}
   ///
   /// [google.cloud.cpp.compute.regionSecurityPolicies.v1.ListRegionSecurityPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L150}
+  /// @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L170}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23371}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23400}
   ///
   StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
   ListRegionSecurityPolicies(
@@ -279,12 +279,12 @@ class RegionSecurityPoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionSecurityPolicies.v1.PatchRegionSecurityPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L218}
+  /// @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L238}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchRegionSecurityPolicies(
@@ -302,16 +302,16 @@ class RegionSecurityPoliciesClient {
   /// instead.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionSecurityPolicies::v1::PatchRegionSecurityPoliciesRequest,google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L218}
+  /// @googleapis_link{google::cloud::cpp::compute::regionSecurityPolicies::v1::PatchRegionSecurityPoliciesRequest,google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L238}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionSecurityPolicies.v1.PatchRegionSecurityPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L218}
+  /// @googleapis_reference_link{google/cloud/compute/region_security_policies/v1/region_security_policies.proto#L238}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchRegionSecurityPolicies(

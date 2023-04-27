@@ -102,12 +102,12 @@ class InstanceGroupsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instanceGroups.v1.AddInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L133}
+  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L147}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddInstances(
       std::string const& project, std::string const& zone,
@@ -122,16 +122,16 @@ class InstanceGroupsClient {
   /// Read Adding instances for more information.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instanceGroups::v1::AddInstancesRequest,google/cloud/compute/instance_groups/v1/instance_groups.proto#L133}
+  /// @googleapis_link{google::cloud::cpp::compute::instanceGroups::v1::AddInstancesRequest,google/cloud/compute/instance_groups/v1/instance_groups.proto#L147}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instanceGroups.v1.AddInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L133}
+  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L147}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddInstances(
       google::cloud::cpp::compute::instanceGroups::v1::
@@ -145,12 +145,12 @@ class InstanceGroupsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroupAggregatedList,google/cloud/compute/v1/internal/common.proto#L9502}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroupAggregatedList,google/cloud/compute/v1/internal/common.proto#L9518}
   ///
   /// [google.cloud.cpp.compute.instanceGroups.v1.AggregatedListInstanceGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L160}
+  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L181}
   /// [google.cloud.cpp.compute.v1.InstanceGroupAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9502}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9518}
   ///
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>
   AggregatedListInstanceGroups(std::string const& project, Options opts = {});
@@ -159,16 +159,16 @@ class InstanceGroupsClient {
   /// Retrieves the list of instance groups and sorts them by zone.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instanceGroups::v1::AggregatedListInstanceGroupsRequest,google/cloud/compute/instance_groups/v1/instance_groups.proto#L160}
+  /// @googleapis_link{google::cloud::cpp::compute::instanceGroups::v1::AggregatedListInstanceGroupsRequest,google/cloud/compute/instance_groups/v1/instance_groups.proto#L181}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroupAggregatedList,google/cloud/compute/v1/internal/common.proto#L9502}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroupAggregatedList,google/cloud/compute/v1/internal/common.proto#L9518}
   ///
   /// [google.cloud.cpp.compute.instanceGroups.v1.AggregatedListInstanceGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L160}
+  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L181}
   /// [google.cloud.cpp.compute.v1.InstanceGroupAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9502}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9518}
   ///
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>
   AggregatedListInstanceGroups(
@@ -187,12 +187,12 @@ class InstanceGroupsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instanceGroups.v1.DeleteInstanceGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L234}
+  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L255}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceGroups(
       std::string const& project, std::string const& zone,
@@ -204,16 +204,16 @@ class InstanceGroupsClient {
   /// Read Deleting an instance group for more information.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instanceGroups::v1::DeleteInstanceGroupsRequest,google/cloud/compute/instance_groups/v1/instance_groups.proto#L234}
+  /// @googleapis_link{google::cloud::cpp::compute::instanceGroups::v1::DeleteInstanceGroupsRequest,google/cloud/compute/instance_groups/v1/instance_groups.proto#L255}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instanceGroups.v1.DeleteInstanceGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L234}
+  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L255}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceGroups(
       google::cloud::cpp::compute::instanceGroups::v1::
@@ -232,12 +232,12 @@ class InstanceGroupsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroup,google/cloud/compute/v1/internal/common.proto#L9441}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroup,google/cloud/compute/v1/internal/common.proto#L9457}
   ///
   /// [google.cloud.cpp.compute.instanceGroups.v1.GetInstanceGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L258}
+  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L285}
   /// [google.cloud.cpp.compute.v1.InstanceGroup]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9441}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9457}
   ///
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroups(
       std::string const& project, std::string const& zone,
@@ -250,16 +250,16 @@ class InstanceGroupsClient {
   /// instead.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instanceGroups::v1::GetInstanceGroupsRequest,google/cloud/compute/instance_groups/v1/instance_groups.proto#L258}
+  /// @googleapis_link{google::cloud::cpp::compute::instanceGroups::v1::GetInstanceGroupsRequest,google/cloud/compute/instance_groups/v1/instance_groups.proto#L285}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroup,google/cloud/compute/v1/internal/common.proto#L9441}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroup,google/cloud/compute/v1/internal/common.proto#L9457}
   ///
   /// [google.cloud.cpp.compute.instanceGroups.v1.GetInstanceGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L258}
+  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L285}
   /// [google.cloud.cpp.compute.v1.InstanceGroup]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9441}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9457}
   ///
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroups(
       google::cloud::cpp::compute::instanceGroups::v1::
@@ -277,12 +277,12 @@ class InstanceGroupsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instanceGroups.v1.InsertInstanceGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L270}
+  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L297}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceGroups(
       std::string const& project, std::string const& zone,
@@ -295,16 +295,16 @@ class InstanceGroupsClient {
   /// that are included in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instanceGroups::v1::InsertInstanceGroupsRequest,google/cloud/compute/instance_groups/v1/instance_groups.proto#L270}
+  /// @googleapis_link{google::cloud::cpp::compute::instanceGroups::v1::InsertInstanceGroupsRequest,google/cloud/compute/instance_groups/v1/instance_groups.proto#L297}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instanceGroups.v1.InsertInstanceGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L270}
+  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L297}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceGroups(
       google::cloud::cpp::compute::instanceGroups::v1::
@@ -321,12 +321,12 @@ class InstanceGroupsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroup,google/cloud/compute/v1/internal/common.proto#L9441}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroup,google/cloud/compute/v1/internal/common.proto#L9457}
   ///
   /// [google.cloud.cpp.compute.instanceGroups.v1.ListInstanceGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L294}
+  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L328}
   /// [google.cloud.cpp.compute.v1.InstanceGroup]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9441}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9457}
   ///
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
   ListInstanceGroups(std::string const& project, std::string const& zone,
@@ -338,16 +338,16 @@ class InstanceGroupsClient {
   /// or regionInstanceGroupManagers methods instead.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instanceGroups::v1::ListInstanceGroupsRequest,google/cloud/compute/instance_groups/v1/instance_groups.proto#L294}
+  /// @googleapis_link{google::cloud::cpp::compute::instanceGroups::v1::ListInstanceGroupsRequest,google/cloud/compute/instance_groups/v1/instance_groups.proto#L328}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroup,google/cloud/compute/v1/internal/common.proto#L9441}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroup,google/cloud/compute/v1/internal/common.proto#L9457}
   ///
   /// [google.cloud.cpp.compute.instanceGroups.v1.ListInstanceGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L294}
+  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L328}
   /// [google.cloud.cpp.compute.v1.InstanceGroup]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9441}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9457}
   ///
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
   ListInstanceGroups(
@@ -370,12 +370,12 @@ class InstanceGroupsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceWithNamedPorts,google/cloud/compute/v1/internal/common.proto#L11587}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceWithNamedPorts,google/cloud/compute/v1/internal/common.proto#L11605}
   ///
   /// [google.cloud.cpp.compute.instanceGroups.v1.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L362}
+  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L396}
   /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11587}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11605}
   ///
   StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>
   ListInstances(
@@ -391,16 +391,16 @@ class InstanceGroupsClient {
   /// only for expressions that use `eq` (equal) or `ne` (not equal) operators.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instanceGroups::v1::ListInstancesRequest,google/cloud/compute/instance_groups/v1/instance_groups.proto#L362}
+  /// @googleapis_link{google::cloud::cpp::compute::instanceGroups::v1::ListInstancesRequest,google/cloud/compute/instance_groups/v1/instance_groups.proto#L396}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceWithNamedPorts,google/cloud/compute/v1/internal/common.proto#L11587}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceWithNamedPorts,google/cloud/compute/v1/internal/common.proto#L11605}
   ///
   /// [google.cloud.cpp.compute.instanceGroups.v1.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L362}
+  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L396}
   /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11587}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11605}
   ///
   StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>
   ListInstances(
@@ -424,12 +424,12 @@ class InstanceGroupsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instanceGroups.v1.RemoveInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L437}
+  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L472}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveInstances(
       std::string const& project, std::string const& zone,
@@ -446,16 +446,16 @@ class InstanceGroupsClient {
   /// connection draining duration before the VM instance is removed or deleted.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instanceGroups::v1::RemoveInstancesRequest,google/cloud/compute/instance_groups/v1/instance_groups.proto#L437}
+  /// @googleapis_link{google::cloud::cpp::compute::instanceGroups::v1::RemoveInstancesRequest,google/cloud/compute/instance_groups/v1/instance_groups.proto#L472}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instanceGroups.v1.RemoveInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L437}
+  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L472}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveInstances(
       google::cloud::cpp::compute::instanceGroups::v1::
@@ -474,12 +474,12 @@ class InstanceGroupsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instanceGroups.v1.SetNamedPortsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L465}
+  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L507}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
       std::string const& project, std::string const& zone,
@@ -492,16 +492,16 @@ class InstanceGroupsClient {
   /// Sets the named ports for the specified instance group.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instanceGroups::v1::SetNamedPortsRequest,google/cloud/compute/instance_groups/v1/instance_groups.proto#L465}
+  /// @googleapis_link{google::cloud::cpp::compute::instanceGroups::v1::SetNamedPortsRequest,google/cloud/compute/instance_groups/v1/instance_groups.proto#L507}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instanceGroups.v1.SetNamedPortsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L465}
+  /// @googleapis_reference_link{google/cloud/compute/instance_groups/v1/instance_groups.proto#L507}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
       google::cloud::cpp::compute::instanceGroups::v1::

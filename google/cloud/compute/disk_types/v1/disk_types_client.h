@@ -93,12 +93,12 @@ class DiskTypesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::DiskTypeAggregatedList,google/cloud/compute/v1/internal/common.proto#L4839}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::DiskTypeAggregatedList,google/cloud/compute/v1/internal/common.proto#L4853}
   ///
   /// [google.cloud.cpp.compute.diskTypes.v1.AggregatedListDiskTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L59}
+  /// @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L62}
   /// [google.cloud.cpp.compute.v1.DiskTypeAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4839}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4853}
   ///
   StatusOr<google::cloud::cpp::compute::v1::DiskTypeAggregatedList>
   AggregatedListDiskTypes(std::string const& project, Options opts = {});
@@ -107,16 +107,16 @@ class DiskTypesClient {
   /// Retrieves an aggregated list of disk types.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::diskTypes::v1::AggregatedListDiskTypesRequest,google/cloud/compute/disk_types/v1/disk_types.proto#L59}
+  /// @googleapis_link{google::cloud::cpp::compute::diskTypes::v1::AggregatedListDiskTypesRequest,google/cloud/compute/disk_types/v1/disk_types.proto#L62}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::DiskTypeAggregatedList,google/cloud/compute/v1/internal/common.proto#L4839}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::DiskTypeAggregatedList,google/cloud/compute/v1/internal/common.proto#L4853}
   ///
   /// [google.cloud.cpp.compute.diskTypes.v1.AggregatedListDiskTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L59}
+  /// @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L62}
   /// [google.cloud.cpp.compute.v1.DiskTypeAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4839}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4853}
   ///
   StatusOr<google::cloud::cpp::compute::v1::DiskTypeAggregatedList>
   AggregatedListDiskTypes(google::cloud::cpp::compute::diskTypes::v1::
@@ -132,12 +132,12 @@ class DiskTypesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::DiskType,google/cloud/compute/v1/internal/common.proto#L4798}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::DiskType,google/cloud/compute/v1/internal/common.proto#L4812}
   ///
   /// [google.cloud.cpp.compute.diskTypes.v1.GetDiskTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L133}
+  /// @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L136}
   /// [google.cloud.cpp.compute.v1.DiskType]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4798}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4812}
   ///
   StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskTypes(
       std::string const& project, std::string const& zone,
@@ -147,16 +147,16 @@ class DiskTypesClient {
   /// Returns the specified disk type.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::diskTypes::v1::GetDiskTypesRequest,google/cloud/compute/disk_types/v1/disk_types.proto#L133}
+  /// @googleapis_link{google::cloud::cpp::compute::diskTypes::v1::GetDiskTypesRequest,google/cloud/compute/disk_types/v1/disk_types.proto#L136}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::DiskType,google/cloud/compute/v1/internal/common.proto#L4798}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::DiskType,google/cloud/compute/v1/internal/common.proto#L4812}
   ///
   /// [google.cloud.cpp.compute.diskTypes.v1.GetDiskTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L133}
+  /// @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L136}
   /// [google.cloud.cpp.compute.v1.DiskType]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4798}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4812}
   ///
   StatusOr<google::cloud::cpp::compute::v1::DiskType> GetDiskTypes(
       google::cloud::cpp::compute::diskTypes::v1::GetDiskTypesRequest const&
@@ -171,12 +171,12 @@ class DiskTypesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::DiskType,google/cloud/compute/v1/internal/common.proto#L4798}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::DiskType,google/cloud/compute/v1/internal/common.proto#L4812}
   ///
   /// [google.cloud.cpp.compute.diskTypes.v1.ListDiskTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L145}
+  /// @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L148}
   /// [google.cloud.cpp.compute.v1.DiskType]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4798}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4812}
   ///
   StreamRange<google::cloud::cpp::compute::v1::DiskType> ListDiskTypes(
       std::string const& project, std::string const& zone, Options opts = {});
@@ -185,16 +185,16 @@ class DiskTypesClient {
   /// Retrieves a list of disk types available to the specified project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::diskTypes::v1::ListDiskTypesRequest,google/cloud/compute/disk_types/v1/disk_types.proto#L145}
+  /// @googleapis_link{google::cloud::cpp::compute::diskTypes::v1::ListDiskTypesRequest,google/cloud/compute/disk_types/v1/disk_types.proto#L148}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::DiskType,google/cloud/compute/v1/internal/common.proto#L4798}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::DiskType,google/cloud/compute/v1/internal/common.proto#L4812}
   ///
   /// [google.cloud.cpp.compute.diskTypes.v1.ListDiskTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L145}
+  /// @googleapis_reference_link{google/cloud/compute/disk_types/v1/disk_types.proto#L148}
   /// [google.cloud.cpp.compute.v1.DiskType]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4798}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4812}
   ///
   StreamRange<google::cloud::cpp::compute::v1::DiskType> ListDiskTypes(
       google::cloud::cpp::compute::diskTypes::v1::ListDiskTypesRequest request,

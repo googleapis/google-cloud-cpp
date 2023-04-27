@@ -97,12 +97,12 @@ class NetworkAttachmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList,google/cloud/compute/v1/internal/common.proto#L14359}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList,google/cloud/compute/v1/internal/common.proto#L14379}
   ///
   /// [google.cloud.cpp.compute.networkAttachments.v1.AggregatedListNetworkAttachmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L109}
+  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L120}
   /// [google.cloud.cpp.compute.v1.NetworkAttachmentAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14359}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14379}
   ///
   StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>
   AggregatedListNetworkAttachments(std::string const& project,
@@ -113,16 +113,16 @@ class NetworkAttachmentsClient {
   /// global, available to the specified project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networkAttachments::v1::AggregatedListNetworkAttachmentsRequest,google/cloud/compute/network_attachments/v1/network_attachments.proto#L109}
+  /// @googleapis_link{google::cloud::cpp::compute::networkAttachments::v1::AggregatedListNetworkAttachmentsRequest,google/cloud/compute/network_attachments/v1/network_attachments.proto#L120}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList,google/cloud/compute/v1/internal/common.proto#L14359}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList,google/cloud/compute/v1/internal/common.proto#L14379}
   ///
   /// [google.cloud.cpp.compute.networkAttachments.v1.AggregatedListNetworkAttachmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L109}
+  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L120}
   /// [google.cloud.cpp.compute.v1.NetworkAttachmentAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14359}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14379}
   ///
   StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>
   AggregatedListNetworkAttachments(
@@ -140,12 +140,12 @@ class NetworkAttachmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networkAttachments.v1.DeleteNetworkAttachmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L183}
+  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L194}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetworkAttachments(
       std::string const& project, std::string const& region,
@@ -155,16 +155,16 @@ class NetworkAttachmentsClient {
   /// Deletes the specified NetworkAttachment in the given scope
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networkAttachments::v1::DeleteNetworkAttachmentsRequest,google/cloud/compute/network_attachments/v1/network_attachments.proto#L183}
+  /// @googleapis_link{google::cloud::cpp::compute::networkAttachments::v1::DeleteNetworkAttachmentsRequest,google/cloud/compute/network_attachments/v1/network_attachments.proto#L194}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networkAttachments.v1.DeleteNetworkAttachmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L183}
+  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L194}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetworkAttachments(
       google::cloud::cpp::compute::networkAttachments::v1::
@@ -181,12 +181,12 @@ class NetworkAttachmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkAttachment,google/cloud/compute/v1/internal/common.proto#L14290}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkAttachment,google/cloud/compute/v1/internal/common.proto#L14310}
   ///
   /// [google.cloud.cpp.compute.networkAttachments.v1.GetNetworkAttachmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L223}
+  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L240}
   /// [google.cloud.cpp.compute.v1.NetworkAttachment]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14290}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14310}
   ///
   StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
   GetNetworkAttachments(std::string const& project, std::string const& region,
@@ -197,16 +197,16 @@ class NetworkAttachmentsClient {
   /// Returns the specified NetworkAttachment resource in the given scope.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networkAttachments::v1::GetNetworkAttachmentsRequest,google/cloud/compute/network_attachments/v1/network_attachments.proto#L223}
+  /// @googleapis_link{google::cloud::cpp::compute::networkAttachments::v1::GetNetworkAttachmentsRequest,google/cloud/compute/network_attachments/v1/network_attachments.proto#L240}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkAttachment,google/cloud/compute/v1/internal/common.proto#L14290}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkAttachment,google/cloud/compute/v1/internal/common.proto#L14310}
   ///
   /// [google.cloud.cpp.compute.networkAttachments.v1.GetNetworkAttachmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L223}
+  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L240}
   /// [google.cloud.cpp.compute.v1.NetworkAttachment]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14290}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14310}
   ///
   StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
   GetNetworkAttachments(google::cloud::cpp::compute::networkAttachments::v1::
@@ -223,12 +223,12 @@ class NetworkAttachmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.networkAttachments.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L208}
+  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L225}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       std::string const& project, std::string const& region,
@@ -239,16 +239,16 @@ class NetworkAttachmentsClient {
   /// policy or resource exists.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networkAttachments::v1::GetIamPolicyRequest,google/cloud/compute/network_attachments/v1/network_attachments.proto#L208}
+  /// @googleapis_link{google::cloud::cpp::compute::networkAttachments::v1::GetIamPolicyRequest,google/cloud/compute/network_attachments/v1/network_attachments.proto#L225}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.networkAttachments.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L208}
+  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L225}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::networkAttachments::v1::
@@ -266,12 +266,12 @@ class NetworkAttachmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networkAttachments.v1.InsertNetworkAttachmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L235}
+  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L252}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNetworkAttachments(
       std::string const& project, std::string const& region,
@@ -284,16 +284,16 @@ class NetworkAttachmentsClient {
   /// using the parameters that are included in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networkAttachments::v1::InsertNetworkAttachmentsRequest,google/cloud/compute/network_attachments/v1/network_attachments.proto#L235}
+  /// @googleapis_link{google::cloud::cpp::compute::networkAttachments::v1::InsertNetworkAttachmentsRequest,google/cloud/compute/network_attachments/v1/network_attachments.proto#L252}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networkAttachments.v1.InsertNetworkAttachmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L235}
+  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L252}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNetworkAttachments(
       google::cloud::cpp::compute::networkAttachments::v1::
@@ -308,12 +308,12 @@ class NetworkAttachmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkAttachment,google/cloud/compute/v1/internal/common.proto#L14290}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkAttachment,google/cloud/compute/v1/internal/common.proto#L14310}
   ///
   /// [google.cloud.cpp.compute.networkAttachments.v1.ListNetworkAttachmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L260}
+  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L284}
   /// [google.cloud.cpp.compute.v1.NetworkAttachment]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14290}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14310}
   ///
   StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>
   ListNetworkAttachments(std::string const& project, std::string const& region,
@@ -323,16 +323,16 @@ class NetworkAttachmentsClient {
   /// Lists the NetworkAttachments for a project in the given scope.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networkAttachments::v1::ListNetworkAttachmentsRequest,google/cloud/compute/network_attachments/v1/network_attachments.proto#L260}
+  /// @googleapis_link{google::cloud::cpp::compute::networkAttachments::v1::ListNetworkAttachmentsRequest,google/cloud/compute/network_attachments/v1/network_attachments.proto#L284}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkAttachment,google/cloud/compute/v1/internal/common.proto#L14290}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkAttachment,google/cloud/compute/v1/internal/common.proto#L14310}
   ///
   /// [google.cloud.cpp.compute.networkAttachments.v1.ListNetworkAttachmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L260}
+  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L284}
   /// [google.cloud.cpp.compute.v1.NetworkAttachment]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14290}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14310}
   ///
   StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>
   ListNetworkAttachments(google::cloud::cpp::compute::networkAttachments::v1::
@@ -351,12 +351,12 @@ class NetworkAttachmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.networkAttachments.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L328}
+  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L352}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       std::string const& project, std::string const& region,
@@ -370,16 +370,16 @@ class NetworkAttachmentsClient {
   /// existing policy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networkAttachments::v1::SetIamPolicyRequest,google/cloud/compute/network_attachments/v1/network_attachments.proto#L328}
+  /// @googleapis_link{google::cloud::cpp::compute::networkAttachments::v1::SetIamPolicyRequest,google/cloud/compute/network_attachments/v1/network_attachments.proto#L352}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.networkAttachments.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L328}
+  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L352}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::networkAttachments::v1::
@@ -397,12 +397,12 @@ class NetworkAttachmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   /// [google.cloud.cpp.compute.networkAttachments.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L343}
+  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L368}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(
@@ -416,16 +416,16 @@ class NetworkAttachmentsClient {
   /// Returns permissions that a caller has on the specified resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networkAttachments::v1::TestIamPermissionsRequest,google/cloud/compute/network_attachments/v1/network_attachments.proto#L343}
+  /// @googleapis_link{google::cloud::cpp::compute::networkAttachments::v1::TestIamPermissionsRequest,google/cloud/compute/network_attachments/v1/network_attachments.proto#L368}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   /// [google.cloud.cpp.compute.networkAttachments.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L343}
+  /// @googleapis_reference_link{google/cloud/compute/network_attachments/v1/network_attachments.proto#L368}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::networkAttachments::v1::

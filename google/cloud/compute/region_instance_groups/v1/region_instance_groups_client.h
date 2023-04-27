@@ -99,12 +99,12 @@ class RegionInstanceGroupsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroup,google/cloud/compute/v1/internal/common.proto#L9441}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroup,google/cloud/compute/v1/internal/common.proto#L9457}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroups.v1.GetRegionInstanceGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L75}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L81}
   /// [google.cloud.cpp.compute.v1.InstanceGroup]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9441}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9457}
   ///
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
   GetRegionInstanceGroups(std::string const& project, std::string const& region,
@@ -114,16 +114,16 @@ class RegionInstanceGroupsClient {
   /// Returns the specified instance group resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroups::v1::GetRegionInstanceGroupsRequest,google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L75}
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroups::v1::GetRegionInstanceGroupsRequest,google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L81}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroup,google/cloud/compute/v1/internal/common.proto#L9441}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroup,google/cloud/compute/v1/internal/common.proto#L9457}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroups.v1.GetRegionInstanceGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L75}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L81}
   /// [google.cloud.cpp.compute.v1.InstanceGroup]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9441}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9457}
   ///
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
   GetRegionInstanceGroups(google::cloud::cpp::compute::regionInstanceGroups::
@@ -139,12 +139,12 @@ class RegionInstanceGroupsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroup,google/cloud/compute/v1/internal/common.proto#L9441}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroup,google/cloud/compute/v1/internal/common.proto#L9457}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroups.v1.ListRegionInstanceGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L162}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L169}
   /// [google.cloud.cpp.compute.v1.InstanceGroup]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9441}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9457}
   ///
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
   ListRegionInstanceGroups(std::string const& project,
@@ -155,16 +155,16 @@ class RegionInstanceGroupsClient {
   /// specified region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroups::v1::ListRegionInstanceGroupsRequest,google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L162}
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroups::v1::ListRegionInstanceGroupsRequest,google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L169}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroup,google/cloud/compute/v1/internal/common.proto#L9441}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroup,google/cloud/compute/v1/internal/common.proto#L9457}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroups.v1.ListRegionInstanceGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L162}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L169}
   /// [google.cloud.cpp.compute.v1.InstanceGroup]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9441}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9457}
   ///
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
   ListRegionInstanceGroups(google::cloud::cpp::compute::regionInstanceGroups::
@@ -187,12 +187,12 @@ class RegionInstanceGroupsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceWithNamedPorts,google/cloud/compute/v1/internal/common.proto#L11587}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceWithNamedPorts,google/cloud/compute/v1/internal/common.proto#L11605}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroups.v1.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L87}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L93}
   /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11587}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11605}
   ///
   StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>
   ListInstances(std::string const& project, std::string const& region,
@@ -209,16 +209,16 @@ class RegionInstanceGroupsClient {
   /// The orderBy query parameter is not supported.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroups::v1::ListInstancesRequest,google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L87}
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroups::v1::ListInstancesRequest,google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L93}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceWithNamedPorts,google/cloud/compute/v1/internal/common.proto#L11587}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceWithNamedPorts,google/cloud/compute/v1/internal/common.proto#L11605}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroups.v1.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L87}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L93}
   /// [google.cloud.cpp.compute.v1.InstanceWithNamedPorts]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11587}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11605}
   ///
   StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>
   ListInstances(google::cloud::cpp::compute::regionInstanceGroups::v1::
@@ -237,12 +237,12 @@ class RegionInstanceGroupsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroups.v1.SetNamedPortsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L230}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L237}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
       std::string const& project, std::string const& region,
@@ -256,16 +256,16 @@ class RegionInstanceGroupsClient {
   /// Sets the named ports for the specified regional instance group.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroups::v1::SetNamedPortsRequest,google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L230}
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroups::v1::SetNamedPortsRequest,google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L237}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroups.v1.SetNamedPortsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L230}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto#L237}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
       google::cloud::cpp::compute::regionInstanceGroups::v1::

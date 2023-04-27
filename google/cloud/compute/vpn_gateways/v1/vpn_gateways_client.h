@@ -95,12 +95,12 @@ class VpnGatewaysClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::VpnGatewayAggregatedList,google/cloud/compute/v1/internal/common.proto#L29865}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::VpnGatewayAggregatedList,google/cloud/compute/v1/internal/common.proto#L29904}
   ///
   /// [google.cloud.cpp.compute.v1.VpnGatewayAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29865}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29904}
   /// [google.cloud.cpp.compute.vpnGateways.v1.AggregatedListVpnGatewaysRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L109}
+  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L120}
   ///
   StatusOr<google::cloud::cpp::compute::v1::VpnGatewayAggregatedList>
   AggregatedListVpnGateways(std::string const& project, Options opts = {});
@@ -109,16 +109,16 @@ class VpnGatewaysClient {
   /// Retrieves an aggregated list of VPN gateways.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::vpnGateways::v1::AggregatedListVpnGatewaysRequest,google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L109}
+  /// @googleapis_link{google::cloud::cpp::compute::vpnGateways::v1::AggregatedListVpnGatewaysRequest,google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L120}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::VpnGatewayAggregatedList,google/cloud/compute/v1/internal/common.proto#L29865}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::VpnGatewayAggregatedList,google/cloud/compute/v1/internal/common.proto#L29904}
   ///
   /// [google.cloud.cpp.compute.v1.VpnGatewayAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29865}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29904}
   /// [google.cloud.cpp.compute.vpnGateways.v1.AggregatedListVpnGatewaysRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L109}
+  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L120}
   ///
   StatusOr<google::cloud::cpp::compute::v1::VpnGatewayAggregatedList>
   AggregatedListVpnGateways(google::cloud::cpp::compute::vpnGateways::v1::
@@ -134,12 +134,12 @@ class VpnGatewaysClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   /// [google.cloud.cpp.compute.vpnGateways.v1.DeleteVpnGatewaysRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L183}
+  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L194}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteVpnGateways(
       std::string const& project, std::string const& region,
@@ -149,16 +149,16 @@ class VpnGatewaysClient {
   /// Deletes the specified VPN gateway.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::vpnGateways::v1::DeleteVpnGatewaysRequest,google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L183}
+  /// @googleapis_link{google::cloud::cpp::compute::vpnGateways::v1::DeleteVpnGatewaysRequest,google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L194}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   /// [google.cloud.cpp.compute.vpnGateways.v1.DeleteVpnGatewaysRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L183}
+  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L194}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteVpnGateways(
       google::cloud::cpp::compute::vpnGateways::v1::
@@ -174,12 +174,12 @@ class VpnGatewaysClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::VpnGateway,google/cloud/compute/v1/internal/common.proto#L29806}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::VpnGateway,google/cloud/compute/v1/internal/common.proto#L29845}
   ///
   /// [google.cloud.cpp.compute.v1.VpnGateway]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29806}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29845}
   /// [google.cloud.cpp.compute.vpnGateways.v1.GetVpnGatewaysRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L219}
+  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L236}
   ///
   StatusOr<google::cloud::cpp::compute::v1::VpnGateway> GetVpnGateways(
       std::string const& project, std::string const& region,
@@ -189,16 +189,16 @@ class VpnGatewaysClient {
   /// Returns the specified VPN gateway.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::vpnGateways::v1::GetVpnGatewaysRequest,google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L219}
+  /// @googleapis_link{google::cloud::cpp::compute::vpnGateways::v1::GetVpnGatewaysRequest,google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L236}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::VpnGateway,google/cloud/compute/v1/internal/common.proto#L29806}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::VpnGateway,google/cloud/compute/v1/internal/common.proto#L29845}
   ///
   /// [google.cloud.cpp.compute.v1.VpnGateway]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29806}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29845}
   /// [google.cloud.cpp.compute.vpnGateways.v1.GetVpnGatewaysRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L219}
+  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L236}
   ///
   StatusOr<google::cloud::cpp::compute::v1::VpnGateway> GetVpnGateways(
       google::cloud::cpp::compute::vpnGateways::v1::GetVpnGatewaysRequest const&
@@ -214,12 +214,12 @@ class VpnGatewaysClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse,google/cloud/compute/v1/internal/common.proto#L30159}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse,google/cloud/compute/v1/internal/common.proto#L30198}
   ///
   /// [google.cloud.cpp.compute.v1.VpnGatewaysGetStatusResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30159}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30198}
   /// [google.cloud.cpp.compute.vpnGateways.v1.GetStatusRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L207}
+  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L224}
   ///
   StatusOr<google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse>
   GetStatus(std::string const& project, std::string const& region,
@@ -229,16 +229,16 @@ class VpnGatewaysClient {
   /// Returns the status for the specified VPN gateway.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::vpnGateways::v1::GetStatusRequest,google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L207}
+  /// @googleapis_link{google::cloud::cpp::compute::vpnGateways::v1::GetStatusRequest,google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L224}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse,google/cloud/compute/v1/internal/common.proto#L30159}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse,google/cloud/compute/v1/internal/common.proto#L30198}
   ///
   /// [google.cloud.cpp.compute.v1.VpnGatewaysGetStatusResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30159}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30198}
   /// [google.cloud.cpp.compute.vpnGateways.v1.GetStatusRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L207}
+  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L224}
   ///
   StatusOr<google::cloud::cpp::compute::v1::VpnGatewaysGetStatusResponse>
   GetStatus(
@@ -256,12 +256,12 @@ class VpnGatewaysClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   /// [google.cloud.cpp.compute.vpnGateways.v1.InsertVpnGatewaysRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L231}
+  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L248}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertVpnGateways(
       std::string const& project, std::string const& region,
@@ -273,16 +273,16 @@ class VpnGatewaysClient {
   /// included in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::vpnGateways::v1::InsertVpnGatewaysRequest,google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L231}
+  /// @googleapis_link{google::cloud::cpp::compute::vpnGateways::v1::InsertVpnGatewaysRequest,google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L248}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   /// [google.cloud.cpp.compute.vpnGateways.v1.InsertVpnGatewaysRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L231}
+  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L248}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertVpnGateways(
       google::cloud::cpp::compute::vpnGateways::v1::
@@ -298,12 +298,12 @@ class VpnGatewaysClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::VpnGateway,google/cloud/compute/v1/internal/common.proto#L29806}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::VpnGateway,google/cloud/compute/v1/internal/common.proto#L29845}
   ///
   /// [google.cloud.cpp.compute.v1.VpnGateway]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29806}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29845}
   /// [google.cloud.cpp.compute.vpnGateways.v1.ListVpnGatewaysRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L255}
+  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L278}
   ///
   StreamRange<google::cloud::cpp::compute::v1::VpnGateway> ListVpnGateways(
       std::string const& project, std::string const& region, Options opts = {});
@@ -313,16 +313,16 @@ class VpnGatewaysClient {
   /// region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::vpnGateways::v1::ListVpnGatewaysRequest,google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L255}
+  /// @googleapis_link{google::cloud::cpp::compute::vpnGateways::v1::ListVpnGatewaysRequest,google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L278}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::VpnGateway,google/cloud/compute/v1/internal/common.proto#L29806}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::VpnGateway,google/cloud/compute/v1/internal/common.proto#L29845}
   ///
   /// [google.cloud.cpp.compute.v1.VpnGateway]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29806}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29845}
   /// [google.cloud.cpp.compute.vpnGateways.v1.ListVpnGatewaysRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L255}
+  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L278}
   ///
   StreamRange<google::cloud::cpp::compute::v1::VpnGateway> ListVpnGateways(
       google::cloud::cpp::compute::vpnGateways::v1::ListVpnGatewaysRequest
@@ -341,12 +341,12 @@ class VpnGatewaysClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   /// [google.cloud.cpp.compute.vpnGateways.v1.SetLabelsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L323}
+  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L346}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       std::string const& project, std::string const& region,
@@ -360,16 +360,16 @@ class VpnGatewaysClient {
   /// Labeling Resources documentation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::vpnGateways::v1::SetLabelsRequest,google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L323}
+  /// @googleapis_link{google::cloud::cpp::compute::vpnGateways::v1::SetLabelsRequest,google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L346}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   /// [google.cloud.cpp.compute.vpnGateways.v1.SetLabelsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L323}
+  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L346}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::cpp::compute::vpnGateways::v1::SetLabelsRequest const&
@@ -387,12 +387,12 @@ class VpnGatewaysClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   /// [google.cloud.cpp.compute.vpnGateways.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L350}
+  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L380}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(
@@ -406,16 +406,16 @@ class VpnGatewaysClient {
   /// Returns permissions that a caller has on the specified resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::vpnGateways::v1::TestIamPermissionsRequest,google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L350}
+  /// @googleapis_link{google::cloud::cpp::compute::vpnGateways::v1::TestIamPermissionsRequest,google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L380}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   /// [google.cloud.cpp.compute.vpnGateways.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L350}
+  /// @googleapis_reference_link{google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto#L380}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::vpnGateways::v1::

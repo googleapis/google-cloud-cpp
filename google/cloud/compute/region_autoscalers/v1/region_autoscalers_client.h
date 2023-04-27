@@ -97,12 +97,12 @@ class RegionAutoscalersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionAutoscalers.v1.DeleteRegionAutoscalersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L95}
+  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L101}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRegionAutoscalers(
       std::string const& project, std::string const& region,
@@ -112,16 +112,16 @@ class RegionAutoscalersClient {
   /// Deletes the specified autoscaler.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionAutoscalers::v1::DeleteRegionAutoscalersRequest,google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L95}
+  /// @googleapis_link{google::cloud::cpp::compute::regionAutoscalers::v1::DeleteRegionAutoscalersRequest,google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L101}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionAutoscalers.v1.DeleteRegionAutoscalersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L95}
+  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L101}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRegionAutoscalers(
       google::cloud::cpp::compute::regionAutoscalers::v1::
@@ -137,12 +137,12 @@ class RegionAutoscalersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Autoscaler,google/cloud/compute/v1/internal/common.proto#L1262}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Autoscaler,google/cloud/compute/v1/internal/common.proto#L1266}
   ///
   /// [google.cloud.cpp.compute.regionAutoscalers.v1.GetRegionAutoscalersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L119}
+  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L131}
   /// [google.cloud.cpp.compute.v1.Autoscaler]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L1262}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L1266}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetRegionAutoscalers(
       std::string const& project, std::string const& region,
@@ -152,16 +152,16 @@ class RegionAutoscalersClient {
   /// Returns the specified autoscaler.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionAutoscalers::v1::GetRegionAutoscalersRequest,google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L119}
+  /// @googleapis_link{google::cloud::cpp::compute::regionAutoscalers::v1::GetRegionAutoscalersRequest,google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L131}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Autoscaler,google/cloud/compute/v1/internal/common.proto#L1262}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Autoscaler,google/cloud/compute/v1/internal/common.proto#L1266}
   ///
   /// [google.cloud.cpp.compute.regionAutoscalers.v1.GetRegionAutoscalersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L119}
+  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L131}
   /// [google.cloud.cpp.compute.v1.Autoscaler]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L1262}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L1266}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetRegionAutoscalers(
       google::cloud::cpp::compute::regionAutoscalers::v1::
@@ -178,12 +178,12 @@ class RegionAutoscalersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionAutoscalers.v1.InsertRegionAutoscalersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L131}
+  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L143}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionAutoscalers(
       std::string const& project, std::string const& region,
@@ -195,16 +195,16 @@ class RegionAutoscalersClient {
   /// the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionAutoscalers::v1::InsertRegionAutoscalersRequest,google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L131}
+  /// @googleapis_link{google::cloud::cpp::compute::regionAutoscalers::v1::InsertRegionAutoscalersRequest,google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L143}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionAutoscalers.v1.InsertRegionAutoscalersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L131}
+  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L143}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionAutoscalers(
       google::cloud::cpp::compute::regionAutoscalers::v1::
@@ -219,12 +219,12 @@ class RegionAutoscalersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Autoscaler,google/cloud/compute/v1/internal/common.proto#L1262}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Autoscaler,google/cloud/compute/v1/internal/common.proto#L1266}
   ///
   /// [google.cloud.cpp.compute.regionAutoscalers.v1.ListRegionAutoscalersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L155}
+  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L173}
   /// [google.cloud.cpp.compute.v1.Autoscaler]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L1262}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L1266}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
   ListRegionAutoscalers(std::string const& project, std::string const& region,
@@ -234,16 +234,16 @@ class RegionAutoscalersClient {
   /// Retrieves a list of autoscalers contained within the specified region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionAutoscalers::v1::ListRegionAutoscalersRequest,google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L155}
+  /// @googleapis_link{google::cloud::cpp::compute::regionAutoscalers::v1::ListRegionAutoscalersRequest,google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L173}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Autoscaler,google/cloud/compute/v1/internal/common.proto#L1262}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Autoscaler,google/cloud/compute/v1/internal/common.proto#L1266}
   ///
   /// [google.cloud.cpp.compute.regionAutoscalers.v1.ListRegionAutoscalersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L155}
+  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L173}
   /// [google.cloud.cpp.compute.v1.Autoscaler]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L1262}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L1266}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
   ListRegionAutoscalers(google::cloud::cpp::compute::regionAutoscalers::v1::
@@ -261,12 +261,12 @@ class RegionAutoscalersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionAutoscalers.v1.PatchRegionAutoscalersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L223}
+  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L241}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRegionAutoscalers(
       std::string const& project, std::string const& region,
@@ -279,16 +279,16 @@ class RegionAutoscalersClient {
   /// patch format and processing rules.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionAutoscalers::v1::PatchRegionAutoscalersRequest,google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L223}
+  /// @googleapis_link{google::cloud::cpp::compute::regionAutoscalers::v1::PatchRegionAutoscalersRequest,google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L241}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionAutoscalers.v1.PatchRegionAutoscalersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L223}
+  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L241}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRegionAutoscalers(
       google::cloud::cpp::compute::regionAutoscalers::v1::
@@ -305,12 +305,12 @@ class RegionAutoscalersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionAutoscalers.v1.UpdateRegionAutoscalersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L250}
+  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L274}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRegionAutoscalers(
       std::string const& project, std::string const& region,
@@ -322,16 +322,16 @@ class RegionAutoscalersClient {
   /// the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionAutoscalers::v1::UpdateRegionAutoscalersRequest,google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L250}
+  /// @googleapis_link{google::cloud::cpp::compute::regionAutoscalers::v1::UpdateRegionAutoscalersRequest,google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L274}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionAutoscalers.v1.UpdateRegionAutoscalersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L250}
+  /// @googleapis_reference_link{google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto#L274}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRegionAutoscalers(
       google::cloud::cpp::compute::regionAutoscalers::v1::

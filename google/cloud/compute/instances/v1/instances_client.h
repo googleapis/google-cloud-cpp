@@ -98,12 +98,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.AddAccessConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L530}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L596}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddAccessConfig(
       std::string const& project, std::string const& zone,
@@ -116,16 +116,16 @@ class InstancesClient {
   /// Adds an access config to an instance's network interface.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest,google/cloud/compute/instances/v1/instances.proto#L530}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest,google/cloud/compute/instances/v1/instances.proto#L596}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.AddAccessConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L530}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L596}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddAccessConfig(
       google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&
@@ -145,12 +145,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.AddResourcePoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L560}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L632}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
       std::string const& project, std::string const& zone,
@@ -166,16 +166,16 @@ class InstancesClient {
   /// live migrations.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::AddResourcePoliciesRequest,google/cloud/compute/instances/v1/instances.proto#L560}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::AddResourcePoliciesRequest,google/cloud/compute/instances/v1/instances.proto#L632}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.AddResourcePoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L560}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L632}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
       google::cloud::cpp::compute::instances::v1::
@@ -192,12 +192,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceAggregatedList,google/cloud/compute/v1/internal/common.proto#L9305}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceAggregatedList,google/cloud/compute/v1/internal/common.proto#L9321}
   ///
   /// [google.cloud.cpp.compute.instances.v1.AggregatedListInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L587}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L666}
   /// [google.cloud.cpp.compute.v1.InstanceAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9305}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9321}
   ///
   StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList>
   AggregatedListInstances(std::string const& project, Options opts = {});
@@ -209,16 +209,16 @@ class InstancesClient {
   /// instances.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::AggregatedListInstancesRequest,google/cloud/compute/instances/v1/instances.proto#L587}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::AggregatedListInstancesRequest,google/cloud/compute/instances/v1/instances.proto#L666}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceAggregatedList,google/cloud/compute/v1/internal/common.proto#L9305}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceAggregatedList,google/cloud/compute/v1/internal/common.proto#L9321}
   ///
   /// [google.cloud.cpp.compute.instances.v1.AggregatedListInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L587}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L666}
   /// [google.cloud.cpp.compute.v1.InstanceAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9305}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9321}
   ///
   StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList>
   AggregatedListInstances(google::cloud::cpp::compute::instances::v1::
@@ -238,12 +238,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.AttachDiskRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L661}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L740}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AttachDisk(
       std::string const& project, std::string const& zone,
@@ -259,16 +259,16 @@ class InstancesClient {
   /// disk to your instance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::AttachDiskRequest,google/cloud/compute/instances/v1/instances.proto#L661}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::AttachDiskRequest,google/cloud/compute/instances/v1/instances.proto#L740}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.AttachDiskRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L661}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L740}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AttachDisk(
       google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
@@ -286,12 +286,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.BulkInsertRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L693}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L778}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
       std::string const& project, std::string const& zone,
@@ -304,16 +304,16 @@ class InstancesClient {
   /// create. For more information, see About bulk creation of VMs.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::BulkInsertRequest,google/cloud/compute/instances/v1/instances.proto#L693}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::BulkInsertRequest,google/cloud/compute/instances/v1/instances.proto#L778}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.BulkInsertRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L693}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L778}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
       google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
@@ -330,12 +330,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.DeleteInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L747}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L845}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstances(
       std::string const& project, std::string const& zone,
@@ -346,16 +346,16 @@ class InstancesClient {
   /// Deleting an instance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest,google/cloud/compute/instances/v1/instances.proto#L747}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest,google/cloud/compute/instances/v1/instances.proto#L845}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.DeleteInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L747}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L845}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstances(
       google::cloud::cpp::compute::instances::v1::DeleteInstancesRequest const&
@@ -373,12 +373,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.DeleteAccessConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L717}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L809}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAccessConfig(
       std::string const& project, std::string const& zone,
@@ -389,16 +389,16 @@ class InstancesClient {
   /// Deletes an access config from an instance's network interface.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::DeleteAccessConfigRequest,google/cloud/compute/instances/v1/instances.proto#L717}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::DeleteAccessConfigRequest,google/cloud/compute/instances/v1/instances.proto#L809}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.DeleteAccessConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L717}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L809}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAccessConfig(
       google::cloud::cpp::compute::instances::v1::
@@ -417,12 +417,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.DetachDiskRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L771}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L875}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DetachDisk(
       std::string const& project, std::string const& zone,
@@ -433,16 +433,16 @@ class InstancesClient {
   /// Detaches a disk from an instance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::DetachDiskRequest,google/cloud/compute/instances/v1/instances.proto#L771}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::DetachDiskRequest,google/cloud/compute/instances/v1/instances.proto#L875}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.DetachDiskRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L771}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L875}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DetachDisk(
       google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
@@ -458,12 +458,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Instance,google/cloud/compute/v1/internal/common.proto#L9086}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Instance,google/cloud/compute/v1/internal/common.proto#L9101}
   ///
   /// [google.cloud.cpp.compute.instances.v1.GetInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L847}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L957}
   /// [google.cloud.cpp.compute.v1.Instance]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9086}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9101}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Instance> GetInstances(
       std::string const& project, std::string const& zone,
@@ -473,16 +473,16 @@ class InstancesClient {
   /// Returns the specified Instance resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::GetInstancesRequest,google/cloud/compute/instances/v1/instances.proto#L847}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::GetInstancesRequest,google/cloud/compute/instances/v1/instances.proto#L957}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Instance,google/cloud/compute/v1/internal/common.proto#L9086}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Instance,google/cloud/compute/v1/internal/common.proto#L9101}
   ///
   /// [google.cloud.cpp.compute.instances.v1.GetInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L847}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L957}
   /// [google.cloud.cpp.compute.v1.Instance]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9086}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9101}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Instance> GetInstances(
       google::cloud::cpp::compute::instances::v1::GetInstancesRequest const&
@@ -500,12 +500,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse,google/cloud/compute/v1/internal/common.proto#L11617}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse,google/cloud/compute/v1/internal/common.proto#L11635}
   ///
   /// [google.cloud.cpp.compute.instances.v1.GetEffectiveFirewallsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L799}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L909}
   /// [google.cloud.cpp.compute.v1.InstancesGetEffectiveFirewallsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11617}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11635}
   ///
   StatusOr<
       google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>
@@ -518,16 +518,16 @@ class InstancesClient {
   /// Returns effective firewalls applied to an interface of the instance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::GetEffectiveFirewallsRequest,google/cloud/compute/instances/v1/instances.proto#L799}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::GetEffectiveFirewallsRequest,google/cloud/compute/instances/v1/instances.proto#L909}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse,google/cloud/compute/v1/internal/common.proto#L11617}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse,google/cloud/compute/v1/internal/common.proto#L11635}
   ///
   /// [google.cloud.cpp.compute.instances.v1.GetEffectiveFirewallsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L799}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L909}
   /// [google.cloud.cpp.compute.v1.InstancesGetEffectiveFirewallsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11617}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11635}
   ///
   StatusOr<
       google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>
@@ -544,12 +544,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::GuestAttributes,google/cloud/compute/v1/internal/common.proto#L7034}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::GuestAttributes,google/cloud/compute/v1/internal/common.proto#L7049}
   ///
   /// [google.cloud.cpp.compute.instances.v1.GetGuestAttributesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L814}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L924}
   /// [google.cloud.cpp.compute.v1.GuestAttributes]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L7034}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L7049}
   ///
   StatusOr<google::cloud::cpp::compute::v1::GuestAttributes> GetGuestAttributes(
       std::string const& project, std::string const& zone,
@@ -559,16 +559,16 @@ class InstancesClient {
   /// Returns the specified guest attributes entry.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::GetGuestAttributesRequest,google/cloud/compute/instances/v1/instances.proto#L814}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::GetGuestAttributesRequest,google/cloud/compute/instances/v1/instances.proto#L924}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::GuestAttributes,google/cloud/compute/v1/internal/common.proto#L7034}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::GuestAttributes,google/cloud/compute/v1/internal/common.proto#L7049}
   ///
   /// [google.cloud.cpp.compute.instances.v1.GetGuestAttributesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L814}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L924}
   /// [google.cloud.cpp.compute.v1.GuestAttributes]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L7034}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L7049}
   ///
   StatusOr<google::cloud::cpp::compute::v1::GuestAttributes> GetGuestAttributes(
       google::cloud::cpp::compute::instances::v1::
@@ -585,12 +585,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.instances.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L832}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L942}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       std::string const& project, std::string const& zone,
@@ -601,16 +601,16 @@ class InstancesClient {
   /// policy or resource exists.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest,google/cloud/compute/instances/v1/instances.proto#L832}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest,google/cloud/compute/instances/v1/instances.proto#L942}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.instances.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L832}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L942}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const&
@@ -626,12 +626,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Screenshot,google/cloud/compute/v1/internal/common.proto#L23156}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Screenshot,google/cloud/compute/v1/internal/common.proto#L23185}
   ///
   /// [google.cloud.cpp.compute.instances.v1.GetScreenshotRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L859}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L969}
   /// [google.cloud.cpp.compute.v1.Screenshot]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23156}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23185}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Screenshot> GetScreenshot(
       std::string const& project, std::string const& zone,
@@ -641,16 +641,16 @@ class InstancesClient {
   /// Returns the screenshot from the specified instance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::GetScreenshotRequest,google/cloud/compute/instances/v1/instances.proto#L859}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::GetScreenshotRequest,google/cloud/compute/instances/v1/instances.proto#L969}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Screenshot,google/cloud/compute/v1/internal/common.proto#L23156}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Screenshot,google/cloud/compute/v1/internal/common.proto#L23185}
   ///
   /// [google.cloud.cpp.compute.instances.v1.GetScreenshotRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L859}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L969}
   /// [google.cloud.cpp.compute.v1.Screenshot]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23156}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23185}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Screenshot> GetScreenshot(
       google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const&
@@ -666,12 +666,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SerialPortOutput,google/cloud/compute/v1/internal/common.proto#L23866}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SerialPortOutput,google/cloud/compute/v1/internal/common.proto#L23904}
   ///
   /// [google.cloud.cpp.compute.instances.v1.GetSerialPortOutputRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L871}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L981}
   /// [google.cloud.cpp.compute.v1.SerialPortOutput]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23866}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23904}
   ///
   StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput>
   GetSerialPortOutput(std::string const& project, std::string const& zone,
@@ -681,16 +681,16 @@ class InstancesClient {
   /// Returns the last 1 MB of serial port output from the specified instance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::GetSerialPortOutputRequest,google/cloud/compute/instances/v1/instances.proto#L871}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::GetSerialPortOutputRequest,google/cloud/compute/instances/v1/instances.proto#L981}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SerialPortOutput,google/cloud/compute/v1/internal/common.proto#L23866}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SerialPortOutput,google/cloud/compute/v1/internal/common.proto#L23904}
   ///
   /// [google.cloud.cpp.compute.instances.v1.GetSerialPortOutputRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L871}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L981}
   /// [google.cloud.cpp.compute.v1.SerialPortOutput]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23866}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23904}
   ///
   StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput>
   GetSerialPortOutput(google::cloud::cpp::compute::instances::v1::
@@ -706,12 +706,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::ShieldedInstanceIdentity,google/cloud/compute/v1/internal/common.proto#L24363}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ShieldedInstanceIdentity,google/cloud/compute/v1/internal/common.proto#L24401}
   ///
   /// [google.cloud.cpp.compute.instances.v1.GetShieldedInstanceIdentityRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L900}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1010}
   /// [google.cloud.cpp.compute.v1.ShieldedInstanceIdentity]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24363}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24401}
   ///
   StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>
   GetShieldedInstanceIdentity(std::string const& project,
@@ -722,16 +722,16 @@ class InstancesClient {
   /// Returns the Shielded Instance Identity of an instance
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::GetShieldedInstanceIdentityRequest,google/cloud/compute/instances/v1/instances.proto#L900}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::GetShieldedInstanceIdentityRequest,google/cloud/compute/instances/v1/instances.proto#L1010}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::ShieldedInstanceIdentity,google/cloud/compute/v1/internal/common.proto#L24363}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ShieldedInstanceIdentity,google/cloud/compute/v1/internal/common.proto#L24401}
   ///
   /// [google.cloud.cpp.compute.instances.v1.GetShieldedInstanceIdentityRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L900}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1010}
   /// [google.cloud.cpp.compute.v1.ShieldedInstanceIdentity]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24363}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24401}
   ///
   StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>
   GetShieldedInstanceIdentity(
@@ -749,12 +749,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.InsertInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L912}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1022}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstances(
       std::string const& project, std::string const& zone,
@@ -766,16 +766,16 @@ class InstancesClient {
   /// included in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::InsertInstancesRequest,google/cloud/compute/instances/v1/instances.proto#L912}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::InsertInstancesRequest,google/cloud/compute/instances/v1/instances.proto#L1022}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.InsertInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L912}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1022}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstances(
       google::cloud::cpp::compute::instances::v1::InsertInstancesRequest const&
@@ -790,12 +790,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Instance,google/cloud/compute/v1/internal/common.proto#L9086}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Instance,google/cloud/compute/v1/internal/common.proto#L9101}
   ///
   /// [google.cloud.cpp.compute.instances.v1.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L954}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1070}
   /// [google.cloud.cpp.compute.v1.Instance]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9086}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9101}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Instance> ListInstances(
       std::string const& project, std::string const& zone, Options opts = {});
@@ -804,16 +804,16 @@ class InstancesClient {
   /// Retrieves the list of instances contained within the specified zone.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::ListInstancesRequest,google/cloud/compute/instances/v1/instances.proto#L954}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::ListInstancesRequest,google/cloud/compute/instances/v1/instances.proto#L1070}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Instance,google/cloud/compute/v1/internal/common.proto#L9086}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Instance,google/cloud/compute/v1/internal/common.proto#L9101}
   ///
   /// [google.cloud.cpp.compute.instances.v1.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L954}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1070}
   /// [google.cloud.cpp.compute.v1.Instance]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9086}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9101}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Instance> ListInstances(
       google::cloud::cpp::compute::instances::v1::ListInstancesRequest request,
@@ -833,12 +833,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Reference,google/cloud/compute/v1/internal/common.proto#L19631}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Reference,google/cloud/compute/v1/internal/common.proto#L19654}
   ///
   /// [google.cloud.cpp.compute.instances.v1.ListReferrersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1022}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1138}
   /// [google.cloud.cpp.compute.v1.Reference]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19631}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19654}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Reference> ListReferrers(
       std::string const& project, std::string const& zone,
@@ -851,16 +851,16 @@ class InstancesClient {
   /// For more information, read Viewing referrers to VM instances.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::ListReferrersRequest,google/cloud/compute/instances/v1/instances.proto#L1022}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::ListReferrersRequest,google/cloud/compute/instances/v1/instances.proto#L1138}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Reference,google/cloud/compute/v1/internal/common.proto#L19631}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Reference,google/cloud/compute/v1/internal/common.proto#L19654}
   ///
   /// [google.cloud.cpp.compute.instances.v1.ListReferrersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1022}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1138}
   /// [google.cloud.cpp.compute.v1.Reference]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19631}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19654}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Reference> ListReferrers(
       google::cloud::cpp::compute::instances::v1::ListReferrersRequest request,
@@ -877,12 +877,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.RemoveResourcePoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1094}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1210}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
       std::string const& project, std::string const& zone,
@@ -896,16 +896,16 @@ class InstancesClient {
   /// Removes resource policies from an instance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::RemoveResourcePoliciesRequest,google/cloud/compute/instances/v1/instances.proto#L1094}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::RemoveResourcePoliciesRequest,google/cloud/compute/instances/v1/instances.proto#L1210}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.RemoveResourcePoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1094}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1210}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
       google::cloud::cpp::compute::instances::v1::
@@ -922,12 +922,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.ResetRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1121}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1244}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> Reset(
       std::string const& project, std::string const& zone,
@@ -938,16 +938,16 @@ class InstancesClient {
   /// a graceful shutdown. For more information, see Resetting an instance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::ResetRequest,google/cloud/compute/instances/v1/instances.proto#L1121}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::ResetRequest,google/cloud/compute/instances/v1/instances.proto#L1244}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.ResetRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1121}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1244}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> Reset(
       google::cloud::cpp::compute::instances::v1::ResetRequest const& request,
@@ -963,12 +963,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.ResumeRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1145}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1274}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resume(
       std::string const& project, std::string const& zone,
@@ -979,16 +979,16 @@ class InstancesClient {
   /// method.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::ResumeRequest,google/cloud/compute/instances/v1/instances.proto#L1145}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::ResumeRequest,google/cloud/compute/instances/v1/instances.proto#L1274}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.ResumeRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1145}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1274}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resume(
       google::cloud::cpp::compute::instances::v1::ResumeRequest const& request,
@@ -1004,7 +1004,7 @@ class InstancesClient {
   ///     backoff policies.
   ///
   /// [google.cloud.cpp.compute.instances.v1.SendDiagnosticInterruptRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1169}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1304}
   ///
   Status SendDiagnosticInterrupt(std::string const& project,
                                  std::string const& zone,
@@ -1015,12 +1015,12 @@ class InstancesClient {
   /// Sends diagnostic interrupt to the instance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SendDiagnosticInterruptRequest,google/cloud/compute/instances/v1/instances.proto#L1169}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SendDiagnosticInterruptRequest,google/cloud/compute/instances/v1/instances.proto#L1304}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.cpp.compute.instances.v1.SendDiagnosticInterruptRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1169}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1304}
   ///
   Status SendDiagnosticInterrupt(
       google::cloud::cpp::compute::instances::v1::
@@ -1036,12 +1036,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetDeletionProtectionRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1181}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1316}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetDeletionProtection(
       std::string const& project, std::string const& zone,
@@ -1051,16 +1051,16 @@ class InstancesClient {
   /// Sets deletion protection on the instance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetDeletionProtectionRequest,google/cloud/compute/instances/v1/instances.proto#L1181}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetDeletionProtectionRequest,google/cloud/compute/instances/v1/instances.proto#L1316}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetDeletionProtectionRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1181}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1316}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetDeletionProtection(
       google::cloud::cpp::compute::instances::v1::
@@ -1081,12 +1081,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetDiskAutoDeleteRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1208}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1349}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetDiskAutoDelete(
       std::string const& project, std::string const& zone,
@@ -1097,16 +1097,16 @@ class InstancesClient {
   /// Sets the auto-delete flag for a disk attached to an instance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetDiskAutoDeleteRequest,google/cloud/compute/instances/v1/instances.proto#L1208}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetDiskAutoDeleteRequest,google/cloud/compute/instances/v1/instances.proto#L1349}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetDiskAutoDeleteRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1208}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1349}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetDiskAutoDelete(
       google::cloud::cpp::compute::instances::v1::
@@ -1125,12 +1125,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1239}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1386}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       std::string const& project, std::string const& zone,
@@ -1144,16 +1144,16 @@ class InstancesClient {
   /// existing policy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest,google/cloud/compute/instances/v1/instances.proto#L1239}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest,google/cloud/compute/instances/v1/instances.proto#L1386}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1239}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1386}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest const&
@@ -1172,12 +1172,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetLabelsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1254}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1402}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       std::string const& project, std::string const& zone,
@@ -1191,16 +1191,16 @@ class InstancesClient {
   /// Resources documentation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetLabelsRequest,google/cloud/compute/instances/v1/instances.proto#L1254}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetLabelsRequest,google/cloud/compute/instances/v1/instances.proto#L1402}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetLabelsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1254}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1402}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&
@@ -1219,12 +1219,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetMachineResourcesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1281}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1436}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMachineResources(
       std::string const& project, std::string const& zone,
@@ -1239,16 +1239,16 @@ class InstancesClient {
   /// the values specified in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetMachineResourcesRequest,google/cloud/compute/instances/v1/instances.proto#L1281}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetMachineResourcesRequest,google/cloud/compute/instances/v1/instances.proto#L1436}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetMachineResourcesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1281}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1436}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMachineResources(
       google::cloud::cpp::compute::instances::v1::
@@ -1267,12 +1267,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetMachineTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1308}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1470}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMachineType(
       std::string const& project, std::string const& zone,
@@ -1286,16 +1286,16 @@ class InstancesClient {
   /// specified in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest,google/cloud/compute/instances/v1/instances.proto#L1308}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest,google/cloud/compute/instances/v1/instances.proto#L1470}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetMachineTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1308}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1470}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMachineType(
       google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&
@@ -1313,12 +1313,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetMetadataRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1335}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1504}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMetadata(
       std::string const& project, std::string const& zone,
@@ -1331,16 +1331,16 @@ class InstancesClient {
   /// request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetMetadataRequest,google/cloud/compute/instances/v1/instances.proto#L1335}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetMetadataRequest,google/cloud/compute/instances/v1/instances.proto#L1504}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetMetadataRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1335}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1504}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMetadata(
       google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&
@@ -1360,12 +1360,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetMinCpuPlatformRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1362}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1537}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMinCpuPlatform(
       std::string const& project, std::string const& zone,
@@ -1380,16 +1380,16 @@ class InstancesClient {
   /// read Specifying a Minimum CPU Platform.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetMinCpuPlatformRequest,google/cloud/compute/instances/v1/instances.proto#L1362}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetMinCpuPlatformRequest,google/cloud/compute/instances/v1/instances.proto#L1537}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetMinCpuPlatformRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1362}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1537}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMinCpuPlatform(
       google::cloud::cpp::compute::instances::v1::
@@ -1407,12 +1407,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetNameRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1389}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1571}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetName(
       std::string const& project, std::string const& zone,
@@ -1425,16 +1425,16 @@ class InstancesClient {
   /// Sets name of an instance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetNameRequest,google/cloud/compute/instances/v1/instances.proto#L1389}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetNameRequest,google/cloud/compute/instances/v1/instances.proto#L1571}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetNameRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1389}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1571}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetName(
       google::cloud::cpp::compute::instances::v1::SetNameRequest const& request,
@@ -1454,12 +1454,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetSchedulingRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1416}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1605}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetScheduling(
       std::string const& project, std::string const& zone,
@@ -1475,16 +1475,16 @@ class InstancesClient {
   /// see Set VM host maintenance policy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetSchedulingRequest,google/cloud/compute/instances/v1/instances.proto#L1416}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetSchedulingRequest,google/cloud/compute/instances/v1/instances.proto#L1605}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetSchedulingRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1416}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1605}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetScheduling(
       google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const&
@@ -1503,12 +1503,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetServiceAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1443}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1638}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetServiceAccount(
       std::string const& project, std::string const& zone,
@@ -1522,16 +1522,16 @@ class InstancesClient {
   /// Changing the service account and access scopes for an instance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetServiceAccountRequest,google/cloud/compute/instances/v1/instances.proto#L1443}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetServiceAccountRequest,google/cloud/compute/instances/v1/instances.proto#L1638}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetServiceAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1443}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1638}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetServiceAccount(
       google::cloud::cpp::compute::instances::v1::
@@ -1551,12 +1551,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetShieldedInstanceIntegrityPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1470}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1672}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   SetShieldedInstanceIntegrityPolicy(
@@ -1572,16 +1572,16 @@ class InstancesClient {
   /// semantics and uses the JSON merge patch format and processing rules.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetShieldedInstanceIntegrityPolicyRequest,google/cloud/compute/instances/v1/instances.proto#L1470}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetShieldedInstanceIntegrityPolicyRequest,google/cloud/compute/instances/v1/instances.proto#L1672}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetShieldedInstanceIntegrityPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1470}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1672}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   SetShieldedInstanceIntegrityPolicy(
@@ -1600,12 +1600,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetTagsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1497}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1706}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetTags(
       std::string const& project, std::string const& zone,
@@ -1618,16 +1618,16 @@ class InstancesClient {
   /// request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetTagsRequest,google/cloud/compute/instances/v1/instances.proto#L1497}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SetTagsRequest,google/cloud/compute/instances/v1/instances.proto#L1706}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SetTagsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1497}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1706}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetTags(
       google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request,
@@ -1643,12 +1643,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SimulateMaintenanceEventRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1524}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1739}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SimulateMaintenanceEvent(
       std::string const& project, std::string const& zone,
@@ -1659,16 +1659,16 @@ class InstancesClient {
   /// Simulate a host maintenance event.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SimulateMaintenanceEventRequest,google/cloud/compute/instances/v1/instances.proto#L1524}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SimulateMaintenanceEventRequest,google/cloud/compute/instances/v1/instances.proto#L1739}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SimulateMaintenanceEventRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1524}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1739}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SimulateMaintenanceEvent(
       google::cloud::cpp::compute::instances::v1::
@@ -1685,12 +1685,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.StartRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1536}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1757}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> Start(
       std::string const& project, std::string const& zone,
@@ -1701,16 +1701,16 @@ class InstancesClient {
   /// more information, see Restart an instance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::StartRequest,google/cloud/compute/instances/v1/instances.proto#L1536}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::StartRequest,google/cloud/compute/instances/v1/instances.proto#L1757}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.StartRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1536}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1757}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> Start(
       google::cloud::cpp::compute::instances::v1::StartRequest const& request,
@@ -1728,12 +1728,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.StartWithEncryptionKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1560}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1787}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> StartWithEncryptionKey(
       std::string const& project, std::string const& zone,
@@ -1748,16 +1748,16 @@ class InstancesClient {
   /// more information, see Restart an instance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::StartWithEncryptionKeyRequest,google/cloud/compute/instances/v1/instances.proto#L1560}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::StartWithEncryptionKeyRequest,google/cloud/compute/instances/v1/instances.proto#L1787}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.StartWithEncryptionKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1560}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1787}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> StartWithEncryptionKey(
       google::cloud::cpp::compute::instances::v1::
@@ -1778,12 +1778,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.StopRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1587}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1821}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> Stop(
       std::string const& project, std::string const& zone,
@@ -1798,16 +1798,16 @@ class InstancesClient {
   /// instance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::StopRequest,google/cloud/compute/instances/v1/instances.proto#L1587}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::StopRequest,google/cloud/compute/instances/v1/instances.proto#L1821}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.StopRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1587}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1821}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> Stop(
       google::cloud::cpp::compute::instances::v1::StopRequest const& request,
@@ -1828,12 +1828,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SuspendRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1615}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1855}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> Suspend(
       std::string const& project, std::string const& zone,
@@ -1849,16 +1849,16 @@ class InstancesClient {
   /// For more information, see Suspending and resuming an instance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SuspendRequest,google/cloud/compute/instances/v1/instances.proto#L1615}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::SuspendRequest,google/cloud/compute/instances/v1/instances.proto#L1855}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.SuspendRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1615}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1855}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> Suspend(
       google::cloud::cpp::compute::instances::v1::SuspendRequest const& request,
@@ -1875,12 +1875,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   /// [google.cloud.cpp.compute.instances.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1643}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1889}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(
@@ -1894,16 +1894,16 @@ class InstancesClient {
   /// Returns permissions that a caller has on the specified resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::TestIamPermissionsRequest,google/cloud/compute/instances/v1/instances.proto#L1643}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::TestIamPermissionsRequest,google/cloud/compute/instances/v1/instances.proto#L1889}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   /// [google.cloud.cpp.compute.instances.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1643}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1889}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::instances::v1::
@@ -1922,12 +1922,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.UpdateInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1715}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1975}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateInstances(
       std::string const& project, std::string const& zone,
@@ -1941,16 +1941,16 @@ class InstancesClient {
   /// a running instance for a list of updatable instance properties.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest,google/cloud/compute/instances/v1/instances.proto#L1715}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest,google/cloud/compute/instances/v1/instances.proto#L1975}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.UpdateInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1715}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1975}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateInstances(
       google::cloud::cpp::compute::instances::v1::UpdateInstancesRequest const&
@@ -1971,12 +1971,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.UpdateAccessConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1658}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1905}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAccessConfig(
       std::string const& project, std::string const& zone,
@@ -1991,16 +1991,16 @@ class InstancesClient {
   /// semantics and uses the JSON merge patch format and processing rules.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::UpdateAccessConfigRequest,google/cloud/compute/instances/v1/instances.proto#L1658}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::UpdateAccessConfigRequest,google/cloud/compute/instances/v1/instances.proto#L1905}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.UpdateAccessConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1658}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1905}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAccessConfig(
       google::cloud::cpp::compute::instances::v1::
@@ -2019,12 +2019,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.UpdateDisplayDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1688}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1941}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisplayDevice(
       std::string const& project, std::string const& zone,
@@ -2039,16 +2039,16 @@ class InstancesClient {
   /// the JSON merge patch format and processing rules.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::UpdateDisplayDeviceRequest,google/cloud/compute/instances/v1/instances.proto#L1688}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::UpdateDisplayDeviceRequest,google/cloud/compute/instances/v1/instances.proto#L1941}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.UpdateDisplayDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1688}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1941}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisplayDevice(
       google::cloud::cpp::compute::instances::v1::
@@ -2070,12 +2070,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.UpdateNetworkInterfaceRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1761}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L2027}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateNetworkInterface(
       std::string const& project, std::string const& zone,
@@ -2092,16 +2092,16 @@ class InstancesClient {
   /// an interface. This method follows PATCH semantics.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::UpdateNetworkInterfaceRequest,google/cloud/compute/instances/v1/instances.proto#L1761}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::UpdateNetworkInterfaceRequest,google/cloud/compute/instances/v1/instances.proto#L2027}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.UpdateNetworkInterfaceRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1761}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L2027}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateNetworkInterface(
       google::cloud::cpp::compute::instances::v1::
@@ -2121,12 +2121,12 @@ class InstancesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.UpdateShieldedInstanceConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1791}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L2064}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   UpdateShieldedInstanceConfig(
@@ -2142,16 +2142,16 @@ class InstancesClient {
   /// and uses the JSON merge patch format and processing rules.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::UpdateShieldedInstanceConfigRequest,google/cloud/compute/instances/v1/instances.proto#L1791}
+  /// @googleapis_link{google::cloud::cpp::compute::instances::v1::UpdateShieldedInstanceConfigRequest,google/cloud/compute/instances/v1/instances.proto#L2064}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.instances.v1.UpdateShieldedInstanceConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L1791}
+  /// @googleapis_reference_link{google/cloud/compute/instances/v1/instances.proto#L2064}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   UpdateShieldedInstanceConfig(

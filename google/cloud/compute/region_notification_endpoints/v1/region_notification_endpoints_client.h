@@ -103,12 +103,12 @@ class RegionNotificationEndpointsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionNotificationEndpoints.v1.DeleteRegionNotificationEndpointsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L72}
+  /// @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L81}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteRegionNotificationEndpoints(std::string const& project,
@@ -120,16 +120,16 @@ class RegionNotificationEndpointsClient {
   /// Deletes the specified NotificationEndpoint in the given region
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionNotificationEndpoints::v1::DeleteRegionNotificationEndpointsRequest,google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L72}
+  /// @googleapis_link{google::cloud::cpp::compute::regionNotificationEndpoints::v1::DeleteRegionNotificationEndpointsRequest,google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L81}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionNotificationEndpoints.v1.DeleteRegionNotificationEndpointsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L72}
+  /// @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L81}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteRegionNotificationEndpoints(
@@ -147,12 +147,12 @@ class RegionNotificationEndpointsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::NotificationEndpoint,google/cloud/compute/v1/internal/common.proto#L17242}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NotificationEndpoint,google/cloud/compute/v1/internal/common.proto#L17263}
   ///
   /// [google.cloud.cpp.compute.regionNotificationEndpoints.v1.GetRegionNotificationEndpointsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L96}
+  /// @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L111}
   /// [google.cloud.cpp.compute.v1.NotificationEndpoint]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17242}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17263}
   ///
   StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
   GetRegionNotificationEndpoints(std::string const& project,
@@ -164,16 +164,16 @@ class RegionNotificationEndpointsClient {
   /// Returns the specified NotificationEndpoint resource in the given region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionNotificationEndpoints::v1::GetRegionNotificationEndpointsRequest,google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L96}
+  /// @googleapis_link{google::cloud::cpp::compute::regionNotificationEndpoints::v1::GetRegionNotificationEndpointsRequest,google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L111}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::NotificationEndpoint,google/cloud/compute/v1/internal/common.proto#L17242}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NotificationEndpoint,google/cloud/compute/v1/internal/common.proto#L17263}
   ///
   /// [google.cloud.cpp.compute.regionNotificationEndpoints.v1.GetRegionNotificationEndpointsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L96}
+  /// @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L111}
   /// [google.cloud.cpp.compute.v1.NotificationEndpoint]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17242}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17263}
   ///
   StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
   GetRegionNotificationEndpoints(
@@ -192,12 +192,12 @@ class RegionNotificationEndpointsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionNotificationEndpoints.v1.InsertRegionNotificationEndpointsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L108}
+  /// @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L123}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertRegionNotificationEndpoints(
@@ -211,16 +211,16 @@ class RegionNotificationEndpointsClient {
   /// using the parameters that are included in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionNotificationEndpoints::v1::InsertRegionNotificationEndpointsRequest,google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L108}
+  /// @googleapis_link{google::cloud::cpp::compute::regionNotificationEndpoints::v1::InsertRegionNotificationEndpointsRequest,google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L123}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionNotificationEndpoints.v1.InsertRegionNotificationEndpointsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L108}
+  /// @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L123}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertRegionNotificationEndpoints(
@@ -236,12 +236,12 @@ class RegionNotificationEndpointsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::NotificationEndpoint,google/cloud/compute/v1/internal/common.proto#L17242}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NotificationEndpoint,google/cloud/compute/v1/internal/common.proto#L17263}
   ///
   /// [google.cloud.cpp.compute.regionNotificationEndpoints.v1.ListRegionNotificationEndpointsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L132}
+  /// @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L154}
   /// [google.cloud.cpp.compute.v1.NotificationEndpoint]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17242}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17263}
   ///
   StreamRange<google::cloud::cpp::compute::v1::NotificationEndpoint>
   ListRegionNotificationEndpoints(std::string const& project,
@@ -251,16 +251,16 @@ class RegionNotificationEndpointsClient {
   /// Lists the NotificationEndpoints for a project in the given region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionNotificationEndpoints::v1::ListRegionNotificationEndpointsRequest,google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L132}
+  /// @googleapis_link{google::cloud::cpp::compute::regionNotificationEndpoints::v1::ListRegionNotificationEndpointsRequest,google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L154}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::NotificationEndpoint,google/cloud/compute/v1/internal/common.proto#L17242}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NotificationEndpoint,google/cloud/compute/v1/internal/common.proto#L17263}
   ///
   /// [google.cloud.cpp.compute.regionNotificationEndpoints.v1.ListRegionNotificationEndpointsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L132}
+  /// @googleapis_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L154}
   /// [google.cloud.cpp.compute.v1.NotificationEndpoint]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17242}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17263}
   ///
   StreamRange<google::cloud::cpp::compute::v1::NotificationEndpoint>
   ListRegionNotificationEndpoints(

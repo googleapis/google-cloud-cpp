@@ -96,12 +96,12 @@ class SslCertificatesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SslCertificateAggregatedList,google/cloud/compute/v1/internal/common.proto#L24836}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslCertificateAggregatedList,google/cloud/compute/v1/internal/common.proto#L24874}
   ///
   /// [google.cloud.cpp.compute.sslCertificates.v1.AggregatedListSslCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L82}
+  /// @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L87}
   /// [google.cloud.cpp.compute.v1.SslCertificateAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24836}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24874}
   ///
   StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
   AggregatedListSslCertificates(std::string const& project, Options opts = {});
@@ -111,16 +111,16 @@ class SslCertificatesClient {
   /// available to the specified project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::sslCertificates::v1::AggregatedListSslCertificatesRequest,google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L82}
+  /// @googleapis_link{google::cloud::cpp::compute::sslCertificates::v1::AggregatedListSslCertificatesRequest,google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L87}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SslCertificateAggregatedList,google/cloud/compute/v1/internal/common.proto#L24836}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslCertificateAggregatedList,google/cloud/compute/v1/internal/common.proto#L24874}
   ///
   /// [google.cloud.cpp.compute.sslCertificates.v1.AggregatedListSslCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L82}
+  /// @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L87}
   /// [google.cloud.cpp.compute.v1.SslCertificateAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24836}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24874}
   ///
   StatusOr<google::cloud::cpp::compute::v1::SslCertificateAggregatedList>
   AggregatedListSslCertificates(
@@ -136,12 +136,12 @@ class SslCertificatesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.sslCertificates.v1.DeleteSslCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L156}
+  /// @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L161}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslCertificates(
       std::string const& project, std::string const& ssl_certificate,
@@ -151,16 +151,16 @@ class SslCertificatesClient {
   /// Deletes the specified SslCertificate resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::sslCertificates::v1::DeleteSslCertificatesRequest,google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L156}
+  /// @googleapis_link{google::cloud::cpp::compute::sslCertificates::v1::DeleteSslCertificatesRequest,google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L161}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.sslCertificates.v1.DeleteSslCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L156}
+  /// @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L161}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslCertificates(
       google::cloud::cpp::compute::sslCertificates::v1::
@@ -175,12 +175,12 @@ class SslCertificatesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SslCertificate,google/cloud/compute/v1/internal/common.proto#L24772}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslCertificate,google/cloud/compute/v1/internal/common.proto#L24810}
   ///
   /// [google.cloud.cpp.compute.sslCertificates.v1.GetSslCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L177}
+  /// @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L185}
   /// [google.cloud.cpp.compute.v1.SslCertificate]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24772}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24810}
   ///
   StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificates(
       std::string const& project, std::string const& ssl_certificate,
@@ -190,16 +190,16 @@ class SslCertificatesClient {
   /// Returns the specified SslCertificate resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::sslCertificates::v1::GetSslCertificatesRequest,google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L177}
+  /// @googleapis_link{google::cloud::cpp::compute::sslCertificates::v1::GetSslCertificatesRequest,google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L185}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SslCertificate,google/cloud/compute/v1/internal/common.proto#L24772}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslCertificate,google/cloud/compute/v1/internal/common.proto#L24810}
   ///
   /// [google.cloud.cpp.compute.sslCertificates.v1.GetSslCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L177}
+  /// @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L185}
   /// [google.cloud.cpp.compute.v1.SslCertificate]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24772}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24810}
   ///
   StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificates(
       google::cloud::cpp::compute::sslCertificates::v1::
@@ -215,12 +215,12 @@ class SslCertificatesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.sslCertificates.v1.InsertSslCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L186}
+  /// @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L194}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslCertificates(
       std::string const& project,
@@ -233,16 +233,16 @@ class SslCertificatesClient {
   /// included in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::sslCertificates::v1::InsertSslCertificatesRequest,google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L186}
+  /// @googleapis_link{google::cloud::cpp::compute::sslCertificates::v1::InsertSslCertificatesRequest,google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L194}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.sslCertificates.v1.InsertSslCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L186}
+  /// @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L194}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslCertificates(
       google::cloud::cpp::compute::sslCertificates::v1::
@@ -257,12 +257,12 @@ class SslCertificatesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SslCertificate,google/cloud/compute/v1/internal/common.proto#L24772}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslCertificate,google/cloud/compute/v1/internal/common.proto#L24810}
   ///
   /// [google.cloud.cpp.compute.sslCertificates.v1.ListSslCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L207}
+  /// @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L219}
   /// [google.cloud.cpp.compute.v1.SslCertificate]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24772}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24810}
   ///
   StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
   ListSslCertificates(std::string const& project, Options opts = {});
@@ -272,16 +272,16 @@ class SslCertificatesClient {
   /// project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::sslCertificates::v1::ListSslCertificatesRequest,google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L207}
+  /// @googleapis_link{google::cloud::cpp::compute::sslCertificates::v1::ListSslCertificatesRequest,google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L219}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SslCertificate,google/cloud/compute/v1/internal/common.proto#L24772}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslCertificate,google/cloud/compute/v1/internal/common.proto#L24810}
   ///
   /// [google.cloud.cpp.compute.sslCertificates.v1.ListSslCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L207}
+  /// @googleapis_reference_link{google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto#L219}
   /// [google.cloud.cpp.compute.v1.SslCertificate]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24772}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24810}
   ///
   StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
   ListSslCertificates(google::cloud::cpp::compute::sslCertificates::v1::

@@ -100,12 +100,12 @@ class BackendServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.AddSignedUrlKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L180}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L201}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddSignedUrlKey(
       std::string const& project, std::string const& backend_service,
@@ -118,16 +118,16 @@ class BackendServicesClient {
   /// service.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::AddSignedUrlKeyRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L180}
+  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::AddSignedUrlKeyRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L201}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.AddSignedUrlKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L180}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L201}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddSignedUrlKey(
       google::cloud::cpp::compute::backendServices::v1::
@@ -142,12 +142,12 @@ class BackendServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendServiceAggregatedList,google/cloud/compute/v1/internal/common.proto#L2653}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendServiceAggregatedList,google/cloud/compute/v1/internal/common.proto#L2663}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.AggregatedListBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L205}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L229}
   /// [google.cloud.cpp.compute.v1.BackendServiceAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2653}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2663}
   ///
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceAggregatedList>
   AggregatedListBackendServices(std::string const& project, Options opts = {});
@@ -157,16 +157,16 @@ class BackendServicesClient {
   /// available to the specified project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::AggregatedListBackendServicesRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L205}
+  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::AggregatedListBackendServicesRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L229}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendServiceAggregatedList,google/cloud/compute/v1/internal/common.proto#L2653}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendServiceAggregatedList,google/cloud/compute/v1/internal/common.proto#L2663}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.AggregatedListBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L205}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L229}
   /// [google.cloud.cpp.compute.v1.BackendServiceAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2653}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2663}
   ///
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceAggregatedList>
   AggregatedListBackendServices(
@@ -182,12 +182,12 @@ class BackendServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.DeleteBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L279}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L303}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteBackendServices(
       std::string const& project, std::string const& backend_service,
@@ -197,16 +197,16 @@ class BackendServicesClient {
   /// Deletes the specified BackendService resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::DeleteBackendServicesRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L279}
+  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::DeleteBackendServicesRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L303}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.DeleteBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L279}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L303}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteBackendServices(
       google::cloud::cpp::compute::backendServices::v1::
@@ -225,12 +225,12 @@ class BackendServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.DeleteSignedUrlKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L300}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L327}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSignedUrlKey(
       std::string const& project, std::string const& backend_service,
@@ -241,16 +241,16 @@ class BackendServicesClient {
   /// service.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::DeleteSignedUrlKeyRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L300}
+  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::DeleteSignedUrlKeyRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L327}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.DeleteSignedUrlKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L300}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L327}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSignedUrlKey(
       google::cloud::cpp::compute::backendServices::v1::
@@ -265,12 +265,12 @@ class BackendServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendService,google/cloud/compute/v1/internal/common.proto#L2329}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendService,google/cloud/compute/v1/internal/common.proto#L2337}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.GetBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L325}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L355}
   /// [google.cloud.cpp.compute.v1.BackendService]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2329}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2337}
   ///
   StatusOr<google::cloud::cpp::compute::v1::BackendService> GetBackendServices(
       std::string const& project, std::string const& backend_service,
@@ -280,16 +280,16 @@ class BackendServicesClient {
   /// Returns the specified BackendService resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::GetBackendServicesRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L325}
+  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::GetBackendServicesRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L355}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendService,google/cloud/compute/v1/internal/common.proto#L2329}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendService,google/cloud/compute/v1/internal/common.proto#L2337}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.GetBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L325}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L355}
   /// [google.cloud.cpp.compute.v1.BackendService]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2329}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2337}
   ///
   StatusOr<google::cloud::cpp::compute::v1::BackendService> GetBackendServices(
       google::cloud::cpp::compute::backendServices::v1::
@@ -309,12 +309,12 @@ class BackendServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendServiceGroupHealth,google/cloud/compute/v1/internal/common.proto#L2991}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendServiceGroupHealth,google/cloud/compute/v1/internal/common.proto#L3003}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.GetHealthRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L334}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L364}
   /// [google.cloud.cpp.compute.v1.BackendServiceGroupHealth]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2991}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3003}
   ///
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
   GetHealth(std::string const& project, std::string const& backend_service,
@@ -328,16 +328,16 @@ class BackendServicesClient {
   /// "/zones/us-east1-b/instanceGroups/lb-backend-example" }
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::GetHealthRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L334}
+  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::GetHealthRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L364}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendServiceGroupHealth,google/cloud/compute/v1/internal/common.proto#L2991}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendServiceGroupHealth,google/cloud/compute/v1/internal/common.proto#L3003}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.GetHealthRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L334}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L364}
   /// [google.cloud.cpp.compute.v1.BackendServiceGroupHealth]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2991}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3003}
   ///
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
   GetHealth(
@@ -354,12 +354,12 @@ class BackendServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L345}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L376}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       std::string const& project, std::string const& resource,
@@ -370,16 +370,16 @@ class BackendServicesClient {
   /// policy or resource exists.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::GetIamPolicyRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L345}
+  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::GetIamPolicyRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L376}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L345}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L376}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::backendServices::v1::
@@ -396,12 +396,12 @@ class BackendServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.InsertBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L357}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L388}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertBackendServices(
       std::string const& project,
@@ -415,16 +415,16 @@ class BackendServicesClient {
   /// overview .
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::InsertBackendServicesRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L357}
+  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::InsertBackendServicesRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L388}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.InsertBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L357}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L388}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertBackendServices(
       google::cloud::cpp::compute::backendServices::v1::
@@ -439,12 +439,12 @@ class BackendServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendService,google/cloud/compute/v1/internal/common.proto#L2329}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendService,google/cloud/compute/v1/internal/common.proto#L2337}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.ListBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L378}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L413}
   /// [google.cloud.cpp.compute.v1.BackendService]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2329}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2337}
   ///
   StreamRange<google::cloud::cpp::compute::v1::BackendService>
   ListBackendServices(std::string const& project, Options opts = {});
@@ -454,16 +454,16 @@ class BackendServicesClient {
   /// project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::ListBackendServicesRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L378}
+  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::ListBackendServicesRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L413}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendService,google/cloud/compute/v1/internal/common.proto#L2329}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendService,google/cloud/compute/v1/internal/common.proto#L2337}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.ListBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L378}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L413}
   /// [google.cloud.cpp.compute.v1.BackendService]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2329}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2337}
   ///
   StreamRange<google::cloud::cpp::compute::v1::BackendService>
   ListBackendServices(google::cloud::cpp::compute::backendServices::v1::
@@ -482,12 +482,12 @@ class BackendServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.PatchBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L443}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L478}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchBackendServices(
       std::string const& project, std::string const& backend_service,
@@ -502,16 +502,16 @@ class BackendServicesClient {
   /// processing rules.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::PatchBackendServicesRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L443}
+  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::PatchBackendServicesRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L478}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.PatchBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L443}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L478}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchBackendServices(
       google::cloud::cpp::compute::backendServices::v1::
@@ -530,12 +530,12 @@ class BackendServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.SetEdgeSecurityPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L467}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L506}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetEdgeSecurityPolicy(
       std::string const& project, std::string const& backend_service,
@@ -547,16 +547,16 @@ class BackendServicesClient {
   /// Sets the edge security policy for the specified backend service.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::SetEdgeSecurityPolicyRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L467}
+  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::SetEdgeSecurityPolicyRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L506}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.SetEdgeSecurityPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L467}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L506}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetEdgeSecurityPolicy(
       google::cloud::cpp::compute::backendServices::v1::
@@ -574,12 +574,12 @@ class BackendServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L492}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L535}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       std::string const& project, std::string const& resource,
@@ -592,16 +592,16 @@ class BackendServicesClient {
   /// existing policy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::SetIamPolicyRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L492}
+  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::SetIamPolicyRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L535}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L492}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L535}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::backendServices::v1::
@@ -621,12 +621,12 @@ class BackendServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.SetSecurityPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L504}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L548}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
       std::string const& project, std::string const& backend_service,
@@ -639,16 +639,16 @@ class BackendServicesClient {
   /// service. For more information, see Google Cloud Armor Overview
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::SetSecurityPolicyRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L504}
+  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::SetSecurityPolicyRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L548}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.SetSecurityPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L504}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L548}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
       google::cloud::cpp::compute::backendServices::v1::
@@ -665,12 +665,12 @@ class BackendServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.UpdateBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L529}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L577}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateBackendServices(
       std::string const& project, std::string const& backend_service,
@@ -683,16 +683,16 @@ class BackendServicesClient {
   /// the request. For more information, see Backend services overview.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::UpdateBackendServicesRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L529}
+  /// @googleapis_link{google::cloud::cpp::compute::backendServices::v1::UpdateBackendServicesRequest,google/cloud/compute/backend_services/v1/backend_services.proto#L577}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.backendServices.v1.UpdateBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L529}
+  /// @googleapis_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L577}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateBackendServices(
       google::cloud::cpp::compute::backendServices::v1::

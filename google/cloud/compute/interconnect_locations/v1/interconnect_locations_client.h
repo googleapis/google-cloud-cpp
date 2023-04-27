@@ -100,12 +100,12 @@ class InterconnectLocationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectLocation,google/cloud/compute/v1/internal/common.proto#L12764}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectLocation,google/cloud/compute/v1/internal/common.proto#L12784}
   ///
   /// [google.cloud.cpp.compute.interconnectLocations.v1.GetInterconnectLocationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L53}
+  /// @googleapis_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L55}
   /// [google.cloud.cpp.compute.v1.InterconnectLocation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L12764}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L12784}
   ///
   StatusOr<google::cloud::cpp::compute::v1::InterconnectLocation>
   GetInterconnectLocations(std::string const& project,
@@ -117,16 +117,16 @@ class InterconnectLocationsClient {
   /// of available interconnect locations by making a list() request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::interconnectLocations::v1::GetInterconnectLocationsRequest,google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L53}
+  /// @googleapis_link{google::cloud::cpp::compute::interconnectLocations::v1::GetInterconnectLocationsRequest,google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L55}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectLocation,google/cloud/compute/v1/internal/common.proto#L12764}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectLocation,google/cloud/compute/v1/internal/common.proto#L12784}
   ///
   /// [google.cloud.cpp.compute.interconnectLocations.v1.GetInterconnectLocationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L53}
+  /// @googleapis_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L55}
   /// [google.cloud.cpp.compute.v1.InterconnectLocation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L12764}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L12784}
   ///
   StatusOr<google::cloud::cpp::compute::v1::InterconnectLocation>
   GetInterconnectLocations(
@@ -142,12 +142,12 @@ class InterconnectLocationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectLocation,google/cloud/compute/v1/internal/common.proto#L12764}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectLocation,google/cloud/compute/v1/internal/common.proto#L12784}
   ///
   /// [google.cloud.cpp.compute.interconnectLocations.v1.ListInterconnectLocationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L62}
+  /// @googleapis_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L64}
   /// [google.cloud.cpp.compute.v1.InterconnectLocation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L12764}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L12784}
   ///
   StreamRange<google::cloud::cpp::compute::v1::InterconnectLocation>
   ListInterconnectLocations(std::string const& project, Options opts = {});
@@ -157,16 +157,16 @@ class InterconnectLocationsClient {
   /// project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::interconnectLocations::v1::ListInterconnectLocationsRequest,google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L62}
+  /// @googleapis_link{google::cloud::cpp::compute::interconnectLocations::v1::ListInterconnectLocationsRequest,google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L64}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectLocation,google/cloud/compute/v1/internal/common.proto#L12764}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectLocation,google/cloud/compute/v1/internal/common.proto#L12784}
   ///
   /// [google.cloud.cpp.compute.interconnectLocations.v1.ListInterconnectLocationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L62}
+  /// @googleapis_reference_link{google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto#L64}
   /// [google.cloud.cpp.compute.v1.InterconnectLocation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L12764}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L12784}
   ///
   StreamRange<google::cloud::cpp::compute::v1::InterconnectLocation>
   ListInterconnectLocations(google::cloud::cpp::compute::interconnectLocations::

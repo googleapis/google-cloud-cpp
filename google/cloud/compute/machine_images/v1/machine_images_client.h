@@ -96,12 +96,12 @@ class MachineImagesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.machineImages.v1.DeleteMachineImagesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L104}
+  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L113}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteMachineImages(
       std::string const& project, std::string const& machine_image,
@@ -112,16 +112,16 @@ class MachineImagesClient {
   /// and cannot be undone.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::machineImages::v1::DeleteMachineImagesRequest,google/cloud/compute/machine_images/v1/machine_images.proto#L104}
+  /// @googleapis_link{google::cloud::cpp::compute::machineImages::v1::DeleteMachineImagesRequest,google/cloud/compute/machine_images/v1/machine_images.proto#L113}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.machineImages.v1.DeleteMachineImagesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L104}
+  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L113}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteMachineImages(
       google::cloud::cpp::compute::machineImages::v1::
@@ -136,12 +136,12 @@ class MachineImagesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::MachineImage,google/cloud/compute/v1/internal/common.proto#L13377}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::MachineImage,google/cloud/compute/v1/internal/common.proto#L13397}
   ///
   /// [google.cloud.cpp.compute.machineImages.v1.GetMachineImagesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L137}
+  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L149}
   /// [google.cloud.cpp.compute.v1.MachineImage]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13377}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13397}
   ///
   StatusOr<google::cloud::cpp::compute::v1::MachineImage> GetMachineImages(
       std::string const& project, std::string const& machine_image,
@@ -151,16 +151,16 @@ class MachineImagesClient {
   /// Returns the specified machine image.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::machineImages::v1::GetMachineImagesRequest,google/cloud/compute/machine_images/v1/machine_images.proto#L137}
+  /// @googleapis_link{google::cloud::cpp::compute::machineImages::v1::GetMachineImagesRequest,google/cloud/compute/machine_images/v1/machine_images.proto#L149}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::MachineImage,google/cloud/compute/v1/internal/common.proto#L13377}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::MachineImage,google/cloud/compute/v1/internal/common.proto#L13397}
   ///
   /// [google.cloud.cpp.compute.machineImages.v1.GetMachineImagesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L137}
+  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L149}
   /// [google.cloud.cpp.compute.v1.MachineImage]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13377}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13397}
   ///
   StatusOr<google::cloud::cpp::compute::v1::MachineImage> GetMachineImages(
       google::cloud::cpp::compute::machineImages::v1::
@@ -176,12 +176,12 @@ class MachineImagesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.machineImages.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L125}
+  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L137}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       std::string const& project, std::string const& resource,
@@ -192,16 +192,16 @@ class MachineImagesClient {
   /// policy or resource exists.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::machineImages::v1::GetIamPolicyRequest,google/cloud/compute/machine_images/v1/machine_images.proto#L125}
+  /// @googleapis_link{google::cloud::cpp::compute::machineImages::v1::GetIamPolicyRequest,google/cloud/compute/machine_images/v1/machine_images.proto#L137}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.machineImages.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L125}
+  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L137}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::machineImages::v1::GetIamPolicyRequest const&
@@ -219,12 +219,12 @@ class MachineImagesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.machineImages.v1.InsertMachineImagesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L146}
+  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L158}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertMachineImages(
       std::string const& project,
@@ -239,16 +239,16 @@ class MachineImagesClient {
   /// or, if applicable, the same subnetwork as the original instance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::machineImages::v1::InsertMachineImagesRequest,google/cloud/compute/machine_images/v1/machine_images.proto#L146}
+  /// @googleapis_link{google::cloud::cpp::compute::machineImages::v1::InsertMachineImagesRequest,google/cloud/compute/machine_images/v1/machine_images.proto#L158}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.machineImages.v1.InsertMachineImagesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L146}
+  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L158}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertMachineImages(
       google::cloud::cpp::compute::machineImages::v1::
@@ -263,12 +263,12 @@ class MachineImagesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::MachineImage,google/cloud/compute/v1/internal/common.proto#L13377}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::MachineImage,google/cloud/compute/v1/internal/common.proto#L13397}
   ///
   /// [google.cloud.cpp.compute.machineImages.v1.ListMachineImagesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L170}
+  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L185}
   /// [google.cloud.cpp.compute.v1.MachineImage]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13377}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13397}
   ///
   StreamRange<google::cloud::cpp::compute::v1::MachineImage> ListMachineImages(
       std::string const& project, Options opts = {});
@@ -278,16 +278,16 @@ class MachineImagesClient {
   /// project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::machineImages::v1::ListMachineImagesRequest,google/cloud/compute/machine_images/v1/machine_images.proto#L170}
+  /// @googleapis_link{google::cloud::cpp::compute::machineImages::v1::ListMachineImagesRequest,google/cloud/compute/machine_images/v1/machine_images.proto#L185}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::MachineImage,google/cloud/compute/v1/internal/common.proto#L13377}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::MachineImage,google/cloud/compute/v1/internal/common.proto#L13397}
   ///
   /// [google.cloud.cpp.compute.machineImages.v1.ListMachineImagesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L170}
+  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L185}
   /// [google.cloud.cpp.compute.v1.MachineImage]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13377}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13397}
   ///
   StreamRange<google::cloud::cpp::compute::v1::MachineImage> ListMachineImages(
       google::cloud::cpp::compute::machineImages::v1::ListMachineImagesRequest
@@ -305,12 +305,12 @@ class MachineImagesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.machineImages.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L235}
+  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L250}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       std::string const& project, std::string const& resource,
@@ -323,16 +323,16 @@ class MachineImagesClient {
   /// existing policy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::machineImages::v1::SetIamPolicyRequest,google/cloud/compute/machine_images/v1/machine_images.proto#L235}
+  /// @googleapis_link{google::cloud::cpp::compute::machineImages::v1::SetIamPolicyRequest,google/cloud/compute/machine_images/v1/machine_images.proto#L250}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.machineImages.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L235}
+  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L250}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::machineImages::v1::SetIamPolicyRequest const&
@@ -349,12 +349,12 @@ class MachineImagesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   /// [google.cloud.cpp.compute.machineImages.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L247}
+  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L263}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(
@@ -367,16 +367,16 @@ class MachineImagesClient {
   /// Returns permissions that a caller has on the specified resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::machineImages::v1::TestIamPermissionsRequest,google/cloud/compute/machine_images/v1/machine_images.proto#L247}
+  /// @googleapis_link{google::cloud::cpp::compute::machineImages::v1::TestIamPermissionsRequest,google/cloud/compute/machine_images/v1/machine_images.proto#L263}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   /// [google.cloud.cpp.compute.machineImages.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L247}
+  /// @googleapis_reference_link{google/cloud/compute/machine_images/v1/machine_images.proto#L263}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::machineImages::v1::

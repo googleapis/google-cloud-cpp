@@ -93,12 +93,12 @@ class ZonesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Zone,google/cloud/compute/v1/internal/common.proto#L30857}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Zone,google/cloud/compute/v1/internal/common.proto#L30896}
   ///
   /// [google.cloud.cpp.compute.v1.Zone]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30857}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30896}
   /// [google.cloud.cpp.compute.zones.v1.GetZonesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L51}
+  /// @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L52}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Zone> GetZones(
       std::string const& project, std::string const& zone, Options opts = {});
@@ -107,16 +107,16 @@ class ZonesClient {
   /// Returns the specified Zone resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::zones::v1::GetZonesRequest,google/cloud/compute/zones/v1/zones.proto#L51}
+  /// @googleapis_link{google::cloud::cpp::compute::zones::v1::GetZonesRequest,google/cloud/compute/zones/v1/zones.proto#L52}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Zone,google/cloud/compute/v1/internal/common.proto#L30857}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Zone,google/cloud/compute/v1/internal/common.proto#L30896}
   ///
   /// [google.cloud.cpp.compute.v1.Zone]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30857}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30896}
   /// [google.cloud.cpp.compute.zones.v1.GetZonesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L51}
+  /// @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L52}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Zone> GetZones(
       google::cloud::cpp::compute::zones::v1::GetZonesRequest const& request,
@@ -129,12 +129,12 @@ class ZonesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Zone,google/cloud/compute/v1/internal/common.proto#L30857}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Zone,google/cloud/compute/v1/internal/common.proto#L30896}
   ///
   /// [google.cloud.cpp.compute.v1.Zone]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30857}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30896}
   /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L60}
+  /// @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L61}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Zone> ListZones(
       std::string const& project, Options opts = {});
@@ -143,16 +143,16 @@ class ZonesClient {
   /// Retrieves the list of Zone resources available to the specified project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::zones::v1::ListZonesRequest,google/cloud/compute/zones/v1/zones.proto#L60}
+  /// @googleapis_link{google::cloud::cpp::compute::zones::v1::ListZonesRequest,google/cloud/compute/zones/v1/zones.proto#L61}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Zone,google/cloud/compute/v1/internal/common.proto#L30857}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Zone,google/cloud/compute/v1/internal/common.proto#L30896}
   ///
   /// [google.cloud.cpp.compute.v1.Zone]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30857}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L30896}
   /// [google.cloud.cpp.compute.zones.v1.ListZonesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L60}
+  /// @googleapis_reference_link{google/cloud/compute/zones/v1/zones.proto#L61}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Zone> ListZones(
       google::cloud::cpp::compute::zones::v1::ListZonesRequest request,

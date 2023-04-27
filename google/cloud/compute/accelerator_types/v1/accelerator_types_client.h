@@ -98,7 +98,7 @@ class AcceleratorTypesClient {
   /// @googleapis_link{google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList,google/cloud/compute/v1/internal/common.proto#L70}
   ///
   /// [google.cloud.cpp.compute.acceleratorTypes.v1.AggregatedListAcceleratorTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L60}
+  /// @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L63}
   /// [google.cloud.cpp.compute.v1.AcceleratorTypeAggregatedList]:
   /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L70}
   ///
@@ -109,14 +109,14 @@ class AcceleratorTypesClient {
   /// Retrieves an aggregated list of accelerator types.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::acceleratorTypes::v1::AggregatedListAcceleratorTypesRequest,google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L60}
+  /// @googleapis_link{google::cloud::cpp::compute::acceleratorTypes::v1::AggregatedListAcceleratorTypesRequest,google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L63}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::cpp::compute::v1::AcceleratorTypeAggregatedList,google/cloud/compute/v1/internal/common.proto#L70}
   ///
   /// [google.cloud.cpp.compute.acceleratorTypes.v1.AggregatedListAcceleratorTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L60}
+  /// @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L63}
   /// [google.cloud.cpp.compute.v1.AcceleratorTypeAggregatedList]:
   /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L70}
   ///
@@ -138,7 +138,7 @@ class AcceleratorTypesClient {
   /// @googleapis_link{google::cloud::cpp::compute::v1::AcceleratorType,google/cloud/compute/v1/internal/common.proto#L37}
   ///
   /// [google.cloud.cpp.compute.acceleratorTypes.v1.GetAcceleratorTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L134}
+  /// @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L137}
   /// [google.cloud.cpp.compute.v1.AcceleratorType]:
   /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L37}
   ///
@@ -150,14 +150,14 @@ class AcceleratorTypesClient {
   /// Returns the specified accelerator type.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::acceleratorTypes::v1::GetAcceleratorTypesRequest,google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L134}
+  /// @googleapis_link{google::cloud::cpp::compute::acceleratorTypes::v1::GetAcceleratorTypesRequest,google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L137}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::cpp::compute::v1::AcceleratorType,google/cloud/compute/v1/internal/common.proto#L37}
   ///
   /// [google.cloud.cpp.compute.acceleratorTypes.v1.GetAcceleratorTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L134}
+  /// @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L137}
   /// [google.cloud.cpp.compute.v1.AcceleratorType]:
   /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L37}
   ///
@@ -178,7 +178,7 @@ class AcceleratorTypesClient {
   /// @googleapis_link{google::cloud::cpp::compute::v1::AcceleratorType,google/cloud/compute/v1/internal/common.proto#L37}
   ///
   /// [google.cloud.cpp.compute.acceleratorTypes.v1.ListAcceleratorTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L146}
+  /// @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L149}
   /// [google.cloud.cpp.compute.v1.AcceleratorType]:
   /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L37}
   ///
@@ -191,14 +191,14 @@ class AcceleratorTypesClient {
   /// project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::acceleratorTypes::v1::ListAcceleratorTypesRequest,google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L146}
+  /// @googleapis_link{google::cloud::cpp::compute::acceleratorTypes::v1::ListAcceleratorTypesRequest,google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L149}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::cpp::compute::v1::AcceleratorType,google/cloud/compute/v1/internal/common.proto#L37}
   ///
   /// [google.cloud.cpp.compute.acceleratorTypes.v1.ListAcceleratorTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L146}
+  /// @googleapis_reference_link{google/cloud/compute/accelerator_types/v1/accelerator_types.proto#L149}
   /// [google.cloud.cpp.compute.v1.AcceleratorType]:
   /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L37}
   ///

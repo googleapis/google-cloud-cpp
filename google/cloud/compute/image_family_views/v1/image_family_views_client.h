@@ -97,12 +97,12 @@ class ImageFamilyViewsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::ImageFamilyView,google/cloud/compute/v1/internal/common.proto#L8958}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ImageFamilyView,google/cloud/compute/v1/internal/common.proto#L8973}
   ///
   /// [google.cloud.cpp.compute.imageFamilyViews.v1.GetImageFamilyViewsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L44}
+  /// @googleapis_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L45}
   /// [google.cloud.cpp.compute.v1.ImageFamilyView]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L8958}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L8973}
   ///
   StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
   GetImageFamilyViews(std::string const& project, std::string const& zone,
@@ -113,16 +113,16 @@ class ImageFamilyViewsClient {
   /// deprecated and is rolled out in the specified zone.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::imageFamilyViews::v1::GetImageFamilyViewsRequest,google/cloud/compute/image_family_views/v1/image_family_views.proto#L44}
+  /// @googleapis_link{google::cloud::cpp::compute::imageFamilyViews::v1::GetImageFamilyViewsRequest,google/cloud/compute/image_family_views/v1/image_family_views.proto#L45}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::ImageFamilyView,google/cloud/compute/v1/internal/common.proto#L8958}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ImageFamilyView,google/cloud/compute/v1/internal/common.proto#L8973}
   ///
   /// [google.cloud.cpp.compute.imageFamilyViews.v1.GetImageFamilyViewsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L44}
+  /// @googleapis_reference_link{google/cloud/compute/image_family_views/v1/image_family_views.proto#L45}
   /// [google.cloud.cpp.compute.v1.ImageFamilyView]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L8958}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L8973}
   ///
   StatusOr<google::cloud::cpp::compute::v1::ImageFamilyView>
   GetImageFamilyViews(google::cloud::cpp::compute::imageFamilyViews::v1::

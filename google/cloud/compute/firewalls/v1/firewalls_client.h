@@ -93,12 +93,12 @@ class FirewallsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.firewalls.v1.DeleteFirewallsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L96}
+  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L102}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteFirewalls(
       std::string const& project, std::string const& firewall,
@@ -108,16 +108,16 @@ class FirewallsClient {
   /// Deletes the specified firewall.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest,google/cloud/compute/firewalls/v1/firewalls.proto#L96}
+  /// @googleapis_link{google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest,google/cloud/compute/firewalls/v1/firewalls.proto#L102}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.firewalls.v1.DeleteFirewallsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L96}
+  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L102}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteFirewalls(
       google::cloud::cpp::compute::firewalls::v1::DeleteFirewallsRequest const&
@@ -132,12 +132,12 @@ class FirewallsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Firewall,google/cloud/compute/v1/internal/common.proto#L5700}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Firewall,google/cloud/compute/v1/internal/common.proto#L5714}
   ///
   /// [google.cloud.cpp.compute.firewalls.v1.GetFirewallsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L117}
+  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L126}
   /// [google.cloud.cpp.compute.v1.Firewall]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5700}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5714}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Firewall> GetFirewalls(
       std::string const& project, std::string const& firewall,
@@ -147,16 +147,16 @@ class FirewallsClient {
   /// Returns the specified firewall.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest,google/cloud/compute/firewalls/v1/firewalls.proto#L117}
+  /// @googleapis_link{google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest,google/cloud/compute/firewalls/v1/firewalls.proto#L126}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Firewall,google/cloud/compute/v1/internal/common.proto#L5700}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Firewall,google/cloud/compute/v1/internal/common.proto#L5714}
   ///
   /// [google.cloud.cpp.compute.firewalls.v1.GetFirewallsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L117}
+  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L126}
   /// [google.cloud.cpp.compute.v1.Firewall]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5700}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5714}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Firewall> GetFirewalls(
       google::cloud::cpp::compute::firewalls::v1::GetFirewallsRequest const&
@@ -172,12 +172,12 @@ class FirewallsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.firewalls.v1.InsertFirewallsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L126}
+  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L135}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertFirewalls(
       std::string const& project,
@@ -189,16 +189,16 @@ class FirewallsClient {
   /// in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest,google/cloud/compute/firewalls/v1/firewalls.proto#L126}
+  /// @googleapis_link{google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest,google/cloud/compute/firewalls/v1/firewalls.proto#L135}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.firewalls.v1.InsertFirewallsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L126}
+  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L135}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertFirewalls(
       google::cloud::cpp::compute::firewalls::v1::InsertFirewallsRequest const&
@@ -212,12 +212,12 @@ class FirewallsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Firewall,google/cloud/compute/v1/internal/common.proto#L5700}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Firewall,google/cloud/compute/v1/internal/common.proto#L5714}
   ///
   /// [google.cloud.cpp.compute.firewalls.v1.ListFirewallsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L147}
+  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L159}
   /// [google.cloud.cpp.compute.v1.Firewall]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5700}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5714}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Firewall> ListFirewalls(
       std::string const& project, Options opts = {});
@@ -226,16 +226,16 @@ class FirewallsClient {
   /// Retrieves the list of firewall rules available to the specified project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest,google/cloud/compute/firewalls/v1/firewalls.proto#L147}
+  /// @googleapis_link{google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest,google/cloud/compute/firewalls/v1/firewalls.proto#L159}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Firewall,google/cloud/compute/v1/internal/common.proto#L5700}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Firewall,google/cloud/compute/v1/internal/common.proto#L5714}
   ///
   /// [google.cloud.cpp.compute.firewalls.v1.ListFirewallsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L147}
+  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L159}
   /// [google.cloud.cpp.compute.v1.Firewall]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5700}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5714}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Firewall> ListFirewalls(
       google::cloud::cpp::compute::firewalls::v1::ListFirewallsRequest request,
@@ -252,12 +252,12 @@ class FirewallsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.firewalls.v1.PatchFirewallsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L212}
+  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L224}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchFirewalls(
       std::string const& project, std::string const& firewall,
@@ -270,16 +270,16 @@ class FirewallsClient {
   /// and processing rules.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest,google/cloud/compute/firewalls/v1/firewalls.proto#L212}
+  /// @googleapis_link{google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest,google/cloud/compute/firewalls/v1/firewalls.proto#L224}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.firewalls.v1.PatchFirewallsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L212}
+  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L224}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchFirewalls(
       google::cloud::cpp::compute::firewalls::v1::PatchFirewallsRequest const&
@@ -297,12 +297,12 @@ class FirewallsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.firewalls.v1.UpdateFirewallsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L236}
+  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L251}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateFirewalls(
       std::string const& project, std::string const& firewall,
@@ -315,16 +315,16 @@ class FirewallsClient {
   /// not specified. To update individual fields, please use PATCH instead.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest,google/cloud/compute/firewalls/v1/firewalls.proto#L236}
+  /// @googleapis_link{google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest,google/cloud/compute/firewalls/v1/firewalls.proto#L251}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.firewalls.v1.UpdateFirewallsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L236}
+  /// @googleapis_reference_link{google/cloud/compute/firewalls/v1/firewalls.proto#L251}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateFirewalls(
       google::cloud::cpp::compute::firewalls::v1::UpdateFirewallsRequest const&

@@ -98,12 +98,12 @@ class DisksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.disks.v1.AddResourcePoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L182}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L201}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
       std::string const& project, std::string const& zone,
@@ -117,16 +117,16 @@ class DisksClient {
   /// which will be applied to this disk for scheduling snapshot creation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest,google/cloud/compute/disks/v1/disks.proto#L182}
+  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest,google/cloud/compute/disks/v1/disks.proto#L201}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.disks.v1.AddResourcePoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L182}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L201}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
       google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&
@@ -140,12 +140,12 @@ class DisksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::DiskAggregatedList,google/cloud/compute/v1/internal/common.proto#L4508}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::DiskAggregatedList,google/cloud/compute/v1/internal/common.proto#L4522}
   ///
   /// [google.cloud.cpp.compute.disks.v1.AggregatedListDisksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L209}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L235}
   /// [google.cloud.cpp.compute.v1.DiskAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4508}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4522}
   ///
   StatusOr<google::cloud::cpp::compute::v1::DiskAggregatedList>
   AggregatedListDisks(std::string const& project, Options opts = {});
@@ -154,16 +154,16 @@ class DisksClient {
   /// Retrieves an aggregated list of persistent disks.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest,google/cloud/compute/disks/v1/disks.proto#L209}
+  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::AggregatedListDisksRequest,google/cloud/compute/disks/v1/disks.proto#L235}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::DiskAggregatedList,google/cloud/compute/v1/internal/common.proto#L4508}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::DiskAggregatedList,google/cloud/compute/v1/internal/common.proto#L4522}
   ///
   /// [google.cloud.cpp.compute.disks.v1.AggregatedListDisksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L209}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L235}
   /// [google.cloud.cpp.compute.v1.DiskAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4508}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4522}
   ///
   StatusOr<google::cloud::cpp::compute::v1::DiskAggregatedList>
   AggregatedListDisks(
@@ -184,12 +184,12 @@ class DisksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.disks.v1.CreateSnapshotRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L283}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L309}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> CreateSnapshot(
       std::string const& project, std::string const& zone,
@@ -204,16 +204,16 @@ class DisksClient {
   /// source disk project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest,google/cloud/compute/disks/v1/disks.proto#L283}
+  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest,google/cloud/compute/disks/v1/disks.proto#L309}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.disks.v1.CreateSnapshotRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L283}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L309}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> CreateSnapshot(
       google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
@@ -232,12 +232,12 @@ class DisksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.disks.v1.DeleteDisksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L314}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L346}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteDisks(
       std::string const& project, std::string const& zone,
@@ -250,16 +250,16 @@ class DisksClient {
   /// snapshots.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::DeleteDisksRequest,google/cloud/compute/disks/v1/disks.proto#L314}
+  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::DeleteDisksRequest,google/cloud/compute/disks/v1/disks.proto#L346}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.disks.v1.DeleteDisksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L314}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L346}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteDisks(
       google::cloud::cpp::compute::disks::v1::DeleteDisksRequest const& request,
@@ -274,12 +274,12 @@ class DisksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Disk,google/cloud/compute/v1/internal/common.proto#L4287}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Disk,google/cloud/compute/v1/internal/common.proto#L4301}
   ///
   /// [google.cloud.cpp.compute.disks.v1.GetDisksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L338}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L376}
   /// [google.cloud.cpp.compute.v1.Disk]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4287}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4301}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisks(
       std::string const& project, std::string const& zone,
@@ -289,16 +289,16 @@ class DisksClient {
   /// Returns the specified persistent disk.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::GetDisksRequest,google/cloud/compute/disks/v1/disks.proto#L338}
+  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::GetDisksRequest,google/cloud/compute/disks/v1/disks.proto#L376}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Disk,google/cloud/compute/v1/internal/common.proto#L4287}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Disk,google/cloud/compute/v1/internal/common.proto#L4301}
   ///
   /// [google.cloud.cpp.compute.disks.v1.GetDisksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L338}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L376}
   /// [google.cloud.cpp.compute.v1.Disk]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4287}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4301}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisks(
       google::cloud::cpp::compute::disks::v1::GetDisksRequest const& request,
@@ -314,12 +314,12 @@ class DisksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.disks.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L350}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L388}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       std::string const& project, std::string const& zone,
@@ -330,16 +330,16 @@ class DisksClient {
   /// policy or resource exists.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest,google/cloud/compute/disks/v1/disks.proto#L350}
+  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest,google/cloud/compute/disks/v1/disks.proto#L388}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.disks.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L350}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L388}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::disks::v1::GetIamPolicyRequest const&
@@ -359,12 +359,12 @@ class DisksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.disks.v1.InsertDisksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L365}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L403}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertDisks(
       std::string const& project, std::string const& zone,
@@ -379,16 +379,16 @@ class DisksClient {
   /// size by specifying the sizeGb property.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::InsertDisksRequest,google/cloud/compute/disks/v1/disks.proto#L365}
+  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::InsertDisksRequest,google/cloud/compute/disks/v1/disks.proto#L403}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.disks.v1.InsertDisksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L365}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L403}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertDisks(
       google::cloud::cpp::compute::disks::v1::InsertDisksRequest const& request,
@@ -402,12 +402,12 @@ class DisksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Disk,google/cloud/compute/v1/internal/common.proto#L4287}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Disk,google/cloud/compute/v1/internal/common.proto#L4301}
   ///
   /// [google.cloud.cpp.compute.disks.v1.ListDisksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L392}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L436}
   /// [google.cloud.cpp.compute.v1.Disk]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4287}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4301}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Disk> ListDisks(
       std::string const& project, std::string const& zone, Options opts = {});
@@ -416,16 +416,16 @@ class DisksClient {
   /// Retrieves a list of persistent disks contained within the specified zone.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::ListDisksRequest,google/cloud/compute/disks/v1/disks.proto#L392}
+  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::ListDisksRequest,google/cloud/compute/disks/v1/disks.proto#L436}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Disk,google/cloud/compute/v1/internal/common.proto#L4287}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Disk,google/cloud/compute/v1/internal/common.proto#L4301}
   ///
   /// [google.cloud.cpp.compute.disks.v1.ListDisksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L392}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L436}
   /// [google.cloud.cpp.compute.v1.Disk]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4287}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L4301}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Disk> ListDisks(
       google::cloud::cpp::compute::disks::v1::ListDisksRequest request,
@@ -442,12 +442,12 @@ class DisksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.disks.v1.RemoveResourcePoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L460}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L504}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
       std::string const& project, std::string const& zone,
@@ -460,16 +460,16 @@ class DisksClient {
   /// Removes resource policies from a disk.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::RemoveResourcePoliciesRequest,google/cloud/compute/disks/v1/disks.proto#L460}
+  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::RemoveResourcePoliciesRequest,google/cloud/compute/disks/v1/disks.proto#L504}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.disks.v1.RemoveResourcePoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L460}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L504}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
       google::cloud::cpp::compute::disks::v1::
@@ -488,12 +488,12 @@ class DisksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.disks.v1.ResizeRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L487}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L538}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
       std::string const& project, std::string const& zone,
@@ -507,16 +507,16 @@ class DisksClient {
   /// the disk.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::ResizeRequest,google/cloud/compute/disks/v1/disks.proto#L487}
+  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::ResizeRequest,google/cloud/compute/disks/v1/disks.proto#L538}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.disks.v1.ResizeRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L487}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L538}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
       google::cloud::cpp::compute::disks::v1::ResizeRequest const& request,
@@ -534,12 +534,12 @@ class DisksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.disks.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L514}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L572}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       std::string const& project, std::string const& zone,
@@ -553,16 +553,16 @@ class DisksClient {
   /// existing policy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::SetIamPolicyRequest,google/cloud/compute/disks/v1/disks.proto#L514}
+  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::SetIamPolicyRequest,google/cloud/compute/disks/v1/disks.proto#L572}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.disks.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L514}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L572}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::disks::v1::SetIamPolicyRequest const&
@@ -581,12 +581,12 @@ class DisksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.disks.v1.SetLabelsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L529}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L588}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       std::string const& project, std::string const& zone,
@@ -600,16 +600,16 @@ class DisksClient {
   /// Resources documentation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::SetLabelsRequest,google/cloud/compute/disks/v1/disks.proto#L529}
+  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::SetLabelsRequest,google/cloud/compute/disks/v1/disks.proto#L588}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.disks.v1.SetLabelsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L529}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L588}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request,
@@ -626,12 +626,12 @@ class DisksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   /// [google.cloud.cpp.compute.disks.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L556}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L622}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(
@@ -645,16 +645,16 @@ class DisksClient {
   /// Returns permissions that a caller has on the specified resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::TestIamPermissionsRequest,google/cloud/compute/disks/v1/disks.proto#L556}
+  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::TestIamPermissionsRequest,google/cloud/compute/disks/v1/disks.proto#L622}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   /// [google.cloud.cpp.compute.disks.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L556}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L622}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(
@@ -674,12 +674,12 @@ class DisksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.disks.v1.UpdateDisksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L571}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L638}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisks(
       std::string const& project, std::string const& zone,
@@ -693,16 +693,16 @@ class DisksClient {
   /// update-mask. Only the following fields can be modified: user_license.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::UpdateDisksRequest,google/cloud/compute/disks/v1/disks.proto#L571}
+  /// @googleapis_link{google::cloud::cpp::compute::disks::v1::UpdateDisksRequest,google/cloud/compute/disks/v1/disks.proto#L638}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.disks.v1.UpdateDisksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L571}
+  /// @googleapis_reference_link{google/cloud/compute/disks/v1/disks.proto#L638}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisks(
       google::cloud::cpp::compute::disks::v1::UpdateDisksRequest const& request,

@@ -95,12 +95,12 @@ class SubnetworksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SubnetworkAggregatedList,google/cloud/compute/v1/internal/common.proto#L25821}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SubnetworkAggregatedList,google/cloud/compute/v1/internal/common.proto#L25859}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.AggregatedListSubnetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L150}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L167}
   /// [google.cloud.cpp.compute.v1.SubnetworkAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25821}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25859}
   ///
   StatusOr<google::cloud::cpp::compute::v1::SubnetworkAggregatedList>
   AggregatedListSubnetworks(std::string const& project, Options opts = {});
@@ -109,16 +109,16 @@ class SubnetworksClient {
   /// Retrieves an aggregated list of subnetworks.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::AggregatedListSubnetworksRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L150}
+  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::AggregatedListSubnetworksRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L167}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SubnetworkAggregatedList,google/cloud/compute/v1/internal/common.proto#L25821}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SubnetworkAggregatedList,google/cloud/compute/v1/internal/common.proto#L25859}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.AggregatedListSubnetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L150}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L167}
   /// [google.cloud.cpp.compute.v1.SubnetworkAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25821}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25859}
   ///
   StatusOr<google::cloud::cpp::compute::v1::SubnetworkAggregatedList>
   AggregatedListSubnetworks(google::cloud::cpp::compute::subnetworks::v1::
@@ -134,12 +134,12 @@ class SubnetworksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.DeleteSubnetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L224}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L241}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSubnetworks(
       std::string const& project, std::string const& region,
@@ -149,16 +149,16 @@ class SubnetworksClient {
   /// Deletes the specified subnetwork.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworksRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L224}
+  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworksRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L241}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.DeleteSubnetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L224}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L241}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSubnetworks(
       google::cloud::cpp::compute::subnetworks::v1::
@@ -176,12 +176,12 @@ class SubnetworksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.ExpandIpCidrRangeRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L248}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L271}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> ExpandIpCidrRange(
       std::string const& project, std::string const& region,
@@ -195,16 +195,16 @@ class SubnetworksClient {
   /// Expands the IP CIDR range of the subnetwork to a specified value.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L248}
+  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::ExpandIpCidrRangeRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L271}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.ExpandIpCidrRangeRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L248}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L271}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> ExpandIpCidrRange(
       google::cloud::cpp::compute::subnetworks::v1::
@@ -220,12 +220,12 @@ class SubnetworksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Subnetwork,google/cloud/compute/v1/internal/common.proto#L25667}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Subnetwork,google/cloud/compute/v1/internal/common.proto#L25705}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.GetSubnetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L290}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L320}
   /// [google.cloud.cpp.compute.v1.Subnetwork]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25667}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25705}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Subnetwork> GetSubnetworks(
       std::string const& project, std::string const& region,
@@ -235,16 +235,16 @@ class SubnetworksClient {
   /// Returns the specified subnetwork.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L290}
+  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L320}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Subnetwork,google/cloud/compute/v1/internal/common.proto#L25667}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Subnetwork,google/cloud/compute/v1/internal/common.proto#L25705}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.GetSubnetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L290}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L320}
   /// [google.cloud.cpp.compute.v1.Subnetwork]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25667}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25705}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Subnetwork> GetSubnetworks(
       google::cloud::cpp::compute::subnetworks::v1::GetSubnetworksRequest const&
@@ -261,12 +261,12 @@ class SubnetworksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L275}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L305}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       std::string const& project, std::string const& region,
@@ -277,16 +277,16 @@ class SubnetworksClient {
   /// policy or resource exists.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L275}
+  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L305}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L275}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L305}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::subnetworks::v1::GetIamPolicyRequest const&
@@ -303,12 +303,12 @@ class SubnetworksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.InsertSubnetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L302}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L332}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSubnetworks(
       std::string const& project, std::string const& region,
@@ -320,16 +320,16 @@ class SubnetworksClient {
   /// the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworksRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L302}
+  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworksRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L332}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.InsertSubnetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L302}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L332}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSubnetworks(
       google::cloud::cpp::compute::subnetworks::v1::
@@ -344,12 +344,12 @@ class SubnetworksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Subnetwork,google/cloud/compute/v1/internal/common.proto#L25667}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Subnetwork,google/cloud/compute/v1/internal/common.proto#L25705}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.ListSubnetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L326}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L362}
   /// [google.cloud.cpp.compute.v1.Subnetwork]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25667}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25705}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Subnetwork> ListSubnetworks(
       std::string const& project, std::string const& region, Options opts = {});
@@ -358,16 +358,16 @@ class SubnetworksClient {
   /// Retrieves a list of subnetworks available to the specified project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L326}
+  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L362}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Subnetwork,google/cloud/compute/v1/internal/common.proto#L25667}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Subnetwork,google/cloud/compute/v1/internal/common.proto#L25705}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.ListSubnetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L326}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L362}
   /// [google.cloud.cpp.compute.v1.Subnetwork]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25667}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25705}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Subnetwork> ListSubnetworks(
       google::cloud::cpp::compute::subnetworks::v1::ListSubnetworksRequest
@@ -381,12 +381,12 @@ class SubnetworksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::UsableSubnetwork,google/cloud/compute/v1/internal/common.proto#L29425}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::UsableSubnetwork,google/cloud/compute/v1/internal/common.proto#L29463}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.ListUsableRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L394}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L430}
   /// [google.cloud.cpp.compute.v1.UsableSubnetwork]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29425}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29463}
   ///
   StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork> ListUsable(
       std::string const& project, Options opts = {});
@@ -395,16 +395,16 @@ class SubnetworksClient {
   /// Retrieves an aggregated list of all usable subnetworks in the project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L394}
+  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L430}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::UsableSubnetwork,google/cloud/compute/v1/internal/common.proto#L29425}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::UsableSubnetwork,google/cloud/compute/v1/internal/common.proto#L29463}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.ListUsableRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L394}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L430}
   /// [google.cloud.cpp.compute.v1.UsableSubnetwork]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29425}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29463}
   ///
   StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork> ListUsable(
       google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request,
@@ -423,12 +423,12 @@ class SubnetworksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.PatchSubnetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L459}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L495}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSubnetworks(
       std::string const& project, std::string const& region,
@@ -443,16 +443,16 @@ class SubnetworksClient {
   /// subnetwork resource being patched.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworksRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L459}
+  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworksRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L495}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.PatchSubnetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L459}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L495}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSubnetworks(
       google::cloud::cpp::compute::subnetworks::v1::
@@ -471,12 +471,12 @@ class SubnetworksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L496}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L538}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       std::string const& project, std::string const& region,
@@ -490,16 +490,16 @@ class SubnetworksClient {
   /// existing policy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L496}
+  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L538}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L496}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L538}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&
@@ -518,12 +518,12 @@ class SubnetworksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.SetPrivateIpGoogleAccessRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L511}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L554}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetPrivateIpGoogleAccess(
       std::string const& project, std::string const& region,
@@ -538,16 +538,16 @@ class SubnetworksClient {
   /// assigning external IP addresses through Private Google Access.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L511}
+  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::SetPrivateIpGoogleAccessRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L554}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.SetPrivateIpGoogleAccessRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L511}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L554}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetPrivateIpGoogleAccess(
       google::cloud::cpp::compute::subnetworks::v1::
@@ -565,12 +565,12 @@ class SubnetworksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L538}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L589}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(
@@ -584,16 +584,16 @@ class SubnetworksClient {
   /// Returns permissions that a caller has on the specified resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::TestIamPermissionsRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L538}
+  /// @googleapis_link{google::cloud::cpp::compute::subnetworks::v1::TestIamPermissionsRequest,google/cloud/compute/subnetworks/v1/subnetworks.proto#L589}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   /// [google.cloud.cpp.compute.subnetworks.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L538}
+  /// @googleapis_reference_link{google/cloud/compute/subnetworks/v1/subnetworks.proto#L589}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::subnetworks::v1::

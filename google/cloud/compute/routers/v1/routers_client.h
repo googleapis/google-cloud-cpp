@@ -93,12 +93,12 @@ class RoutersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::RouterAggregatedList,google/cloud/compute/v1/internal/common.proto#L22006}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::RouterAggregatedList,google/cloud/compute/v1/internal/common.proto#L22035}
   ///
   /// [google.cloud.cpp.compute.routers.v1.AggregatedListRoutersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L131}
+  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L144}
   /// [google.cloud.cpp.compute.v1.RouterAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L22006}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L22035}
   ///
   StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
   AggregatedListRouters(std::string const& project, Options opts = {});
@@ -107,16 +107,16 @@ class RoutersClient {
   /// Retrieves an aggregated list of routers.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest,google/cloud/compute/routers/v1/routers.proto#L131}
+  /// @googleapis_link{google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest,google/cloud/compute/routers/v1/routers.proto#L144}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::RouterAggregatedList,google/cloud/compute/v1/internal/common.proto#L22006}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::RouterAggregatedList,google/cloud/compute/v1/internal/common.proto#L22035}
   ///
   /// [google.cloud.cpp.compute.routers.v1.AggregatedListRoutersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L131}
+  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L144}
   /// [google.cloud.cpp.compute.v1.RouterAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L22006}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L22035}
   ///
   StatusOr<google::cloud::cpp::compute::v1::RouterAggregatedList>
   AggregatedListRouters(google::cloud::cpp::compute::routers::v1::
@@ -132,12 +132,12 @@ class RoutersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.routers.v1.DeleteRoutersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L205}
+  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L218}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRouters(
       std::string const& project, std::string const& region,
@@ -147,16 +147,16 @@ class RoutersClient {
   /// Deletes the specified Router resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest,google/cloud/compute/routers/v1/routers.proto#L205}
+  /// @googleapis_link{google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest,google/cloud/compute/routers/v1/routers.proto#L218}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.routers.v1.DeleteRoutersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L205}
+  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L218}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRouters(
       google::cloud::cpp::compute::routers::v1::DeleteRoutersRequest const&
@@ -172,12 +172,12 @@ class RoutersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Router,google/cloud/compute/v1/internal/common.proto#L21937}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Router,google/cloud/compute/v1/internal/common.proto#L21966}
   ///
   /// [google.cloud.cpp.compute.routers.v1.GetRoutersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L313}
+  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L332}
   /// [google.cloud.cpp.compute.v1.Router]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21937}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21966}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Router> GetRouters(
       std::string const& project, std::string const& region,
@@ -187,16 +187,16 @@ class RoutersClient {
   /// Returns the specified Router resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::routers::v1::GetRoutersRequest,google/cloud/compute/routers/v1/routers.proto#L313}
+  /// @googleapis_link{google::cloud::cpp::compute::routers::v1::GetRoutersRequest,google/cloud/compute/routers/v1/routers.proto#L332}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Router,google/cloud/compute/v1/internal/common.proto#L21937}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Router,google/cloud/compute/v1/internal/common.proto#L21966}
   ///
   /// [google.cloud.cpp.compute.routers.v1.GetRoutersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L313}
+  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L332}
   /// [google.cloud.cpp.compute.v1.Router]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21937}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21966}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Router> GetRouters(
       google::cloud::cpp::compute::routers::v1::GetRoutersRequest const&
@@ -214,12 +214,12 @@ class RoutersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::VmEndpointNatMappingsList,google/cloud/compute/v1/internal/common.proto#L29697}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::VmEndpointNatMappingsList,google/cloud/compute/v1/internal/common.proto#L29736}
   ///
   /// [google.cloud.cpp.compute.routers.v1.GetNatMappingInfoRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L229}
+  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L248}
   /// [google.cloud.cpp.compute.v1.VmEndpointNatMappingsList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29697}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29736}
   ///
   StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
   GetNatMappingInfo(std::string const& project, std::string const& region,
@@ -229,16 +229,16 @@ class RoutersClient {
   /// Retrieves runtime Nat mapping information of VM endpoints.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest,google/cloud/compute/routers/v1/routers.proto#L229}
+  /// @googleapis_link{google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest,google/cloud/compute/routers/v1/routers.proto#L248}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::VmEndpointNatMappingsList,google/cloud/compute/v1/internal/common.proto#L29697}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::VmEndpointNatMappingsList,google/cloud/compute/v1/internal/common.proto#L29736}
   ///
   /// [google.cloud.cpp.compute.routers.v1.GetNatMappingInfoRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L229}
+  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L248}
   /// [google.cloud.cpp.compute.v1.VmEndpointNatMappingsList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29697}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29736}
   ///
   StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
   GetNatMappingInfo(
@@ -255,12 +255,12 @@ class RoutersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::RouterStatusResponse,google/cloud/compute/v1/internal/common.proto#L22774}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::RouterStatusResponse,google/cloud/compute/v1/internal/common.proto#L22803}
   ///
   /// [google.cloud.cpp.compute.routers.v1.GetRouterStatusRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L301}
+  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L320}
   /// [google.cloud.cpp.compute.v1.RouterStatusResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L22774}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L22803}
   ///
   StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
   GetRouterStatus(std::string const& project, std::string const& region,
@@ -270,16 +270,16 @@ class RoutersClient {
   /// Retrieves runtime information of the specified router.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest,google/cloud/compute/routers/v1/routers.proto#L301}
+  /// @googleapis_link{google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest,google/cloud/compute/routers/v1/routers.proto#L320}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::RouterStatusResponse,google/cloud/compute/v1/internal/common.proto#L22774}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::RouterStatusResponse,google/cloud/compute/v1/internal/common.proto#L22803}
   ///
   /// [google.cloud.cpp.compute.routers.v1.GetRouterStatusRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L301}
+  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L320}
   /// [google.cloud.cpp.compute.v1.RouterStatusResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L22774}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L22803}
   ///
   StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
   GetRouterStatus(
@@ -297,12 +297,12 @@ class RoutersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.routers.v1.InsertRoutersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L325}
+  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L344}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRouters(
       std::string const& project, std::string const& region,
@@ -314,16 +314,16 @@ class RoutersClient {
   /// data included in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::routers::v1::InsertRoutersRequest,google/cloud/compute/routers/v1/routers.proto#L325}
+  /// @googleapis_link{google::cloud::cpp::compute::routers::v1::InsertRoutersRequest,google/cloud/compute/routers/v1/routers.proto#L344}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.routers.v1.InsertRoutersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L325}
+  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L344}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRouters(
       google::cloud::cpp::compute::routers::v1::InsertRoutersRequest const&
@@ -338,12 +338,12 @@ class RoutersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Router,google/cloud/compute/v1/internal/common.proto#L21937}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Router,google/cloud/compute/v1/internal/common.proto#L21966}
   ///
   /// [google.cloud.cpp.compute.routers.v1.ListRoutersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L349}
+  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L374}
   /// [google.cloud.cpp.compute.v1.Router]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21937}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21966}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Router> ListRouters(
       std::string const& project, std::string const& region, Options opts = {});
@@ -352,16 +352,16 @@ class RoutersClient {
   /// Retrieves a list of Router resources available to the specified project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::routers::v1::ListRoutersRequest,google/cloud/compute/routers/v1/routers.proto#L349}
+  /// @googleapis_link{google::cloud::cpp::compute::routers::v1::ListRoutersRequest,google/cloud/compute/routers/v1/routers.proto#L374}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Router,google/cloud/compute/v1/internal/common.proto#L21937}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Router,google/cloud/compute/v1/internal/common.proto#L21966}
   ///
   /// [google.cloud.cpp.compute.routers.v1.ListRoutersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L349}
+  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L374}
   /// [google.cloud.cpp.compute.v1.Router]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21937}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21966}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Router> ListRouters(
       google::cloud::cpp::compute::routers::v1::ListRoutersRequest request,
@@ -379,12 +379,12 @@ class RoutersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.routers.v1.PatchRoutersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L417}
+  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L442}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRouters(
       std::string const& project, std::string const& region,
@@ -398,16 +398,16 @@ class RoutersClient {
   /// format and processing rules.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::routers::v1::PatchRoutersRequest,google/cloud/compute/routers/v1/routers.proto#L417}
+  /// @googleapis_link{google::cloud::cpp::compute::routers::v1::PatchRoutersRequest,google/cloud/compute/routers/v1/routers.proto#L442}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.routers.v1.PatchRoutersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L417}
+  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L442}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRouters(
       google::cloud::cpp::compute::routers::v1::PatchRoutersRequest const&
@@ -425,12 +425,12 @@ class RoutersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::RoutersPreviewResponse,google/cloud/compute/v1/internal/common.proto#L22781}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::RoutersPreviewResponse,google/cloud/compute/v1/internal/common.proto#L22810}
   ///
   /// [google.cloud.cpp.compute.routers.v1.PreviewRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L444}
+  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L475}
   /// [google.cloud.cpp.compute.v1.RoutersPreviewResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L22781}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L22810}
   ///
   StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse> Preview(
       std::string const& project, std::string const& region,
@@ -443,16 +443,16 @@ class RoutersClient {
   /// Calling this method does NOT create or update the router.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::routers::v1::PreviewRequest,google/cloud/compute/routers/v1/routers.proto#L444}
+  /// @googleapis_link{google::cloud::cpp::compute::routers::v1::PreviewRequest,google/cloud/compute/routers/v1/routers.proto#L475}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::RoutersPreviewResponse,google/cloud/compute/v1/internal/common.proto#L22781}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::RoutersPreviewResponse,google/cloud/compute/v1/internal/common.proto#L22810}
   ///
   /// [google.cloud.cpp.compute.routers.v1.PreviewRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L444}
+  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L475}
   /// [google.cloud.cpp.compute.v1.RoutersPreviewResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L22781}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L22810}
   ///
   StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse> Preview(
       google::cloud::cpp::compute::routers::v1::PreviewRequest const& request,
@@ -471,12 +471,12 @@ class RoutersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.routers.v1.UpdateRoutersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L459}
+  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L490}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRouters(
       std::string const& project, std::string const& region,
@@ -491,16 +491,16 @@ class RoutersClient {
   /// by the representation enclosed in the request message payload.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest,google/cloud/compute/routers/v1/routers.proto#L459}
+  /// @googleapis_link{google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest,google/cloud/compute/routers/v1/routers.proto#L490}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.routers.v1.UpdateRoutersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L459}
+  /// @googleapis_reference_link{google/cloud/compute/routers/v1/routers.proto#L490}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRouters(
       google::cloud::cpp::compute::routers::v1::UpdateRoutersRequest const&

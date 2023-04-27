@@ -99,12 +99,12 @@ class InterconnectAttachmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectAttachmentAggregatedList,google/cloud/compute/v1/internal/common.proto#L12202}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectAttachmentAggregatedList,google/cloud/compute/v1/internal/common.proto#L12221}
   ///
   /// [google.cloud.cpp.compute.interconnectAttachments.v1.AggregatedListInterconnectAttachmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L104}
+  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L118}
   /// [google.cloud.cpp.compute.v1.InterconnectAttachmentAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L12202}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L12221}
   ///
   StatusOr<
       google::cloud::cpp::compute::v1::InterconnectAttachmentAggregatedList>
@@ -115,16 +115,16 @@ class InterconnectAttachmentsClient {
   /// Retrieves an aggregated list of interconnect attachments.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::interconnectAttachments::v1::AggregatedListInterconnectAttachmentsRequest,google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L104}
+  /// @googleapis_link{google::cloud::cpp::compute::interconnectAttachments::v1::AggregatedListInterconnectAttachmentsRequest,google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L118}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectAttachmentAggregatedList,google/cloud/compute/v1/internal/common.proto#L12202}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectAttachmentAggregatedList,google/cloud/compute/v1/internal/common.proto#L12221}
   ///
   /// [google.cloud.cpp.compute.interconnectAttachments.v1.AggregatedListInterconnectAttachmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L104}
+  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L118}
   /// [google.cloud.cpp.compute.v1.InterconnectAttachmentAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L12202}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L12221}
   ///
   StatusOr<
       google::cloud::cpp::compute::v1::InterconnectAttachmentAggregatedList>
@@ -143,12 +143,12 @@ class InterconnectAttachmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.interconnectAttachments.v1.DeleteInterconnectAttachmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L178}
+  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L192}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteInterconnectAttachments(std::string const& project,
@@ -160,16 +160,16 @@ class InterconnectAttachmentsClient {
   /// Deletes the specified interconnect attachment.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::interconnectAttachments::v1::DeleteInterconnectAttachmentsRequest,google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L178}
+  /// @googleapis_link{google::cloud::cpp::compute::interconnectAttachments::v1::DeleteInterconnectAttachmentsRequest,google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L192}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.interconnectAttachments.v1.DeleteInterconnectAttachmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L178}
+  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L192}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteInterconnectAttachments(
@@ -187,12 +187,12 @@ class InterconnectAttachmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectAttachment,google/cloud/compute/v1/internal/common.proto#L11943}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectAttachment,google/cloud/compute/v1/internal/common.proto#L11962}
   ///
   /// [google.cloud.cpp.compute.interconnectAttachments.v1.GetInterconnectAttachmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L202}
+  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L222}
   /// [google.cloud.cpp.compute.v1.InterconnectAttachment]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11943}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11962}
   ///
   StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
   GetInterconnectAttachments(std::string const& project,
@@ -204,16 +204,16 @@ class InterconnectAttachmentsClient {
   /// Returns the specified interconnect attachment.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::interconnectAttachments::v1::GetInterconnectAttachmentsRequest,google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L202}
+  /// @googleapis_link{google::cloud::cpp::compute::interconnectAttachments::v1::GetInterconnectAttachmentsRequest,google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L222}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectAttachment,google/cloud/compute/v1/internal/common.proto#L11943}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectAttachment,google/cloud/compute/v1/internal/common.proto#L11962}
   ///
   /// [google.cloud.cpp.compute.interconnectAttachments.v1.GetInterconnectAttachmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L202}
+  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L222}
   /// [google.cloud.cpp.compute.v1.InterconnectAttachment]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11943}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11962}
   ///
   StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
   GetInterconnectAttachments(
@@ -232,12 +232,12 @@ class InterconnectAttachmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.interconnectAttachments.v1.InsertInterconnectAttachmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L214}
+  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L234}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertInterconnectAttachments(
@@ -251,16 +251,16 @@ class InterconnectAttachmentsClient {
   /// included in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::interconnectAttachments::v1::InsertInterconnectAttachmentsRequest,google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L214}
+  /// @googleapis_link{google::cloud::cpp::compute::interconnectAttachments::v1::InsertInterconnectAttachmentsRequest,google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L234}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.interconnectAttachments.v1.InsertInterconnectAttachmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L214}
+  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L234}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertInterconnectAttachments(
@@ -277,12 +277,12 @@ class InterconnectAttachmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectAttachment,google/cloud/compute/v1/internal/common.proto#L11943}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectAttachment,google/cloud/compute/v1/internal/common.proto#L11962}
   ///
   /// [google.cloud.cpp.compute.interconnectAttachments.v1.ListInterconnectAttachmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L241}
+  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L268}
   /// [google.cloud.cpp.compute.v1.InterconnectAttachment]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11943}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11962}
   ///
   StreamRange<google::cloud::cpp::compute::v1::InterconnectAttachment>
   ListInterconnectAttachments(std::string const& project,
@@ -293,16 +293,16 @@ class InterconnectAttachmentsClient {
   /// specified region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::interconnectAttachments::v1::ListInterconnectAttachmentsRequest,google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L241}
+  /// @googleapis_link{google::cloud::cpp::compute::interconnectAttachments::v1::ListInterconnectAttachmentsRequest,google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L268}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectAttachment,google/cloud/compute/v1/internal/common.proto#L11943}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectAttachment,google/cloud/compute/v1/internal/common.proto#L11962}
   ///
   /// [google.cloud.cpp.compute.interconnectAttachments.v1.ListInterconnectAttachmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L241}
+  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L268}
   /// [google.cloud.cpp.compute.v1.InterconnectAttachment]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11943}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11962}
   ///
   StreamRange<google::cloud::cpp::compute::v1::InterconnectAttachment>
   ListInterconnectAttachments(
@@ -324,12 +324,12 @@ class InterconnectAttachmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.interconnectAttachments.v1.PatchInterconnectAttachmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L309}
+  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L336}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchInterconnectAttachments(
@@ -345,16 +345,16 @@ class InterconnectAttachmentsClient {
   /// patch format and processing rules.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::interconnectAttachments::v1::PatchInterconnectAttachmentsRequest,google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L309}
+  /// @googleapis_link{google::cloud::cpp::compute::interconnectAttachments::v1::PatchInterconnectAttachmentsRequest,google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L336}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.interconnectAttachments.v1.PatchInterconnectAttachmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L309}
+  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L336}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchInterconnectAttachments(
@@ -374,12 +374,12 @@ class InterconnectAttachmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.interconnectAttachments.v1.SetLabelsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L336}
+  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L370}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       std::string const& project, std::string const& region,
@@ -393,16 +393,16 @@ class InterconnectAttachmentsClient {
   /// read the Labeling Resources documentation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::interconnectAttachments::v1::SetLabelsRequest,google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L336}
+  /// @googleapis_link{google::cloud::cpp::compute::interconnectAttachments::v1::SetLabelsRequest,google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L370}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.interconnectAttachments.v1.SetLabelsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L336}
+  /// @googleapis_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L370}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::cpp::compute::interconnectAttachments::v1::

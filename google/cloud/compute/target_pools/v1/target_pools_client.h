@@ -99,12 +99,12 @@ class TargetPoolsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.targetPools.v1.AddHealthCheckRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L141}
+  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L159}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddHealthCheck(
       std::string const& project, std::string const& region,
@@ -117,16 +117,16 @@ class TargetPoolsClient {
   /// Adds health check URLs to a target pool.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::targetPools::v1::AddHealthCheckRequest,google/cloud/compute/target_pools/v1/target_pools.proto#L141}
+  /// @googleapis_link{google::cloud::cpp::compute::targetPools::v1::AddHealthCheckRequest,google/cloud/compute/target_pools/v1/target_pools.proto#L159}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.targetPools.v1.AddHealthCheckRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L141}
+  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L159}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddHealthCheck(
       google::cloud::cpp::compute::targetPools::v1::AddHealthCheckRequest const&
@@ -144,12 +144,12 @@ class TargetPoolsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.targetPools.v1.AddInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L168}
+  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L193}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddInstance(
       std::string const& project, std::string const& region,
@@ -162,16 +162,16 @@ class TargetPoolsClient {
   /// Adds an instance to a target pool.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::targetPools::v1::AddInstanceRequest,google/cloud/compute/target_pools/v1/target_pools.proto#L168}
+  /// @googleapis_link{google::cloud::cpp::compute::targetPools::v1::AddInstanceRequest,google/cloud/compute/target_pools/v1/target_pools.proto#L193}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.targetPools.v1.AddInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L168}
+  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L193}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddInstance(
       google::cloud::cpp::compute::targetPools::v1::AddInstanceRequest const&
@@ -185,12 +185,12 @@ class TargetPoolsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetPoolAggregatedList,google/cloud/compute/v1/internal/common.proto#L27615}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetPoolAggregatedList,google/cloud/compute/v1/internal/common.proto#L27653}
   ///
   /// [google.cloud.cpp.compute.targetPools.v1.AggregatedListTargetPoolsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L195}
+  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L227}
   /// [google.cloud.cpp.compute.v1.TargetPoolAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27615}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27653}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TargetPoolAggregatedList>
   AggregatedListTargetPools(std::string const& project, Options opts = {});
@@ -199,16 +199,16 @@ class TargetPoolsClient {
   /// Retrieves an aggregated list of target pools.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::targetPools::v1::AggregatedListTargetPoolsRequest,google/cloud/compute/target_pools/v1/target_pools.proto#L195}
+  /// @googleapis_link{google::cloud::cpp::compute::targetPools::v1::AggregatedListTargetPoolsRequest,google/cloud/compute/target_pools/v1/target_pools.proto#L227}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetPoolAggregatedList,google/cloud/compute/v1/internal/common.proto#L27615}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetPoolAggregatedList,google/cloud/compute/v1/internal/common.proto#L27653}
   ///
   /// [google.cloud.cpp.compute.targetPools.v1.AggregatedListTargetPoolsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L195}
+  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L227}
   /// [google.cloud.cpp.compute.v1.TargetPoolAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27615}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27653}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TargetPoolAggregatedList>
   AggregatedListTargetPools(google::cloud::cpp::compute::targetPools::v1::
@@ -224,12 +224,12 @@ class TargetPoolsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.targetPools.v1.DeleteTargetPoolsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L269}
+  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L301}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetPools(
       std::string const& project, std::string const& region,
@@ -239,16 +239,16 @@ class TargetPoolsClient {
   /// Deletes the specified target pool.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::targetPools::v1::DeleteTargetPoolsRequest,google/cloud/compute/target_pools/v1/target_pools.proto#L269}
+  /// @googleapis_link{google::cloud::cpp::compute::targetPools::v1::DeleteTargetPoolsRequest,google/cloud/compute/target_pools/v1/target_pools.proto#L301}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.targetPools.v1.DeleteTargetPoolsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L269}
+  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L301}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetPools(
       google::cloud::cpp::compute::targetPools::v1::
@@ -264,12 +264,12 @@ class TargetPoolsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetPool,google/cloud/compute/v1/internal/common.proto#L27514}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetPool,google/cloud/compute/v1/internal/common.proto#L27552}
   ///
   /// [google.cloud.cpp.compute.targetPools.v1.GetTargetPoolsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L308}
+  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L347}
   /// [google.cloud.cpp.compute.v1.TargetPool]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27514}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27552}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPools(
       std::string const& project, std::string const& region,
@@ -279,16 +279,16 @@ class TargetPoolsClient {
   /// Returns the specified target pool.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::targetPools::v1::GetTargetPoolsRequest,google/cloud/compute/target_pools/v1/target_pools.proto#L308}
+  /// @googleapis_link{google::cloud::cpp::compute::targetPools::v1::GetTargetPoolsRequest,google/cloud/compute/target_pools/v1/target_pools.proto#L347}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetPool,google/cloud/compute/v1/internal/common.proto#L27514}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetPool,google/cloud/compute/v1/internal/common.proto#L27552}
   ///
   /// [google.cloud.cpp.compute.targetPools.v1.GetTargetPoolsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L308}
+  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L347}
   /// [google.cloud.cpp.compute.v1.TargetPool]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27514}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27552}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPools(
       google::cloud::cpp::compute::targetPools::v1::GetTargetPoolsRequest const&
@@ -308,12 +308,12 @@ class TargetPoolsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetPoolInstanceHealth,google/cloud/compute/v1/internal/common.proto#L27721}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetPoolInstanceHealth,google/cloud/compute/v1/internal/common.proto#L27759}
   ///
   /// [google.cloud.cpp.compute.targetPools.v1.GetHealthRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L293}
+  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L331}
   /// [google.cloud.cpp.compute.v1.TargetPoolInstanceHealth]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27721}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27759}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth> GetHealth(
       std::string const& project, std::string const& region,
@@ -327,16 +327,16 @@ class TargetPoolsClient {
   /// that is referenced by the given target pool.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::targetPools::v1::GetHealthRequest,google/cloud/compute/target_pools/v1/target_pools.proto#L293}
+  /// @googleapis_link{google::cloud::cpp::compute::targetPools::v1::GetHealthRequest,google/cloud/compute/target_pools/v1/target_pools.proto#L331}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetPoolInstanceHealth,google/cloud/compute/v1/internal/common.proto#L27721}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetPoolInstanceHealth,google/cloud/compute/v1/internal/common.proto#L27759}
   ///
   /// [google.cloud.cpp.compute.targetPools.v1.GetHealthRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L293}
+  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L331}
   /// [google.cloud.cpp.compute.v1.TargetPoolInstanceHealth]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27721}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27759}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TargetPoolInstanceHealth> GetHealth(
       google::cloud::cpp::compute::targetPools::v1::GetHealthRequest const&
@@ -353,12 +353,12 @@ class TargetPoolsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.targetPools.v1.InsertTargetPoolsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L320}
+  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L359}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetPools(
       std::string const& project, std::string const& region,
@@ -370,16 +370,16 @@ class TargetPoolsClient {
   /// included in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::targetPools::v1::InsertTargetPoolsRequest,google/cloud/compute/target_pools/v1/target_pools.proto#L320}
+  /// @googleapis_link{google::cloud::cpp::compute::targetPools::v1::InsertTargetPoolsRequest,google/cloud/compute/target_pools/v1/target_pools.proto#L359}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.targetPools.v1.InsertTargetPoolsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L320}
+  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L359}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetPools(
       google::cloud::cpp::compute::targetPools::v1::
@@ -395,12 +395,12 @@ class TargetPoolsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetPool,google/cloud/compute/v1/internal/common.proto#L27514}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetPool,google/cloud/compute/v1/internal/common.proto#L27552}
   ///
   /// [google.cloud.cpp.compute.targetPools.v1.ListTargetPoolsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L344}
+  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L389}
   /// [google.cloud.cpp.compute.v1.TargetPool]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27514}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27552}
   ///
   StreamRange<google::cloud::cpp::compute::v1::TargetPool> ListTargetPools(
       std::string const& project, std::string const& region, Options opts = {});
@@ -410,16 +410,16 @@ class TargetPoolsClient {
   /// region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::targetPools::v1::ListTargetPoolsRequest,google/cloud/compute/target_pools/v1/target_pools.proto#L344}
+  /// @googleapis_link{google::cloud::cpp::compute::targetPools::v1::ListTargetPoolsRequest,google/cloud/compute/target_pools/v1/target_pools.proto#L389}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetPool,google/cloud/compute/v1/internal/common.proto#L27514}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetPool,google/cloud/compute/v1/internal/common.proto#L27552}
   ///
   /// [google.cloud.cpp.compute.targetPools.v1.ListTargetPoolsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L344}
+  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L389}
   /// [google.cloud.cpp.compute.v1.TargetPool]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27514}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L27552}
   ///
   StreamRange<google::cloud::cpp::compute::v1::TargetPool> ListTargetPools(
       google::cloud::cpp::compute::targetPools::v1::ListTargetPoolsRequest
@@ -437,12 +437,12 @@ class TargetPoolsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.targetPools.v1.RemoveHealthCheckRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L412}
+  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L457}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveHealthCheck(
       std::string const& project, std::string const& region,
@@ -456,16 +456,16 @@ class TargetPoolsClient {
   /// Removes health check URL from a target pool.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::targetPools::v1::RemoveHealthCheckRequest,google/cloud/compute/target_pools/v1/target_pools.proto#L412}
+  /// @googleapis_link{google::cloud::cpp::compute::targetPools::v1::RemoveHealthCheckRequest,google/cloud/compute/target_pools/v1/target_pools.proto#L457}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.targetPools.v1.RemoveHealthCheckRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L412}
+  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L457}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveHealthCheck(
       google::cloud::cpp::compute::targetPools::v1::
@@ -484,12 +484,12 @@ class TargetPoolsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.targetPools.v1.RemoveInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L439}
+  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L491}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveInstance(
       std::string const& project, std::string const& region,
@@ -502,16 +502,16 @@ class TargetPoolsClient {
   /// Removes instance URL from a target pool.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::targetPools::v1::RemoveInstanceRequest,google/cloud/compute/target_pools/v1/target_pools.proto#L439}
+  /// @googleapis_link{google::cloud::cpp::compute::targetPools::v1::RemoveInstanceRequest,google/cloud/compute/target_pools/v1/target_pools.proto#L491}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.targetPools.v1.RemoveInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L439}
+  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L491}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveInstance(
       google::cloud::cpp::compute::targetPools::v1::RemoveInstanceRequest const&
@@ -529,12 +529,12 @@ class TargetPoolsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.targetPools.v1.SetBackupRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L466}
+  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L525}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetBackup(
       std::string const& project, std::string const& region,
@@ -547,16 +547,16 @@ class TargetPoolsClient {
   /// Changes a backup target pool's configurations.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::targetPools::v1::SetBackupRequest,google/cloud/compute/target_pools/v1/target_pools.proto#L466}
+  /// @googleapis_link{google::cloud::cpp::compute::targetPools::v1::SetBackupRequest,google/cloud/compute/target_pools/v1/target_pools.proto#L525}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.targetPools.v1.SetBackupRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L466}
+  /// @googleapis_reference_link{google/cloud/compute/target_pools/v1/target_pools.proto#L525}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetBackup(
       google::cloud::cpp::compute::targetPools::v1::SetBackupRequest const&

@@ -95,12 +95,12 @@ class NetworksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networks.v1.AddPeeringRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L141}
+  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L155}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddPeering(
       std::string const& project, std::string const& network,
@@ -112,16 +112,16 @@ class NetworksClient {
   /// Adds a peering to the specified network.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networks::v1::AddPeeringRequest,google/cloud/compute/networks/v1/networks.proto#L141}
+  /// @googleapis_link{google::cloud::cpp::compute::networks::v1::AddPeeringRequest,google/cloud/compute/networks/v1/networks.proto#L155}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networks.v1.AddPeeringRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L141}
+  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L155}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddPeering(
       google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
@@ -136,12 +136,12 @@ class NetworksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networks.v1.DeleteNetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L165}
+  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L183}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetworks(
       std::string const& project, std::string const& network,
@@ -151,16 +151,16 @@ class NetworksClient {
   /// Deletes the specified network.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest,google/cloud/compute/networks/v1/networks.proto#L165}
+  /// @googleapis_link{google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest,google/cloud/compute/networks/v1/networks.proto#L183}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networks.v1.DeleteNetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L165}
+  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L183}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetworks(
       google::cloud::cpp::compute::networks::v1::DeleteNetworksRequest const&
@@ -175,12 +175,12 @@ class NetworksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Network,google/cloud/compute/v1/internal/common.proto#L14201}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Network,google/cloud/compute/v1/internal/common.proto#L14221}
   ///
   /// [google.cloud.cpp.compute.networks.v1.GetNetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L195}
+  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L216}
   /// [google.cloud.cpp.compute.v1.Network]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14201}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14221}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Network> GetNetworks(
       std::string const& project, std::string const& network,
@@ -190,16 +190,16 @@ class NetworksClient {
   /// Returns the specified network.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networks::v1::GetNetworksRequest,google/cloud/compute/networks/v1/networks.proto#L195}
+  /// @googleapis_link{google::cloud::cpp::compute::networks::v1::GetNetworksRequest,google/cloud/compute/networks/v1/networks.proto#L216}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Network,google/cloud/compute/v1/internal/common.proto#L14201}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Network,google/cloud/compute/v1/internal/common.proto#L14221}
   ///
   /// [google.cloud.cpp.compute.networks.v1.GetNetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L195}
+  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L216}
   /// [google.cloud.cpp.compute.v1.Network]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14201}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14221}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Network> GetNetworks(
       google::cloud::cpp::compute::networks::v1::GetNetworksRequest const&
@@ -214,12 +214,12 @@ class NetworksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse,google/cloud/compute/v1/internal/common.proto#L15898}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse,google/cloud/compute/v1/internal/common.proto#L15918}
   ///
   /// [google.cloud.cpp.compute.networks.v1.GetEffectiveFirewallsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L186}
+  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L207}
   /// [google.cloud.cpp.compute.v1.NetworksGetEffectiveFirewallsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L15898}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L15918}
   ///
   StatusOr<
       google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>
@@ -230,16 +230,16 @@ class NetworksClient {
   /// Returns the effective firewalls on a given network.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networks::v1::GetEffectiveFirewallsRequest,google/cloud/compute/networks/v1/networks.proto#L186}
+  /// @googleapis_link{google::cloud::cpp::compute::networks::v1::GetEffectiveFirewallsRequest,google/cloud/compute/networks/v1/networks.proto#L207}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse,google/cloud/compute/v1/internal/common.proto#L15898}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse,google/cloud/compute/v1/internal/common.proto#L15918}
   ///
   /// [google.cloud.cpp.compute.networks.v1.GetEffectiveFirewallsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L186}
+  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L207}
   /// [google.cloud.cpp.compute.v1.NetworksGetEffectiveFirewallsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L15898}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L15918}
   ///
   StatusOr<
       google::cloud::cpp::compute::v1::NetworksGetEffectiveFirewallsResponse>
@@ -256,12 +256,12 @@ class NetworksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networks.v1.InsertNetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L204}
+  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L225}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNetworks(
       std::string const& project,
@@ -273,16 +273,16 @@ class NetworksClient {
   /// request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networks::v1::InsertNetworksRequest,google/cloud/compute/networks/v1/networks.proto#L204}
+  /// @googleapis_link{google::cloud::cpp::compute::networks::v1::InsertNetworksRequest,google/cloud/compute/networks/v1/networks.proto#L225}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networks.v1.InsertNetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L204}
+  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L225}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNetworks(
       google::cloud::cpp::compute::networks::v1::InsertNetworksRequest const&
@@ -296,12 +296,12 @@ class NetworksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Network,google/cloud/compute/v1/internal/common.proto#L14201}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Network,google/cloud/compute/v1/internal/common.proto#L14221}
   ///
   /// [google.cloud.cpp.compute.networks.v1.ListNetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L225}
+  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L249}
   /// [google.cloud.cpp.compute.v1.Network]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14201}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14221}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Network> ListNetworks(
       std::string const& project, Options opts = {});
@@ -310,16 +310,16 @@ class NetworksClient {
   /// Retrieves the list of networks available to the specified project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networks::v1::ListNetworksRequest,google/cloud/compute/networks/v1/networks.proto#L225}
+  /// @googleapis_link{google::cloud::cpp::compute::networks::v1::ListNetworksRequest,google/cloud/compute/networks/v1/networks.proto#L249}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Network,google/cloud/compute/v1/internal/common.proto#L14201}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Network,google/cloud/compute/v1/internal/common.proto#L14221}
   ///
   /// [google.cloud.cpp.compute.networks.v1.ListNetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L225}
+  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L249}
   /// [google.cloud.cpp.compute.v1.Network]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14201}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14221}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Network> ListNetworks(
       google::cloud::cpp::compute::networks::v1::ListNetworksRequest request,
@@ -333,12 +333,12 @@ class NetworksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::ExchangedPeeringRoute,google/cloud/compute/v1/internal/common.proto#L5323}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ExchangedPeeringRoute,google/cloud/compute/v1/internal/common.proto#L5337}
   ///
   /// [google.cloud.cpp.compute.networks.v1.ListPeeringRoutesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L290}
+  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L314}
   /// [google.cloud.cpp.compute.v1.ExchangedPeeringRoute]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5323}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5337}
   ///
   StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>
   ListPeeringRoutes(std::string const& project, std::string const& network,
@@ -348,16 +348,16 @@ class NetworksClient {
   /// Lists the peering routes exchanged over peering connection.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest,google/cloud/compute/networks/v1/networks.proto#L290}
+  /// @googleapis_link{google::cloud::cpp::compute::networks::v1::ListPeeringRoutesRequest,google/cloud/compute/networks/v1/networks.proto#L314}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::ExchangedPeeringRoute,google/cloud/compute/v1/internal/common.proto#L5323}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ExchangedPeeringRoute,google/cloud/compute/v1/internal/common.proto#L5337}
   ///
   /// [google.cloud.cpp.compute.networks.v1.ListPeeringRoutesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L290}
+  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L314}
   /// [google.cloud.cpp.compute.v1.ExchangedPeeringRoute]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5323}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L5337}
   ///
   StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>
   ListPeeringRoutes(
@@ -375,12 +375,12 @@ class NetworksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networks.v1.PatchNetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L370}
+  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L394}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNetworks(
       std::string const& project, std::string const& network,
@@ -392,16 +392,16 @@ class NetworksClient {
   /// the following fields can be modified: routingConfig.routingMode.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networks::v1::PatchNetworksRequest,google/cloud/compute/networks/v1/networks.proto#L370}
+  /// @googleapis_link{google::cloud::cpp::compute::networks::v1::PatchNetworksRequest,google/cloud/compute/networks/v1/networks.proto#L394}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networks.v1.PatchNetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L370}
+  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L394}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNetworks(
       google::cloud::cpp::compute::networks::v1::PatchNetworksRequest const&
@@ -418,12 +418,12 @@ class NetworksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networks.v1.RemovePeeringRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L394}
+  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L421}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemovePeering(
       std::string const& project, std::string const& network,
@@ -435,16 +435,16 @@ class NetworksClient {
   /// Removes a peering from the specified network.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networks::v1::RemovePeeringRequest,google/cloud/compute/networks/v1/networks.proto#L394}
+  /// @googleapis_link{google::cloud::cpp::compute::networks::v1::RemovePeeringRequest,google/cloud/compute/networks/v1/networks.proto#L421}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networks.v1.RemovePeeringRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L394}
+  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L421}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemovePeering(
       google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
@@ -459,12 +459,12 @@ class NetworksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networks.v1.SwitchToCustomModeRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L418}
+  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L449}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SwitchToCustomMode(
       std::string const& project, std::string const& network,
@@ -474,16 +474,16 @@ class NetworksClient {
   /// Switches the network mode from auto subnet mode to custom subnet mode.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest,google/cloud/compute/networks/v1/networks.proto#L418}
+  /// @googleapis_link{google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest,google/cloud/compute/networks/v1/networks.proto#L449}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networks.v1.SwitchToCustomModeRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L418}
+  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L449}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SwitchToCustomMode(
       google::cloud::cpp::compute::networks::v1::
@@ -503,12 +503,12 @@ class NetworksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networks.v1.UpdatePeeringRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L439}
+  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L473}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdatePeering(
       std::string const& project, std::string const& network,
@@ -522,16 +522,16 @@ class NetworksClient {
   /// and the NetworkPeering.import_custom_routes field.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest,google/cloud/compute/networks/v1/networks.proto#L439}
+  /// @googleapis_link{google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest,google/cloud/compute/networks/v1/networks.proto#L473}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networks.v1.UpdatePeeringRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L439}
+  /// @googleapis_reference_link{google/cloud/compute/networks/v1/networks.proto#L473}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdatePeering(
       google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&

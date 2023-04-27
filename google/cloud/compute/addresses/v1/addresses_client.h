@@ -96,7 +96,7 @@ class AddressesClient {
   /// @googleapis_link{google::cloud::cpp::compute::v1::AddressAggregatedList,google/cloud/compute/v1/internal/common.proto#L569}
   ///
   /// [google.cloud.cpp.compute.addresses.v1.AggregatedListAddressesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L91}
+  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L98}
   /// [google.cloud.cpp.compute.v1.AddressAggregatedList]:
   /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L569}
   ///
@@ -107,14 +107,14 @@ class AddressesClient {
   /// Retrieves an aggregated list of addresses.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest,google/cloud/compute/addresses/v1/addresses.proto#L91}
+  /// @googleapis_link{google::cloud::cpp::compute::addresses::v1::AggregatedListAddressesRequest,google/cloud/compute/addresses/v1/addresses.proto#L98}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::cpp::compute::v1::AddressAggregatedList,google/cloud/compute/v1/internal/common.proto#L569}
   ///
   /// [google.cloud.cpp.compute.addresses.v1.AggregatedListAddressesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L91}
+  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L98}
   /// [google.cloud.cpp.compute.v1.AddressAggregatedList]:
   /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L569}
   ///
@@ -132,12 +132,12 @@ class AddressesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.addresses.v1.DeleteAddressesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L165}
+  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L172}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAddresses(
       std::string const& project, std::string const& region,
@@ -147,16 +147,16 @@ class AddressesClient {
   /// Deletes the specified address resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest,google/cloud/compute/addresses/v1/addresses.proto#L165}
+  /// @googleapis_link{google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest,google/cloud/compute/addresses/v1/addresses.proto#L172}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.addresses.v1.DeleteAddressesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L165}
+  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L172}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAddresses(
       google::cloud::cpp::compute::addresses::v1::DeleteAddressesRequest const&
@@ -175,7 +175,7 @@ class AddressesClient {
   /// @googleapis_link{google::cloud::cpp::compute::v1::Address,google/cloud/compute/v1/internal/common.proto#L437}
   ///
   /// [google.cloud.cpp.compute.addresses.v1.GetAddressesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L189}
+  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L202}
   /// [google.cloud.cpp.compute.v1.Address]:
   /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L437}
   ///
@@ -187,14 +187,14 @@ class AddressesClient {
   /// Returns the specified address resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::addresses::v1::GetAddressesRequest,google/cloud/compute/addresses/v1/addresses.proto#L189}
+  /// @googleapis_link{google::cloud::cpp::compute::addresses::v1::GetAddressesRequest,google/cloud/compute/addresses/v1/addresses.proto#L202}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::cpp::compute::v1::Address,google/cloud/compute/v1/internal/common.proto#L437}
   ///
   /// [google.cloud.cpp.compute.addresses.v1.GetAddressesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L189}
+  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L202}
   /// [google.cloud.cpp.compute.v1.Address]:
   /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L437}
   ///
@@ -213,12 +213,12 @@ class AddressesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.addresses.v1.InsertAddressesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L201}
+  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L214}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAddresses(
       std::string const& project, std::string const& region,
@@ -230,16 +230,16 @@ class AddressesClient {
   /// included in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest,google/cloud/compute/addresses/v1/addresses.proto#L201}
+  /// @googleapis_link{google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest,google/cloud/compute/addresses/v1/addresses.proto#L214}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.addresses.v1.InsertAddressesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L201}
+  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L214}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAddresses(
       google::cloud::cpp::compute::addresses::v1::InsertAddressesRequest const&
@@ -257,7 +257,7 @@ class AddressesClient {
   /// @googleapis_link{google::cloud::cpp::compute::v1::Address,google/cloud/compute/v1/internal/common.proto#L437}
   ///
   /// [google.cloud.cpp.compute.addresses.v1.ListAddressesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L225}
+  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L244}
   /// [google.cloud.cpp.compute.v1.Address]:
   /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L437}
   ///
@@ -268,14 +268,14 @@ class AddressesClient {
   /// Retrieves a list of addresses contained within the specified region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::addresses::v1::ListAddressesRequest,google/cloud/compute/addresses/v1/addresses.proto#L225}
+  /// @googleapis_link{google::cloud::cpp::compute::addresses::v1::ListAddressesRequest,google/cloud/compute/addresses/v1/addresses.proto#L244}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::cpp::compute::v1::Address,google/cloud/compute/v1/internal/common.proto#L437}
   ///
   /// [google.cloud.cpp.compute.addresses.v1.ListAddressesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L225}
+  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L244}
   /// [google.cloud.cpp.compute.v1.Address]:
   /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L437}
   ///
@@ -295,12 +295,12 @@ class AddressesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.addresses.v1.SetLabelsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L293}
+  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L312}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       std::string const& project, std::string const& region,
@@ -314,16 +314,16 @@ class AddressesClient {
   /// Labeling Resources documentation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::addresses::v1::SetLabelsRequest,google/cloud/compute/addresses/v1/addresses.proto#L293}
+  /// @googleapis_link{google::cloud::cpp::compute::addresses::v1::SetLabelsRequest,google/cloud/compute/addresses/v1/addresses.proto#L312}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.addresses.v1.SetLabelsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L293}
+  /// @googleapis_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L312}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&

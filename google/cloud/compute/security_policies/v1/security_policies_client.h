@@ -98,12 +98,12 @@ class SecurityPoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.AddRuleRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L153}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L169}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddRule(
       std::string const& project, std::string const& security_policy,
@@ -115,16 +115,16 @@ class SecurityPoliciesClient {
   /// Inserts a rule into a security policy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::AddRuleRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L153}
+  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::AddRuleRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L169}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.AddRuleRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L153}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L169}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddRule(
       google::cloud::cpp::compute::securityPolicies::v1::AddRuleRequest const&
@@ -139,12 +139,12 @@ class SecurityPoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList,google/cloud/compute/v1/internal/common.proto#L23165}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList,google/cloud/compute/v1/internal/common.proto#L23194}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.AggregatedListSecurityPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L168}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L188}
   /// [google.cloud.cpp.compute.v1.SecurityPoliciesAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23165}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23194}
   ///
   StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>
   AggregatedListSecurityPolicies(std::string const& project, Options opts = {});
@@ -154,16 +154,16 @@ class SecurityPoliciesClient {
   /// available to the specified project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::AggregatedListSecurityPoliciesRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L168}
+  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::AggregatedListSecurityPoliciesRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L188}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList,google/cloud/compute/v1/internal/common.proto#L23165}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList,google/cloud/compute/v1/internal/common.proto#L23194}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.AggregatedListSecurityPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L168}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L188}
   /// [google.cloud.cpp.compute.v1.SecurityPoliciesAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23165}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23194}
   ///
   StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>
   AggregatedListSecurityPolicies(
@@ -179,12 +179,12 @@ class SecurityPoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.DeleteSecurityPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L242}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L262}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSecurityPolicies(
       std::string const& project, std::string const& security_policy,
@@ -194,16 +194,16 @@ class SecurityPoliciesClient {
   /// Deletes the specified policy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::DeleteSecurityPoliciesRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L242}
+  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::DeleteSecurityPoliciesRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L262}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.DeleteSecurityPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L242}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L262}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSecurityPolicies(
       google::cloud::cpp::compute::securityPolicies::v1::
@@ -218,12 +218,12 @@ class SecurityPoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPolicy,google/cloud/compute/v1/internal/common.proto#L23371}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPolicy,google/cloud/compute/v1/internal/common.proto#L23400}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.GetSecurityPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L275}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L298}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23371}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23400}
   ///
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicies(
       std::string const& project, std::string const& security_policy,
@@ -233,16 +233,16 @@ class SecurityPoliciesClient {
   /// List all of the ordered rules present in a single specified policy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::GetSecurityPoliciesRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L275}
+  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::GetSecurityPoliciesRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L298}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPolicy,google/cloud/compute/v1/internal/common.proto#L23371}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPolicy,google/cloud/compute/v1/internal/common.proto#L23400}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.GetSecurityPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L275}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L298}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23371}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23400}
   ///
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicies(
       google::cloud::cpp::compute::securityPolicies::v1::
@@ -258,12 +258,12 @@ class SecurityPoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPolicyRule,google/cloud/compute/v1/internal/common.proto#L23612}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPolicyRule,google/cloud/compute/v1/internal/common.proto#L23644}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.GetRuleRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L263}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L286}
   /// [google.cloud.cpp.compute.v1.SecurityPolicyRule]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23612}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23644}
   ///
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule> GetRule(
       std::string const& project, std::string const& security_policy,
@@ -273,16 +273,16 @@ class SecurityPoliciesClient {
   /// Gets a rule at the specified priority.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::GetRuleRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L263}
+  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::GetRuleRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L286}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPolicyRule,google/cloud/compute/v1/internal/common.proto#L23612}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPolicyRule,google/cloud/compute/v1/internal/common.proto#L23644}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.GetRuleRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L263}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L286}
   /// [google.cloud.cpp.compute.v1.SecurityPolicyRule]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23612}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23644}
   ///
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule> GetRule(
       google::cloud::cpp::compute::securityPolicies::v1::GetRuleRequest const&
@@ -298,12 +298,12 @@ class SecurityPoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.InsertSecurityPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L284}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L307}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSecurityPolicies(
       std::string const& project,
@@ -316,16 +316,16 @@ class SecurityPoliciesClient {
   /// the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::InsertSecurityPoliciesRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L284}
+  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::InsertSecurityPoliciesRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L307}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.InsertSecurityPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L284}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L307}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSecurityPolicies(
       google::cloud::cpp::compute::securityPolicies::v1::
@@ -339,12 +339,12 @@ class SecurityPoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPolicy,google/cloud/compute/v1/internal/common.proto#L23371}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPolicy,google/cloud/compute/v1/internal/common.proto#L23400}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.ListSecurityPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L373}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L400}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23371}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23400}
   ///
   StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
   ListSecurityPolicies(std::string const& project, Options opts = {});
@@ -353,16 +353,16 @@ class SecurityPoliciesClient {
   /// List all the policies that have been configured for the specified project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::ListSecurityPoliciesRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L373}
+  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::ListSecurityPoliciesRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L400}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPolicy,google/cloud/compute/v1/internal/common.proto#L23371}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPolicy,google/cloud/compute/v1/internal/common.proto#L23400}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.ListSecurityPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L373}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L400}
   /// [google.cloud.cpp.compute.v1.SecurityPolicy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23371}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23400}
   ///
   StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
   ListSecurityPolicies(google::cloud::cpp::compute::securityPolicies::v1::
@@ -377,12 +377,12 @@ class SecurityPoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPoliciesListPreconfiguredExpressionSetsResponse,google/cloud/compute/v1/internal/common.proto#L23273}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPoliciesListPreconfiguredExpressionSetsResponse,google/cloud/compute/v1/internal/common.proto#L23302}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.ListPreconfiguredExpressionSetsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L308}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L335}
   /// [google.cloud.cpp.compute.v1.SecurityPoliciesListPreconfiguredExpressionSetsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23273}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23302}
   ///
   StatusOr<google::cloud::cpp::compute::v1::
                SecurityPoliciesListPreconfiguredExpressionSetsResponse>
@@ -394,16 +394,16 @@ class SecurityPoliciesClient {
   /// expressions.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::ListPreconfiguredExpressionSetsRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L308}
+  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::ListPreconfiguredExpressionSetsRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L335}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPoliciesListPreconfiguredExpressionSetsResponse,google/cloud/compute/v1/internal/common.proto#L23273}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SecurityPoliciesListPreconfiguredExpressionSetsResponse,google/cloud/compute/v1/internal/common.proto#L23302}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.ListPreconfiguredExpressionSetsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L308}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L335}
   /// [google.cloud.cpp.compute.v1.SecurityPoliciesListPreconfiguredExpressionSetsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23273}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L23302}
   ///
   StatusOr<google::cloud::cpp::compute::v1::
                SecurityPoliciesListPreconfiguredExpressionSetsResponse>
@@ -425,12 +425,12 @@ class SecurityPoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.PatchSecurityPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L456}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L487}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSecurityPolicies(
       std::string const& project, std::string const& security_policy,
@@ -446,16 +446,16 @@ class SecurityPoliciesClient {
   /// instead.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::PatchSecurityPoliciesRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L456}
+  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::PatchSecurityPoliciesRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L487}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.PatchSecurityPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L456}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L487}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSecurityPolicies(
       google::cloud::cpp::compute::securityPolicies::v1::
@@ -472,12 +472,12 @@ class SecurityPoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.PatchRuleRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L438}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L465}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRule(
       std::string const& project, std::string const& security_policy,
@@ -489,16 +489,16 @@ class SecurityPoliciesClient {
   /// Patches a rule at the specified priority.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::PatchRuleRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L438}
+  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::PatchRuleRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L465}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.PatchRuleRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L438}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L465}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRule(
       google::cloud::cpp::compute::securityPolicies::v1::PatchRuleRequest const&
@@ -513,12 +513,12 @@ class SecurityPoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.RemoveRuleRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L480}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L515}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveRule(
       std::string const& project, std::string const& security_policy,
@@ -528,16 +528,16 @@ class SecurityPoliciesClient {
   /// Deletes a rule at the specified priority.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::RemoveRuleRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L480}
+  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::RemoveRuleRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L515}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.RemoveRuleRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L480}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L515}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveRule(
       google::cloud::cpp::compute::securityPolicies::v1::
@@ -555,12 +555,12 @@ class SecurityPoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.SetLabelsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L492}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L530}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       std::string const& project, std::string const& resource,
@@ -573,16 +573,16 @@ class SecurityPoliciesClient {
   /// Labeling Resources documentation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::SetLabelsRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L492}
+  /// @googleapis_link{google::cloud::cpp::compute::securityPolicies::v1::SetLabelsRequest,google/cloud/compute/security_policies/v1/security_policies.proto#L530}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.securityPolicies.v1.SetLabelsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L492}
+  /// @googleapis_reference_link{google/cloud/compute/security_policies/v1/security_policies.proto#L530}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::cpp::compute::securityPolicies::v1::SetLabelsRequest const&

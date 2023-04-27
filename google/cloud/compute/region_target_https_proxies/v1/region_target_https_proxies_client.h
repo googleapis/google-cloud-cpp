@@ -102,12 +102,12 @@ class RegionTargetHttpsProxiesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionTargetHttpsProxies.v1.DeleteRegionTargetHttpsProxiesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L105}
+  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L116}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteRegionTargetHttpsProxies(std::string const& project,
@@ -119,16 +119,16 @@ class RegionTargetHttpsProxiesClient {
   /// Deletes the specified TargetHttpsProxy resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionTargetHttpsProxies::v1::DeleteRegionTargetHttpsProxiesRequest,google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L105}
+  /// @googleapis_link{google::cloud::cpp::compute::regionTargetHttpsProxies::v1::DeleteRegionTargetHttpsProxiesRequest,google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L116}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionTargetHttpsProxies.v1.DeleteRegionTargetHttpsProxiesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L105}
+  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L116}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteRegionTargetHttpsProxies(
@@ -146,12 +146,12 @@ class RegionTargetHttpsProxiesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetHttpsProxy,google/cloud/compute/v1/internal/common.proto#L26842}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetHttpsProxy,google/cloud/compute/v1/internal/common.proto#L26880}
   ///
   /// [google.cloud.cpp.compute.regionTargetHttpsProxies.v1.GetRegionTargetHttpsProxiesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L129}
+  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L146}
   /// [google.cloud.cpp.compute.v1.TargetHttpsProxy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26842}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26880}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
   GetRegionTargetHttpsProxies(std::string const& project,
@@ -163,16 +163,16 @@ class RegionTargetHttpsProxiesClient {
   /// Returns the specified TargetHttpsProxy resource in the specified region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionTargetHttpsProxies::v1::GetRegionTargetHttpsProxiesRequest,google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L129}
+  /// @googleapis_link{google::cloud::cpp::compute::regionTargetHttpsProxies::v1::GetRegionTargetHttpsProxiesRequest,google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L146}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetHttpsProxy,google/cloud/compute/v1/internal/common.proto#L26842}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetHttpsProxy,google/cloud/compute/v1/internal/common.proto#L26880}
   ///
   /// [google.cloud.cpp.compute.regionTargetHttpsProxies.v1.GetRegionTargetHttpsProxiesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L129}
+  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L146}
   /// [google.cloud.cpp.compute.v1.TargetHttpsProxy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26842}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26880}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
   GetRegionTargetHttpsProxies(
@@ -190,12 +190,12 @@ class RegionTargetHttpsProxiesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionTargetHttpsProxies.v1.InsertRegionTargetHttpsProxiesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L141}
+  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L158}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertRegionTargetHttpsProxies(
@@ -209,16 +209,16 @@ class RegionTargetHttpsProxiesClient {
   /// using the data included in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionTargetHttpsProxies::v1::InsertRegionTargetHttpsProxiesRequest,google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L141}
+  /// @googleapis_link{google::cloud::cpp::compute::regionTargetHttpsProxies::v1::InsertRegionTargetHttpsProxiesRequest,google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L158}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionTargetHttpsProxies.v1.InsertRegionTargetHttpsProxiesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L141}
+  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L158}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertRegionTargetHttpsProxies(
@@ -235,12 +235,12 @@ class RegionTargetHttpsProxiesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetHttpsProxy,google/cloud/compute/v1/internal/common.proto#L26842}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetHttpsProxy,google/cloud/compute/v1/internal/common.proto#L26880}
   ///
   /// [google.cloud.cpp.compute.regionTargetHttpsProxies.v1.ListRegionTargetHttpsProxiesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L165}
+  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L189}
   /// [google.cloud.cpp.compute.v1.TargetHttpsProxy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26842}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26880}
   ///
   StreamRange<google::cloud::cpp::compute::v1::TargetHttpsProxy>
   ListRegionTargetHttpsProxies(std::string const& project,
@@ -251,16 +251,16 @@ class RegionTargetHttpsProxiesClient {
   /// specified project in the specified region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionTargetHttpsProxies::v1::ListRegionTargetHttpsProxiesRequest,google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L165}
+  /// @googleapis_link{google::cloud::cpp::compute::regionTargetHttpsProxies::v1::ListRegionTargetHttpsProxiesRequest,google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L189}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetHttpsProxy,google/cloud/compute/v1/internal/common.proto#L26842}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetHttpsProxy,google/cloud/compute/v1/internal/common.proto#L26880}
   ///
   /// [google.cloud.cpp.compute.regionTargetHttpsProxies.v1.ListRegionTargetHttpsProxiesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L165}
+  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L189}
   /// [google.cloud.cpp.compute.v1.TargetHttpsProxy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26842}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26880}
   ///
   StreamRange<google::cloud::cpp::compute::v1::TargetHttpsProxy>
   ListRegionTargetHttpsProxies(
@@ -280,12 +280,12 @@ class RegionTargetHttpsProxiesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionTargetHttpsProxies.v1.PatchRegionTargetHttpsProxiesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L233}
+  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L257}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchRegionTargetHttpsProxies(
@@ -301,16 +301,16 @@ class RegionTargetHttpsProxiesClient {
   /// JSON merge patch format and processing rules.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionTargetHttpsProxies::v1::PatchRegionTargetHttpsProxiesRequest,google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L233}
+  /// @googleapis_link{google::cloud::cpp::compute::regionTargetHttpsProxies::v1::PatchRegionTargetHttpsProxiesRequest,google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L257}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionTargetHttpsProxies.v1.PatchRegionTargetHttpsProxiesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L233}
+  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L257}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchRegionTargetHttpsProxies(
@@ -331,12 +331,12 @@ class RegionTargetHttpsProxiesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionTargetHttpsProxies.v1.SetSslCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L260}
+  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L291}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetSslCertificates(
       std::string const& project, std::string const& region,
@@ -350,16 +350,16 @@ class RegionTargetHttpsProxiesClient {
   /// Replaces SslCertificates for TargetHttpsProxy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionTargetHttpsProxies::v1::SetSslCertificatesRequest,google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L260}
+  /// @googleapis_link{google::cloud::cpp::compute::regionTargetHttpsProxies::v1::SetSslCertificatesRequest,google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L291}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionTargetHttpsProxies.v1.SetSslCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L260}
+  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L291}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetSslCertificates(
       google::cloud::cpp::compute::regionTargetHttpsProxies::v1::
@@ -377,12 +377,12 @@ class RegionTargetHttpsProxiesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionTargetHttpsProxies.v1.SetUrlMapRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L288}
+  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L327}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetUrlMap(
       std::string const& project, std::string const& region,
@@ -395,16 +395,16 @@ class RegionTargetHttpsProxiesClient {
   /// Changes the URL map for TargetHttpsProxy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionTargetHttpsProxies::v1::SetUrlMapRequest,google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L288}
+  /// @googleapis_link{google::cloud::cpp::compute::regionTargetHttpsProxies::v1::SetUrlMapRequest,google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L327}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionTargetHttpsProxies.v1.SetUrlMapRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L288}
+  /// @googleapis_reference_link{google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto#L327}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetUrlMap(
       google::cloud::cpp::compute::regionTargetHttpsProxies::v1::

@@ -95,12 +95,12 @@ class RegionCommitmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::CommitmentAggregatedList,google/cloud/compute/v1/internal/common.proto#L3774}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::CommitmentAggregatedList,google/cloud/compute/v1/internal/common.proto#L3788}
   ///
   /// [google.cloud.cpp.compute.regionCommitments.v1.AggregatedListRegionCommitmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L83}
+  /// @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L89}
   /// [google.cloud.cpp.compute.v1.CommitmentAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3774}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3788}
   ///
   StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
   AggregatedListRegionCommitments(std::string const& project,
@@ -110,16 +110,16 @@ class RegionCommitmentsClient {
   /// Retrieves an aggregated list of commitments by region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionCommitments::v1::AggregatedListRegionCommitmentsRequest,google/cloud/compute/region_commitments/v1/region_commitments.proto#L83}
+  /// @googleapis_link{google::cloud::cpp::compute::regionCommitments::v1::AggregatedListRegionCommitmentsRequest,google/cloud/compute/region_commitments/v1/region_commitments.proto#L89}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::CommitmentAggregatedList,google/cloud/compute/v1/internal/common.proto#L3774}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::CommitmentAggregatedList,google/cloud/compute/v1/internal/common.proto#L3788}
   ///
   /// [google.cloud.cpp.compute.regionCommitments.v1.AggregatedListRegionCommitmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L83}
+  /// @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L89}
   /// [google.cloud.cpp.compute.v1.CommitmentAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3774}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3788}
   ///
   StatusOr<google::cloud::cpp::compute::v1::CommitmentAggregatedList>
   AggregatedListRegionCommitments(
@@ -136,12 +136,12 @@ class RegionCommitmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Commitment,google/cloud/compute/v1/internal/common.proto#L3663}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Commitment,google/cloud/compute/v1/internal/common.proto#L3677}
   ///
   /// [google.cloud.cpp.compute.regionCommitments.v1.GetRegionCommitmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L157}
+  /// @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L163}
   /// [google.cloud.cpp.compute.v1.Commitment]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3663}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3677}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Commitment> GetRegionCommitments(
       std::string const& project, std::string const& region,
@@ -151,16 +151,16 @@ class RegionCommitmentsClient {
   /// Returns the specified commitment resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionCommitments::v1::GetRegionCommitmentsRequest,google/cloud/compute/region_commitments/v1/region_commitments.proto#L157}
+  /// @googleapis_link{google::cloud::cpp::compute::regionCommitments::v1::GetRegionCommitmentsRequest,google/cloud/compute/region_commitments/v1/region_commitments.proto#L163}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Commitment,google/cloud/compute/v1/internal/common.proto#L3663}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Commitment,google/cloud/compute/v1/internal/common.proto#L3677}
   ///
   /// [google.cloud.cpp.compute.regionCommitments.v1.GetRegionCommitmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L157}
+  /// @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L163}
   /// [google.cloud.cpp.compute.v1.Commitment]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3663}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3677}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Commitment> GetRegionCommitments(
       google::cloud::cpp::compute::regionCommitments::v1::
@@ -177,12 +177,12 @@ class RegionCommitmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionCommitments.v1.InsertRegionCommitmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L169}
+  /// @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L175}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionCommitments(
       std::string const& project, std::string const& region,
@@ -194,16 +194,16 @@ class RegionCommitmentsClient {
   /// the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionCommitments::v1::InsertRegionCommitmentsRequest,google/cloud/compute/region_commitments/v1/region_commitments.proto#L169}
+  /// @googleapis_link{google::cloud::cpp::compute::regionCommitments::v1::InsertRegionCommitmentsRequest,google/cloud/compute/region_commitments/v1/region_commitments.proto#L175}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionCommitments.v1.InsertRegionCommitmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L169}
+  /// @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L175}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionCommitments(
       google::cloud::cpp::compute::regionCommitments::v1::
@@ -218,12 +218,12 @@ class RegionCommitmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Commitment,google/cloud/compute/v1/internal/common.proto#L3663}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Commitment,google/cloud/compute/v1/internal/common.proto#L3677}
   ///
   /// [google.cloud.cpp.compute.regionCommitments.v1.ListRegionCommitmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L193}
+  /// @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L205}
   /// [google.cloud.cpp.compute.v1.Commitment]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3663}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3677}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Commitment>
   ListRegionCommitments(std::string const& project, std::string const& region,
@@ -233,16 +233,16 @@ class RegionCommitmentsClient {
   /// Retrieves a list of commitments contained within the specified region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionCommitments::v1::ListRegionCommitmentsRequest,google/cloud/compute/region_commitments/v1/region_commitments.proto#L193}
+  /// @googleapis_link{google::cloud::cpp::compute::regionCommitments::v1::ListRegionCommitmentsRequest,google/cloud/compute/region_commitments/v1/region_commitments.proto#L205}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Commitment,google/cloud/compute/v1/internal/common.proto#L3663}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Commitment,google/cloud/compute/v1/internal/common.proto#L3677}
   ///
   /// [google.cloud.cpp.compute.regionCommitments.v1.ListRegionCommitmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L193}
+  /// @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L205}
   /// [google.cloud.cpp.compute.v1.Commitment]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3663}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3677}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Commitment>
   ListRegionCommitments(google::cloud::cpp::compute::regionCommitments::v1::
@@ -262,12 +262,12 @@ class RegionCommitmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionCommitments.v1.UpdateRegionCommitmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L261}
+  /// @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L273}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRegionCommitments(
       std::string const& project, std::string const& region,
@@ -281,16 +281,16 @@ class RegionCommitmentsClient {
   /// update-mask. Only the following fields can be modified: auto_renew.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionCommitments::v1::UpdateRegionCommitmentsRequest,google/cloud/compute/region_commitments/v1/region_commitments.proto#L261}
+  /// @googleapis_link{google::cloud::cpp::compute::regionCommitments::v1::UpdateRegionCommitmentsRequest,google/cloud/compute/region_commitments/v1/region_commitments.proto#L273}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionCommitments.v1.UpdateRegionCommitmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L261}
+  /// @googleapis_reference_link{google/cloud/compute/region_commitments/v1/region_commitments.proto#L273}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRegionCommitments(
       google::cloud::cpp::compute::regionCommitments::v1::

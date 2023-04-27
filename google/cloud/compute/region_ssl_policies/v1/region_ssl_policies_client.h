@@ -100,12 +100,12 @@ class RegionSslPoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionSslPolicies.v1.DeleteRegionSslPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L94}
+  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L101}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRegionSslPolicies(
       std::string const& project, std::string const& region,
@@ -117,16 +117,16 @@ class RegionSslPoliciesClient {
   /// resources.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionSslPolicies::v1::DeleteRegionSslPoliciesRequest,google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L94}
+  /// @googleapis_link{google::cloud::cpp::compute::regionSslPolicies::v1::DeleteRegionSslPoliciesRequest,google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L101}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionSslPolicies.v1.DeleteRegionSslPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L94}
+  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L101}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRegionSslPolicies(
       google::cloud::cpp::compute::regionSslPolicies::v1::
@@ -144,12 +144,12 @@ class RegionSslPoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SslPolicy,google/cloud/compute/v1/internal/common.proto#L25482}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslPolicy,google/cloud/compute/v1/internal/common.proto#L25520}
   ///
   /// [google.cloud.cpp.compute.regionSslPolicies.v1.GetRegionSslPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L119}
+  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L132}
   /// [google.cloud.cpp.compute.v1.SslPolicy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25482}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25520}
   ///
   StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetRegionSslPolicies(
       std::string const& project, std::string const& region,
@@ -159,16 +159,16 @@ class RegionSslPoliciesClient {
   /// Lists all of the ordered rules present in a single specified policy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionSslPolicies::v1::GetRegionSslPoliciesRequest,google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L119}
+  /// @googleapis_link{google::cloud::cpp::compute::regionSslPolicies::v1::GetRegionSslPoliciesRequest,google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L132}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SslPolicy,google/cloud/compute/v1/internal/common.proto#L25482}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslPolicy,google/cloud/compute/v1/internal/common.proto#L25520}
   ///
   /// [google.cloud.cpp.compute.regionSslPolicies.v1.GetRegionSslPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L119}
+  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L132}
   /// [google.cloud.cpp.compute.v1.SslPolicy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25482}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25520}
   ///
   StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetRegionSslPolicies(
       google::cloud::cpp::compute::regionSslPolicies::v1::
@@ -185,12 +185,12 @@ class RegionSslPoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionSslPolicies.v1.InsertRegionSslPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L132}
+  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L145}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionSslPolicies(
       std::string const& project, std::string const& region,
@@ -202,16 +202,16 @@ class RegionSslPoliciesClient {
   /// included in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionSslPolicies::v1::InsertRegionSslPoliciesRequest,google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L132}
+  /// @googleapis_link{google::cloud::cpp::compute::regionSslPolicies::v1::InsertRegionSslPoliciesRequest,google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L145}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionSslPolicies.v1.InsertRegionSslPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L132}
+  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L145}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionSslPolicies(
       google::cloud::cpp::compute::regionSslPolicies::v1::
@@ -227,12 +227,12 @@ class RegionSslPoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SslPolicy,google/cloud/compute/v1/internal/common.proto#L25482}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslPolicy,google/cloud/compute/v1/internal/common.proto#L25520}
   ///
   /// [google.cloud.cpp.compute.regionSslPolicies.v1.ListRegionSslPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L224}
+  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L243}
   /// [google.cloud.cpp.compute.v1.SslPolicy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25482}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25520}
   ///
   StreamRange<google::cloud::cpp::compute::v1::SslPolicy> ListRegionSslPolicies(
       std::string const& project, std::string const& region, Options opts = {});
@@ -242,16 +242,16 @@ class RegionSslPoliciesClient {
   /// project and region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionSslPolicies::v1::ListRegionSslPoliciesRequest,google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L224}
+  /// @googleapis_link{google::cloud::cpp::compute::regionSslPolicies::v1::ListRegionSslPoliciesRequest,google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L243}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SslPolicy,google/cloud/compute/v1/internal/common.proto#L25482}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslPolicy,google/cloud/compute/v1/internal/common.proto#L25520}
   ///
   /// [google.cloud.cpp.compute.regionSslPolicies.v1.ListRegionSslPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L224}
+  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L243}
   /// [google.cloud.cpp.compute.v1.SslPolicy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25482}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25520}
   ///
   StreamRange<google::cloud::cpp::compute::v1::SslPolicy> ListRegionSslPolicies(
       google::cloud::cpp::compute::regionSslPolicies::v1::
@@ -267,12 +267,12 @@ class RegionSslPoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse,google/cloud/compute/v1/internal/common.proto#L25388}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse,google/cloud/compute/v1/internal/common.proto#L25426}
   ///
   /// [google.cloud.cpp.compute.regionSslPolicies.v1.ListAvailableFeaturesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L156}
+  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L175}
   /// [google.cloud.cpp.compute.v1.SslPoliciesListAvailableFeaturesResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25388}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25426}
   ///
   StatusOr<
       google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
@@ -284,16 +284,16 @@ class RegionSslPoliciesClient {
   /// custom profile.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionSslPolicies::v1::ListAvailableFeaturesRequest,google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L156}
+  /// @googleapis_link{google::cloud::cpp::compute::regionSslPolicies::v1::ListAvailableFeaturesRequest,google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L175}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse,google/cloud/compute/v1/internal/common.proto#L25388}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse,google/cloud/compute/v1/internal/common.proto#L25426}
   ///
   /// [google.cloud.cpp.compute.regionSslPolicies.v1.ListAvailableFeaturesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L156}
+  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L175}
   /// [google.cloud.cpp.compute.v1.SslPoliciesListAvailableFeaturesResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25388}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L25426}
   ///
   StatusOr<
       google::cloud::cpp::compute::v1::SslPoliciesListAvailableFeaturesResponse>
@@ -313,12 +313,12 @@ class RegionSslPoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionSslPolicies.v1.PatchRegionSslPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L292}
+  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L311}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRegionSslPolicies(
       std::string const& project, std::string const& region,
@@ -330,16 +330,16 @@ class RegionSslPoliciesClient {
   /// Patches the specified SSL policy with the data included in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionSslPolicies::v1::PatchRegionSslPoliciesRequest,google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L292}
+  /// @googleapis_link{google::cloud::cpp::compute::regionSslPolicies::v1::PatchRegionSslPoliciesRequest,google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L311}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionSslPolicies.v1.PatchRegionSslPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L292}
+  /// @googleapis_reference_link{google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto#L311}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRegionSslPolicies(
       google::cloud::cpp::compute::regionSslPolicies::v1::

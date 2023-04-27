@@ -95,12 +95,12 @@ class ForwardingRulesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList,google/cloud/compute/v1/internal/common.proto#L6615}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList,google/cloud/compute/v1/internal/common.proto#L6630}
   ///
   /// [google.cloud.cpp.compute.forwardingRules.v1.AggregatedListForwardingRulesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L116}
+  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L128}
   /// [google.cloud.cpp.compute.v1.ForwardingRuleAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6615}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6630}
   ///
   StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>
   AggregatedListForwardingRules(std::string const& project, Options opts = {});
@@ -109,16 +109,16 @@ class ForwardingRulesClient {
   /// Retrieves an aggregated list of forwarding rules.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::forwardingRules::v1::AggregatedListForwardingRulesRequest,google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L116}
+  /// @googleapis_link{google::cloud::cpp::compute::forwardingRules::v1::AggregatedListForwardingRulesRequest,google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L128}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList,google/cloud/compute/v1/internal/common.proto#L6615}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList,google/cloud/compute/v1/internal/common.proto#L6630}
   ///
   /// [google.cloud.cpp.compute.forwardingRules.v1.AggregatedListForwardingRulesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L116}
+  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L128}
   /// [google.cloud.cpp.compute.v1.ForwardingRuleAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6615}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6630}
   ///
   StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>
   AggregatedListForwardingRules(
@@ -135,12 +135,12 @@ class ForwardingRulesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.forwardingRules.v1.DeleteForwardingRulesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L190}
+  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L202}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteForwardingRules(
       std::string const& project, std::string const& region,
@@ -150,16 +150,16 @@ class ForwardingRulesClient {
   /// Deletes the specified ForwardingRule resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::forwardingRules::v1::DeleteForwardingRulesRequest,google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L190}
+  /// @googleapis_link{google::cloud::cpp::compute::forwardingRules::v1::DeleteForwardingRulesRequest,google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L202}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.forwardingRules.v1.DeleteForwardingRulesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L190}
+  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L202}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteForwardingRules(
       google::cloud::cpp::compute::forwardingRules::v1::
@@ -175,12 +175,12 @@ class ForwardingRulesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::ForwardingRule,google/cloud/compute/v1/internal/common.proto#L6330}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ForwardingRule,google/cloud/compute/v1/internal/common.proto#L6344}
   ///
   /// [google.cloud.cpp.compute.forwardingRules.v1.GetForwardingRulesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L214}
+  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L232}
   /// [google.cloud.cpp.compute.v1.ForwardingRule]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6330}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6344}
   ///
   StatusOr<google::cloud::cpp::compute::v1::ForwardingRule> GetForwardingRules(
       std::string const& project, std::string const& region,
@@ -190,16 +190,16 @@ class ForwardingRulesClient {
   /// Returns the specified ForwardingRule resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::forwardingRules::v1::GetForwardingRulesRequest,google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L214}
+  /// @googleapis_link{google::cloud::cpp::compute::forwardingRules::v1::GetForwardingRulesRequest,google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L232}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::ForwardingRule,google/cloud/compute/v1/internal/common.proto#L6330}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ForwardingRule,google/cloud/compute/v1/internal/common.proto#L6344}
   ///
   /// [google.cloud.cpp.compute.forwardingRules.v1.GetForwardingRulesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L214}
+  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L232}
   /// [google.cloud.cpp.compute.v1.ForwardingRule]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6330}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6344}
   ///
   StatusOr<google::cloud::cpp::compute::v1::ForwardingRule> GetForwardingRules(
       google::cloud::cpp::compute::forwardingRules::v1::
@@ -216,12 +216,12 @@ class ForwardingRulesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.forwardingRules.v1.InsertForwardingRulesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L226}
+  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L244}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertForwardingRules(
       std::string const& project, std::string const& region,
@@ -234,16 +234,16 @@ class ForwardingRulesClient {
   /// using the data included in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::forwardingRules::v1::InsertForwardingRulesRequest,google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L226}
+  /// @googleapis_link{google::cloud::cpp::compute::forwardingRules::v1::InsertForwardingRulesRequest,google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L244}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.forwardingRules.v1.InsertForwardingRulesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L226}
+  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L244}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertForwardingRules(
       google::cloud::cpp::compute::forwardingRules::v1::
@@ -259,12 +259,12 @@ class ForwardingRulesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::ForwardingRule,google/cloud/compute/v1/internal/common.proto#L6330}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ForwardingRule,google/cloud/compute/v1/internal/common.proto#L6344}
   ///
   /// [google.cloud.cpp.compute.forwardingRules.v1.ListForwardingRulesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L250}
+  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L275}
   /// [google.cloud.cpp.compute.v1.ForwardingRule]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6330}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6344}
   ///
   StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>
   ListForwardingRules(std::string const& project, std::string const& region,
@@ -275,16 +275,16 @@ class ForwardingRulesClient {
   /// project and region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::forwardingRules::v1::ListForwardingRulesRequest,google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L250}
+  /// @googleapis_link{google::cloud::cpp::compute::forwardingRules::v1::ListForwardingRulesRequest,google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L275}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::ForwardingRule,google/cloud/compute/v1/internal/common.proto#L6330}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ForwardingRule,google/cloud/compute/v1/internal/common.proto#L6344}
   ///
   /// [google.cloud.cpp.compute.forwardingRules.v1.ListForwardingRulesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L250}
+  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L275}
   /// [google.cloud.cpp.compute.v1.ForwardingRule]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6330}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L6344}
   ///
   StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>
   ListForwardingRules(google::cloud::cpp::compute::forwardingRules::v1::
@@ -304,12 +304,12 @@ class ForwardingRulesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.forwardingRules.v1.PatchForwardingRulesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L318}
+  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L343}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchForwardingRules(
       std::string const& project, std::string const& region,
@@ -325,16 +325,16 @@ class ForwardingRulesClient {
   /// network_tier field.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::forwardingRules::v1::PatchForwardingRulesRequest,google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L318}
+  /// @googleapis_link{google::cloud::cpp::compute::forwardingRules::v1::PatchForwardingRulesRequest,google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L343}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.forwardingRules.v1.PatchForwardingRulesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L318}
+  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L343}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchForwardingRules(
       google::cloud::cpp::compute::forwardingRules::v1::
@@ -353,12 +353,12 @@ class ForwardingRulesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.forwardingRules.v1.SetLabelsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L345}
+  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L377}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       std::string const& project, std::string const& region,
@@ -372,16 +372,16 @@ class ForwardingRulesClient {
   /// read the Labeling Resources documentation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::forwardingRules::v1::SetLabelsRequest,google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L345}
+  /// @googleapis_link{google::cloud::cpp::compute::forwardingRules::v1::SetLabelsRequest,google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L377}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.forwardingRules.v1.SetLabelsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L345}
+  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L377}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::cpp::compute::forwardingRules::v1::SetLabelsRequest const&
@@ -400,12 +400,12 @@ class ForwardingRulesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.forwardingRules.v1.SetTargetRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L372}
+  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L411}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetTarget(
       std::string const& project, std::string const& region,
@@ -419,16 +419,16 @@ class ForwardingRulesClient {
   /// same type as the old target.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::forwardingRules::v1::SetTargetRequest,google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L372}
+  /// @googleapis_link{google::cloud::cpp::compute::forwardingRules::v1::SetTargetRequest,google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L411}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.forwardingRules.v1.SetTargetRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L372}
+  /// @googleapis_reference_link{google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto#L411}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetTarget(
       google::cloud::cpp::compute::forwardingRules::v1::SetTargetRequest const&

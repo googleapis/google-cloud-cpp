@@ -99,12 +99,12 @@ class RegionsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Region,google/cloud/compute/v1/internal/common.proto#L19649}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Region,google/cloud/compute/v1/internal/common.proto#L19672}
   ///
   /// [google.cloud.cpp.compute.regions.v1.GetRegionsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L64}
+  /// @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L66}
   /// [google.cloud.cpp.compute.v1.Region]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19649}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19672}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Region> GetRegions(
       std::string const& project, std::string const& region, Options opts = {});
@@ -119,16 +119,16 @@ class RegionsClient {
   /// query parameter `?fields=id,selfLink` to your request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regions::v1::GetRegionsRequest,google/cloud/compute/regions/v1/regions.proto#L64}
+  /// @googleapis_link{google::cloud::cpp::compute::regions::v1::GetRegionsRequest,google/cloud/compute/regions/v1/regions.proto#L66}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Region,google/cloud/compute/v1/internal/common.proto#L19649}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Region,google/cloud/compute/v1/internal/common.proto#L19672}
   ///
   /// [google.cloud.cpp.compute.regions.v1.GetRegionsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L64}
+  /// @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L66}
   /// [google.cloud.cpp.compute.v1.Region]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19649}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19672}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Region> GetRegions(
       google::cloud::cpp::compute::regions::v1::GetRegionsRequest const&
@@ -149,12 +149,12 @@ class RegionsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Region,google/cloud/compute/v1/internal/common.proto#L19649}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Region,google/cloud/compute/v1/internal/common.proto#L19672}
   ///
   /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L73}
+  /// @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L75}
   /// [google.cloud.cpp.compute.v1.Region]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19649}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19672}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Region> ListRegions(
       std::string const& project, Options opts = {});
@@ -170,16 +170,16 @@ class RegionsClient {
   /// `?fields=id,selfLink` to your request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regions::v1::ListRegionsRequest,google/cloud/compute/regions/v1/regions.proto#L73}
+  /// @googleapis_link{google::cloud::cpp::compute::regions::v1::ListRegionsRequest,google/cloud/compute/regions/v1/regions.proto#L75}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Region,google/cloud/compute/v1/internal/common.proto#L19649}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Region,google/cloud/compute/v1/internal/common.proto#L19672}
   ///
   /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L73}
+  /// @googleapis_reference_link{google/cloud/compute/regions/v1/regions.proto#L75}
   /// [google.cloud.cpp.compute.v1.Region]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19649}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19672}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Region> ListRegions(
       google::cloud::cpp::compute::regions::v1::ListRegionsRequest request,

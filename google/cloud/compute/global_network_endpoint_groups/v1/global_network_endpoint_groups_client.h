@@ -106,12 +106,12 @@ class GlobalNetworkEndpointGroupsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.globalNetworkEndpointGroups.v1.AttachNetworkEndpointsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L103}
+  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L115}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AttachNetworkEndpoints(
       std::string const& project, std::string const& network_endpoint_group,
@@ -124,16 +124,16 @@ class GlobalNetworkEndpointGroupsClient {
   /// Attach a network endpoint to the specified network endpoint group.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::globalNetworkEndpointGroups::v1::AttachNetworkEndpointsRequest,google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L103}
+  /// @googleapis_link{google::cloud::cpp::compute::globalNetworkEndpointGroups::v1::AttachNetworkEndpointsRequest,google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L115}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.globalNetworkEndpointGroups.v1.AttachNetworkEndpointsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L103}
+  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L115}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AttachNetworkEndpoints(
       google::cloud::cpp::compute::globalNetworkEndpointGroups::v1::
@@ -151,12 +151,12 @@ class GlobalNetworkEndpointGroupsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.globalNetworkEndpointGroups.v1.DeleteGlobalNetworkEndpointGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L128}
+  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L145}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteGlobalNetworkEndpointGroups(std::string const& project,
@@ -168,16 +168,16 @@ class GlobalNetworkEndpointGroupsClient {
   /// deleted if there are backend services referencing it.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::globalNetworkEndpointGroups::v1::DeleteGlobalNetworkEndpointGroupsRequest,google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L128}
+  /// @googleapis_link{google::cloud::cpp::compute::globalNetworkEndpointGroups::v1::DeleteGlobalNetworkEndpointGroupsRequest,google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L145}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.globalNetworkEndpointGroups.v1.DeleteGlobalNetworkEndpointGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L128}
+  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L145}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteGlobalNetworkEndpointGroups(
@@ -197,12 +197,12 @@ class GlobalNetworkEndpointGroupsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.globalNetworkEndpointGroups.v1.DetachNetworkEndpointsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L150}
+  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L170}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DetachNetworkEndpoints(
       std::string const& project, std::string const& network_endpoint_group,
@@ -215,16 +215,16 @@ class GlobalNetworkEndpointGroupsClient {
   /// Detach the network endpoint from the specified network endpoint group.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::globalNetworkEndpointGroups::v1::DetachNetworkEndpointsRequest,google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L150}
+  /// @googleapis_link{google::cloud::cpp::compute::globalNetworkEndpointGroups::v1::DetachNetworkEndpointsRequest,google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L170}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.globalNetworkEndpointGroups.v1.DetachNetworkEndpointsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L150}
+  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L170}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DetachNetworkEndpoints(
       google::cloud::cpp::compute::globalNetworkEndpointGroups::v1::
@@ -240,12 +240,12 @@ class GlobalNetworkEndpointGroupsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkEndpointGroup,google/cloud/compute/v1/internal/common.proto#L14957}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkEndpointGroup,google/cloud/compute/v1/internal/common.proto#L14977}
   ///
   /// [google.cloud.cpp.compute.globalNetworkEndpointGroups.v1.GetGlobalNetworkEndpointGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L175}
+  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L200}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14957}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14977}
   ///
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
   GetGlobalNetworkEndpointGroups(std::string const& project,
@@ -256,16 +256,16 @@ class GlobalNetworkEndpointGroupsClient {
   /// Returns the specified network endpoint group.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::globalNetworkEndpointGroups::v1::GetGlobalNetworkEndpointGroupsRequest,google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L175}
+  /// @googleapis_link{google::cloud::cpp::compute::globalNetworkEndpointGroups::v1::GetGlobalNetworkEndpointGroupsRequest,google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L200}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkEndpointGroup,google/cloud/compute/v1/internal/common.proto#L14957}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkEndpointGroup,google/cloud/compute/v1/internal/common.proto#L14977}
   ///
   /// [google.cloud.cpp.compute.globalNetworkEndpointGroups.v1.GetGlobalNetworkEndpointGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L175}
+  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L200}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14957}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14977}
   ///
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
   GetGlobalNetworkEndpointGroups(
@@ -283,12 +283,12 @@ class GlobalNetworkEndpointGroupsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.globalNetworkEndpointGroups.v1.InsertGlobalNetworkEndpointGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L184}
+  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L209}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertGlobalNetworkEndpointGroups(
@@ -302,16 +302,16 @@ class GlobalNetworkEndpointGroupsClient {
   /// parameters that are included in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::globalNetworkEndpointGroups::v1::InsertGlobalNetworkEndpointGroupsRequest,google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L184}
+  /// @googleapis_link{google::cloud::cpp::compute::globalNetworkEndpointGroups::v1::InsertGlobalNetworkEndpointGroupsRequest,google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L209}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.globalNetworkEndpointGroups.v1.InsertGlobalNetworkEndpointGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L184}
+  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L209}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertGlobalNetworkEndpointGroups(
@@ -327,12 +327,12 @@ class GlobalNetworkEndpointGroupsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkEndpointGroup,google/cloud/compute/v1/internal/common.proto#L14957}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkEndpointGroup,google/cloud/compute/v1/internal/common.proto#L14977}
   ///
   /// [google.cloud.cpp.compute.globalNetworkEndpointGroups.v1.ListGlobalNetworkEndpointGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L205}
+  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L234}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14957}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14977}
   ///
   StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
   ListGlobalNetworkEndpointGroups(std::string const& project,
@@ -343,16 +343,16 @@ class GlobalNetworkEndpointGroupsClient {
   /// specified project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::globalNetworkEndpointGroups::v1::ListGlobalNetworkEndpointGroupsRequest,google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L205}
+  /// @googleapis_link{google::cloud::cpp::compute::globalNetworkEndpointGroups::v1::ListGlobalNetworkEndpointGroupsRequest,google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L234}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkEndpointGroup,google/cloud/compute/v1/internal/common.proto#L14957}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkEndpointGroup,google/cloud/compute/v1/internal/common.proto#L14977}
   ///
   /// [google.cloud.cpp.compute.globalNetworkEndpointGroups.v1.ListGlobalNetworkEndpointGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L205}
+  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L234}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointGroup]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14957}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14977}
   ///
   StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
   ListGlobalNetworkEndpointGroups(
@@ -370,12 +370,12 @@ class GlobalNetworkEndpointGroupsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkEndpointWithHealthStatus,google/cloud/compute/v1/internal/common.proto#L15564}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkEndpointWithHealthStatus,google/cloud/compute/v1/internal/common.proto#L15584}
   ///
   /// [google.cloud.cpp.compute.globalNetworkEndpointGroups.v1.ListNetworkEndpointsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L270}
+  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L299}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointWithHealthStatus]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L15564}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L15584}
   ///
   StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointWithHealthStatus>
   ListNetworkEndpoints(std::string const& project,
@@ -386,16 +386,16 @@ class GlobalNetworkEndpointGroupsClient {
   /// Lists the network endpoints in the specified network endpoint group.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::globalNetworkEndpointGroups::v1::ListNetworkEndpointsRequest,google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L270}
+  /// @googleapis_link{google::cloud::cpp::compute::globalNetworkEndpointGroups::v1::ListNetworkEndpointsRequest,google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L299}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkEndpointWithHealthStatus,google/cloud/compute/v1/internal/common.proto#L15564}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkEndpointWithHealthStatus,google/cloud/compute/v1/internal/common.proto#L15584}
   ///
   /// [google.cloud.cpp.compute.globalNetworkEndpointGroups.v1.ListNetworkEndpointsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L270}
+  /// @googleapis_reference_link{google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto#L299}
   /// [google.cloud.cpp.compute.v1.NetworkEndpointWithHealthStatus]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L15564}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L15584}
   ///
   StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointWithHealthStatus>
   ListNetworkEndpoints(

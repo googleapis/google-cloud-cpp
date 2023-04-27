@@ -95,12 +95,12 @@ class GlobalOperationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::OperationAggregatedList,google/cloud/compute/v1/internal/common.proto#L17638}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::OperationAggregatedList,google/cloud/compute/v1/internal/common.proto#L17659}
   ///
   /// [google.cloud.cpp.compute.globalOperations.v1.AggregatedListGlobalOperationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L91}
+  /// @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L95}
   /// [google.cloud.cpp.compute.v1.OperationAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17638}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17659}
   ///
   StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
   AggregatedListGlobalOperations(std::string const& project, Options opts = {});
@@ -109,16 +109,16 @@ class GlobalOperationsClient {
   /// Retrieves an aggregated list of all operations.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::globalOperations::v1::AggregatedListGlobalOperationsRequest,google/cloud/compute/global_operations/v1/global_operations.proto#L91}
+  /// @googleapis_link{google::cloud::cpp::compute::globalOperations::v1::AggregatedListGlobalOperationsRequest,google/cloud/compute/global_operations/v1/global_operations.proto#L95}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::OperationAggregatedList,google/cloud/compute/v1/internal/common.proto#L17638}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::OperationAggregatedList,google/cloud/compute/v1/internal/common.proto#L17659}
   ///
   /// [google.cloud.cpp.compute.globalOperations.v1.AggregatedListGlobalOperationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L91}
+  /// @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L95}
   /// [google.cloud.cpp.compute.v1.OperationAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17638}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17659}
   ///
   StatusOr<google::cloud::cpp::compute::v1::OperationAggregatedList>
   AggregatedListGlobalOperations(
@@ -135,7 +135,7 @@ class GlobalOperationsClient {
   ///     backoff policies.
   ///
   /// [google.cloud.cpp.compute.globalOperations.v1.DeleteGlobalOperationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L165}
+  /// @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L169}
   ///
   Status DeleteGlobalOperations(std::string const& project,
                                 std::string const& operation,
@@ -145,12 +145,12 @@ class GlobalOperationsClient {
   /// Deletes the specified Operations resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::globalOperations::v1::DeleteGlobalOperationsRequest,google/cloud/compute/global_operations/v1/global_operations.proto#L165}
+  /// @googleapis_link{google::cloud::cpp::compute::globalOperations::v1::DeleteGlobalOperationsRequest,google/cloud/compute/global_operations/v1/global_operations.proto#L169}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.cpp.compute.globalOperations.v1.DeleteGlobalOperationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L165}
+  /// @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L169}
   ///
   Status DeleteGlobalOperations(
       google::cloud::cpp::compute::globalOperations::v1::
@@ -165,12 +165,12 @@ class GlobalOperationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.globalOperations.v1.GetGlobalOperationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L174}
+  /// @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L178}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetGlobalOperations(
       std::string const& project, std::string const& operation,
@@ -180,16 +180,16 @@ class GlobalOperationsClient {
   /// Retrieves the specified Operations resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::globalOperations::v1::GetGlobalOperationsRequest,google/cloud/compute/global_operations/v1/global_operations.proto#L174}
+  /// @googleapis_link{google::cloud::cpp::compute::globalOperations::v1::GetGlobalOperationsRequest,google/cloud/compute/global_operations/v1/global_operations.proto#L178}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.globalOperations.v1.GetGlobalOperationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L174}
+  /// @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L178}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetGlobalOperations(
       google::cloud::cpp::compute::globalOperations::v1::
@@ -204,12 +204,12 @@ class GlobalOperationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.globalOperations.v1.ListGlobalOperationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L183}
+  /// @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L190}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Operation> ListGlobalOperations(
       std::string const& project, Options opts = {});
@@ -219,16 +219,16 @@ class GlobalOperationsClient {
   /// project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::globalOperations::v1::ListGlobalOperationsRequest,google/cloud/compute/global_operations/v1/global_operations.proto#L183}
+  /// @googleapis_link{google::cloud::cpp::compute::globalOperations::v1::ListGlobalOperationsRequest,google/cloud/compute/global_operations/v1/global_operations.proto#L190}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.globalOperations.v1.ListGlobalOperationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L183}
+  /// @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L190}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Operation> ListGlobalOperations(
       google::cloud::cpp::compute::globalOperations::v1::
@@ -254,12 +254,12 @@ class GlobalOperationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.globalOperations.v1.WaitRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L248}
+  /// @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L255}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
       std::string const& project, std::string const& operation,
@@ -280,16 +280,16 @@ class GlobalOperationsClient {
   /// if the operation is not `DONE`.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::globalOperations::v1::WaitRequest,google/cloud/compute/global_operations/v1/global_operations.proto#L248}
+  /// @googleapis_link{google::cloud::cpp::compute::globalOperations::v1::WaitRequest,google/cloud/compute/global_operations/v1/global_operations.proto#L255}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.globalOperations.v1.WaitRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L248}
+  /// @googleapis_reference_link{google/cloud/compute/global_operations/v1/global_operations.proto#L255}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
       google::cloud::cpp::compute::globalOperations::v1::WaitRequest const&

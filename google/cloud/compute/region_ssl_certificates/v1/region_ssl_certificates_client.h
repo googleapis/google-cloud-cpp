@@ -100,12 +100,12 @@ class RegionSslCertificatesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionSslCertificates.v1.DeleteRegionSslCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L74}
+  /// @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L79}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteRegionSslCertificates(std::string const& project,
@@ -117,16 +117,16 @@ class RegionSslCertificatesClient {
   /// Deletes the specified SslCertificate resource in the region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionSslCertificates::v1::DeleteRegionSslCertificatesRequest,google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L74}
+  /// @googleapis_link{google::cloud::cpp::compute::regionSslCertificates::v1::DeleteRegionSslCertificatesRequest,google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L79}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionSslCertificates.v1.DeleteRegionSslCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L74}
+  /// @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L79}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteRegionSslCertificates(
@@ -144,12 +144,12 @@ class RegionSslCertificatesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SslCertificate,google/cloud/compute/v1/internal/common.proto#L24772}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslCertificate,google/cloud/compute/v1/internal/common.proto#L24810}
   ///
   /// [google.cloud.cpp.compute.regionSslCertificates.v1.GetRegionSslCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L98}
+  /// @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L109}
   /// [google.cloud.cpp.compute.v1.SslCertificate]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24772}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24810}
   ///
   StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
   GetRegionSslCertificates(std::string const& project,
@@ -162,16 +162,16 @@ class RegionSslCertificatesClient {
   /// a list of available SSL certificates by making a list() request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionSslCertificates::v1::GetRegionSslCertificatesRequest,google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L98}
+  /// @googleapis_link{google::cloud::cpp::compute::regionSslCertificates::v1::GetRegionSslCertificatesRequest,google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L109}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SslCertificate,google/cloud/compute/v1/internal/common.proto#L24772}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslCertificate,google/cloud/compute/v1/internal/common.proto#L24810}
   ///
   /// [google.cloud.cpp.compute.regionSslCertificates.v1.GetRegionSslCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L98}
+  /// @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L109}
   /// [google.cloud.cpp.compute.v1.SslCertificate]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24772}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24810}
   ///
   StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
   GetRegionSslCertificates(
@@ -189,12 +189,12 @@ class RegionSslCertificatesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionSslCertificates.v1.InsertRegionSslCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L110}
+  /// @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L121}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertRegionSslCertificates(
@@ -208,16 +208,16 @@ class RegionSslCertificatesClient {
   /// using the data included in the request
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionSslCertificates::v1::InsertRegionSslCertificatesRequest,google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L110}
+  /// @googleapis_link{google::cloud::cpp::compute::regionSslCertificates::v1::InsertRegionSslCertificatesRequest,google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L121}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionSslCertificates.v1.InsertRegionSslCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L110}
+  /// @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L121}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertRegionSslCertificates(
@@ -234,12 +234,12 @@ class RegionSslCertificatesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SslCertificate,google/cloud/compute/v1/internal/common.proto#L24772}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslCertificate,google/cloud/compute/v1/internal/common.proto#L24810}
   ///
   /// [google.cloud.cpp.compute.regionSslCertificates.v1.ListRegionSslCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L134}
+  /// @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L152}
   /// [google.cloud.cpp.compute.v1.SslCertificate]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24772}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24810}
   ///
   StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
   ListRegionSslCertificates(std::string const& project,
@@ -250,16 +250,16 @@ class RegionSslCertificatesClient {
   /// project in the specified region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionSslCertificates::v1::ListRegionSslCertificatesRequest,google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L134}
+  /// @googleapis_link{google::cloud::cpp::compute::regionSslCertificates::v1::ListRegionSslCertificatesRequest,google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L152}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::SslCertificate,google/cloud/compute/v1/internal/common.proto#L24772}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::SslCertificate,google/cloud/compute/v1/internal/common.proto#L24810}
   ///
   /// [google.cloud.cpp.compute.regionSslCertificates.v1.ListRegionSslCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L134}
+  /// @googleapis_reference_link{google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto#L152}
   /// [google.cloud.cpp.compute.v1.SslCertificate]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24772}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L24810}
   ///
   StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
   ListRegionSslCertificates(google::cloud::cpp::compute::regionSslCertificates::

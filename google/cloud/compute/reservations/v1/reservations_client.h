@@ -95,12 +95,12 @@ class ReservationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::ReservationAggregatedList,google/cloud/compute/v1/internal/common.proto#L20753}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ReservationAggregatedList,google/cloud/compute/v1/internal/common.proto#L20779}
   ///
   /// [google.cloud.cpp.compute.reservations.v1.AggregatedListReservationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L130}
+  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L143}
   /// [google.cloud.cpp.compute.v1.ReservationAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L20753}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L20779}
   ///
   StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>
   AggregatedListReservations(std::string const& project, Options opts = {});
@@ -109,16 +109,16 @@ class ReservationsClient {
   /// Retrieves an aggregated list of reservations.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::reservations::v1::AggregatedListReservationsRequest,google/cloud/compute/reservations/v1/reservations.proto#L130}
+  /// @googleapis_link{google::cloud::cpp::compute::reservations::v1::AggregatedListReservationsRequest,google/cloud/compute/reservations/v1/reservations.proto#L143}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::ReservationAggregatedList,google/cloud/compute/v1/internal/common.proto#L20753}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ReservationAggregatedList,google/cloud/compute/v1/internal/common.proto#L20779}
   ///
   /// [google.cloud.cpp.compute.reservations.v1.AggregatedListReservationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L130}
+  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L143}
   /// [google.cloud.cpp.compute.v1.ReservationAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L20753}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L20779}
   ///
   StatusOr<google::cloud::cpp::compute::v1::ReservationAggregatedList>
   AggregatedListReservations(
@@ -135,12 +135,12 @@ class ReservationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.reservations.v1.DeleteReservationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L204}
+  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L217}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteReservations(
       std::string const& project, std::string const& zone,
@@ -150,16 +150,16 @@ class ReservationsClient {
   /// Deletes the specified reservation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::reservations::v1::DeleteReservationsRequest,google/cloud/compute/reservations/v1/reservations.proto#L204}
+  /// @googleapis_link{google::cloud::cpp::compute::reservations::v1::DeleteReservationsRequest,google/cloud/compute/reservations/v1/reservations.proto#L217}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.reservations.v1.DeleteReservationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L204}
+  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L217}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteReservations(
       google::cloud::cpp::compute::reservations::v1::
@@ -175,12 +175,12 @@ class ReservationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Reservation,google/cloud/compute/v1/internal/common.proto#L20659}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Reservation,google/cloud/compute/v1/internal/common.proto#L20685}
   ///
   /// [google.cloud.cpp.compute.reservations.v1.GetReservationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L243}
+  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L262}
   /// [google.cloud.cpp.compute.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L20659}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L20685}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservations(
       std::string const& project, std::string const& zone,
@@ -190,16 +190,16 @@ class ReservationsClient {
   /// Retrieves information about the specified reservation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::reservations::v1::GetReservationsRequest,google/cloud/compute/reservations/v1/reservations.proto#L243}
+  /// @googleapis_link{google::cloud::cpp::compute::reservations::v1::GetReservationsRequest,google/cloud/compute/reservations/v1/reservations.proto#L262}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Reservation,google/cloud/compute/v1/internal/common.proto#L20659}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Reservation,google/cloud/compute/v1/internal/common.proto#L20685}
   ///
   /// [google.cloud.cpp.compute.reservations.v1.GetReservationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L243}
+  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L262}
   /// [google.cloud.cpp.compute.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L20659}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L20685}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservations(
       google::cloud::cpp::compute::reservations::v1::
@@ -216,12 +216,12 @@ class ReservationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.reservations.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L228}
+  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L247}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       std::string const& project, std::string const& zone,
@@ -232,16 +232,16 @@ class ReservationsClient {
   /// policy or resource exists.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest,google/cloud/compute/reservations/v1/reservations.proto#L228}
+  /// @googleapis_link{google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest,google/cloud/compute/reservations/v1/reservations.proto#L247}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.reservations.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L228}
+  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L247}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::reservations::v1::GetIamPolicyRequest const&
@@ -258,12 +258,12 @@ class ReservationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.reservations.v1.InsertReservationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L255}
+  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L274}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertReservations(
       std::string const& project, std::string const& zone,
@@ -275,16 +275,16 @@ class ReservationsClient {
   /// resources.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::reservations::v1::InsertReservationsRequest,google/cloud/compute/reservations/v1/reservations.proto#L255}
+  /// @googleapis_link{google::cloud::cpp::compute::reservations::v1::InsertReservationsRequest,google/cloud/compute/reservations/v1/reservations.proto#L274}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.reservations.v1.InsertReservationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L255}
+  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L274}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertReservations(
       google::cloud::cpp::compute::reservations::v1::
@@ -300,12 +300,12 @@ class ReservationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Reservation,google/cloud/compute/v1/internal/common.proto#L20659}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Reservation,google/cloud/compute/v1/internal/common.proto#L20685}
   ///
   /// [google.cloud.cpp.compute.reservations.v1.ListReservationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L279}
+  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L304}
   /// [google.cloud.cpp.compute.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L20659}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L20685}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Reservation> ListReservations(
       std::string const& project, std::string const& zone, Options opts = {});
@@ -315,16 +315,16 @@ class ReservationsClient {
   /// project in specified zone.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::reservations::v1::ListReservationsRequest,google/cloud/compute/reservations/v1/reservations.proto#L279}
+  /// @googleapis_link{google::cloud::cpp::compute::reservations::v1::ListReservationsRequest,google/cloud/compute/reservations/v1/reservations.proto#L304}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Reservation,google/cloud/compute/v1/internal/common.proto#L20659}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Reservation,google/cloud/compute/v1/internal/common.proto#L20685}
   ///
   /// [google.cloud.cpp.compute.reservations.v1.ListReservationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L279}
+  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L304}
   /// [google.cloud.cpp.compute.v1.Reservation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L20659}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L20685}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Reservation> ListReservations(
       google::cloud::cpp::compute::reservations::v1::ListReservationsRequest
@@ -343,12 +343,12 @@ class ReservationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.reservations.v1.ResizeRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L347}
+  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L372}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
       std::string const& project, std::string const& zone,
@@ -362,16 +362,16 @@ class ReservationsClient {
   /// more information, read Modifying reservations.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::reservations::v1::ResizeRequest,google/cloud/compute/reservations/v1/reservations.proto#L347}
+  /// @googleapis_link{google::cloud::cpp::compute::reservations::v1::ResizeRequest,google/cloud/compute/reservations/v1/reservations.proto#L372}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.reservations.v1.ResizeRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L347}
+  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L372}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
       google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
@@ -390,12 +390,12 @@ class ReservationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.reservations.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L374}
+  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L406}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       std::string const& project, std::string const& zone,
@@ -409,16 +409,16 @@ class ReservationsClient {
   /// existing policy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest,google/cloud/compute/reservations/v1/reservations.proto#L374}
+  /// @googleapis_link{google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest,google/cloud/compute/reservations/v1/reservations.proto#L406}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.reservations.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L374}
+  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L406}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const&
@@ -436,12 +436,12 @@ class ReservationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   /// [google.cloud.cpp.compute.reservations.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L389}
+  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L422}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(
@@ -455,16 +455,16 @@ class ReservationsClient {
   /// Returns permissions that a caller has on the specified resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::reservations::v1::TestIamPermissionsRequest,google/cloud/compute/reservations/v1/reservations.proto#L389}
+  /// @googleapis_link{google::cloud::cpp::compute::reservations::v1::TestIamPermissionsRequest,google/cloud/compute/reservations/v1/reservations.proto#L422}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   /// [google.cloud.cpp.compute.reservations.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L389}
+  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L422}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::reservations::v1::
@@ -481,12 +481,12 @@ class ReservationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.reservations.v1.UpdateReservationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L404}
+  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L438}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateReservations(
       std::string const& project, std::string const& zone,
@@ -498,16 +498,16 @@ class ReservationsClient {
   /// Update share settings of the reservation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::reservations::v1::UpdateReservationsRequest,google/cloud/compute/reservations/v1/reservations.proto#L404}
+  /// @googleapis_link{google::cloud::cpp::compute::reservations::v1::UpdateReservationsRequest,google/cloud/compute/reservations/v1/reservations.proto#L438}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.reservations.v1.UpdateReservationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L404}
+  /// @googleapis_reference_link{google/cloud/compute/reservations/v1/reservations.proto#L438}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateReservations(
       google::cloud::cpp::compute::reservations::v1::

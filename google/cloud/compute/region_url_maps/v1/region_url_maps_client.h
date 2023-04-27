@@ -96,12 +96,12 @@ class RegionUrlMapsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionUrlMaps.v1.DeleteRegionUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L107}
+  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L117}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRegionUrlMaps(
       std::string const& project, std::string const& region,
@@ -111,16 +111,16 @@ class RegionUrlMapsClient {
   /// Deletes the specified UrlMap resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionUrlMaps::v1::DeleteRegionUrlMapsRequest,google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L107}
+  /// @googleapis_link{google::cloud::cpp::compute::regionUrlMaps::v1::DeleteRegionUrlMapsRequest,google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L117}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionUrlMaps.v1.DeleteRegionUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L107}
+  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L117}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRegionUrlMaps(
       google::cloud::cpp::compute::regionUrlMaps::v1::
@@ -136,12 +136,12 @@ class RegionUrlMapsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMap,google/cloud/compute/v1/internal/common.proto#L28928}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMap,google/cloud/compute/v1/internal/common.proto#L28966}
   ///
   /// [google.cloud.cpp.compute.regionUrlMaps.v1.GetRegionUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L123}
+  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L139}
   /// [google.cloud.cpp.compute.v1.UrlMap]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28928}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28966}
   ///
   StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetRegionUrlMaps(
       std::string const& project, std::string const& region,
@@ -151,16 +151,16 @@ class RegionUrlMapsClient {
   /// Returns the specified UrlMap resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionUrlMaps::v1::GetRegionUrlMapsRequest,google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L123}
+  /// @googleapis_link{google::cloud::cpp::compute::regionUrlMaps::v1::GetRegionUrlMapsRequest,google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L139}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMap,google/cloud/compute/v1/internal/common.proto#L28928}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMap,google/cloud/compute/v1/internal/common.proto#L28966}
   ///
   /// [google.cloud.cpp.compute.regionUrlMaps.v1.GetRegionUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L123}
+  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L139}
   /// [google.cloud.cpp.compute.v1.UrlMap]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28928}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28966}
   ///
   StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetRegionUrlMaps(
       google::cloud::cpp::compute::regionUrlMaps::v1::
@@ -177,12 +177,12 @@ class RegionUrlMapsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionUrlMaps.v1.InsertRegionUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L135}
+  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L151}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionUrlMaps(
       std::string const& project, std::string const& region,
@@ -194,16 +194,16 @@ class RegionUrlMapsClient {
   /// in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionUrlMaps::v1::InsertRegionUrlMapsRequest,google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L135}
+  /// @googleapis_link{google::cloud::cpp::compute::regionUrlMaps::v1::InsertRegionUrlMapsRequest,google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L151}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionUrlMaps.v1.InsertRegionUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L135}
+  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L151}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionUrlMaps(
       google::cloud::cpp::compute::regionUrlMaps::v1::
@@ -219,12 +219,12 @@ class RegionUrlMapsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMap,google/cloud/compute/v1/internal/common.proto#L28928}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMap,google/cloud/compute/v1/internal/common.proto#L28966}
   ///
   /// [google.cloud.cpp.compute.regionUrlMaps.v1.ListRegionUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L151}
+  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L173}
   /// [google.cloud.cpp.compute.v1.UrlMap]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28928}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28966}
   ///
   StreamRange<google::cloud::cpp::compute::v1::UrlMap> ListRegionUrlMaps(
       std::string const& project, std::string const& region, Options opts = {});
@@ -234,16 +234,16 @@ class RegionUrlMapsClient {
   /// in the specified region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionUrlMaps::v1::ListRegionUrlMapsRequest,google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L151}
+  /// @googleapis_link{google::cloud::cpp::compute::regionUrlMaps::v1::ListRegionUrlMapsRequest,google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L173}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMap,google/cloud/compute/v1/internal/common.proto#L28928}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMap,google/cloud/compute/v1/internal/common.proto#L28966}
   ///
   /// [google.cloud.cpp.compute.regionUrlMaps.v1.ListRegionUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L151}
+  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L173}
   /// [google.cloud.cpp.compute.v1.UrlMap]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28928}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28966}
   ///
   StreamRange<google::cloud::cpp::compute::v1::UrlMap> ListRegionUrlMaps(
       google::cloud::cpp::compute::regionUrlMaps::v1::ListRegionUrlMapsRequest
@@ -262,12 +262,12 @@ class RegionUrlMapsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionUrlMaps.v1.PatchRegionUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L219}
+  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L241}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRegionUrlMaps(
       std::string const& project, std::string const& region,
@@ -281,16 +281,16 @@ class RegionUrlMapsClient {
   /// format and processing rules.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionUrlMaps::v1::PatchRegionUrlMapsRequest,google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L219}
+  /// @googleapis_link{google::cloud::cpp::compute::regionUrlMaps::v1::PatchRegionUrlMapsRequest,google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L241}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionUrlMaps.v1.PatchRegionUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L219}
+  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L241}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRegionUrlMaps(
       google::cloud::cpp::compute::regionUrlMaps::v1::
@@ -308,12 +308,12 @@ class RegionUrlMapsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionUrlMaps.v1.UpdateRegionUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L238}
+  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L266}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRegionUrlMaps(
       std::string const& project, std::string const& region,
@@ -326,16 +326,16 @@ class RegionUrlMapsClient {
   /// request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionUrlMaps::v1::UpdateRegionUrlMapsRequest,google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L238}
+  /// @googleapis_link{google::cloud::cpp::compute::regionUrlMaps::v1::UpdateRegionUrlMapsRequest,google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L266}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionUrlMaps.v1.UpdateRegionUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L238}
+  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L266}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRegionUrlMaps(
       google::cloud::cpp::compute::regionUrlMaps::v1::
@@ -355,12 +355,12 @@ class RegionUrlMapsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMapsValidateResponse,google/cloud/compute/v1/internal/common.proto#L29406}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMapsValidateResponse,google/cloud/compute/v1/internal/common.proto#L29444}
   ///
   /// [google.cloud.cpp.compute.regionUrlMaps.v1.ValidateRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L257}
+  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L291}
   /// [google.cloud.cpp.compute.v1.UrlMapsValidateResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29406}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29444}
   ///
   StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse> Validate(
       std::string const& project, std::string const& region,
@@ -375,16 +375,16 @@ class RegionUrlMapsClient {
   /// UrlMap.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionUrlMaps::v1::ValidateRequest,google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L257}
+  /// @googleapis_link{google::cloud::cpp::compute::regionUrlMaps::v1::ValidateRequest,google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L291}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMapsValidateResponse,google/cloud/compute/v1/internal/common.proto#L29406}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMapsValidateResponse,google/cloud/compute/v1/internal/common.proto#L29444}
   ///
   /// [google.cloud.cpp.compute.regionUrlMaps.v1.ValidateRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L257}
+  /// @googleapis_reference_link{google/cloud/compute/region_url_maps/v1/region_url_maps.proto#L291}
   /// [google.cloud.cpp.compute.v1.UrlMapsValidateResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29406}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29444}
   ///
   StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse> Validate(
       google::cloud::cpp::compute::regionUrlMaps::v1::ValidateRequest const&

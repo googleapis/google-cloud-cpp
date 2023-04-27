@@ -101,12 +101,12 @@ class RegionBackendServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionBackendServices.v1.DeleteRegionBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L127}
+  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L141}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteRegionBackendServices(std::string const& project,
@@ -118,16 +118,16 @@ class RegionBackendServicesClient {
   /// Deletes the specified regional BackendService resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionBackendServices::v1::DeleteRegionBackendServicesRequest,google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L127}
+  /// @googleapis_link{google::cloud::cpp::compute::regionBackendServices::v1::DeleteRegionBackendServicesRequest,google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L141}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionBackendServices.v1.DeleteRegionBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L127}
+  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L141}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteRegionBackendServices(
@@ -144,12 +144,12 @@ class RegionBackendServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendService,google/cloud/compute/v1/internal/common.proto#L2329}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendService,google/cloud/compute/v1/internal/common.proto#L2337}
   ///
   /// [google.cloud.cpp.compute.regionBackendServices.v1.GetRegionBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L180}
+  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L201}
   /// [google.cloud.cpp.compute.v1.BackendService]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2329}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2337}
   ///
   StatusOr<google::cloud::cpp::compute::v1::BackendService>
   GetRegionBackendServices(std::string const& project,
@@ -161,16 +161,16 @@ class RegionBackendServicesClient {
   /// Returns the specified regional BackendService resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionBackendServices::v1::GetRegionBackendServicesRequest,google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L180}
+  /// @googleapis_link{google::cloud::cpp::compute::regionBackendServices::v1::GetRegionBackendServicesRequest,google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L201}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendService,google/cloud/compute/v1/internal/common.proto#L2329}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendService,google/cloud/compute/v1/internal/common.proto#L2337}
   ///
   /// [google.cloud.cpp.compute.regionBackendServices.v1.GetRegionBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L180}
+  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L201}
   /// [google.cloud.cpp.compute.v1.BackendService]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2329}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2337}
   ///
   StatusOr<google::cloud::cpp::compute::v1::BackendService>
   GetRegionBackendServices(
@@ -191,12 +191,12 @@ class RegionBackendServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendServiceGroupHealth,google/cloud/compute/v1/internal/common.proto#L2991}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendServiceGroupHealth,google/cloud/compute/v1/internal/common.proto#L3003}
   ///
   /// [google.cloud.cpp.compute.regionBackendServices.v1.GetHealthRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L151}
+  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L171}
   /// [google.cloud.cpp.compute.v1.BackendServiceGroupHealth]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2991}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3003}
   ///
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
   GetHealth(std::string const& project, std::string const& region,
@@ -210,16 +210,16 @@ class RegionBackendServicesClient {
   /// BackendService.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionBackendServices::v1::GetHealthRequest,google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L151}
+  /// @googleapis_link{google::cloud::cpp::compute::regionBackendServices::v1::GetHealthRequest,google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L171}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendServiceGroupHealth,google/cloud/compute/v1/internal/common.proto#L2991}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendServiceGroupHealth,google/cloud/compute/v1/internal/common.proto#L3003}
   ///
   /// [google.cloud.cpp.compute.regionBackendServices.v1.GetHealthRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L151}
+  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L171}
   /// [google.cloud.cpp.compute.v1.BackendServiceGroupHealth]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2991}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L3003}
   ///
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
   GetHealth(google::cloud::cpp::compute::regionBackendServices::v1::
@@ -236,12 +236,12 @@ class RegionBackendServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.regionBackendServices.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L165}
+  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L186}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       std::string const& project, std::string const& region,
@@ -252,16 +252,16 @@ class RegionBackendServicesClient {
   /// policy or resource exists.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionBackendServices::v1::GetIamPolicyRequest,google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L165}
+  /// @googleapis_link{google::cloud::cpp::compute::regionBackendServices::v1::GetIamPolicyRequest,google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L186}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.regionBackendServices.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L165}
+  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L186}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::regionBackendServices::v1::
@@ -279,12 +279,12 @@ class RegionBackendServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionBackendServices.v1.InsertRegionBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L192}
+  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L213}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertRegionBackendServices(
@@ -299,16 +299,16 @@ class RegionBackendServicesClient {
   /// services overview.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionBackendServices::v1::InsertRegionBackendServicesRequest,google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L192}
+  /// @googleapis_link{google::cloud::cpp::compute::regionBackendServices::v1::InsertRegionBackendServicesRequest,google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L213}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionBackendServices.v1.InsertRegionBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L192}
+  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L213}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertRegionBackendServices(
@@ -325,12 +325,12 @@ class RegionBackendServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendService,google/cloud/compute/v1/internal/common.proto#L2329}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendService,google/cloud/compute/v1/internal/common.proto#L2337}
   ///
   /// [google.cloud.cpp.compute.regionBackendServices.v1.ListRegionBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L216}
+  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L244}
   /// [google.cloud.cpp.compute.v1.BackendService]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2329}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2337}
   ///
   StreamRange<google::cloud::cpp::compute::v1::BackendService>
   ListRegionBackendServices(std::string const& project,
@@ -341,16 +341,16 @@ class RegionBackendServicesClient {
   /// specified project in the given region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionBackendServices::v1::ListRegionBackendServicesRequest,google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L216}
+  /// @googleapis_link{google::cloud::cpp::compute::regionBackendServices::v1::ListRegionBackendServicesRequest,google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L244}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendService,google/cloud/compute/v1/internal/common.proto#L2329}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::BackendService,google/cloud/compute/v1/internal/common.proto#L2337}
   ///
   /// [google.cloud.cpp.compute.regionBackendServices.v1.ListRegionBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L216}
+  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L244}
   /// [google.cloud.cpp.compute.v1.BackendService]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2329}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L2337}
   ///
   StreamRange<google::cloud::cpp::compute::v1::BackendService>
   ListRegionBackendServices(google::cloud::cpp::compute::regionBackendServices::
@@ -370,12 +370,12 @@ class RegionBackendServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionBackendServices.v1.PatchRegionBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L284}
+  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L312}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchRegionBackendServices(
@@ -392,16 +392,16 @@ class RegionBackendServicesClient {
   /// patch format and processing rules.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionBackendServices::v1::PatchRegionBackendServicesRequest,google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L284}
+  /// @googleapis_link{google::cloud::cpp::compute::regionBackendServices::v1::PatchRegionBackendServicesRequest,google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L312}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionBackendServices.v1.PatchRegionBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L284}
+  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L312}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchRegionBackendServices(
@@ -421,12 +421,12 @@ class RegionBackendServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.regionBackendServices.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L311}
+  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L346}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       std::string const& project, std::string const& region,
@@ -440,16 +440,16 @@ class RegionBackendServicesClient {
   /// existing policy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionBackendServices::v1::SetIamPolicyRequest,google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L311}
+  /// @googleapis_link{google::cloud::cpp::compute::regionBackendServices::v1::SetIamPolicyRequest,google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L346}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.regionBackendServices.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L311}
+  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L346}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::regionBackendServices::v1::
@@ -468,12 +468,12 @@ class RegionBackendServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionBackendServices.v1.UpdateRegionBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L326}
+  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L362}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   UpdateRegionBackendServices(
@@ -489,16 +489,16 @@ class RegionBackendServicesClient {
   /// overview .
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionBackendServices::v1::UpdateRegionBackendServicesRequest,google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L326}
+  /// @googleapis_link{google::cloud::cpp::compute::regionBackendServices::v1::UpdateRegionBackendServicesRequest,google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L362}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionBackendServices.v1.UpdateRegionBackendServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L326}
+  /// @googleapis_reference_link{google/cloud/compute/region_backend_services/v1/region_backend_services.proto#L362}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   UpdateRegionBackendServices(

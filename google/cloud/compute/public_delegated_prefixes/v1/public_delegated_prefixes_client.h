@@ -100,12 +100,12 @@ class PublicDelegatedPrefixesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::PublicDelegatedPrefixAggregatedList,google/cloud/compute/v1/internal/common.proto#L19129}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::PublicDelegatedPrefixAggregatedList,google/cloud/compute/v1/internal/common.proto#L19152}
   ///
   /// [google.cloud.cpp.compute.publicDelegatedPrefixes.v1.AggregatedListPublicDelegatedPrefixesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L93}
+  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L105}
   /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefixAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19129}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19152}
   ///
   StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefixAggregatedList>
   AggregatedListPublicDelegatedPrefixes(std::string const& project,
@@ -116,16 +116,16 @@ class PublicDelegatedPrefixesClient {
   /// across all scopes.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::publicDelegatedPrefixes::v1::AggregatedListPublicDelegatedPrefixesRequest,google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L93}
+  /// @googleapis_link{google::cloud::cpp::compute::publicDelegatedPrefixes::v1::AggregatedListPublicDelegatedPrefixesRequest,google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L105}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::PublicDelegatedPrefixAggregatedList,google/cloud/compute/v1/internal/common.proto#L19129}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::PublicDelegatedPrefixAggregatedList,google/cloud/compute/v1/internal/common.proto#L19152}
   ///
   /// [google.cloud.cpp.compute.publicDelegatedPrefixes.v1.AggregatedListPublicDelegatedPrefixesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L93}
+  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L105}
   /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefixAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19129}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19152}
   ///
   StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefixAggregatedList>
   AggregatedListPublicDelegatedPrefixes(
@@ -143,12 +143,12 @@ class PublicDelegatedPrefixesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.publicDelegatedPrefixes.v1.DeletePublicDelegatedPrefixesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L167}
+  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L179}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeletePublicDelegatedPrefixes(std::string const& project,
@@ -160,16 +160,16 @@ class PublicDelegatedPrefixesClient {
   /// Deletes the specified PublicDelegatedPrefix in the given region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::publicDelegatedPrefixes::v1::DeletePublicDelegatedPrefixesRequest,google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L167}
+  /// @googleapis_link{google::cloud::cpp::compute::publicDelegatedPrefixes::v1::DeletePublicDelegatedPrefixesRequest,google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L179}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.publicDelegatedPrefixes.v1.DeletePublicDelegatedPrefixesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L167}
+  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L179}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeletePublicDelegatedPrefixes(
@@ -187,12 +187,12 @@ class PublicDelegatedPrefixesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::PublicDelegatedPrefix,google/cloud/compute/v1/internal/common.proto#L19057}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::PublicDelegatedPrefix,google/cloud/compute/v1/internal/common.proto#L19079}
   ///
   /// [google.cloud.cpp.compute.publicDelegatedPrefixes.v1.GetPublicDelegatedPrefixesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L191}
+  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L209}
   /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19057}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19079}
   ///
   StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
   GetPublicDelegatedPrefixes(std::string const& project,
@@ -204,16 +204,16 @@ class PublicDelegatedPrefixesClient {
   /// Returns the specified PublicDelegatedPrefix resource in the given region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::publicDelegatedPrefixes::v1::GetPublicDelegatedPrefixesRequest,google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L191}
+  /// @googleapis_link{google::cloud::cpp::compute::publicDelegatedPrefixes::v1::GetPublicDelegatedPrefixesRequest,google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L209}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::PublicDelegatedPrefix,google/cloud/compute/v1/internal/common.proto#L19057}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::PublicDelegatedPrefix,google/cloud/compute/v1/internal/common.proto#L19079}
   ///
   /// [google.cloud.cpp.compute.publicDelegatedPrefixes.v1.GetPublicDelegatedPrefixesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L191}
+  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L209}
   /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19057}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19079}
   ///
   StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
   GetPublicDelegatedPrefixes(
@@ -232,12 +232,12 @@ class PublicDelegatedPrefixesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.publicDelegatedPrefixes.v1.InsertPublicDelegatedPrefixesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L203}
+  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L221}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertPublicDelegatedPrefixes(
@@ -251,16 +251,16 @@ class PublicDelegatedPrefixesClient {
   /// region using the parameters that are included in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::publicDelegatedPrefixes::v1::InsertPublicDelegatedPrefixesRequest,google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L203}
+  /// @googleapis_link{google::cloud::cpp::compute::publicDelegatedPrefixes::v1::InsertPublicDelegatedPrefixesRequest,google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L221}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.publicDelegatedPrefixes.v1.InsertPublicDelegatedPrefixesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L203}
+  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L221}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertPublicDelegatedPrefixes(
@@ -276,12 +276,12 @@ class PublicDelegatedPrefixesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::PublicDelegatedPrefix,google/cloud/compute/v1/internal/common.proto#L19057}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::PublicDelegatedPrefix,google/cloud/compute/v1/internal/common.proto#L19079}
   ///
   /// [google.cloud.cpp.compute.publicDelegatedPrefixes.v1.ListPublicDelegatedPrefixesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L227}
+  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L252}
   /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19057}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19079}
   ///
   StreamRange<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
   ListPublicDelegatedPrefixes(std::string const& project,
@@ -291,16 +291,16 @@ class PublicDelegatedPrefixesClient {
   /// Lists the PublicDelegatedPrefixes for a project in the given region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::publicDelegatedPrefixes::v1::ListPublicDelegatedPrefixesRequest,google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L227}
+  /// @googleapis_link{google::cloud::cpp::compute::publicDelegatedPrefixes::v1::ListPublicDelegatedPrefixesRequest,google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L252}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::PublicDelegatedPrefix,google/cloud/compute/v1/internal/common.proto#L19057}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::PublicDelegatedPrefix,google/cloud/compute/v1/internal/common.proto#L19079}
   ///
   /// [google.cloud.cpp.compute.publicDelegatedPrefixes.v1.ListPublicDelegatedPrefixesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L227}
+  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L252}
   /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19057}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L19079}
   ///
   StreamRange<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
   ListPublicDelegatedPrefixes(
@@ -322,12 +322,12 @@ class PublicDelegatedPrefixesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.publicDelegatedPrefixes.v1.PatchPublicDelegatedPrefixesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L295}
+  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L320}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchPublicDelegatedPrefixes(
@@ -343,16 +343,16 @@ class PublicDelegatedPrefixesClient {
   /// JSON merge patch format and processing rules.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::publicDelegatedPrefixes::v1::PatchPublicDelegatedPrefixesRequest,google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L295}
+  /// @googleapis_link{google::cloud::cpp::compute::publicDelegatedPrefixes::v1::PatchPublicDelegatedPrefixesRequest,google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L320}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.publicDelegatedPrefixes.v1.PatchPublicDelegatedPrefixesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L295}
+  /// @googleapis_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L320}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchPublicDelegatedPrefixes(

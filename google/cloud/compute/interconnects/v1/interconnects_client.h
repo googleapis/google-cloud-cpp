@@ -95,12 +95,12 @@ class InterconnectsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.interconnects.v1.DeleteInterconnectsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L104}
+  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L113}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInterconnects(
       std::string const& project, std::string const& interconnect,
@@ -110,16 +110,16 @@ class InterconnectsClient {
   /// Deletes the specified Interconnect.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectsRequest,google/cloud/compute/interconnects/v1/interconnects.proto#L104}
+  /// @googleapis_link{google::cloud::cpp::compute::interconnects::v1::DeleteInterconnectsRequest,google/cloud/compute/interconnects/v1/interconnects.proto#L113}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.interconnects.v1.DeleteInterconnectsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L104}
+  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L113}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInterconnects(
       google::cloud::cpp::compute::interconnects::v1::
@@ -135,12 +135,12 @@ class InterconnectsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Interconnect,google/cloud/compute/v1/internal/common.proto#L11805}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Interconnect,google/cloud/compute/v1/internal/common.proto#L11824}
   ///
   /// [google.cloud.cpp.compute.interconnects.v1.GetInterconnectsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L134}
+  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L146}
   /// [google.cloud.cpp.compute.v1.Interconnect]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11805}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11824}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Interconnect> GetInterconnects(
       std::string const& project, std::string const& interconnect,
@@ -151,16 +151,16 @@ class InterconnectsClient {
   /// by making a list() request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::interconnects::v1::GetInterconnectsRequest,google/cloud/compute/interconnects/v1/interconnects.proto#L134}
+  /// @googleapis_link{google::cloud::cpp::compute::interconnects::v1::GetInterconnectsRequest,google/cloud/compute/interconnects/v1/interconnects.proto#L146}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Interconnect,google/cloud/compute/v1/internal/common.proto#L11805}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Interconnect,google/cloud/compute/v1/internal/common.proto#L11824}
   ///
   /// [google.cloud.cpp.compute.interconnects.v1.GetInterconnectsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L134}
+  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L146}
   /// [google.cloud.cpp.compute.v1.Interconnect]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11805}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11824}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Interconnect> GetInterconnects(
       google::cloud::cpp::compute::interconnects::v1::
@@ -175,12 +175,12 @@ class InterconnectsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse,google/cloud/compute/v1/internal/common.proto#L13034}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse,google/cloud/compute/v1/internal/common.proto#L13054}
   ///
   /// [google.cloud.cpp.compute.interconnects.v1.GetDiagnosticsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L125}
+  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L137}
   /// [google.cloud.cpp.compute.v1.InterconnectsGetDiagnosticsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13034}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13054}
   ///
   StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
   GetDiagnostics(std::string const& project, std::string const& interconnect,
@@ -190,16 +190,16 @@ class InterconnectsClient {
   /// Returns the interconnectDiagnostics for the specified Interconnect.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest,google/cloud/compute/interconnects/v1/interconnects.proto#L125}
+  /// @googleapis_link{google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest,google/cloud/compute/interconnects/v1/interconnects.proto#L137}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse,google/cloud/compute/v1/internal/common.proto#L13034}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse,google/cloud/compute/v1/internal/common.proto#L13054}
   ///
   /// [google.cloud.cpp.compute.interconnects.v1.GetDiagnosticsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L125}
+  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L137}
   /// [google.cloud.cpp.compute.v1.InterconnectsGetDiagnosticsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13034}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L13054}
   ///
   StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
   GetDiagnostics(google::cloud::cpp::compute::interconnects::v1::
@@ -215,12 +215,12 @@ class InterconnectsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.interconnects.v1.InsertInterconnectsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L143}
+  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L155}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInterconnects(
       std::string const& project,
@@ -233,16 +233,16 @@ class InterconnectsClient {
   /// in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::interconnects::v1::InsertInterconnectsRequest,google/cloud/compute/interconnects/v1/interconnects.proto#L143}
+  /// @googleapis_link{google::cloud::cpp::compute::interconnects::v1::InsertInterconnectsRequest,google/cloud/compute/interconnects/v1/interconnects.proto#L155}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.interconnects.v1.InsertInterconnectsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L143}
+  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L155}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInterconnects(
       google::cloud::cpp::compute::interconnects::v1::
@@ -256,12 +256,12 @@ class InterconnectsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Interconnect,google/cloud/compute/v1/internal/common.proto#L11805}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Interconnect,google/cloud/compute/v1/internal/common.proto#L11824}
   ///
   /// [google.cloud.cpp.compute.interconnects.v1.ListInterconnectsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L164}
+  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L179}
   /// [google.cloud.cpp.compute.v1.Interconnect]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11805}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11824}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Interconnect> ListInterconnects(
       std::string const& project, Options opts = {});
@@ -270,16 +270,16 @@ class InterconnectsClient {
   /// Retrieves the list of Interconnects available to the specified project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest,google/cloud/compute/interconnects/v1/interconnects.proto#L164}
+  /// @googleapis_link{google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest,google/cloud/compute/interconnects/v1/interconnects.proto#L179}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Interconnect,google/cloud/compute/v1/internal/common.proto#L11805}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Interconnect,google/cloud/compute/v1/internal/common.proto#L11824}
   ///
   /// [google.cloud.cpp.compute.interconnects.v1.ListInterconnectsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L164}
+  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L179}
   /// [google.cloud.cpp.compute.v1.Interconnect]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11805}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11824}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Interconnect> ListInterconnects(
       google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest
@@ -297,12 +297,12 @@ class InterconnectsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.interconnects.v1.PatchInterconnectsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L229}
+  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L244}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInterconnects(
       std::string const& project, std::string const& interconnect,
@@ -316,16 +316,16 @@ class InterconnectsClient {
   /// and processing rules.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::interconnects::v1::PatchInterconnectsRequest,google/cloud/compute/interconnects/v1/interconnects.proto#L229}
+  /// @googleapis_link{google::cloud::cpp::compute::interconnects::v1::PatchInterconnectsRequest,google/cloud/compute/interconnects/v1/interconnects.proto#L244}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.interconnects.v1.PatchInterconnectsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L229}
+  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L244}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInterconnects(
       google::cloud::cpp::compute::interconnects::v1::
@@ -343,12 +343,12 @@ class InterconnectsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.interconnects.v1.SetLabelsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L253}
+  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L271}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       std::string const& project, std::string const& resource,
@@ -361,16 +361,16 @@ class InterconnectsClient {
   /// Labeling Resources documentation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest,google/cloud/compute/interconnects/v1/interconnects.proto#L253}
+  /// @googleapis_link{google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest,google/cloud/compute/interconnects/v1/interconnects.proto#L271}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.interconnects.v1.SetLabelsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L253}
+  /// @googleapis_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L271}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&

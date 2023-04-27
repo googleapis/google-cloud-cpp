@@ -101,12 +101,12 @@ class PublicAdvertisedPrefixesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.publicAdvertisedPrefixes.v1.DeletePublicAdvertisedPrefixesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L84}
+  /// @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L91}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeletePublicAdvertisedPrefixes(std::string const& project,
@@ -117,16 +117,16 @@ class PublicAdvertisedPrefixesClient {
   /// Deletes the specified PublicAdvertisedPrefix
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::publicAdvertisedPrefixes::v1::DeletePublicAdvertisedPrefixesRequest,google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L84}
+  /// @googleapis_link{google::cloud::cpp::compute::publicAdvertisedPrefixes::v1::DeletePublicAdvertisedPrefixesRequest,google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L91}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.publicAdvertisedPrefixes.v1.DeletePublicAdvertisedPrefixesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L84}
+  /// @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L91}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeletePublicAdvertisedPrefixes(
@@ -143,12 +143,12 @@ class PublicAdvertisedPrefixesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::PublicAdvertisedPrefix,google/cloud/compute/v1/internal/common.proto#L18860}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::PublicAdvertisedPrefix,google/cloud/compute/v1/internal/common.proto#L18881}
   ///
   /// [google.cloud.cpp.compute.publicAdvertisedPrefixes.v1.GetPublicAdvertisedPrefixesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L105}
+  /// @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L115}
   /// [google.cloud.cpp.compute.v1.PublicAdvertisedPrefix]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18860}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18881}
   ///
   StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
   GetPublicAdvertisedPrefixes(std::string const& project,
@@ -159,16 +159,16 @@ class PublicAdvertisedPrefixesClient {
   /// Returns the specified PublicAdvertisedPrefix resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::publicAdvertisedPrefixes::v1::GetPublicAdvertisedPrefixesRequest,google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L105}
+  /// @googleapis_link{google::cloud::cpp::compute::publicAdvertisedPrefixes::v1::GetPublicAdvertisedPrefixesRequest,google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L115}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::PublicAdvertisedPrefix,google/cloud/compute/v1/internal/common.proto#L18860}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::PublicAdvertisedPrefix,google/cloud/compute/v1/internal/common.proto#L18881}
   ///
   /// [google.cloud.cpp.compute.publicAdvertisedPrefixes.v1.GetPublicAdvertisedPrefixesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L105}
+  /// @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L115}
   /// [google.cloud.cpp.compute.v1.PublicAdvertisedPrefix]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18860}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18881}
   ///
   StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
   GetPublicAdvertisedPrefixes(
@@ -186,12 +186,12 @@ class PublicAdvertisedPrefixesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.publicAdvertisedPrefixes.v1.InsertPublicAdvertisedPrefixesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L114}
+  /// @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L124}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertPublicAdvertisedPrefixes(
@@ -205,16 +205,16 @@ class PublicAdvertisedPrefixesClient {
   /// parameters that are included in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::publicAdvertisedPrefixes::v1::InsertPublicAdvertisedPrefixesRequest,google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L114}
+  /// @googleapis_link{google::cloud::cpp::compute::publicAdvertisedPrefixes::v1::InsertPublicAdvertisedPrefixesRequest,google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L124}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.publicAdvertisedPrefixes.v1.InsertPublicAdvertisedPrefixesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L114}
+  /// @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L124}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertPublicAdvertisedPrefixes(
@@ -229,12 +229,12 @@ class PublicAdvertisedPrefixesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::PublicAdvertisedPrefix,google/cloud/compute/v1/internal/common.proto#L18860}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::PublicAdvertisedPrefix,google/cloud/compute/v1/internal/common.proto#L18881}
   ///
   /// [google.cloud.cpp.compute.publicAdvertisedPrefixes.v1.ListPublicAdvertisedPrefixesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L135}
+  /// @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L149}
   /// [google.cloud.cpp.compute.v1.PublicAdvertisedPrefix]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18860}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18881}
   ///
   StreamRange<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
   ListPublicAdvertisedPrefixes(std::string const& project, Options opts = {});
@@ -243,16 +243,16 @@ class PublicAdvertisedPrefixesClient {
   /// Lists the PublicAdvertisedPrefixes for a project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::publicAdvertisedPrefixes::v1::ListPublicAdvertisedPrefixesRequest,google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L135}
+  /// @googleapis_link{google::cloud::cpp::compute::publicAdvertisedPrefixes::v1::ListPublicAdvertisedPrefixesRequest,google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L149}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::PublicAdvertisedPrefix,google/cloud/compute/v1/internal/common.proto#L18860}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::PublicAdvertisedPrefix,google/cloud/compute/v1/internal/common.proto#L18881}
   ///
   /// [google.cloud.cpp.compute.publicAdvertisedPrefixes.v1.ListPublicAdvertisedPrefixesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L135}
+  /// @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L149}
   /// [google.cloud.cpp.compute.v1.PublicAdvertisedPrefix]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18860}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18881}
   ///
   StreamRange<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
   ListPublicAdvertisedPrefixes(
@@ -273,12 +273,12 @@ class PublicAdvertisedPrefixesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.publicAdvertisedPrefixes.v1.PatchPublicAdvertisedPrefixesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L200}
+  /// @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L214}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchPublicAdvertisedPrefixes(
@@ -293,16 +293,16 @@ class PublicAdvertisedPrefixesClient {
   /// format and processing rules.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::publicAdvertisedPrefixes::v1::PatchPublicAdvertisedPrefixesRequest,google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L200}
+  /// @googleapis_link{google::cloud::cpp::compute::publicAdvertisedPrefixes::v1::PatchPublicAdvertisedPrefixesRequest,google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L214}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.publicAdvertisedPrefixes.v1.PatchPublicAdvertisedPrefixesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L200}
+  /// @googleapis_reference_link{google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto#L214}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchPublicAdvertisedPrefixes(

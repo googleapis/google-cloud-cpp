@@ -102,12 +102,12 @@ class NetworkEdgeSecurityServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkEdgeSecurityServiceAggregatedList,google/cloud/compute/v1/internal/common.proto#L14727}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkEdgeSecurityServiceAggregatedList,google/cloud/compute/v1/internal/common.proto#L14747}
   ///
   /// [google.cloud.cpp.compute.networkEdgeSecurityServices.v1.AggregatedListNetworkEdgeSecurityServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L83}
+  /// @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L96}
   /// [google.cloud.cpp.compute.v1.NetworkEdgeSecurityServiceAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14727}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14747}
   ///
   StatusOr<
       google::cloud::cpp::compute::v1::NetworkEdgeSecurityServiceAggregatedList>
@@ -119,16 +119,16 @@ class NetworkEdgeSecurityServicesClient {
   /// to the specified project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networkEdgeSecurityServices::v1::AggregatedListNetworkEdgeSecurityServicesRequest,google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L83}
+  /// @googleapis_link{google::cloud::cpp::compute::networkEdgeSecurityServices::v1::AggregatedListNetworkEdgeSecurityServicesRequest,google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L96}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkEdgeSecurityServiceAggregatedList,google/cloud/compute/v1/internal/common.proto#L14727}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkEdgeSecurityServiceAggregatedList,google/cloud/compute/v1/internal/common.proto#L14747}
   ///
   /// [google.cloud.cpp.compute.networkEdgeSecurityServices.v1.AggregatedListNetworkEdgeSecurityServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L83}
+  /// @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L96}
   /// [google.cloud.cpp.compute.v1.NetworkEdgeSecurityServiceAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14727}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14747}
   ///
   StatusOr<
       google::cloud::cpp::compute::v1::NetworkEdgeSecurityServiceAggregatedList>
@@ -147,12 +147,12 @@ class NetworkEdgeSecurityServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networkEdgeSecurityServices.v1.DeleteNetworkEdgeSecurityServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L157}
+  /// @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L170}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteNetworkEdgeSecurityServices(
@@ -163,16 +163,16 @@ class NetworkEdgeSecurityServicesClient {
   /// Deletes the specified service.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networkEdgeSecurityServices::v1::DeleteNetworkEdgeSecurityServicesRequest,google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L157}
+  /// @googleapis_link{google::cloud::cpp::compute::networkEdgeSecurityServices::v1::DeleteNetworkEdgeSecurityServicesRequest,google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L170}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networkEdgeSecurityServices.v1.DeleteNetworkEdgeSecurityServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L157}
+  /// @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L170}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteNetworkEdgeSecurityServices(
@@ -190,12 +190,12 @@ class NetworkEdgeSecurityServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkEdgeSecurityService,google/cloud/compute/v1/internal/common.proto#L14678}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkEdgeSecurityService,google/cloud/compute/v1/internal/common.proto#L14698}
   ///
   /// [google.cloud.cpp.compute.networkEdgeSecurityServices.v1.GetNetworkEdgeSecurityServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L181}
+  /// @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L201}
   /// [google.cloud.cpp.compute.v1.NetworkEdgeSecurityService]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14678}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14698}
   ///
   StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
   GetNetworkEdgeSecurityServices(
@@ -206,16 +206,16 @@ class NetworkEdgeSecurityServicesClient {
   /// Gets a specified NetworkEdgeSecurityService.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networkEdgeSecurityServices::v1::GetNetworkEdgeSecurityServicesRequest,google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L181}
+  /// @googleapis_link{google::cloud::cpp::compute::networkEdgeSecurityServices::v1::GetNetworkEdgeSecurityServicesRequest,google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L201}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkEdgeSecurityService,google/cloud/compute/v1/internal/common.proto#L14678}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::NetworkEdgeSecurityService,google/cloud/compute/v1/internal/common.proto#L14698}
   ///
   /// [google.cloud.cpp.compute.networkEdgeSecurityServices.v1.GetNetworkEdgeSecurityServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L181}
+  /// @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L201}
   /// [google.cloud.cpp.compute.v1.NetworkEdgeSecurityService]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14678}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L14698}
   ///
   StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
   GetNetworkEdgeSecurityServices(
@@ -234,12 +234,12 @@ class NetworkEdgeSecurityServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networkEdgeSecurityServices.v1.InsertNetworkEdgeSecurityServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L193}
+  /// @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L214}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertNetworkEdgeSecurityServices(
@@ -253,16 +253,16 @@ class NetworkEdgeSecurityServicesClient {
   /// the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networkEdgeSecurityServices::v1::InsertNetworkEdgeSecurityServicesRequest,google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L193}
+  /// @googleapis_link{google::cloud::cpp::compute::networkEdgeSecurityServices::v1::InsertNetworkEdgeSecurityServicesRequest,google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L214}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networkEdgeSecurityServices.v1.InsertNetworkEdgeSecurityServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L193}
+  /// @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L214}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertNetworkEdgeSecurityServices(
@@ -282,12 +282,12 @@ class NetworkEdgeSecurityServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networkEdgeSecurityServices.v1.PatchNetworkEdgeSecurityServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L220}
+  /// @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L248}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchNetworkEdgeSecurityServices(
@@ -301,16 +301,16 @@ class NetworkEdgeSecurityServicesClient {
   /// Patches the specified policy with the data included in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::networkEdgeSecurityServices::v1::PatchNetworkEdgeSecurityServicesRequest,google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L220}
+  /// @googleapis_link{google::cloud::cpp::compute::networkEdgeSecurityServices::v1::PatchNetworkEdgeSecurityServicesRequest,google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L248}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.networkEdgeSecurityServices.v1.PatchNetworkEdgeSecurityServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L220}
+  /// @googleapis_reference_link{google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto#L248}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchNetworkEdgeSecurityServices(

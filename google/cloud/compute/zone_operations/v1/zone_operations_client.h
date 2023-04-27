@@ -97,7 +97,7 @@ class ZoneOperationsClient {
   ///     backoff policies.
   ///
   /// [google.cloud.cpp.compute.zoneOperations.v1.DeleteZoneOperationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L82}
+  /// @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L85}
   ///
   Status DeleteZoneOperations(std::string const& project,
                               std::string const& zone,
@@ -107,12 +107,12 @@ class ZoneOperationsClient {
   /// Deletes the specified zone-specific Operations resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::zoneOperations::v1::DeleteZoneOperationsRequest,google/cloud/compute/zone_operations/v1/zone_operations.proto#L82}
+  /// @googleapis_link{google::cloud::cpp::compute::zoneOperations::v1::DeleteZoneOperationsRequest,google/cloud/compute/zone_operations/v1/zone_operations.proto#L85}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.cpp.compute.zoneOperations.v1.DeleteZoneOperationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L82}
+  /// @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L85}
   ///
   Status DeleteZoneOperations(google::cloud::cpp::compute::zoneOperations::v1::
                                   DeleteZoneOperationsRequest const& request,
@@ -127,12 +127,12 @@ class ZoneOperationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   /// [google.cloud.cpp.compute.zoneOperations.v1.GetZoneOperationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L94}
+  /// @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L97}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetZoneOperations(
       std::string const& project, std::string const& zone,
@@ -142,16 +142,16 @@ class ZoneOperationsClient {
   /// Retrieves the specified zone-specific Operations resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::zoneOperations::v1::GetZoneOperationsRequest,google/cloud/compute/zone_operations/v1/zone_operations.proto#L94}
+  /// @googleapis_link{google::cloud::cpp::compute::zoneOperations::v1::GetZoneOperationsRequest,google/cloud/compute/zone_operations/v1/zone_operations.proto#L97}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   /// [google.cloud.cpp.compute.zoneOperations.v1.GetZoneOperationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L94}
+  /// @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L97}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetZoneOperations(
       google::cloud::cpp::compute::zoneOperations::v1::
@@ -167,12 +167,12 @@ class ZoneOperationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   /// [google.cloud.cpp.compute.zoneOperations.v1.ListZoneOperationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L106}
+  /// @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L115}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Operation> ListZoneOperations(
       std::string const& project, std::string const& zone, Options opts = {});
@@ -182,16 +182,16 @@ class ZoneOperationsClient {
   /// zone.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::zoneOperations::v1::ListZoneOperationsRequest,google/cloud/compute/zone_operations/v1/zone_operations.proto#L106}
+  /// @googleapis_link{google::cloud::cpp::compute::zoneOperations::v1::ListZoneOperationsRequest,google/cloud/compute/zone_operations/v1/zone_operations.proto#L115}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   /// [google.cloud.cpp.compute.zoneOperations.v1.ListZoneOperationsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L106}
+  /// @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L115}
   ///
   StreamRange<google::cloud::cpp::compute::v1::Operation> ListZoneOperations(
       google::cloud::cpp::compute::zoneOperations::v1::ListZoneOperationsRequest
@@ -216,12 +216,12 @@ class ZoneOperationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   /// [google.cloud.cpp.compute.zoneOperations.v1.WaitRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L174}
+  /// @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L183}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
       std::string const& project, std::string const& zone,
@@ -240,16 +240,16 @@ class ZoneOperationsClient {
   /// Be prepared to retry if the operation is not `DONE`.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::zoneOperations::v1::WaitRequest,google/cloud/compute/zone_operations/v1/zone_operations.proto#L174}
+  /// @googleapis_link{google::cloud::cpp::compute::zoneOperations::v1::WaitRequest,google/cloud/compute/zone_operations/v1/zone_operations.proto#L183}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   /// [google.cloud.cpp.compute.zoneOperations.v1.WaitRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L174}
+  /// @googleapis_reference_link{google/cloud/compute/zone_operations/v1/zone_operations.proto#L183}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
       google::cloud::cpp::compute::zoneOperations::v1::WaitRequest const&

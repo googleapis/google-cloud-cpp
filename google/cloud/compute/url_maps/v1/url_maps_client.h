@@ -94,12 +94,12 @@ class UrlMapsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMapsAggregatedList,google/cloud/compute/v1/internal/common.proto#L29195}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMapsAggregatedList,google/cloud/compute/v1/internal/common.proto#L29233}
   ///
   /// [google.cloud.cpp.compute.urlMaps.v1.AggregatedListUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L127}
+  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L138}
   /// [google.cloud.cpp.compute.v1.UrlMapsAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29195}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29233}
   ///
   StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
   AggregatedListUrlMaps(std::string const& project, Options opts = {});
@@ -109,16 +109,16 @@ class UrlMapsClient {
   /// to the specified project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::urlMaps::v1::AggregatedListUrlMapsRequest,google/cloud/compute/url_maps/v1/url_maps.proto#L127}
+  /// @googleapis_link{google::cloud::cpp::compute::urlMaps::v1::AggregatedListUrlMapsRequest,google/cloud/compute/url_maps/v1/url_maps.proto#L138}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMapsAggregatedList,google/cloud/compute/v1/internal/common.proto#L29195}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMapsAggregatedList,google/cloud/compute/v1/internal/common.proto#L29233}
   ///
   /// [google.cloud.cpp.compute.urlMaps.v1.AggregatedListUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L127}
+  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L138}
   /// [google.cloud.cpp.compute.v1.UrlMapsAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29195}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29233}
   ///
   StatusOr<google::cloud::cpp::compute::v1::UrlMapsAggregatedList>
   AggregatedListUrlMaps(google::cloud::cpp::compute::urlMaps::v1::
@@ -133,12 +133,12 @@ class UrlMapsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.urlMaps.v1.DeleteUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L201}
+  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L212}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteUrlMaps(
       std::string const& project, std::string const& url_map,
@@ -148,16 +148,16 @@ class UrlMapsClient {
   /// Deletes the specified UrlMap resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::urlMaps::v1::DeleteUrlMapsRequest,google/cloud/compute/url_maps/v1/url_maps.proto#L201}
+  /// @googleapis_link{google::cloud::cpp::compute::urlMaps::v1::DeleteUrlMapsRequest,google/cloud/compute/url_maps/v1/url_maps.proto#L212}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.urlMaps.v1.DeleteUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L201}
+  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L212}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteUrlMaps(
       google::cloud::cpp::compute::urlMaps::v1::DeleteUrlMapsRequest const&
@@ -172,12 +172,12 @@ class UrlMapsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMap,google/cloud/compute/v1/internal/common.proto#L28928}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMap,google/cloud/compute/v1/internal/common.proto#L28966}
   ///
   /// [google.cloud.cpp.compute.urlMaps.v1.GetUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L222}
+  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L236}
   /// [google.cloud.cpp.compute.v1.UrlMap]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28928}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28966}
   ///
   StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMaps(
       std::string const& project, std::string const& url_map,
@@ -187,16 +187,16 @@ class UrlMapsClient {
   /// Returns the specified UrlMap resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::urlMaps::v1::GetUrlMapsRequest,google/cloud/compute/url_maps/v1/url_maps.proto#L222}
+  /// @googleapis_link{google::cloud::cpp::compute::urlMaps::v1::GetUrlMapsRequest,google/cloud/compute/url_maps/v1/url_maps.proto#L236}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMap,google/cloud/compute/v1/internal/common.proto#L28928}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMap,google/cloud/compute/v1/internal/common.proto#L28966}
   ///
   /// [google.cloud.cpp.compute.urlMaps.v1.GetUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L222}
+  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L236}
   /// [google.cloud.cpp.compute.v1.UrlMap]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28928}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28966}
   ///
   StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMaps(
       google::cloud::cpp::compute::urlMaps::v1::GetUrlMapsRequest const&
@@ -212,12 +212,12 @@ class UrlMapsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.urlMaps.v1.InsertUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L231}
+  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L245}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertUrlMaps(
       std::string const& project,
@@ -229,16 +229,16 @@ class UrlMapsClient {
   /// in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::urlMaps::v1::InsertUrlMapsRequest,google/cloud/compute/url_maps/v1/url_maps.proto#L231}
+  /// @googleapis_link{google::cloud::cpp::compute::urlMaps::v1::InsertUrlMapsRequest,google/cloud/compute/url_maps/v1/url_maps.proto#L245}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.urlMaps.v1.InsertUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L231}
+  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L245}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertUrlMaps(
       google::cloud::cpp::compute::urlMaps::v1::InsertUrlMapsRequest const&
@@ -257,12 +257,12 @@ class UrlMapsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.urlMaps.v1.InvalidateCacheRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L252}
+  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L269}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InvalidateCache(
       std::string const& project, std::string const& url_map,
@@ -276,16 +276,16 @@ class UrlMapsClient {
   /// cached content](/cdn/docs/invalidating-cached-content).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::urlMaps::v1::InvalidateCacheRequest,google/cloud/compute/url_maps/v1/url_maps.proto#L252}
+  /// @googleapis_link{google::cloud::cpp::compute::urlMaps::v1::InvalidateCacheRequest,google/cloud/compute/url_maps/v1/url_maps.proto#L269}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.urlMaps.v1.InvalidateCacheRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L252}
+  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L269}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InvalidateCache(
       google::cloud::cpp::compute::urlMaps::v1::InvalidateCacheRequest const&
@@ -299,12 +299,12 @@ class UrlMapsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMap,google/cloud/compute/v1/internal/common.proto#L28928}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMap,google/cloud/compute/v1/internal/common.proto#L28966}
   ///
   /// [google.cloud.cpp.compute.urlMaps.v1.ListUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L276}
+  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L297}
   /// [google.cloud.cpp.compute.v1.UrlMap]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28928}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28966}
   ///
   StreamRange<google::cloud::cpp::compute::v1::UrlMap> ListUrlMaps(
       std::string const& project, Options opts = {});
@@ -313,16 +313,16 @@ class UrlMapsClient {
   /// Retrieves the list of UrlMap resources available to the specified project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::urlMaps::v1::ListUrlMapsRequest,google/cloud/compute/url_maps/v1/url_maps.proto#L276}
+  /// @googleapis_link{google::cloud::cpp::compute::urlMaps::v1::ListUrlMapsRequest,google/cloud/compute/url_maps/v1/url_maps.proto#L297}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMap,google/cloud/compute/v1/internal/common.proto#L28928}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMap,google/cloud/compute/v1/internal/common.proto#L28966}
   ///
   /// [google.cloud.cpp.compute.urlMaps.v1.ListUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L276}
+  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L297}
   /// [google.cloud.cpp.compute.v1.UrlMap]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28928}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28966}
   ///
   StreamRange<google::cloud::cpp::compute::v1::UrlMap> ListUrlMaps(
       google::cloud::cpp::compute::urlMaps::v1::ListUrlMapsRequest request,
@@ -339,12 +339,12 @@ class UrlMapsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.urlMaps.v1.PatchUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L341}
+  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L362}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchUrlMaps(
       std::string const& project, std::string const& url_map,
@@ -357,16 +357,16 @@ class UrlMapsClient {
   /// patch format and processing rules.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::urlMaps::v1::PatchUrlMapsRequest,google/cloud/compute/url_maps/v1/url_maps.proto#L341}
+  /// @googleapis_link{google::cloud::cpp::compute::urlMaps::v1::PatchUrlMapsRequest,google/cloud/compute/url_maps/v1/url_maps.proto#L362}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.urlMaps.v1.PatchUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L341}
+  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L362}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchUrlMaps(
       google::cloud::cpp::compute::urlMaps::v1::PatchUrlMapsRequest const&
@@ -383,12 +383,12 @@ class UrlMapsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.urlMaps.v1.UpdateUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L365}
+  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L389}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateUrlMaps(
       std::string const& project, std::string const& url_map,
@@ -400,16 +400,16 @@ class UrlMapsClient {
   /// request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::urlMaps::v1::UpdateUrlMapsRequest,google/cloud/compute/url_maps/v1/url_maps.proto#L365}
+  /// @googleapis_link{google::cloud::cpp::compute::urlMaps::v1::UpdateUrlMapsRequest,google/cloud/compute/url_maps/v1/url_maps.proto#L389}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.urlMaps.v1.UpdateUrlMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L365}
+  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L389}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateUrlMaps(
       google::cloud::cpp::compute::urlMaps::v1::UpdateUrlMapsRequest const&
@@ -428,12 +428,12 @@ class UrlMapsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMapsValidateResponse,google/cloud/compute/v1/internal/common.proto#L29406}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMapsValidateResponse,google/cloud/compute/v1/internal/common.proto#L29444}
   ///
   /// [google.cloud.cpp.compute.urlMaps.v1.ValidateRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L389}
+  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L416}
   /// [google.cloud.cpp.compute.v1.UrlMapsValidateResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29406}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29444}
   ///
   StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse> Validate(
       std::string const& project, std::string const& url_map,
@@ -447,16 +447,16 @@ class UrlMapsClient {
   /// UrlMap.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::urlMaps::v1::ValidateRequest,google/cloud/compute/url_maps/v1/url_maps.proto#L389}
+  /// @googleapis_link{google::cloud::cpp::compute::urlMaps::v1::ValidateRequest,google/cloud/compute/url_maps/v1/url_maps.proto#L416}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMapsValidateResponse,google/cloud/compute/v1/internal/common.proto#L29406}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::UrlMapsValidateResponse,google/cloud/compute/v1/internal/common.proto#L29444}
   ///
   /// [google.cloud.cpp.compute.urlMaps.v1.ValidateRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L389}
+  /// @googleapis_reference_link{google/cloud/compute/url_maps/v1/url_maps.proto#L416}
   /// [google.cloud.cpp.compute.v1.UrlMapsValidateResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29406}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L29444}
   ///
   StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse> Validate(
       google::cloud::cpp::compute::urlMaps::v1::ValidateRequest const& request,

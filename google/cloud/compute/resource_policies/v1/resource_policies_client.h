@@ -95,12 +95,12 @@ class ResourcePoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList,google/cloud/compute/v1/internal/common.proto#L21224}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList,google/cloud/compute/v1/internal/common.proto#L21250}
   ///
   /// [google.cloud.cpp.compute.resourcePolicies.v1.AggregatedListResourcePoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L108}
+  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L119}
   /// [google.cloud.cpp.compute.v1.ResourcePolicyAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21224}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21250}
   ///
   StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>
   AggregatedListResourcePolicies(std::string const& project, Options opts = {});
@@ -109,16 +109,16 @@ class ResourcePoliciesClient {
   /// Retrieves an aggregated list of resource policies.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::resourcePolicies::v1::AggregatedListResourcePoliciesRequest,google/cloud/compute/resource_policies/v1/resource_policies.proto#L108}
+  /// @googleapis_link{google::cloud::cpp::compute::resourcePolicies::v1::AggregatedListResourcePoliciesRequest,google/cloud/compute/resource_policies/v1/resource_policies.proto#L119}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList,google/cloud/compute/v1/internal/common.proto#L21224}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList,google/cloud/compute/v1/internal/common.proto#L21250}
   ///
   /// [google.cloud.cpp.compute.resourcePolicies.v1.AggregatedListResourcePoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L108}
+  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L119}
   /// [google.cloud.cpp.compute.v1.ResourcePolicyAggregatedList]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21224}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21250}
   ///
   StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>
   AggregatedListResourcePolicies(
@@ -135,12 +135,12 @@ class ResourcePoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.resourcePolicies.v1.DeleteResourcePoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L182}
+  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L193}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteResourcePolicies(
       std::string const& project, std::string const& region,
@@ -150,16 +150,16 @@ class ResourcePoliciesClient {
   /// Deletes the specified resource policy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::resourcePolicies::v1::DeleteResourcePoliciesRequest,google/cloud/compute/resource_policies/v1/resource_policies.proto#L182}
+  /// @googleapis_link{google::cloud::cpp::compute::resourcePolicies::v1::DeleteResourcePoliciesRequest,google/cloud/compute/resource_policies/v1/resource_policies.proto#L193}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.resourcePolicies.v1.DeleteResourcePoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L182}
+  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L193}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteResourcePolicies(
       google::cloud::cpp::compute::resourcePolicies::v1::
@@ -175,12 +175,12 @@ class ResourcePoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::ResourcePolicy,google/cloud/compute/v1/internal/common.proto#L21174}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ResourcePolicy,google/cloud/compute/v1/internal/common.proto#L21200}
   ///
   /// [google.cloud.cpp.compute.resourcePolicies.v1.GetResourcePoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L221}
+  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L238}
   /// [google.cloud.cpp.compute.v1.ResourcePolicy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21174}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21200}
   ///
   StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy> GetResourcePolicies(
       std::string const& project, std::string const& region,
@@ -190,16 +190,16 @@ class ResourcePoliciesClient {
   /// Retrieves all information of the specified resource policy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::resourcePolicies::v1::GetResourcePoliciesRequest,google/cloud/compute/resource_policies/v1/resource_policies.proto#L221}
+  /// @googleapis_link{google::cloud::cpp::compute::resourcePolicies::v1::GetResourcePoliciesRequest,google/cloud/compute/resource_policies/v1/resource_policies.proto#L238}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::ResourcePolicy,google/cloud/compute/v1/internal/common.proto#L21174}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ResourcePolicy,google/cloud/compute/v1/internal/common.proto#L21200}
   ///
   /// [google.cloud.cpp.compute.resourcePolicies.v1.GetResourcePoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L221}
+  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L238}
   /// [google.cloud.cpp.compute.v1.ResourcePolicy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21174}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21200}
   ///
   StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy> GetResourcePolicies(
       google::cloud::cpp::compute::resourcePolicies::v1::
@@ -216,12 +216,12 @@ class ResourcePoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.resourcePolicies.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L206}
+  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L223}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       std::string const& project, std::string const& region,
@@ -232,16 +232,16 @@ class ResourcePoliciesClient {
   /// policy or resource exists.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::resourcePolicies::v1::GetIamPolicyRequest,google/cloud/compute/resource_policies/v1/resource_policies.proto#L206}
+  /// @googleapis_link{google::cloud::cpp::compute::resourcePolicies::v1::GetIamPolicyRequest,google/cloud/compute/resource_policies/v1/resource_policies.proto#L223}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.resourcePolicies.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L206}
+  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L223}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
       google::cloud::cpp::compute::resourcePolicies::v1::
@@ -257,12 +257,12 @@ class ResourcePoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.resourcePolicies.v1.InsertResourcePoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L233}
+  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L250}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertResourcePolicies(
       std::string const& project, std::string const& region,
@@ -274,16 +274,16 @@ class ResourcePoliciesClient {
   /// Creates a new resource policy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::resourcePolicies::v1::InsertResourcePoliciesRequest,google/cloud/compute/resource_policies/v1/resource_policies.proto#L233}
+  /// @googleapis_link{google::cloud::cpp::compute::resourcePolicies::v1::InsertResourcePoliciesRequest,google/cloud/compute/resource_policies/v1/resource_policies.proto#L250}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.resourcePolicies.v1.InsertResourcePoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L233}
+  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L250}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertResourcePolicies(
       google::cloud::cpp::compute::resourcePolicies::v1::
@@ -299,12 +299,12 @@ class ResourcePoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::ResourcePolicy,google/cloud/compute/v1/internal/common.proto#L21174}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ResourcePolicy,google/cloud/compute/v1/internal/common.proto#L21200}
   ///
   /// [google.cloud.cpp.compute.resourcePolicies.v1.ListResourcePoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L257}
+  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L281}
   /// [google.cloud.cpp.compute.v1.ResourcePolicy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21174}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21200}
   ///
   StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>
   ListResourcePolicies(std::string const& project, std::string const& region,
@@ -315,16 +315,16 @@ class ResourcePoliciesClient {
   /// specified project in specified region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::resourcePolicies::v1::ListResourcePoliciesRequest,google/cloud/compute/resource_policies/v1/resource_policies.proto#L257}
+  /// @googleapis_link{google::cloud::cpp::compute::resourcePolicies::v1::ListResourcePoliciesRequest,google/cloud/compute/resource_policies/v1/resource_policies.proto#L281}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::ResourcePolicy,google/cloud/compute/v1/internal/common.proto#L21174}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::ResourcePolicy,google/cloud/compute/v1/internal/common.proto#L21200}
   ///
   /// [google.cloud.cpp.compute.resourcePolicies.v1.ListResourcePoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L257}
+  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L281}
   /// [google.cloud.cpp.compute.v1.ResourcePolicy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21174}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L21200}
   ///
   StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>
   ListResourcePolicies(google::cloud::cpp::compute::resourcePolicies::v1::
@@ -343,12 +343,12 @@ class ResourcePoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.resourcePolicies.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L325}
+  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L349}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       std::string const& project, std::string const& region,
@@ -362,16 +362,16 @@ class ResourcePoliciesClient {
   /// existing policy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::resourcePolicies::v1::SetIamPolicyRequest,google/cloud/compute/resource_policies/v1/resource_policies.proto#L325}
+  /// @googleapis_link{google::cloud::cpp::compute::resourcePolicies::v1::SetIamPolicyRequest,google/cloud/compute/resource_policies/v1/resource_policies.proto#L349}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Policy,google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   /// [google.cloud.cpp.compute.resourcePolicies.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L325}
+  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L349}
   /// [google.cloud.cpp.compute.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18654}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18675}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::resourcePolicies::v1::
@@ -389,12 +389,12 @@ class ResourcePoliciesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   /// [google.cloud.cpp.compute.resourcePolicies.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L340}
+  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L365}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(
@@ -408,16 +408,16 @@ class ResourcePoliciesClient {
   /// Returns permissions that a caller has on the specified resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::resourcePolicies::v1::TestIamPermissionsRequest,google/cloud/compute/resource_policies/v1/resource_policies.proto#L340}
+  /// @googleapis_link{google::cloud::cpp::compute::resourcePolicies::v1::TestIamPermissionsRequest,google/cloud/compute/resource_policies/v1/resource_policies.proto#L365}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TestPermissionsResponse,google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   /// [google.cloud.cpp.compute.resourcePolicies.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L340}
+  /// @googleapis_reference_link{google/cloud/compute/resource_policies/v1/resource_policies.proto#L365}
   /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28901}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L28939}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::resourcePolicies::v1::

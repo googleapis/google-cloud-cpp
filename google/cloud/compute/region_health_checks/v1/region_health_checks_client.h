@@ -98,12 +98,12 @@ class RegionHealthChecksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionHealthChecks.v1.DeleteRegionHealthChecksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L96}
+  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L105}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRegionHealthChecks(
       std::string const& project, std::string const& region,
@@ -113,16 +113,16 @@ class RegionHealthChecksClient {
   /// Deletes the specified HealthCheck resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionHealthChecks::v1::DeleteRegionHealthChecksRequest,google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L96}
+  /// @googleapis_link{google::cloud::cpp::compute::regionHealthChecks::v1::DeleteRegionHealthChecksRequest,google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L105}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionHealthChecks.v1.DeleteRegionHealthChecksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L96}
+  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L105}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRegionHealthChecks(
       google::cloud::cpp::compute::regionHealthChecks::v1::
@@ -138,12 +138,12 @@ class RegionHealthChecksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::HealthCheck,google/cloud/compute/v1/internal/common.proto#L7293}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::HealthCheck,google/cloud/compute/v1/internal/common.proto#L7308}
   ///
   /// [google.cloud.cpp.compute.regionHealthChecks.v1.GetRegionHealthChecksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L120}
+  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L135}
   /// [google.cloud.cpp.compute.v1.HealthCheck]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L7293}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L7308}
   ///
   StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetRegionHealthChecks(
       std::string const& project, std::string const& region,
@@ -153,16 +153,16 @@ class RegionHealthChecksClient {
   /// Returns the specified HealthCheck resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionHealthChecks::v1::GetRegionHealthChecksRequest,google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L120}
+  /// @googleapis_link{google::cloud::cpp::compute::regionHealthChecks::v1::GetRegionHealthChecksRequest,google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L135}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::HealthCheck,google/cloud/compute/v1/internal/common.proto#L7293}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::HealthCheck,google/cloud/compute/v1/internal/common.proto#L7308}
   ///
   /// [google.cloud.cpp.compute.regionHealthChecks.v1.GetRegionHealthChecksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L120}
+  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L135}
   /// [google.cloud.cpp.compute.v1.HealthCheck]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L7293}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L7308}
   ///
   StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetRegionHealthChecks(
       google::cloud::cpp::compute::regionHealthChecks::v1::
@@ -179,12 +179,12 @@ class RegionHealthChecksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionHealthChecks.v1.InsertRegionHealthChecksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L132}
+  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L147}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionHealthChecks(
       std::string const& project, std::string const& region,
@@ -196,16 +196,16 @@ class RegionHealthChecksClient {
   /// included in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionHealthChecks::v1::InsertRegionHealthChecksRequest,google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L132}
+  /// @googleapis_link{google::cloud::cpp::compute::regionHealthChecks::v1::InsertRegionHealthChecksRequest,google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L147}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionHealthChecks.v1.InsertRegionHealthChecksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L132}
+  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L147}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRegionHealthChecks(
       google::cloud::cpp::compute::regionHealthChecks::v1::
@@ -221,12 +221,12 @@ class RegionHealthChecksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::HealthCheck,google/cloud/compute/v1/internal/common.proto#L7293}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::HealthCheck,google/cloud/compute/v1/internal/common.proto#L7308}
   ///
   /// [google.cloud.cpp.compute.regionHealthChecks.v1.ListRegionHealthChecksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L156}
+  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L177}
   /// [google.cloud.cpp.compute.v1.HealthCheck]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L7293}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L7308}
   ///
   StreamRange<google::cloud::cpp::compute::v1::HealthCheck>
   ListRegionHealthChecks(std::string const& project, std::string const& region,
@@ -237,16 +237,16 @@ class RegionHealthChecksClient {
   /// project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionHealthChecks::v1::ListRegionHealthChecksRequest,google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L156}
+  /// @googleapis_link{google::cloud::cpp::compute::regionHealthChecks::v1::ListRegionHealthChecksRequest,google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L177}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::HealthCheck,google/cloud/compute/v1/internal/common.proto#L7293}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::HealthCheck,google/cloud/compute/v1/internal/common.proto#L7308}
   ///
   /// [google.cloud.cpp.compute.regionHealthChecks.v1.ListRegionHealthChecksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L156}
+  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L177}
   /// [google.cloud.cpp.compute.v1.HealthCheck]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L7293}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L7308}
   ///
   StreamRange<google::cloud::cpp::compute::v1::HealthCheck>
   ListRegionHealthChecks(google::cloud::cpp::compute::regionHealthChecks::v1::
@@ -265,12 +265,12 @@ class RegionHealthChecksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionHealthChecks.v1.PatchRegionHealthChecksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L224}
+  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L245}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRegionHealthChecks(
       std::string const& project, std::string const& region,
@@ -284,16 +284,16 @@ class RegionHealthChecksClient {
   /// JSON merge patch format and processing rules.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionHealthChecks::v1::PatchRegionHealthChecksRequest,google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L224}
+  /// @googleapis_link{google::cloud::cpp::compute::regionHealthChecks::v1::PatchRegionHealthChecksRequest,google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L245}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionHealthChecks.v1.PatchRegionHealthChecksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L224}
+  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L245}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRegionHealthChecks(
       google::cloud::cpp::compute::regionHealthChecks::v1::
@@ -311,12 +311,12 @@ class RegionHealthChecksClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionHealthChecks.v1.UpdateRegionHealthChecksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L251}
+  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L278}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRegionHealthChecks(
       std::string const& project, std::string const& region,
@@ -329,16 +329,16 @@ class RegionHealthChecksClient {
   /// included in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionHealthChecks::v1::UpdateRegionHealthChecksRequest,google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L251}
+  /// @googleapis_link{google::cloud::cpp::compute::regionHealthChecks::v1::UpdateRegionHealthChecksRequest,google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L278}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionHealthChecks.v1.UpdateRegionHealthChecksRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L251}
+  /// @googleapis_reference_link{google/cloud/compute/region_health_checks/v1/region_health_checks.proto#L278}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRegionHealthChecks(
       google::cloud::cpp::compute::regionHealthChecks::v1::

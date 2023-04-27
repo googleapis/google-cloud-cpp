@@ -115,12 +115,12 @@ class RegionInstanceGroupManagersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.AbandonInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L294}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L335}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AbandonInstances(
       std::string const& project, std::string const& region,
@@ -145,16 +145,16 @@ class RegionInstanceGroupManagersClient {
   /// maximum of 1000 instances with this method per request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::AbandonInstancesRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L294}
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::AbandonInstancesRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L335}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.AbandonInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L294}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L335}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> AbandonInstances(
       google::cloud::cpp::compute::regionInstanceGroupManagers::v1::
@@ -174,12 +174,12 @@ class RegionInstanceGroupManagersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.ApplyUpdatesToInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L321}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L370}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> ApplyUpdatesToInstances(
       std::string const& project, std::string const& region,
@@ -193,16 +193,16 @@ class RegionInstanceGroupManagersClient {
   /// Apply updates to selected instances the managed instance group.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::ApplyUpdatesToInstancesRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L321}
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::ApplyUpdatesToInstancesRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L370}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.ApplyUpdatesToInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L321}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L370}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> ApplyUpdatesToInstances(
       google::cloud::cpp::compute::regionInstanceGroupManagers::v1::
@@ -228,12 +228,12 @@ class RegionInstanceGroupManagersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.CreateInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L336}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L393}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> CreateInstances(
       std::string const& project, std::string const& region,
@@ -252,16 +252,16 @@ class RegionInstanceGroupManagersClient {
   /// actions with the listmanagedinstances method.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::CreateInstancesRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L336}
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::CreateInstancesRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L393}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.CreateInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L336}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L393}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> CreateInstances(
       google::cloud::cpp::compute::regionInstanceGroupManagers::v1::
@@ -279,12 +279,12 @@ class RegionInstanceGroupManagersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.DeleteRegionInstanceGroupManagersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L405}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L486}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteRegionInstanceGroupManagers(std::string const& project,
@@ -297,16 +297,16 @@ class RegionInstanceGroupManagersClient {
   /// that group.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::DeleteRegionInstanceGroupManagersRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L405}
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::DeleteRegionInstanceGroupManagersRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L486}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.DeleteRegionInstanceGroupManagersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L405}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L486}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteRegionInstanceGroupManagers(
@@ -336,12 +336,12 @@ class RegionInstanceGroupManagersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.DeleteInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L363}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L428}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstances(
       std::string const& project, std::string const& region,
@@ -366,16 +366,16 @@ class RegionInstanceGroupManagersClient {
   /// method per request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::DeleteInstancesRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L363}
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::DeleteInstancesRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L428}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.DeleteInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L363}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L428}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstances(
       google::cloud::cpp::compute::regionInstanceGroupManagers::v1::
@@ -396,12 +396,12 @@ class RegionInstanceGroupManagersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.DeletePerInstanceConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L390}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L463}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeletePerInstanceConfigs(
       std::string const& project, std::string const& region,
@@ -416,16 +416,16 @@ class RegionInstanceGroupManagersClient {
   /// group.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::DeletePerInstanceConfigsRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L390}
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::DeletePerInstanceConfigsRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L463}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.DeletePerInstanceConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L390}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L463}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeletePerInstanceConfigs(
       google::cloud::cpp::compute::regionInstanceGroupManagers::v1::
@@ -442,12 +442,12 @@ class RegionInstanceGroupManagersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroupManager,google/cloud/compute/v1/internal/common.proto#L9718}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroupManager,google/cloud/compute/v1/internal/common.proto#L9734}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.GetRegionInstanceGroupManagersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L429}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L516}
   /// [google.cloud.cpp.compute.v1.InstanceGroupManager]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9718}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9734}
   ///
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
   GetRegionInstanceGroupManagers(std::string const& project,
@@ -459,16 +459,16 @@ class RegionInstanceGroupManagersClient {
   /// Returns all of the details about the specified managed instance group.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::GetRegionInstanceGroupManagersRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L429}
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::GetRegionInstanceGroupManagersRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L516}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroupManager,google/cloud/compute/v1/internal/common.proto#L9718}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroupManager,google/cloud/compute/v1/internal/common.proto#L9734}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.GetRegionInstanceGroupManagersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L429}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L516}
   /// [google.cloud.cpp.compute.v1.InstanceGroupManager]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9718}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9734}
   ///
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
   GetRegionInstanceGroupManagers(
@@ -492,12 +492,12 @@ class RegionInstanceGroupManagersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.InsertRegionInstanceGroupManagersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L441}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L528}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertRegionInstanceGroupManagers(
@@ -516,16 +516,16 @@ class RegionInstanceGroupManagersClient {
   /// instance group can contain up to 2000 instances.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::InsertRegionInstanceGroupManagersRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L441}
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::InsertRegionInstanceGroupManagersRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L528}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.InsertRegionInstanceGroupManagersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L441}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L528}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertRegionInstanceGroupManagers(
@@ -542,12 +542,12 @@ class RegionInstanceGroupManagersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroupManager,google/cloud/compute/v1/internal/common.proto#L9718}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroupManager,google/cloud/compute/v1/internal/common.proto#L9734}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.ListRegionInstanceGroupManagersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L680}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L774}
   /// [google.cloud.cpp.compute.v1.InstanceGroupManager]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9718}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9734}
   ///
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroupManager>
   ListRegionInstanceGroupManagers(std::string const& project,
@@ -558,16 +558,16 @@ class RegionInstanceGroupManagersClient {
   /// the specified region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::ListRegionInstanceGroupManagersRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L680}
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::ListRegionInstanceGroupManagersRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L774}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroupManager,google/cloud/compute/v1/internal/common.proto#L9718}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceGroupManager,google/cloud/compute/v1/internal/common.proto#L9734}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.ListRegionInstanceGroupManagersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L680}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L774}
   /// [google.cloud.cpp.compute.v1.InstanceGroupManager]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9718}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L9734}
   ///
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroupManager>
   ListRegionInstanceGroupManagers(
@@ -590,12 +590,12 @@ class RegionInstanceGroupManagersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceManagedByIgmError,google/cloud/compute/v1/internal/common.proto#L11035}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceManagedByIgmError,google/cloud/compute/v1/internal/common.proto#L11052}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.ListErrorsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L465}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L559}
   /// [google.cloud.cpp.compute.v1.InstanceManagedByIgmError]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11035}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11052}
   ///
   StreamRange<google::cloud::cpp::compute::v1::InstanceManagedByIgmError>
   ListErrors(std::string const& project, std::string const& region,
@@ -607,16 +607,16 @@ class RegionInstanceGroupManagersClient {
   /// supported.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::ListErrorsRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L465}
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::ListErrorsRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L559}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceManagedByIgmError,google/cloud/compute/v1/internal/common.proto#L11035}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::InstanceManagedByIgmError,google/cloud/compute/v1/internal/common.proto#L11052}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.ListErrorsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L465}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L559}
   /// [google.cloud.cpp.compute.v1.InstanceManagedByIgmError]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11035}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L11052}
   ///
   StreamRange<google::cloud::cpp::compute::v1::InstanceManagedByIgmError>
   ListErrors(google::cloud::cpp::compute::regionInstanceGroupManagers::v1::
@@ -637,12 +637,12 @@ class RegionInstanceGroupManagersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::RegionInstanceGroupManagersListInstancesResponse,google/cloud/compute/v1/internal/common.proto#L20310}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::RegionInstanceGroupManagersListInstancesResponse,google/cloud/compute/v1/internal/common.proto#L20333}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.ListManagedInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L538}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L632}
   /// [google.cloud.cpp.compute.v1.RegionInstanceGroupManagersListInstancesResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L20310}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L20333}
   ///
   StatusOr<google::cloud::cpp::compute::v1::
                RegionInstanceGroupManagersListInstancesResponse>
@@ -659,16 +659,16 @@ class RegionInstanceGroupManagersClient {
   /// is set to `PAGINATED`.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::ListManagedInstancesRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L538}
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::ListManagedInstancesRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L632}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::RegionInstanceGroupManagersListInstancesResponse,google/cloud/compute/v1/internal/common.proto#L20310}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::RegionInstanceGroupManagersListInstancesResponse,google/cloud/compute/v1/internal/common.proto#L20333}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.ListManagedInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L538}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L632}
   /// [google.cloud.cpp.compute.v1.RegionInstanceGroupManagersListInstancesResponse]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L20310}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L20333}
   ///
   StatusOr<google::cloud::cpp::compute::v1::
                RegionInstanceGroupManagersListInstancesResponse>
@@ -689,12 +689,12 @@ class RegionInstanceGroupManagersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::PerInstanceConfig,google/cloud/compute/v1/internal/common.proto#L18586}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::PerInstanceConfig,google/cloud/compute/v1/internal/common.proto#L18607}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.ListPerInstanceConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L609}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L703}
   /// [google.cloud.cpp.compute.v1.PerInstanceConfig]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18586}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18607}
   ///
   StreamRange<google::cloud::cpp::compute::v1::PerInstanceConfig>
   ListPerInstanceConfigs(std::string const& project, std::string const& region,
@@ -706,16 +706,16 @@ class RegionInstanceGroupManagersClient {
   /// instance group. The orderBy query parameter is not supported.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::ListPerInstanceConfigsRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L609}
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::ListPerInstanceConfigsRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L703}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::PerInstanceConfig,google/cloud/compute/v1/internal/common.proto#L18586}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::PerInstanceConfig,google/cloud/compute/v1/internal/common.proto#L18607}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.ListPerInstanceConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L609}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L703}
   /// [google.cloud.cpp.compute.v1.PerInstanceConfig]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18586}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L18607}
   ///
   StreamRange<google::cloud::cpp::compute::v1::PerInstanceConfig>
   ListPerInstanceConfigs(
@@ -744,12 +744,12 @@ class RegionInstanceGroupManagersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.PatchRegionInstanceGroupManagersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L775}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L877}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchRegionInstanceGroupManagers(
@@ -773,16 +773,16 @@ class RegionInstanceGroupManagersClient {
   /// MIG.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::PatchRegionInstanceGroupManagersRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L775}
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::PatchRegionInstanceGroupManagersRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L877}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.PatchRegionInstanceGroupManagersRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L775}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L877}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchRegionInstanceGroupManagers(
@@ -805,12 +805,12 @@ class RegionInstanceGroupManagersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.PatchPerInstanceConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L748}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L842}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchPerInstanceConfigs(
       std::string const& project, std::string const& region,
@@ -826,16 +826,16 @@ class RegionInstanceGroupManagersClient {
   /// to perform insert or patch.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::PatchPerInstanceConfigsRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L748}
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::PatchPerInstanceConfigsRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L842}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.PatchPerInstanceConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L748}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L842}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchPerInstanceConfigs(
       google::cloud::cpp::compute::regionInstanceGroupManagers::v1::
@@ -862,12 +862,12 @@ class RegionInstanceGroupManagersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.RecreateInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L802}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L911}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> RecreateInstances(
       std::string const& project, std::string const& region,
@@ -890,16 +890,16 @@ class RegionInstanceGroupManagersClient {
   /// maximum of 1000 instances with this method per request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::RecreateInstancesRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L802}
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::RecreateInstancesRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L911}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.RecreateInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L802}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L911}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> RecreateInstances(
       google::cloud::cpp::compute::regionInstanceGroupManagers::v1::
@@ -926,12 +926,12 @@ class RegionInstanceGroupManagersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.ResizeRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L829}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L946}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
       std::string const& project, std::string const& region,
@@ -951,16 +951,16 @@ class RegionInstanceGroupManagersClient {
   /// removed or deleted.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::ResizeRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L829}
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::ResizeRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L946}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.ResizeRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L829}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L946}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
       google::cloud::cpp::compute::regionInstanceGroupManagers::v1::
@@ -979,12 +979,12 @@ class RegionInstanceGroupManagersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.SetInstanceTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L856}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L979}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetInstanceTemplate(
       std::string const& project, std::string const& region,
@@ -999,16 +999,16 @@ class RegionInstanceGroupManagersClient {
   /// recreating instances in this group. Existing instances are not affected.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::SetInstanceTemplateRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L856}
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::SetInstanceTemplateRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L979}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.SetInstanceTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L856}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L979}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetInstanceTemplate(
       google::cloud::cpp::compute::regionInstanceGroupManagers::v1::
@@ -1027,12 +1027,12 @@ class RegionInstanceGroupManagersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.SetTargetPoolsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L883}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L1014}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetTargetPools(
       std::string const& project, std::string const& region,
@@ -1047,16 +1047,16 @@ class RegionInstanceGroupManagersClient {
   /// assigned. Existing instances in the group are not affected.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::SetTargetPoolsRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L883}
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::SetTargetPoolsRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L1014}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.SetTargetPoolsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L883}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L1014}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetTargetPools(
       google::cloud::cpp::compute::regionInstanceGroupManagers::v1::
@@ -1078,12 +1078,12 @@ class RegionInstanceGroupManagersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.UpdatePerInstanceConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L910}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L1049}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdatePerInstanceConfigs(
       std::string const& project, std::string const& region,
@@ -1099,16 +1099,16 @@ class RegionInstanceGroupManagersClient {
   /// to perform insert or patch.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::UpdatePerInstanceConfigsRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L910}
+  /// @googleapis_link{google::cloud::cpp::compute::regionInstanceGroupManagers::v1::UpdatePerInstanceConfigsRequest,google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L1049}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.regionInstanceGroupManagers.v1.UpdatePerInstanceConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L910}
+  /// @googleapis_reference_link{google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto#L1049}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdatePerInstanceConfigs(
       google::cloud::cpp::compute::regionInstanceGroupManagers::v1::

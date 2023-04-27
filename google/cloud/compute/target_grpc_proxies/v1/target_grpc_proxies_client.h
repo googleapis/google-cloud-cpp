@@ -95,12 +95,12 @@ class TargetGrpcProxiesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.targetGrpcProxies.v1.DeleteTargetGrpcProxiesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L84}
+  /// @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L90}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetGrpcProxies(
       std::string const& project, std::string const& target_grpc_proxy,
@@ -110,16 +110,16 @@ class TargetGrpcProxiesClient {
   /// Deletes the specified TargetGrpcProxy in the given scope
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::targetGrpcProxies::v1::DeleteTargetGrpcProxiesRequest,google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L84}
+  /// @googleapis_link{google::cloud::cpp::compute::targetGrpcProxies::v1::DeleteTargetGrpcProxiesRequest,google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L90}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.targetGrpcProxies.v1.DeleteTargetGrpcProxiesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L84}
+  /// @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L90}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetGrpcProxies(
       google::cloud::cpp::compute::targetGrpcProxies::v1::
@@ -134,12 +134,12 @@ class TargetGrpcProxiesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetGrpcProxy,google/cloud/compute/v1/internal/common.proto#L26285}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetGrpcProxy,google/cloud/compute/v1/internal/common.proto#L26323}
   ///
   /// [google.cloud.cpp.compute.targetGrpcProxies.v1.GetTargetGrpcProxiesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L105}
+  /// @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L114}
   /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26285}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26323}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
   GetTargetGrpcProxies(std::string const& project,
@@ -149,16 +149,16 @@ class TargetGrpcProxiesClient {
   /// Returns the specified TargetGrpcProxy resource in the given scope.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::targetGrpcProxies::v1::GetTargetGrpcProxiesRequest,google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L105}
+  /// @googleapis_link{google::cloud::cpp::compute::targetGrpcProxies::v1::GetTargetGrpcProxiesRequest,google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L114}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetGrpcProxy,google/cloud/compute/v1/internal/common.proto#L26285}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetGrpcProxy,google/cloud/compute/v1/internal/common.proto#L26323}
   ///
   /// [google.cloud.cpp.compute.targetGrpcProxies.v1.GetTargetGrpcProxiesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L105}
+  /// @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L114}
   /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26285}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26323}
   ///
   StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
   GetTargetGrpcProxies(google::cloud::cpp::compute::targetGrpcProxies::v1::
@@ -174,12 +174,12 @@ class TargetGrpcProxiesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.targetGrpcProxies.v1.InsertTargetGrpcProxiesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L114}
+  /// @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L123}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetGrpcProxies(
       std::string const& project,
@@ -192,16 +192,16 @@ class TargetGrpcProxiesClient {
   /// using the parameters that are included in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::targetGrpcProxies::v1::InsertTargetGrpcProxiesRequest,google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L114}
+  /// @googleapis_link{google::cloud::cpp::compute::targetGrpcProxies::v1::InsertTargetGrpcProxiesRequest,google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L123}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.targetGrpcProxies.v1.InsertTargetGrpcProxiesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L114}
+  /// @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L123}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetGrpcProxies(
       google::cloud::cpp::compute::targetGrpcProxies::v1::
@@ -215,12 +215,12 @@ class TargetGrpcProxiesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetGrpcProxy,google/cloud/compute/v1/internal/common.proto#L26285}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetGrpcProxy,google/cloud/compute/v1/internal/common.proto#L26323}
   ///
   /// [google.cloud.cpp.compute.targetGrpcProxies.v1.ListTargetGrpcProxiesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L135}
+  /// @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L148}
   /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26285}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26323}
   ///
   StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>
   ListTargetGrpcProxies(std::string const& project, Options opts = {});
@@ -229,16 +229,16 @@ class TargetGrpcProxiesClient {
   /// Lists the TargetGrpcProxies for a project in the given scope.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::targetGrpcProxies::v1::ListTargetGrpcProxiesRequest,google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L135}
+  /// @googleapis_link{google::cloud::cpp::compute::targetGrpcProxies::v1::ListTargetGrpcProxiesRequest,google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L148}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetGrpcProxy,google/cloud/compute/v1/internal/common.proto#L26285}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::TargetGrpcProxy,google/cloud/compute/v1/internal/common.proto#L26323}
   ///
   /// [google.cloud.cpp.compute.targetGrpcProxies.v1.ListTargetGrpcProxiesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L135}
+  /// @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L148}
   /// [google.cloud.cpp.compute.v1.TargetGrpcProxy]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26285}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L26323}
   ///
   StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>
   ListTargetGrpcProxies(google::cloud::cpp::compute::targetGrpcProxies::v1::
@@ -256,12 +256,12 @@ class TargetGrpcProxiesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.targetGrpcProxies.v1.PatchTargetGrpcProxiesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L200}
+  /// @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L213}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchTargetGrpcProxies(
       std::string const& project, std::string const& target_grpc_proxy,
@@ -275,16 +275,16 @@ class TargetGrpcProxiesClient {
   /// patch format and processing rules.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::cpp::compute::targetGrpcProxies::v1::PatchTargetGrpcProxiesRequest,google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L200}
+  /// @googleapis_link{google::cloud::cpp::compute::targetGrpcProxies::v1::PatchTargetGrpcProxiesRequest,google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L213}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_link{google::cloud::cpp::compute::v1::Operation,google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   /// [google.cloud.cpp.compute.targetGrpcProxies.v1.PatchTargetGrpcProxiesRequest]:
-  /// @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L200}
+  /// @googleapis_reference_link{google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto#L213}
   /// [google.cloud.cpp.compute.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17422}
+  /// @googleapis_reference_link{google/cloud/compute/v1/internal/common.proto#L17443}
   ///
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchTargetGrpcProxies(
       google::cloud::cpp::compute::targetGrpcProxies::v1::
