@@ -51,16 +51,15 @@ class DatasetClient {
     return !(a == b);
   }
 
-  /// Gets specific dataset information from Bigquery specific to the datasetID
-  /// specified in the request. For more details on BigQuery datasets, please
-  /// refer to: https://cloud.google.com/bigquery/docs/managing-datasets
+  /// Gets the metadata for the given dataset.
+  ///
+  /// @see https://cloud.google.com/bigquery/docs/managing-datasets for more details on BigQuery datasets.
   StatusOr<Dataset> GetDataset(GetDatasetRequest const& request,
                                Options opts = {});
 
-  /// Lists all datasets in the specified project to which the user has been
-  /// granted the READER dataset role.
-  /// For more details on BigQuery datasets,
-  /// please refer to: https://cloud.google.com/bigquery/docs/managing-datasets
+  /// Lists all datasets for a project.
+  ///
+  /// @see https://cloud.google.com/bigquery/docs/managing-datasets for more details on BigQuery datasets.
   StreamRange<ListFormatDataset> ListDatasets(
       ListDatasetsRequest const& request, Options opts = {});
 
