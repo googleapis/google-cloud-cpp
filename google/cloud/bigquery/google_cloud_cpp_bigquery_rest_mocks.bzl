@@ -17,6 +17,7 @@
 """Automatically generated source lists for google_cloud_cpp_bigquery_rest_mocks - DO NOT EDIT."""
 
 google_cloud_cpp_bigquery_rest_mocks_hdrs = [
+    "v2/minimal/mocks/mock_dataset_connection.h",
     "v2/minimal/mocks/mock_job_connection.h",
 ]
 

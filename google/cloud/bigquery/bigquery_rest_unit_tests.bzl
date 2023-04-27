@@ -19,6 +19,8 @@
 bigquery_rest_unit_tests = [
     "v2/minimal/internal/bigquery_http_response_test.cc",
     "v2/minimal/internal/common_v2_resources_test.cc",
+    "v2/minimal/internal/dataset_client_test.cc",
+    "v2/minimal/internal/dataset_connection_test.cc",
     "v2/minimal/internal/dataset_idempotency_policy_test.cc",
     "v2/minimal/internal/dataset_logging_test.cc",
     "v2/minimal/internal/dataset_metadata_test.cc",
