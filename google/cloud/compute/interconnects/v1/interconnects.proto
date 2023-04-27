@@ -27,12 +27,13 @@ import "google/cloud/extended_operations.proto";
 service Interconnects {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified Interconnect.
-  rpc DeleteInterconnects(DeleteInterconnectsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteInterconnects(DeleteInterconnectsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/interconnects/{interconnect}"
     };
@@ -42,7 +43,8 @@ service Interconnects {
 
   // Returns the specified Interconnect. Get a list of available Interconnects
   // by making a list() request.
-  rpc GetInterconnects(GetInterconnectsRequest) returns (google.cloud.cpp.compute.v1.Interconnect) {
+  rpc GetInterconnects(GetInterconnectsRequest)
+      returns (google.cloud.cpp.compute.v1.Interconnect) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/interconnects/{interconnect}"
     };
@@ -50,7 +52,8 @@ service Interconnects {
   }
 
   // Returns the interconnectDiagnostics for the specified Interconnect.
-  rpc GetDiagnostics(GetDiagnosticsRequest) returns (google.cloud.cpp.compute.v1.InterconnectsGetDiagnosticsResponse) {
+  rpc GetDiagnostics(GetDiagnosticsRequest) returns (
+      google.cloud.cpp.compute.v1.InterconnectsGetDiagnosticsResponse) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/interconnects/{interconnect}/getDiagnostics"
     };
@@ -59,7 +62,8 @@ service Interconnects {
 
   // Creates an Interconnect in the specified project using the data included in
   // the request.
-  rpc InsertInterconnects(InsertInterconnectsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertInterconnects(InsertInterconnectsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/interconnects"
       body: "interconnect_resource"
@@ -69,7 +73,8 @@ service Interconnects {
   }
 
   // Retrieves the list of Interconnects available to the specified project.
-  rpc ListInterconnects(ListInterconnectsRequest) returns (google.cloud.cpp.compute.v1.InterconnectList) {
+  rpc ListInterconnects(ListInterconnectsRequest)
+      returns (google.cloud.cpp.compute.v1.InterconnectList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/interconnects"
     };
@@ -79,23 +84,27 @@ service Interconnects {
   // Updates the specified Interconnect with the data included in the request.
   // This method supports PATCH semantics and uses the JSON merge patch format
   // and processing rules.
-  rpc PatchInterconnects(PatchInterconnectsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchInterconnects(PatchInterconnectsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/global/interconnects/{interconnect}"
       body: "interconnect_resource"
     };
-    option (google.api.method_signature) = "project,interconnect,interconnect_resource";
+    option (google.api.method_signature) =
+        "project,interconnect,interconnect_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Sets the labels on an Interconnect. To learn more about labels, read the
   // Labeling Resources documentation.
-  rpc SetLabels(SetLabelsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetLabels(SetLabelsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/interconnects/{resource}/setLabels"
       body: "global_set_labels_request_resource"
     };
-    option (google.api.method_signature) = "project,resource,global_set_labels_request_resource";
+    option (google.api.method_signature) =
+        "project,resource,global_set_labels_request_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 }
@@ -106,7 +115,10 @@ message DeleteInterconnectsRequest {
   string interconnect = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -145,7 +157,10 @@ message InsertInterconnectsRequest {
   optional google.cloud.cpp.compute.v1.Interconnect interconnect_resource = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -234,7 +249,10 @@ message PatchInterconnectsRequest {
   optional google.cloud.cpp.compute.v1.Interconnect interconnect_resource = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -252,10 +270,14 @@ message PatchInterconnectsRequest {
 // Request message for SetLabels.
 message SetLabelsRequest {
   // The GlobalSetLabelsRequest for this request.
-  optional google.cloud.cpp.compute.v1.GlobalSetLabelsRequest global_set_labels_request_resource = 1;
+  optional google.cloud.cpp.compute.v1.GlobalSetLabelsRequest
+      global_set_labels_request_resource = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name or id of the resource for this request.
   string resource = 3 [(google.api.field_behavior) = REQUIRED];

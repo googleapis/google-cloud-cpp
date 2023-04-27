@@ -27,15 +27,16 @@ import "google/cloud/extended_operations.proto";
 service Projects {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly,"
-    "https://www.googleapis.com/auth/devstorage.full_control,"
-    "https://www.googleapis.com/auth/devstorage.read_only,"
-    "https://www.googleapis.com/auth/devstorage.read_write";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly,"
+      "https://www.googleapis.com/auth/devstorage.full_control,"
+      "https://www.googleapis.com/auth/devstorage.read_only,"
+      "https://www.googleapis.com/auth/devstorage.read_write";
 
   // Disable this project as a shared VPC host project.
-  rpc DisableXpnHost(DisableXpnHostRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DisableXpnHost(DisableXpnHostRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/disableXpnHost"
       body: "*"
@@ -46,17 +47,20 @@ service Projects {
 
   // Disable a service resource (also known as service project) associated with
   // this host project.
-  rpc DisableXpnResource(DisableXpnResourceRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DisableXpnResource(DisableXpnResourceRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/disableXpnResource"
       body: "projects_disable_xpn_resource_request_resource"
     };
-    option (google.api.method_signature) = "project,projects_disable_xpn_resource_request_resource";
+    option (google.api.method_signature) =
+        "project,projects_disable_xpn_resource_request_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Enable this project as a shared VPC host project.
-  rpc EnableXpnHost(EnableXpnHostRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc EnableXpnHost(EnableXpnHostRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/enableXpnHost"
       body: "*"
@@ -68,12 +72,14 @@ service Projects {
   // Enable service resource (a.k.a service project) for a host project, so that
   // subnets in the host project can be used by instances in the service
   // project.
-  rpc EnableXpnResource(EnableXpnResourceRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc EnableXpnResource(EnableXpnResourceRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/enableXpnResource"
       body: "projects_enable_xpn_resource_request_resource"
     };
-    option (google.api.method_signature) = "project,projects_enable_xpn_resource_request_resource";
+    option (google.api.method_signature) =
+        "project,projects_enable_xpn_resource_request_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
@@ -84,7 +90,8 @@ service Projects {
   // your request's `fields` query parameter to only include the fields you
   // need. For example, to only include the `id` and `selfLink` fields, add the
   // query parameter `?fields=id,selfLink` to your request.
-  rpc GetProjects(GetProjectsRequest) returns (google.cloud.cpp.compute.v1.Project) {
+  rpc GetProjects(GetProjectsRequest)
+      returns (google.cloud.cpp.compute.v1.Project) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}"
     };
@@ -93,7 +100,8 @@ service Projects {
 
   // Gets the shared VPC host project that this project links to. May be empty
   // if no link exists.
-  rpc GetXpnHost(GetXpnHostRequest) returns (google.cloud.cpp.compute.v1.Project) {
+  rpc GetXpnHost(GetXpnHostRequest)
+      returns (google.cloud.cpp.compute.v1.Project) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/getXpnHost"
     };
@@ -102,7 +110,8 @@ service Projects {
 
   // Gets service resources (a.k.a service project) associated with this host
   // project.
-  rpc GetXpnResources(GetXpnResourcesRequest) returns (google.cloud.cpp.compute.v1.ProjectsGetXpnResources) {
+  rpc GetXpnResources(GetXpnResourcesRequest)
+      returns (google.cloud.cpp.compute.v1.ProjectsGetXpnResources) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/getXpnResources"
     };
@@ -110,16 +119,19 @@ service Projects {
   }
 
   // Lists all shared VPC host projects visible to the user in an organization.
-  rpc ListXpnHosts(ListXpnHostsRequest) returns (google.cloud.cpp.compute.v1.XpnHostList) {
+  rpc ListXpnHosts(ListXpnHostsRequest)
+      returns (google.cloud.cpp.compute.v1.XpnHostList) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/listXpnHosts"
       body: "projects_list_xpn_hosts_request_resource"
     };
-    option (google.api.method_signature) = "project,projects_list_xpn_hosts_request_resource";
+    option (google.api.method_signature) =
+        "project,projects_list_xpn_hosts_request_resource";
   }
 
   // Moves a persistent disk from one zone to another.
-  rpc MoveDisk(MoveDiskRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc MoveDisk(MoveDiskRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/moveDisk"
       body: "disk_move_request_resource"
@@ -132,18 +144,21 @@ service Projects {
   // another. *Note*: Moving VMs or disks by using this method might cause
   // unexpected behavior. For more information, see the [known
   // issue](/compute/docs/troubleshooting/known-issues#moving_vms_or_disks_using_the_moveinstance_api_or_the_causes_unexpected_behavior).
-  rpc MoveInstance(MoveInstanceRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc MoveInstance(MoveInstanceRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/moveInstance"
       body: "instance_move_request_resource"
     };
-    option (google.api.method_signature) = "project,instance_move_request_resource";
+    option (google.api.method_signature) =
+        "project,instance_move_request_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Sets metadata common to all instances within the specified project using
   // the data included in the request.
-  rpc SetCommonInstanceMetadata(SetCommonInstanceMetadataRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetCommonInstanceMetadata(SetCommonInstanceMetadataRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/setCommonInstanceMetadata"
       body: "metadata_resource"
@@ -155,24 +170,28 @@ service Projects {
   // Sets the default network tier of the project. The default network tier is
   // used when an address/forwardingRule/instance is created without specifying
   // the network tier field.
-  rpc SetDefaultNetworkTier(SetDefaultNetworkTierRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetDefaultNetworkTier(SetDefaultNetworkTierRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/setDefaultNetworkTier"
       body: "projects_set_default_network_tier_request_resource"
     };
-    option (google.api.method_signature) = "project,projects_set_default_network_tier_request_resource";
+    option (google.api.method_signature) =
+        "project,projects_set_default_network_tier_request_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Enables the usage export feature and sets the usage export bucket where
   // reports are stored. If you provide an empty request body using this method,
   // the usage export feature will be disabled.
-  rpc SetUsageExportBucket(SetUsageExportBucketRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetUsageExportBucket(SetUsageExportBucketRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/setUsageExportBucket"
       body: "usage_export_location_resource"
     };
-    option (google.api.method_signature) = "project,usage_export_location_resource";
+    option (google.api.method_signature) =
+        "project,usage_export_location_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 }
@@ -180,7 +199,10 @@ service Projects {
 // Request message for DisableXpnHost.
 message DisableXpnHostRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -198,10 +220,14 @@ message DisableXpnHostRequest {
 // Request message for DisableXpnResource.
 message DisableXpnResourceRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // The ProjectsDisableXpnResourceRequest for this request.
-  optional google.cloud.cpp.compute.v1.ProjectsDisableXpnResourceRequest projects_disable_xpn_resource_request_resource = 2;
+  optional google.cloud.cpp.compute.v1.ProjectsDisableXpnResourceRequest
+      projects_disable_xpn_resource_request_resource = 2;
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -219,7 +245,10 @@ message DisableXpnResourceRequest {
 // Request message for EnableXpnHost.
 message EnableXpnHostRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -237,10 +266,14 @@ message EnableXpnHostRequest {
 // Request message for EnableXpnResource.
 message EnableXpnResourceRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // The ProjectsEnableXpnResourceRequest for this request.
-  optional google.cloud.cpp.compute.v1.ProjectsEnableXpnResourceRequest projects_enable_xpn_resource_request_resource = 2;
+  optional google.cloud.cpp.compute.v1.ProjectsEnableXpnResourceRequest
+      projects_enable_xpn_resource_request_resource = 2;
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -393,7 +426,8 @@ message ListXpnHostsRequest {
   string project = 5 [(google.api.field_behavior) = REQUIRED];
 
   // The ProjectsListXpnHostsRequest for this request.
-  optional google.cloud.cpp.compute.v1.ProjectsListXpnHostsRequest projects_list_xpn_hosts_request_resource = 6;
+  optional google.cloud.cpp.compute.v1.ProjectsListXpnHostsRequest
+      projects_list_xpn_hosts_request_resource = 6;
 
   // Opt-in for partial success behavior which provides partial results in case
   // of failure. The default value is false.
@@ -403,10 +437,14 @@ message ListXpnHostsRequest {
 // Request message for MoveDisk.
 message MoveDiskRequest {
   // The DiskMoveRequest for this request.
-  optional google.cloud.cpp.compute.v1.DiskMoveRequest disk_move_request_resource = 1;
+  optional google.cloud.cpp.compute.v1.DiskMoveRequest
+      disk_move_request_resource = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -424,10 +462,14 @@ message MoveDiskRequest {
 // Request message for MoveInstance.
 message MoveInstanceRequest {
   // The InstanceMoveRequest for this request.
-  optional google.cloud.cpp.compute.v1.InstanceMoveRequest instance_move_request_resource = 1;
+  optional google.cloud.cpp.compute.v1.InstanceMoveRequest
+      instance_move_request_resource = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -448,7 +490,10 @@ message SetCommonInstanceMetadataRequest {
   optional google.cloud.cpp.compute.v1.Metadata metadata_resource = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -466,10 +511,14 @@ message SetCommonInstanceMetadataRequest {
 // Request message for SetDefaultNetworkTier.
 message SetDefaultNetworkTierRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // The ProjectsSetDefaultNetworkTierRequest for this request.
-  optional google.cloud.cpp.compute.v1.ProjectsSetDefaultNetworkTierRequest projects_set_default_network_tier_request_resource = 2;
+  optional google.cloud.cpp.compute.v1.ProjectsSetDefaultNetworkTierRequest
+      projects_set_default_network_tier_request_resource = 2;
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -487,7 +536,10 @@ message SetDefaultNetworkTierRequest {
 // Request message for SetUsageExportBucket.
 message SetUsageExportBucketRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -502,5 +554,6 @@ message SetUsageExportBucketRequest {
   optional string request_id = 2;
 
   // The UsageExportLocation for this request.
-  optional google.cloud.cpp.compute.v1.UsageExportLocation usage_export_location_resource = 3;
+  optional google.cloud.cpp.compute.v1.UsageExportLocation
+      usage_export_location_resource = 3;
 }

@@ -27,41 +27,48 @@ import "google/cloud/extended_operations.proto";
 service RegionHealthCheckServices {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified regional HealthCheckService.
-  rpc DeleteRegionHealthCheckServices(DeleteRegionHealthCheckServicesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteRegionHealthCheckServices(DeleteRegionHealthCheckServicesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/healthCheckServices/{health_check_service}"
     };
-    option (google.api.method_signature) = "project,region,health_check_service";
+    option (google.api.method_signature) =
+        "project,region,health_check_service";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Returns the specified regional HealthCheckService resource.
-  rpc GetRegionHealthCheckServices(GetRegionHealthCheckServicesRequest) returns (google.cloud.cpp.compute.v1.HealthCheckService) {
+  rpc GetRegionHealthCheckServices(GetRegionHealthCheckServicesRequest)
+      returns (google.cloud.cpp.compute.v1.HealthCheckService) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/healthCheckServices/{health_check_service}"
     };
-    option (google.api.method_signature) = "project,region,health_check_service";
+    option (google.api.method_signature) =
+        "project,region,health_check_service";
   }
 
   // Creates a regional HealthCheckService resource in the specified project and
   // region using the data included in the request.
-  rpc InsertRegionHealthCheckServices(InsertRegionHealthCheckServicesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertRegionHealthCheckServices(InsertRegionHealthCheckServicesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/healthCheckServices"
       body: "health_check_service_resource"
     };
-    option (google.api.method_signature) = "project,region,health_check_service_resource";
+    option (google.api.method_signature) =
+        "project,region,health_check_service_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Lists all the HealthCheckService resources that have been configured for
   // the specified project in the given region.
-  rpc ListRegionHealthCheckServices(ListRegionHealthCheckServicesRequest) returns (google.cloud.cpp.compute.v1.HealthCheckServicesList) {
+  rpc ListRegionHealthCheckServices(ListRegionHealthCheckServicesRequest)
+      returns (google.cloud.cpp.compute.v1.HealthCheckServicesList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/healthCheckServices"
     };
@@ -71,12 +78,14 @@ service RegionHealthCheckServices {
   // Updates the specified regional HealthCheckService resource with the data
   // included in the request. This method supports PATCH semantics and uses the
   // JSON merge patch format and processing rules.
-  rpc PatchRegionHealthCheckServices(PatchRegionHealthCheckServicesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchRegionHealthCheckServices(PatchRegionHealthCheckServicesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/regions/{region}/healthCheckServices/{health_check_service}"
       body: "health_check_service_resource"
     };
-    option (google.api.method_signature) = "project,region,health_check_service,health_check_service_resource";
+    option (google.api.method_signature) =
+        "project,region,health_check_service,health_check_service_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 }
@@ -88,10 +97,16 @@ message DeleteRegionHealthCheckServicesRequest {
   string health_check_service = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -122,13 +137,20 @@ message GetRegionHealthCheckServicesRequest {
 // Request message for InsertRegionHealthCheckServices.
 message InsertRegionHealthCheckServicesRequest {
   // The HealthCheckService for this request.
-  optional google.cloud.cpp.compute.v1.HealthCheckService health_check_service_resource = 1;
+  optional google.cloud.cpp.compute.v1.HealthCheckService
+      health_check_service_resource = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -218,13 +240,20 @@ message PatchRegionHealthCheckServicesRequest {
   string health_check_service = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The HealthCheckService for this request.
-  optional google.cloud.cpp.compute.v1.HealthCheckService health_check_service_resource = 2;
+  optional google.cloud.cpp.compute.v1.HealthCheckService
+      health_check_service_resource = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the

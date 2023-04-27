@@ -27,16 +27,17 @@ import "google/cloud/extended_operations.proto";
 service Snapshots {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified Snapshot resource. Keep in mind that deleting a
   // single snapshot might not necessarily delete all the data on that snapshot.
   // If any data on the snapshot that is marked for deletion is needed for
   // subsequent snapshots, the data will be moved to the next corresponding
   // snapshot. For more information, see Deleting snapshots.
-  rpc DeleteSnapshots(DeleteSnapshotsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteSnapshots(DeleteSnapshotsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/snapshots/{snapshot}"
     };
@@ -45,7 +46,8 @@ service Snapshots {
   }
 
   // Returns the specified Snapshot resource.
-  rpc GetSnapshots(GetSnapshotsRequest) returns (google.cloud.cpp.compute.v1.Snapshot) {
+  rpc GetSnapshots(GetSnapshotsRequest)
+      returns (google.cloud.cpp.compute.v1.Snapshot) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/snapshots/{snapshot}"
     };
@@ -54,7 +56,8 @@ service Snapshots {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
-  rpc GetIamPolicy(GetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc GetIamPolicy(GetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/snapshots/{resource}/getIamPolicy"
     };
@@ -65,7 +68,8 @@ service Snapshots {
   // request. For regular snapshot creation, consider using this method instead
   // of disks.createSnapshot, as this method supports more features, such as
   // creating snapshots in a project different from the source disk project.
-  rpc InsertSnapshots(InsertSnapshotsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertSnapshots(InsertSnapshotsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/snapshots"
       body: "snapshot_resource"
@@ -76,7 +80,8 @@ service Snapshots {
 
   // Retrieves the list of Snapshot resources contained within the specified
   // project.
-  rpc ListSnapshots(ListSnapshotsRequest) returns (google.cloud.cpp.compute.v1.SnapshotList) {
+  rpc ListSnapshots(ListSnapshotsRequest)
+      returns (google.cloud.cpp.compute.v1.SnapshotList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/snapshots"
     };
@@ -85,39 +90,48 @@ service Snapshots {
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
-  rpc SetIamPolicy(SetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc SetIamPolicy(SetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/snapshots/{resource}/setIamPolicy"
       body: "global_set_policy_request_resource"
     };
-    option (google.api.method_signature) = "project,resource,global_set_policy_request_resource";
+    option (google.api.method_signature) =
+        "project,resource,global_set_policy_request_resource";
   }
 
   // Sets the labels on a snapshot. To learn more about labels, read the
   // Labeling Resources documentation.
-  rpc SetLabels(SetLabelsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetLabels(SetLabelsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/snapshots/{resource}/setLabels"
       body: "global_set_labels_request_resource"
     };
-    option (google.api.method_signature) = "project,resource,global_set_labels_request_resource";
+    option (google.api.method_signature) =
+        "project,resource,global_set_labels_request_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Returns permissions that a caller has on the specified resource.
-  rpc TestIamPermissions(TestIamPermissionsRequest) returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
+  rpc TestIamPermissions(TestIamPermissionsRequest)
+      returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/snapshots/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
-    option (google.api.method_signature) = "project,resource,test_permissions_request_resource";
+    option (google.api.method_signature) =
+        "project,resource,test_permissions_request_resource";
   }
 }
 
 // Request message for DeleteSnapshots.
 message DeleteSnapshotsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -159,7 +173,10 @@ message GetSnapshotsRequest {
 // Request message for InsertSnapshots.
 message InsertSnapshotsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -245,7 +262,8 @@ message ListSnapshotsRequest {
 // Request message for SetIamPolicy.
 message SetIamPolicyRequest {
   // The GlobalSetPolicyRequest for this request.
-  optional google.cloud.cpp.compute.v1.GlobalSetPolicyRequest global_set_policy_request_resource = 1;
+  optional google.cloud.cpp.compute.v1.GlobalSetPolicyRequest
+      global_set_policy_request_resource = 1;
 
   // Project ID for this request.
   string project = 2 [(google.api.field_behavior) = REQUIRED];
@@ -257,10 +275,14 @@ message SetIamPolicyRequest {
 // Request message for SetLabels.
 message SetLabelsRequest {
   // The GlobalSetLabelsRequest for this request.
-  optional google.cloud.cpp.compute.v1.GlobalSetLabelsRequest global_set_labels_request_resource = 1;
+  optional google.cloud.cpp.compute.v1.GlobalSetLabelsRequest
+      global_set_labels_request_resource = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name or id of the resource for this request.
   string resource = 3 [(google.api.field_behavior) = REQUIRED];
@@ -275,5 +297,6 @@ message TestIamPermissionsRequest {
   string resource = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The TestPermissionsRequest for this request.
-  optional google.cloud.cpp.compute.v1.TestPermissionsRequest test_permissions_request_resource = 3;
+  optional google.cloud.cpp.compute.v1.TestPermissionsRequest
+      test_permissions_request_resource = 3;
 }

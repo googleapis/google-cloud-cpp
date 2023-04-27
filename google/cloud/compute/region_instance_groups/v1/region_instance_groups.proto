@@ -27,12 +27,13 @@ import "google/cloud/extended_operations.proto";
 service RegionInstanceGroups {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Returns the specified instance group resource.
-  rpc GetRegionInstanceGroups(GetRegionInstanceGroupsRequest) returns (google.cloud.cpp.compute.v1.InstanceGroup) {
+  rpc GetRegionInstanceGroups(GetRegionInstanceGroupsRequest)
+      returns (google.cloud.cpp.compute.v1.InstanceGroup) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/instanceGroups/{instance_group}"
     };
@@ -41,7 +42,8 @@ service RegionInstanceGroups {
 
   // Retrieves the list of instance group resources contained within the
   // specified region.
-  rpc ListRegionInstanceGroups(ListRegionInstanceGroupsRequest) returns (google.cloud.cpp.compute.v1.RegionInstanceGroupList) {
+  rpc ListRegionInstanceGroups(ListRegionInstanceGroupsRequest)
+      returns (google.cloud.cpp.compute.v1.RegionInstanceGroupList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/instanceGroups"
     };
@@ -52,21 +54,25 @@ service RegionInstanceGroups {
   // information about the named ports. Depending on the specified options, this
   // method can list all instances or only the instances that are running. The
   // orderBy query parameter is not supported.
-  rpc ListInstances(ListInstancesRequest) returns (google.cloud.cpp.compute.v1.RegionInstanceGroupsListInstances) {
+  rpc ListInstances(ListInstancesRequest)
+      returns (google.cloud.cpp.compute.v1.RegionInstanceGroupsListInstances) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/instanceGroups/{instance_group}/listInstances"
       body: "region_instance_groups_list_instances_request_resource"
     };
-    option (google.api.method_signature) = "project,region,instance_group,region_instance_groups_list_instances_request_resource";
+    option (google.api.method_signature) =
+        "project,region,instance_group,region_instance_groups_list_instances_request_resource";
   }
 
   // Sets the named ports for the specified regional instance group.
-  rpc SetNamedPorts(SetNamedPortsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetNamedPorts(SetNamedPortsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/instanceGroups/{instance_group}/setNamedPorts"
       body: "region_instance_groups_set_named_ports_request_resource"
     };
-    option (google.api.method_signature) = "project,region,instance_group,region_instance_groups_set_named_ports_request_resource";
+    option (google.api.method_signature) =
+        "project,region,instance_group,region_instance_groups_set_named_ports_request_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 }
@@ -151,7 +157,8 @@ message ListInstancesRequest {
   string region = 7 [(google.api.field_behavior) = REQUIRED];
 
   // The RegionInstanceGroupsListInstancesRequest for this request.
-  optional google.cloud.cpp.compute.v1.RegionInstanceGroupsListInstancesRequest region_instance_groups_list_instances_request_resource = 8;
+  optional google.cloud.cpp.compute.v1.RegionInstanceGroupsListInstancesRequest
+      region_instance_groups_list_instances_request_resource = 8;
 
   // Opt-in for partial success behavior which provides partial results in case
   // of failure. The default value is false.
@@ -232,13 +239,20 @@ message SetNamedPortsRequest {
   string instance_group = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // The RegionInstanceGroupsSetNamedPortsRequest for this request.
-  optional google.cloud.cpp.compute.v1.RegionInstanceGroupsSetNamedPortsRequest region_instance_groups_set_named_ports_request_resource = 4;
+  optional google.cloud.cpp.compute.v1.RegionInstanceGroupsSetNamedPortsRequest
+      region_instance_groups_set_named_ports_request_resource = 4;
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the

@@ -27,12 +27,14 @@ import "google/cloud/extended_operations.proto";
 service GlobalPublicDelegatedPrefixes {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified global PublicDelegatedPrefix.
-  rpc DeleteGlobalPublicDelegatedPrefixes(DeleteGlobalPublicDelegatedPrefixesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteGlobalPublicDelegatedPrefixes(
+      DeleteGlobalPublicDelegatedPrefixesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/publicDelegatedPrefixes/{public_delegated_prefix}"
     };
@@ -41,7 +43,8 @@ service GlobalPublicDelegatedPrefixes {
   }
 
   // Returns the specified global PublicDelegatedPrefix resource.
-  rpc GetGlobalPublicDelegatedPrefixes(GetGlobalPublicDelegatedPrefixesRequest) returns (google.cloud.cpp.compute.v1.PublicDelegatedPrefix) {
+  rpc GetGlobalPublicDelegatedPrefixes(GetGlobalPublicDelegatedPrefixesRequest)
+      returns (google.cloud.cpp.compute.v1.PublicDelegatedPrefix) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/publicDelegatedPrefixes/{public_delegated_prefix}"
     };
@@ -50,17 +53,22 @@ service GlobalPublicDelegatedPrefixes {
 
   // Creates a global PublicDelegatedPrefix in the specified project using the
   // parameters that are included in the request.
-  rpc InsertGlobalPublicDelegatedPrefixes(InsertGlobalPublicDelegatedPrefixesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertGlobalPublicDelegatedPrefixes(
+      InsertGlobalPublicDelegatedPrefixesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/publicDelegatedPrefixes"
       body: "public_delegated_prefix_resource"
     };
-    option (google.api.method_signature) = "project,public_delegated_prefix_resource";
+    option (google.api.method_signature) =
+        "project,public_delegated_prefix_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Lists the global PublicDelegatedPrefixes for a project.
-  rpc ListGlobalPublicDelegatedPrefixes(ListGlobalPublicDelegatedPrefixesRequest) returns (google.cloud.cpp.compute.v1.PublicDelegatedPrefixList) {
+  rpc ListGlobalPublicDelegatedPrefixes(
+      ListGlobalPublicDelegatedPrefixesRequest)
+      returns (google.cloud.cpp.compute.v1.PublicDelegatedPrefixList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/publicDelegatedPrefixes"
     };
@@ -70,12 +78,15 @@ service GlobalPublicDelegatedPrefixes {
   // Patches the specified global PublicDelegatedPrefix resource with the data
   // included in the request. This method supports PATCH semantics and uses JSON
   // merge patch format and processing rules.
-  rpc PatchGlobalPublicDelegatedPrefixes(PatchGlobalPublicDelegatedPrefixesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchGlobalPublicDelegatedPrefixes(
+      PatchGlobalPublicDelegatedPrefixesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/global/publicDelegatedPrefixes/{public_delegated_prefix}"
       body: "public_delegated_prefix_resource"
     };
-    option (google.api.method_signature) = "project,public_delegated_prefix,public_delegated_prefix_resource";
+    option (google.api.method_signature) =
+        "project,public_delegated_prefix,public_delegated_prefix_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 }
@@ -83,7 +94,10 @@ service GlobalPublicDelegatedPrefixes {
 // Request message for DeleteGlobalPublicDelegatedPrefixes.
 message DeleteGlobalPublicDelegatedPrefixesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the PublicDelegatedPrefix resource to delete.
   string public_delegated_prefix = 2 [(google.api.field_behavior) = REQUIRED];
@@ -113,10 +127,14 @@ message GetGlobalPublicDelegatedPrefixesRequest {
 // Request message for InsertGlobalPublicDelegatedPrefixes.
 message InsertGlobalPublicDelegatedPrefixesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // The PublicDelegatedPrefix for this request.
-  optional google.cloud.cpp.compute.v1.PublicDelegatedPrefix public_delegated_prefix_resource = 2;
+  optional google.cloud.cpp.compute.v1.PublicDelegatedPrefix
+      public_delegated_prefix_resource = 2;
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -199,13 +217,17 @@ message ListGlobalPublicDelegatedPrefixesRequest {
 // Request message for PatchGlobalPublicDelegatedPrefixes.
 message PatchGlobalPublicDelegatedPrefixesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the PublicDelegatedPrefix resource to patch.
   string public_delegated_prefix = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The PublicDelegatedPrefix for this request.
-  optional google.cloud.cpp.compute.v1.PublicDelegatedPrefix public_delegated_prefix_resource = 3;
+  optional google.cloud.cpp.compute.v1.PublicDelegatedPrefix
+      public_delegated_prefix_resource = 3;
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the

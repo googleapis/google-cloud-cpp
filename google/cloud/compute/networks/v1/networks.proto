@@ -27,22 +27,25 @@ import "google/cloud/extended_operations.proto";
 service Networks {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Adds a peering to the specified network.
-  rpc AddPeering(AddPeeringRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc AddPeering(AddPeeringRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/networks/{network}/addPeering"
       body: "networks_add_peering_request_resource"
     };
-    option (google.api.method_signature) = "project,network,networks_add_peering_request_resource";
+    option (google.api.method_signature) =
+        "project,network,networks_add_peering_request_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Deletes the specified network.
-  rpc DeleteNetworks(DeleteNetworksRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteNetworks(DeleteNetworksRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/networks/{network}"
     };
@@ -51,7 +54,8 @@ service Networks {
   }
 
   // Returns the specified network.
-  rpc GetNetworks(GetNetworksRequest) returns (google.cloud.cpp.compute.v1.Network) {
+  rpc GetNetworks(GetNetworksRequest)
+      returns (google.cloud.cpp.compute.v1.Network) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/networks/{network}"
     };
@@ -59,7 +63,8 @@ service Networks {
   }
 
   // Returns the effective firewalls on a given network.
-  rpc GetEffectiveFirewalls(GetEffectiveFirewallsRequest) returns (google.cloud.cpp.compute.v1.NetworksGetEffectiveFirewallsResponse) {
+  rpc GetEffectiveFirewalls(GetEffectiveFirewallsRequest) returns (
+      google.cloud.cpp.compute.v1.NetworksGetEffectiveFirewallsResponse) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/networks/{network}/getEffectiveFirewalls"
     };
@@ -68,7 +73,8 @@ service Networks {
 
   // Creates a network in the specified project using the data included in the
   // request.
-  rpc InsertNetworks(InsertNetworksRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertNetworks(InsertNetworksRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/networks"
       body: "network_resource"
@@ -78,7 +84,8 @@ service Networks {
   }
 
   // Retrieves the list of networks available to the specified project.
-  rpc ListNetworks(ListNetworksRequest) returns (google.cloud.cpp.compute.v1.NetworkList) {
+  rpc ListNetworks(ListNetworksRequest)
+      returns (google.cloud.cpp.compute.v1.NetworkList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/networks"
     };
@@ -86,7 +93,8 @@ service Networks {
   }
 
   // Lists the peering routes exchanged over peering connection.
-  rpc ListPeeringRoutes(ListPeeringRoutesRequest) returns (google.cloud.cpp.compute.v1.ExchangedPeeringRoutesList) {
+  rpc ListPeeringRoutes(ListPeeringRoutesRequest)
+      returns (google.cloud.cpp.compute.v1.ExchangedPeeringRoutesList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/networks/{network}/listPeeringRoutes"
     };
@@ -95,7 +103,8 @@ service Networks {
 
   // Patches the specified network with the data included in the request. Only
   // the following fields can be modified: routingConfig.routingMode.
-  rpc PatchNetworks(PatchNetworksRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchNetworks(PatchNetworksRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/global/networks/{network}"
       body: "network_resource"
@@ -105,17 +114,20 @@ service Networks {
   }
 
   // Removes a peering from the specified network.
-  rpc RemovePeering(RemovePeeringRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc RemovePeering(RemovePeeringRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/networks/{network}/removePeering"
       body: "networks_remove_peering_request_resource"
     };
-    option (google.api.method_signature) = "project,network,networks_remove_peering_request_resource";
+    option (google.api.method_signature) =
+        "project,network,networks_remove_peering_request_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Switches the network mode from auto subnet mode to custom subnet mode.
-  rpc SwitchToCustomMode(SwitchToCustomModeRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SwitchToCustomMode(SwitchToCustomModeRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/networks/{network}/switchToCustomMode"
       body: "*"
@@ -127,12 +139,14 @@ service Networks {
   // Updates the specified network peering with the data included in the
   // request. You can only modify the NetworkPeering.export_custom_routes field
   // and the NetworkPeering.import_custom_routes field.
-  rpc UpdatePeering(UpdatePeeringRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc UpdatePeering(UpdatePeeringRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/global/networks/{network}/updatePeering"
       body: "networks_update_peering_request_resource"
     };
-    option (google.api.method_signature) = "project,network,networks_update_peering_request_resource";
+    option (google.api.method_signature) =
+        "project,network,networks_update_peering_request_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 }
@@ -143,10 +157,14 @@ message AddPeeringRequest {
   string network = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The NetworksAddPeeringRequest for this request.
-  optional google.cloud.cpp.compute.v1.NetworksAddPeeringRequest networks_add_peering_request_resource = 2;
+  optional google.cloud.cpp.compute.v1.NetworksAddPeeringRequest
+      networks_add_peering_request_resource = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -167,7 +185,10 @@ message DeleteNetworksRequest {
   string network = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -206,7 +227,10 @@ message InsertNetworksRequest {
   optional google.cloud.cpp.compute.v1.Network network_resource = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -375,7 +399,10 @@ message PatchNetworksRequest {
   optional google.cloud.cpp.compute.v1.Network network_resource = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -396,10 +423,14 @@ message RemovePeeringRequest {
   string network = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The NetworksRemovePeeringRequest for this request.
-  optional google.cloud.cpp.compute.v1.NetworksRemovePeeringRequest networks_remove_peering_request_resource = 2;
+  optional google.cloud.cpp.compute.v1.NetworksRemovePeeringRequest
+      networks_remove_peering_request_resource = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -420,7 +451,10 @@ message SwitchToCustomModeRequest {
   string network = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -441,10 +475,14 @@ message UpdatePeeringRequest {
   string network = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The NetworksUpdatePeeringRequest for this request.
-  optional google.cloud.cpp.compute.v1.NetworksUpdatePeeringRequest networks_update_peering_request_resource = 2;
+  optional google.cloud.cpp.compute.v1.NetworksUpdatePeeringRequest
+      networks_update_peering_request_resource = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the

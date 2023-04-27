@@ -26,12 +26,13 @@ import "google/cloud/compute/v1/internal/common.proto";
 service NodeTypes {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of node types.
-  rpc AggregatedListNodeTypes(AggregatedListNodeTypesRequest) returns (google.cloud.cpp.compute.v1.NodeTypeAggregatedList) {
+  rpc AggregatedListNodeTypes(AggregatedListNodeTypesRequest)
+      returns (google.cloud.cpp.compute.v1.NodeTypeAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/aggregated/nodeTypes"
     };
@@ -39,7 +40,8 @@ service NodeTypes {
   }
 
   // Returns the specified node type.
-  rpc GetNodeTypes(GetNodeTypesRequest) returns (google.cloud.cpp.compute.v1.NodeType) {
+  rpc GetNodeTypes(GetNodeTypesRequest)
+      returns (google.cloud.cpp.compute.v1.NodeType) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/nodeTypes/{node_type}"
     };
@@ -47,7 +49,8 @@ service NodeTypes {
   }
 
   // Retrieves a list of node types available to the specified project.
-  rpc ListNodeTypes(ListNodeTypesRequest) returns (google.cloud.cpp.compute.v1.NodeTypeList) {
+  rpc ListNodeTypes(ListNodeTypesRequest)
+      returns (google.cloud.cpp.compute.v1.NodeTypeList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/nodeTypes"
     };

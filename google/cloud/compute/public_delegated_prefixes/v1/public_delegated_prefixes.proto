@@ -27,13 +27,16 @@ import "google/cloud/extended_operations.proto";
 service PublicDelegatedPrefixes {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Lists all PublicDelegatedPrefix resources owned by the specific project
   // across all scopes.
-  rpc AggregatedListPublicDelegatedPrefixes(AggregatedListPublicDelegatedPrefixesRequest) returns (google.cloud.cpp.compute.v1.PublicDelegatedPrefixAggregatedList) {
+  rpc AggregatedListPublicDelegatedPrefixes(
+      AggregatedListPublicDelegatedPrefixesRequest)
+      returns (
+          google.cloud.cpp.compute.v1.PublicDelegatedPrefixAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/aggregated/publicDelegatedPrefixes"
     };
@@ -41,35 +44,42 @@ service PublicDelegatedPrefixes {
   }
 
   // Deletes the specified PublicDelegatedPrefix in the given region.
-  rpc DeletePublicDelegatedPrefixes(DeletePublicDelegatedPrefixesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeletePublicDelegatedPrefixes(DeletePublicDelegatedPrefixesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/publicDelegatedPrefixes/{public_delegated_prefix}"
     };
-    option (google.api.method_signature) = "project,region,public_delegated_prefix";
+    option (google.api.method_signature) =
+        "project,region,public_delegated_prefix";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Returns the specified PublicDelegatedPrefix resource in the given region.
-  rpc GetPublicDelegatedPrefixes(GetPublicDelegatedPrefixesRequest) returns (google.cloud.cpp.compute.v1.PublicDelegatedPrefix) {
+  rpc GetPublicDelegatedPrefixes(GetPublicDelegatedPrefixesRequest)
+      returns (google.cloud.cpp.compute.v1.PublicDelegatedPrefix) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/publicDelegatedPrefixes/{public_delegated_prefix}"
     };
-    option (google.api.method_signature) = "project,region,public_delegated_prefix";
+    option (google.api.method_signature) =
+        "project,region,public_delegated_prefix";
   }
 
   // Creates a PublicDelegatedPrefix in the specified project in the given
   // region using the parameters that are included in the request.
-  rpc InsertPublicDelegatedPrefixes(InsertPublicDelegatedPrefixesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertPublicDelegatedPrefixes(InsertPublicDelegatedPrefixesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/publicDelegatedPrefixes"
       body: "public_delegated_prefix_resource"
     };
-    option (google.api.method_signature) = "project,region,public_delegated_prefix_resource";
+    option (google.api.method_signature) =
+        "project,region,public_delegated_prefix_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Lists the PublicDelegatedPrefixes for a project in the given region.
-  rpc ListPublicDelegatedPrefixes(ListPublicDelegatedPrefixesRequest) returns (google.cloud.cpp.compute.v1.PublicDelegatedPrefixList) {
+  rpc ListPublicDelegatedPrefixes(ListPublicDelegatedPrefixesRequest)
+      returns (google.cloud.cpp.compute.v1.PublicDelegatedPrefixList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/publicDelegatedPrefixes"
     };
@@ -79,12 +89,14 @@ service PublicDelegatedPrefixes {
   // Patches the specified PublicDelegatedPrefix resource with the data included
   // in the request. This method supports PATCH semantics and uses JSON merge
   // patch format and processing rules.
-  rpc PatchPublicDelegatedPrefixes(PatchPublicDelegatedPrefixesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchPublicDelegatedPrefixes(PatchPublicDelegatedPrefixesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/regions/{region}/publicDelegatedPrefixes/{public_delegated_prefix}"
       body: "public_delegated_prefix_resource"
     };
-    option (google.api.method_signature) = "project,region,public_delegated_prefix,public_delegated_prefix_resource";
+    option (google.api.method_signature) =
+        "project,region,public_delegated_prefix,public_delegated_prefix_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 }
@@ -166,13 +178,19 @@ message AggregatedListPublicDelegatedPrefixesRequest {
 // Request message for DeletePublicDelegatedPrefixes.
 message DeletePublicDelegatedPrefixesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the PublicDelegatedPrefix resource to delete.
   string public_delegated_prefix = 2 [(google.api.field_behavior) = REQUIRED];
 
   // Name of the region of this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -202,13 +220,20 @@ message GetPublicDelegatedPrefixesRequest {
 // Request message for InsertPublicDelegatedPrefixes.
 message InsertPublicDelegatedPrefixesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // The PublicDelegatedPrefix for this request.
-  optional google.cloud.cpp.compute.v1.PublicDelegatedPrefix public_delegated_prefix_resource = 2;
+  optional google.cloud.cpp.compute.v1.PublicDelegatedPrefix
+      public_delegated_prefix_resource = 2;
 
   // Name of the region of this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -294,16 +319,23 @@ message ListPublicDelegatedPrefixesRequest {
 // Request message for PatchPublicDelegatedPrefixes.
 message PatchPublicDelegatedPrefixesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the PublicDelegatedPrefix resource to patch.
   string public_delegated_prefix = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The PublicDelegatedPrefix for this request.
-  optional google.cloud.cpp.compute.v1.PublicDelegatedPrefix public_delegated_prefix_resource = 3;
+  optional google.cloud.cpp.compute.v1.PublicDelegatedPrefix
+      public_delegated_prefix_resource = 3;
 
   // Name of the region for this request.
-  string region = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the

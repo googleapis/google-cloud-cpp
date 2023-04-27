@@ -27,12 +27,13 @@ import "google/cloud/extended_operations.proto";
 service TargetInstances {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of target instances.
-  rpc AggregatedListTargetInstances(AggregatedListTargetInstancesRequest) returns (google.cloud.cpp.compute.v1.TargetInstanceAggregatedList) {
+  rpc AggregatedListTargetInstances(AggregatedListTargetInstancesRequest)
+      returns (google.cloud.cpp.compute.v1.TargetInstanceAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/aggregated/targetInstances"
     };
@@ -40,7 +41,8 @@ service TargetInstances {
   }
 
   // Deletes the specified TargetInstance resource.
-  rpc DeleteTargetInstances(DeleteTargetInstancesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteTargetInstances(DeleteTargetInstancesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/zones/{zone}/targetInstances/{target_instance}"
     };
@@ -49,7 +51,8 @@ service TargetInstances {
   }
 
   // Returns the specified TargetInstance resource.
-  rpc GetTargetInstances(GetTargetInstancesRequest) returns (google.cloud.cpp.compute.v1.TargetInstance) {
+  rpc GetTargetInstances(GetTargetInstancesRequest)
+      returns (google.cloud.cpp.compute.v1.TargetInstance) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/targetInstances/{target_instance}"
     };
@@ -58,18 +61,21 @@ service TargetInstances {
 
   // Creates a TargetInstance resource in the specified project and zone using
   // the data included in the request.
-  rpc InsertTargetInstances(InsertTargetInstancesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertTargetInstances(InsertTargetInstancesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/targetInstances"
       body: "target_instance_resource"
     };
-    option (google.api.method_signature) = "project,zone,target_instance_resource";
+    option (google.api.method_signature) =
+        "project,zone,target_instance_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Retrieves a list of TargetInstance resources available to the specified
   // project and zone.
-  rpc ListTargetInstances(ListTargetInstancesRequest) returns (google.cloud.cpp.compute.v1.TargetInstanceList) {
+  rpc ListTargetInstances(ListTargetInstancesRequest)
+      returns (google.cloud.cpp.compute.v1.TargetInstanceList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/targetInstances"
     };
@@ -154,7 +160,10 @@ message AggregatedListTargetInstancesRequest {
 // Request message for DeleteTargetInstances.
 message DeleteTargetInstancesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -172,7 +181,10 @@ message DeleteTargetInstancesRequest {
   string target_instance = 3 [(google.api.field_behavior) = REQUIRED];
 
   // Name of the zone scoping this request.
-  string zone = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for GetTargetInstances.
@@ -190,7 +202,10 @@ message GetTargetInstancesRequest {
 // Request message for InsertTargetInstances.
 message InsertTargetInstancesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -205,10 +220,14 @@ message InsertTargetInstancesRequest {
   optional string request_id = 2;
 
   // The TargetInstance for this request.
-  optional google.cloud.cpp.compute.v1.TargetInstance target_instance_resource = 3;
+  optional google.cloud.cpp.compute.v1.TargetInstance target_instance_resource =
+      3;
 
   // Name of the zone scoping this request.
-  string zone = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for ListTargetInstances.

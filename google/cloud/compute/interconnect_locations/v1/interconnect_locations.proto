@@ -26,13 +26,14 @@ import "google/cloud/compute/v1/internal/common.proto";
 service InterconnectLocations {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Returns the details for the specified interconnect location. Gets a list of
   // available interconnect locations by making a list() request.
-  rpc GetInterconnectLocations(GetInterconnectLocationsRequest) returns (google.cloud.cpp.compute.v1.InterconnectLocation) {
+  rpc GetInterconnectLocations(GetInterconnectLocationsRequest)
+      returns (google.cloud.cpp.compute.v1.InterconnectLocation) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/interconnectLocations/{interconnect_location}"
     };
@@ -41,7 +42,8 @@ service InterconnectLocations {
 
   // Retrieves the list of interconnect locations available to the specified
   // project.
-  rpc ListInterconnectLocations(ListInterconnectLocationsRequest) returns (google.cloud.cpp.compute.v1.InterconnectLocationList) {
+  rpc ListInterconnectLocations(ListInterconnectLocationsRequest)
+      returns (google.cloud.cpp.compute.v1.InterconnectLocationList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/interconnectLocations"
     };

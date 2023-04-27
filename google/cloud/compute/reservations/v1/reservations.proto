@@ -27,12 +27,13 @@ import "google/cloud/extended_operations.proto";
 service Reservations {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of reservations.
-  rpc AggregatedListReservations(AggregatedListReservationsRequest) returns (google.cloud.cpp.compute.v1.ReservationAggregatedList) {
+  rpc AggregatedListReservations(AggregatedListReservationsRequest)
+      returns (google.cloud.cpp.compute.v1.ReservationAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/aggregated/reservations"
     };
@@ -40,7 +41,8 @@ service Reservations {
   }
 
   // Deletes the specified reservation.
-  rpc DeleteReservations(DeleteReservationsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteReservations(DeleteReservationsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/zones/{zone}/reservations/{reservation}"
     };
@@ -49,7 +51,8 @@ service Reservations {
   }
 
   // Retrieves information about the specified reservation.
-  rpc GetReservations(GetReservationsRequest) returns (google.cloud.cpp.compute.v1.Reservation) {
+  rpc GetReservations(GetReservationsRequest)
+      returns (google.cloud.cpp.compute.v1.Reservation) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/reservations/{reservation}"
     };
@@ -58,7 +61,8 @@ service Reservations {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
-  rpc GetIamPolicy(GetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc GetIamPolicy(GetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/reservations/{resource}/getIamPolicy"
     };
@@ -67,7 +71,8 @@ service Reservations {
 
   // Creates a new reservation. For more information, read Reserving zonal
   // resources.
-  rpc InsertReservations(InsertReservationsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertReservations(InsertReservationsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/reservations"
       body: "reservation_resource"
@@ -78,7 +83,8 @@ service Reservations {
 
   // A list of all the reservations that have been configured for the specified
   // project in specified zone.
-  rpc ListReservations(ListReservationsRequest) returns (google.cloud.cpp.compute.v1.ReservationList) {
+  rpc ListReservations(ListReservationsRequest)
+      returns (google.cloud.cpp.compute.v1.ReservationList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/reservations"
     };
@@ -92,36 +98,43 @@ service Reservations {
       post: "/compute/v1/projects/{project}/zones/{zone}/reservations/{reservation}/resize"
       body: "reservations_resize_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,reservation,reservations_resize_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,reservation,reservations_resize_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
-  rpc SetIamPolicy(SetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc SetIamPolicy(SetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/reservations/{resource}/setIamPolicy"
       body: "zone_set_policy_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,resource,zone_set_policy_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,resource,zone_set_policy_request_resource";
   }
 
   // Returns permissions that a caller has on the specified resource.
-  rpc TestIamPermissions(TestIamPermissionsRequest) returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
+  rpc TestIamPermissions(TestIamPermissionsRequest)
+      returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/reservations/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,resource,test_permissions_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,resource,test_permissions_request_resource";
   }
 
   // Update share settings of the reservation.
-  rpc UpdateReservations(UpdateReservationsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc UpdateReservations(UpdateReservationsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/zones/{zone}/reservations/{reservation}"
       body: "reservation_resource"
     };
-    option (google.api.method_signature) = "project,zone,reservation,reservation_resource";
+    option (google.api.method_signature) =
+        "project,zone,reservation,reservation_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 }
@@ -203,7 +216,10 @@ message AggregatedListReservationsRequest {
 // Request message for DeleteReservations.
 message DeleteReservationsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -221,7 +237,10 @@ message DeleteReservationsRequest {
   string reservation = 3 [(google.api.field_behavior) = REQUIRED];
 
   // Name of the zone for this request.
-  string zone = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for GetIamPolicy.
@@ -254,7 +273,10 @@ message GetReservationsRequest {
 // Request message for InsertReservations.
 message InsertReservationsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -272,7 +294,10 @@ message InsertReservationsRequest {
   optional google.cloud.cpp.compute.v1.Reservation reservation_resource = 3;
 
   // Name of the zone for this request.
-  string zone = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for ListReservations.
@@ -346,7 +371,10 @@ message ListReservationsRequest {
 // Request message for Resize.
 message ResizeRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -364,10 +392,14 @@ message ResizeRequest {
   string reservation = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The ReservationsResizeRequest for this request.
-  optional google.cloud.cpp.compute.v1.ReservationsResizeRequest reservations_resize_request_resource = 4;
+  optional google.cloud.cpp.compute.v1.ReservationsResizeRequest
+      reservations_resize_request_resource = 4;
 
   // Name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for SetIamPolicy.
@@ -382,7 +414,8 @@ message SetIamPolicyRequest {
   string zone = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The ZoneSetPolicyRequest for this request.
-  optional google.cloud.cpp.compute.v1.ZoneSetPolicyRequest zone_set_policy_request_resource = 4;
+  optional google.cloud.cpp.compute.v1.ZoneSetPolicyRequest
+      zone_set_policy_request_resource = 4;
 }
 
 // Request message for TestIamPermissions.
@@ -394,7 +427,8 @@ message TestIamPermissionsRequest {
   string resource = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The TestPermissionsRequest for this request.
-  optional google.cloud.cpp.compute.v1.TestPermissionsRequest test_permissions_request_resource = 3;
+  optional google.cloud.cpp.compute.v1.TestPermissionsRequest
+      test_permissions_request_resource = 3;
 
   // The name of the zone for this request.
   string zone = 4 [(google.api.field_behavior) = REQUIRED];
@@ -405,7 +439,10 @@ message UpdateReservationsRequest {
   optional string paths = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -429,5 +466,8 @@ message UpdateReservationsRequest {
   optional string update_mask = 6;
 
   // Name of the zone for this request.
-  string zone = 7 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 7 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }

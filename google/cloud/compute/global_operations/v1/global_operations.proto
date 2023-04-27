@@ -28,12 +28,13 @@ import "google/protobuf/empty.proto";
 service GlobalOperations {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of all operations.
-  rpc AggregatedListGlobalOperations(AggregatedListGlobalOperationsRequest) returns (google.cloud.cpp.compute.v1.OperationAggregatedList) {
+  rpc AggregatedListGlobalOperations(AggregatedListGlobalOperationsRequest)
+      returns (google.cloud.cpp.compute.v1.OperationAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/aggregated/operations"
     };
@@ -41,7 +42,8 @@ service GlobalOperations {
   }
 
   // Deletes the specified Operations resource.
-  rpc DeleteGlobalOperations(DeleteGlobalOperationsRequest) returns (google.protobuf.Empty) {
+  rpc DeleteGlobalOperations(DeleteGlobalOperationsRequest)
+      returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/operations/{operation}"
     };
@@ -49,7 +51,8 @@ service GlobalOperations {
   }
 
   // Retrieves the specified Operations resource.
-  rpc GetGlobalOperations(GetGlobalOperationsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc GetGlobalOperations(GetGlobalOperationsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/operations/{operation}"
     };
@@ -59,7 +62,8 @@ service GlobalOperations {
 
   // Retrieves a list of Operation resources contained within the specified
   // project.
-  rpc ListGlobalOperations(ListGlobalOperationsRequest) returns (google.cloud.cpp.compute.v1.OperationList) {
+  rpc ListGlobalOperations(ListGlobalOperationsRequest)
+      returns (google.cloud.cpp.compute.v1.OperationList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/operations"
     };
@@ -76,7 +80,7 @@ service GlobalOperations {
   // before the default deadline is reached, or might return after zero seconds.
   // - If the default deadline is reached, there is no guarantee that the
   // operation is actually done when the method returns. Be prepared to retry if
-  // the operation is not `DONE`. 
+  // the operation is not `DONE`.
   rpc Wait(WaitRequest) returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/operations/{operation}/wait"
@@ -176,7 +180,10 @@ message GetGlobalOperationsRequest {
   string operation = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 }
 
 // Request message for ListGlobalOperations.
@@ -250,5 +257,8 @@ message WaitRequest {
   string operation = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 }

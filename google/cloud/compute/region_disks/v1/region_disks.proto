@@ -27,18 +27,20 @@ import "google/cloud/extended_operations.proto";
 service RegionDisks {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Adds existing resource policies to a regional disk. You can only add one
   // policy which will be applied to this disk for scheduling snapshot creation.
-  rpc AddResourcePolicies(AddResourcePoliciesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc AddResourcePolicies(AddResourcePoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/disks/{disk}/addResourcePolicies"
       body: "region_disks_add_resource_policies_request_resource"
     };
-    option (google.api.method_signature) = "project,region,disk,region_disks_add_resource_policies_request_resource";
+    option (google.api.method_signature) =
+        "project,region,disk,region_disks_add_resource_policies_request_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
@@ -46,12 +48,14 @@ service RegionDisks {
   // creation, consider using snapshots.insert instead, as that method supports
   // more features, such as creating snapshots in a project different from the
   // source disk project.
-  rpc CreateSnapshot(CreateSnapshotRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc CreateSnapshot(CreateSnapshotRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/disks/{disk}/createSnapshot"
       body: "snapshot_resource"
     };
-    option (google.api.method_signature) = "project,region,disk,snapshot_resource";
+    option (google.api.method_signature) =
+        "project,region,disk,snapshot_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
@@ -59,7 +63,8 @@ service RegionDisks {
   // removes all the replicas of its data permanently and is irreversible.
   // However, deleting a disk does not delete any snapshots previously made from
   // the disk. You must separately delete snapshots.
-  rpc DeleteRegionDisks(DeleteRegionDisksRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteRegionDisks(DeleteRegionDisksRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/disks/{disk}"
     };
@@ -68,7 +73,8 @@ service RegionDisks {
   }
 
   // Returns a specified regional persistent disk.
-  rpc GetRegionDisks(GetRegionDisksRequest) returns (google.cloud.cpp.compute.v1.Disk) {
+  rpc GetRegionDisks(GetRegionDisksRequest)
+      returns (google.cloud.cpp.compute.v1.Disk) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/disks/{disk}"
     };
@@ -77,7 +83,8 @@ service RegionDisks {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
-  rpc GetIamPolicy(GetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc GetIamPolicy(GetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/disks/{resource}/getIamPolicy"
     };
@@ -86,7 +93,8 @@ service RegionDisks {
 
   // Creates a persistent regional disk in the specified project using the data
   // included in the request.
-  rpc InsertRegionDisks(InsertRegionDisksRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertRegionDisks(InsertRegionDisksRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/disks"
       body: "disk_resource"
@@ -97,7 +105,8 @@ service RegionDisks {
 
   // Retrieves the list of persistent disks contained within the specified
   // region.
-  rpc ListRegionDisks(ListRegionDisksRequest) returns (google.cloud.cpp.compute.v1.DiskList) {
+  rpc ListRegionDisks(ListRegionDisksRequest)
+      returns (google.cloud.cpp.compute.v1.DiskList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/disks"
     };
@@ -105,12 +114,14 @@ service RegionDisks {
   }
 
   // Removes resource policies from a regional disk.
-  rpc RemoveResourcePolicies(RemoveResourcePoliciesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc RemoveResourcePolicies(RemoveResourcePoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/disks/{disk}/removeResourcePolicies"
       body: "region_disks_remove_resource_policies_request_resource"
     };
-    option (google.api.method_signature) = "project,region,disk,region_disks_remove_resource_policies_request_resource";
+    option (google.api.method_signature) =
+        "project,region,disk,region_disks_remove_resource_policies_request_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
@@ -120,43 +131,51 @@ service RegionDisks {
       post: "/compute/v1/projects/{project}/regions/{region}/disks/{disk}/resize"
       body: "region_disks_resize_request_resource"
     };
-    option (google.api.method_signature) = "project,region,disk,region_disks_resize_request_resource";
+    option (google.api.method_signature) =
+        "project,region,disk,region_disks_resize_request_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
-  rpc SetIamPolicy(SetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc SetIamPolicy(SetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/disks/{resource}/setIamPolicy"
       body: "region_set_policy_request_resource"
     };
-    option (google.api.method_signature) = "project,region,resource,region_set_policy_request_resource";
+    option (google.api.method_signature) =
+        "project,region,resource,region_set_policy_request_resource";
   }
 
   // Sets the labels on the target regional disk.
-  rpc SetLabels(SetLabelsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetLabels(SetLabelsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/disks/{resource}/setLabels"
       body: "region_set_labels_request_resource"
     };
-    option (google.api.method_signature) = "project,region,resource,region_set_labels_request_resource";
+    option (google.api.method_signature) =
+        "project,region,resource,region_set_labels_request_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Returns permissions that a caller has on the specified resource.
-  rpc TestIamPermissions(TestIamPermissionsRequest) returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
+  rpc TestIamPermissions(TestIamPermissionsRequest)
+      returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/disks/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
-    option (google.api.method_signature) = "project,region,resource,test_permissions_request_resource";
+    option (google.api.method_signature) =
+        "project,region,resource,test_permissions_request_resource";
   }
 
   // Update the specified disk with the data included in the request. Update is
   // performed only on selected fields included as part of update-mask. Only the
   // following fields can be modified: user_license.
-  rpc UpdateRegionDisks(UpdateRegionDisksRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc UpdateRegionDisks(UpdateRegionDisksRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/regions/{region}/disks/{disk}"
       body: "disk_resource"
@@ -172,13 +191,20 @@ message AddResourcePoliciesRequest {
   string disk = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // The name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // The RegionDisksAddResourcePoliciesRequest for this request.
-  optional google.cloud.cpp.compute.v1.RegionDisksAddResourcePoliciesRequest region_disks_add_resource_policies_request_resource = 4;
+  optional google.cloud.cpp.compute.v1.RegionDisksAddResourcePoliciesRequest
+      region_disks_add_resource_policies_request_resource = 4;
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -199,10 +225,16 @@ message CreateSnapshotRequest {
   string disk = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -226,10 +258,16 @@ message DeleteRegionDisksRequest {
   string disk = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -277,10 +315,16 @@ message InsertRegionDisksRequest {
   optional google.cloud.cpp.compute.v1.Disk disk_resource = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -372,13 +416,20 @@ message RemoveResourcePoliciesRequest {
   string disk = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // The name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // The RegionDisksRemoveResourcePoliciesRequest for this request.
-  optional google.cloud.cpp.compute.v1.RegionDisksRemoveResourcePoliciesRequest region_disks_remove_resource_policies_request_resource = 4;
+  optional google.cloud.cpp.compute.v1.RegionDisksRemoveResourcePoliciesRequest
+      region_disks_remove_resource_policies_request_resource = 4;
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -399,13 +450,20 @@ message ResizeRequest {
   string disk = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // The RegionDisksResizeRequest for this request.
-  optional google.cloud.cpp.compute.v1.RegionDisksResizeRequest region_disks_resize_request_resource = 4;
+  optional google.cloud.cpp.compute.v1.RegionDisksResizeRequest
+      region_disks_resize_request_resource = 4;
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -429,7 +487,8 @@ message SetIamPolicyRequest {
   string region = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The RegionSetPolicyRequest for this request.
-  optional google.cloud.cpp.compute.v1.RegionSetPolicyRequest region_set_policy_request_resource = 3;
+  optional google.cloud.cpp.compute.v1.RegionSetPolicyRequest
+      region_set_policy_request_resource = 3;
 
   // Name or id of the resource for this request.
   string resource = 4 [(google.api.field_behavior) = REQUIRED];
@@ -438,13 +497,20 @@ message SetIamPolicyRequest {
 // Request message for SetLabels.
 message SetLabelsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // The region for this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // The RegionSetLabelsRequest for this request.
-  optional google.cloud.cpp.compute.v1.RegionSetLabelsRequest region_set_labels_request_resource = 3;
+  optional google.cloud.cpp.compute.v1.RegionSetLabelsRequest
+      region_set_labels_request_resource = 3;
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -474,7 +540,8 @@ message TestIamPermissionsRequest {
   string resource = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The TestPermissionsRequest for this request.
-  optional google.cloud.cpp.compute.v1.TestPermissionsRequest test_permissions_request_resource = 4;
+  optional google.cloud.cpp.compute.v1.TestPermissionsRequest
+      test_permissions_request_resource = 4;
 }
 
 // Request message for UpdateRegionDisks.
@@ -488,10 +555,16 @@ message UpdateRegionDisksRequest {
   optional string paths = 3;
 
   // Project ID for this request.
-  string project = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // The name of the region for this request.
-  string region = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the

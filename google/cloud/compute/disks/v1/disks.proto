@@ -27,23 +27,26 @@ import "google/cloud/extended_operations.proto";
 service Disks {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Adds existing resource policies to a disk. You can only add one policy
   // which will be applied to this disk for scheduling snapshot creation.
-  rpc AddResourcePolicies(AddResourcePoliciesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc AddResourcePolicies(AddResourcePoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}/addResourcePolicies"
       body: "disks_add_resource_policies_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,disk,disks_add_resource_policies_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,disk,disks_add_resource_policies_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Retrieves an aggregated list of persistent disks.
-  rpc AggregatedListDisks(AggregatedListDisksRequest) returns (google.cloud.cpp.compute.v1.DiskAggregatedList) {
+  rpc AggregatedListDisks(AggregatedListDisksRequest)
+      returns (google.cloud.cpp.compute.v1.DiskAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/aggregated/disks"
     };
@@ -54,12 +57,14 @@ service Disks {
   // creation, consider using snapshots.insert instead, as that method supports
   // more features, such as creating snapshots in a project different from the
   // source disk project.
-  rpc CreateSnapshot(CreateSnapshotRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc CreateSnapshot(CreateSnapshotRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}/createSnapshot"
       body: "snapshot_resource"
     };
-    option (google.api.method_signature) = "project,zone,disk,snapshot_resource";
+    option (google.api.method_signature) =
+        "project,zone,disk,snapshot_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
@@ -67,7 +72,8 @@ service Disks {
   // permanently and is irreversible. However, deleting a disk does not delete
   // any snapshots previously made from the disk. You must separately delete
   // snapshots.
-  rpc DeleteDisks(DeleteDisksRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteDisks(DeleteDisksRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}"
     };
@@ -85,7 +91,8 @@ service Disks {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
-  rpc GetIamPolicy(GetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc GetIamPolicy(GetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/disks/{resource}/getIamPolicy"
     };
@@ -97,7 +104,8 @@ service Disks {
   // or sourceDisk) or create an empty 500 GB data disk by omitting all
   // properties. You can also create a disk that is larger than the default size
   // by specifying the sizeGb property.
-  rpc InsertDisks(InsertDisksRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertDisks(InsertDisksRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/disks"
       body: "disk_resource"
@@ -107,7 +115,8 @@ service Disks {
   }
 
   // Retrieves a list of persistent disks contained within the specified zone.
-  rpc ListDisks(ListDisksRequest) returns (google.cloud.cpp.compute.v1.DiskList) {
+  rpc ListDisks(ListDisksRequest)
+      returns (google.cloud.cpp.compute.v1.DiskList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/disks"
     };
@@ -115,12 +124,14 @@ service Disks {
   }
 
   // Removes resource policies from a disk.
-  rpc RemoveResourcePolicies(RemoveResourcePoliciesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc RemoveResourcePolicies(RemoveResourcePoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}/removeResourcePolicies"
       body: "disks_remove_resource_policies_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,disk,disks_remove_resource_policies_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,disk,disks_remove_resource_policies_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
@@ -131,44 +142,52 @@ service Disks {
       post: "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}/resize"
       body: "disks_resize_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,disk,disks_resize_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,disk,disks_resize_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
-  rpc SetIamPolicy(SetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc SetIamPolicy(SetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/disks/{resource}/setIamPolicy"
       body: "zone_set_policy_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,resource,zone_set_policy_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,resource,zone_set_policy_request_resource";
   }
 
   // Sets the labels on a disk. To learn more about labels, read the Labeling
   // Resources documentation.
-  rpc SetLabels(SetLabelsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetLabels(SetLabelsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/disks/{resource}/setLabels"
       body: "zone_set_labels_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,resource,zone_set_labels_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,resource,zone_set_labels_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Returns permissions that a caller has on the specified resource.
-  rpc TestIamPermissions(TestIamPermissionsRequest) returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
+  rpc TestIamPermissions(TestIamPermissionsRequest)
+      returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/disks/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,resource,test_permissions_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,resource,test_permissions_request_resource";
   }
 
   // Updates the specified disk with the data included in the request. The
   // update is performed only on selected fields included as part of
   // update-mask. Only the following fields can be modified: user_license.
-  rpc UpdateDisks(UpdateDisksRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc UpdateDisks(UpdateDisksRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/zones/{zone}/disks/{disk}"
       body: "disk_resource"
@@ -184,10 +203,14 @@ message AddResourcePoliciesRequest {
   string disk = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The DisksAddResourcePoliciesRequest for this request.
-  optional google.cloud.cpp.compute.v1.DisksAddResourcePoliciesRequest disks_add_resource_policies_request_resource = 2;
+  optional google.cloud.cpp.compute.v1.DisksAddResourcePoliciesRequest
+      disks_add_resource_policies_request_resource = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -202,7 +225,10 @@ message AddResourcePoliciesRequest {
   optional string request_id = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for AggregatedListDisks.
@@ -289,7 +315,10 @@ message CreateSnapshotRequest {
   optional bool guest_flush = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -307,7 +336,10 @@ message CreateSnapshotRequest {
   optional google.cloud.cpp.compute.v1.Snapshot snapshot_resource = 5;
 
   // The name of the zone for this request.
-  string zone = 6 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 6 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for DeleteDisks.
@@ -316,7 +348,10 @@ message DeleteDisksRequest {
   string disk = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -331,7 +366,10 @@ message DeleteDisksRequest {
   optional string request_id = 3;
 
   // The name of the zone for this request.
-  string zone = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for GetDisks.
@@ -367,7 +405,10 @@ message InsertDisksRequest {
   optional google.cloud.cpp.compute.v1.Disk disk_resource = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -385,7 +426,10 @@ message InsertDisksRequest {
   optional string source_image = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for ListDisks.
@@ -462,10 +506,14 @@ message RemoveResourcePoliciesRequest {
   string disk = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The DisksRemoveResourcePoliciesRequest for this request.
-  optional google.cloud.cpp.compute.v1.DisksRemoveResourcePoliciesRequest disks_remove_resource_policies_request_resource = 2;
+  optional google.cloud.cpp.compute.v1.DisksRemoveResourcePoliciesRequest
+      disks_remove_resource_policies_request_resource = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -480,7 +528,10 @@ message RemoveResourcePoliciesRequest {
   optional string request_id = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for Resize.
@@ -489,10 +540,14 @@ message ResizeRequest {
   string disk = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The DisksResizeRequest for this request.
-  optional google.cloud.cpp.compute.v1.DisksResizeRequest disks_resize_request_resource = 2;
+  optional google.cloud.cpp.compute.v1.DisksResizeRequest
+      disks_resize_request_resource = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -507,7 +562,10 @@ message ResizeRequest {
   optional string request_id = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for SetIamPolicy.
@@ -522,13 +580,17 @@ message SetIamPolicyRequest {
   string zone = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The ZoneSetPolicyRequest for this request.
-  optional google.cloud.cpp.compute.v1.ZoneSetPolicyRequest zone_set_policy_request_resource = 4;
+  optional google.cloud.cpp.compute.v1.ZoneSetPolicyRequest
+      zone_set_policy_request_resource = 4;
 }
 
 // Request message for SetLabels.
 message SetLabelsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -546,10 +608,14 @@ message SetLabelsRequest {
   string resource = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The name of the zone for this request.
-  string zone = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 
   // The ZoneSetLabelsRequest for this request.
-  optional google.cloud.cpp.compute.v1.ZoneSetLabelsRequest zone_set_labels_request_resource = 5;
+  optional google.cloud.cpp.compute.v1.ZoneSetLabelsRequest
+      zone_set_labels_request_resource = 5;
 }
 
 // Request message for TestIamPermissions.
@@ -561,7 +627,8 @@ message TestIamPermissionsRequest {
   string resource = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The TestPermissionsRequest for this request.
-  optional google.cloud.cpp.compute.v1.TestPermissionsRequest test_permissions_request_resource = 3;
+  optional google.cloud.cpp.compute.v1.TestPermissionsRequest
+      test_permissions_request_resource = 3;
 
   // The name of the zone for this request.
   string zone = 4 [(google.api.field_behavior) = REQUIRED];
@@ -578,7 +645,10 @@ message UpdateDisksRequest {
   optional string paths = 3;
 
   // Project ID for this request.
-  string project = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -596,5 +666,8 @@ message UpdateDisksRequest {
   optional string update_mask = 6;
 
   // The name of the zone for this request.
-  string zone = 7 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 7 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }

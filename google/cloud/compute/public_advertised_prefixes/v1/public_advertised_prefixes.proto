@@ -27,12 +27,13 @@ import "google/cloud/extended_operations.proto";
 service PublicAdvertisedPrefixes {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified PublicAdvertisedPrefix
-  rpc DeletePublicAdvertisedPrefixes(DeletePublicAdvertisedPrefixesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeletePublicAdvertisedPrefixes(DeletePublicAdvertisedPrefixesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/publicAdvertisedPrefixes/{public_advertised_prefix}"
     };
@@ -41,7 +42,8 @@ service PublicAdvertisedPrefixes {
   }
 
   // Returns the specified PublicAdvertisedPrefix resource.
-  rpc GetPublicAdvertisedPrefixes(GetPublicAdvertisedPrefixesRequest) returns (google.cloud.cpp.compute.v1.PublicAdvertisedPrefix) {
+  rpc GetPublicAdvertisedPrefixes(GetPublicAdvertisedPrefixesRequest)
+      returns (google.cloud.cpp.compute.v1.PublicAdvertisedPrefix) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/publicAdvertisedPrefixes/{public_advertised_prefix}"
     };
@@ -50,17 +52,20 @@ service PublicAdvertisedPrefixes {
 
   // Creates a PublicAdvertisedPrefix in the specified project using the
   // parameters that are included in the request.
-  rpc InsertPublicAdvertisedPrefixes(InsertPublicAdvertisedPrefixesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertPublicAdvertisedPrefixes(InsertPublicAdvertisedPrefixesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/publicAdvertisedPrefixes"
       body: "public_advertised_prefix_resource"
     };
-    option (google.api.method_signature) = "project,public_advertised_prefix_resource";
+    option (google.api.method_signature) =
+        "project,public_advertised_prefix_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Lists the PublicAdvertisedPrefixes for a project.
-  rpc ListPublicAdvertisedPrefixes(ListPublicAdvertisedPrefixesRequest) returns (google.cloud.cpp.compute.v1.PublicAdvertisedPrefixList) {
+  rpc ListPublicAdvertisedPrefixes(ListPublicAdvertisedPrefixesRequest)
+      returns (google.cloud.cpp.compute.v1.PublicAdvertisedPrefixList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/publicAdvertisedPrefixes"
     };
@@ -70,12 +75,14 @@ service PublicAdvertisedPrefixes {
   // Patches the specified Router resource with the data included in the
   // request. This method supports PATCH semantics and uses JSON merge patch
   // format and processing rules.
-  rpc PatchPublicAdvertisedPrefixes(PatchPublicAdvertisedPrefixesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchPublicAdvertisedPrefixes(PatchPublicAdvertisedPrefixesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/global/publicAdvertisedPrefixes/{public_advertised_prefix}"
       body: "public_advertised_prefix_resource"
     };
-    option (google.api.method_signature) = "project,public_advertised_prefix,public_advertised_prefix_resource";
+    option (google.api.method_signature) =
+        "project,public_advertised_prefix,public_advertised_prefix_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 }
@@ -83,7 +90,10 @@ service PublicAdvertisedPrefixes {
 // Request message for DeletePublicAdvertisedPrefixes.
 message DeletePublicAdvertisedPrefixesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the PublicAdvertisedPrefix resource to delete.
   string public_advertised_prefix = 2 [(google.api.field_behavior) = REQUIRED];
@@ -113,10 +123,14 @@ message GetPublicAdvertisedPrefixesRequest {
 // Request message for InsertPublicAdvertisedPrefixes.
 message InsertPublicAdvertisedPrefixesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // The PublicAdvertisedPrefix for this request.
-  optional google.cloud.cpp.compute.v1.PublicAdvertisedPrefix public_advertised_prefix_resource = 2;
+  optional google.cloud.cpp.compute.v1.PublicAdvertisedPrefix
+      public_advertised_prefix_resource = 2;
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -199,13 +213,17 @@ message ListPublicAdvertisedPrefixesRequest {
 // Request message for PatchPublicAdvertisedPrefixes.
 message PatchPublicAdvertisedPrefixesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the PublicAdvertisedPrefix resource to patch.
   string public_advertised_prefix = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The PublicAdvertisedPrefix for this request.
-  optional google.cloud.cpp.compute.v1.PublicAdvertisedPrefix public_advertised_prefix_resource = 3;
+  optional google.cloud.cpp.compute.v1.PublicAdvertisedPrefix
+      public_advertised_prefix_resource = 3;
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the

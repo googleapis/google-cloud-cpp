@@ -27,42 +27,51 @@ import "google/cloud/extended_operations.proto";
 service RegionNetworkEndpointGroups {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified network endpoint group. Note that the NEG cannot be
   // deleted if it is configured as a backend of a backend service.
-  rpc DeleteRegionNetworkEndpointGroups(DeleteRegionNetworkEndpointGroupsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteRegionNetworkEndpointGroups(
+      DeleteRegionNetworkEndpointGroupsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/networkEndpointGroups/{network_endpoint_group}"
     };
-    option (google.api.method_signature) = "project,region,network_endpoint_group";
+    option (google.api.method_signature) =
+        "project,region,network_endpoint_group";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Returns the specified network endpoint group.
-  rpc GetRegionNetworkEndpointGroups(GetRegionNetworkEndpointGroupsRequest) returns (google.cloud.cpp.compute.v1.NetworkEndpointGroup) {
+  rpc GetRegionNetworkEndpointGroups(GetRegionNetworkEndpointGroupsRequest)
+      returns (google.cloud.cpp.compute.v1.NetworkEndpointGroup) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/networkEndpointGroups/{network_endpoint_group}"
     };
-    option (google.api.method_signature) = "project,region,network_endpoint_group";
+    option (google.api.method_signature) =
+        "project,region,network_endpoint_group";
   }
 
   // Creates a network endpoint group in the specified project using the
   // parameters that are included in the request.
-  rpc InsertRegionNetworkEndpointGroups(InsertRegionNetworkEndpointGroupsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertRegionNetworkEndpointGroups(
+      InsertRegionNetworkEndpointGroupsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/networkEndpointGroups"
       body: "network_endpoint_group_resource"
     };
-    option (google.api.method_signature) = "project,region,network_endpoint_group_resource";
+    option (google.api.method_signature) =
+        "project,region,network_endpoint_group_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Retrieves the list of regional network endpoint groups available to the
   // specified project in the given region.
-  rpc ListRegionNetworkEndpointGroups(ListRegionNetworkEndpointGroupsRequest) returns (google.cloud.cpp.compute.v1.NetworkEndpointGroupList) {
+  rpc ListRegionNetworkEndpointGroups(ListRegionNetworkEndpointGroupsRequest)
+      returns (google.cloud.cpp.compute.v1.NetworkEndpointGroupList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/networkEndpointGroups"
     };
@@ -77,11 +86,17 @@ message DeleteRegionNetworkEndpointGroupsRequest {
   string network_endpoint_group = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // The name of the region where the network endpoint group is located. It
   // should comply with RFC1035.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -112,14 +127,21 @@ message GetRegionNetworkEndpointGroupsRequest {
 // Request message for InsertRegionNetworkEndpointGroups.
 message InsertRegionNetworkEndpointGroupsRequest {
   // The NetworkEndpointGroup for this request.
-  optional google.cloud.cpp.compute.v1.NetworkEndpointGroup network_endpoint_group_resource = 1;
+  optional google.cloud.cpp.compute.v1.NetworkEndpointGroup
+      network_endpoint_group_resource = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // The name of the region where you want to create the network endpoint group.
   // It should comply with RFC1035.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the

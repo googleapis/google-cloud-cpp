@@ -26,13 +26,14 @@ import "google/cloud/compute/v1/internal/common.proto";
 service ImageFamilyViews {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Returns the latest image that is part of an image family, is not deprecated
   // and is rolled out in the specified zone.
-  rpc GetImageFamilyViews(GetImageFamilyViewsRequest) returns (google.cloud.cpp.compute.v1.ImageFamilyView) {
+  rpc GetImageFamilyViews(GetImageFamilyViewsRequest)
+      returns (google.cloud.cpp.compute.v1.ImageFamilyView) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/imageFamilyViews/{family}"
     };

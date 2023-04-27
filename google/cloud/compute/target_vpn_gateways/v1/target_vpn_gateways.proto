@@ -27,12 +27,13 @@ import "google/cloud/extended_operations.proto";
 service TargetVpnGateways {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of target VPN gateways.
-  rpc AggregatedListTargetVpnGateways(AggregatedListTargetVpnGatewaysRequest) returns (google.cloud.cpp.compute.v1.TargetVpnGatewayAggregatedList) {
+  rpc AggregatedListTargetVpnGateways(AggregatedListTargetVpnGatewaysRequest)
+      returns (google.cloud.cpp.compute.v1.TargetVpnGatewayAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/aggregated/targetVpnGateways"
     };
@@ -40,7 +41,8 @@ service TargetVpnGateways {
   }
 
   // Deletes the specified target VPN gateway.
-  rpc DeleteTargetVpnGateways(DeleteTargetVpnGatewaysRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteTargetVpnGateways(DeleteTargetVpnGatewaysRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/targetVpnGateways/{target_vpn_gateway}"
     };
@@ -49,7 +51,8 @@ service TargetVpnGateways {
   }
 
   // Returns the specified target VPN gateway.
-  rpc GetTargetVpnGateways(GetTargetVpnGatewaysRequest) returns (google.cloud.cpp.compute.v1.TargetVpnGateway) {
+  rpc GetTargetVpnGateways(GetTargetVpnGatewaysRequest)
+      returns (google.cloud.cpp.compute.v1.TargetVpnGateway) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/targetVpnGateways/{target_vpn_gateway}"
     };
@@ -58,18 +61,21 @@ service TargetVpnGateways {
 
   // Creates a target VPN gateway in the specified project and region using the
   // data included in the request.
-  rpc InsertTargetVpnGateways(InsertTargetVpnGatewaysRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertTargetVpnGateways(InsertTargetVpnGatewaysRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/targetVpnGateways"
       body: "target_vpn_gateway_resource"
     };
-    option (google.api.method_signature) = "project,region,target_vpn_gateway_resource";
+    option (google.api.method_signature) =
+        "project,region,target_vpn_gateway_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Retrieves a list of target VPN gateways available to the specified project
   // and region.
-  rpc ListTargetVpnGateways(ListTargetVpnGatewaysRequest) returns (google.cloud.cpp.compute.v1.TargetVpnGatewayList) {
+  rpc ListTargetVpnGateways(ListTargetVpnGatewaysRequest)
+      returns (google.cloud.cpp.compute.v1.TargetVpnGatewayList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/targetVpnGateways"
     };
@@ -78,12 +84,14 @@ service TargetVpnGateways {
 
   // Sets the labels on a TargetVpnGateway. To learn more about labels, read the
   // Labeling Resources documentation.
-  rpc SetLabels(SetLabelsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetLabels(SetLabelsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/targetVpnGateways/{resource}/setLabels"
       body: "region_set_labels_request_resource"
     };
-    option (google.api.method_signature) = "project,region,resource,region_set_labels_request_resource";
+    option (google.api.method_signature) =
+        "project,region,resource,region_set_labels_request_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 }
@@ -165,10 +173,16 @@ message AggregatedListTargetVpnGatewaysRequest {
 // Request message for DeleteTargetVpnGateways.
 message DeleteTargetVpnGatewaysRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -201,10 +215,16 @@ message GetTargetVpnGatewaysRequest {
 // Request message for InsertTargetVpnGateways.
 message InsertTargetVpnGatewaysRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -219,7 +239,8 @@ message InsertTargetVpnGatewaysRequest {
   optional string request_id = 3;
 
   // The TargetVpnGateway for this request.
-  optional google.cloud.cpp.compute.v1.TargetVpnGateway target_vpn_gateway_resource = 4;
+  optional google.cloud.cpp.compute.v1.TargetVpnGateway
+      target_vpn_gateway_resource = 4;
 }
 
 // Request message for ListTargetVpnGateways.
@@ -293,13 +314,20 @@ message ListTargetVpnGatewaysRequest {
 // Request message for SetLabels.
 message SetLabelsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // The region for this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // The RegionSetLabelsRequest for this request.
-  optional google.cloud.cpp.compute.v1.RegionSetLabelsRequest region_set_labels_request_resource = 3;
+  optional google.cloud.cpp.compute.v1.RegionSetLabelsRequest
+      region_set_labels_request_resource = 3;
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the

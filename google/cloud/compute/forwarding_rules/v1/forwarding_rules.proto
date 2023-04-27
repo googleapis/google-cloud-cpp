@@ -27,12 +27,13 @@ import "google/cloud/extended_operations.proto";
 service ForwardingRules {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of forwarding rules.
-  rpc AggregatedListForwardingRules(AggregatedListForwardingRulesRequest) returns (google.cloud.cpp.compute.v1.ForwardingRuleAggregatedList) {
+  rpc AggregatedListForwardingRules(AggregatedListForwardingRulesRequest)
+      returns (google.cloud.cpp.compute.v1.ForwardingRuleAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/aggregated/forwardingRules"
     };
@@ -40,7 +41,8 @@ service ForwardingRules {
   }
 
   // Deletes the specified ForwardingRule resource.
-  rpc DeleteForwardingRules(DeleteForwardingRulesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteForwardingRules(DeleteForwardingRulesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/forwardingRules/{forwarding_rule}"
     };
@@ -49,7 +51,8 @@ service ForwardingRules {
   }
 
   // Returns the specified ForwardingRule resource.
-  rpc GetForwardingRules(GetForwardingRulesRequest) returns (google.cloud.cpp.compute.v1.ForwardingRule) {
+  rpc GetForwardingRules(GetForwardingRulesRequest)
+      returns (google.cloud.cpp.compute.v1.ForwardingRule) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/forwardingRules/{forwarding_rule}"
     };
@@ -58,18 +61,21 @@ service ForwardingRules {
 
   // Creates a ForwardingRule resource in the specified project and region using
   // the data included in the request.
-  rpc InsertForwardingRules(InsertForwardingRulesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertForwardingRules(InsertForwardingRulesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/forwardingRules"
       body: "forwarding_rule_resource"
     };
-    option (google.api.method_signature) = "project,region,forwarding_rule_resource";
+    option (google.api.method_signature) =
+        "project,region,forwarding_rule_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Retrieves a list of ForwardingRule resources available to the specified
   // project and region.
-  rpc ListForwardingRules(ListForwardingRulesRequest) returns (google.cloud.cpp.compute.v1.ForwardingRuleList) {
+  rpc ListForwardingRules(ListForwardingRulesRequest)
+      returns (google.cloud.cpp.compute.v1.ForwardingRuleList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/forwardingRules"
     };
@@ -80,34 +86,40 @@ service ForwardingRules {
   // request. This method supports PATCH semantics and uses the JSON merge patch
   // format and processing rules. Currently, you can only patch the network_tier
   // field.
-  rpc PatchForwardingRules(PatchForwardingRulesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchForwardingRules(PatchForwardingRulesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/regions/{region}/forwardingRules/{forwarding_rule}"
       body: "forwarding_rule_resource"
     };
-    option (google.api.method_signature) = "project,region,forwarding_rule,forwarding_rule_resource";
+    option (google.api.method_signature) =
+        "project,region,forwarding_rule,forwarding_rule_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Sets the labels on the specified resource. To learn more about labels, read
   // the Labeling Resources documentation.
-  rpc SetLabels(SetLabelsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetLabels(SetLabelsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/forwardingRules/{resource}/setLabels"
       body: "region_set_labels_request_resource"
     };
-    option (google.api.method_signature) = "project,region,resource,region_set_labels_request_resource";
+    option (google.api.method_signature) =
+        "project,region,resource,region_set_labels_request_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Changes target URL for forwarding rule. The new target should be of the
   // same type as the old target.
-  rpc SetTarget(SetTargetRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetTarget(SetTargetRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/forwardingRules/{forwarding_rule}/setTarget"
       body: "target_reference_resource"
     };
-    option (google.api.method_signature) = "project,region,forwarding_rule,target_reference_resource";
+    option (google.api.method_signature) =
+        "project,region,forwarding_rule,target_reference_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 }
@@ -192,10 +204,16 @@ message DeleteForwardingRulesRequest {
   string forwarding_rule = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -225,13 +243,20 @@ message GetForwardingRulesRequest {
 // Request message for InsertForwardingRules.
 message InsertForwardingRulesRequest {
   // The ForwardingRule for this request.
-  optional google.cloud.cpp.compute.v1.ForwardingRule forwarding_rule_resource = 1;
+  optional google.cloud.cpp.compute.v1.ForwardingRule forwarding_rule_resource =
+      1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -320,13 +345,20 @@ message PatchForwardingRulesRequest {
   string forwarding_rule = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The ForwardingRule for this request.
-  optional google.cloud.cpp.compute.v1.ForwardingRule forwarding_rule_resource = 2;
+  optional google.cloud.cpp.compute.v1.ForwardingRule forwarding_rule_resource =
+      2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -344,13 +376,20 @@ message PatchForwardingRulesRequest {
 // Request message for SetLabels.
 message SetLabelsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // The region for this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // The RegionSetLabelsRequest for this request.
-  optional google.cloud.cpp.compute.v1.RegionSetLabelsRequest region_set_labels_request_resource = 3;
+  optional google.cloud.cpp.compute.v1.RegionSetLabelsRequest
+      region_set_labels_request_resource = 3;
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -374,10 +413,16 @@ message SetTargetRequest {
   string forwarding_rule = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -392,5 +437,6 @@ message SetTargetRequest {
   optional string request_id = 4;
 
   // The TargetReference for this request.
-  optional google.cloud.cpp.compute.v1.TargetReference target_reference_resource = 5;
+  optional google.cloud.cpp.compute.v1.TargetReference
+      target_reference_resource = 5;
 }

@@ -27,12 +27,13 @@ import "google/cloud/extended_operations.proto";
 service VpnGateways {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of VPN gateways.
-  rpc AggregatedListVpnGateways(AggregatedListVpnGatewaysRequest) returns (google.cloud.cpp.compute.v1.VpnGatewayAggregatedList) {
+  rpc AggregatedListVpnGateways(AggregatedListVpnGatewaysRequest)
+      returns (google.cloud.cpp.compute.v1.VpnGatewayAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/aggregated/vpnGateways"
     };
@@ -40,7 +41,8 @@ service VpnGateways {
   }
 
   // Deletes the specified VPN gateway.
-  rpc DeleteVpnGateways(DeleteVpnGatewaysRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteVpnGateways(DeleteVpnGatewaysRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/vpnGateways/{vpn_gateway}"
     };
@@ -49,7 +51,8 @@ service VpnGateways {
   }
 
   // Returns the specified VPN gateway.
-  rpc GetVpnGateways(GetVpnGatewaysRequest) returns (google.cloud.cpp.compute.v1.VpnGateway) {
+  rpc GetVpnGateways(GetVpnGatewaysRequest)
+      returns (google.cloud.cpp.compute.v1.VpnGateway) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/vpnGateways/{vpn_gateway}"
     };
@@ -57,7 +60,8 @@ service VpnGateways {
   }
 
   // Returns the status for the specified VPN gateway.
-  rpc GetStatus(GetStatusRequest) returns (google.cloud.cpp.compute.v1.VpnGatewaysGetStatusResponse) {
+  rpc GetStatus(GetStatusRequest)
+      returns (google.cloud.cpp.compute.v1.VpnGatewaysGetStatusResponse) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/vpnGateways/{vpn_gateway}/getStatus"
     };
@@ -66,18 +70,21 @@ service VpnGateways {
 
   // Creates a VPN gateway in the specified project and region using the data
   // included in the request.
-  rpc InsertVpnGateways(InsertVpnGatewaysRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertVpnGateways(InsertVpnGatewaysRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/vpnGateways"
       body: "vpn_gateway_resource"
     };
-    option (google.api.method_signature) = "project,region,vpn_gateway_resource";
+    option (google.api.method_signature) =
+        "project,region,vpn_gateway_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Retrieves a list of VPN gateways available to the specified project and
   // region.
-  rpc ListVpnGateways(ListVpnGatewaysRequest) returns (google.cloud.cpp.compute.v1.VpnGatewayList) {
+  rpc ListVpnGateways(ListVpnGatewaysRequest)
+      returns (google.cloud.cpp.compute.v1.VpnGatewayList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/vpnGateways"
     };
@@ -86,22 +93,26 @@ service VpnGateways {
 
   // Sets the labels on a VpnGateway. To learn more about labels, read the
   // Labeling Resources documentation.
-  rpc SetLabels(SetLabelsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetLabels(SetLabelsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/vpnGateways/{resource}/setLabels"
       body: "region_set_labels_request_resource"
     };
-    option (google.api.method_signature) = "project,region,resource,region_set_labels_request_resource";
+    option (google.api.method_signature) =
+        "project,region,resource,region_set_labels_request_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Returns permissions that a caller has on the specified resource.
-  rpc TestIamPermissions(TestIamPermissionsRequest) returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
+  rpc TestIamPermissions(TestIamPermissionsRequest)
+      returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/vpnGateways/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
-    option (google.api.method_signature) = "project,region,resource,test_permissions_request_resource";
+    option (google.api.method_signature) =
+        "project,region,resource,test_permissions_request_resource";
   }
 }
 
@@ -182,10 +193,16 @@ message AggregatedListVpnGatewaysRequest {
 // Request message for DeleteVpnGateways.
 message DeleteVpnGatewaysRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -230,10 +247,16 @@ message GetVpnGatewaysRequest {
 // Request message for InsertVpnGateways.
 message InsertVpnGatewaysRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -322,13 +345,20 @@ message ListVpnGatewaysRequest {
 // Request message for SetLabels.
 message SetLabelsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // The region for this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // The RegionSetLabelsRequest for this request.
-  optional google.cloud.cpp.compute.v1.RegionSetLabelsRequest region_set_labels_request_resource = 3;
+  optional google.cloud.cpp.compute.v1.RegionSetLabelsRequest
+      region_set_labels_request_resource = 3;
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -358,5 +388,6 @@ message TestIamPermissionsRequest {
   string resource = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The TestPermissionsRequest for this request.
-  optional google.cloud.cpp.compute.v1.TestPermissionsRequest test_permissions_request_resource = 4;
+  optional google.cloud.cpp.compute.v1.TestPermissionsRequest
+      test_permissions_request_resource = 4;
 }

@@ -28,12 +28,14 @@ import "google/protobuf/empty.proto";
 service GlobalOrganizationOperations {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified Operations resource.
-  rpc DeleteGlobalOrganizationOperations(DeleteGlobalOrganizationOperationsRequest) returns (google.protobuf.Empty) {
+  rpc DeleteGlobalOrganizationOperations(
+      DeleteGlobalOrganizationOperationsRequest)
+      returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/compute/v1/locations/global/operations/{operation}"
     };
@@ -42,7 +44,8 @@ service GlobalOrganizationOperations {
 
   // Retrieves the specified Operations resource. Gets a list of operations by
   // making a `list()` request.
-  rpc GetGlobalOrganizationOperations(GetGlobalOrganizationOperationsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc GetGlobalOrganizationOperations(GetGlobalOrganizationOperationsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       get: "/compute/v1/locations/global/operations/{operation}"
     };
@@ -52,7 +55,8 @@ service GlobalOrganizationOperations {
 
   // Retrieves a list of Operation resources contained within the specified
   // organization.
-  rpc ListGlobalOrganizationOperations(ListGlobalOrganizationOperationsRequest) returns (google.cloud.cpp.compute.v1.OperationList) {
+  rpc ListGlobalOrganizationOperations(ListGlobalOrganizationOperationsRequest)
+      returns (google.cloud.cpp.compute.v1.OperationList) {
     option (google.api.http) = {
       get: "/compute/v1/locations/global/operations"
     };

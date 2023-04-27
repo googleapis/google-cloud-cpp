@@ -27,16 +27,17 @@ import "google/cloud/extended_operations.proto";
 service Licenses {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly,"
-    "https://www.googleapis.com/auth/devstorage.full_control,"
-    "https://www.googleapis.com/auth/devstorage.read_only,"
-    "https://www.googleapis.com/auth/devstorage.read_write";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly,"
+      "https://www.googleapis.com/auth/devstorage.full_control,"
+      "https://www.googleapis.com/auth/devstorage.read_only,"
+      "https://www.googleapis.com/auth/devstorage.read_write";
 
   // Deletes the specified license. *Caution* This resource is intended for use
-  // only by third-party partners who are creating Cloud Marketplace images. 
-  rpc DeleteLicenses(DeleteLicensesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  // only by third-party partners who are creating Cloud Marketplace images.
+  rpc DeleteLicenses(DeleteLicensesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/licenses/{license}"
     };
@@ -46,8 +47,9 @@ service Licenses {
 
   // Returns the specified License resource. *Caution* This resource is intended
   // for use only by third-party partners who are creating Cloud Marketplace
-  // images. 
-  rpc GetLicenses(GetLicensesRequest) returns (google.cloud.cpp.compute.v1.License) {
+  // images.
+  rpc GetLicenses(GetLicensesRequest)
+      returns (google.cloud.cpp.compute.v1.License) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/licenses/{license}"
     };
@@ -56,8 +58,9 @@ service Licenses {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists. *Caution* This resource is intended for use only
-  // by third-party partners who are creating Cloud Marketplace images. 
-  rpc GetIamPolicy(GetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  // by third-party partners who are creating Cloud Marketplace images.
+  rpc GetIamPolicy(GetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/licenses/{resource}/getIamPolicy"
     };
@@ -66,8 +69,9 @@ service Licenses {
 
   // Create a License resource in the specified project. *Caution* This resource
   // is intended for use only by third-party partners who are creating Cloud
-  // Marketplace images. 
-  rpc InsertLicenses(InsertLicensesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  // Marketplace images.
+  rpc InsertLicenses(InsertLicensesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/licenses"
       body: "license_resource"
@@ -82,8 +86,9 @@ service Licenses {
   // to get a list of publicly-available licenses, use this method to make a
   // request to the respective image project, such as debian-cloud or
   // windows-cloud. *Caution* This resource is intended for use only by
-  // third-party partners who are creating Cloud Marketplace images. 
-  rpc ListLicenses(ListLicensesRequest) returns (google.cloud.cpp.compute.v1.LicensesListResponse) {
+  // third-party partners who are creating Cloud Marketplace images.
+  rpc ListLicenses(ListLicensesRequest)
+      returns (google.cloud.cpp.compute.v1.LicensesListResponse) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/licenses"
     };
@@ -92,24 +97,28 @@ service Licenses {
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy. *Caution* This resource is intended for use only by
-  // third-party partners who are creating Cloud Marketplace images. 
-  rpc SetIamPolicy(SetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  // third-party partners who are creating Cloud Marketplace images.
+  rpc SetIamPolicy(SetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/licenses/{resource}/setIamPolicy"
       body: "global_set_policy_request_resource"
     };
-    option (google.api.method_signature) = "project,resource,global_set_policy_request_resource";
+    option (google.api.method_signature) =
+        "project,resource,global_set_policy_request_resource";
   }
 
   // Returns permissions that a caller has on the specified resource. *Caution*
   // This resource is intended for use only by third-party partners who are
-  // creating Cloud Marketplace images. 
-  rpc TestIamPermissions(TestIamPermissionsRequest) returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
+  // creating Cloud Marketplace images.
+  rpc TestIamPermissions(TestIamPermissionsRequest)
+      returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/licenses/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
-    option (google.api.method_signature) = "project,resource,test_permissions_request_resource";
+    option (google.api.method_signature) =
+        "project,resource,test_permissions_request_resource";
   }
 }
 
@@ -119,7 +128,10 @@ message DeleteLicensesRequest {
   string license = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -161,7 +173,10 @@ message InsertLicensesRequest {
   optional google.cloud.cpp.compute.v1.License license_resource = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -244,7 +259,8 @@ message ListLicensesRequest {
 // Request message for SetIamPolicy.
 message SetIamPolicyRequest {
   // The GlobalSetPolicyRequest for this request.
-  optional google.cloud.cpp.compute.v1.GlobalSetPolicyRequest global_set_policy_request_resource = 1;
+  optional google.cloud.cpp.compute.v1.GlobalSetPolicyRequest
+      global_set_policy_request_resource = 1;
 
   // Project ID for this request.
   string project = 2 [(google.api.field_behavior) = REQUIRED];
@@ -262,5 +278,6 @@ message TestIamPermissionsRequest {
   string resource = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The TestPermissionsRequest for this request.
-  optional google.cloud.cpp.compute.v1.TestPermissionsRequest test_permissions_request_resource = 3;
+  optional google.cloud.cpp.compute.v1.TestPermissionsRequest
+      test_permissions_request_resource = 3;
 }

@@ -26,12 +26,13 @@ import "google/cloud/compute/v1/internal/common.proto";
 service AcceleratorTypes {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of accelerator types.
-  rpc AggregatedListAcceleratorTypes(AggregatedListAcceleratorTypesRequest) returns (google.cloud.cpp.compute.v1.AcceleratorTypeAggregatedList) {
+  rpc AggregatedListAcceleratorTypes(AggregatedListAcceleratorTypesRequest)
+      returns (google.cloud.cpp.compute.v1.AcceleratorTypeAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/aggregated/acceleratorTypes"
     };
@@ -39,7 +40,8 @@ service AcceleratorTypes {
   }
 
   // Returns the specified accelerator type.
-  rpc GetAcceleratorTypes(GetAcceleratorTypesRequest) returns (google.cloud.cpp.compute.v1.AcceleratorType) {
+  rpc GetAcceleratorTypes(GetAcceleratorTypesRequest)
+      returns (google.cloud.cpp.compute.v1.AcceleratorType) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/acceleratorTypes/{accelerator_type}"
     };
@@ -48,7 +50,8 @@ service AcceleratorTypes {
 
   // Retrieves a list of accelerator types that are available to the specified
   // project.
-  rpc ListAcceleratorTypes(ListAcceleratorTypesRequest) returns (google.cloud.cpp.compute.v1.AcceleratorTypeList) {
+  rpc ListAcceleratorTypes(ListAcceleratorTypesRequest)
+      returns (google.cloud.cpp.compute.v1.AcceleratorTypeList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/acceleratorTypes"
     };

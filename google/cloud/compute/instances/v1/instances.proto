@@ -28,36 +28,41 @@ import "google/protobuf/empty.proto";
 service Instances {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Adds an access config to an instance's network interface.
-  rpc AddAccessConfig(AddAccessConfigRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc AddAccessConfig(AddAccessConfigRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/addAccessConfig"
       body: "access_config_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance,network_interface,access_config_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance,network_interface,access_config_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Adds existing resource policies to an instance. You can only add one policy
   // right now which will be applied to this instance for scheduling live
   // migrations.
-  rpc AddResourcePolicies(AddResourcePoliciesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc AddResourcePolicies(AddResourcePoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/addResourcePolicies"
       body: "instances_add_resource_policies_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance,instances_add_resource_policies_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance,instances_add_resource_policies_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Retrieves an aggregated list of all of the instances in your project across
   // all regions and zones. The performance of this method degrades when a
   // filter is specified on a project that has a very large number of instances.
-  rpc AggregatedListInstances(AggregatedListInstancesRequest) returns (google.cloud.cpp.compute.v1.InstanceAggregatedList) {
+  rpc AggregatedListInstances(AggregatedListInstancesRequest)
+      returns (google.cloud.cpp.compute.v1.InstanceAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/aggregated/instances"
     };
@@ -68,29 +73,34 @@ service Instances {
   // the disk before you can attach it. It is not possible to create and attach
   // a disk at the same time. For more information, read Adding a persistent
   // disk to your instance.
-  rpc AttachDisk(AttachDiskRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc AttachDisk(AttachDiskRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/attachDisk"
       body: "attached_disk_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance,attached_disk_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance,attached_disk_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Creates multiple instances. Count specifies the number of instances to
   // create. For more information, see About bulk creation of VMs.
-  rpc BulkInsert(BulkInsertRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc BulkInsert(BulkInsertRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/bulkInsert"
       body: "bulk_insert_instance_resource"
     };
-    option (google.api.method_signature) = "project,zone,bulk_insert_instance_resource";
+    option (google.api.method_signature) =
+        "project,zone,bulk_insert_instance_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Deletes the specified Instance resource. For more information, see Deleting
   // an instance.
-  rpc DeleteInstances(DeleteInstancesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteInstances(DeleteInstancesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}"
     };
@@ -99,17 +109,20 @@ service Instances {
   }
 
   // Deletes an access config from an instance's network interface.
-  rpc DeleteAccessConfig(DeleteAccessConfigRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteAccessConfig(DeleteAccessConfigRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/deleteAccessConfig"
       body: "*"
     };
-    option (google.api.method_signature) = "project,zone,instance,access_config,network_interface";
+    option (google.api.method_signature) =
+        "project,zone,instance,access_config,network_interface";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Detaches a disk from an instance.
-  rpc DetachDisk(DetachDiskRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DetachDisk(DetachDiskRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/detachDisk"
       body: "*"
@@ -119,7 +132,8 @@ service Instances {
   }
 
   // Returns the specified Instance resource.
-  rpc GetInstances(GetInstancesRequest) returns (google.cloud.cpp.compute.v1.Instance) {
+  rpc GetInstances(GetInstancesRequest)
+      returns (google.cloud.cpp.compute.v1.Instance) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}"
     };
@@ -127,15 +141,18 @@ service Instances {
   }
 
   // Returns effective firewalls applied to an interface of the instance.
-  rpc GetEffectiveFirewalls(GetEffectiveFirewallsRequest) returns (google.cloud.cpp.compute.v1.InstancesGetEffectiveFirewallsResponse) {
+  rpc GetEffectiveFirewalls(GetEffectiveFirewallsRequest) returns (
+      google.cloud.cpp.compute.v1.InstancesGetEffectiveFirewallsResponse) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/getEffectiveFirewalls"
     };
-    option (google.api.method_signature) = "project,zone,instance,network_interface";
+    option (google.api.method_signature) =
+        "project,zone,instance,network_interface";
   }
 
   // Returns the specified guest attributes entry.
-  rpc GetGuestAttributes(GetGuestAttributesRequest) returns (google.cloud.cpp.compute.v1.GuestAttributes) {
+  rpc GetGuestAttributes(GetGuestAttributesRequest)
+      returns (google.cloud.cpp.compute.v1.GuestAttributes) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/getGuestAttributes"
     };
@@ -144,7 +161,8 @@ service Instances {
 
   // Gets the access control policy for a resource. May be empty if no such
   // policy or resource exists.
-  rpc GetIamPolicy(GetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc GetIamPolicy(GetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/instances/{resource}/getIamPolicy"
     };
@@ -152,7 +170,8 @@ service Instances {
   }
 
   // Returns the screenshot from the specified instance.
-  rpc GetScreenshot(GetScreenshotRequest) returns (google.cloud.cpp.compute.v1.Screenshot) {
+  rpc GetScreenshot(GetScreenshotRequest)
+      returns (google.cloud.cpp.compute.v1.Screenshot) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/screenshot"
     };
@@ -160,7 +179,8 @@ service Instances {
   }
 
   // Returns the last 1 MB of serial port output from the specified instance.
-  rpc GetSerialPortOutput(GetSerialPortOutputRequest) returns (google.cloud.cpp.compute.v1.SerialPortOutput) {
+  rpc GetSerialPortOutput(GetSerialPortOutputRequest)
+      returns (google.cloud.cpp.compute.v1.SerialPortOutput) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/serialPort"
     };
@@ -168,7 +188,8 @@ service Instances {
   }
 
   // Returns the Shielded Instance Identity of an instance
-  rpc GetShieldedInstanceIdentity(GetShieldedInstanceIdentityRequest) returns (google.cloud.cpp.compute.v1.ShieldedInstanceIdentity) {
+  rpc GetShieldedInstanceIdentity(GetShieldedInstanceIdentityRequest)
+      returns (google.cloud.cpp.compute.v1.ShieldedInstanceIdentity) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/getShieldedInstanceIdentity"
     };
@@ -177,7 +198,8 @@ service Instances {
 
   // Creates an instance resource in the specified project using the data
   // included in the request.
-  rpc InsertInstances(InsertInstancesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertInstances(InsertInstancesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances"
       body: "instance_resource"
@@ -187,7 +209,8 @@ service Instances {
   }
 
   // Retrieves the list of instances contained within the specified zone.
-  rpc ListInstances(ListInstancesRequest) returns (google.cloud.cpp.compute.v1.InstanceList) {
+  rpc ListInstances(ListInstancesRequest)
+      returns (google.cloud.cpp.compute.v1.InstanceList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/instances"
     };
@@ -198,7 +221,8 @@ service Instances {
   // the request. For example, if the VM instance is part of a managed or
   // unmanaged instance group, the referrers list includes the instance group.
   // For more information, read Viewing referrers to VM instances.
-  rpc ListReferrers(ListReferrersRequest) returns (google.cloud.cpp.compute.v1.InstanceListReferrers) {
+  rpc ListReferrers(ListReferrersRequest)
+      returns (google.cloud.cpp.compute.v1.InstanceListReferrers) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/referrers"
     };
@@ -206,12 +230,14 @@ service Instances {
   }
 
   // Removes resource policies from an instance.
-  rpc RemoveResourcePolicies(RemoveResourcePoliciesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc RemoveResourcePolicies(RemoveResourcePoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/removeResourcePolicies"
       body: "instances_remove_resource_policies_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance,instances_remove_resource_policies_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance,instances_remove_resource_policies_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
@@ -238,7 +264,8 @@ service Instances {
   }
 
   // Sends diagnostic interrupt to the instance.
-  rpc SendDiagnosticInterrupt(SendDiagnosticInterruptRequest) returns (google.protobuf.Empty) {
+  rpc SendDiagnosticInterrupt(SendDiagnosticInterruptRequest)
+      returns (google.protobuf.Empty) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/sendDiagnosticInterrupt"
       body: "*"
@@ -247,7 +274,8 @@ service Instances {
   }
 
   // Sets deletion protection on the instance.
-  rpc SetDeletionProtection(SetDeletionProtectionRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetDeletionProtection(SetDeletionProtectionRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{resource}/setDeletionProtection"
       body: "*"
@@ -257,78 +285,92 @@ service Instances {
   }
 
   // Sets the auto-delete flag for a disk attached to an instance.
-  rpc SetDiskAutoDelete(SetDiskAutoDeleteRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetDiskAutoDelete(SetDiskAutoDeleteRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setDiskAutoDelete"
       body: "*"
     };
-    option (google.api.method_signature) = "project,zone,instance,auto_delete,device_name";
+    option (google.api.method_signature) =
+        "project,zone,instance,auto_delete,device_name";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Sets the access control policy on the specified resource. Replaces any
   // existing policy.
-  rpc SetIamPolicy(SetIamPolicyRequest) returns (google.cloud.cpp.compute.v1.Policy) {
+  rpc SetIamPolicy(SetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{resource}/setIamPolicy"
       body: "zone_set_policy_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,resource,zone_set_policy_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,resource,zone_set_policy_request_resource";
   }
 
   // Sets labels on an instance. To learn more about labels, read the Labeling
   // Resources documentation.
-  rpc SetLabels(SetLabelsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetLabels(SetLabelsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setLabels"
       body: "instances_set_labels_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance,instances_set_labels_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance,instances_set_labels_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Changes the number and/or type of accelerator for a stopped instance to the
   // values specified in the request.
-  rpc SetMachineResources(SetMachineResourcesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetMachineResources(SetMachineResourcesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setMachineResources"
       body: "instances_set_machine_resources_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance,instances_set_machine_resources_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance,instances_set_machine_resources_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Changes the machine type for a stopped instance to the machine type
   // specified in the request.
-  rpc SetMachineType(SetMachineTypeRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetMachineType(SetMachineTypeRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setMachineType"
       body: "instances_set_machine_type_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance,instances_set_machine_type_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance,instances_set_machine_type_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Sets metadata for the specified instance to the data included in the
   // request.
-  rpc SetMetadata(SetMetadataRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetMetadata(SetMetadataRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setMetadata"
       body: "metadata_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance,metadata_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance,metadata_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Changes the minimum CPU platform that this instance should use. This method
   // can only be called on a stopped instance. For more information, read
   // Specifying a Minimum CPU Platform.
-  rpc SetMinCpuPlatform(SetMinCpuPlatformRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetMinCpuPlatform(SetMinCpuPlatformRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setMinCpuPlatform"
       body: "instances_set_min_cpu_platform_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance,instances_set_min_cpu_platform_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance,instances_set_min_cpu_platform_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
@@ -338,7 +380,8 @@ service Instances {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setName"
       body: "instances_set_name_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance,instances_set_name_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance,instances_set_name_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
@@ -347,35 +390,42 @@ service Instances {
   // See Instance Life Cycle for more information on the possible instance
   // states. For more information about setting scheduling options for a VM, see
   // Set VM host maintenance policy.
-  rpc SetScheduling(SetSchedulingRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetScheduling(SetSchedulingRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setScheduling"
       body: "scheduling_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance,scheduling_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance,scheduling_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Sets the service account on the instance. For more information, read
   // Changing the service account and access scopes for an instance.
-  rpc SetServiceAccount(SetServiceAccountRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetServiceAccount(SetServiceAccountRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setServiceAccount"
       body: "instances_set_service_account_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance,instances_set_service_account_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance,instances_set_service_account_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Sets the Shielded Instance integrity policy for an instance. You can only
   // use this method on a running instance. This method supports PATCH semantics
   // and uses the JSON merge patch format and processing rules.
-  rpc SetShieldedInstanceIntegrityPolicy(SetShieldedInstanceIntegrityPolicyRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetShieldedInstanceIntegrityPolicy(
+      SetShieldedInstanceIntegrityPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setShieldedInstanceIntegrityPolicy"
       body: "shielded_instance_integrity_policy_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance,shielded_instance_integrity_policy_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance,shielded_instance_integrity_policy_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
@@ -386,13 +436,15 @@ service Instances {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/setTags"
       body: "tags_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance,tags_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance,tags_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Simulates a host maintenance event on a VM. For more information, see
   // Simulate a host maintenance event.
-  rpc SimulateMaintenanceEvent(SimulateMaintenanceEventRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SimulateMaintenanceEvent(SimulateMaintenanceEventRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/simulateMaintenanceEvent"
       body: "*"
@@ -414,12 +466,14 @@ service Instances {
 
   // Starts an instance that was stopped using the instances().stop method. For
   // more information, see Restart an instance.
-  rpc StartWithEncryptionKey(StartWithEncryptionKeyRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc StartWithEncryptionKey(StartWithEncryptionKeyRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/startWithEncryptionKey"
       body: "instances_start_with_encryption_key_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance,instances_start_with_encryption_key_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance,instances_start_with_encryption_key_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
@@ -455,47 +509,55 @@ service Instances {
   }
 
   // Returns permissions that a caller has on the specified resource.
-  rpc TestIamPermissions(TestIamPermissionsRequest) returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
+  rpc TestIamPermissions(TestIamPermissionsRequest)
+      returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,resource,test_permissions_request_resource";
+    option (google.api.method_signature) =
+        "project,zone,resource,test_permissions_request_resource";
   }
 
   // Updates an instance only if the necessary resources are available. This
   // method can update only a specific set of instance properties. See Updating
   // a running instance for a list of updatable instance properties.
-  rpc UpdateInstances(UpdateInstancesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc UpdateInstances(UpdateInstancesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       put: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}"
       body: "instance_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance,instance_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance,instance_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Updates the specified access config from an instance's network interface
   // with the data included in the request. This method supports PATCH semantics
   // and uses the JSON merge patch format and processing rules.
-  rpc UpdateAccessConfig(UpdateAccessConfigRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc UpdateAccessConfig(UpdateAccessConfigRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/updateAccessConfig"
       body: "access_config_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance,network_interface,access_config_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance,network_interface,access_config_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Updates the Display config for a VM instance. You can only use this method
   // on a stopped VM instance. This method supports PATCH semantics and uses the
   // JSON merge patch format and processing rules.
-  rpc UpdateDisplayDevice(UpdateDisplayDeviceRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc UpdateDisplayDevice(UpdateDisplayDeviceRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/updateDisplayDevice"
       body: "display_device_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance,display_device_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance,display_device_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
@@ -504,24 +566,28 @@ service Instances {
   // ranges for an existing instance for instructions on changing alias IP
   // ranges. See Migrating a VM between networks for instructions on migrating
   // an interface. This method follows PATCH semantics.
-  rpc UpdateNetworkInterface(UpdateNetworkInterfaceRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc UpdateNetworkInterface(UpdateNetworkInterfaceRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/updateNetworkInterface"
       body: "network_interface_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance,network_interface,network_interface_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance,network_interface,network_interface_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
   // Updates the Shielded Instance config for an instance. You can only use this
   // method on a stopped instance. This method supports PATCH semantics and uses
   // the JSON merge patch format and processing rules.
-  rpc UpdateShieldedInstanceConfig(UpdateShieldedInstanceConfigRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc UpdateShieldedInstanceConfig(UpdateShieldedInstanceConfigRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/zones/{zone}/instances/{instance}/updateShieldedInstanceConfig"
       body: "shielded_instance_config_resource"
     };
-    option (google.api.method_signature) = "project,zone,instance,shielded_instance_config_resource";
+    option (google.api.method_signature) =
+        "project,zone,instance,shielded_instance_config_resource";
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 }
@@ -538,7 +604,10 @@ message AddAccessConfigRequest {
   string network_interface = 3 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -553,7 +622,10 @@ message AddAccessConfigRequest {
   optional string request_id = 5;
 
   // The name of the zone for this request.
-  string zone = 6 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 6 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for AddResourcePolicies.
@@ -562,10 +634,14 @@ message AddResourcePoliciesRequest {
   string instance = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The InstancesAddResourcePoliciesRequest for this request.
-  optional google.cloud.cpp.compute.v1.InstancesAddResourcePoliciesRequest instances_add_resource_policies_request_resource = 2;
+  optional google.cloud.cpp.compute.v1.InstancesAddResourcePoliciesRequest
+      instances_add_resource_policies_request_resource = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -580,7 +656,10 @@ message AddResourcePoliciesRequest {
   optional string request_id = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for AggregatedListInstances.
@@ -671,7 +750,10 @@ message AttachDiskRequest {
   string instance = 3 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -686,16 +768,23 @@ message AttachDiskRequest {
   optional string request_id = 5;
 
   // The name of the zone for this request.
-  string zone = 6 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 6 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for BulkInsert.
 message BulkInsertRequest {
   // The BulkInsertInstanceResource for this request.
-  optional google.cloud.cpp.compute.v1.BulkInsertInstanceResource bulk_insert_instance_resource = 1;
+  optional google.cloud.cpp.compute.v1.BulkInsertInstanceResource
+      bulk_insert_instance_resource = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -710,7 +799,10 @@ message BulkInsertRequest {
   optional string request_id = 3;
 
   // The name of the zone for this request.
-  string zone = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for DeleteAccessConfig.
@@ -725,7 +817,10 @@ message DeleteAccessConfigRequest {
   string network_interface = 3 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -740,7 +835,10 @@ message DeleteAccessConfigRequest {
   optional string request_id = 5;
 
   // The name of the zone for this request.
-  string zone = 6 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 6 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for DeleteInstances.
@@ -749,7 +847,10 @@ message DeleteInstancesRequest {
   string instance = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -764,7 +865,10 @@ message DeleteInstancesRequest {
   optional string request_id = 3;
 
   // The name of the zone for this request.
-  string zone = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for DetachDisk.
@@ -777,7 +881,10 @@ message DetachDiskRequest {
   string instance = 2 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -792,7 +899,10 @@ message DetachDiskRequest {
   optional string request_id = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for GetEffectiveFirewalls.
@@ -914,7 +1024,10 @@ message InsertInstancesRequest {
   optional google.cloud.cpp.compute.v1.Instance instance_resource = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -934,7 +1047,7 @@ message InsertInstancesRequest {
   // https://www.googleapis.com/compute/v1/projects/project
   // /global/instanceTemplates/instanceTemplate -
   // projects/project/global/instanceTemplates/instanceTemplate -
-  // global/instanceTemplates/instanceTemplate 
+  // global/instanceTemplates/instanceTemplate
   optional string source_instance_template = 4;
 
   // Specifies the machine image to use to create the instance. This field is
@@ -943,11 +1056,14 @@ message InsertInstancesRequest {
   // https://www.googleapis.com/compute/v1/projects/project/global/global
   // /machineImages/machineImage -
   // projects/project/global/global/machineImages/machineImage -
-  // global/machineImages/machineImage 
+  // global/machineImages/machineImage
   optional string source_machine_image = 5;
 
   // The name of the zone for this request.
-  string zone = 6 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 6 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for ListInstances.
@@ -1096,10 +1212,14 @@ message RemoveResourcePoliciesRequest {
   string instance = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The InstancesRemoveResourcePoliciesRequest for this request.
-  optional google.cloud.cpp.compute.v1.InstancesRemoveResourcePoliciesRequest instances_remove_resource_policies_request_resource = 2;
+  optional google.cloud.cpp.compute.v1.InstancesRemoveResourcePoliciesRequest
+      instances_remove_resource_policies_request_resource = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1114,7 +1234,10 @@ message RemoveResourcePoliciesRequest {
   optional string request_id = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for Reset.
@@ -1123,7 +1246,10 @@ message ResetRequest {
   string instance = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1138,7 +1264,10 @@ message ResetRequest {
   optional string request_id = 3;
 
   // The name of the zone for this request.
-  string zone = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for Resume.
@@ -1147,7 +1276,10 @@ message ResumeRequest {
   string instance = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1162,7 +1294,10 @@ message ResumeRequest {
   optional string request_id = 3;
 
   // The name of the zone for this request.
-  string zone = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for SendDiagnosticInterrupt.
@@ -1183,7 +1318,10 @@ message SetDeletionProtectionRequest {
   optional bool deletion_protection = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1201,7 +1339,10 @@ message SetDeletionProtectionRequest {
   string resource = 4 [(google.api.field_behavior) = REQUIRED];
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for SetDiskAutoDelete.
@@ -1217,7 +1358,10 @@ message SetDiskAutoDeleteRequest {
   string instance = 3 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1232,7 +1376,10 @@ message SetDiskAutoDeleteRequest {
   optional string request_id = 5;
 
   // The name of the zone for this request.
-  string zone = 6 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 6 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for SetIamPolicy.
@@ -1247,7 +1394,8 @@ message SetIamPolicyRequest {
   string zone = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The ZoneSetPolicyRequest for this request.
-  optional google.cloud.cpp.compute.v1.ZoneSetPolicyRequest zone_set_policy_request_resource = 4;
+  optional google.cloud.cpp.compute.v1.ZoneSetPolicyRequest
+      zone_set_policy_request_resource = 4;
 }
 
 // Request message for SetLabels.
@@ -1256,10 +1404,14 @@ message SetLabelsRequest {
   string instance = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The InstancesSetLabelsRequest for this request.
-  optional google.cloud.cpp.compute.v1.InstancesSetLabelsRequest instances_set_labels_request_resource = 2;
+  optional google.cloud.cpp.compute.v1.InstancesSetLabelsRequest
+      instances_set_labels_request_resource = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1274,7 +1426,10 @@ message SetLabelsRequest {
   optional string request_id = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for SetMachineResources.
@@ -1283,10 +1438,14 @@ message SetMachineResourcesRequest {
   string instance = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The InstancesSetMachineResourcesRequest for this request.
-  optional google.cloud.cpp.compute.v1.InstancesSetMachineResourcesRequest instances_set_machine_resources_request_resource = 2;
+  optional google.cloud.cpp.compute.v1.InstancesSetMachineResourcesRequest
+      instances_set_machine_resources_request_resource = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1301,7 +1460,10 @@ message SetMachineResourcesRequest {
   optional string request_id = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for SetMachineType.
@@ -1310,10 +1472,14 @@ message SetMachineTypeRequest {
   string instance = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The InstancesSetMachineTypeRequest for this request.
-  optional google.cloud.cpp.compute.v1.InstancesSetMachineTypeRequest instances_set_machine_type_request_resource = 2;
+  optional google.cloud.cpp.compute.v1.InstancesSetMachineTypeRequest
+      instances_set_machine_type_request_resource = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1328,7 +1494,10 @@ message SetMachineTypeRequest {
   optional string request_id = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for SetMetadata.
@@ -1340,7 +1509,10 @@ message SetMetadataRequest {
   optional google.cloud.cpp.compute.v1.Metadata metadata_resource = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1355,7 +1527,10 @@ message SetMetadataRequest {
   optional string request_id = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for SetMinCpuPlatform.
@@ -1364,10 +1539,14 @@ message SetMinCpuPlatformRequest {
   string instance = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The InstancesSetMinCpuPlatformRequest for this request.
-  optional google.cloud.cpp.compute.v1.InstancesSetMinCpuPlatformRequest instances_set_min_cpu_platform_request_resource = 2;
+  optional google.cloud.cpp.compute.v1.InstancesSetMinCpuPlatformRequest
+      instances_set_min_cpu_platform_request_resource = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1382,7 +1561,10 @@ message SetMinCpuPlatformRequest {
   optional string request_id = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for SetName.
@@ -1391,10 +1573,14 @@ message SetNameRequest {
   string instance = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The InstancesSetNameRequest for this request.
-  optional google.cloud.cpp.compute.v1.InstancesSetNameRequest instances_set_name_request_resource = 2;
+  optional google.cloud.cpp.compute.v1.InstancesSetNameRequest
+      instances_set_name_request_resource = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1409,7 +1595,10 @@ message SetNameRequest {
   optional string request_id = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for SetScheduling.
@@ -1418,7 +1607,10 @@ message SetSchedulingRequest {
   string instance = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1436,7 +1628,10 @@ message SetSchedulingRequest {
   optional google.cloud.cpp.compute.v1.Scheduling scheduling_resource = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for SetServiceAccount.
@@ -1445,10 +1640,14 @@ message SetServiceAccountRequest {
   string instance = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The InstancesSetServiceAccountRequest for this request.
-  optional google.cloud.cpp.compute.v1.InstancesSetServiceAccountRequest instances_set_service_account_request_resource = 2;
+  optional google.cloud.cpp.compute.v1.InstancesSetServiceAccountRequest
+      instances_set_service_account_request_resource = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1463,7 +1662,10 @@ message SetServiceAccountRequest {
   optional string request_id = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for SetShieldedInstanceIntegrityPolicy.
@@ -1472,7 +1674,10 @@ message SetShieldedInstanceIntegrityPolicyRequest {
   string instance = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1487,10 +1692,14 @@ message SetShieldedInstanceIntegrityPolicyRequest {
   optional string request_id = 3;
 
   // The ShieldedInstanceIntegrityPolicy for this request.
-  optional google.cloud.cpp.compute.v1.ShieldedInstanceIntegrityPolicy shielded_instance_integrity_policy_resource = 4;
+  optional google.cloud.cpp.compute.v1.ShieldedInstanceIntegrityPolicy
+      shielded_instance_integrity_policy_resource = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for SetTags.
@@ -1499,7 +1708,10 @@ message SetTagsRequest {
   string instance = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1517,7 +1729,10 @@ message SetTagsRequest {
   optional google.cloud.cpp.compute.v1.Tags tags_resource = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for SimulateMaintenanceEvent.
@@ -1526,10 +1741,16 @@ message SimulateMaintenanceEventRequest {
   string instance = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // The name of the zone for this request.
-  string zone = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for Start.
@@ -1538,7 +1759,10 @@ message StartRequest {
   string instance = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1553,7 +1777,10 @@ message StartRequest {
   optional string request_id = 3;
 
   // The name of the zone for this request.
-  string zone = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for StartWithEncryptionKey.
@@ -1562,10 +1789,14 @@ message StartWithEncryptionKeyRequest {
   string instance = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The InstancesStartWithEncryptionKeyRequest for this request.
-  optional google.cloud.cpp.compute.v1.InstancesStartWithEncryptionKeyRequest instances_start_with_encryption_key_request_resource = 2;
+  optional google.cloud.cpp.compute.v1.InstancesStartWithEncryptionKeyRequest
+      instances_start_with_encryption_key_request_resource = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1580,7 +1811,10 @@ message StartWithEncryptionKeyRequest {
   optional string request_id = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for Stop.
@@ -1593,7 +1827,10 @@ message StopRequest {
   string instance = 2 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1608,7 +1845,10 @@ message StopRequest {
   optional string request_id = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for Suspend.
@@ -1621,7 +1861,10 @@ message SuspendRequest {
   string instance = 2 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1636,7 +1879,10 @@ message SuspendRequest {
   optional string request_id = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for TestIamPermissions.
@@ -1648,7 +1894,8 @@ message TestIamPermissionsRequest {
   string resource = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The TestPermissionsRequest for this request.
-  optional google.cloud.cpp.compute.v1.TestPermissionsRequest test_permissions_request_resource = 3;
+  optional google.cloud.cpp.compute.v1.TestPermissionsRequest
+      test_permissions_request_resource = 3;
 
   // The name of the zone for this request.
   string zone = 4 [(google.api.field_behavior) = REQUIRED];
@@ -1666,7 +1913,10 @@ message UpdateAccessConfigRequest {
   string network_interface = 3 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1681,19 +1931,26 @@ message UpdateAccessConfigRequest {
   optional string request_id = 5;
 
   // The name of the zone for this request.
-  string zone = 6 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 6 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for UpdateDisplayDevice.
 message UpdateDisplayDeviceRequest {
   // The DisplayDevice for this request.
-  optional google.cloud.cpp.compute.v1.DisplayDevice display_device_resource = 1;
+  optional google.cloud.cpp.compute.v1.DisplayDevice display_device_resource =
+      1;
 
   // Name of the instance scoping this request.
   string instance = 2 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1708,7 +1965,10 @@ message UpdateDisplayDeviceRequest {
   optional string request_id = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for UpdateInstances.
@@ -1722,7 +1982,7 @@ message UpdateInstancesRequest {
   // Specifies the action to take when updating an instance even if the updated
   // properties do not require it. If not specified, then Compute Engine acts
   // based on the minimum action that the updated properties require.
-  // INVALID: 
+  // INVALID:
   // NO_EFFECT: No changes can be made to the instance.
   // REFRESH: The instance will not restart.
   // RESTART: The instance will restart.
@@ -1732,14 +1992,17 @@ message UpdateInstancesRequest {
   // part of the update. Compute Engine returns an error if the instance
   // properties require a more disruptive action as part of the instance update.
   // Valid options from lowest to highest are NO_EFFECT, REFRESH, and RESTART.
-  // INVALID: 
+  // INVALID:
   // NO_EFFECT: No changes can be made to the instance.
   // REFRESH: The instance will not restart.
   // RESTART: The instance will restart.
   optional string most_disruptive_allowed_action = 4;
 
   // Project ID for this request.
-  string project = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1754,7 +2017,10 @@ message UpdateInstancesRequest {
   optional string request_id = 6;
 
   // The name of the zone for this request.
-  string zone = 7 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 7 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for UpdateNetworkInterface.
@@ -1766,10 +2032,14 @@ message UpdateNetworkInterfaceRequest {
   string network_interface = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The NetworkInterface for this request.
-  optional google.cloud.cpp.compute.v1.NetworkInterface network_interface_resource = 3;
+  optional google.cloud.cpp.compute.v1.NetworkInterface
+      network_interface_resource = 3;
 
   // Project ID for this request.
-  string project = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1784,7 +2054,10 @@ message UpdateNetworkInterfaceRequest {
   optional string request_id = 5;
 
   // The name of the zone for this request.
-  string zone = 6 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 6 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for UpdateShieldedInstanceConfig.
@@ -1793,7 +2066,10 @@ message UpdateShieldedInstanceConfigRequest {
   string instance = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -1808,8 +2084,12 @@ message UpdateShieldedInstanceConfigRequest {
   optional string request_id = 3;
 
   // The ShieldedInstanceConfig for this request.
-  optional google.cloud.cpp.compute.v1.ShieldedInstanceConfig shielded_instance_config_resource = 4;
+  optional google.cloud.cpp.compute.v1.ShieldedInstanceConfig
+      shielded_instance_config_resource = 4;
 
   // The name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }

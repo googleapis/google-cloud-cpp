@@ -27,12 +27,13 @@ import "google/cloud/extended_operations.proto";
 service PacketMirrorings {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of packetMirrorings.
-  rpc AggregatedListPacketMirrorings(AggregatedListPacketMirroringsRequest) returns (google.cloud.cpp.compute.v1.PacketMirroringAggregatedList) {
+  rpc AggregatedListPacketMirrorings(AggregatedListPacketMirroringsRequest)
+      returns (google.cloud.cpp.compute.v1.PacketMirroringAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/aggregated/packetMirrorings"
     };
@@ -40,7 +41,8 @@ service PacketMirrorings {
   }
 
   // Deletes the specified PacketMirroring resource.
-  rpc DeletePacketMirrorings(DeletePacketMirroringsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeletePacketMirrorings(DeletePacketMirroringsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/packetMirrorings/{packet_mirroring}"
     };
@@ -49,7 +51,8 @@ service PacketMirrorings {
   }
 
   // Returns the specified PacketMirroring resource.
-  rpc GetPacketMirrorings(GetPacketMirroringsRequest) returns (google.cloud.cpp.compute.v1.PacketMirroring) {
+  rpc GetPacketMirrorings(GetPacketMirroringsRequest)
+      returns (google.cloud.cpp.compute.v1.PacketMirroring) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/packetMirrorings/{packet_mirroring}"
     };
@@ -58,18 +61,21 @@ service PacketMirrorings {
 
   // Creates a PacketMirroring resource in the specified project and region
   // using the data included in the request.
-  rpc InsertPacketMirrorings(InsertPacketMirroringsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertPacketMirrorings(InsertPacketMirroringsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/packetMirrorings"
       body: "packet_mirroring_resource"
     };
-    option (google.api.method_signature) = "project,region,packet_mirroring_resource";
+    option (google.api.method_signature) =
+        "project,region,packet_mirroring_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Retrieves a list of PacketMirroring resources available to the specified
   // project and region.
-  rpc ListPacketMirrorings(ListPacketMirroringsRequest) returns (google.cloud.cpp.compute.v1.PacketMirroringList) {
+  rpc ListPacketMirrorings(ListPacketMirroringsRequest)
+      returns (google.cloud.cpp.compute.v1.PacketMirroringList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/packetMirrorings"
     };
@@ -79,22 +85,26 @@ service PacketMirrorings {
   // Patches the specified PacketMirroring resource with the data included in
   // the request. This method supports PATCH semantics and uses JSON merge patch
   // format and processing rules.
-  rpc PatchPacketMirrorings(PatchPacketMirroringsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchPacketMirrorings(PatchPacketMirroringsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/regions/{region}/packetMirrorings/{packet_mirroring}"
       body: "packet_mirroring_resource"
     };
-    option (google.api.method_signature) = "project,region,packet_mirroring,packet_mirroring_resource";
+    option (google.api.method_signature) =
+        "project,region,packet_mirroring,packet_mirroring_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Returns permissions that a caller has on the specified resource.
-  rpc TestIamPermissions(TestIamPermissionsRequest) returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
+  rpc TestIamPermissions(TestIamPermissionsRequest)
+      returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/packetMirrorings/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
-    option (google.api.method_signature) = "project,region,resource,test_permissions_request_resource";
+    option (google.api.method_signature) =
+        "project,region,resource,test_permissions_request_resource";
   }
 }
 
@@ -178,10 +188,16 @@ message DeletePacketMirroringsRequest {
   string packet_mirroring = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -211,13 +227,20 @@ message GetPacketMirroringsRequest {
 // Request message for InsertPacketMirrorings.
 message InsertPacketMirroringsRequest {
   // The PacketMirroring for this request.
-  optional google.cloud.cpp.compute.v1.PacketMirroring packet_mirroring_resource = 1;
+  optional google.cloud.cpp.compute.v1.PacketMirroring
+      packet_mirroring_resource = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -306,13 +329,20 @@ message PatchPacketMirroringsRequest {
   string packet_mirroring = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The PacketMirroring for this request.
-  optional google.cloud.cpp.compute.v1.PacketMirroring packet_mirroring_resource = 2;
+  optional google.cloud.cpp.compute.v1.PacketMirroring
+      packet_mirroring_resource = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -339,5 +369,6 @@ message TestIamPermissionsRequest {
   string resource = 3 [(google.api.field_behavior) = REQUIRED];
 
   // The TestPermissionsRequest for this request.
-  optional google.cloud.cpp.compute.v1.TestPermissionsRequest test_permissions_request_resource = 4;
+  optional google.cloud.cpp.compute.v1.TestPermissionsRequest
+      test_permissions_request_resource = 4;
 }

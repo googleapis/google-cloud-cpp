@@ -27,13 +27,14 @@ import "google/cloud/extended_operations.proto";
 service UrlMaps {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves the list of all UrlMap resources, regional and global, available
   // to the specified project.
-  rpc AggregatedListUrlMaps(AggregatedListUrlMapsRequest) returns (google.cloud.cpp.compute.v1.UrlMapsAggregatedList) {
+  rpc AggregatedListUrlMaps(AggregatedListUrlMapsRequest)
+      returns (google.cloud.cpp.compute.v1.UrlMapsAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/aggregated/urlMaps"
     };
@@ -41,7 +42,8 @@ service UrlMaps {
   }
 
   // Deletes the specified UrlMap resource.
-  rpc DeleteUrlMaps(DeleteUrlMapsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteUrlMaps(DeleteUrlMapsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/urlMaps/{url_map}"
     };
@@ -50,7 +52,8 @@ service UrlMaps {
   }
 
   // Returns the specified UrlMap resource.
-  rpc GetUrlMaps(GetUrlMapsRequest) returns (google.cloud.cpp.compute.v1.UrlMap) {
+  rpc GetUrlMaps(GetUrlMapsRequest)
+      returns (google.cloud.cpp.compute.v1.UrlMap) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/urlMaps/{url_map}"
     };
@@ -59,7 +62,8 @@ service UrlMaps {
 
   // Creates a UrlMap resource in the specified project using the data included
   // in the request.
-  rpc InsertUrlMaps(InsertUrlMapsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertUrlMaps(InsertUrlMapsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/urlMaps"
       body: "url_map_resource"
@@ -71,17 +75,20 @@ service UrlMaps {
   // Initiates a cache invalidation operation, invalidating the specified path,
   // scoped to the specified UrlMap. For more information, see [Invalidating
   // cached content](/cdn/docs/invalidating-cached-content).
-  rpc InvalidateCache(InvalidateCacheRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InvalidateCache(InvalidateCacheRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/urlMaps/{url_map}/invalidateCache"
       body: "cache_invalidation_rule_resource"
     };
-    option (google.api.method_signature) = "project,url_map,cache_invalidation_rule_resource";
+    option (google.api.method_signature) =
+        "project,url_map,cache_invalidation_rule_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Retrieves the list of UrlMap resources available to the specified project.
-  rpc ListUrlMaps(ListUrlMapsRequest) returns (google.cloud.cpp.compute.v1.UrlMapList) {
+  rpc ListUrlMaps(ListUrlMapsRequest)
+      returns (google.cloud.cpp.compute.v1.UrlMapList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/urlMaps"
     };
@@ -91,7 +98,8 @@ service UrlMaps {
   // Patches the specified UrlMap resource with the data included in the
   // request. This method supports PATCH semantics and uses the JSON merge patch
   // format and processing rules.
-  rpc PatchUrlMaps(PatchUrlMapsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchUrlMaps(PatchUrlMapsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/global/urlMaps/{url_map}"
       body: "url_map_resource"
@@ -102,7 +110,8 @@ service UrlMaps {
 
   // Updates the specified UrlMap resource with the data included in the
   // request.
-  rpc UpdateUrlMaps(UpdateUrlMapsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc UpdateUrlMaps(UpdateUrlMapsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       put: "/compute/v1/projects/{project}/global/urlMaps/{url_map}"
       body: "url_map_resource"
@@ -114,12 +123,14 @@ service UrlMaps {
   // Runs static validation for the UrlMap. In particular, the tests of the
   // provided UrlMap will be run. Calling this method does NOT create the
   // UrlMap.
-  rpc Validate(ValidateRequest) returns (google.cloud.cpp.compute.v1.UrlMapsValidateResponse) {
+  rpc Validate(ValidateRequest)
+      returns (google.cloud.cpp.compute.v1.UrlMapsValidateResponse) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/urlMaps/{url_map}/validate"
       body: "url_maps_validate_request_resource"
     };
-    option (google.api.method_signature) = "project,url_map,url_maps_validate_request_resource";
+    option (google.api.method_signature) =
+        "project,url_map,url_maps_validate_request_resource";
   }
 }
 
@@ -200,7 +211,10 @@ message AggregatedListUrlMapsRequest {
 // Request message for DeleteUrlMaps.
 message DeleteUrlMapsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -230,7 +244,10 @@ message GetUrlMapsRequest {
 // Request message for InsertUrlMaps.
 message InsertUrlMapsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -251,10 +268,14 @@ message InsertUrlMapsRequest {
 // Request message for InvalidateCache.
 message InvalidateCacheRequest {
   // The CacheInvalidationRule for this request.
-  optional google.cloud.cpp.compute.v1.CacheInvalidationRule cache_invalidation_rule_resource = 1;
+  optional google.cloud.cpp.compute.v1.CacheInvalidationRule
+      cache_invalidation_rule_resource = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -340,7 +361,10 @@ message ListUrlMapsRequest {
 // Request message for PatchUrlMaps.
 message PatchUrlMapsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -364,7 +388,10 @@ message PatchUrlMapsRequest {
 // Request message for UpdateUrlMaps.
 message UpdateUrlMapsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -394,5 +421,6 @@ message ValidateRequest {
   string url_map = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The UrlMapsValidateRequest for this request.
-  optional google.cloud.cpp.compute.v1.UrlMapsValidateRequest url_maps_validate_request_resource = 3;
+  optional google.cloud.cpp.compute.v1.UrlMapsValidateRequest
+      url_maps_validate_request_resource = 3;
 }

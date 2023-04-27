@@ -27,12 +27,15 @@ import "google/cloud/extended_operations.proto";
 service InterconnectAttachments {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of interconnect attachments.
-  rpc AggregatedListInterconnectAttachments(AggregatedListInterconnectAttachmentsRequest) returns (google.cloud.cpp.compute.v1.InterconnectAttachmentAggregatedList) {
+  rpc AggregatedListInterconnectAttachments(
+      AggregatedListInterconnectAttachmentsRequest)
+      returns (
+          google.cloud.cpp.compute.v1.InterconnectAttachmentAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/aggregated/interconnectAttachments"
     };
@@ -40,36 +43,43 @@ service InterconnectAttachments {
   }
 
   // Deletes the specified interconnect attachment.
-  rpc DeleteInterconnectAttachments(DeleteInterconnectAttachmentsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteInterconnectAttachments(DeleteInterconnectAttachmentsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/regions/{region}/interconnectAttachments/{interconnect_attachment}"
     };
-    option (google.api.method_signature) = "project,region,interconnect_attachment";
+    option (google.api.method_signature) =
+        "project,region,interconnect_attachment";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Returns the specified interconnect attachment.
-  rpc GetInterconnectAttachments(GetInterconnectAttachmentsRequest) returns (google.cloud.cpp.compute.v1.InterconnectAttachment) {
+  rpc GetInterconnectAttachments(GetInterconnectAttachmentsRequest)
+      returns (google.cloud.cpp.compute.v1.InterconnectAttachment) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/interconnectAttachments/{interconnect_attachment}"
     };
-    option (google.api.method_signature) = "project,region,interconnect_attachment";
+    option (google.api.method_signature) =
+        "project,region,interconnect_attachment";
   }
 
   // Creates an InterconnectAttachment in the specified project using the data
   // included in the request.
-  rpc InsertInterconnectAttachments(InsertInterconnectAttachmentsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertInterconnectAttachments(InsertInterconnectAttachmentsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/interconnectAttachments"
       body: "interconnect_attachment_resource"
     };
-    option (google.api.method_signature) = "project,region,interconnect_attachment_resource";
+    option (google.api.method_signature) =
+        "project,region,interconnect_attachment_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Retrieves the list of interconnect attachments contained within the
   // specified region.
-  rpc ListInterconnectAttachments(ListInterconnectAttachmentsRequest) returns (google.cloud.cpp.compute.v1.InterconnectAttachmentList) {
+  rpc ListInterconnectAttachments(ListInterconnectAttachmentsRequest)
+      returns (google.cloud.cpp.compute.v1.InterconnectAttachmentList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/interconnectAttachments"
     };
@@ -79,23 +89,27 @@ service InterconnectAttachments {
   // Updates the specified interconnect attachment with the data included in the
   // request. This method supports PATCH semantics and uses the JSON merge patch
   // format and processing rules.
-  rpc PatchInterconnectAttachments(PatchInterconnectAttachmentsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchInterconnectAttachments(PatchInterconnectAttachmentsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/regions/{region}/interconnectAttachments/{interconnect_attachment}"
       body: "interconnect_attachment_resource"
     };
-    option (google.api.method_signature) = "project,region,interconnect_attachment,interconnect_attachment_resource";
+    option (google.api.method_signature) =
+        "project,region,interconnect_attachment,interconnect_attachment_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 
   // Sets the labels on an InterconnectAttachment. To learn more about labels,
   // read the Labeling Resources documentation.
-  rpc SetLabels(SetLabelsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetLabels(SetLabelsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/interconnectAttachments/{resource}/setLabels"
       body: "region_set_labels_request_resource"
     };
-    option (google.api.method_signature) = "project,region,resource,region_set_labels_request_resource";
+    option (google.api.method_signature) =
+        "project,region,resource,region_set_labels_request_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 }
@@ -180,10 +194,16 @@ message DeleteInterconnectAttachmentsRequest {
   string interconnect_attachment = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -213,13 +233,20 @@ message GetInterconnectAttachmentsRequest {
 // Request message for InsertInterconnectAttachments.
 message InsertInterconnectAttachmentsRequest {
   // The InterconnectAttachment for this request.
-  optional google.cloud.cpp.compute.v1.InterconnectAttachment interconnect_attachment_resource = 1;
+  optional google.cloud.cpp.compute.v1.InterconnectAttachment
+      interconnect_attachment_resource = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -311,13 +338,20 @@ message PatchInterconnectAttachmentsRequest {
   string interconnect_attachment = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The InterconnectAttachment for this request.
-  optional google.cloud.cpp.compute.v1.InterconnectAttachment interconnect_attachment_resource = 2;
+  optional google.cloud.cpp.compute.v1.InterconnectAttachment
+      interconnect_attachment_resource = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region scoping this request.
-  string region = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -335,13 +369,20 @@ message PatchInterconnectAttachmentsRequest {
 // Request message for SetLabels.
 message SetLabelsRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // The region for this request.
-  string region = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // The RegionSetLabelsRequest for this request.
-  optional google.cloud.cpp.compute.v1.RegionSetLabelsRequest region_set_labels_request_resource = 3;
+  optional google.cloud.cpp.compute.v1.RegionSetLabelsRequest
+      region_set_labels_request_resource = 3;
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the

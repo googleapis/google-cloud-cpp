@@ -26,9 +26,9 @@ import "google/cloud/compute/v1/internal/common.proto";
 service Zones {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Returns the specified Zone resource.
   rpc GetZones(GetZonesRequest) returns (google.cloud.cpp.compute.v1.Zone) {
@@ -39,7 +39,8 @@ service Zones {
   }
 
   // Retrieves the list of Zone resources available to the specified project.
-  rpc ListZones(ListZonesRequest) returns (google.cloud.cpp.compute.v1.ZoneList) {
+  rpc ListZones(ListZonesRequest)
+      returns (google.cloud.cpp.compute.v1.ZoneList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones"
     };

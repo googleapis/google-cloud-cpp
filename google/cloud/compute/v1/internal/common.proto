@@ -163,7 +163,7 @@ message AcceleratorTypeAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -267,7 +267,7 @@ message AcceleratorTypeList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -353,7 +353,7 @@ message AcceleratorTypesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -423,8 +423,8 @@ message AccessConfig {
   optional bool set_public_ptr = 8;
 
   // The type of configuration. The default and only option is ONE_TO_ONE_NAT.
-  // DIRECT_IPV6: 
-  // ONE_TO_ONE_NAT: 
+  // DIRECT_IPV6:
+  // ONE_TO_ONE_NAT:
   optional string type = 9;
 }
 
@@ -443,7 +443,7 @@ message Address {
   // EXTERNAL: A publicly visible external IP address.
   // INTERNAL: A private network IP address, for use with an Instance or
   // Internal Load Balancer forwarding rule.
-  // UNSPECIFIED_TYPE: 
+  // UNSPECIFIED_TYPE:
   optional string address_type = 2;
 
   // [Output Only] Creation timestamp in RFC3339 text format.
@@ -459,9 +459,9 @@ message Address {
 
   // The IP version that will be used by this address. Valid options are IPV4 or
   // IPV6. This can only be specified for a global address.
-  // IPV4: 
-  // IPV6: 
-  // UNSPECIFIED_VERSION: 
+  // IPV4:
+  // IPV6:
+  // UNSPECIFIED_VERSION:
   optional string ip_version = 6;
 
   // The endpoint type of this address, which should be VM or NETLB. This is
@@ -518,7 +518,7 @@ message Address {
   // `SHARED_LOADBALANCER_VIP` for an internal IP address that is assigned to
   // multiple internal forwarding rules. - `PRIVATE_SERVICE_CONNECT` for a
   // private network address that is used to configure Private Service Connect.
-  // Only global internal addresses can use this purpose. 
+  // Only global internal addresses can use this purpose.
   // DNS_RESOLVER: DNS resolver address in the subnetwork.
   // GCE_ENDPOINT: VM internal/alias IP, Internal LB service IP, etc.
   // IPSEC_INTERCONNECT: A regional internal IP address range reserved for the
@@ -661,7 +661,7 @@ message AddressAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -765,7 +765,7 @@ message AddressList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -851,7 +851,7 @@ message AddressesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -904,7 +904,8 @@ message AliasIpRange {
 // [Output Only] Contains output only fields.
 message AllocationResourceStatus {
   // Allocation Properties of this reservation.
-  optional AllocationResourceStatusSpecificSKUAllocation specific_sku_allocation = 1;
+  optional AllocationResourceStatusSpecificSKUAllocation
+      specific_sku_allocation = 1;
 }
 
 // Contains Properties set for the reservation.
@@ -920,8 +921,8 @@ message AllocationSpecificSKUAllocationAllocatedInstancePropertiesReservedDisk {
   // Specifies the disk interface to use for attaching this disk, which is
   // either SCSI or NVME. The default is SCSI. For performance characteristics
   // of SCSI over NVMe, see Local SSD performance.
-  // NVME: 
-  // SCSI: 
+  // NVME:
+  // SCSI:
   optional string interface = 2;
 }
 
@@ -932,7 +933,9 @@ message AllocationSpecificSKUAllocationReservedInstanceProperties {
 
   // Specifies amount of local ssd to reserve with each instance. The type of
   // disk is local-ssd.
-  repeated AllocationSpecificSKUAllocationAllocatedInstancePropertiesReservedDisk local_ssds = 2;
+  repeated
+      AllocationSpecificSKUAllocationAllocatedInstancePropertiesReservedDisk
+          local_ssds = 2;
 
   // An opaque location hint used to place the allocation close to other
   // resources. This field is for use by internal tools that use the public API.
@@ -960,7 +963,8 @@ message AllocationSpecificSKUReservation {
   optional string in_use_count = 3;
 
   // The instance properties for the reservation.
-  optional AllocationSpecificSKUAllocationReservedInstanceProperties instance_properties = 4;
+  optional AllocationSpecificSKUAllocationReservedInstanceProperties
+      instance_properties = 4;
 
   // Specifies the instance template to create the reservation. If you use this
   // field, you must exclude the instanceProperties field. This field is
@@ -969,7 +973,7 @@ message AllocationSpecificSKUReservation {
   // https://www.googleapis.com/compute/v1/projects/project
   // /global/instanceTemplates/instanceTemplate -
   // projects/project/global/instanceTemplates/instanceTemplate -
-  // global/instanceTemplates/instanceTemplate 
+  // global/instanceTemplates/instanceTemplate
   optional string source_instance_template = 5;
 }
 
@@ -1043,8 +1047,8 @@ message AttachedDisk {
   // either SCSI or NVME. For most machine types, the default is SCSI. Local
   // SSDs can use either NVME or SCSI. In certain configurations, persistent
   // disks can use NVMe. For more information, see About persistent disks.
-  // NVME: 
-  // SCSI: 
+  // NVME:
+  // SCSI:
   optional string interface = 11;
 
   // [Output Only] Type of the resource. Always compute#attachedDisk for
@@ -1076,8 +1080,8 @@ message AttachedDisk {
 
   // Specifies the type of the disk, either SCRATCH or PERSISTENT. If not
   // specified, the default is PERSISTENT.
-  // PERSISTENT: 
-  // SCRATCH: 
+  // PERSISTENT:
+  // SCRATCH:
   optional string type = 17;
 }
 
@@ -1431,7 +1435,7 @@ message AutoscalerAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -1535,7 +1539,7 @@ message AutoscalerList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -1621,7 +1625,7 @@ message AutoscalerStatusDetails {
   // SCHEDULED_INSTANCES_LESS_THAN_AUTOSCALER_MIN: For some scaling schedules
   // minRequiredReplicas is less than minNumReplicas. Autoscaler always
   // recommends at least minNumReplicas instances.
-  // UNKNOWN: 
+  // UNKNOWN:
   // UNSUPPORTED_MAX_RATE_LOAD_BALANCING_CONFIGURATION: Autoscaling does not
   // work with an HTTP/S load balancer that has been configured for maxRate.
   // ZONE_RESOURCE_STOCKOUT: For zonal autoscalers: there is a resource stockout
@@ -1705,7 +1709,7 @@ message AutoscalersScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -1733,10 +1737,12 @@ message AutoscalingPolicy {
   optional AutoscalingPolicyCpuUtilization cpu_utilization = 2;
 
   // Configuration parameters of autoscaling based on a custom metric.
-  repeated AutoscalingPolicyCustomMetricUtilization custom_metric_utilizations = 3;
+  repeated AutoscalingPolicyCustomMetricUtilization custom_metric_utilizations =
+      3;
 
   // Configuration parameters of autoscaling based on load balancer.
-  optional AutoscalingPolicyLoadBalancingUtilization load_balancing_utilization = 4;
+  optional AutoscalingPolicyLoadBalancingUtilization
+      load_balancing_utilization = 4;
 
   // The maximum number of instances that the autoscaler can scale out to. This
   // is required when creating or updating an autoscaler. The maximum number of
@@ -2059,7 +2065,8 @@ message BackendBucketCdnPolicy {
   // Bypass the cache when the specified request headers are matched - e.g.
   // Pragma or Authorization headers. Up to 5 headers can be specified. The
   // cache is bypassed for all cdnPolicy.cacheMode settings.
-  repeated BackendBucketCdnPolicyBypassCacheOnRequestHeader bypass_cache_on_request_headers = 1;
+  repeated BackendBucketCdnPolicyBypassCacheOnRequestHeader
+      bypass_cache_on_request_headers = 1;
 
   // The CacheKeyPolicy for this CdnPolicy.
   optional BackendBucketCdnPolicyCacheKeyPolicy cache_key_policy = 2;
@@ -2084,7 +2091,7 @@ message BackendBucketCdnPolicy {
   // FORCE_CACHE_ALL: Cache all content, ignoring any "private", "no-store" or
   // "no-cache" directives in Cache-Control response headers. Warning: this may
   // result in Cloud CDN caching private, per-user (user identifiable) content.
-  // INVALID_CACHE_MODE: 
+  // INVALID_CACHE_MODE:
   // USE_ORIGIN_HEADERS: Requires the origin to set valid caching headers to
   // cache content. Responses without these headers will not be cached at
   // Google's edge, and will require a full trip to the origin on every request,
@@ -2146,7 +2153,8 @@ message BackendBucketCdnPolicy {
   // take care to specify a cache TTL for all response codes that you wish to
   // cache. Cloud CDN will not apply any default negative caching when a policy
   // exists.
-  repeated BackendBucketCdnPolicyNegativeCachingPolicy negative_caching_policy = 8;
+  repeated BackendBucketCdnPolicyNegativeCachingPolicy negative_caching_policy =
+      8;
 
   // If true then Cloud CDN will combine multiple concurrent cache fill requests
   // into a small number of requests to the origin.
@@ -2303,7 +2311,7 @@ message BackendBucketList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -2358,7 +2366,8 @@ message BackendService {
   // Connection Tracking configuration for this BackendService. Connection
   // tracking policy settings are only available for Network Load Balancing and
   // Internal TCP/UDP Load Balancing.
-  optional BackendServiceConnectionTrackingPolicy connection_tracking_policy = 7;
+  optional BackendServiceConnectionTrackingPolicy connection_tracking_policy =
+      7;
 
   // Consistent Hash-based load balancing can be used to provide soft session
   // affinity based on HTTP headers, cookies or other properties. This load
@@ -2370,7 +2379,7 @@ message BackendService {
   // either: - A regional backend service with the service_protocol set to HTTP,
   // HTTPS, or HTTP2, and load_balancing_scheme set to INTERNAL_MANAGED. - A
   // global backend service with the load_balancing_scheme set to
-  // INTERNAL_SELF_MANAGED. 
+  // INTERNAL_SELF_MANAGED.
   optional ConsistentHashLoadBalancerSettings consistent_hash = 8;
 
   // [Output Only] Creation timestamp in RFC3339 text format.
@@ -2448,7 +2457,7 @@ message BackendService {
   // Load Balancing.
   // INTERNAL_SELF_MANAGED: Signifies that this will be used by Traffic
   // Director.
-  // INVALID_LOAD_BALANCING_SCHEME: 
+  // INVALID_LOAD_BALANCING_SCHEME:
   optional string load_balancing_scheme = 21;
 
   // A list of locality load-balancing policies to be used in order of
@@ -2460,7 +2469,8 @@ message BackendService {
   // children are intended for use in a service mesh that includes gRPC clients
   // only. Envoy proxies can't use backend services that have this
   // configuration.
-  repeated BackendServiceLocalityLoadBalancingPolicyConfig locality_lb_policies = 22;
+  repeated BackendServiceLocalityLoadBalancingPolicyConfig
+      locality_lb_policies = 22;
 
   // The load balancing algorithm used within the scope of the locality. The
   // possible values are: - ROUND_ROBIN: This is a simple policy in which each
@@ -2486,7 +2496,7 @@ message BackendService {
   // effect. Only ROUND_ROBIN and RING_HASH are supported when the backend
   // service is referenced by a URL map that is bound to target gRPC proxy that
   // has validateForProxyless field set to true.
-  // INVALID_LB_POLICY: 
+  // INVALID_LB_POLICY:
   // LEAST_REQUEST: An O(1) algorithm which selects two random healthy hosts and
   // picks the host which has fewer active requests.
   // MAGLEV: This algorithm implements consistent hashing to backends. Maglev
@@ -2548,7 +2558,7 @@ message BackendService {
   // considered disabled. This field is applicable to either: - A regional
   // backend service with the service_protocol set to HTTP, HTTPS, HTTP2, or
   // GRPC, and load_balancing_scheme set to INTERNAL_MANAGED. - A global backend
-  // service with the load_balancing_scheme set to INTERNAL_SELF_MANAGED. 
+  // service with the load_balancing_scheme set to INTERNAL_SELF_MANAGED.
   optional OutlierDetection outlier_detection = 28;
 
   // Deprecated in favor of portName. The TCP port to connect on the backend.
@@ -2571,9 +2581,9 @@ message BackendService {
   // information. Must be set to GRPC when the backend service is referenced by
   // a URL map that is bound to target gRPC proxy.
   // GRPC: gRPC (available for Traffic Director).
-  // HTTP: 
+  // HTTP:
   // HTTP2: HTTP/2 with SSL.
-  // HTTPS: 
+  // HTTPS:
   // SSL: TCP proxying with SSL.
   // TCP: TCP proxying or TCP pass-through.
   // UDP: UDP.
@@ -2744,7 +2754,7 @@ message BackendServiceAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -2760,7 +2770,8 @@ message BackendServiceCdnPolicy {
   // Bypass the cache when the specified request headers are matched - e.g.
   // Pragma or Authorization headers. Up to 5 headers can be specified. The
   // cache is bypassed for all cdnPolicy.cacheMode settings.
-  repeated BackendServiceCdnPolicyBypassCacheOnRequestHeader bypass_cache_on_request_headers = 1;
+  repeated BackendServiceCdnPolicyBypassCacheOnRequestHeader
+      bypass_cache_on_request_headers = 1;
 
   // The CacheKeyPolicy for this CdnPolicy.
   optional CacheKeyPolicy cache_key_policy = 2;
@@ -2785,7 +2796,7 @@ message BackendServiceCdnPolicy {
   // FORCE_CACHE_ALL: Cache all content, ignoring any "private", "no-store" or
   // "no-cache" directives in Cache-Control response headers. Warning: this may
   // result in Cloud CDN caching private, per-user (user identifiable) content.
-  // INVALID_CACHE_MODE: 
+  // INVALID_CACHE_MODE:
   // USE_ORIGIN_HEADERS: Requires the origin to set valid caching headers to
   // cache content. Responses without these headers will not be cached at
   // Google's edge, and will require a full trip to the origin on every request,
@@ -2847,7 +2858,8 @@ message BackendServiceCdnPolicy {
   // take care to specify a cache TTL for all response codes that you wish to
   // cache. Cloud CDN will not apply any default negative caching when a policy
   // exists.
-  repeated BackendServiceCdnPolicyNegativeCachingPolicy negative_caching_policy = 8;
+  repeated BackendServiceCdnPolicyNegativeCachingPolicy
+      negative_caching_policy = 8;
 
   // If true then Cloud CDN will combine multiple concurrent cache fill requests
   // into a small number of requests to the origin.
@@ -2918,9 +2930,9 @@ message BackendServiceConnectionTrackingPolicy {
   // Balancing](https://cloud.google.com/load-balancing/docs/network/networklb-backend-service#connection-persistence)
   // and [Connection Persistence for Internal TCP/UDP Load
   // Balancing](https://cloud.google.com/load-balancing/docs/internal#connection-persistence).
-  // ALWAYS_PERSIST: 
-  // DEFAULT_FOR_PROTOCOL: 
-  // NEVER_PERSIST: 
+  // ALWAYS_PERSIST:
+  // DEFAULT_FOR_PROTOCOL:
+  // NEVER_PERSIST:
   optional string connection_persistence_on_unhealthy_backends = 1;
 
   // Enable Strong Session Affinity for Network Load Balancing. This option is
@@ -2945,9 +2957,9 @@ message BackendServiceConnectionTrackingPolicy {
   // Balancing](https://cloud.google.com/load-balancing/docs/network/networklb-backend-service#tracking-mode)
   // and [Tracking Mode for Internal TCP/UDP Load
   // Balancing](https://cloud.google.com/load-balancing/docs/internal#tracking-mode).
-  // INVALID_TRACKING_MODE: 
-  // PER_CONNECTION: 
-  // PER_SESSION: 
+  // INVALID_TRACKING_MODE:
+  // PER_CONNECTION:
+  // PER_SESSION:
   optional string tracking_mode = 4;
 }
 
@@ -3114,7 +3126,7 @@ message BackendServiceList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -3128,7 +3140,8 @@ message BackendServiceList {
 // Container for either a built-in LB policy supported by gRPC or Envoy or a
 // custom one implemented by the end user.
 message BackendServiceLocalityLoadBalancingPolicyConfig {
-  optional BackendServiceLocalityLoadBalancingPolicyConfigCustomPolicy custom_policy = 1;
+  optional BackendServiceLocalityLoadBalancingPolicyConfigCustomPolicy
+      custom_policy = 1;
 
   optional BackendServiceLocalityLoadBalancingPolicyConfigPolicy policy = 2;
 }
@@ -3157,7 +3170,7 @@ message BackendServiceLocalityLoadBalancingPolicyConfigPolicy {
   // these values, see the description of localityLbPolicy. Do not specify the
   // same policy more than once for a backend. If you do, the configuration is
   // rejected.
-  // INVALID_LB_POLICY: 
+  // INVALID_LB_POLICY:
   // LEAST_REQUEST: An O(1) algorithm which selects two random healthy hosts and
   // picks the host which has fewer active requests.
   // MAGLEV: This algorithm implements consistent hashing to backends. Maglev
@@ -3296,7 +3309,7 @@ message BackendServicesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -3325,16 +3338,16 @@ message BfdPacket {
   // in session state. This allows remote systems to determine the reason that
   // the previous session failed, for example. These diagnostic codes are
   // specified in section 4.1 of RFC5880
-  // ADMINISTRATIVELY_DOWN: 
-  // CONCATENATED_PATH_DOWN: 
-  // CONTROL_DETECTION_TIME_EXPIRED: 
-  // DIAGNOSTIC_UNSPECIFIED: 
-  // ECHO_FUNCTION_FAILED: 
-  // FORWARDING_PLANE_RESET: 
-  // NEIGHBOR_SIGNALED_SESSION_DOWN: 
-  // NO_DIAGNOSTIC: 
-  // PATH_DOWN: 
-  // REVERSE_CONCATENATED_PATH_DOWN: 
+  // ADMINISTRATIVELY_DOWN:
+  // CONCATENATED_PATH_DOWN:
+  // CONTROL_DETECTION_TIME_EXPIRED:
+  // DIAGNOSTIC_UNSPECIFIED:
+  // ECHO_FUNCTION_FAILED:
+  // FORWARDING_PLANE_RESET:
+  // NEIGHBOR_SIGNALED_SESSION_DOWN:
+  // NO_DIAGNOSTIC:
+  // PATH_DOWN:
+  // REVERSE_CONCATENATED_PATH_DOWN:
   optional string diagnostic = 4;
 
   // The Final bit of the BFD packet. This is specified in section 4.1 of
@@ -3374,11 +3387,11 @@ message BfdPacket {
 
   // The current BFD session state as seen by the transmitting system. These
   // states are specified in section 4.1 of RFC5880
-  // ADMIN_DOWN: 
-  // DOWN: 
-  // INIT: 
-  // STATE_UNSPECIFIED: 
-  // UP: 
+  // ADMIN_DOWN:
+  // DOWN:
+  // INIT:
+  // STATE_UNSPECIFIED:
+  // UP:
   optional string state = 14;
 
   // The version number of the BFD protocol, as specified in section 4.1 of
@@ -3397,9 +3410,9 @@ message BfdStatus {
   // PASSIVE, the Cloud Router will wait for the peer router to initiate the BFD
   // session for this BGP peer. If set to DISABLED, BFD is disabled for this BGP
   // peer.
-  // ACTIVE: 
-  // DISABLED: 
-  // PASSIVE: 
+  // ACTIVE:
+  // DISABLED:
+  // PASSIVE:
   optional string bfd_session_initialization_mode = 1;
 
   // Unix timestamp of the most recent config update.
@@ -3415,25 +3428,25 @@ message BfdStatus {
   // in session state. This allows remote systems to determine the reason that
   // the previous session failed, for example. These diagnostic codes are
   // specified in section 4.1 of RFC5880
-  // ADMINISTRATIVELY_DOWN: 
-  // CONCATENATED_PATH_DOWN: 
-  // CONTROL_DETECTION_TIME_EXPIRED: 
-  // DIAGNOSTIC_UNSPECIFIED: 
-  // ECHO_FUNCTION_FAILED: 
-  // FORWARDING_PLANE_RESET: 
-  // NEIGHBOR_SIGNALED_SESSION_DOWN: 
-  // NO_DIAGNOSTIC: 
-  // PATH_DOWN: 
-  // REVERSE_CONCATENATED_PATH_DOWN: 
+  // ADMINISTRATIVELY_DOWN:
+  // CONCATENATED_PATH_DOWN:
+  // CONTROL_DETECTION_TIME_EXPIRED:
+  // DIAGNOSTIC_UNSPECIFIED:
+  // ECHO_FUNCTION_FAILED:
+  // FORWARDING_PLANE_RESET:
+  // NEIGHBOR_SIGNALED_SESSION_DOWN:
+  // NO_DIAGNOSTIC:
+  // PATH_DOWN:
+  // REVERSE_CONCATENATED_PATH_DOWN:
   optional string local_diagnostic = 5;
 
   // The current BFD session state as seen by the transmitting system. These
   // states are specified in section 4.1 of RFC5880
-  // ADMIN_DOWN: 
-  // DOWN: 
-  // INIT: 
-  // STATE_UNSPECIFIED: 
-  // UP: 
+  // ADMIN_DOWN:
+  // DOWN:
+  // INIT:
+  // STATE_UNSPECIFIED:
+  // UP:
   optional string local_state = 6;
 
   // Negotiated transmit interval for control packets.
@@ -3557,7 +3570,8 @@ message BulkInsertInstanceResource {
 
   // Per-instance properties to be set on individual instances. Keys of this map
   // specify requested instance names. Can be empty if name_pattern is used.
-  map<string, BulkInsertInstanceResourcePerInstanceProperties> per_instance_properties = 6;
+  map<string, BulkInsertInstanceResourcePerInstanceProperties>
+      per_instance_properties = 6;
 
   // Specifies the instance template from which to create instances. You may
   // combine sourceInstanceTemplate with instanceProperties to override specific
@@ -3673,9 +3687,9 @@ message Commitment {
   // Category LICENSE specifies commitments composed of software licenses,
   // listed in licenseResources. Note that only MACHINE commitments should have
   // a Type specified.
-  // CATEGORY_UNSPECIFIED: 
-  // LICENSE: 
-  // MACHINE: 
+  // CATEGORY_UNSPECIFIED:
+  // LICENSE:
+  // MACHINE:
   optional string category = 2;
 
   // [Output Only] Creation timestamp in RFC3339 text format.
@@ -3714,9 +3728,9 @@ message Commitment {
   // The plan for this commitment, which determines duration and discount rate.
   // The currently supported plans are TWELVE_MONTH (1 year), and
   // THIRTY_SIX_MONTH (3 years).
-  // INVALID: 
-  // THIRTY_SIX_MONTH: 
-  // TWELVE_MONTH: 
+  // INVALID:
+  // THIRTY_SIX_MONTH:
+  // TWELVE_MONTH:
   optional string plan = 11;
 
   // [Output Only] URL of the region where this commitment may be used.
@@ -3741,12 +3755,12 @@ message Commitment {
   // [Output Only] Status of the commitment with regards to eventual expiration
   // (each commitment has an end date defined). One of the following values:
   // NOT_YET_ACTIVE, ACTIVE, EXPIRED.
-  // ACTIVE: 
+  // ACTIVE:
   // CANCELLED: Deprecate CANCELED status. Will use separate status to
   // differentiate cancel by mergeCud or manual cancellation.
-  // CREATING: 
-  // EXPIRED: 
-  // NOT_YET_ACTIVE: 
+  // CREATING:
+  // EXPIRED:
+  // NOT_YET_ACTIVE:
   optional string status = 18;
 
   // [Output Only] An optional, human-readable explanation of the status.
@@ -3756,18 +3770,18 @@ message Commitment {
   // resources. Type MEMORY_OPTIMIZED specifies a commitment that will only
   // apply to memory optimized machines. Type ACCELERATOR_OPTIMIZED specifies a
   // commitment that will only apply to accelerator optimized machines.
-  // ACCELERATOR_OPTIMIZED: 
-  // COMPUTE_OPTIMIZED: 
-  // COMPUTE_OPTIMIZED_C2D: 
-  // COMPUTE_OPTIMIZED_C3: 
-  // GENERAL_PURPOSE: 
-  // GENERAL_PURPOSE_E2: 
-  // GENERAL_PURPOSE_N2: 
-  // GENERAL_PURPOSE_N2D: 
-  // GENERAL_PURPOSE_T2D: 
-  // MEMORY_OPTIMIZED: 
-  // MEMORY_OPTIMIZED_M3: 
-  // TYPE_UNSPECIFIED: 
+  // ACCELERATOR_OPTIMIZED:
+  // COMPUTE_OPTIMIZED:
+  // COMPUTE_OPTIMIZED_C2D:
+  // COMPUTE_OPTIMIZED_C3:
+  // GENERAL_PURPOSE:
+  // GENERAL_PURPOSE_E2:
+  // GENERAL_PURPOSE_N2:
+  // GENERAL_PURPOSE_N2D:
+  // GENERAL_PURPOSE_T2D:
+  // MEMORY_OPTIMIZED:
+  // MEMORY_OPTIMIZED_M3:
+  // TYPE_UNSPECIFIED:
   optional string type = 20;
 }
 
@@ -3866,7 +3880,7 @@ message CommitmentAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -3970,7 +3984,7 @@ message CommitmentList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -4056,7 +4070,7 @@ message CommitmentsScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -4195,18 +4209,18 @@ message CorsPolicy {
 message CustomerEncryptionKey {
   // The name of the encryption key that is stored in Google Cloud KMS. For
   // example: "kmsKeyName": "projects/kms_project_id/locations/region/keyRings/
-  // key_region/cryptoKeys/key 
+  // key_region/cryptoKeys/key
   optional string kms_key_name = 1;
 
   // The service account being used for the encryption request for the given KMS
   // key. If absent, the Compute Engine default service account is used. For
-  // example: "kmsKeyServiceAccount": "name@project_id.iam.gserviceaccount.com/ 
+  // example: "kmsKeyServiceAccount": "name@project_id.iam.gserviceaccount.com/
   optional string kms_key_service_account = 2;
 
   // Specifies a 256-bit customer-supplied encryption key, encoded in RFC 4648
   // base64 to either encrypt or decrypt this resource. You can provide either
   // the rawKey or the rsaEncryptedKey. For example: "rawKey":
-  // "SGVsbG8gZnJvbSBHb29nbGUgQ2xvdWQgUGxhdGZvcm0=" 
+  // "SGVsbG8gZnJvbSBHb29nbGUgQ2xvdWQgUGxhdGZvcm0="
   optional string raw_key = 3;
 
   // Specifies an RFC 4648 base64 encoded, RSA-wrapped 2048-bit
@@ -4221,7 +4235,7 @@ message CustomerEncryptionKey {
   // provided by Google. 2. After being wrapped, the key must be encoded in RFC
   // 4648 base64 encoding. Gets the RSA public key certificate provided by
   // Google at:
-  // https://cloud-certs.storage.googleapis.com/google-cloud-csek-ingress.pem 
+  // https://cloud-certs.storage.googleapis.com/google-cloud-csek-ingress.pem
   optional string rsa_encrypted_key = 4;
 
   // [Output only] The RFC 4648 base64 encoded SHA-256 hash of the
@@ -4236,7 +4250,7 @@ message CustomerEncryptionKeyProtectedDisk {
 
   // Specifies a valid partial or full URL to an existing Persistent Disk
   // resource. This field is only applicable for persistent disks. For example:
-  // "source": "/compute/v1/projects/project_id/zones/zone/disks/ disk_name 
+  // "source": "/compute/v1/projects/project_id/zones/zone/disks/ disk_name
   optional string source = 2;
 }
 
@@ -4268,10 +4282,10 @@ message DeprecationStatus {
   // DEPRECATED resource will return successfully, but with a warning indicating
   // the deprecated resource and recommending its replacement. Operations which
   // use OBSOLETE or DELETED resources will be rejected and result in an error.
-  // ACTIVE: 
-  // DELETED: 
-  // DEPRECATED: 
-  // OBSOLETE: 
+  // ACTIVE:
+  // DELETED:
+  // DEPRECATED:
+  // OBSOLETE:
   optional string state = 5;
 }
 
@@ -4418,7 +4432,7 @@ message Disk {
   // https://www.googleapis.com/compute/v1/projects/project/regions/region
   // /disks/disk - projects/project/zones/zone/disks/disk -
   // projects/project/regions/region/disks/disk - zones/zone/disks/disk -
-  // regions/region/disks/disk 
+  // regions/region/disks/disk
   optional string source_disk = 26;
 
   // [Output Only] The unique ID of the disk used to create this disk. This
@@ -4439,7 +4453,7 @@ message Disk {
   // following format: global/images/my-custom-image You can also specify a
   // custom image by its image family, which returns the latest version of the
   // image in that family. Replace the image name with family/family-name:
-  // global/images/family/my-image-family 
+  // global/images/family/my-image-family
   optional string source_image = 28;
 
   // The customer-supplied encryption key of the source image. Required if the
@@ -4457,7 +4471,7 @@ message Disk {
   // partial or full URL to the resource. For example, the following are valid
   // values: - https://www.googleapis.com/compute/v1/projects/project
   // /global/snapshots/snapshot - projects/project/global/snapshots/snapshot -
-  // global/snapshots/snapshot 
+  // global/snapshots/snapshot
   optional string source_snapshot = 31;
 
   // The customer-supplied encryption key of the source snapshot. Required if
@@ -4482,7 +4496,7 @@ message Disk {
   // [Output Only] The status of disk creation. - CREATING: Disk is
   // provisioning. - RESTORING: Source data is being copied into the disk. -
   // FAILED: Disk creation failed. - READY: Disk is ready for use. - DELETING:
-  // Disk is deleting. 
+  // Disk is deleting.
   // CREATING: Disk is provisioning
   // DELETING: Disk is deleting.
   // FAILED: Disk creation failed.
@@ -4600,7 +4614,7 @@ message DiskAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -4635,7 +4649,7 @@ message DiskInstantiationConfig {
   // Applicable to the boot disk and additional read-write disks. -
   // attach-read-only: to attach a read-only disk. Applicable to read-only
   // disks. - do-not-include: to exclude a disk from the template. Applicable to
-  // additional read-write disks, local SSDs, and read-only disks. 
+  // additional read-write disks, local SSDs, and read-only disks.
   // ATTACH_READ_ONLY: Attach the existing disk in read-only mode. The request
   // will fail if the disk was attached in read-write mode on the source
   // instance. Applicable to: read-only disks.
@@ -4752,7 +4766,7 @@ message DiskList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -4767,14 +4781,14 @@ message DiskMoveRequest {
   // The URL of the destination zone to move the disk. This can be a full or
   // partial URL. For example, the following are all valid URLs to a zone: -
   // https://www.googleapis.com/compute/v1/projects/project/zones/zone -
-  // projects/project/zones/zone - zones/zone 
+  // projects/project/zones/zone - zones/zone
   optional string destination_zone = 1;
 
   // The URL of the target disk to move. This can be a full or partial URL. For
   // example, the following are all valid URLs to a disk: -
   // https://www.googleapis.com/compute/v1/projects/project/zones/zone
   // /disks/disk - projects/project/zones/zone/disks/disk -
-  // zones/zone/disks/disk 
+  // zones/zone/disks/disk
   optional string target_disk = 2;
 }
 
@@ -4930,7 +4944,7 @@ message DiskTypeAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -5033,7 +5047,7 @@ message DiskTypeList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -5119,7 +5133,7 @@ message DiskTypesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -5222,7 +5236,7 @@ message DisksScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -5435,7 +5449,7 @@ message ExchangedPeeringRoutesList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -5567,7 +5581,7 @@ message ExternalVpnGatewayInterface {
   // The numeric ID of this interface. The allowed input values for this id for
   // different redundancy types of external VPN gateway: -
   // SINGLE_IP_INTERNALLY_REDUNDANT - 0 - TWO_IPS_REDUNDANCY - 0, 1 -
-  // FOUR_IPS_REDUNDANCY - 0, 1, 2, 3 
+  // FOUR_IPS_REDUNDANCY - 0, 1, 2, 3
   optional uint32 id = 1;
 
   // IP address of the interface in the external VPN gateway. Only IPv4 is
@@ -5672,7 +5686,7 @@ message ExternalVpnGatewayList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -5688,9 +5702,9 @@ message FileContentBuffer {
   optional string content = 1;
 
   // The file type of source file.
-  // BIN: 
-  // UNDEFINED: 
-  // X509: 
+  // BIN:
+  // UNDEFINED:
+  // X509:
   optional string file_type = 2;
 }
 
@@ -5787,7 +5801,7 @@ message Firewall {
   // specify the network as a full or partial URL. For example, the following
   // are all valid URLs: -
   // https://www.googleapis.com/compute/v1/projects/myproject/global/networks/my-network
-  // - projects/myproject/global/networks/my-network - global/networks/default 
+  // - projects/myproject/global/networks/my-network - global/networks/default
   optional string network = 12;
 
   // Priority for this rule. This is an integer between `0` and `65535`, both
@@ -5947,7 +5961,7 @@ message FirewallList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -5967,8 +5981,8 @@ message FirewallLogConfig {
   // This field can only be specified for a particular firewall rule if logging
   // is enabled for that rule. This field denotes whether to include or exclude
   // metadata for firewall logs.
-  // EXCLUDE_ALL_METADATA: 
-  // INCLUDE_ALL_METADATA: 
+  // EXCLUDE_ALL_METADATA:
+  // INCLUDE_ALL_METADATA:
   optional string metadata = 2;
 }
 
@@ -6173,7 +6187,7 @@ message FirewallPolicyList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -6195,8 +6209,8 @@ message FirewallPolicyRule {
   optional string description = 2;
 
   // The direction in which this rule applies.
-  // EGRESS: 
-  // INGRESS: 
+  // EGRESS:
+  // INGRESS:
   optional string direction = 3;
 
   // Denotes whether the firewall policy rule is disabled. When set to true, the
@@ -6294,8 +6308,8 @@ message FirewallPolicyRuleSecureTag {
 
   // [Output Only] State of the secure tag, either `EFFECTIVE` or `INEFFECTIVE`.
   // A secure tag is `INEFFECTIVE` when it is deleted or its network is deleted.
-  // EFFECTIVE: 
-  // INEFFECTIVE: 
+  // EFFECTIVE:
+  // INEFFECTIVE:
   optional string state = 2;
 }
 
@@ -6306,7 +6320,7 @@ message FixedOrPercent {
   // to the fixed value. - If the value is a percent, then the calculated value
   // is percent/100 * targetSize. For example, the calculated value of a 80% of
   // a managed instance group with 150 instances would be (80/100 * 150) = 120
-  // VM instances. If there is a remainder, the number is rounded. 
+  // VM instances. If there is a remainder, the number is rounded.
   optional int32 calculated = 1;
 
   // Specifies a fixed number of VM instances. This must be a positive integer.
@@ -6357,13 +6371,13 @@ message ForwardingRule {
   // protocols are different for different load balancing products as described
   // in [Load balancing
   // features](https://cloud.google.com/load-balancing/docs/features#protocols_from_the_load_balancer_to_the_backends).
-  // AH: 
-  // ESP: 
-  // ICMP: 
-  // L3_DEFAULT: 
-  // SCTP: 
-  // TCP: 
-  // UDP: 
+  // AH:
+  // ESP:
+  // ICMP:
+  // L3_DEFAULT:
+  // SCTP:
+  // TCP:
+  // UDP:
   optional string ip_protocol = 2;
 
   // This field can only be used: - If IPProtocol is one of TCP, UDP, or SCTP. -
@@ -6415,9 +6429,9 @@ message ForwardingRule {
 
   // The IP Version that will be used by this forwarding rule. Valid options are
   // IPV4 or IPV6.
-  // IPV4: 
-  // IPV6: 
-  // UNSPECIFIED_VERSION: 
+  // IPV4:
+  // IPV6:
+  // UNSPECIFIED_VERSION:
   optional string ip_version = 11;
 
   // Indicates whether or not this load balancer can be used as a collector for
@@ -6447,12 +6461,12 @@ message ForwardingRule {
 
   // Specifies the forwarding rule type. For more information about forwarding
   // rules, refer to Forwarding rule concepts.
-  // EXTERNAL: 
-  // EXTERNAL_MANAGED: 
-  // INTERNAL: 
-  // INTERNAL_MANAGED: 
-  // INTERNAL_SELF_MANAGED: 
-  // INVALID: 
+  // EXTERNAL:
+  // EXTERNAL_MANAGED:
+  // INTERNAL:
+  // INTERNAL_MANAGED:
+  // INTERNAL_SELF_MANAGED:
+  // INVALID:
   optional string load_balancing_scheme = 16;
 
   // Opaque filter criteria used by load balancer to restrict routing
@@ -6552,7 +6566,7 @@ message ForwardingRule {
   // traffic.
   // PENDING: The connection is pending acceptance by the producer.
   // REJECTED: The connection has been rejected by the producer.
-  // STATUS_UNSPECIFIED: 
+  // STATUS_UNSPECIFIED:
   optional string psc_connection_status = 25;
 
   // [Output Only] URL of the region where the regional forwarding rule resides.
@@ -6566,7 +6580,8 @@ message ForwardingRule {
 
   // Service Directory resources to register this forwarding rule with.
   // Currently, only supports a single Service Directory resource.
-  repeated ForwardingRuleServiceDirectoryRegistration service_directory_registrations = 28;
+  repeated ForwardingRuleServiceDirectoryRegistration
+      service_directory_registrations = 28;
 
   // An optional prefix to the service name for this Forwarding Rule. If
   // specified, the prefix is the first label of the fully qualified service
@@ -6608,7 +6623,7 @@ message ForwardingRule {
   // Google APIs, provide the name of a supported Google API bundle: - vpc-sc -
   // APIs that support VPC Service Controls. - all-apis - All supported Google
   // APIs. - For Private Service Connect forwarding rules that forward traffic
-  // to managed services, the target must be a service attachment. 
+  // to managed services, the target must be a service attachment.
   optional string target = 33;
 }
 
@@ -6707,7 +6722,7 @@ message ForwardingRuleAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -6810,7 +6825,7 @@ message ForwardingRuleList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -6917,7 +6932,7 @@ message ForwardingRulesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -7077,15 +7092,15 @@ message GuestOsFeature {
   // VIRTIO_SCSI_MULTIQUEUE - WINDOWS - MULTI_IP_SUBNET - UEFI_COMPATIBLE -
   // GVNIC - SEV_CAPABLE - SUSPEND_RESUME_COMPATIBLE - SEV_SNP_CAPABLE For more
   // information, see Enabling guest operating system features.
-  // FEATURE_TYPE_UNSPECIFIED: 
-  // GVNIC: 
-  // MULTI_IP_SUBNET: 
-  // SECURE_BOOT: 
-  // SEV_CAPABLE: 
-  // SEV_SNP_CAPABLE: 
-  // UEFI_COMPATIBLE: 
-  // VIRTIO_SCSI_MULTIQUEUE: 
-  // WINDOWS: 
+  // FEATURE_TYPE_UNSPECIFIED:
+  // GVNIC:
+  // MULTI_IP_SUBNET:
+  // SECURE_BOOT:
+  // SEV_CAPABLE:
+  // SEV_SNP_CAPABLE:
+  // UEFI_COMPATIBLE:
+  // VIRTIO_SCSI_MULTIQUEUE:
+  // WINDOWS:
   optional string type = 1;
 }
 
@@ -7136,8 +7151,8 @@ message HTTP2HealthCheck {
 
   // Specifies the type of proxy header to append before sending data to the
   // backend, either NONE or PROXY_V1. The default is NONE.
-  // NONE: 
-  // PROXY_V1: 
+  // NONE:
+  // PROXY_V1:
   optional string proxy_header = 5;
 
   // The request path of the HTTP/2 health check request. The default value is
@@ -7199,8 +7214,8 @@ message HTTPHealthCheck {
 
   // Specifies the type of proxy header to append before sending data to the
   // backend, either NONE or PROXY_V1. The default is NONE.
-  // NONE: 
-  // PROXY_V1: 
+  // NONE:
+  // PROXY_V1:
   optional string proxy_header = 5;
 
   // The request path of the HTTP health check request. The default value is /.
@@ -7261,8 +7276,8 @@ message HTTPSHealthCheck {
 
   // Specifies the type of proxy header to append before sending data to the
   // backend, either NONE or PROXY_V1. The default is NONE.
-  // NONE: 
-  // PROXY_V1: 
+  // NONE:
+  // PROXY_V1:
   optional string proxy_header = 5;
 
   // The request path of the HTTPS health check request. The default value is /.
@@ -7352,13 +7367,13 @@ message HealthCheck {
   // Specifies the type of the healthCheck, either TCP, SSL, HTTP, HTTPS, HTTP2
   // or GRPC. Exactly one of the protocol-specific health check fields must be
   // specified, which must match type field.
-  // GRPC: 
-  // HTTP: 
-  // HTTP2: 
-  // HTTPS: 
-  // INVALID: 
-  // SSL: 
-  // TCP: 
+  // GRPC:
+  // HTTP:
+  // HTTP2:
+  // HTTPS:
+  // INVALID:
+  // SSL:
+  // TCP:
   optional string type = 18;
 
   // A so-far healthy instance will be marked unhealthy after this many
@@ -7458,7 +7473,7 @@ message HealthCheckList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -7481,7 +7496,7 @@ message HealthCheckLogConfig {
 // valid URLs: -
 // https://www.googleapis.com/compute/beta/projects/project-id/global/httpHealthChecks/health-check
 // - projects/project-id/global/httpHealthChecks/health-check -
-// global/httpHealthChecks/health-check 
+// global/httpHealthChecks/health-check
 message HealthCheckReference {
   optional string health_check = 1;
 }
@@ -7576,7 +7591,7 @@ message HealthCheckService {
 // https://www.googleapis.com/compute/beta/projects/project-id/regions/us-west1/healthCheckServices/health-check-service
 // -
 // projects/project-id/regions/us-west1/healthCheckServices/health-check-service
-// - regions/us-west1/healthCheckServices/health-check-service 
+// - regions/us-west1/healthCheckServices/health-check-service
 message HealthCheckServiceReference {
   optional string health_check_service = 1;
 }
@@ -7673,7 +7688,7 @@ message HealthCheckServicesList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -7778,7 +7793,7 @@ message HealthChecksAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -7864,7 +7879,7 @@ message HealthChecksScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -7888,8 +7903,8 @@ message HealthStatus {
   optional string forwarding_rule_ip = 3;
 
   // Health state of the instance.
-  // HEALTHY: 
-  // UNHEALTHY: 
+  // HEALTHY:
+  // UNHEALTHY:
   optional string health_state = 4;
 
   // URL of the instance resource.
@@ -7944,10 +7959,10 @@ message HealthStatusForNetworkEndpoint {
 
   // Health state of the network endpoint determined based on the health checks
   // configured.
-  // DRAINING: 
-  // HEALTHY: 
-  // UNHEALTHY: 
-  // UNKNOWN: 
+  // DRAINING:
+  // HEALTHY:
+  // UNHEALTHY:
+  // UNKNOWN:
   optional string health_state = 5;
 }
 
@@ -8073,7 +8088,7 @@ message HttpHeaderMatch {
   // If set to false, the headerMatch is considered a match if the preceding
   // match criteria are met. If set to true, the headerMatch is considered a
   // match if the preceding match criteria are NOT met. The default setting is
-  // false. 
+  // false.
   optional bool invert_match = 3;
 
   // The value of the header must start with the contents of prefixMatch. Only
@@ -8122,7 +8137,7 @@ message HttpHeaderOption {
 
   // If false, headerValue is appended to any values that already exist for the
   // header. If true, headerValue is set for the header, discarding any values
-  // that were set for that header. The default value is false. 
+  // that were set for that header. The default value is false.
   optional bool replace = 3;
 }
 
@@ -8282,7 +8297,7 @@ message HttpHealthCheckList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -8297,7 +8312,7 @@ message HttpHealthCheckList {
 message HttpQueryParameterMatch {
   // The queryParameterMatch matches if the value of the parameter exactly
   // matches the contents of exactMatch. Only one of presentMatch, exactMatch,
-  // or regexMatch must be set. 
+  // or regexMatch must be set.
   optional string exact_match = 1;
 
   // The name of the query parameter to match. The query parameter must exist in
@@ -8306,14 +8321,14 @@ message HttpQueryParameterMatch {
 
   // Specifies that the queryParameterMatch matches if the request contains the
   // query parameter, irrespective of whether the parameter has a value or not.
-  // Only one of presentMatch, exactMatch, or regexMatch must be set. 
+  // Only one of presentMatch, exactMatch, or regexMatch must be set.
   optional bool present_match = 3;
 
   // The queryParameterMatch matches if the value of the parameter matches the
   // regular expression specified by regexMatch. For more information about
   // regular expression syntax, see Syntax. Only one of presentMatch,
   // exactMatch, or regexMatch must be set. Regular expressions can only be used
-  // when the loadBalancingScheme is set to INTERNAL_SELF_MANAGED. 
+  // when the loadBalancingScheme is set to INTERNAL_SELF_MANAGED.
   optional string regex_match = 4;
 }
 
@@ -8350,7 +8365,7 @@ message HttpRedirectAction {
   // 301. - FOUND, which corresponds to 302. - SEE_OTHER which corresponds to
   // 303. - TEMPORARY_REDIRECT, which corresponds to 307. In this case, the
   // request method is retained. - PERMANENT_REDIRECT, which corresponds to 308.
-  // In this case, the request method is retained. 
+  // In this case, the request method is retained.
   // FOUND: Http Status Code 302 - Found.
   // MOVED_PERMANENTLY_DEFAULT: Http Status Code 301 - Moved Permanently.
   // PERMANENT_REDIRECT: Http Status Code 308 - Permanent Redirect maintaining
@@ -8362,7 +8377,7 @@ message HttpRedirectAction {
 
   // If set to true, any accompanying query portion of the original URL is
   // removed before redirecting the request. If set to false, the query portion
-  // of the original URL is retained. The default is set to false. 
+  // of the original URL is retained. The default is set to false.
   optional bool strip_query = 6;
 }
 
@@ -8402,7 +8417,7 @@ message HttpRetryPolicy {
   // unavailable. Only the following codes are supported when the URL map is
   // bound to target gRPC proxy that has validateForProxyless field set to true.
   // - cancelled - deadline-exceeded - internal - resource-exhausted -
-  // unavailable 
+  // unavailable
   repeated string retry_conditions = 3;
 }
 
@@ -8751,7 +8766,7 @@ message HttpsHealthCheckList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -8850,7 +8865,7 @@ message Image {
     // The format used to encode and transmit the block device, which should be
     // TAR. This is just a container and transmission format and not a runtime
     // format. Provided by the client when the disk image is created.
-    // TAR: 
+    // TAR:
     optional string container_type = 1;
 
     // [Deprecated] This field is deprecated. An optional SHA1 checksum of the
@@ -8864,7 +8879,7 @@ message Image {
     // https://storage.googleapis.com/bucket_name/folder_name/
     // image_archive_name In order to create an image, you must provide the full
     // or partial URL of one of the following: - The rawDisk.source URL - The
-    // sourceDisk URL - The sourceImage URL - The sourceSnapshot URL 
+    // sourceDisk URL - The sourceImage URL - The sourceSnapshot URL
     optional string source = 3;
   }
 
@@ -8886,7 +8901,7 @@ message Image {
   // /disks/disk - projects/project/zones/zone/disks/disk -
   // zones/zone/disks/disk In order to create an image, you must provide the
   // full or partial URL of one of the following: - The rawDisk.source URL - The
-  // sourceDisk URL - The sourceImage URL - The sourceSnapshot URL 
+  // sourceDisk URL - The sourceImage URL - The sourceSnapshot URL
   optional string source_disk = 21;
 
   // The customer-supplied encryption key of the source disk. Required if the
@@ -8904,7 +8919,7 @@ message Image {
   // images/image_name - projects/project_id/global/images/image_name In order
   // to create an image, you must provide the full or partial URL of one of the
   // following: - The rawDisk.source URL - The sourceDisk URL - The sourceImage
-  // URL - The sourceSnapshot URL 
+  // URL - The sourceSnapshot URL
   optional string source_image = 24;
 
   // The customer-supplied encryption key of the source image. Required if the
@@ -8923,7 +8938,7 @@ message Image {
   // projects/project_id/global/snapshots/snapshot_name In order to create an
   // image, you must provide the full or partial URL of one of the following: -
   // The rawDisk.source URL - The sourceDisk URL - The sourceImage URL - The
-  // sourceSnapshot URL 
+  // sourceSnapshot URL
   optional string source_snapshot = 27;
 
   // The customer-supplied encryption key of the source snapshot. Required if
@@ -8937,7 +8952,7 @@ message Image {
 
   // The type of the image used to create this disk. The default and only valid
   // value is RAW.
-  // RAW: 
+  // RAW:
   optional string source_type = 30;
 
   // [Output Only] The status of the image. An image can be used to create other
@@ -9053,7 +9068,7 @@ message ImageList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -9253,7 +9268,8 @@ message Instance {
 
   optional ShieldedInstanceConfig shielded_instance_config = 36;
 
-  optional ShieldedInstanceIntegrityPolicy shielded_instance_integrity_policy = 37;
+  optional ShieldedInstanceIntegrityPolicy shielded_instance_integrity_policy =
+      37;
 
   // Source machine image
   optional string source_machine_image = 38;
@@ -9397,7 +9413,7 @@ message InstanceAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -9468,7 +9484,7 @@ message InstanceGroup {
   // This allows the system to reference ports by the assigned name instead of a
   // port number. Named ports can also contain multiple ports. For example:
   // [{name: "app1", port: 8080}, {name: "app1", port: 8081}, {name: "app2",
-  // port: 8082}] Named ports apply to all instances in this instance group. 
+  // port: 8082}] Named ports apply to all instances in this instance group.
   repeated NamedPort named_ports = 7;
 
   // [Output Only] The URL of the network to which all instances in the instance
@@ -9595,7 +9611,7 @@ message InstanceGroupAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -9699,7 +9715,7 @@ message InstanceGroupList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -9987,7 +10003,7 @@ message InstanceGroupManagerAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -10104,7 +10120,7 @@ message InstanceGroupManagerList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -10146,7 +10162,8 @@ message InstanceGroupManagerStatusStateful {
   optional bool has_stateful_config = 1;
 
   // [Output Only] Status of per-instance configurations on the instance.
-  optional InstanceGroupManagerStatusStatefulPerInstanceConfigs per_instance_configs = 2;
+  optional InstanceGroupManagerStatusStatefulPerInstanceConfigs
+      per_instance_configs = 2;
 }
 
 message InstanceGroupManagerStatusStatefulPerInstanceConfigs {
@@ -10168,7 +10185,7 @@ message InstanceGroupManagerUpdatePolicy {
   // The instance redistribution policy for regional managed instance groups.
   // Valid values are: - PROACTIVE (default): The group attempts to maintain an
   // even distribution of VM instances across zones in the region. - NONE: For
-  // non-autoscaled groups, proactive redistribution is disabled. 
+  // non-autoscaled groups, proactive redistribution is disabled.
   // NONE: No action is being proactively performed in order to bring this IGM
   // to its target instance distribution.
   // PROACTIVE: This IGM will actively converge to its target instance
@@ -10207,7 +10224,7 @@ message InstanceGroupManagerUpdatePolicy {
   // action to RESTART or REPLACE. For example, Compute Engine does not need to
   // restart a VM to change its metadata. But if your application reads instance
   // metadata only when a VM is restarted, you can set the minimal action to
-  // RESTART in order to pick up metadata changes. 
+  // RESTART in order to pick up metadata changes.
   // NONE: Do not perform any action.
   // REFRESH: Updates applied in runtime, instances will not be disrupted.
   // REPLACE: Old instances will be deleted. New instances will be created from
@@ -10455,7 +10472,7 @@ message InstanceGroupManagersListPerInstanceConfigsResp {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -10555,7 +10572,7 @@ message InstanceGroupManagersScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -10696,7 +10713,7 @@ message InstanceGroupsListInstances {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -10798,7 +10815,7 @@ message InstanceGroupsScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -10917,7 +10934,7 @@ message InstanceList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -11021,7 +11038,7 @@ message InstanceListReferrers {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -11039,7 +11056,8 @@ message InstanceManagedByIgmError {
   // [Output Only] Details of the instance action that triggered this error. May
   // be null, if the error was not caused by an action on an instance. This
   // field is optional.
-  optional InstanceManagedByIgmErrorInstanceActionDetails instance_action_details = 2;
+  optional InstanceManagedByIgmErrorInstanceActionDetails
+      instance_action_details = 2;
 
   // [Output Only] The time that this error occurred. This value is in RFC3339
   // text format.
@@ -11102,14 +11120,14 @@ message InstanceMoveRequest {
   // The URL of the destination zone to move the instance. This can be a full or
   // partial URL. For example, the following are all valid URLs to a zone: -
   // https://www.googleapis.com/compute/v1/projects/project/zones/zone -
-  // projects/project/zones/zone - zones/zone 
+  // projects/project/zones/zone - zones/zone
   optional string destination_zone = 1;
 
   // The URL of the target instance to move. This can be a full or partial URL.
   // For example, the following are all valid URLs to an instance: -
   // https://www.googleapis.com/compute/v1/projects/project/zones/zone
   // /instances/instance - projects/project/zones/zone/instances/instance -
-  // zones/zone/instances/instance 
+  // zones/zone/instances/instance
   optional string target_instance = 2;
 }
 
@@ -11282,7 +11300,7 @@ message InstanceTemplate {
   // The source instance used to create the template. You can provide this as a
   // partial or full URL to the resource. For example, the following are valid
   // values: - https://www.googleapis.com/compute/v1/projects/project/zones/zone
-  // /instances/instance - projects/project/zones/zone/instances/instance 
+  // /instances/instance - projects/project/zones/zone/instances/instance
   optional string source_instance = 9;
 
   // The source instance params to use to create this instance template.
@@ -11381,7 +11399,7 @@ message InstanceTemplateAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -11485,7 +11503,7 @@ message InstanceTemplateList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -11572,7 +11590,7 @@ message InstanceTemplatesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -11616,7 +11634,8 @@ message InstancesAddResourcePoliciesRequest {
 
 message InstancesGetEffectiveFirewallsResponse {
   // Effective firewalls from firewall policies.
-  repeated InstancesGetEffectiveFirewallsResponseEffectiveFirewallPolicy firewall_policys = 1;
+  repeated InstancesGetEffectiveFirewallsResponseEffectiveFirewallPolicy
+      firewall_policys = 1;
 
   // Effective firewalls on the instance.
   repeated Firewall firewalls = 2;
@@ -11638,10 +11657,10 @@ message InstancesGetEffectiveFirewallsResponseEffectiveFirewallPolicy {
 
   // [Output Only] The type of the firewall policy. Can be one of HIERARCHY,
   // NETWORK, NETWORK_REGIONAL.
-  // HIERARCHY: 
-  // NETWORK: 
-  // NETWORK_REGIONAL: 
-  // UNSPECIFIED: 
+  // HIERARCHY:
+  // NETWORK:
+  // NETWORK_REGIONAL:
+  // UNSPECIFIED:
   optional string type = 5;
 }
 
@@ -11725,7 +11744,7 @@ message InstancesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -11897,7 +11916,7 @@ message Interconnect {
   // has not completed turnup. No attachments may be provisioned on this
   // Interconnect. - OS_UNDER_MAINTENANCE: An Interconnect that is undergoing
   // internal maintenance. No attachments may be provisioned or updated on this
-  // Interconnect. 
+  // Interconnect.
   // OS_ACTIVE: The interconnect is valid, turned up, and ready to use.
   // Attachments may be provisioned on this interconnect.
   // OS_UNPROVISIONED: The interconnect has not completed turnup. No attachments
@@ -11928,7 +11947,7 @@ message Interconnect {
   // Interconnect. - UNPROVISIONED: The Interconnect has not completed turnup.
   // No attachments may be provisioned on this Interconnect. -
   // UNDER_MAINTENANCE: The Interconnect is undergoing internal maintenance. No
-  // attachments may be provisioned or updated on this Interconnect. 
+  // attachments may be provisioned or updated on this Interconnect.
   // ACTIVE: The interconnect is valid, turned up, and ready to use. Attachments
   // may be provisioned on this interconnect.
   // UNPROVISIONED: The interconnect has not completed turnup. No attachments
@@ -11953,7 +11972,7 @@ message InterconnectAttachment {
   // values: - BPS_50M: 50 Mbit/s - BPS_100M: 100 Mbit/s - BPS_200M: 200 Mbit/s
   // - BPS_300M: 300 Mbit/s - BPS_400M: 400 Mbit/s - BPS_500M: 500 Mbit/s -
   // BPS_1G: 1 Gbit/s - BPS_2G: 2 Gbit/s - BPS_5G: 5 Gbit/s - BPS_10G: 10 Gbit/s
-  // - BPS_20G: 20 Gbit/s - BPS_50G: 50 Gbit/s 
+  // - BPS_20G: 20 Gbit/s - BPS_50G: 50 Gbit/s
   // BPS_100M: 100 Mbit/s
   // BPS_10G: 10 Gbit/s
   // BPS_1G: 1 Gbit/s
@@ -12021,9 +12040,9 @@ message InterconnectAttachment {
   // to the Partner via the pairing key, so that the provisioned circuit will
   // lie in the specified domain. If not specified, the value will default to
   // AVAILABILITY_DOMAIN_ANY.
-  // AVAILABILITY_DOMAIN_1: 
-  // AVAILABILITY_DOMAIN_2: 
-  // AVAILABILITY_DOMAIN_ANY: 
+  // AVAILABILITY_DOMAIN_1:
+  // AVAILABILITY_DOMAIN_2:
+  // AVAILABILITY_DOMAIN_ANY:
   optional string edge_availability_domain = 14;
 
   // Indicates the user-supplied encryption option of this VLAN attachment
@@ -12035,7 +12054,7 @@ message InterconnectAttachment {
   // traffic that is encrypted by an IPsec device, such as an HA VPN gateway or
   // third-party IPsec VPN. VMs cannot directly send traffic to, or receive
   // traffic from, such a VLAN attachment. To use *HA VPN over Cloud
-  // Interconnect*, the VLAN attachment must be created with this option. 
+  // Interconnect*, the VLAN attachment must be created with this option.
   // IPSEC: The interconnect attachment will carry only encrypted traffic that
   // is encrypted by an IPsec device such as HA VPN gateway; VMs cannot directly
   // send traffic to or receive traffic from such an interconnect attachment. To
@@ -12071,7 +12090,7 @@ message InterconnectAttachment {
   // attachment. If this field is not specified when creating the VLAN
   // attachment, then later on when creating an HA VPN gateway on this VLAN
   // attachment, the HA VPN gateway's IP address is allocated from the regional
-  // external IP address pool. Not currently available publicly. 
+  // external IP address pool. Not currently available publicly.
   repeated string ipsec_internal_addresses = 19;
 
   // [Output Only] Type of the resource. Always compute#interconnectAttachment
@@ -12096,7 +12115,7 @@ message InterconnectAttachment {
   // attachment is functional, which can take one of the following values: -
   // OS_ACTIVE: The attachment has been turned up and is ready to use. -
   // OS_UNPROVISIONED: The attachment is not ready to use yet, because turnup is
-  // not complete. 
+  // not complete.
   // OS_ACTIVE: Indicates that attachment has been turned up and is ready to
   // use.
   // OS_UNPROVISIONED: Indicates that attachment is not ready to use yet,
@@ -12166,7 +12185,7 @@ message InterconnectAttachment {
   // attachment that is waiting for a customer to activate it. - DEFUNCT: The
   // attachment was deleted externally and is no longer functional. This could
   // be because the associated Interconnect was removed, or because the other
-  // side of a Partner attachment was deleted. 
+  // side of a Partner attachment was deleted.
   // ACTIVE: Indicates that attachment has been turned up and is ready to use.
   // DEFUNCT: The attachment was deleted externally and is no longer functional.
   // This could be because the associated Interconnect was wiped out, or because
@@ -12178,7 +12197,7 @@ message InterconnectAttachment {
   // for the customer to activate.
   // PENDING_PARTNER: A newly created PARTNER attachment that has not yet been
   // configured on the Partner side.
-  // STATE_UNSPECIFIED: 
+  // STATE_UNSPECIFIED:
   // UNPROVISIONED: Indicates that attachment is not ready to use yet, because
   // turnup is not complete.
   optional string state = 33;
@@ -12187,7 +12206,7 @@ message InterconnectAttachment {
   // following values: - DEDICATED: an attachment to a Dedicated Interconnect. -
   // PARTNER: an attachment to a Partner Interconnect, created by the customer.
   // - PARTNER_PROVIDER: an attachment to a Partner Interconnect, created by the
-  // partner. 
+  // partner.
   // DEDICATED: Attachment to a dedicated interconnect.
   // PARTNER: Attachment to a partner interconnect, created by the customer.
   // PARTNER_PROVIDER: Attachment to a partner interconnect, created by the
@@ -12295,7 +12314,7 @@ message InterconnectAttachmentAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -12400,7 +12419,7 @@ message InterconnectAttachmentList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -12513,7 +12532,7 @@ message InterconnectAttachmentsScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -12590,7 +12609,7 @@ message InterconnectDiagnosticsLinkLACPStatus {
   // The state of a LACP link, which can take one of the following values: -
   // ACTIVE: The link is configured and active within the bundle. - DETACHED:
   // The link is not configured within the bundle. This means that the rest of
-  // the object should be empty. 
+  // the object should be empty.
   // ACTIVE: The link is configured and active within the bundle.
   // DETACHED: The link is not configured within the bundle, this means the rest
   // of the object should be empty.
@@ -12604,7 +12623,7 @@ message InterconnectDiagnosticsLinkOpticalPower {
   // LOW_WARNING: The value has crossed below the low warning threshold. -
   // HIGH_WARNING: The value has crossed above the high warning threshold. -
   // LOW_ALARM: The value has crossed below the low alarm threshold. -
-  // HIGH_ALARM: The value has crossed above the high alarm threshold. 
+  // HIGH_ALARM: The value has crossed above the high alarm threshold.
   // HIGH_ALARM: The value has crossed above the high alarm threshold.
   // HIGH_WARNING: The value of the current optical power has crossed above the
   // high warning threshold.
@@ -12650,7 +12669,8 @@ message InterconnectDiagnosticsLinkStatus {
 
   // An InterconnectDiagnostics.LinkOpticalPower object, describing the current
   // value and status of the transmitted light level.
-  optional InterconnectDiagnosticsLinkOpticalPower transmitting_optical_power = 7;
+  optional InterconnectDiagnosticsLinkOpticalPower transmitting_optical_power =
+      7;
 }
 
 // Response to the list request, and contains a list of interconnects.
@@ -12746,7 +12766,7 @@ message InterconnectList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -12778,17 +12798,17 @@ message InterconnectLocation {
 
   // [Output Only] Continent for this location, which can take one of the
   // following values: - AFRICA - ASIA_PAC - EUROPE - NORTH_AMERICA -
-  // SOUTH_AMERICA 
-  // AFRICA: 
-  // ASIA_PAC: 
-  // C_AFRICA: 
-  // C_ASIA_PAC: 
-  // C_EUROPE: 
-  // C_NORTH_AMERICA: 
-  // C_SOUTH_AMERICA: 
-  // EUROPE: 
-  // NORTH_AMERICA: 
-  // SOUTH_AMERICA: 
+  // SOUTH_AMERICA
+  // AFRICA:
+  // ASIA_PAC:
+  // C_AFRICA:
+  // C_ASIA_PAC:
+  // C_EUROPE:
+  // C_NORTH_AMERICA:
+  // C_SOUTH_AMERICA:
+  // EUROPE:
+  // NORTH_AMERICA:
+  // SOUTH_AMERICA:
   optional string continent = 4;
 
   // [Output Only] Creation timestamp in RFC3339 text format.
@@ -12830,7 +12850,7 @@ message InterconnectLocation {
   // [Output Only] The status of this InterconnectLocation, which can take one
   // of the following values: - CLOSED: The InterconnectLocation is closed and
   // is unavailable for provisioning new Interconnects. - AVAILABLE: The
-  // InterconnectLocation is available for provisioning new Interconnects. 
+  // InterconnectLocation is available for provisioning new Interconnects.
   // AVAILABLE: The InterconnectLocation is available for provisioning new
   // Interconnects.
   // CLOSED: The InterconnectLocation is closed for provisioning new
@@ -12934,7 +12954,7 @@ message InterconnectLocationList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -13038,7 +13058,7 @@ message InterconnectsGetDiagnosticsResponse {
 // Represents a License resource. A License represents billing and aggregate
 // usage data for public and marketplace images. *Caution* This resource is
 // intended for use only by third-party partners who are creating Cloud
-// Marketplace images. 
+// Marketplace images.
 message License {
   // [Output Only] Deprecated. This field no longer reflects whether a license
   // charges a usage fee.
@@ -13078,7 +13098,7 @@ message License {
 
 // Represents a License Code resource. A License Code is a unique identifier
 // used to represent a license resource. *Caution* This resource is intended for
-// use only by third-party partners who are creating Cloud Marketplace images. 
+// use only by third-party partners who are creating Cloud Marketplace images.
 message LicenseCode {
   // [Output Only] Creation timestamp in RFC3339 text format.
   optional string creation_timestamp = 1;
@@ -13110,7 +13130,7 @@ message LicenseCode {
   // ENABLED: Use is allowed for anyone with USE_READ_ONLY access to this
   // License Code.
   // RESTRICTED: Use of this license is limited to a project whitelist.
-  // STATE_UNSPECIFIED: 
+  // STATE_UNSPECIFIED:
   // TERMINATED: Reserved state.
   optional string state = 8;
 
@@ -13237,7 +13257,7 @@ message LicensesListResponse {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -13437,7 +13457,7 @@ message MachineImage {
   // as a partial or full URL to the resource. For example, the following are
   // valid values: -
   // https://www.googleapis.com/compute/v1/projects/project/zones/zone
-  // /instances/instance - projects/project/zones/zone/instances/instance 
+  // /instances/instance - projects/project/zones/zone/instances/instance
   optional string source_instance = 13;
 
   // [Output Only] DEPRECATED: Please use instance_properties instead for source
@@ -13447,11 +13467,11 @@ message MachineImage {
 
   // [Output Only] The status of the machine image. One of the following values:
   // INVALID, CREATING, READY, DELETING, and UPLOADING.
-  // CREATING: 
-  // DELETING: 
-  // INVALID: 
-  // READY: 
-  // UPLOADING: 
+  // CREATING:
+  // DELETING:
+  // INVALID:
+  // READY:
+  // UPLOADING:
   optional string status = 15;
 
   // The regional or multi-regional Cloud Storage bucket location where the
@@ -13555,7 +13575,7 @@ message MachineImageList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -13737,7 +13757,7 @@ message MachineTypeAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -13841,7 +13861,7 @@ message MachineTypeList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -13927,7 +13947,7 @@ message MachineTypesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -13959,7 +13979,7 @@ message ManagedInstance {
   // the instance without stopping it. For example, the group can update the
   // target pool list for an instance without stopping that instance. -
   // VERIFYING The managed instance group has created the instance and it is in
-  // the process of being verified. 
+  // the process of being verified.
   // ABANDONING: The managed instance group is abandoning this instance. The
   // instance will be removed from the instance group and from any target pools
   // that are associated with this group.
@@ -14163,7 +14183,7 @@ message MetadataFilter {
   // filterLabels and contributes toward the overall metadataFilter match.
   // Supported values are: - MATCH_ANY: at least one of the filterLabels must
   // have a matching label in the provided metadata. - MATCH_ALL: all
-  // filterLabels must have matching labels in the provided metadata. 
+  // filterLabels must have matching labels in the provided metadata.
   // MATCH_ALL: Specifies that all filterLabels must match for the
   // metadataFilter to be considered a match.
   // MATCH_ANY: Specifies that any filterLabel must match for the metadataFilter
@@ -14264,8 +14284,8 @@ message Network {
   // The network firewall policy enforcement order. Can be either
   // AFTER_CLASSIC_FIREWALL or BEFORE_CLASSIC_FIREWALL. Defaults to
   // AFTER_CLASSIC_FIREWALL if the field is not specified.
-  // AFTER_CLASSIC_FIREWALL: 
-  // BEFORE_CLASSIC_FIREWALL: 
+  // AFTER_CLASSIC_FIREWALL:
+  // BEFORE_CLASSIC_FIREWALL:
   optional string network_firewall_policy_enforcement_order = 13;
 
   // [Output Only] A list of network peerings for the resource.
@@ -14292,9 +14312,9 @@ message NetworkAttachment {
   // this network attachment.
   repeated NetworkAttachmentConnectedEndpoint connection_endpoints = 1;
 
-  // ACCEPT_AUTOMATIC: 
-  // ACCEPT_MANUAL: 
-  // INVALID: 
+  // ACCEPT_AUTOMATIC:
+  // ACCEPT_MANUAL:
+  // INVALID:
   optional string connection_preference = 2;
 
   // [Output Only] Creation timestamp in RFC3339 text format.
@@ -14446,7 +14466,7 @@ message NetworkAttachmentAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -14478,7 +14498,7 @@ message NetworkAttachmentConnectedEndpoint {
   // producer to reach its VPC.
   // REJECTED: The consumer prohibits traffic from the producer to reach its
   // VPC.
-  // STATUS_UNSPECIFIED: 
+  // STATUS_UNSPECIFIED:
   optional string status = 4;
 
   // The subnetwork used to assign the IP to the producer instance network
@@ -14576,7 +14596,7 @@ message NetworkAttachmentList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -14662,7 +14682,7 @@ message NetworkAttachmentsScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -14822,7 +14842,7 @@ message NetworkEdgeSecurityServiceAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -14908,7 +14928,7 @@ message NetworkEdgeSecurityServicesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -15144,7 +15164,7 @@ message NetworkEndpointGroupAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -15316,7 +15336,7 @@ message NetworkEndpointGroupList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -15348,7 +15368,7 @@ message NetworkEndpointGroupPscData {
   // traffic.
   // PENDING: The connection is pending acceptance by the producer.
   // REJECTED: The connection has been rejected by the producer.
-  // STATUS_UNSPECIFIED: 
+  // STATUS_UNSPECIFIED:
   optional string psc_connection_status = 3;
 }
 
@@ -15462,7 +15482,7 @@ message NetworkEndpointGroupsListNetworkEndpoints {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -15549,7 +15569,7 @@ message NetworkEndpointGroupsScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -15628,7 +15648,7 @@ message NetworkInterface {
   // full or partial URL. For example, the following are all valid URLs: -
   // https://www.googleapis.com/compute/v1/projects/project/global/networks/
   // network - projects/project/global/networks/network -
-  // global/networks/default 
+  // global/networks/default
   optional string network = 10;
 
   // The URL of the network attachment that this interface should connect to in
@@ -15668,7 +15688,7 @@ message NetworkInterface {
   // specify this field, you can specify the subnetwork as a full or partial
   // URL. For example, the following are all valid URLs: -
   // https://www.googleapis.com/compute/v1/projects/project/regions/region
-  // /subnetworks/subnetwork - regions/region/subnetworks/subnetwork 
+  // /subnetworks/subnetwork - regions/region/subnetworks/subnetwork
   optional string subnetwork = 16;
 }
 
@@ -15765,7 +15785,7 @@ message NetworkList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -15850,8 +15870,8 @@ message NetworkPeering {
 }
 
 message NetworkPerformanceConfig {
-  // DEFAULT: 
-  // TIER_1: 
+  // DEFAULT:
+  // TIER_1:
   optional string total_egress_bandwidth_tier = 1;
 }
 
@@ -15864,8 +15884,8 @@ message NetworkRoutingConfig {
   // the same region as the router. If set to GLOBAL, this network's Cloud
   // Routers will advertise routes with all subnets of this network, across
   // regions.
-  // GLOBAL: 
-  // REGIONAL: 
+  // GLOBAL:
+  // REGIONAL:
   optional string routing_mode = 1;
 }
 
@@ -15897,7 +15917,8 @@ message NetworksAddPeeringRequest {
 
 message NetworksGetEffectiveFirewallsResponse {
   // Effective firewalls from firewall policy.
-  repeated NetworksGetEffectiveFirewallsResponseEffectiveFirewallPolicy firewall_policys = 1;
+  repeated NetworksGetEffectiveFirewallsResponseEffectiveFirewallPolicy
+      firewall_policys = 1;
 
   // Effective firewalls on the network.
   repeated Firewall firewalls = 2;
@@ -15918,9 +15939,9 @@ message NetworksGetEffectiveFirewallsResponseEffectiveFirewallPolicy {
   optional string short_name = 4;
 
   // [Output Only] The type of the firewall policy.
-  // HIERARCHY: 
-  // NETWORK: 
-  // UNSPECIFIED: 
+  // HIERARCHY:
+  // NETWORK:
+  // UNSPECIFIED:
   optional string type = 5;
 }
 
@@ -15972,7 +15993,7 @@ message NodeGroup {
   // information, see Maintenance policies.
   // DEFAULT: Allow the node and corresponding instances to retain default
   // maintenance behavior.
-  // MAINTENANCE_POLICY_UNSPECIFIED: 
+  // MAINTENANCE_POLICY_UNSPECIFIED:
   // MIGRATE_WITHIN_NODE_GROUP: When maintenance must be done on a node, the
   // instances on that node will be moved to other nodes in the group. Instances
   // with onHostMaintenance = MIGRATE will live migrate to their destinations
@@ -16006,10 +16027,10 @@ message NodeGroup {
   // [Output Only] The total number of nodes in the node group.
   optional int32 size = 14;
 
-  // CREATING: 
-  // DELETING: 
-  // INVALID: 
-  // READY: 
+  // CREATING:
+  // DELETING:
+  // INVALID:
+  // READY:
   optional string status = 15;
 
   // [Output Only] The name of the zone where the node group resides, such as
@@ -16112,7 +16133,7 @@ message NodeGroupAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -16133,7 +16154,7 @@ message NodeGroupAutoscalingPolicy {
 
   // The autoscaling mode. Set to one of: ON, OFF, or ONLY_SCALE_OUT. For more
   // information, see Autoscaler modes.
-  // MODE_UNSPECIFIED: 
+  // MODE_UNSPECIFIED:
   // OFF: Autoscaling is disabled.
   // ON: Autocaling is fully enabled.
   // ONLY_SCALE_OUT: Autoscaling will only scale out and will not remove nodes.
@@ -16233,7 +16254,7 @@ message NodeGroupList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -16265,9 +16286,9 @@ message NodeGroupNode {
   optional InstanceConsumptionInfo consumed_resources = 2;
 
   // CPU overcommit.
-  // CPU_OVERCOMMIT_TYPE_UNSPECIFIED: 
-  // ENABLED: 
-  // NONE: 
+  // CPU_OVERCOMMIT_TYPE_UNSPECIFIED:
+  // ENABLED:
+  // NONE:
   optional string cpu_overcommit_type = 3;
 
   // Local disk configurations.
@@ -16294,11 +16315,11 @@ message NodeGroupNode {
   // Server ID associated with this node.
   optional string server_id = 11;
 
-  // CREATING: 
-  // DELETING: 
-  // INVALID: 
-  // READY: 
-  // REPAIRING: 
+  // CREATING:
+  // DELETING:
+  // INVALID:
+  // READY:
+  // REPAIRING:
   optional string status = 12;
 
   // Total amount of available resources on the node.
@@ -16408,7 +16429,7 @@ message NodeGroupsListNodes {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -16494,7 +16515,7 @@ message NodeGroupsScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -16519,9 +16540,9 @@ message NodeTemplate {
   repeated AcceleratorConfig accelerators = 1;
 
   // CPU overcommit.
-  // CPU_OVERCOMMIT_TYPE_UNSPECIFIED: 
-  // ENABLED: 
-  // NONE: 
+  // CPU_OVERCOMMIT_TYPE_UNSPECIFIED:
+  // ENABLED:
+  // NONE:
   optional string cpu_overcommit_type = 2;
 
   // [Output Only] Creation timestamp in RFC3339 text format.
@@ -16680,7 +16701,7 @@ message NodeTemplateAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -16784,7 +16805,7 @@ message NodeTemplateList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -16878,7 +16899,7 @@ message NodeTemplatesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -17033,7 +17054,7 @@ message NodeTypeAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -17137,7 +17158,7 @@ message NodeTypeList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -17223,7 +17244,7 @@ message NodeTypesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -17398,7 +17419,7 @@ message NotificationEndpointList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -17526,9 +17547,9 @@ message Operation {
 
   // [Output Only] The status of the operation, which can be one of the
   // following: `PENDING`, `RUNNING`, or `DONE`.
-  // DONE: 
-  // PENDING: 
-  // RUNNING: 
+  // DONE:
+  // PENDING:
+  // RUNNING:
   optional string status = 18;
 
   // [Output Only] An optional textual description of the current status of the
@@ -17619,7 +17640,7 @@ message Operation {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -17731,7 +17752,7 @@ message OperationAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -17836,7 +17857,7 @@ message OperationList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -17922,7 +17943,7 @@ message OperationsScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -18011,10 +18032,10 @@ message PacketIntervals {
   optional string avg_ms = 1;
 
   // From how long ago in the past these intervals were observed.
-  // DURATION_UNSPECIFIED: 
-  // HOUR: 
+  // DURATION_UNSPECIFIED:
+  // HOUR:
   // MAX: From BfdSession object creation time.
-  // MINUTE: 
+  // MINUTE:
   optional string duration = 2;
 
   // Maximum observed inter-packet interval in milliseconds.
@@ -18031,7 +18052,7 @@ message PacketIntervals {
   // sending and receiving the same packet.
   // RECEIVE: Intervals between received packets.
   // TRANSMIT: Intervals between transmitted packets.
-  // TYPE_UNSPECIFIED: 
+  // TYPE_UNSPECIFIED:
   optional string type = 6;
 }
 
@@ -18056,8 +18077,8 @@ message PacketMirroring {
   // Indicates whether or not this packet mirroring takes effect. If set to
   // FALSE, this packet mirroring policy will not be enforced on the network.
   // The default is TRUE.
-  // FALSE: 
-  // TRUE: 
+  // FALSE:
+  // TRUE:
   optional string enable = 4;
 
   // Filter for mirrored traffic. If unspecified, all traffic is mirrored.
@@ -18198,7 +18219,7 @@ message PacketMirroringAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -18334,7 +18355,7 @@ message PacketMirroringList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -18463,7 +18484,7 @@ message PacketMirroringsScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -18506,7 +18527,7 @@ message PathMatcher {
   // defaultUrlRedirect , or defaultRouteAction.weightedBackendService must be
   // set. Authorization requires one or more of the following Google IAM
   // permissions on the specified resource default_service: -
-  // compute.backendBuckets.use - compute.backendServices.use 
+  // compute.backendBuckets.use - compute.backendServices.use
   optional string default_service = 2;
 
   // When none of the specified pathRules or routeRules match, the request is
@@ -18721,8 +18742,8 @@ message PreservedStatePreservedDisk {
   // should be deleted after it is no longer used by the group, e.g. when the
   // given instance or the whole MIG is deleted. Note: disks attached in
   // READ_ONLY mode cannot be auto-deleted.
-  // NEVER: 
-  // ON_PERMANENT_INSTANCE_DELETION: 
+  // NEVER:
+  // ON_PERMANENT_INSTANCE_DELETION:
   optional string auto_delete = 1;
 
   // The mode in which to attach this disk, either READ_WRITE or READ_ONLY. If
@@ -18794,17 +18815,17 @@ message Project {
 
   // [Output Only] Default internal DNS setting used by VMs running in this
   // project.
-  // GLOBAL_DEFAULT: 
-  // UNSPECIFIED_VM_DNS_SETTING: 
-  // ZONAL_DEFAULT: 
-  // ZONAL_ONLY: 
+  // GLOBAL_DEFAULT:
+  // UNSPECIFIED_VM_DNS_SETTING:
+  // ZONAL_DEFAULT:
+  // ZONAL_ONLY:
   optional string vm_dns_setting = 13;
 
   // [Output Only] The role this project has in a shared VPC configuration.
   // Currently, only projects with the host role, which is specified by the
   // value HOST, are differentiated.
-  // HOST: 
-  // UNSPECIFIED_XPN_PROJECT_STATUS: 
+  // HOST:
+  // UNSPECIFIED_XPN_PROJECT_STATUS:
   optional string xpn_project_status = 14;
 }
 
@@ -18899,7 +18920,8 @@ message PublicAdvertisedPrefix {
 
   // [Output Only] The list of public delegated prefixes that exist for this
   // public advertised prefix.
-  repeated PublicAdvertisedPrefixPublicDelegatedPrefix public_delegated_prefixs = 9;
+  repeated PublicAdvertisedPrefixPublicDelegatedPrefix
+      public_delegated_prefixs = 9;
 
   // [Output Only] Server-defined URL for the resource.
   optional string self_link = 10;
@@ -18913,7 +18935,7 @@ message PublicAdvertisedPrefix {
   // `REVERSE_DNS_LOOKUP_FAILED`: Reverse DNS lookup failed. -
   // `PREFIX_CONFIGURATION_IN_PROGRESS`: The prefix is being configured. -
   // `PREFIX_CONFIGURATION_COMPLETE`: The prefix is fully configured. -
-  // `PREFIX_REMOVAL_IN_PROGRESS`: The prefix is being removed. 
+  // `PREFIX_REMOVAL_IN_PROGRESS`: The prefix is being removed.
   // INITIAL: RPKI validation is complete.
   // PREFIX_CONFIGURATION_COMPLETE: The prefix is fully configured.
   // PREFIX_CONFIGURATION_IN_PROGRESS: The prefix is being configured.
@@ -19016,7 +19038,7 @@ message PublicAdvertisedPrefixList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -19100,7 +19122,8 @@ message PublicDelegatedPrefix {
 
   // The list of sub public delegated prefixes that exist for this public
   // delegated prefix.
-  repeated PublicDelegatedPrefixPublicDelegatedSubPrefix public_delegated_sub_prefixs = 10;
+  repeated PublicDelegatedPrefixPublicDelegatedSubPrefix
+      public_delegated_sub_prefixs = 10;
 
   // [Output Only] URL of the region where the public delegated prefix resides.
   // This field applies only to the region resource. You must specify this field
@@ -19116,7 +19139,7 @@ message PublicDelegatedPrefix {
   // initialized and addresses cannot be created yet. - `READY_TO_ANNOUNCE` The
   // public delegated prefix is a live migration prefix and is active. -
   // `ANNOUNCED` The public delegated prefix is active. - `DELETING` The public
-  // delegated prefix is being deprovsioned. 
+  // delegated prefix is being deprovsioned.
   // ANNOUNCED: The public delegated prefix is active.
   // DELETING: The public delegated prefix is being deprovsioned.
   // INITIALIZING: The public delegated prefix is being initialized and
@@ -19222,7 +19245,7 @@ message PublicDelegatedPrefixAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -19325,7 +19348,7 @@ message PublicDelegatedPrefixList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -19361,8 +19384,8 @@ message PublicDelegatedPrefixPublicDelegatedSubPrefix {
   optional string region = 6;
 
   // [Output Only] The status of the sub public delegated prefix.
-  // ACTIVE: 
-  // INACTIVE: 
+  // ACTIVE:
+  // INACTIVE:
   optional string status = 7;
 }
 
@@ -19441,7 +19464,7 @@ message PublicDelegatedPrefixesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -19459,148 +19482,148 @@ message Quota {
   optional double limit = 1;
 
   // [Output Only] Name of the quota metric.
-  // A2_CPUS: 
-  // AFFINITY_GROUPS: 
-  // AUTOSCALERS: 
-  // BACKEND_BUCKETS: 
-  // BACKEND_SERVICES: 
-  // C2D_CPUS: 
-  // C2_CPUS: 
-  // C3_CPUS: 
-  // COMMITMENTS: 
-  // COMMITTED_A2_CPUS: 
-  // COMMITTED_C2D_CPUS: 
-  // COMMITTED_C2_CPUS: 
-  // COMMITTED_C3_CPUS: 
-  // COMMITTED_CPUS: 
-  // COMMITTED_E2_CPUS: 
-  // COMMITTED_LICENSES: 
-  // COMMITTED_LOCAL_SSD_TOTAL_GB: 
-  // COMMITTED_M3_CPUS: 
-  // COMMITTED_MEMORY_OPTIMIZED_CPUS: 
-  // COMMITTED_N2A_CPUS: 
-  // COMMITTED_N2D_CPUS: 
-  // COMMITTED_N2_CPUS: 
-  // COMMITTED_NVIDIA_A100_80GB_GPUS: 
-  // COMMITTED_NVIDIA_A100_GPUS: 
-  // COMMITTED_NVIDIA_K80_GPUS: 
-  // COMMITTED_NVIDIA_P100_GPUS: 
-  // COMMITTED_NVIDIA_P4_GPUS: 
-  // COMMITTED_NVIDIA_T4_GPUS: 
-  // COMMITTED_NVIDIA_V100_GPUS: 
-  // COMMITTED_T2A_CPUS: 
-  // COMMITTED_T2D_CPUS: 
+  // A2_CPUS:
+  // AFFINITY_GROUPS:
+  // AUTOSCALERS:
+  // BACKEND_BUCKETS:
+  // BACKEND_SERVICES:
+  // C2D_CPUS:
+  // C2_CPUS:
+  // C3_CPUS:
+  // COMMITMENTS:
+  // COMMITTED_A2_CPUS:
+  // COMMITTED_C2D_CPUS:
+  // COMMITTED_C2_CPUS:
+  // COMMITTED_C3_CPUS:
+  // COMMITTED_CPUS:
+  // COMMITTED_E2_CPUS:
+  // COMMITTED_LICENSES:
+  // COMMITTED_LOCAL_SSD_TOTAL_GB:
+  // COMMITTED_M3_CPUS:
+  // COMMITTED_MEMORY_OPTIMIZED_CPUS:
+  // COMMITTED_N2A_CPUS:
+  // COMMITTED_N2D_CPUS:
+  // COMMITTED_N2_CPUS:
+  // COMMITTED_NVIDIA_A100_80GB_GPUS:
+  // COMMITTED_NVIDIA_A100_GPUS:
+  // COMMITTED_NVIDIA_K80_GPUS:
+  // COMMITTED_NVIDIA_P100_GPUS:
+  // COMMITTED_NVIDIA_P4_GPUS:
+  // COMMITTED_NVIDIA_T4_GPUS:
+  // COMMITTED_NVIDIA_V100_GPUS:
+  // COMMITTED_T2A_CPUS:
+  // COMMITTED_T2D_CPUS:
   // CPUS: Guest CPUs
-  // CPUS_ALL_REGIONS: 
-  // DISKS_TOTAL_GB: 
-  // E2_CPUS: 
-  // EXTERNAL_MANAGED_FORWARDING_RULES: 
-  // EXTERNAL_NETWORK_LB_FORWARDING_RULES: 
-  // EXTERNAL_PROTOCOL_FORWARDING_RULES: 
-  // EXTERNAL_VPN_GATEWAYS: 
-  // FIREWALLS: 
-  // FORWARDING_RULES: 
-  // GLOBAL_EXTERNAL_MANAGED_BACKEND_SERVICES: 
-  // GLOBAL_EXTERNAL_MANAGED_FORWARDING_RULES: 
-  // GLOBAL_EXTERNAL_PROXY_LB_BACKEND_SERVICES: 
-  // GLOBAL_INTERNAL_ADDRESSES: 
-  // GLOBAL_INTERNAL_MANAGED_BACKEND_SERVICES: 
-  // GLOBAL_INTERNAL_TRAFFIC_DIRECTOR_BACKEND_SERVICES: 
-  // GPUS_ALL_REGIONS: 
-  // HEALTH_CHECKS: 
-  // IMAGES: 
-  // INSTANCES: 
-  // INSTANCE_GROUPS: 
-  // INSTANCE_GROUP_MANAGERS: 
-  // INSTANCE_TEMPLATES: 
-  // INTERCONNECTS: 
-  // INTERCONNECT_ATTACHMENTS_PER_REGION: 
-  // INTERCONNECT_ATTACHMENTS_TOTAL_MBPS: 
-  // INTERCONNECT_TOTAL_GBPS: 
-  // INTERNAL_ADDRESSES: 
-  // INTERNAL_TRAFFIC_DIRECTOR_FORWARDING_RULES: 
-  // IN_PLACE_SNAPSHOTS: 
-  // IN_USE_ADDRESSES: 
-  // IN_USE_BACKUP_SCHEDULES: 
-  // IN_USE_SNAPSHOT_SCHEDULES: 
-  // LOCAL_SSD_TOTAL_GB: 
-  // M1_CPUS: 
-  // M2_CPUS: 
-  // M3_CPUS: 
-  // MACHINE_IMAGES: 
-  // N2A_CPUS: 
-  // N2D_CPUS: 
-  // N2_CPUS: 
-  // NETWORKS: 
-  // NETWORK_ATTACHMENTS: 
-  // NETWORK_ENDPOINT_GROUPS: 
-  // NETWORK_FIREWALL_POLICIES: 
-  // NODE_GROUPS: 
-  // NODE_TEMPLATES: 
-  // NVIDIA_A100_80GB_GPUS: 
-  // NVIDIA_A100_GPUS: 
-  // NVIDIA_K80_GPUS: 
-  // NVIDIA_P100_GPUS: 
-  // NVIDIA_P100_VWS_GPUS: 
-  // NVIDIA_P4_GPUS: 
-  // NVIDIA_P4_VWS_GPUS: 
-  // NVIDIA_T4_GPUS: 
-  // NVIDIA_T4_VWS_GPUS: 
-  // NVIDIA_V100_GPUS: 
-  // PACKET_MIRRORINGS: 
-  // PD_EXTREME_TOTAL_PROVISIONED_IOPS: 
-  // PREEMPTIBLE_CPUS: 
-  // PREEMPTIBLE_LOCAL_SSD_GB: 
-  // PREEMPTIBLE_NVIDIA_A100_80GB_GPUS: 
-  // PREEMPTIBLE_NVIDIA_A100_GPUS: 
-  // PREEMPTIBLE_NVIDIA_K80_GPUS: 
-  // PREEMPTIBLE_NVIDIA_P100_GPUS: 
-  // PREEMPTIBLE_NVIDIA_P100_VWS_GPUS: 
-  // PREEMPTIBLE_NVIDIA_P4_GPUS: 
-  // PREEMPTIBLE_NVIDIA_P4_VWS_GPUS: 
-  // PREEMPTIBLE_NVIDIA_T4_GPUS: 
-  // PREEMPTIBLE_NVIDIA_T4_VWS_GPUS: 
-  // PREEMPTIBLE_NVIDIA_V100_GPUS: 
-  // PSC_ILB_CONSUMER_FORWARDING_RULES_PER_PRODUCER_NETWORK: 
-  // PSC_INTERNAL_LB_FORWARDING_RULES: 
-  // PUBLIC_ADVERTISED_PREFIXES: 
-  // PUBLIC_DELEGATED_PREFIXES: 
-  // REGIONAL_AUTOSCALERS: 
-  // REGIONAL_EXTERNAL_MANAGED_BACKEND_SERVICES: 
-  // REGIONAL_EXTERNAL_NETWORK_LB_BACKEND_SERVICES: 
-  // REGIONAL_INSTANCE_GROUP_MANAGERS: 
-  // REGIONAL_INTERNAL_LB_BACKEND_SERVICES: 
-  // REGIONAL_INTERNAL_MANAGED_BACKEND_SERVICES: 
-  // RESERVATIONS: 
-  // RESOURCE_POLICIES: 
-  // ROUTERS: 
-  // ROUTES: 
-  // SECURITY_POLICIES: 
-  // SECURITY_POLICIES_PER_REGION: 
-  // SECURITY_POLICY_CEVAL_RULES: 
-  // SECURITY_POLICY_RULES: 
-  // SECURITY_POLICY_RULES_PER_REGION: 
-  // SERVICE_ATTACHMENTS: 
+  // CPUS_ALL_REGIONS:
+  // DISKS_TOTAL_GB:
+  // E2_CPUS:
+  // EXTERNAL_MANAGED_FORWARDING_RULES:
+  // EXTERNAL_NETWORK_LB_FORWARDING_RULES:
+  // EXTERNAL_PROTOCOL_FORWARDING_RULES:
+  // EXTERNAL_VPN_GATEWAYS:
+  // FIREWALLS:
+  // FORWARDING_RULES:
+  // GLOBAL_EXTERNAL_MANAGED_BACKEND_SERVICES:
+  // GLOBAL_EXTERNAL_MANAGED_FORWARDING_RULES:
+  // GLOBAL_EXTERNAL_PROXY_LB_BACKEND_SERVICES:
+  // GLOBAL_INTERNAL_ADDRESSES:
+  // GLOBAL_INTERNAL_MANAGED_BACKEND_SERVICES:
+  // GLOBAL_INTERNAL_TRAFFIC_DIRECTOR_BACKEND_SERVICES:
+  // GPUS_ALL_REGIONS:
+  // HEALTH_CHECKS:
+  // IMAGES:
+  // INSTANCES:
+  // INSTANCE_GROUPS:
+  // INSTANCE_GROUP_MANAGERS:
+  // INSTANCE_TEMPLATES:
+  // INTERCONNECTS:
+  // INTERCONNECT_ATTACHMENTS_PER_REGION:
+  // INTERCONNECT_ATTACHMENTS_TOTAL_MBPS:
+  // INTERCONNECT_TOTAL_GBPS:
+  // INTERNAL_ADDRESSES:
+  // INTERNAL_TRAFFIC_DIRECTOR_FORWARDING_RULES:
+  // IN_PLACE_SNAPSHOTS:
+  // IN_USE_ADDRESSES:
+  // IN_USE_BACKUP_SCHEDULES:
+  // IN_USE_SNAPSHOT_SCHEDULES:
+  // LOCAL_SSD_TOTAL_GB:
+  // M1_CPUS:
+  // M2_CPUS:
+  // M3_CPUS:
+  // MACHINE_IMAGES:
+  // N2A_CPUS:
+  // N2D_CPUS:
+  // N2_CPUS:
+  // NETWORKS:
+  // NETWORK_ATTACHMENTS:
+  // NETWORK_ENDPOINT_GROUPS:
+  // NETWORK_FIREWALL_POLICIES:
+  // NODE_GROUPS:
+  // NODE_TEMPLATES:
+  // NVIDIA_A100_80GB_GPUS:
+  // NVIDIA_A100_GPUS:
+  // NVIDIA_K80_GPUS:
+  // NVIDIA_P100_GPUS:
+  // NVIDIA_P100_VWS_GPUS:
+  // NVIDIA_P4_GPUS:
+  // NVIDIA_P4_VWS_GPUS:
+  // NVIDIA_T4_GPUS:
+  // NVIDIA_T4_VWS_GPUS:
+  // NVIDIA_V100_GPUS:
+  // PACKET_MIRRORINGS:
+  // PD_EXTREME_TOTAL_PROVISIONED_IOPS:
+  // PREEMPTIBLE_CPUS:
+  // PREEMPTIBLE_LOCAL_SSD_GB:
+  // PREEMPTIBLE_NVIDIA_A100_80GB_GPUS:
+  // PREEMPTIBLE_NVIDIA_A100_GPUS:
+  // PREEMPTIBLE_NVIDIA_K80_GPUS:
+  // PREEMPTIBLE_NVIDIA_P100_GPUS:
+  // PREEMPTIBLE_NVIDIA_P100_VWS_GPUS:
+  // PREEMPTIBLE_NVIDIA_P4_GPUS:
+  // PREEMPTIBLE_NVIDIA_P4_VWS_GPUS:
+  // PREEMPTIBLE_NVIDIA_T4_GPUS:
+  // PREEMPTIBLE_NVIDIA_T4_VWS_GPUS:
+  // PREEMPTIBLE_NVIDIA_V100_GPUS:
+  // PSC_ILB_CONSUMER_FORWARDING_RULES_PER_PRODUCER_NETWORK:
+  // PSC_INTERNAL_LB_FORWARDING_RULES:
+  // PUBLIC_ADVERTISED_PREFIXES:
+  // PUBLIC_DELEGATED_PREFIXES:
+  // REGIONAL_AUTOSCALERS:
+  // REGIONAL_EXTERNAL_MANAGED_BACKEND_SERVICES:
+  // REGIONAL_EXTERNAL_NETWORK_LB_BACKEND_SERVICES:
+  // REGIONAL_INSTANCE_GROUP_MANAGERS:
+  // REGIONAL_INTERNAL_LB_BACKEND_SERVICES:
+  // REGIONAL_INTERNAL_MANAGED_BACKEND_SERVICES:
+  // RESERVATIONS:
+  // RESOURCE_POLICIES:
+  // ROUTERS:
+  // ROUTES:
+  // SECURITY_POLICIES:
+  // SECURITY_POLICIES_PER_REGION:
+  // SECURITY_POLICY_CEVAL_RULES:
+  // SECURITY_POLICY_RULES:
+  // SECURITY_POLICY_RULES_PER_REGION:
+  // SERVICE_ATTACHMENTS:
   // SNAPSHOTS: The total number of snapshots allowed for a single project.
-  // SSD_TOTAL_GB: 
-  // SSL_CERTIFICATES: 
-  // STATIC_ADDRESSES: 
-  // STATIC_BYOIP_ADDRESSES: 
-  // STATIC_EXTERNAL_IPV6_ADDRESS_RANGES: 
-  // SUBNETWORKS: 
-  // T2A_CPUS: 
-  // T2D_CPUS: 
-  // TARGET_HTTPS_PROXIES: 
-  // TARGET_HTTP_PROXIES: 
-  // TARGET_INSTANCES: 
-  // TARGET_POOLS: 
-  // TARGET_SSL_PROXIES: 
-  // TARGET_TCP_PROXIES: 
-  // TARGET_VPN_GATEWAYS: 
-  // URL_MAPS: 
-  // VPN_GATEWAYS: 
-  // VPN_TUNNELS: 
-  // XPN_SERVICE_PROJECTS: 
+  // SSD_TOTAL_GB:
+  // SSL_CERTIFICATES:
+  // STATIC_ADDRESSES:
+  // STATIC_BYOIP_ADDRESSES:
+  // STATIC_EXTERNAL_IPV6_ADDRESS_RANGES:
+  // SUBNETWORKS:
+  // T2A_CPUS:
+  // T2D_CPUS:
+  // TARGET_HTTPS_PROXIES:
+  // TARGET_HTTP_PROXIES:
+  // TARGET_INSTANCES:
+  // TARGET_POOLS:
+  // TARGET_SSL_PROXIES:
+  // TARGET_TCP_PROXIES:
+  // TARGET_VPN_GATEWAYS:
+  // URL_MAPS:
+  // VPN_GATEWAYS:
+  // VPN_TUNNELS:
+  // XPN_SERVICE_PROJECTS:
   optional string metric = 2;
 
   // [Output Only] Owning resource. This is the resource on which this quota is
@@ -19634,7 +19657,7 @@ message Reference {
   optional string kind = 1;
 
   // A description of the reference type with no implied semantics. Possible
-  // values include: 1. MEMBER_OF 
+  // values include: 1. MEMBER_OF
   optional string reference_type = 2;
 
   // URL of the resource which refers to the target.
@@ -19673,8 +19696,8 @@ message Region {
   optional string self_link = 8;
 
   // [Output Only] Status of the region, either UP or DOWN.
-  // DOWN: 
-  // UP: 
+  // DOWN:
+  // UP:
   optional string status = 9;
 
   // [Output Only] Reserved for future use.
@@ -19777,7 +19800,7 @@ message RegionAutoscalerList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -19880,7 +19903,7 @@ message RegionDiskTypeList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -19998,7 +20021,7 @@ message RegionInstanceGroupList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -20110,7 +20133,7 @@ message RegionInstanceGroupManagerList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -20296,7 +20319,7 @@ message RegionInstanceGroupManagersListInstanceConfigsResp {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -20434,7 +20457,7 @@ message RegionInstanceGroupsListInstances {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -20564,7 +20587,7 @@ message RegionList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -20577,13 +20600,16 @@ message RegionList {
 
 message RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponse {
   // Effective firewalls from firewall policy.
-  repeated RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponseEffectiveFirewallPolicy firewall_policys = 1;
+  repeated
+      RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponseEffectiveFirewallPolicy
+          firewall_policys = 1;
 
   // Effective firewalls on the network.
   repeated Firewall firewalls = 2;
 }
 
-message RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponseEffectiveFirewallPolicy {
+message
+RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponseEffectiveFirewallPolicy {
   // [Output Only] The display name of the firewall policy.
   optional string display_name = 1;
 
@@ -20595,10 +20621,10 @@ message RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponseEffectiveFirew
 
   // [Output Only] The type of the firewall policy. Can be one of HIERARCHY,
   // NETWORK, NETWORK_REGIONAL.
-  // HIERARCHY: 
-  // NETWORK: 
-  // NETWORK_REGIONAL: 
-  // UNSPECIFIED: 
+  // HIERARCHY:
+  // NETWORK:
+  // NETWORK_REGIONAL:
+  // UNSPECIFIED:
   optional string type = 4;
 }
 
@@ -20649,7 +20675,7 @@ message RequestMirrorPolicy {
   // The backend service configured for a mirroring policy must reference
   // backends that are of the same type as the original backend service matched
   // in the URL map. Serverless NEG backends are not currently supported as a
-  // mirrored backend service. 
+  // mirrored backend service.
   optional string backend_service = 1;
 }
 
@@ -20715,7 +20741,7 @@ message Reservation {
   // [Output Only] The status of the reservation.
   // CREATING: Resources are being allocated for the reservation.
   // DELETING: Reservation is currently being deleted.
-  // INVALID: 
+  // INVALID:
   // READY: Reservation has allocated all its resources.
   // UPDATING: Reservation is currently being resized.
   optional string status = 14;
@@ -20734,7 +20760,7 @@ message ReservationAffinity {
   // NO_RESERVATION: Do not consume from any allocated capacity.
   // SPECIFIC_RESERVATION: Must consume from a specific reservation. Must
   // specify key value fields for specifying the reservations.
-  // UNSPECIFIED: 
+  // UNSPECIFIED:
   optional string consume_reservation_type = 1;
 
   // Corresponds to the label key of a reservation resource. To target a
@@ -20844,7 +20870,7 @@ message ReservationAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -20948,7 +20974,7 @@ message ReservationList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -21040,7 +21066,7 @@ message ReservationsScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -21067,11 +21093,11 @@ message ResourceCommitment {
 
   // Type of resource for which this commitment applies. Possible values are
   // VCPU, MEMORY, LOCAL_SSD, and ACCELERATOR.
-  // ACCELERATOR: 
-  // LOCAL_SSD: 
-  // MEMORY: 
-  // UNSPECIFIED: 
-  // VCPU: 
+  // ACCELERATOR:
+  // LOCAL_SSD:
+  // MEMORY:
+  // UNSPECIFIED:
+  // VCPU:
   optional string type = 3;
 }
 
@@ -21156,7 +21182,7 @@ message ResourcePoliciesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -21215,7 +21241,7 @@ message ResourcePolicy {
   // CREATING: Resource policy is being created.
   // DELETING: Resource policy is being deleted.
   // EXPIRED: Resource policy is expired and will not run again.
-  // INVALID: 
+  // INVALID:
   // READY: Resource policy is ready to be used.
   optional string status = 12;
 }
@@ -21317,7 +21343,7 @@ message ResourcePolicyAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -21353,8 +21379,8 @@ message ResourcePolicyGroupPlacementPolicy {
   optional int32 availability_domain_count = 1;
 
   // Specifies network collocation
-  // COLLOCATED: 
-  // UNSPECIFIED_COLLOCATION: 
+  // COLLOCATED:
+  // UNSPECIFIED_COLLOCATION:
   optional string collocation = 2;
 
   // Number of VMs in this placement group. Google does not recommend that you
@@ -21500,7 +21526,7 @@ message ResourcePolicyList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -21518,7 +21544,8 @@ message ResourcePolicyResourceStatus {
   // [Output Only] Specifies a set of output values reffering to the
   // instance_schedule_policy system status. This field should have the same
   // name as corresponding policy field.
-  optional ResourcePolicyResourceStatusInstanceSchedulePolicyStatus instance_schedule_policy = 1;
+  optional ResourcePolicyResourceStatusInstanceSchedulePolicyStatus
+      instance_schedule_policy = 1;
 }
 
 message ResourcePolicyResourceStatusInstanceSchedulePolicyStatus {
@@ -21536,7 +21563,8 @@ message ResourcePolicyResourceStatusInstanceSchedulePolicyStatus {
 // scheduled snapshots should be retained.
 message ResourcePolicySnapshotSchedulePolicy {
   // Retention policy applied to snapshots created by this resource policy.
-  optional ResourcePolicySnapshotSchedulePolicyRetentionPolicy retention_policy = 1;
+  optional ResourcePolicySnapshotSchedulePolicyRetentionPolicy
+      retention_policy = 1;
 
   // A Vm Maintenance Policy specifies what kind of infrastructure maintenance
   // we are allowed to perform on this VM and when. Schedule that is applied to
@@ -21545,7 +21573,8 @@ message ResourcePolicySnapshotSchedulePolicy {
 
   // Properties with which snapshots are created such as labels, encryption
   // keys.
-  optional ResourcePolicySnapshotSchedulePolicySnapshotProperties snapshot_properties = 3;
+  optional ResourcePolicySnapshotSchedulePolicySnapshotProperties
+      snapshot_properties = 3;
 }
 
 // Policy for retention of scheduled snapshots.
@@ -21555,9 +21584,9 @@ message ResourcePolicySnapshotSchedulePolicyRetentionPolicy {
 
   // Specifies the behavior to apply to scheduled snapshots when the source disk
   // is deleted.
-  // APPLY_RETENTION_POLICY: 
-  // KEEP_AUTO_SNAPSHOTS: 
-  // UNSPECIFIED_ON_SOURCE_DISK_DELETE: 
+  // APPLY_RETENTION_POLICY:
+  // KEEP_AUTO_SNAPSHOTS:
+  // UNSPECIFIED_ON_SOURCE_DISK_DELETE:
   optional string on_source_disk_delete = 2;
 }
 
@@ -21597,14 +21626,14 @@ message ResourcePolicyWeeklyCycleDayOfWeek {
   // Defines a schedule that runs on specific days of the week. Specify one or
   // more days. The following options are available: MONDAY, TUESDAY, WEDNESDAY,
   // THURSDAY, FRIDAY, SATURDAY, SUNDAY.
-  // FRIDAY: 
-  // INVALID: 
-  // MONDAY: 
-  // SATURDAY: 
-  // SUNDAY: 
-  // THURSDAY: 
-  // TUESDAY: 
-  // WEDNESDAY: 
+  // FRIDAY:
+  // INVALID:
+  // MONDAY:
+  // SATURDAY:
+  // SUNDAY:
+  // THURSDAY:
+  // TUESDAY:
+  // WEDNESDAY:
   optional string day = 1;
 
   // [Output only] Duration of the time window, automatically chosen to be
@@ -21672,7 +21701,7 @@ message Route {
   // For example, the following are all valid URLs: - 10.128.0.56 -
   // https://www.googleapis.com/compute/v1/projects/project/regions/region
   // /forwardingRules/forwardingRule -
-  // regions/region/forwardingRules/forwardingRule 
+  // regions/region/forwardingRules/forwardingRule
   optional string next_hop_ilb = 10;
 
   // The URL to an instance that should handle matching packets. You can specify
@@ -21716,10 +21745,10 @@ message Route {
   // another Cloud Router and will readvertise to one of its BGP peers -
   // 'SUBNET' for a route from a subnet of the VPC - 'BGP' for a route learned
   // from a BGP peer of this router - 'STATIC' for a static route
-  // BGP: 
-  // STATIC: 
-  // SUBNET: 
-  // TRANSIT: 
+  // BGP:
+  // STATIC:
+  // SUBNET:
+  // TRANSIT:
   optional string route_type = 18;
 
   // [Output Only] Server-defined fully-qualified URL for this resource.
@@ -21799,7 +21828,7 @@ message Route {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -21821,11 +21850,11 @@ message RouteAsPath {
   // route has traversed - 'AS_CONFED_SEQUENCE': ordered set of Member
   // Autonomous Systems in the local confederation that the route has traversed
   // - 'AS_CONFED_SET': unordered set of Member Autonomous Systems in the local
-  // confederation that the route has traversed 
-  // AS_CONFED_SEQUENCE: 
-  // AS_CONFED_SET: 
-  // AS_SEQUENCE: 
-  // AS_SET: 
+  // confederation that the route has traversed
+  // AS_CONFED_SEQUENCE:
+  // AS_CONFED_SET:
+  // AS_SEQUENCE:
+  // AS_SET:
   optional string path_segment_type = 2;
 }
 
@@ -21921,7 +21950,7 @@ message RouteList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -22097,7 +22126,7 @@ message RouterAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -22111,8 +22140,8 @@ message RouterAggregatedList {
 message RouterBgp {
   // User-specified flag to indicate which mode to use for advertisement. The
   // options are DEFAULT or CUSTOM.
-  // CUSTOM: 
-  // DEFAULT: 
+  // CUSTOM:
+  // DEFAULT:
   optional string advertise_mode = 1;
 
   // User-specified list of prefix groups to advertise in custom mode. This
@@ -22146,8 +22175,8 @@ message RouterBgp {
 
 message RouterBgpPeer {
   // User-specified flag to indicate which mode to use for advertisement.
-  // CUSTOM: 
-  // DEFAULT: 
+  // CUSTOM:
+  // DEFAULT:
   optional string advertise_mode = 1;
 
   // User-specified list of prefix groups to advertise in custom mode, which
@@ -22178,8 +22207,8 @@ message RouterBgpPeer {
   // with the peer is terminated and all associated routing information is
   // removed. If set to TRUE, the peer connection can be established with
   // routing information. The default is TRUE.
-  // FALSE: 
-  // TRUE: 
+  // FALSE:
+  // TRUE:
   optional string enable = 6;
 
   // Enable IPv6 traffic over BGP Peer. If not specified, it is disabled by
@@ -22202,7 +22231,7 @@ message RouterBgpPeer {
   // by Cloud Interconnect, specifically by an InterconnectAttachment of type
   // PARTNER. Google automatically creates, updates, and deletes this type of
   // BGP peer when the PARTNER InterconnectAttachment is created, updated, or
-  // deleted. 
+  // deleted.
   // MANAGED_BY_ATTACHMENT: The BGP peer is automatically created for PARTNER
   // type InterconnectAttachment; Google will automatically create/delete this
   // BGP peer when the PARTNER InterconnectAttachment is created/deleted, and
@@ -22270,9 +22299,9 @@ message RouterBgpPeerBfd {
   // PASSIVE, the Cloud Router will wait for the peer router to initiate the BFD
   // session for this BGP peer. If set to DISABLED, BFD is disabled for this BGP
   // peer. The default is DISABLED.
-  // ACTIVE: 
-  // DISABLED: 
-  // PASSIVE: 
+  // ACTIVE:
+  // DISABLED:
+  // PASSIVE:
   optional string session_initialization_mode = 4;
 }
 
@@ -22299,7 +22328,7 @@ message RouterInterface {
   // Cloud Interconnect, specifically, by an InterconnectAttachment of type
   // PARTNER. Google automatically creates, updates, and deletes this type of
   // interface when the PARTNER InterconnectAttachment is created, updated, or
-  // deleted. 
+  // deleted.
   // MANAGED_BY_ATTACHMENT: The interface is automatically created for PARTNER
   // type InterconnectAttachment, Google will automatically create/update/delete
   // this interface when the PARTNER InterconnectAttachment is
@@ -22434,7 +22463,7 @@ message RouterList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -22473,7 +22502,7 @@ message RouterNat {
   // NAT config. - enableEndpointIndependentMapping cannot be set to true. - If
   // minPorts is set, minPortsPerVm must be set to a power of two greater than
   // or equal to 32. If minPortsPerVm is not set, a minimum of 32 ports will be
-  // allocated to a VM from this NAT config. 
+  // allocated to a VM from this NAT config.
   optional bool enable_dynamic_port_allocation = 2;
 
   optional bool enable_endpoint_independent_mapping = 3;
@@ -22512,7 +22541,7 @@ message RouterNat {
   // When there are not enough specified Nat IPs, the Nat service fails for new
   // VMs. - AUTO_ONLY: Nat IPs are allocated by Google Cloud Platform; customers
   // can't specify any Nat IPs. When choosing AUTO_ONLY, then nat_ip should be
-  // empty. 
+  // empty.
   // AUTO_ONLY: Nat IPs are allocated by GCP; customers can not specify any Nat
   // IPs.
   // MANUAL_ONLY: Only use Nat IPs provided by customers. When specified Nat IPs
@@ -22574,7 +22603,7 @@ message RouterNatLogConfig {
   // exported for all connections handled by this NAT. This option can take one
   // of the following values: - ERRORS_ONLY: Export logs only for connection
   // failures. - TRANSLATIONS_ONLY: Export logs only for successful connections.
-  // - ALL: Export logs for all connections, successful and unsuccessful. 
+  // - ALL: Export logs for all connections, successful and unsuccessful.
   // ALL: Export logs for all (successful and unsuccessful) connections.
   // ERRORS_ONLY: Export logs for connection failures only.
   // TRANSLATIONS_ONLY: Export logs for successful connections only.
@@ -22693,16 +22722,16 @@ message RouterStatusBgpPeerStatus {
   optional string state = 13;
 
   // Status of the BGP peer: {UP, DOWN}
-  // DOWN: 
-  // UNKNOWN: 
-  // UP: 
+  // DOWN:
+  // UNKNOWN:
+  // UP:
   optional string status = 14;
 
   // Indicates why particular status was returned.
   // MD5_AUTH_INTERNAL_PROBLEM: Indicates internal problems with configuration
   // of MD5 authentication. This particular reason can only be returned when
   // md5AuthEnabled is true and status is DOWN.
-  // STATUS_REASON_UNSPECIFIED: 
+  // STATUS_REASON_UNSPECIFIED:
   optional string status_reason = 15;
 
   // Time this session has been up. Format: 14 years, 51 weeks, 6 days, 23
@@ -22858,7 +22887,7 @@ message RoutersScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -22940,8 +22969,8 @@ message SSLHealthCheck {
 
   // Specifies the type of proxy header to append before sending data to the
   // backend, either NONE or PROXY_V1. The default is NONE.
-  // NONE: 
-  // PROXY_V1: 
+  // NONE:
+  // PROXY_V1:
   optional string proxy_header = 4;
 
   // Instructs the health check prober to send this exact ASCII string, up to
@@ -22992,8 +23021,8 @@ message SavedAttachedDisk {
 
   // Specifies the disk interface to use for attaching this disk, which is
   // either SCSI or NVME.
-  // NVME: 
-  // SCSI: 
+  // NVME:
+  // SCSI:
   optional string interface = 9;
 
   // [Output Only] Type of the resource. Always compute#attachedDisk for
@@ -23022,13 +23051,13 @@ message SavedAttachedDisk {
   // is being adjusted as a result of shared storage reallocation. This status
   // can either be UPDATING, meaning the size of the snapshot is being updated,
   // or UP_TO_DATE, meaning the size of the snapshot is up-to-date.
-  // UPDATING: 
-  // UP_TO_DATE: 
+  // UPDATING:
+  // UP_TO_DATE:
   optional string storage_bytes_status = 15;
 
   // Specifies the type of the attached disk, either SCRATCH or PERSISTENT.
-  // PERSISTENT: 
-  // SCRATCH: 
+  // PERSISTENT:
+  // SCRATCH:
   optional string type = 16;
 }
 
@@ -23055,8 +23084,8 @@ message SavedDisk {
   // is being adjusted as a result of shared storage reallocation. This status
   // can either be UPDATING, meaning the size of the snapshot is being updated,
   // or UP_TO_DATE, meaning the size of the snapshot is up-to-date.
-  // UPDATING: 
-  // UP_TO_DATE: 
+  // UPDATING:
+  // UP_TO_DATE:
   optional string storage_bytes_status = 5;
 }
 
@@ -23145,7 +23174,7 @@ message SchedulingNodeAffinity {
   // affinity and NOT_IN for anti-affinity.
   // IN: Requires Compute Engine to seek for matched nodes.
   // NOT_IN: Requires Compute Engine to avoid certain nodes.
-  // OPERATOR_UNSPECIFIED: 
+  // OPERATOR_UNSPECIFIED:
   optional string operator = 2;
 
   // Corresponds to the label values of Node resource.
@@ -23259,7 +23288,7 @@ message SecurityPoliciesAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -23349,7 +23378,7 @@ message SecurityPoliciesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -23369,7 +23398,8 @@ message SecurityPoliciesWafConfig {
 // backend services that use load balancers can reference a security policy. For
 // more information, see Google Cloud Armor security policy overview.
 message SecurityPolicy {
-  optional SecurityPolicyAdaptiveProtectionConfig adaptive_protection_config = 1;
+  optional SecurityPolicyAdaptiveProtectionConfig adaptive_protection_config =
+      1;
 
   optional SecurityPolicyAdvancedOptionsConfig advanced_options_config = 2;
 
@@ -23441,16 +23471,17 @@ message SecurityPolicy {
   // services, target pools, target instances, and instances with external IPs.
   // They filter requests before the request is served from the application.
   // This field can be set only at resource creation time.
-  // CLOUD_ARMOR: 
-  // CLOUD_ARMOR_EDGE: 
-  // CLOUD_ARMOR_NETWORK: 
+  // CLOUD_ARMOR:
+  // CLOUD_ARMOR_EDGE:
+  // CLOUD_ARMOR_NETWORK:
   optional string type = 14;
 }
 
 // Configuration options for Cloud Armor Adaptive Protection (CAAP).
 message SecurityPolicyAdaptiveProtectionConfig {
   // If set to true, enables Cloud Armor Machine Learning.
-  optional SecurityPolicyAdaptiveProtectionConfigLayer7DdosDefenseConfig layer7_ddos_defense_config = 1;
+  optional SecurityPolicyAdaptiveProtectionConfigLayer7DdosDefenseConfig
+      layer7_ddos_defense_config = 1;
 }
 
 // Configuration options for L7 DDoS detection.
@@ -23460,22 +23491,23 @@ message SecurityPolicyAdaptiveProtectionConfigLayer7DdosDefenseConfig {
 
   // Rule visibility can be one of the following: STANDARD - opaque rules.
   // (default) PREMIUM - transparent rules.
-  // PREMIUM: 
-  // STANDARD: 
+  // PREMIUM:
+  // STANDARD:
   optional string rule_visibility = 2;
 }
 
 message SecurityPolicyAdvancedOptionsConfig {
   // Custom configuration to apply the JSON parsing. Only applicable when
   // json_parsing is set to STANDARD.
-  optional SecurityPolicyAdvancedOptionsConfigJsonCustomConfig json_custom_config = 1;
+  optional SecurityPolicyAdvancedOptionsConfigJsonCustomConfig
+      json_custom_config = 1;
 
-  // DISABLED: 
-  // STANDARD: 
+  // DISABLED:
+  // STANDARD:
   optional string json_parsing = 2;
 
-  // NORMAL: 
-  // VERBOSE: 
+  // NORMAL:
+  // VERBOSE:
   optional string log_level = 3;
 }
 
@@ -23489,8 +23521,8 @@ message SecurityPolicyAdvancedOptionsConfigJsonCustomConfig {
 }
 
 message SecurityPolicyDdosProtectionConfig {
-  // ADVANCED: 
-  // STANDARD: 
+  // ADVANCED:
+  // STANDARD:
   optional string ddos_protection = 1;
 }
 
@@ -23583,7 +23615,7 @@ message SecurityPolicyList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -23621,7 +23653,7 @@ message SecurityPolicyRule {
   // URL-based redirect via a 302 response. Parameters for this action can be
   // configured via redirectOptions. - throttle: limit client traffic to the
   // configured threshold. Configure parameters for this action in
-  // rateLimitOptions. Requires rate_limit_options to be set for this. 
+  // rateLimitOptions. Requires rate_limit_options to be set for this.
   optional string action = 1;
 
   // An optional description of this resource. Provide this property when you
@@ -23642,7 +23674,8 @@ message SecurityPolicyRule {
   // Preconfigured WAF configuration to be applied for the rule. If the rule
   // does not evaluate preconfigured WAF rules, i.e., if
   // evaluatePreconfiguredWaf() is not used, this field will have no effect.
-  optional SecurityPolicyRulePreconfiguredWafConfig preconfigured_waf_config = 6;
+  optional SecurityPolicyRulePreconfiguredWafConfig preconfigured_waf_config =
+      6;
 
   // If set to true, the specified action is not enforced.
   optional bool preview = 7;
@@ -23664,7 +23697,8 @@ message SecurityPolicyRule {
 
 message SecurityPolicyRuleHttpHeaderAction {
   // The list of request headers to add or overwrite if they're already present.
-  repeated SecurityPolicyRuleHttpHeaderActionHttpHeaderOption request_headers_to_adds = 1;
+  repeated SecurityPolicyRuleHttpHeaderActionHttpHeaderOption
+      request_headers_to_adds = 1;
 }
 
 message SecurityPolicyRuleHttpHeaderActionHttpHeaderOption {
@@ -23710,21 +23744,25 @@ message SecurityPolicyRulePreconfiguredWafConfig {
 message SecurityPolicyRulePreconfiguredWafConfigExclusion {
   // A list of request cookie names whose value will be excluded from inspection
   // during preconfigured WAF evaluation.
-  repeated SecurityPolicyRulePreconfiguredWafConfigExclusionFieldParams request_cookies_to_exclude = 1;
+  repeated SecurityPolicyRulePreconfiguredWafConfigExclusionFieldParams
+      request_cookies_to_exclude = 1;
 
   // A list of request header names whose value will be excluded from inspection
   // during preconfigured WAF evaluation.
-  repeated SecurityPolicyRulePreconfiguredWafConfigExclusionFieldParams request_headers_to_exclude = 2;
+  repeated SecurityPolicyRulePreconfiguredWafConfigExclusionFieldParams
+      request_headers_to_exclude = 2;
 
   // A list of request query parameter names whose value will be excluded from
   // inspection during preconfigured WAF evaluation. Note that the parameter can
   // be in the query string or in the POST body.
-  repeated SecurityPolicyRulePreconfiguredWafConfigExclusionFieldParams request_query_params_to_exclude = 3;
+  repeated SecurityPolicyRulePreconfiguredWafConfigExclusionFieldParams
+      request_query_params_to_exclude = 3;
 
   // A list of request URIs from the request line to be excluded from inspection
   // during preconfigured WAF evaluation. When specifying this field, the query
   // or fragment part should be excluded.
-  repeated SecurityPolicyRulePreconfiguredWafConfigExclusionFieldParams request_uris_to_exclude = 4;
+  repeated SecurityPolicyRulePreconfiguredWafConfigExclusionFieldParams
+      request_uris_to_exclude = 4;
 
   // A list of target rule IDs under the WAF rule set to apply the preconfigured
   // WAF exclusion. If omitted, it refers to all the rule IDs under the WAF rule
@@ -23786,15 +23824,15 @@ message SecurityPolicyRuleRateLimitOptions {
   // bytes. - SNI: Server name indication in the TLS session of the HTTPS
   // request. The key value is truncated to the first 128 bytes. The key type
   // defaults to ALL on a HTTP session. - REGION_CODE: The country/region from
-  // which the request originates. 
-  // ALL: 
-  // HTTP_COOKIE: 
-  // HTTP_HEADER: 
-  // HTTP_PATH: 
-  // IP: 
-  // REGION_CODE: 
-  // SNI: 
-  // XFF_IP: 
+  // which the request originates.
+  // ALL:
+  // HTTP_COOKIE:
+  // HTTP_HEADER:
+  // HTTP_PATH:
+  // IP:
+  // REGION_CODE:
+  // SNI:
+  // XFF_IP:
   optional string enforce_on_key = 4;
 
   // Rate limit key name applicable only for the following key types:
@@ -23832,8 +23870,8 @@ message SecurityPolicyRuleRedirectOptions {
   optional string target = 1;
 
   // Type of the redirect action.
-  // EXTERNAL_302: 
-  // GOOGLE_RECAPTCHA: 
+  // EXTERNAL_302:
+  // GOOGLE_RECAPTCHA:
   optional string type = 2;
 }
 
@@ -23893,7 +23931,7 @@ message ServerBinding {
   // over its lifetime.
   // RESTART_NODE_ON_MINIMAL_SERVERS: Node may associate with minimal physical
   // servers over its lifetime.
-  // SERVER_BINDING_TYPE_UNSPECIFIED: 
+  // SERVER_BINDING_TYPE_UNSPECIFIED:
   optional string type = 1;
 }
 
@@ -23918,9 +23956,9 @@ message ServiceAttachment {
   // The connection preference of service attachment. The value can be set to
   // ACCEPT_AUTOMATIC. An ACCEPT_AUTOMATIC service attachment is one that always
   // accepts the connection from consumer forwarding rules.
-  // ACCEPT_AUTOMATIC: 
-  // ACCEPT_MANUAL: 
-  // CONNECTION_PREFERENCE_UNSPECIFIED: 
+  // ACCEPT_AUTOMATIC:
+  // ACCEPT_MANUAL:
+  // CONNECTION_PREFERENCE_UNSPECIFIED:
   optional string connection_preference = 2;
 
   // Projects that are allowed to connect to this service attachment.
@@ -24093,7 +24131,7 @@ message ServiceAttachmentAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -24120,7 +24158,7 @@ message ServiceAttachmentConnectedEndpoint {
   // traffic.
   // PENDING: The connection is pending acceptance by the producer.
   // REJECTED: The consumer is still connected but not using the connection.
-  // STATUS_UNSPECIFIED: 
+  // STATUS_UNSPECIFIED:
   optional string status = 3;
 }
 
@@ -24227,7 +24265,7 @@ message ServiceAttachmentList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -24313,7 +24351,7 @@ message ServiceAttachmentsScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -24506,8 +24544,8 @@ message Snapshot {
   optional CustomerEncryptionKey snapshot_encryption_key = 19;
 
   // Indicates the type of the snapshot.
-  // ARCHIVE: 
-  // STANDARD: 
+  // ARCHIVE:
+  // STANDARD:
   optional string snapshot_type = 20;
 
   // The source disk used to create this snapshot.
@@ -24548,8 +24586,8 @@ message Snapshot {
   // is being adjusted as a result of shared storage reallocation. This status
   // can either be UPDATING, meaning the size of the snapshot is being updated,
   // or UP_TO_DATE, meaning the size of the snapshot is up-to-date.
-  // UPDATING: 
-  // UP_TO_DATE: 
+  // UPDATING:
+  // UP_TO_DATE:
   optional string storage_bytes_status = 28;
 
   // Cloud Storage bucket storage location of the snapshot (regional or
@@ -24649,7 +24687,7 @@ message SnapshotList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -24669,7 +24707,7 @@ message SourceDiskEncryptionKey {
   // valid partial URL. For example, the following are valid values: -
   // https://www.googleapis.com/compute/v1/projects/project/zones/zone
   // /disks/disk - projects/project/zones/zone/disks/disk -
-  // zones/zone/disks/disk 
+  // zones/zone/disks/disk
   optional string source_disk = 2;
 }
 
@@ -24829,7 +24867,7 @@ message SslCertificate {
   // certificate and private_key are used.
   // MANAGED: Google-managed SSLCertificate.
   // SELF_MANAGED: Certificate uploaded by user.
-  // TYPE_UNSPECIFIED: 
+  // TYPE_UNSPECIFIED:
   optional string type = 14;
 }
 
@@ -24928,7 +24966,7 @@ message SslCertificateAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -25031,7 +25069,7 @@ message SslCertificateList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -25057,7 +25095,7 @@ message SslCertificateManagedSslCertificate {
   // [Output only] Status of the managed certificate resource.
   // ACTIVE: The certificate management is working, and a certificate has been
   // provisioned.
-  // MANAGED_CERTIFICATE_STATUS_UNSPECIFIED: 
+  // MANAGED_CERTIFICATE_STATUS_UNSPECIFIED:
   // PROVISIONING: The certificate management is working. GCP will attempt to
   // provision the first certificate.
   // PROVISIONING_FAILED: Certificate provisioning failed due to an issue with
@@ -25162,7 +25200,7 @@ message SslCertificatesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -25271,7 +25309,7 @@ message SslPoliciesAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -25374,7 +25412,7 @@ message SslPoliciesList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -25464,7 +25502,7 @@ message SslPoliciesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -25620,7 +25658,7 @@ message SslPolicy {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -25655,8 +25693,8 @@ message StatefulPolicyPreservedStateDiskDevice {
   // should be deleted after it is no longer used by the group, e.g. when the
   // given instance or the whole group is deleted. Note: disks attached in
   // READ_ONLY mode cannot be auto-deleted.
-  // NEVER: 
-  // ON_PERMANENT_INSTANCE_DELETION: 
+  // NEVER:
+  // ON_PERMANENT_INSTANCE_DELETION:
   optional string auto_delete = 1;
 }
 
@@ -25913,7 +25951,7 @@ message SubnetworkAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -26017,7 +26055,7 @@ message SubnetworkList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -26034,12 +26072,12 @@ message SubnetworkLogConfig {
   // Toggles the aggregation interval for collecting flow logs. Increasing the
   // interval time will reduce the amount of generated flow logs for long
   // lasting connections. Default is an interval of 5 seconds per connection.
-  // INTERVAL_10_MIN: 
-  // INTERVAL_15_MIN: 
-  // INTERVAL_1_MIN: 
-  // INTERVAL_30_SEC: 
-  // INTERVAL_5_MIN: 
-  // INTERVAL_5_SEC: 
+  // INTERVAL_10_MIN:
+  // INTERVAL_15_MIN:
+  // INTERVAL_1_MIN:
+  // INTERVAL_30_SEC:
+  // INTERVAL_5_MIN:
+  // INTERVAL_5_SEC:
   optional string aggregation_interval = 1;
 
   // Whether to enable flow logging for this subnetwork. If this field is not
@@ -26064,9 +26102,9 @@ message SubnetworkLogConfig {
   // Can only be specified if VPC flow logs for this subnetwork is enabled.
   // Configures whether all, none or a subset of metadata fields should be added
   // to the reported VPC flow logs. Default is EXCLUDE_ALL_METADATA.
-  // CUSTOM_METADATA: 
-  // EXCLUDE_ALL_METADATA: 
-  // INCLUDE_ALL_METADATA: 
+  // CUSTOM_METADATA:
+  // EXCLUDE_ALL_METADATA:
+  // INCLUDE_ALL_METADATA:
   optional string metadata = 5;
 
   // Can only be specified if VPC flow logs for this subnetwork is enabled and
@@ -26172,7 +26210,7 @@ message SubnetworksScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -26246,8 +26284,8 @@ message TCPHealthCheck {
 
   // Specifies the type of proxy header to append before sending data to the
   // backend, either NONE or PROXY_V1. The default is NONE.
-  // NONE: 
-  // PROXY_V1: 
+  // NONE:
+  // PROXY_V1:
   optional string proxy_header = 4;
 
   // Instructs the health check prober to send this exact ASCII string, up to
@@ -26430,7 +26468,7 @@ message TargetGrpcProxyList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -26516,7 +26554,7 @@ message TargetHttpProxiesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -26711,7 +26749,7 @@ message TargetHttpProxyList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -26797,7 +26835,7 @@ message TargetHttpsProxiesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -26902,7 +26940,7 @@ message TargetHttpsProxy {
   // quic-override is set to NONE, Google manages whether QUIC is used. - When
   // quic-override is set to ENABLE, the load balancer uses QUIC when possible.
   // - When quic-override is set to DISABLE, the load balancer doesn't use QUIC.
-  // - If the quic-override flag is not specified, NONE is implied. 
+  // - If the quic-override flag is not specified, NONE is implied.
   // DISABLE: The load balancer will not attempt to negotiate QUIC with clients.
   // ENABLE: The load balancer will attempt to negotiate QUIC with clients.
   // NONE: No overrides to the default QUIC policy. This option is implicit if
@@ -26940,7 +26978,7 @@ message TargetHttpsProxy {
   // the mapping from URL to the BackendService. For example, the following are
   // all valid URLs for specifying a URL map: -
   // https://www.googleapis.compute/v1/projects/project/global/urlMaps/ url-map
-  // - projects/project/global/urlMaps/url-map - global/urlMaps/url-map 
+  // - projects/project/global/urlMaps/url-map - global/urlMaps/url-map
   optional string url_map = 16;
 }
 
@@ -27039,7 +27077,7 @@ message TargetHttpsProxyAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -27143,7 +27181,7 @@ message TargetHttpsProxyList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -27176,7 +27214,7 @@ message TargetInstance {
   // For example, the following are all valid URLs: -
   // https://www.googleapis.com/compute/v1/projects/project/zones/zone
   // /instances/instance - projects/project/zones/zone/instances/instance -
-  // zones/zone/instances/instance 
+  // zones/zone/instances/instance
   optional string instance = 4;
 
   // [Output Only] The type of the resource. Always compute#targetInstance for
@@ -27306,7 +27344,7 @@ message TargetInstanceAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -27409,7 +27447,7 @@ message TargetInstanceList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -27495,7 +27533,7 @@ message TargetInstancesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -27707,7 +27745,7 @@ message TargetPoolAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -27819,7 +27857,7 @@ message TargetPoolList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -27841,7 +27879,7 @@ message TargetPoolsAddInstanceRequest {
   // https://www.googleapis.com/compute/v1/projects/project-id/zones/zone
   // /instances/instance-name -
   // projects/project-id/zones/zone/instances/instance-name -
-  // zones/zone/instances/instance-name 
+  // zones/zone/instances/instance-name
   repeated InstanceReference instances = 1;
 }
 
@@ -27851,7 +27889,7 @@ message TargetPoolsRemoveHealthCheckRequest {
   // https://www.googleapis.com/compute/beta/projects/project
   // /global/httpHealthChecks/health-check -
   // projects/project/global/httpHealthChecks/health-check -
-  // global/httpHealthChecks/health-check 
+  // global/httpHealthChecks/health-check
   repeated HealthCheckReference health_checks = 1;
 }
 
@@ -27935,7 +27973,7 @@ message TargetPoolsScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -27964,8 +28002,8 @@ message TargetSslProxiesSetCertificateMapRequest {
 message TargetSslProxiesSetProxyHeaderRequest {
   // The new type of proxy header to append before sending data to the backend.
   // NONE or PROXY_V1 are allowed.
-  // NONE: 
-  // PROXY_V1: 
+  // NONE:
+  // PROXY_V1:
   optional string proxy_header = 1;
 }
 
@@ -28012,8 +28050,8 @@ message TargetSslProxy {
 
   // Specifies the type of proxy header to append before sending data to the
   // backend, either NONE or PROXY_V1. The default is NONE.
-  // NONE: 
-  // PROXY_V1: 
+  // NONE:
+  // PROXY_V1:
   optional string proxy_header = 7;
 
   // [Output Only] Server-defined URL for the resource.
@@ -28126,7 +28164,7 @@ message TargetSslProxyList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -28212,7 +28250,7 @@ message TargetTcpProxiesScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -28232,8 +28270,8 @@ message TargetTcpProxiesSetBackendServiceRequest {
 message TargetTcpProxiesSetProxyHeaderRequest {
   // The new type of proxy header to append before sending data to the backend.
   // NONE or PROXY_V1 are allowed.
-  // NONE: 
-  // PROXY_V1: 
+  // NONE:
+  // PROXY_V1:
   optional string proxy_header = 1;
 }
 
@@ -28278,8 +28316,8 @@ message TargetTcpProxy {
 
   // Specifies the type of proxy header to append before sending data to the
   // backend, either NONE or PROXY_V1. The default is NONE.
-  // NONE: 
-  // PROXY_V1: 
+  // NONE:
+  // PROXY_V1:
   optional string proxy_header = 7;
 
   // [Output Only] URL of the region where the regional TCP proxy resides. This
@@ -28388,7 +28426,7 @@ message TargetTcpProxyAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -28491,7 +28529,7 @@ message TargetTcpProxyList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -28549,10 +28587,10 @@ message TargetVpnGateway {
 
   // [Output Only] The status of the VPN gateway, which can be one of the
   // following: CREATING, READY, FAILED, or DELETING.
-  // CREATING: 
-  // DELETING: 
-  // FAILED: 
-  // READY: 
+  // CREATING:
+  // DELETING:
+  // FAILED:
+  // READY:
   optional string status = 10;
 
   // [Output Only] A list of URLs to VpnTunnel resources. VpnTunnels are created
@@ -28656,7 +28694,7 @@ message TargetVpnGatewayAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -28760,7 +28798,7 @@ message TargetVpnGatewayList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -28846,7 +28884,7 @@ message TargetVpnGatewaysScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -29110,7 +29148,7 @@ message UrlMapList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -29286,7 +29324,7 @@ message UrlMapsAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -29372,7 +29410,7 @@ message UrlMapsScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -29595,7 +29633,7 @@ message UsableSubnetworksAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -29655,7 +29693,8 @@ message VmEndpointNatMappingsInterfaceNatMappings {
   optional int32 num_total_nat_ports = 4;
 
   // Information about mappings provided by rules in this NAT.
-  repeated VmEndpointNatMappingsInterfaceNatMappingsNatRuleMappings rule_mappings = 5;
+  repeated VmEndpointNatMappingsInterfaceNatMappingsNatRuleMappings
+      rule_mappings = 5;
 
   // Alias IP range for this interface endpoint. It will be a private (RFC 1918)
   // IP range. Examples: "10.33.4.55/32", or "192.168.5.0/24".
@@ -29787,7 +29826,7 @@ message VmEndpointNatMappingsList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -29956,7 +29995,7 @@ message VpnGatewayAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -30059,7 +30098,7 @@ message VpnGatewayList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -30093,7 +30132,7 @@ message VpnGatewayStatusHighAvailabilityRequirementState {
   // Indicates the reason why the VPN connection does not meet the high
   // availability redundancy criteria/requirement. Valid values is
   // INCOMPLETE_TUNNELS_COVERAGE.
-  // INCOMPLETE_TUNNELS_COVERAGE: 
+  // INCOMPLETE_TUNNELS_COVERAGE:
   optional string unsatisfied_reason = 2;
 }
 
@@ -30235,7 +30274,7 @@ message VpnGatewaysScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -30348,7 +30387,7 @@ message VpnTunnel {
   // Rules being deleted for Classic VPN tunnels or the project is in frozen
   // state. - PEER_IDENTITY_MISMATCH: Peer identity does not match peer IP,
   // probably behind NAT. - TS_NARROWING_NOT_ALLOWED: Traffic selector narrowing
-  // not allowed for an HA-VPN tunnel. 
+  // not allowed for an HA-VPN tunnel.
   // ALLOCATING_RESOURCES: Cloud VPN is in the process of allocating all
   // required resources (specifically, a borg task).
   // AUTHORIZATION_ERROR: Auth error (e.g. bad shared secret).
@@ -30476,7 +30515,7 @@ message VpnTunnelAggregatedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -30579,7 +30618,7 @@ message VpnTunnelList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -30665,7 +30704,7 @@ message VpnTunnelsScopedList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -30827,7 +30866,7 @@ message XpnHostList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.
@@ -30846,8 +30885,8 @@ message XpnResourceId {
   optional string id = 1;
 
   // The type of the service resource.
-  // PROJECT: 
-  // XPN_RESOURCE_TYPE_UNSPECIFIED: 
+  // PROJECT:
+  // XPN_RESOURCE_TYPE_UNSPECIFIED:
   optional string type = 2;
 }
 
@@ -30884,8 +30923,8 @@ message Zone {
   optional string self_link = 9;
 
   // [Output Only] Status of the zone, either UP or DOWN.
-  // DOWN: 
-  // UP: 
+  // DOWN:
+  // UP:
   optional string status = 10;
 
   // [Output Only] Reserved for future use.
@@ -30984,7 +31023,7 @@ message ZoneList {
     }
 
     // [Output Only] Metadata about this warning in key: value format. For
-    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" } 
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
     repeated DataItem data = 2;
 
     // [Output Only] A human-readable description of the warning code.

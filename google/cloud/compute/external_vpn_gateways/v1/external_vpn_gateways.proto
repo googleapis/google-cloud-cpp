@@ -27,12 +27,13 @@ import "google/cloud/extended_operations.proto";
 service ExternalVpnGateways {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Deletes the specified externalVpnGateway.
-  rpc DeleteExternalVpnGateways(DeleteExternalVpnGatewaysRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteExternalVpnGateways(DeleteExternalVpnGatewaysRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/externalVpnGateways/{external_vpn_gateway}"
     };
@@ -42,7 +43,8 @@ service ExternalVpnGateways {
 
   // Returns the specified externalVpnGateway. Get a list of available
   // externalVpnGateways by making a list() request.
-  rpc GetExternalVpnGateways(GetExternalVpnGatewaysRequest) returns (google.cloud.cpp.compute.v1.ExternalVpnGateway) {
+  rpc GetExternalVpnGateways(GetExternalVpnGatewaysRequest)
+      returns (google.cloud.cpp.compute.v1.ExternalVpnGateway) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/externalVpnGateways/{external_vpn_gateway}"
     };
@@ -51,18 +53,21 @@ service ExternalVpnGateways {
 
   // Creates a ExternalVpnGateway in the specified project using the data
   // included in the request.
-  rpc InsertExternalVpnGateways(InsertExternalVpnGatewaysRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertExternalVpnGateways(InsertExternalVpnGatewaysRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/externalVpnGateways"
       body: "external_vpn_gateway_resource"
     };
-    option (google.api.method_signature) = "project,external_vpn_gateway_resource";
+    option (google.api.method_signature) =
+        "project,external_vpn_gateway_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Retrieves the list of ExternalVpnGateway available to the specified
   // project.
-  rpc ListExternalVpnGateways(ListExternalVpnGatewaysRequest) returns (google.cloud.cpp.compute.v1.ExternalVpnGatewayList) {
+  rpc ListExternalVpnGateways(ListExternalVpnGatewaysRequest)
+      returns (google.cloud.cpp.compute.v1.ExternalVpnGatewayList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/externalVpnGateways"
     };
@@ -71,22 +76,26 @@ service ExternalVpnGateways {
 
   // Sets the labels on an ExternalVpnGateway. To learn more about labels, read
   // the Labeling Resources documentation.
-  rpc SetLabels(SetLabelsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc SetLabels(SetLabelsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/externalVpnGateways/{resource}/setLabels"
       body: "global_set_labels_request_resource"
     };
-    option (google.api.method_signature) = "project,resource,global_set_labels_request_resource";
+    option (google.api.method_signature) =
+        "project,resource,global_set_labels_request_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 
   // Returns permissions that a caller has on the specified resource.
-  rpc TestIamPermissions(TestIamPermissionsRequest) returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
+  rpc TestIamPermissions(TestIamPermissionsRequest)
+      returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/externalVpnGateways/{resource}/testIamPermissions"
       body: "test_permissions_request_resource"
     };
-    option (google.api.method_signature) = "project,resource,test_permissions_request_resource";
+    option (google.api.method_signature) =
+        "project,resource,test_permissions_request_resource";
   }
 }
 
@@ -96,7 +105,10 @@ message DeleteExternalVpnGatewaysRequest {
   string external_vpn_gateway = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -123,10 +135,14 @@ message GetExternalVpnGatewaysRequest {
 // Request message for InsertExternalVpnGateways.
 message InsertExternalVpnGatewaysRequest {
   // The ExternalVpnGateway for this request.
-  optional google.cloud.cpp.compute.v1.ExternalVpnGateway external_vpn_gateway_resource = 1;
+  optional google.cloud.cpp.compute.v1.ExternalVpnGateway
+      external_vpn_gateway_resource = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -209,10 +225,14 @@ message ListExternalVpnGatewaysRequest {
 // Request message for SetLabels.
 message SetLabelsRequest {
   // The GlobalSetLabelsRequest for this request.
-  optional google.cloud.cpp.compute.v1.GlobalSetLabelsRequest global_set_labels_request_resource = 1;
+  optional google.cloud.cpp.compute.v1.GlobalSetLabelsRequest
+      global_set_labels_request_resource = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name or id of the resource for this request.
   string resource = 3 [(google.api.field_behavior) = REQUIRED];
@@ -227,5 +247,6 @@ message TestIamPermissionsRequest {
   string resource = 2 [(google.api.field_behavior) = REQUIRED];
 
   // The TestPermissionsRequest for this request.
-  optional google.cloud.cpp.compute.v1.TestPermissionsRequest test_permissions_request_resource = 3;
+  optional google.cloud.cpp.compute.v1.TestPermissionsRequest
+      test_permissions_request_resource = 3;
 }

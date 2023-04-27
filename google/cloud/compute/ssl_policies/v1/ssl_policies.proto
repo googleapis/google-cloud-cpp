@@ -27,13 +27,14 @@ import "google/cloud/extended_operations.proto";
 service SslPolicies {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves the list of all SslPolicy resources, regional and global,
   // available to the specified project.
-  rpc AggregatedListSslPolicies(AggregatedListSslPoliciesRequest) returns (google.cloud.cpp.compute.v1.SslPoliciesAggregatedList) {
+  rpc AggregatedListSslPolicies(AggregatedListSslPoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.SslPoliciesAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/aggregated/sslPolicies"
     };
@@ -43,7 +44,8 @@ service SslPolicies {
   // Deletes the specified SSL policy. The SSL policy resource can be deleted
   // only if it is not in use by any TargetHttpsProxy or TargetSslProxy
   // resources.
-  rpc DeleteSslPolicies(DeleteSslPoliciesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteSslPolicies(DeleteSslPoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/global/sslPolicies/{ssl_policy}"
     };
@@ -52,7 +54,8 @@ service SslPolicies {
   }
 
   // Lists all of the ordered rules present in a single specified policy.
-  rpc GetSslPolicies(GetSslPoliciesRequest) returns (google.cloud.cpp.compute.v1.SslPolicy) {
+  rpc GetSslPolicies(GetSslPoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.SslPolicy) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/sslPolicies/{ssl_policy}"
     };
@@ -60,7 +63,8 @@ service SslPolicies {
   }
 
   // Returns the specified SSL policy resource.
-  rpc InsertSslPolicies(InsertSslPoliciesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertSslPolicies(InsertSslPoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/global/sslPolicies"
       body: "ssl_policy_resource"
@@ -71,7 +75,8 @@ service SslPolicies {
 
   // Lists all the SSL policies that have been configured for the specified
   // project.
-  rpc ListSslPolicies(ListSslPoliciesRequest) returns (google.cloud.cpp.compute.v1.SslPoliciesList) {
+  rpc ListSslPolicies(ListSslPoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.SslPoliciesList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/sslPolicies"
     };
@@ -80,7 +85,8 @@ service SslPolicies {
 
   // Lists all features that can be specified in the SSL policy when using
   // custom profile.
-  rpc ListAvailableFeatures(ListAvailableFeaturesRequest) returns (google.cloud.cpp.compute.v1.SslPoliciesListAvailableFeaturesResponse) {
+  rpc ListAvailableFeatures(ListAvailableFeaturesRequest) returns (
+      google.cloud.cpp.compute.v1.SslPoliciesListAvailableFeaturesResponse) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/global/sslPolicies/listAvailableFeatures"
     };
@@ -88,12 +94,14 @@ service SslPolicies {
   }
 
   // Patches the specified SSL policy with the data included in the request.
-  rpc PatchSslPolicies(PatchSslPoliciesRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchSslPolicies(PatchSslPoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/global/sslPolicies/{ssl_policy}"
       body: "ssl_policy_resource"
     };
-    option (google.api.method_signature) = "project,ssl_policy,ssl_policy_resource";
+    option (google.api.method_signature) =
+        "project,ssl_policy,ssl_policy_resource";
     option (google.cloud.operation_service) = "GlobalOperations";
   }
 }
@@ -175,7 +183,10 @@ message AggregatedListSslPoliciesRequest {
 // Request message for DeleteSslPolicies.
 message DeleteSslPoliciesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -207,7 +218,10 @@ message GetSslPoliciesRequest {
 // Request message for InsertSslPolicies.
 message InsertSslPoliciesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -358,7 +372,10 @@ message ListSslPoliciesRequest {
 // Request message for PatchSslPolicies.
 message PatchSslPoliciesRequest {
   // Project ID for this request.
-  string project = 1 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the

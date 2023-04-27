@@ -27,12 +27,13 @@ import "google/cloud/extended_operations.proto";
 service Autoscalers {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of autoscalers.
-  rpc AggregatedListAutoscalers(AggregatedListAutoscalersRequest) returns (google.cloud.cpp.compute.v1.AutoscalerAggregatedList) {
+  rpc AggregatedListAutoscalers(AggregatedListAutoscalersRequest)
+      returns (google.cloud.cpp.compute.v1.AutoscalerAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/aggregated/autoscalers"
     };
@@ -40,7 +41,8 @@ service Autoscalers {
   }
 
   // Deletes the specified autoscaler.
-  rpc DeleteAutoscalers(DeleteAutoscalersRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DeleteAutoscalers(DeleteAutoscalersRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       delete: "/compute/v1/projects/{project}/zones/{zone}/autoscalers/{autoscaler}"
     };
@@ -49,7 +51,8 @@ service Autoscalers {
   }
 
   // Returns the specified autoscaler resource.
-  rpc GetAutoscalers(GetAutoscalersRequest) returns (google.cloud.cpp.compute.v1.Autoscaler) {
+  rpc GetAutoscalers(GetAutoscalersRequest)
+      returns (google.cloud.cpp.compute.v1.Autoscaler) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/autoscalers/{autoscaler}"
     };
@@ -58,7 +61,8 @@ service Autoscalers {
 
   // Creates an autoscaler in the specified project using the data included in
   // the request.
-  rpc InsertAutoscalers(InsertAutoscalersRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertAutoscalers(InsertAutoscalersRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/zones/{zone}/autoscalers"
       body: "autoscaler_resource"
@@ -68,7 +72,8 @@ service Autoscalers {
   }
 
   // Retrieves a list of autoscalers contained within the specified zone.
-  rpc ListAutoscalers(ListAutoscalersRequest) returns (google.cloud.cpp.compute.v1.AutoscalerList) {
+  rpc ListAutoscalers(ListAutoscalersRequest)
+      returns (google.cloud.cpp.compute.v1.AutoscalerList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/zones/{zone}/autoscalers"
     };
@@ -78,7 +83,8 @@ service Autoscalers {
   // Updates an autoscaler in the specified project using the data included in
   // the request. This method supports PATCH semantics and uses the JSON merge
   // patch format and processing rules.
-  rpc PatchAutoscalers(PatchAutoscalersRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc PatchAutoscalers(PatchAutoscalersRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/zones/{zone}/autoscalers"
       body: "autoscaler_resource"
@@ -89,7 +95,8 @@ service Autoscalers {
 
   // Updates an autoscaler in the specified project using the data included in
   // the request.
-  rpc UpdateAutoscalers(UpdateAutoscalersRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc UpdateAutoscalers(UpdateAutoscalersRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       put: "/compute/v1/projects/{project}/zones/{zone}/autoscalers"
       body: "autoscaler_resource"
@@ -179,7 +186,10 @@ message DeleteAutoscalersRequest {
   string autoscaler = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -194,7 +204,10 @@ message DeleteAutoscalersRequest {
   optional string request_id = 3;
 
   // Name of the zone for this request.
-  string zone = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for GetAutoscalers.
@@ -215,7 +228,10 @@ message InsertAutoscalersRequest {
   optional google.cloud.cpp.compute.v1.Autoscaler autoscaler_resource = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -230,7 +246,10 @@ message InsertAutoscalersRequest {
   optional string request_id = 3;
 
   // Name of the zone for this request.
-  string zone = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for ListAutoscalers.
@@ -310,7 +329,10 @@ message PatchAutoscalersRequest {
   optional google.cloud.cpp.compute.v1.Autoscaler autoscaler_resource = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -325,7 +347,10 @@ message PatchAutoscalersRequest {
   optional string request_id = 4;
 
   // Name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }
 
 // Request message for UpdateAutoscalers.
@@ -337,7 +362,10 @@ message UpdateAutoscalersRequest {
   optional google.cloud.cpp.compute.v1.Autoscaler autoscaler_resource = 2;
 
   // Project ID for this request.
-  string project = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -352,5 +380,8 @@ message UpdateAutoscalersRequest {
   optional string request_id = 4;
 
   // Name of the zone for this request.
-  string zone = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "zone"];
+  string zone = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "zone"
+  ];
 }

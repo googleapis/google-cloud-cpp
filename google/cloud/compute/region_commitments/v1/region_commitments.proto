@@ -27,12 +27,13 @@ import "google/cloud/extended_operations.proto";
 service RegionCommitments {
   option (google.api.default_host) = "compute.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/compute,"
-    "https://www.googleapis.com/auth/compute.readonly";
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
 
   // Retrieves an aggregated list of commitments by region.
-  rpc AggregatedListRegionCommitments(AggregatedListRegionCommitmentsRequest) returns (google.cloud.cpp.compute.v1.CommitmentAggregatedList) {
+  rpc AggregatedListRegionCommitments(AggregatedListRegionCommitmentsRequest)
+      returns (google.cloud.cpp.compute.v1.CommitmentAggregatedList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/aggregated/commitments"
     };
@@ -40,7 +41,8 @@ service RegionCommitments {
   }
 
   // Returns the specified commitment resource.
-  rpc GetRegionCommitments(GetRegionCommitmentsRequest) returns (google.cloud.cpp.compute.v1.Commitment) {
+  rpc GetRegionCommitments(GetRegionCommitmentsRequest)
+      returns (google.cloud.cpp.compute.v1.Commitment) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/commitments/{commitment}"
     };
@@ -49,7 +51,8 @@ service RegionCommitments {
 
   // Creates a commitment in the specified project using the data included in
   // the request.
-  rpc InsertRegionCommitments(InsertRegionCommitmentsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc InsertRegionCommitments(InsertRegionCommitmentsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       post: "/compute/v1/projects/{project}/regions/{region}/commitments"
       body: "commitment_resource"
@@ -59,7 +62,8 @@ service RegionCommitments {
   }
 
   // Retrieves a list of commitments contained within the specified region.
-  rpc ListRegionCommitments(ListRegionCommitmentsRequest) returns (google.cloud.cpp.compute.v1.CommitmentList) {
+  rpc ListRegionCommitments(ListRegionCommitmentsRequest)
+      returns (google.cloud.cpp.compute.v1.CommitmentList) {
     option (google.api.http) = {
       get: "/compute/v1/projects/{project}/regions/{region}/commitments"
     };
@@ -69,12 +73,14 @@ service RegionCommitments {
   // Updates the specified commitment with the data included in the request.
   // Update is performed only on selected fields included as part of
   // update-mask. Only the following fields can be modified: auto_renew.
-  rpc UpdateRegionCommitments(UpdateRegionCommitmentsRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc UpdateRegionCommitments(UpdateRegionCommitmentsRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
     option (google.api.http) = {
       patch: "/compute/v1/projects/{project}/regions/{region}/commitments/{commitment}"
       body: "commitment_resource"
     };
-    option (google.api.method_signature) = "project,region,commitment,commitment_resource";
+    option (google.api.method_signature) =
+        "project,region,commitment,commitment_resource";
     option (google.cloud.operation_service) = "RegionOperations";
   }
 }
@@ -171,10 +177,16 @@ message InsertRegionCommitmentsRequest {
   optional google.cloud.cpp.compute.v1.Commitment commitment_resource = 1;
 
   // Project ID for this request.
-  string project = 2 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 3 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
@@ -268,10 +280,16 @@ message UpdateRegionCommitmentsRequest {
   optional string paths = 3;
 
   // Project ID for this request.
-  string project = 4 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "project"];
+  string project = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
 
   // Name of the region for this request.
-  string region = 5 [(google.api.field_behavior) = REQUIRED,(google.cloud.operation_request_field) = "region"];
+  string region = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
 
   // An optional request ID to identify requests. Specify a unique request ID so
   // that if you must retry your request, the server will know to ignore the
