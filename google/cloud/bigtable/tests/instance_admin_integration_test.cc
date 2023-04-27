@@ -36,6 +36,7 @@ namespace {
 using ::google::cloud::bigtable::testing::RandomInstanceId;
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::ContainsOnce;
+using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Not;
@@ -243,7 +244,13 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
   // List instances
   auto instances = instance_admin_->ListInstances();
   ASSERT_STATUS_OK(instances);
-  ASSERT_TRUE(instances->failed_locations.empty());
+  // If either zone_a_ or zone_b_ are in the list of failed locations then we
+  // cannot proceed.
+  ASSERT_THAT(instances->failed_locations,
+              Not(AnyOf(Contains(instance_admin_->project_name() +
+                                 "/locations/" + zone_a_),
+                        Contains(instance_admin_->project_name() +
+                                 "/locations/" + zone_b_))));
   EXPECT_TRUE(IsInstancePresent(instances->instances, instance->name()));
 
   // Get instance
@@ -270,7 +277,13 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
   // Verify delete
   instances = instance_admin_->ListInstances();
   ASSERT_STATUS_OK(instances);
-  ASSERT_TRUE(instances->failed_locations.empty());
+  // If either zone_a_ or zone_b_ are in the list of failed locations then we
+  // cannot proceed.
+  ASSERT_THAT(instances->failed_locations,
+              Not(AnyOf(Contains(instance_admin_->project_name() +
+                                 "/locations/" + zone_a_),
+                        Contains(instance_admin_->project_name() +
+                                 "/locations/" + zone_b_))));
   EXPECT_FALSE(IsInstancePresent(instances->instances, instance_name));
 }
 
@@ -385,7 +398,13 @@ TEST_F(InstanceAdminIntegrationTest,
   // Verify create
   auto instances = instance_admin->ListInstances();
   ASSERT_STATUS_OK(instances);
-  ASSERT_TRUE(instances->failed_locations.empty());
+  // If either zone_a_ or zone_b_ are in the list of failed locations then we
+  // cannot proceed.
+  ASSERT_THAT(instances->failed_locations,
+              Not(AnyOf(Contains(instance_admin_->project_name() +
+                                 "/locations/" + zone_a_),
+                        Contains(instance_admin_->project_name() +
+                                 "/locations/" + zone_b_))));
   EXPECT_TRUE(IsInstancePresent(instances->instances, instance->name()));
 
   // Get instance
@@ -412,7 +431,13 @@ TEST_F(InstanceAdminIntegrationTest,
   // Verify delete
   instances = instance_admin->ListInstances();
   ASSERT_STATUS_OK(instances);
-  ASSERT_TRUE(instances->failed_locations.empty());
+  // If either zone_a_ or zone_b_ are in the list of failed locations then we
+  // cannot proceed.
+  ASSERT_THAT(instances->failed_locations,
+              Not(AnyOf(Contains(instance_admin_->project_name() +
+                                 "/locations/" + zone_a_),
+                        Contains(instance_admin_->project_name() +
+                                 "/locations/" + zone_b_))));
   EXPECT_FALSE(IsInstancePresent(instances->instances, instance_name));
 
   auto const log_lines = log.ExtractLines();
