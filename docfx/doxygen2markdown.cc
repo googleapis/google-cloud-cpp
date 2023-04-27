@@ -354,6 +354,15 @@ bool AppendIfNDash(std::ostream& os, MarkdownContext const& /*ctx*/,
   return true;
 }
 
+// The `linebreak` represents a linebreak. Use `<br>` because we are targeting
+// a dialect of markdown that supports it.
+bool AppendIfLinebreak(std::ostream& os, MarkdownContext const& /*ctx*/,
+                       pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "linebreak") return false;
+  os << "<br>";
+  return true;
+}
+
 // The `docTitleCmdGroup` element type in Doxygen is defined as below.
 //
 // Only one is possible. We will ignore most of them because they do not
@@ -414,7 +423,7 @@ bool AppendIfDocTitleCmdGroup(std::ostream& os, MarkdownContext const& ctx,
   // Unexpected: formula
   if (AppendIfRef(os, ctx, node)) return true;
   // Unexpected: emoji
-  // Unexpected: linebreak
+  if (AppendIfLinebreak(os, ctx, node)) return true;
   // Unexpected: nonbreakablespace
   // Unexpected: many many symbols
   if (AppendIfNDash(os, ctx, node)) return true;
