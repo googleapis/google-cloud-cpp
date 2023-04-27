@@ -50,6 +50,11 @@ the Cloud IAM C++ client library API.
 @snippet quickstart.cc all
 @endparblock
 
+## Main classes
+
+<!-- inject-client-list-start -->
+<!-- inject-client-list-end -->
+
 ## Override the default endpoint
 
 In some cases, you may need to override the default endpoint used by the client

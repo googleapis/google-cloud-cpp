@@ -19,6 +19,11 @@ which should give you a taste of the Cloud Video Intelligence API C++ client lib
 
 @snippet quickstart.cc all
 
+## Main classes
+
+<!-- inject-client-list-start -->
+<!-- inject-client-list-end -->
+
 ## Override the default endpoint
 
 In some cases, you may need to override the default endpoint used by the client
