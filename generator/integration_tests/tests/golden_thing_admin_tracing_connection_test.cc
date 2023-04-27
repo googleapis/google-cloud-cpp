@@ -34,7 +34,8 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::Return;
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
+using ::google::cloud::testing_util::DisableTracing;
+using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::SpanAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
@@ -589,9 +590,7 @@ TEST(MakeGoldenThingAdminTracingConnection, TracingEnabled) {
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
-  EXPECT_CALL(*mock, options)
-      .WillOnce(
-          Return(Options{}.set<internal::OpenTelemetryTracingOption>(true)));
+  EXPECT_CALL(*mock, options).WillOnce(Return(EnableTracing(Options{})));
   EXPECT_CALL(*mock, DropDatabase)
       .WillOnce(Return(internal::AbortedError("fail")));
 
@@ -607,9 +606,7 @@ TEST(MakeGoldenThingAdminTracingConnection, TracingDisabled) {
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
-  EXPECT_CALL(*mock, options)
-      .WillOnce(
-          Return(Options{}.set<internal::OpenTelemetryTracingOption>(false)));
+  EXPECT_CALL(*mock, options).WillOnce(Return(DisableTracing(Options{})));
   EXPECT_CALL(*mock, DropDatabase)
       .WillOnce(Return(internal::AbortedError("fail")));
 

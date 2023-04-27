@@ -213,14 +213,17 @@ TEST(RetryLoopTest, ConfigureContext) {
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+using ::google::cloud::testing_util::DisableTracing;
+using ::google::cloud::testing_util::EnableTracing;
+using ::google::cloud::testing_util::SpanNamed;
+using ::testing::AllOf;
+using ::testing::Each;
+using ::testing::IsEmpty;
+using ::testing::SizeIs;
 
 TEST(RetryLoopTest, TracingEnabled) {
-  using ::google::cloud::testing_util::SpanNamed;
-  using ::testing::AllOf;
-  using ::testing::Each;
-  using ::testing::SizeIs;
   auto span_catcher = testing_util::InstallSpanCatcher();
-  OptionsSpan span(Options{}.set<OpenTelemetryTracingOption>(true));
+  OptionsSpan o(EnableTracing(Options{}));
 
   StatusOr<int> actual = RetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
@@ -234,9 +237,8 @@ TEST(RetryLoopTest, TracingEnabled) {
 }
 
 TEST(RetryLoopTest, TracingDisabled) {
-  using ::testing::IsEmpty;
   auto span_catcher = testing_util::InstallSpanCatcher();
-  OptionsSpan span(Options{}.set<OpenTelemetryTracingOption>(false));
+  OptionsSpan o(DisableTracing(Options{}));
 
   StatusOr<int> actual = RetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,

@@ -613,7 +613,7 @@ TEST(RetryClientTest, UploadFinalChunkQueryTooManyMissingPayloads) {
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-using ::google::cloud::internal::OpenTelemetryTracingOption;
+using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::SpanNamed;
 using ::testing::ElementsAre;
@@ -625,7 +625,7 @@ TEST(RetryClientTest, BackoffSpansSimple) {
   auto client = storage_internal::MakeTracingClient(
       RetryClient::Create(std::shared_ptr<internal::RawClient>(mock)));
   google::cloud::internal::OptionsSpan const span(
-      BasicTestPolicies().set<OpenTelemetryTracingOption>(true));
+      EnableTracing(BasicTestPolicies()));
   EXPECT_CALL(*mock, GetObjectMetadata)
       .WillRepeatedly(Return(TransientError()));
   auto response = client->GetObjectMetadata(GetObjectMetadataRequest());
@@ -642,7 +642,7 @@ TEST(RetryClientTest, BackoffSpansUploadChunk) {
   auto client = storage_internal::MakeTracingClient(
       RetryClient::Create(std::shared_ptr<internal::RawClient>(mock)));
   google::cloud::internal::OptionsSpan const span(
-      BasicTestPolicies().set<OpenTelemetryTracingOption>(true));
+      EnableTracing(BasicTestPolicies()));
 
   ::testing::InSequence sequence;
   EXPECT_CALL(*mock, UploadChunk).WillOnce(Return(TransientError()));

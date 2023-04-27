@@ -200,15 +200,17 @@ TEST(RestRetryLoopTest, TooManyTransientFailuresIdempotent) {
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+using ::google::cloud::testing_util::DisableTracing;
+using ::google::cloud::testing_util::EnableTracing;
+using ::google::cloud::testing_util::SpanNamed;
+using ::testing::AllOf;
+using ::testing::Each;
+using ::testing::IsEmpty;
+using ::testing::SizeIs;
 
 TEST(RestRetryLoopTest, TracingEnabled) {
-  using ::google::cloud::testing_util::SpanNamed;
-  using ::testing::AllOf;
-  using ::testing::Each;
-  using ::testing::SizeIs;
   auto span_catcher = testing_util::InstallSpanCatcher();
-  internal::OptionsSpan span(
-      Options{}.set<internal::OpenTelemetryTracingOption>(true));
+  internal::OptionsSpan o(EnableTracing(Options{}));
 
   StatusOr<int> actual = RestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
@@ -222,10 +224,8 @@ TEST(RestRetryLoopTest, TracingEnabled) {
 }
 
 TEST(RestRetryLoopTest, TracingDisabled) {
-  using ::testing::IsEmpty;
   auto span_catcher = testing_util::InstallSpanCatcher();
-  internal::OptionsSpan span(
-      Options{}.set<internal::OpenTelemetryTracingOption>(false));
+  internal::OptionsSpan o(DisableTracing(Options{}));
 
   StatusOr<int> actual = RestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,

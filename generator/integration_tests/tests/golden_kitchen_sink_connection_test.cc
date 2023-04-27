@@ -337,17 +337,19 @@ TEST(GoldenKitchenSinkConnectionTest, CheckExpectedOptions) {
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+using ::google::cloud::testing_util::DisableTracing;
+using ::google::cloud::testing_util::EnableTracing;
+using ::google::cloud::testing_util::SpanNamed;
+using ::testing::Not;
 
 TEST(GoldenKitchenSinkConnectionTest, TracingEnabled) {
-  using ::google::cloud::testing_util::SpanNamed;
   auto span_catcher = testing_util::InstallSpanCatcher();
 
-  auto options =
+  auto options = EnableTracing(
       Options{}
-          .set<internal::OpenTelemetryTracingOption>(true)
           .set<EndpointOption>("localhost:1")
           .set<GoldenKitchenSinkRetryPolicyOption>(
-              GoldenKitchenSinkLimitedErrorCountRetryPolicy(0).clone());
+              GoldenKitchenSinkLimitedErrorCountRetryPolicy(0).clone()));
   auto conn = MakeGoldenKitchenSinkConnection(std::move(options));
   // Make a call, which should fail fast. The error itself is not important.
   (void)conn->DoNothing({});
@@ -359,16 +361,13 @@ TEST(GoldenKitchenSinkConnectionTest, TracingEnabled) {
 }
 
 TEST(GoldenKitchenSinkConnectionTest, TracingDisabled) {
-  using ::google::cloud::testing_util::SpanNamed;
-  using ::testing::Not;
   auto span_catcher = testing_util::InstallSpanCatcher();
 
-  auto options =
+  auto options = DisableTracing(
       Options{}
-          .set<internal::OpenTelemetryTracingOption>(false)
           .set<EndpointOption>("localhost:1")
           .set<GoldenKitchenSinkRetryPolicyOption>(
-              GoldenKitchenSinkLimitedErrorCountRetryPolicy(0).clone());
+              GoldenKitchenSinkLimitedErrorCountRetryPolicy(0).clone()));
   auto conn = MakeGoldenKitchenSinkConnection(std::move(options));
   // Make a call, which should fail fast. The error itself is not important.
   (void)conn->DoNothing({});

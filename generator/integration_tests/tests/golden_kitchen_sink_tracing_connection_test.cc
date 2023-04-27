@@ -34,7 +34,8 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::Return;
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
+using ::google::cloud::testing_util::DisableTracing;
+using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::SpanAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
@@ -345,9 +346,7 @@ TEST(MakeGoldenKitchenSinkTracingConnection, TracingEnabled) {
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
-  EXPECT_CALL(*mock, options)
-      .WillOnce(
-          Return(Options{}.set<internal::OpenTelemetryTracingOption>(true)));
+  EXPECT_CALL(*mock, options).WillOnce(Return(EnableTracing(Options{})));
   EXPECT_CALL(*mock, DoNothing)
       .WillOnce(Return(internal::AbortedError("fail")));
 
@@ -363,9 +362,7 @@ TEST(MakeGoldenKitchenSinkTracingConnection, TracingDisabled) {
   auto span_catcher = InstallSpanCatcher();
 
   auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
-  EXPECT_CALL(*mock, options)
-      .WillOnce(
-          Return(Options{}.set<internal::OpenTelemetryTracingOption>(false)));
+  EXPECT_CALL(*mock, options).WillOnce(Return(DisableTracing(Options{})));
   EXPECT_CALL(*mock, DoNothing)
       .WillOnce(Return(internal::AbortedError("fail")));
 

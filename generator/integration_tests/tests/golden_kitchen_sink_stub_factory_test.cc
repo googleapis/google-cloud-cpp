@@ -70,14 +70,15 @@ TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithAuth) {
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+using ::google::cloud::testing_util::DisableTracing;
+using ::google::cloud::testing_util::EnableTracing;
+using ::google::cloud::testing_util::SpanNamed;
+using ::testing::Not;
 
 TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithTracingEnabled) {
-  using ::google::cloud::testing_util::SpanNamed;
   auto span_catcher = testing_util::InstallSpanCatcher();
 
-  auto options = Options{}
-                     .set<internal::OpenTelemetryTracingOption>(true)
-                     .set<EndpointOption>("localhost:1");
+  auto options = EnableTracing(Options{}.set<EndpointOption>("localhost:1"));
   auto stub =
       CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, std::move(options));
   grpc::ClientContext context;
@@ -90,13 +91,9 @@ TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithTracingEnabled) {
 }
 
 TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithTracingDisabled) {
-  using ::google::cloud::testing_util::SpanNamed;
-  using ::testing::Not;
   auto span_catcher = testing_util::InstallSpanCatcher();
 
-  auto options = Options{}
-                     .set<internal::OpenTelemetryTracingOption>(false)
-                     .set<EndpointOption>("localhost:1");
+  auto options = DisableTracing(Options{}.set<EndpointOption>("localhost:1"));
   auto stub =
       CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, std::move(options));
   grpc::ClientContext context;

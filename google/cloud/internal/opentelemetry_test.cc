@@ -34,7 +34,8 @@ using ms = std::chrono::milliseconds;
 using ::testing::MockFunction;
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
+using ::google::cloud::testing_util::EnableTracing;
+using ::google::cloud::testing_util::DisableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::SpanAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
@@ -291,7 +292,7 @@ TEST(OpenTelemetry, MakeTracedSleeperEnabled) {
   MockFunction<void(ms)> mock_sleeper;
   EXPECT_CALL(mock_sleeper, Call(ms(42)));
 
-  OptionsSpan span(Options{}.set<OpenTelemetryTracingOption>(true));
+  OptionsSpan o(EnableTracing(Options{}));
   auto sleeper = mock_sleeper.AsStdFunction();
   auto result = MakeTracedSleeper(sleeper);
   result(ms(42));
@@ -307,7 +308,7 @@ TEST(OpenTelemetry, MakeTracedSleeperDisabled) {
   MockFunction<void(ms)> mock_sleeper;
   EXPECT_CALL(mock_sleeper, Call(ms(42)));
 
-  OptionsSpan span(Options{}.set<OpenTelemetryTracingOption>(false));
+  OptionsSpan o(DisableTracing(Options{}));
   auto sleeper = mock_sleeper.AsStdFunction();
   auto result = MakeTracedSleeper(sleeper);
   result(ms(42));
@@ -322,7 +323,7 @@ TEST(OpenTelemetry, AddSpanAttributeEnabled) {
 
   auto span = MakeSpan("span");
   auto scope = opentelemetry::trace::Scope(span);
-  OptionsSpan o(Options{}.set<OpenTelemetryTracingOption>(true));
+  OptionsSpan o(EnableTracing(Options{}));
   AddSpanAttribute("key", "value");
   span->End();
 
@@ -338,7 +339,7 @@ TEST(OpenTelemetry, AddSpanAttributeDisabled) {
 
   auto span = MakeSpan("span");
   auto scope = opentelemetry::trace::Scope(span);
-  OptionsSpan o(Options{}.set<OpenTelemetryTracingOption>(false));
+  OptionsSpan o(DisableTracing(Options{}));
   AddSpanAttribute("key", "value");
   span->End();
 
