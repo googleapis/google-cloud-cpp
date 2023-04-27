@@ -53,10 +53,3 @@ function (google_cloud_cpp_sql_define_integration_tests)
         return()
     endif ()
 endfunction ()
-
-# Only define the tests if testing is enabled. Package maintainers may not want
-# to build all the tests everytime they create a new package or when the package
-# is installed from source.
-if (BUILD_TESTING)
-    google_cloud_cpp_sql_define_integration_tests()
-endif (BUILD_TESTING)
