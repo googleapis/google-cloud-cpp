@@ -482,6 +482,8 @@ bool AppendIfDocCmdGroup(std::ostream& os, MarkdownContext const& ctx,
   if (AppendIfXRefSect(os, ctx, node)) return true;
   // Unexpected: copydoc, blockquote
   if (AppendIfParBlock(os, ctx, node)) return true;
+  // zero-width joiner, just ignore them.
+  if (name == "zwj") return true;
   return false;
 }
 
