@@ -21,6 +21,12 @@ which should give you a taste of the Kubernetes Engine API C++ client library AP
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`container_v1::ClusterManagerClient`](@ref google::cloud::container_v1::ClusterManagerClient),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`container_v1::ClusterManagerClient`](@ref google::cloud::container_v1::ClusterManagerClient) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

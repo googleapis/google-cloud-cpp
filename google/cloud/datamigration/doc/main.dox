@@ -20,6 +20,12 @@ which should give you a taste of the Database Migration API C++ client library A
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`datamigration_v1::DataMigrationServiceClient`](@ref google::cloud::datamigration_v1::DataMigrationServiceClient),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`datamigration_v1::DataMigrationServiceClient`](@ref google::cloud::datamigration_v1::DataMigrationServiceClient) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

@@ -22,6 +22,12 @@ which should give you a taste of the Web Security Scanner API C++ client library
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`websecurityscanner_v1::WebSecurityScannerClient`](@ref google::cloud::websecurityscanner_v1::WebSecurityScannerClient),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`websecurityscanner_v1::WebSecurityScannerClient`](@ref google::cloud::websecurityscanner_v1::WebSecurityScannerClient) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

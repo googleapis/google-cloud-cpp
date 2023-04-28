@@ -21,6 +21,12 @@ which should give you a taste of the Network Management API C++ client library A
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`networkmanagement_v1::ReachabilityServiceClient`](@ref google::cloud::networkmanagement_v1::ReachabilityServiceClient),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`networkmanagement_v1::ReachabilityServiceClient`](@ref google::cloud::networkmanagement_v1::ReachabilityServiceClient) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

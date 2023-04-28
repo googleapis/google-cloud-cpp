@@ -21,6 +21,12 @@ which should give you a taste of the Google Cloud Deploy API C++ client library 
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`deploy_v1::CloudDeployClient`](@ref google::cloud::deploy_v1::CloudDeployClient),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`deploy_v1::CloudDeployClient`](@ref google::cloud::deploy_v1::CloudDeployClient) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

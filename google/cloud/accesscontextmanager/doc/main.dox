@@ -20,6 +20,12 @@ which should give you a taste of the Access Context Manager API C++ client libra
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`accesscontextmanager_v1::AccessContextManagerClient`](@ref google::cloud::accesscontextmanager_v1::AccessContextManagerClient),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`accesscontextmanager_v1::AccessContextManagerClient`](@ref google::cloud::accesscontextmanager_v1::AccessContextManagerClient) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

@@ -23,6 +23,12 @@ which should give you a taste of the Distributed Cloud Edge Container API C++ cl
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`edgecontainer_v1::EdgeContainerClient`](@ref google::cloud::edgecontainer_v1::EdgeContainerClient),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`edgecontainer_v1::EdgeContainerClient`](@ref google::cloud::edgecontainer_v1::EdgeContainerClient) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

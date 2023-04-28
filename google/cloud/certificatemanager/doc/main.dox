@@ -21,6 +21,12 @@ which should give you a taste of the Certificate Manager API C++ client library 
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`certificatemanager_v1::CertificateManagerClient`](@ref google::cloud::certificatemanager_v1::CertificateManagerClient),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`certificatemanager_v1::CertificateManagerClient`](@ref google::cloud::certificatemanager_v1::CertificateManagerClient) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

@@ -21,6 +21,12 @@ which should give you a taste of the GKE Hub C++ client library API.
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`gkehub_v1::GkeHubClient`](@ref google::cloud::gkehub_v1::GkeHubClient),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`gkehub_v1::GkeHubClient`](@ref google::cloud::gkehub_v1::GkeHubClient) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

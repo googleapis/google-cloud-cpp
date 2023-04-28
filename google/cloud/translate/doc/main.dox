@@ -20,6 +20,12 @@ which should give you a taste of the Cloud Translation API C++ client library AP
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`translate_v3::TranslationServiceClient`](@ref google::cloud::translate_v3::TranslationServiceClient),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`translate_v3::TranslationServiceClient`](@ref google::cloud::translate_v3::TranslationServiceClient) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

@@ -23,6 +23,21 @@ which should give you a taste of the Cloud Dataproc API C++ client library API.
 ## Main classes
 
 <!-- inject-client-list-start -->
+This library offers multiple `*Client` classes, which are listed below. Each
+one of these classes exposes all the RPCs for a gRPC `service` as member
+functions of the class. This library groups multiple gRPC services because they
+are part of the same product or are often used together. A typical example may
+be the administrative and data place operations for a single product.
+
+The library also has other classes that provide helpers, retry policies,
+configuration parameters, and infrastructure to mock the `*Client` classes
+when testing your application.
+
+- [`dataproc_v1::AutoscalingPolicyServiceClient`](@ref google::cloud::dataproc_v1::AutoscalingPolicyServiceClient)
+- [`dataproc_v1::BatchControllerClient`](@ref google::cloud::dataproc_v1::BatchControllerClient)
+- [`dataproc_v1::ClusterControllerClient`](@ref google::cloud::dataproc_v1::ClusterControllerClient)
+- [`dataproc_v1::JobControllerClient`](@ref google::cloud::dataproc_v1::JobControllerClient)
+- [`dataproc_v1::WorkflowTemplateServiceClient`](@ref google::cloud::dataproc_v1::WorkflowTemplateServiceClient)
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

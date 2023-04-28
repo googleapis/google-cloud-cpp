@@ -22,6 +22,12 @@ which should give you a taste of the Assured Workloads API C++ client library AP
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`assuredworkloads_v1::AssuredWorkloadsServiceClient`](@ref google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceClient),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`assuredworkloads_v1::AssuredWorkloadsServiceClient`](@ref google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceClient) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

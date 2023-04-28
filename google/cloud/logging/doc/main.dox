@@ -21,6 +21,12 @@ which should give you a taste of the Cloud Logging API C++ client library API.
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`logging_v2::LoggingServiceV2Client`](@ref google::cloud::logging_v2::LoggingServiceV2Client),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`logging_v2::LoggingServiceV2Client`](@ref google::cloud::logging_v2::LoggingServiceV2Client) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

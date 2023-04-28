@@ -23,6 +23,12 @@ which should give you a taste of the Certificate Authority API C++ client librar
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`privateca_v1::CertificateAuthorityServiceClient`](@ref google::cloud::privateca_v1::CertificateAuthorityServiceClient),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`privateca_v1::CertificateAuthorityServiceClient`](@ref google::cloud::privateca_v1::CertificateAuthorityServiceClient) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

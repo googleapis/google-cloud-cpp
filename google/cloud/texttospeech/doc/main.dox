@@ -21,6 +21,12 @@ which should give you a taste of the Cloud Text-to-Speech API C++ client library
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`texttospeech_v1::TextToSpeechClient`](@ref google::cloud::texttospeech_v1::TextToSpeechClient),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`texttospeech_v1::TextToSpeechClient`](@ref google::cloud::texttospeech_v1::TextToSpeechClient) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

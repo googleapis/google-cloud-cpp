@@ -21,6 +21,12 @@ which should give you a taste of the Storage Transfer API C++ client library API
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`storagetransfer_v1::StorageTransferServiceClient`](@ref google::cloud::storagetransfer_v1::StorageTransferServiceClient),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`storagetransfer_v1::StorageTransferServiceClient`](@ref google::cloud::storagetransfer_v1::StorageTransferServiceClient) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

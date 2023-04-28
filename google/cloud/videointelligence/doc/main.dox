@@ -22,6 +22,12 @@ which should give you a taste of the Cloud Video Intelligence API C++ client lib
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`videointelligence_v1::VideoIntelligenceServiceClient`](@ref google::cloud::videointelligence_v1::VideoIntelligenceServiceClient),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`videointelligence_v1::VideoIntelligenceServiceClient`](@ref google::cloud::videointelligence_v1::VideoIntelligenceServiceClient) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

@@ -23,6 +23,21 @@ which should give you a taste of the BeyondCorp API C++ client library API.
 ## Main classes
 
 <!-- inject-client-list-start -->
+This library offers multiple `*Client` classes, which are listed below. Each
+one of these classes exposes all the RPCs for a gRPC `service` as member
+functions of the class. This library groups multiple gRPC services because they
+are part of the same product or are often used together. A typical example may
+be the administrative and data place operations for a single product.
+
+The library also has other classes that provide helpers, retry policies,
+configuration parameters, and infrastructure to mock the `*Client` classes
+when testing your application.
+
+- [`beyondcorp_appconnections_v1::AppConnectionsServiceClient`](@ref google::cloud::beyondcorp_appconnections_v1::AppConnectionsServiceClient)
+- [`beyondcorp_appconnectors_v1::AppConnectorsServiceClient`](@ref google::cloud::beyondcorp_appconnectors_v1::AppConnectorsServiceClient)
+- [`beyondcorp_appgateways_v1::AppGatewaysServiceClient`](@ref google::cloud::beyondcorp_appgateways_v1::AppGatewaysServiceClient)
+- [`beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceClient`](@ref google::cloud::beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceClient)
+- [`beyondcorp_clientgateways_v1::ClientGatewaysServiceClient`](@ref google::cloud::beyondcorp_clientgateways_v1::ClientGatewaysServiceClient)
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint
@@ -40,6 +55,7 @@ Follow these links to find examples for other \c *Client classes:
  [beyondcorp_appconnections_v1::AppConnectionsServiceClient](@ref beyondcorp_appconnections_v1::AppConnectionsServiceClient-endpoint-snippet)
  [beyondcorp_appconnectors_v1::AppConnectorsServiceClient](@ref beyondcorp_appconnectors_v1::AppConnectorsServiceClient-endpoint-snippet)
  [beyondcorp_appgateways_v1::AppGatewaysServiceClient](@ref beyondcorp_appgateways_v1::AppGatewaysServiceClient-endpoint-snippet)
+ [beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceClient](@ref beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceClient-endpoint-snippet)
  [beyondcorp_clientgateways_v1::ClientGatewaysServiceClient](@ref beyondcorp_clientgateways_v1::ClientGatewaysServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
@@ -58,6 +74,7 @@ Follow these links to find examples for other \c *Client classes:
  [beyondcorp_appconnections_v1::AppConnectionsServiceClient](@ref beyondcorp_appconnections_v1::AppConnectionsServiceClient-service-account-snippet)
  [beyondcorp_appconnectors_v1::AppConnectorsServiceClient](@ref beyondcorp_appconnectors_v1::AppConnectorsServiceClient-service-account-snippet)
  [beyondcorp_appgateways_v1::AppGatewaysServiceClient](@ref beyondcorp_appgateways_v1::AppGatewaysServiceClient-service-account-snippet)
+ [beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceClient](@ref beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceClient-service-account-snippet)
  [beyondcorp_clientgateways_v1::ClientGatewaysServiceClient](@ref beyondcorp_clientgateways_v1::ClientGatewaysServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
@@ -129,13 +146,13 @@ can override the default policies.
 
 */
 
-/*! @page -endpoint-snippet Override  Endpoint Configuration
+/*! @page beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceClient-endpoint-snippet Override beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceClient Endpoint Configuration
 
 @snippet google/cloud/beyondcorp/clientconnectorservices/v1/samples/client_connector_services_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page -service-account-snippet Override  Authentication Defaults
+/*! @page beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceClient-service-account-snippet Override beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceClient Authentication Defaults
 
 @snippet google/cloud/beyondcorp/clientconnectorservices/v1/samples/client_connector_services_client_samples.cc with-service-account
 

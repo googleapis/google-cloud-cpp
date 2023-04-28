@@ -21,6 +21,12 @@ which should give you a taste of the Confidential Computing API C++ client libra
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`confidentialcomputing_v1::ConfidentialComputingClient`](@ref google::cloud::confidentialcomputing_v1::ConfidentialComputingClient),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`confidentialcomputing_v1::ConfidentialComputingClient`](@ref google::cloud::confidentialcomputing_v1::ConfidentialComputingClient) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

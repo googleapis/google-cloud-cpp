@@ -21,6 +21,12 @@ which should give you a taste of the Advisory Notifications API C++ client libra
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`advisorynotifications_v1::AdvisoryNotificationsServiceClient`](@ref google::cloud::advisorynotifications_v1::AdvisoryNotificationsServiceClient),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`advisorynotifications_v1::AdvisoryNotificationsServiceClient`](@ref google::cloud::advisorynotifications_v1::AdvisoryNotificationsServiceClient) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

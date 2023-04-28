@@ -23,6 +23,12 @@ which should give you a taste of the Cloud Data Loss Prevention (DLP) API C++ cl
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`dlp_v2::DlpServiceClient`](@ref google::cloud::dlp_v2::DlpServiceClient),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`dlp_v2::DlpServiceClient`](@ref google::cloud::dlp_v2::DlpServiceClient) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

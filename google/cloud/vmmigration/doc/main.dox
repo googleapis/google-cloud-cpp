@@ -20,6 +20,12 @@ which should give you a taste of the VM Migration API C++ client library API.
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`vmmigration_v1::VmMigrationClient`](@ref google::cloud::vmmigration_v1::VmMigrationClient),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`vmmigration_v1::VmMigrationClient`](@ref google::cloud::vmmigration_v1::VmMigrationClient) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

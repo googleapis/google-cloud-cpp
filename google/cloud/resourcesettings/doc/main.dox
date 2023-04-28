@@ -22,6 +22,12 @@ which should give you a taste of the Resource Settings API C++ client library AP
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`resourcesettings_v1::ResourceSettingsServiceClient`](@ref google::cloud::resourcesettings_v1::ResourceSettingsServiceClient),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`resourcesettings_v1::ResourceSettingsServiceClient`](@ref google::cloud::resourcesettings_v1::ResourceSettingsServiceClient) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

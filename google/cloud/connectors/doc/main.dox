@@ -22,6 +22,12 @@ which should give you a taste of the Connectors API C++ client library API.
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`connectors_v1::ConnectorsClient`](@ref google::cloud::connectors_v1::ConnectorsClient),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`connectors_v1::ConnectorsClient`](@ref google::cloud::connectors_v1::ConnectorsClient) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

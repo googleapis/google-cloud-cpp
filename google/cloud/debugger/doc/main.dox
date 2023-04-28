@@ -21,6 +21,18 @@ which should give you a taste of the Stackdriver Debugger API C++ client library
 ## Main classes
 
 <!-- inject-client-list-start -->
+This library offers multiple `*Client` classes, which are listed below. Each
+one of these classes exposes all the RPCs for a gRPC `service` as member
+functions of the class. This library groups multiple gRPC services because they
+are part of the same product or are often used together. A typical example may
+be the administrative and data place operations for a single product.
+
+The library also has other classes that provide helpers, retry policies,
+configuration parameters, and infrastructure to mock the `*Client` classes
+when testing your application.
+
+- [`debugger_v2::Controller2Client`](@ref google::cloud::debugger_v2::Controller2Client)
+- [`debugger_v2::Debugger2Client`](@ref google::cloud::debugger_v2::Debugger2Client)
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

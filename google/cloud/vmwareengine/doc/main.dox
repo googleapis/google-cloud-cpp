@@ -21,6 +21,12 @@ which should give you a taste of the VMware Engine API C++ client library API.
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`vmwareengine_v1::VmwareEngineClient`](@ref google::cloud::vmwareengine_v1::VmwareEngineClient),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`vmwareengine_v1::VmwareEngineClient`](@ref google::cloud::vmwareengine_v1::VmwareEngineClient) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint

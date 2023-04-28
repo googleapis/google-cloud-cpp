@@ -21,6 +21,12 @@ which should give you a taste of the Cloud Shell API C++ client library API.
 ## Main classes
 
 <!-- inject-client-list-start -->
+The main class in this library is
+[`shell_v1::CloudShellServiceClient`](@ref google::cloud::shell_v1::CloudShellServiceClient),
+all RPCs are exposed as member functions in this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`shell_v1::CloudShellServiceClient`](@ref google::cloud::shell_v1::CloudShellServiceClient) when testing your
+application.
 <!-- inject-client-list-end -->
 
 ## Override the default endpoint
