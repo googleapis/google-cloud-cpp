@@ -40,54 +40,6 @@ when testing your application.
 - [`dataproc_v1::WorkflowTemplateServiceClient`](@ref google::cloud::dataproc_v1::WorkflowTemplateServiceClient)
 <!-- inject-client-list-end -->
 
-## Override the default endpoint
-
-In some cases, you may need to override the default endpoint used by the client
-library. Use the `google::cloud::EndpointOption` when initializing the client
-library to change this default.
-
-<!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `dataproc_v1::AutoscalingPolicyServiceClient`:
-
-@snippet autoscaling_policy_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [dataproc_v1::AutoscalingPolicyServiceClient](@ref dataproc_v1::AutoscalingPolicyServiceClient-endpoint-snippet)
- [dataproc_v1::BatchControllerClient](@ref dataproc_v1::BatchControllerClient-endpoint-snippet)
- [dataproc_v1::ClusterControllerClient](@ref dataproc_v1::ClusterControllerClient-endpoint-snippet)
- [dataproc_v1::JobControllerClient](@ref dataproc_v1::JobControllerClient-endpoint-snippet)
- [dataproc_v1::WorkflowTemplateServiceClient](@ref dataproc_v1::WorkflowTemplateServiceClient-endpoint-snippet)
-
-<!-- inject-endpoint-snippet-end -->
-
-## Override the authentication configuration
-
-Some applications cannot use the default authentication mechanism (known as
-[Application Default Credentials]). You can override this default using
-`google::cloud::UnifiedCredentialsOption`. The following example shows how
-to explicitly load a service account key file.
-
-<!-- inject-service-account-snippet-start -->
-@snippet autoscaling_policy_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [dataproc_v1::AutoscalingPolicyServiceClient](@ref dataproc_v1::AutoscalingPolicyServiceClient-service-account-snippet)
- [dataproc_v1::BatchControllerClient](@ref dataproc_v1::BatchControllerClient-service-account-snippet)
- [dataproc_v1::ClusterControllerClient](@ref dataproc_v1::ClusterControllerClient-service-account-snippet)
- [dataproc_v1::JobControllerClient](@ref dataproc_v1::JobControllerClient-service-account-snippet)
- [dataproc_v1::WorkflowTemplateServiceClient](@ref dataproc_v1::WorkflowTemplateServiceClient-service-account-snippet)
-
-<!-- inject-service-account-snippet-end -->
-
-Keep in mind that we chose this as an example because it is relatively easy to
-understand. Consult the [Best practices for managing service account keys]
-guide for more details.
-
-@see @ref guac - for more information on the factory functions to create
-`google::cloud::Credentials` objects.
-
-[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
-[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
 
 ## Retry, Backoff, and Idempotency Policies.
 

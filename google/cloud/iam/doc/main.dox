@@ -69,52 +69,6 @@ when testing your application.
 - [`iam_v2::PoliciesClient`](@ref google::cloud::iam_v2::PoliciesClient)
 <!-- inject-client-list-end -->
 
-## Override the default endpoint
-
-In some cases, you may need to override the default endpoint used by the client
-library. Use the `google::cloud::EndpointOption` when initializing the client
-library to change this default.
-
-<!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `iam_admin_v1::IAMClient`:
-
-@snippet iam_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [iam_admin_v1::IAMClient](@ref iam_admin_v1::IAMClient-endpoint-snippet)
- [iam_credentials_v1::IAMCredentialsClient](@ref iam_credentials_v1::IAMCredentialsClient-endpoint-snippet)
- [iam_v1::IAMPolicyClient](@ref iam_v1::IAMPolicyClient-endpoint-snippet)
- [iam_v2::PoliciesClient](@ref iam_v2::PoliciesClient-endpoint-snippet)
-
-<!-- inject-endpoint-snippet-end -->
-
-## Override the authentication configuration
-
-Some applications cannot use the default authentication mechanism (known as
-[Application Default Credentials]). You can override this default using
-`google::cloud::UnifiedCredentialsOption`. The following example shows how
-to explicitly load a service account key file.
-
-<!-- inject-service-account-snippet-start -->
-@snippet iam_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [iam_admin_v1::IAMClient](@ref iam_admin_v1::IAMClient-service-account-snippet)
- [iam_credentials_v1::IAMCredentialsClient](@ref iam_credentials_v1::IAMCredentialsClient-service-account-snippet)
- [iam_v1::IAMPolicyClient](@ref iam_v1::IAMPolicyClient-service-account-snippet)
- [iam_v2::PoliciesClient](@ref iam_v2::PoliciesClient-service-account-snippet)
-
-<!-- inject-service-account-snippet-end -->
-
-Keep in mind that we chose this as an example because it is relatively easy to
-understand. Consult the [Best practices for managing service account keys]
-guide for more details.
-
-@see @ref guac - for more information on the factory functions to create
-`google::cloud::Credentials` objects.
-
-[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
-[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
 
 ## Next Steps
 
