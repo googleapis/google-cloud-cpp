@@ -51,6 +51,10 @@ can override the default policies.
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
+- @ref video-override-endpoint - describes how to override the default
+  endpoint.
+- @ref video-override-authentication - describes how to change the
+  authentication credentials used by the library.
 
 [livestream-service-docs]: https://cloud.google.com/livestream
 [transcoder-service-docs]: https://cloud.google.com/transcoder

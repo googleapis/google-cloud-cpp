@@ -45,6 +45,10 @@ can override the default policies.
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
+- @ref resourcemanager-override-endpoint - describes how to override the default
+  endpoint.
+- @ref resourcemanager-override-authentication - describes how to change the
+  authentication credentials used by the library.
 
 [cloud-product]: https://cloud.google.com/resource-manager
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff

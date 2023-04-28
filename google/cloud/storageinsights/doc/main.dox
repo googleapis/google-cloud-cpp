@@ -39,6 +39,10 @@ can override the default policies.
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
+- @ref storageinsights-override-endpoint - describes how to override the default
+  endpoint.
+- @ref storageinsights-override-authentication - describes how to change the
+  authentication credentials used by the library.
 
 [cloud-service-docs]: https://cloud.google.com/storage/docs/insights/inventory-reports
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff

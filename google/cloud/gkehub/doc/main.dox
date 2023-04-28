@@ -38,6 +38,10 @@ can override the default policies.
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
+- @ref gkehub-override-endpoint - describes how to override the default
+  endpoint.
+- @ref gkehub-override-authentication - describes how to change the
+  authentication credentials used by the library.
 
 [cloud-service-docs]: https://cloud.google.com/anthos
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff

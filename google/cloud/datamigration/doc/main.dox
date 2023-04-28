@@ -37,6 +37,10 @@ can override the default policies.
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
+- @ref datamigration-override-endpoint - describes how to override the default
+  endpoint.
+- @ref datamigration-override-authentication - describes how to change the
+  authentication credentials used by the library.
 
 [cloud-service-docs]: https://cloud.google.com/database-migration
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff

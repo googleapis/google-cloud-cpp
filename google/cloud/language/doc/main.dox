@@ -39,6 +39,10 @@ can override the default policies.
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
+- @ref language-override-endpoint - describes how to override the default
+  endpoint.
+- @ref language-override-authentication - describes how to change the
+  authentication credentials used by the library.
 
 [cloud-service-docs]: https://cloud.google.com/natural-language
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff

@@ -38,6 +38,10 @@ can override the default policies.
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
+- @ref accessapproval-override-endpoint - describes how to override the default
+  endpoint.
+- @ref accessapproval-override-authentication - describes how to change the
+  authentication credentials used by the library.
 
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [gcs-quickstart]: https://cloud.google.com/cloud-provider-access-management/access-approval/docs/quickstart 'Quickstarts'

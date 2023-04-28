@@ -37,6 +37,10 @@ can override the default policies.
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
+- @ref orgpolicy-override-endpoint - describes how to override the default
+  endpoint.
+- @ref orgpolicy-override-authentication - describes how to change the
+  authentication credentials used by the library.
 
 [cloud-service-docs]: https://cloud.google.com/resource-manager/docs/organization-policy/overview
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
