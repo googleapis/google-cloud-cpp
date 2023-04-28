@@ -12,11 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/opentelemetry/configure_basic_tracing.h"
 #include "google/cloud/trace/v1/trace_client.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/sdk/trace/simple_processor.h>
@@ -32,6 +34,8 @@ namespace otel {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::InstallSpanCatcher;
+using ::google::cloud::testing_util::SpanNamed;
 using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::IsEmpty;
@@ -55,7 +59,16 @@ Matcher<google::devtools::cloudtrace::v1::TraceSpan const&> TraceSpan(
       Eq(name));
 }
 
+std::string RandomSpanName() {
+  auto generator = internal::MakeDefaultPRNG();
+  return "span-" + internal::Sample(generator, 32, "0123456789");
+}
+
 TEST(ConfigureBasicTracing, Basic) {
+  // Instantiate an in-memory exporter, which will get usurped by the Cloud
+  // Trace exporter.
+  auto span_catcher = InstallSpanCatcher();
+
   auto project_id = internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_THAT(project_id, Not(IsEmpty()));
 
@@ -63,22 +76,14 @@ TEST(ConfigureBasicTracing, Basic) {
   auto project = Project(project_id);
   auto configuration = ConfigureBasicTracing(project);
 
-  // Create a span.
+  // Create a test span using the global TracerProvider. It should get exported
+  // to Cloud Trace.
   auto provider = opentelemetry::trace::Provider::GetTracerProvider();
   auto tracer = provider->GetTracer("gcloud-cpp");
-
-  // Create a test span, which should get exported to Cloud Trace.
-  auto generator = google::cloud::internal::MakeDefaultPRNG();
-  auto const name =
-      "span-" + google::cloud::internal::Sample(generator, 32, "0123456789");
-
+  auto const name = RandomSpanName();
   auto span = tracer->StartSpan(name);
-  opentelemetry::trace::StartSpanOptions options;
-  options.kind = opentelemetry::trace::SpanKind::kClient;
-  auto const elapsed = std::chrono::milliseconds(20);
-  options.start_steady_time = std::chrono::steady_clock::now() - elapsed;
-  options.start_system_time = std::chrono::system_clock::now() - elapsed;
   span->End();
+
   // Flush the data.
   configuration.reset();
 
@@ -100,6 +105,54 @@ TEST(ConfigureBasicTracing, Basic) {
   }
   ASSERT_STATUS_OK(trace) << "Trace did not show up in Cloud Trace";
   EXPECT_THAT(trace->spans(), ElementsAre(TraceSpan(name)));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, IsEmpty());
+}
+
+TEST(ConfigureBasicTracing, IgnoresEmptyProject) {
+  // Instantiate an in-memory exporter.
+  auto span_catcher = InstallSpanCatcher();
+
+  // A basic tracing configuration with an empty project ID should be a no-op.
+  auto project = Project("");
+  auto configuration = ConfigureBasicTracing(project);
+
+  // Create a test span, which should get exported to the in-memory exporter;
+  // not Cloud Trace.
+  auto provider = opentelemetry::trace::Provider::GetTracerProvider();
+  auto tracer = provider->GetTracer("gcloud-cpp");
+  auto const name = RandomSpanName();
+  auto span = tracer->StartSpan(name);
+  span->End();
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, ElementsAre(SpanNamed(name)));
+}
+
+TEST(ConfigureBasicTracing, RestoresPrevious) {
+  auto project_id = internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+  ASSERT_THAT(project_id, Not(IsEmpty()));
+
+  // Instantiate an in-memory exporter.
+  auto span_catcher = InstallSpanCatcher();
+
+  // Create a scoped basic tracing configuration.
+  {
+    auto project = Project(project_id);
+    auto configuration = ConfigureBasicTracing(project);
+  }
+
+  // Create a test span using the global TracerProvider. The span should get
+  // exported to the in-memory exporter; not Cloud Trace.
+  auto provider = opentelemetry::trace::Provider::GetTracerProvider();
+  auto tracer = provider->GetTracer("gcloud-cpp");
+  auto const name = RandomSpanName();
+  auto span = tracer->StartSpan(name);
+  span->End();
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, ElementsAre(SpanNamed(name)));
 }
 
 }  // namespace
@@ -107,3 +160,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel
 }  // namespace cloud
 }  // namespace google
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

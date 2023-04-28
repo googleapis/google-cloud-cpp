@@ -68,6 +68,11 @@ Matcher<google::devtools::cloudtrace::v1::TraceSpan const&> TraceSpan(
       Eq(name));
 }
 
+std::string RandomSpanName() {
+  auto generator = internal::MakeDefaultPRNG();
+  return "span-" + internal::Sample(generator, 32, "0123456789");
+}
+
 TEST(TraceExporter, Basic) {
   auto project_id = internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_THAT(project_id, Not(IsEmpty()));
@@ -76,20 +81,12 @@ TEST(TraceExporter, Basic) {
   auto exporter = MakeTraceExporter(project);
   InstallExporter(std::move(exporter));
 
+  // Create a test span using the global TracerProvider. It should get exported
+  // to Cloud Trace.
   auto provider = opentelemetry::trace::Provider::GetTracerProvider();
   auto tracer = provider->GetTracer("gcloud-cpp");
-
-  // Create a test span, which should get exported to Cloud Trace.
-  auto generator = google::cloud::internal::MakeDefaultPRNG();
-  auto const name =
-      "span-" + google::cloud::internal::Sample(generator, 32, "0123456789");
-
+  auto const name = RandomSpanName();
   auto span = tracer->StartSpan(name);
-  opentelemetry::trace::StartSpanOptions options;
-  options.kind = opentelemetry::trace::SpanKind::kClient;
-  auto const elapsed = std::chrono::milliseconds(20);
-  options.start_steady_time = std::chrono::steady_clock::now() - elapsed;
-  options.start_system_time = std::chrono::system_clock::now() - elapsed;
   span->End();
 
   auto trace_client =
