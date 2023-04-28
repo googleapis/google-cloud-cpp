@@ -956,6 +956,131 @@ TEST(AssignResourcesAndTypesToFilesTest,
   EXPECT_THAT(result[1].types().front()->name(), Eq("Operation"));
 }
 
+TEST(DefaultHostFromRootUrlTest, RootUrlFormattedAsExpected) {
+  auto constexpr kDocumentJson = R"""({
+"rootUrl": "https://default.hostname.com/"
+})""";
+  auto const document_json =
+      nlohmann::json::parse(kDocumentJson, nullptr, false);
+  ASSERT_TRUE(document_json.is_object());
+  auto result = DefaultHostFromRootUrl(document_json);
+  EXPECT_THAT(result, IsOkAndHolds("default.hostname.com"));
+}
+
+TEST(DefaultHostFromRootUrlTest, RootUrlFormattedWithNoTrailingSlash) {
+  auto constexpr kDocumentJson = R"""({
+"rootUrl": "https://default.hostname.com"
+})""";
+  auto const document_json =
+      nlohmann::json::parse(kDocumentJson, nullptr, false);
+  ASSERT_TRUE(document_json.is_object());
+  auto result = DefaultHostFromRootUrl(document_json);
+  EXPECT_THAT(result, IsOkAndHolds("default.hostname.com"));
+}
+
+TEST(DefaultHostFromRootUrlTest, RootUrlFormattedWithNoPrefix) {
+  auto constexpr kDocumentJson = R"""({
+"rootUrl": "default.hostname.com"
+})""";
+  auto const document_json =
+      nlohmann::json::parse(kDocumentJson, nullptr, false);
+  ASSERT_TRUE(document_json.is_object());
+  auto result = DefaultHostFromRootUrl(document_json);
+  EXPECT_THAT(
+      result,
+      StatusIs(
+          StatusCode::kInvalidArgument,
+          HasSubstr(
+              "rootUrl field in unexpected format: default.hostname.com")));
+}
+
+TEST(GenerateProtosFromDiscoveryDocTest, MissingDocumentProperty) {
+  auto constexpr kDocumentJson = R"""({
+"rootUrl": "https://default.hostname.com/"
+})""";
+  auto const document_json =
+      nlohmann::json::parse(kDocumentJson, nullptr, false);
+  ASSERT_TRUE(document_json.is_object());
+  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "");
+  EXPECT_THAT(result,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("Missing one or more document properties")));
+}
+
+TEST(GenerateProtosFromDiscoveryDocTest, ExtractTypesFromSchemaFailure) {
+  auto constexpr kDocumentJson = R"""({
+"basePath": "base/path",
+"name": "my_product",
+"rootUrl": "https://default.hostname.com/",
+"version": "v8"
+})""";
+  auto const document_json =
+      nlohmann::json::parse(kDocumentJson, nullptr, false);
+  ASSERT_TRUE(document_json.is_object());
+  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "");
+  EXPECT_THAT(
+      result,
+      StatusIs(
+          StatusCode::kInvalidArgument,
+          HasSubstr("Discovery Document does not contain schemas element")));
+}
+
+TEST(GenerateProtosFromDiscoveryDocTest, EmptyResourcesFailure) {
+  auto constexpr kDocumentJson = R"""({
+  "basePath": "base/path",
+  "name": "my_product",
+  "rootUrl": "https://default.hostname.com/",
+  "version": "v8",
+  "schemas": {
+    "foo": {
+      "id": "foo",
+      "type": "object"
+    }
+  }
+})""";
+  auto const document_json =
+      nlohmann::json::parse(kDocumentJson, nullptr, false);
+  ASSERT_TRUE(document_json.is_object());
+  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "");
+  EXPECT_THAT(result,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("No resources found in Discovery Document")));
+}
+
+TEST(GenerateProtosFromDiscoveryDocTest, ProcessRequestResponseFailure) {
+  auto constexpr kDocumentJson = R"""({
+  "basePath": "base/path",
+  "name": "my_product",
+  "rootUrl": "https://default.hostname.com/",
+  "version": "v8",
+  "resources": {
+    "bar": {
+      "methods": {
+        "get": {
+          "response": {
+            "$ref": "baz"
+          }
+        }
+      }
+    }
+  },
+  "schemas": {
+    "foo": {
+      "id": "foo",
+      "type": "object",
+      "properties": {}
+    }
+  }
+})""";
+  auto const document_json =
+      nlohmann::json::parse(kDocumentJson, nullptr, false);
+  ASSERT_TRUE(document_json.is_object());
+  auto result = GenerateProtosFromDiscoveryDoc(document_json, "", "", "");
+  EXPECT_THAT(result,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("Response name=baz not found in types")));
+}
+
 }  // namespace
 }  // namespace generator_internal
 }  // namespace cloud

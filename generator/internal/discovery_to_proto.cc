@@ -27,7 +27,9 @@
 #include "absl/strings/str_split.h"
 #include <nlohmann/json.hpp>
 #include <fstream>
+#include <future>
 #include <map>
+#include <thread>
 #include <utility>
 
 namespace google {
@@ -56,6 +58,8 @@ google::cloud::StatusOr<std::string> GetPage(std::string const& url) {
   return rest::ReadAll(std::move(payload));
 }
 
+}  // namespace
+
 StatusOr<nlohmann::json> GetDiscoveryDoc(std::string const& url) {
   nlohmann::json parsed_discovery_doc;
   if (absl::StartsWith(url, "file://")) {
@@ -78,8 +82,6 @@ StatusOr<nlohmann::json> GetDiscoveryDoc(std::string const& url) {
 
   return parsed_discovery_doc;
 }
-
-}  // namespace
 
 StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
     DiscoveryDocumentProperties const& document_properties,
@@ -350,14 +352,85 @@ std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
   return files;
 }
 
-Status GenerateProtosFromDiscoveryDoc(std::string const& url,
-                                      std::string const&, std::string const&,
-                                      std::string const&) {
-  auto discovery_doc = GetDiscoveryDoc(url);
-  if (!discovery_doc) return discovery_doc.status();
+StatusOr<std::string> DefaultHostFromRootUrl(nlohmann::json const& json) {
+  std::string root_url = json.value("rootUrl", "");
+  if (root_url.empty()) return root_url;
+  absl::string_view host = root_url;
+  if (!absl::ConsumePrefix(&host, "https://")) {
+    return internal::InvalidArgumentError(
+        absl::StrCat("rootUrl field in unexpected format: ", host));
+  }
+  absl::ConsumeSuffix(&host, "/");
+  return std::string(host);
+}
 
-  // TODO(10980): Finish implementing this function.
-  return internal::UnimplementedError("Not implemented.");
+Status GenerateProtosFromDiscoveryDoc(nlohmann::json const& discovery_doc,
+                                      std::string const&, std::string const&,
+                                      std::string const& output_path) {
+  auto default_hostname =
+      google::cloud::generator_internal::DefaultHostFromRootUrl(discovery_doc);
+  if (!default_hostname) return std::move(default_hostname).status();
+
+  DiscoveryDocumentProperties document_properties{
+      discovery_doc.value("basePath", ""), *default_hostname,
+      discovery_doc.value("name", ""), discovery_doc.value("version", "")};
+
+  if (document_properties.base_path.empty() ||
+      document_properties.default_hostname.empty() ||
+      document_properties.product_name.empty() ||
+      document_properties.version.empty()) {
+    return internal::InvalidArgumentError(
+        "Missing one or more document properties",
+        GCP_ERROR_INFO()
+            .WithMetadata("basePath", document_properties.base_path)
+            .WithMetadata("rootUrl", document_properties.default_hostname)
+            .WithMetadata("name", document_properties.product_name)
+            .WithMetadata("version", document_properties.version));
+  }
+
+  auto types = ExtractTypesFromSchema(document_properties, discovery_doc);
+  if (!types) return std::move(types).status();
+
+  auto resources = ExtractResources(document_properties, discovery_doc);
+  if (resources.empty()) {
+    return internal::InvalidArgumentError(
+        "No resources found in Discovery Document.");
+  }
+
+  auto method_status = ProcessMethodRequestsAndResponses(resources, *types);
+  if (!method_status.ok()) return method_status;
+
+  std::vector<DiscoveryFile> files = AssignResourcesAndTypesToFiles(
+      resources, *types, document_properties, output_path);
+
+  std::vector<std::future<google::cloud::Status>> tasks;
+  tasks.reserve(files.size());
+  for (auto f : files) {
+    tasks.push_back(std::async(
+        std::launch::async,
+        [](DiscoveryFile const& f,
+           DiscoveryDocumentProperties const& document_properties,
+           std::map<std::string, DiscoveryTypeVertex> const& types) {
+          return f.WriteFile(document_properties, types);
+        },
+        std::move(f), document_properties, *types));
+  }
+
+  bool file_write_error = false;
+  for (auto& t : tasks) {
+    auto result = t.get();
+    if (!result.ok()) {
+      GCP_LOG(ERROR) << result;
+      file_write_error = true;
+    }
+  }
+
+  if (file_write_error) {
+    return internal::InternalError(
+        "Error encountered writing file. Check log for additional details.");
+  }
+
+  return {};
 }
 
 }  // namespace generator_internal
