@@ -49,17 +49,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page advisorynotifications_v1::AdvisoryNotificationsServiceClient-endpoint-snippet Override advisorynotifications_v1::AdvisoryNotificationsServiceClient Endpoint Configuration
-
-@snippet google/cloud/advisorynotifications/v1/samples/advisory_notifications_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page advisorynotifications_v1::AdvisoryNotificationsServiceClient-service-account-snippet Override advisorynotifications_v1::AdvisoryNotificationsServiceClient Authentication Defaults
-
-@snippet google/cloud/advisorynotifications/v1/samples/advisory_notifications_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

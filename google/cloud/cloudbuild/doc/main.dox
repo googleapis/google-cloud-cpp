@@ -54,29 +54,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page cloudbuild_v1::CloudBuildClient-endpoint-snippet Override cloudbuild_v1::CloudBuildClient Endpoint Configuration
-
-@snippet google/cloud/cloudbuild/v1/samples/cloud_build_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page cloudbuild_v1::CloudBuildClient-service-account-snippet Override cloudbuild_v1::CloudBuildClient Authentication Defaults
-
-@snippet google/cloud/cloudbuild/v1/samples/cloud_build_client_samples.cc with-service-account
-
-*/
-
-/*! @page cloudbuild_v2::RepositoryManagerClient-endpoint-snippet Override cloudbuild_v2::RepositoryManagerClient Endpoint Configuration
-
-@snippet google/cloud/cloudbuild/v2/samples/repository_manager_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page cloudbuild_v2::RepositoryManagerClient-service-account-snippet Override cloudbuild_v2::RepositoryManagerClient Authentication Defaults
-
-@snippet google/cloud/cloudbuild/v2/samples/repository_manager_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

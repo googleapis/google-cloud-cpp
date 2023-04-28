@@ -48,17 +48,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page translate_v3::TranslationServiceClient-endpoint-snippet Override translate_v3::TranslationServiceClient Endpoint Configuration
-
-@snippet google/cloud/translate/v3/samples/translation_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page translate_v3::TranslationServiceClient-service-account-snippet Override translate_v3::TranslationServiceClient Authentication Defaults
-
-@snippet google/cloud/translate/v3/samples/translation_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

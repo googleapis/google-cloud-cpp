@@ -48,17 +48,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page datamigration_v1::DataMigrationServiceClient-endpoint-snippet Override datamigration_v1::DataMigrationServiceClient Endpoint Configuration
-
-@snippet google/cloud/datamigration/v1/samples/data_migration_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page datamigration_v1::DataMigrationServiceClient-service-account-snippet Override datamigration_v1::DataMigrationServiceClient Authentication Defaults
-
-@snippet google/cloud/datamigration/v1/samples/data_migration_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

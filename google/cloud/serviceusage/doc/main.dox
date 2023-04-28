@@ -49,17 +49,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page serviceusage_v1::ServiceUsageClient-endpoint-snippet Override serviceusage_v1::ServiceUsageClient Endpoint Configuration
-
-@snippet google/cloud/serviceusage/v1/samples/service_usage_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page serviceusage_v1::ServiceUsageClient-service-account-snippet Override serviceusage_v1::ServiceUsageClient Authentication Defaults
-
-@snippet google/cloud/serviceusage/v1/samples/service_usage_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

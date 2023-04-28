@@ -48,17 +48,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page accesscontextmanager_v1::AccessContextManagerClient-endpoint-snippet Override accesscontextmanager_v1::AccessContextManagerClient Endpoint Configuration
-
-@snippet google/cloud/accesscontextmanager/v1/samples/access_context_manager_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page accesscontextmanager_v1::AccessContextManagerClient-service-account-snippet Override accesscontextmanager_v1::AccessContextManagerClient Authentication Defaults
-
-@snippet google/cloud/accesscontextmanager/v1/samples/access_context_manager_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

@@ -49,17 +49,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page gkehub_v1::GkeHubClient-endpoint-snippet Override gkehub_v1::GkeHubClient Endpoint Configuration
-
-@snippet google/cloud/gkehub/v1/samples/gke_hub_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page gkehub_v1::GkeHubClient-service-account-snippet Override gkehub_v1::GkeHubClient Authentication Defaults
-
-@snippet google/cloud/gkehub/v1/samples/gke_hub_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

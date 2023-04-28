@@ -48,17 +48,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page filestore_v1::CloudFilestoreManagerClient-endpoint-snippet Override filestore_v1::CloudFilestoreManagerClient Endpoint Configuration
-
-@snippet google/cloud/filestore/v1/samples/cloud_filestore_manager_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page filestore_v1::CloudFilestoreManagerClient-service-account-snippet Override filestore_v1::CloudFilestoreManagerClient Authentication Defaults
-
-@snippet google/cloud/filestore/v1/samples/cloud_filestore_manager_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

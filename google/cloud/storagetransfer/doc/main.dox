@@ -49,17 +49,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page storagetransfer_v1::StorageTransferServiceClient-endpoint-snippet Override storagetransfer_v1::StorageTransferServiceClient Endpoint Configuration
-
-@snippet google/cloud/storagetransfer/v1/samples/storage_transfer_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page storagetransfer_v1::StorageTransferServiceClient-service-account-snippet Override storagetransfer_v1::StorageTransferServiceClient Authentication Defaults
-
-@snippet google/cloud/storagetransfer/v1/samples/storage_transfer_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

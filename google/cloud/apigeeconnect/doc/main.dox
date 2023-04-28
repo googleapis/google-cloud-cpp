@@ -52,17 +52,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page apigeeconnect_v1::ConnectionServiceClient-endpoint-snippet Override apigeeconnect_v1::ConnectionServiceClient Endpoint Configuration
-
-@snippet google/cloud/apigeeconnect/v1/samples/connection_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page apigeeconnect_v1::ConnectionServiceClient-service-account-snippet Override apigeeconnect_v1::ConnectionServiceClient Authentication Defaults
-
-@snippet google/cloud/apigeeconnect/v1/samples/connection_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

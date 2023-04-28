@@ -63,29 +63,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page run_v2::RevisionsClient-endpoint-snippet Override run_v2::RevisionsClient Endpoint Configuration
-
-@snippet google/cloud/run/v2/samples/revisions_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page run_v2::RevisionsClient-service-account-snippet Override run_v2::RevisionsClient Authentication Defaults
-
-@snippet google/cloud/run/v2/samples/revisions_client_samples.cc with-service-account
-
-*/
-
-/*! @page run_v2::ServicesClient-endpoint-snippet Override run_v2::ServicesClient Endpoint Configuration
-
-@snippet google/cloud/run/v2/samples/services_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page run_v2::ServicesClient-service-account-snippet Override run_v2::ServicesClient Authentication Defaults
-
-@snippet google/cloud/run/v2/samples/services_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

@@ -51,17 +51,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page workstations_v1::WorkstationsClient-endpoint-snippet Override workstations_v1::WorkstationsClient Endpoint Configuration
-
-@snippet google/cloud/workstations/v1/samples/workstations_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page workstations_v1::WorkstationsClient-service-account-snippet Override workstations_v1::WorkstationsClient Authentication Defaults
-
-@snippet google/cloud/workstations/v1/samples/workstations_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

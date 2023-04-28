@@ -51,17 +51,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page datastream_v1::DatastreamClient-endpoint-snippet Override datastream_v1::DatastreamClient Endpoint Configuration
-
-@snippet google/cloud/datastream/v1/samples/datastream_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page datastream_v1::DatastreamClient-service-account-snippet Override datastream_v1::DatastreamClient Authentication Defaults
-
-@snippet google/cloud/datastream/v1/samples/datastream_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

@@ -57,29 +57,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page trace_v1::TraceServiceClient-endpoint-snippet Override trace_v1::TraceServiceClient Endpoint Configuration
-
-@snippet google/cloud/trace/v1/samples/trace_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page trace_v1::TraceServiceClient-service-account-snippet Override trace_v1::TraceServiceClient Authentication Defaults
-
-@snippet google/cloud/trace/v1/samples/trace_client_samples.cc with-service-account
-
-*/
-
-/*! @page trace_v2::TraceServiceClient-endpoint-snippet Override trace_v2::TraceServiceClient Endpoint Configuration
-
-@snippet google/cloud/trace/v2/samples/trace_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page trace_v2::TraceServiceClient-service-account-snippet Override trace_v2::TraceServiceClient Authentication Defaults
-
-@snippet google/cloud/trace/v2/samples/trace_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

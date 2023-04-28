@@ -54,29 +54,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page composer_v1::EnvironmentsClient-endpoint-snippet Override composer_v1::EnvironmentsClient Endpoint Configuration
-
-@snippet google/cloud/composer/v1/samples/environments_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page composer_v1::EnvironmentsClient-service-account-snippet Override composer_v1::EnvironmentsClient Authentication Defaults
-
-@snippet google/cloud/composer/v1/samples/environments_client_samples.cc with-service-account
-
-*/
-
-/*! @page composer_v1::ImageVersionsClient-endpoint-snippet Override composer_v1::ImageVersionsClient Endpoint Configuration
-
-@snippet google/cloud/composer/v1/samples/image_versions_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page composer_v1::ImageVersionsClient-service-account-snippet Override composer_v1::ImageVersionsClient Authentication Defaults
-
-@snippet google/cloud/composer/v1/samples/image_versions_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

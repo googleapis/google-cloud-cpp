@@ -54,29 +54,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page eventarc_publishing_v1::PublisherClient-endpoint-snippet Override eventarc_publishing_v1::PublisherClient Endpoint Configuration
-
-@snippet google/cloud/eventarc/publishing/v1/samples/publisher_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page eventarc_publishing_v1::PublisherClient-service-account-snippet Override eventarc_publishing_v1::PublisherClient Authentication Defaults
-
-@snippet google/cloud/eventarc/publishing/v1/samples/publisher_client_samples.cc with-service-account
-
-*/
-
-/*! @page eventarc_v1::EventarcClient-endpoint-snippet Override eventarc_v1::EventarcClient Endpoint Configuration
-
-@snippet google/cloud/eventarc/v1/samples/eventarc_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page eventarc_v1::EventarcClient-service-account-snippet Override eventarc_v1::EventarcClient Authentication Defaults
-
-@snippet google/cloud/eventarc/v1/samples/eventarc_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

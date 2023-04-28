@@ -55,29 +55,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page tpu_v1::TpuClient-endpoint-snippet Override tpu_v1::TpuClient Endpoint Configuration
-
-@snippet google/cloud/tpu/v1/samples/tpu_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page tpu_v1::TpuClient-service-account-snippet Override tpu_v1::TpuClient Authentication Defaults
-
-@snippet google/cloud/tpu/v1/samples/tpu_client_samples.cc with-service-account
-
-*/
-
-/*! @page tpu_v2::TpuClient-endpoint-snippet Override tpu_v2::TpuClient Endpoint Configuration
-
-@snippet google/cloud/tpu/v2/samples/tpu_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page tpu_v2::TpuClient-service-account-snippet Override tpu_v2::TpuClient Authentication Defaults
-
-@snippet google/cloud/tpu/v2/samples/tpu_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

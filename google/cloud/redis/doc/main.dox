@@ -49,17 +49,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page redis_v1::CloudRedisClient-endpoint-snippet Override redis_v1::CloudRedisClient Endpoint Configuration
-
-@snippet google/cloud/redis/v1/samples/cloud_redis_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page redis_v1::CloudRedisClient-service-account-snippet Override redis_v1::CloudRedisClient Authentication Defaults
-
-@snippet google/cloud/redis/v1/samples/cloud_redis_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

@@ -55,29 +55,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page servicedirectory_v1::LookupServiceClient-endpoint-snippet Override servicedirectory_v1::LookupServiceClient Endpoint Configuration
-
-@snippet google/cloud/servicedirectory/v1/samples/lookup_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page servicedirectory_v1::LookupServiceClient-service-account-snippet Override servicedirectory_v1::LookupServiceClient Authentication Defaults
-
-@snippet google/cloud/servicedirectory/v1/samples/lookup_client_samples.cc with-service-account
-
-*/
-
-/*! @page servicedirectory_v1::RegistrationServiceClient-endpoint-snippet Override servicedirectory_v1::RegistrationServiceClient Endpoint Configuration
-
-@snippet google/cloud/servicedirectory/v1/samples/registration_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page servicedirectory_v1::RegistrationServiceClient-service-account-snippet Override servicedirectory_v1::RegistrationServiceClient Authentication Defaults
-
-@snippet google/cloud/servicedirectory/v1/samples/registration_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

@@ -49,17 +49,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page shell_v1::CloudShellServiceClient-endpoint-snippet Override shell_v1::CloudShellServiceClient Endpoint Configuration
-
-@snippet google/cloud/shell/v1/samples/cloud_shell_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page shell_v1::CloudShellServiceClient-service-account-snippet Override shell_v1::CloudShellServiceClient Authentication Defaults
-
-@snippet google/cloud/shell/v1/samples/cloud_shell_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

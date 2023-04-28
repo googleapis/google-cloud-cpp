@@ -48,17 +48,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page vpcaccess_v1::VpcAccessServiceClient-endpoint-snippet Override vpcaccess_v1::VpcAccessServiceClient Endpoint Configuration
-
-@snippet google/cloud/vpcaccess/v1/samples/vpc_access_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page vpcaccess_v1::VpcAccessServiceClient-service-account-snippet Override vpcaccess_v1::VpcAccessServiceClient Authentication Defaults
-
-@snippet google/cloud/vpcaccess/v1/samples/vpc_access_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

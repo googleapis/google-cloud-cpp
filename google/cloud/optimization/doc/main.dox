@@ -49,17 +49,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page optimization_v1::FleetRoutingClient-endpoint-snippet Override optimization_v1::FleetRoutingClient Endpoint Configuration
-
-@snippet google/cloud/optimization/v1/samples/fleet_routing_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page optimization_v1::FleetRoutingClient-service-account-snippet Override optimization_v1::FleetRoutingClient Authentication Defaults
-
-@snippet google/cloud/optimization/v1/samples/fleet_routing_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

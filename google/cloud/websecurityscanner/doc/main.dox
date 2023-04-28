@@ -49,17 +49,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page websecurityscanner_v1::WebSecurityScannerClient-endpoint-snippet Override websecurityscanner_v1::WebSecurityScannerClient Endpoint Configuration
-
-@snippet google/cloud/websecurityscanner/v1/samples/web_security_scanner_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page websecurityscanner_v1::WebSecurityScannerClient-service-account-snippet Override websecurityscanner_v1::WebSecurityScannerClient Authentication Defaults
-
-@snippet google/cloud/websecurityscanner/v1/samples/web_security_scanner_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

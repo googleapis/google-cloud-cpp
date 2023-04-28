@@ -55,29 +55,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page osconfig_agentendpoint_v1::AgentEndpointServiceClient-endpoint-snippet Override osconfig_agentendpoint_v1::AgentEndpointServiceClient Endpoint Configuration
-
-@snippet google/cloud/osconfig/agentendpoint/v1/samples/agent_endpoint_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page osconfig_agentendpoint_v1::AgentEndpointServiceClient-service-account-snippet Override osconfig_agentendpoint_v1::AgentEndpointServiceClient Authentication Defaults
-
-@snippet google/cloud/osconfig/agentendpoint/v1/samples/agent_endpoint_client_samples.cc with-service-account
-
-*/
-
-/*! @page osconfig_v1::OsConfigServiceClient-endpoint-snippet Override osconfig_v1::OsConfigServiceClient Endpoint Configuration
-
-@snippet google/cloud/osconfig/v1/samples/os_config_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page osconfig_v1::OsConfigServiceClient-service-account-snippet Override osconfig_v1::OsConfigServiceClient Authentication Defaults
-
-@snippet google/cloud/osconfig/v1/samples/os_config_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

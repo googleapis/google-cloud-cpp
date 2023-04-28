@@ -48,17 +48,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page securitycenter_v1::SecurityCenterClient-endpoint-snippet Override securitycenter_v1::SecurityCenterClient Endpoint Configuration
-
-@snippet google/cloud/securitycenter/v1/samples/security_center_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page securitycenter_v1::SecurityCenterClient-service-account-snippet Override securitycenter_v1::SecurityCenterClient Authentication Defaults
-
-@snippet google/cloud/securitycenter/v1/samples/security_center_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

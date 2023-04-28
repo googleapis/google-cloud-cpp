@@ -49,17 +49,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page artifactregistry_v1::ArtifactRegistryClient-endpoint-snippet Override artifactregistry_v1::ArtifactRegistryClient Endpoint Configuration
-
-@snippet google/cloud/artifactregistry/v1/samples/artifact_registry_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page artifactregistry_v1::ArtifactRegistryClient-service-account-snippet Override artifactregistry_v1::ArtifactRegistryClient Authentication Defaults
-
-@snippet google/cloud/artifactregistry/v1/samples/artifact_registry_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

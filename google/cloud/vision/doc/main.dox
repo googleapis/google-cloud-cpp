@@ -56,29 +56,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page vision_v1::ImageAnnotatorClient-endpoint-snippet Override vision_v1::ImageAnnotatorClient Endpoint Configuration
-
-@snippet google/cloud/vision/v1/samples/image_annotator_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page vision_v1::ImageAnnotatorClient-service-account-snippet Override vision_v1::ImageAnnotatorClient Authentication Defaults
-
-@snippet google/cloud/vision/v1/samples/image_annotator_client_samples.cc with-service-account
-
-*/
-
-/*! @page vision_v1::ProductSearchClient-endpoint-snippet Override vision_v1::ProductSearchClient Endpoint Configuration
-
-@snippet google/cloud/vision/v1/samples/product_search_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page vision_v1::ProductSearchClient-service-account-snippet Override vision_v1::ProductSearchClient Authentication Defaults
-
-@snippet google/cloud/vision/v1/samples/product_search_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

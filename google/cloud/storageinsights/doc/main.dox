@@ -50,17 +50,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page storageinsights_v1::StorageInsightsClient-endpoint-snippet Override storageinsights_v1::StorageInsightsClient Endpoint Configuration
-
-@snippet google/cloud/storageinsights/v1/samples/storage_insights_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page storageinsights_v1::StorageInsightsClient-service-account-snippet Override storageinsights_v1::StorageInsightsClient Authentication Defaults
-
-@snippet google/cloud/storageinsights/v1/samples/storage_insights_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

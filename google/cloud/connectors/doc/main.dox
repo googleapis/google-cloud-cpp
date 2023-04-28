@@ -50,17 +50,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page connectors_v1::ConnectorsClient-endpoint-snippet Override connectors_v1::ConnectorsClient Endpoint Configuration
-
-@snippet google/cloud/connectors/v1/samples/connectors_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page connectors_v1::ConnectorsClient-service-account-snippet Override connectors_v1::ConnectorsClient Authentication Defaults
-
-@snippet google/cloud/connectors/v1/samples/connectors_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

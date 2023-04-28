@@ -49,17 +49,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page oslogin_v1::OsLoginServiceClient-endpoint-snippet Override oslogin_v1::OsLoginServiceClient Endpoint Configuration
-
-@snippet google/cloud/oslogin/v1/samples/os_login_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page oslogin_v1::OsLoginServiceClient-service-account-snippet Override oslogin_v1::OsLoginServiceClient Authentication Defaults
-
-@snippet google/cloud/oslogin/v1/samples/os_login_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

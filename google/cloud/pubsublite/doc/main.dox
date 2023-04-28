@@ -55,29 +55,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page pubsublite::AdminServiceClient-endpoint-snippet Override pubsublite::AdminServiceClient Endpoint Configuration
-
-@snippet google/cloud/pubsublite/samples/admin_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page pubsublite::AdminServiceClient-service-account-snippet Override pubsublite::AdminServiceClient Authentication Defaults
-
-@snippet google/cloud/pubsublite/samples/admin_client_samples.cc with-service-account
-
-*/
-
-/*! @page pubsublite::TopicStatsServiceClient-endpoint-snippet Override pubsublite::TopicStatsServiceClient Endpoint Configuration
-
-@snippet google/cloud/pubsublite/samples/topic_stats_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page pubsublite::TopicStatsServiceClient-service-account-snippet Override pubsublite::TopicStatsServiceClient Authentication Defaults
-
-@snippet google/cloud/pubsublite/samples/topic_stats_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

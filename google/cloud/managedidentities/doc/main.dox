@@ -50,17 +50,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page managedidentities_v1::ManagedIdentitiesServiceClient-endpoint-snippet Override managedidentities_v1::ManagedIdentitiesServiceClient Endpoint Configuration
-
-@snippet google/cloud/managedidentities/v1/samples/managed_identities_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page managedidentities_v1::ManagedIdentitiesServiceClient-service-account-snippet Override managedidentities_v1::ManagedIdentitiesServiceClient Authentication Defaults
-
-@snippet google/cloud/managedidentities/v1/samples/managed_identities_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

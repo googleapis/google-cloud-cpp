@@ -49,17 +49,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page recommender_v1::RecommenderClient-endpoint-snippet Override recommender_v1::RecommenderClient Endpoint Configuration
-
-@snippet google/cloud/recommender/v1/samples/recommender_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page recommender_v1::RecommenderClient-service-account-snippet Override recommender_v1::RecommenderClient Authentication Defaults
-
-@snippet google/cloud/recommender/v1/samples/recommender_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

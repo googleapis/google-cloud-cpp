@@ -50,17 +50,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page functions_v1::CloudFunctionsServiceClient-endpoint-snippet Override functions_v1::CloudFunctionsServiceClient Endpoint Configuration
-
-@snippet google/cloud/functions/v1/samples/cloud_functions_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page functions_v1::CloudFunctionsServiceClient-service-account-snippet Override functions_v1::CloudFunctionsServiceClient Authentication Defaults
-
-@snippet google/cloud/functions/v1/samples/cloud_functions_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

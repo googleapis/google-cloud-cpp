@@ -51,17 +51,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page networkconnectivity_v1::HubServiceClient-endpoint-snippet Override networkconnectivity_v1::HubServiceClient Endpoint Configuration
-
-@snippet google/cloud/networkconnectivity/v1/samples/hub_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page networkconnectivity_v1::HubServiceClient-service-account-snippet Override networkconnectivity_v1::HubServiceClient Authentication Defaults
-
-@snippet google/cloud/networkconnectivity/v1/samples/hub_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

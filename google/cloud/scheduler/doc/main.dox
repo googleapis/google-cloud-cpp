@@ -48,17 +48,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page scheduler_v1::CloudSchedulerClient-endpoint-snippet Override scheduler_v1::CloudSchedulerClient Endpoint Configuration
-
-@snippet google/cloud/scheduler/v1/samples/cloud_scheduler_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page scheduler_v1::CloudSchedulerClient-service-account-snippet Override scheduler_v1::CloudSchedulerClient Authentication Defaults
-
-@snippet google/cloud/scheduler/v1/samples/cloud_scheduler_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

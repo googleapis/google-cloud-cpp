@@ -49,17 +49,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page iot_v1::DeviceManagerClient-endpoint-snippet Override iot_v1::DeviceManagerClient Endpoint Configuration
-
-@snippet google/cloud/iot/v1/samples/device_manager_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page iot_v1::DeviceManagerClient-service-account-snippet Override iot_v1::DeviceManagerClient Authentication Defaults
-
-@snippet google/cloud/iot/v1/samples/device_manager_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

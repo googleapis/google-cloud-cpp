@@ -49,17 +49,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page secretmanager_v1::SecretManagerServiceClient-endpoint-snippet Override secretmanager_v1::SecretManagerServiceClient Endpoint Configuration
-
-@snippet google/cloud/secretmanager/v1/samples/secret_manager_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page secretmanager_v1::SecretManagerServiceClient-service-account-snippet Override secretmanager_v1::SecretManagerServiceClient Authentication Defaults
-
-@snippet google/cloud/secretmanager/v1/samples/secret_manager_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

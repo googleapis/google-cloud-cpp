@@ -48,17 +48,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page apigateway_v1::ApiGatewayServiceClient-endpoint-snippet Override apigateway_v1::ApiGatewayServiceClient Endpoint Configuration
-
-@snippet google/cloud/apigateway/v1/samples/api_gateway_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page apigateway_v1::ApiGatewayServiceClient-service-account-snippet Override apigateway_v1::ApiGatewayServiceClient Authentication Defaults
-
-@snippet google/cloud/apigateway/v1/samples/api_gateway_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

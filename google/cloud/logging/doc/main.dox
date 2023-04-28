@@ -48,17 +48,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page logging_v2::LoggingServiceV2Client-endpoint-snippet Override logging_v2::LoggingServiceV2Client Endpoint Configuration
-
-@snippet google/cloud/logging/v2/samples/logging_service_v2_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page logging_v2::LoggingServiceV2Client-service-account-snippet Override logging_v2::LoggingServiceV2Client Authentication Defaults
-
-@snippet google/cloud/logging/v2/samples/logging_service_v2_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

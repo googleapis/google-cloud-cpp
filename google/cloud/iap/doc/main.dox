@@ -54,29 +54,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page iap_v1::IdentityAwareProxyAdminServiceClient-endpoint-snippet Override iap_v1::IdentityAwareProxyAdminServiceClient Endpoint Configuration
-
-@snippet google/cloud/iap/v1/samples/identity_aware_proxy_admin_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page iap_v1::IdentityAwareProxyAdminServiceClient-service-account-snippet Override iap_v1::IdentityAwareProxyAdminServiceClient Authentication Defaults
-
-@snippet google/cloud/iap/v1/samples/identity_aware_proxy_admin_client_samples.cc with-service-account
-
-*/
-
-/*! @page iap_v1::IdentityAwareProxyOAuthServiceClient-endpoint-snippet Override iap_v1::IdentityAwareProxyOAuthServiceClient Endpoint Configuration
-
-@snippet google/cloud/iap/v1/samples/identity_aware_proxy_o_auth_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page iap_v1::IdentityAwareProxyOAuthServiceClient-service-account-snippet Override iap_v1::IdentityAwareProxyOAuthServiceClient Authentication Defaults
-
-@snippet google/cloud/iap/v1/samples/identity_aware_proxy_o_auth_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

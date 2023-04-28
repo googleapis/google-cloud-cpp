@@ -49,17 +49,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page container_v1::ClusterManagerClient-endpoint-snippet Override container_v1::ClusterManagerClient Endpoint Configuration
-
-@snippet google/cloud/container/v1/samples/cluster_manager_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page container_v1::ClusterManagerClient-service-account-snippet Override container_v1::ClusterManagerClient Authentication Defaults
-
-@snippet google/cloud/container/v1/samples/cluster_manager_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

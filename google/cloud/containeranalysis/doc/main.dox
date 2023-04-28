@@ -56,29 +56,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page containeranalysis_v1::ContainerAnalysisClient-endpoint-snippet Override containeranalysis_v1::ContainerAnalysisClient Endpoint Configuration
-
-@snippet google/cloud/containeranalysis/v1/samples/container_analysis_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page containeranalysis_v1::ContainerAnalysisClient-service-account-snippet Override containeranalysis_v1::ContainerAnalysisClient Authentication Defaults
-
-@snippet google/cloud/containeranalysis/v1/samples/container_analysis_client_samples.cc with-service-account
-
-*/
-
-/*! @page containeranalysis_v1::GrafeasClient-endpoint-snippet Override containeranalysis_v1::GrafeasClient Endpoint Configuration
-
-@snippet google/cloud/containeranalysis/v1/samples/grafeas_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page containeranalysis_v1::GrafeasClient-service-account-snippet Override containeranalysis_v1::GrafeasClient Authentication Defaults
-
-@snippet google/cloud/containeranalysis/v1/samples/grafeas_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

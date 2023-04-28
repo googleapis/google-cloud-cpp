@@ -54,17 +54,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page accessapproval_v1::AccessApprovalClient-endpoint-snippet Override accessapproval_v1::AccessApprovalClient Endpoint Configuration
-
-@snippet google/cloud/accessapproval/v1/samples/access_approval_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page accessapproval_v1::AccessApprovalClient-service-account-snippet Override accessapproval_v1::AccessApprovalClient Authentication Defaults
-
-@snippet google/cloud/accessapproval/v1/samples/access_approval_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

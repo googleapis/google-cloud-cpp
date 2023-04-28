@@ -49,17 +49,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page confidentialcomputing_v1::ConfidentialComputingClient-endpoint-snippet Override confidentialcomputing_v1::ConfidentialComputingClient Endpoint Configuration
-
-@snippet google/cloud/confidentialcomputing/v1/samples/confidential_computing_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page confidentialcomputing_v1::ConfidentialComputingClient-service-account-snippet Override confidentialcomputing_v1::ConfidentialComputingClient Authentication Defaults
-
-@snippet google/cloud/confidentialcomputing/v1/samples/confidential_computing_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

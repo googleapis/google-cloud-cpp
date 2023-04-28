@@ -60,17 +60,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page alloydb_v1::AlloyDBAdminClient-endpoint-snippet Override alloydb_v1::AlloyDBAdminClient Endpoint Configuration
-
-@snippet google/cloud/alloydb/v1/samples/alloy_db_admin_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page alloydb_v1::AlloyDBAdminClient-service-account-snippet Override alloydb_v1::AlloyDBAdminClient Authentication Defaults
-
-@snippet google/cloud/alloydb/v1/samples/alloy_db_admin_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

@@ -50,17 +50,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page videointelligence_v1::VideoIntelligenceServiceClient-endpoint-snippet Override videointelligence_v1::VideoIntelligenceServiceClient Endpoint Configuration
-
-@snippet google/cloud/videointelligence/v1/samples/video_intelligence_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page videointelligence_v1::VideoIntelligenceServiceClient-service-account-snippet Override videointelligence_v1::VideoIntelligenceServiceClient Authentication Defaults
-
-@snippet google/cloud/videointelligence/v1/samples/video_intelligence_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

@@ -55,29 +55,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page debugger_v2::Controller2Client-endpoint-snippet Override debugger_v2::Controller2Client Endpoint Configuration
-
-@snippet google/cloud/debugger/v2/samples/controller2_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page debugger_v2::Controller2Client-service-account-snippet Override debugger_v2::Controller2Client Authentication Defaults
-
-@snippet google/cloud/debugger/v2/samples/controller2_client_samples.cc with-service-account
-
-*/
-
-/*! @page debugger_v2::Debugger2Client-endpoint-snippet Override debugger_v2::Debugger2Client Endpoint Configuration
-
-@snippet google/cloud/debugger/v2/samples/debugger2_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page debugger_v2::Debugger2Client-service-account-snippet Override debugger_v2::Debugger2Client Authentication Defaults
-
-@snippet google/cloud/debugger/v2/samples/debugger2_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

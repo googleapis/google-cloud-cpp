@@ -49,17 +49,3 @@ can override the default policies.
 
 */
 
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page baremetalsolution_v2::BareMetalSolutionClient-endpoint-snippet Override baremetalsolution_v2::BareMetalSolutionClient Endpoint Configuration
-
-@snippet google/cloud/baremetalsolution/v2/samples/bare_metal_solution_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page baremetalsolution_v2::BareMetalSolutionClient-service-account-snippet Override baremetalsolution_v2::BareMetalSolutionClient Authentication Defaults
-
-@snippet google/cloud/baremetalsolution/v2/samples/bare_metal_solution_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->
