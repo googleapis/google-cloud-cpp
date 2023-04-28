@@ -71,7 +71,15 @@ std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
     DiscoveryDocumentProperties const& document_properties,
     std::string const& output_path);
 
-Status GenerateProtosFromDiscoveryDoc(std::string const& url,
+// Extract hostname typically found in Discovery Documents in the form:
+// https://hostname/
+StatusOr<std::string> DefaultHostFromRootUrl(nlohmann::json const& json);
+
+// Read the provided file://, http://, or https:// URL into a json object.
+StatusOr<nlohmann::json> GetDiscoveryDoc(std::string const& url);
+
+// Emit protos generated from the discovery_doc.
+Status GenerateProtosFromDiscoveryDoc(nlohmann::json const& discovery_doc,
                                       std::string const& protobuf_proto_path,
                                       std::string const& googleapis_proto_path,
                                       std::string const& output_path);
