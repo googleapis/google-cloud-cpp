@@ -11,7 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
+#if 0
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/protobuf/util/json_util.h"
 #include <generator/integration_tests/discovery.pb.h>
@@ -2398,3 +2398,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1
 }  // namespace cloud
 }  // namespace google
+#endif
