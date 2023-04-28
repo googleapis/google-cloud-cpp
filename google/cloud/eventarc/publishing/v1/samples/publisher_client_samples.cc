@@ -26,7 +26,9 @@
 #include <string>
 #include <vector>
 
+// clang-format off
 // main-dox-marker: eventarc_publishing_v1::PublisherClient
+// clang-format on
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

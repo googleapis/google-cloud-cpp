@@ -26,7 +26,9 @@
 #include <string>
 #include <vector>
 
+// clang-format off
 // main-dox-marker: contactcenterinsights_v1::ContactCenterInsightsClient
+// clang-format on
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

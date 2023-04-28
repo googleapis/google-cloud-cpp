@@ -27,7 +27,9 @@
 #include <string>
 #include <vector>
 
+// clang-format off
 // main-dox-marker: beyondcorp_clientgateways_v1::ClientGatewaysServiceClient
+// clang-format on
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

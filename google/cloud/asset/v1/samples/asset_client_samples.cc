@@ -26,7 +26,9 @@
 #include <string>
 #include <vector>
 
+// clang-format off
 // main-dox-marker: asset_v1::AssetServiceClient
+// clang-format on
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

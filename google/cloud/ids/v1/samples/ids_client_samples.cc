@@ -26,7 +26,9 @@
 #include <string>
 #include <vector>
 
+// clang-format off
 // main-dox-marker: ids_v1::IDSClient
+// clang-format on
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

@@ -27,7 +27,9 @@
 #include <string>
 #include <vector>
 
+// clang-format off
 // main-dox-marker: cloudbuild_v2::RepositoryManagerClient
+// clang-format on
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
