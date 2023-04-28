@@ -34,8 +34,8 @@ using ms = std::chrono::milliseconds;
 using ::testing::MockFunction;
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::DisableTracing;
+using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::SpanAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
