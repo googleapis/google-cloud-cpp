@@ -60,29 +60,6 @@ google::cloud::StatusOr<std::string> GetPage(std::string const& url) {
 
 }  // namespace
 
-StatusOr<nlohmann::json> GetDiscoveryDoc(std::string const& url) {
-  nlohmann::json parsed_discovery_doc;
-  if (absl::StartsWith(url, "file://")) {
-    auto file_path = std::string(absl::StripPrefix(url, "file://"));
-    std::ifstream json_file(file_path);
-    if (!json_file.is_open()) {
-      return internal::InvalidArgumentError(
-          absl::StrCat("Unable to open file ", file_path));
-    }
-    parsed_discovery_doc = nlohmann::json::parse(json_file, nullptr, false);
-  } else {
-    auto page = GetPage(url);
-    if (!page) return std::move(page).status();
-    parsed_discovery_doc = nlohmann::json::parse(*page, nullptr, false);
-  }
-
-  if (!parsed_discovery_doc.is_object()) {
-    return internal::InvalidArgumentError("Error parsing Discovery Doc");
-  }
-
-  return parsed_discovery_doc;
-}
-
 StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
     DiscoveryDocumentProperties const& document_properties,
     nlohmann::json const& discovery_doc) {
@@ -364,11 +341,35 @@ StatusOr<std::string> DefaultHostFromRootUrl(nlohmann::json const& json) {
   return std::string(host);
 }
 
+StatusOr<nlohmann::json> GetDiscoveryDoc(std::string const& url) {
+  nlohmann::json parsed_discovery_doc;
+  if (absl::StartsWith(url, "file://")) {
+    auto file_path = std::string(absl::StripPrefix(url, "file://"));
+    std::ifstream json_file(file_path);
+    if (!json_file.is_open()) {
+      return internal::InvalidArgumentError(
+          absl::StrCat("Unable to open file ", file_path));
+    }
+    parsed_discovery_doc = nlohmann::json::parse(json_file, nullptr, false);
+  } else {
+    auto page = GetPage(url);
+    if (!page) return std::move(page).status();
+    parsed_discovery_doc = nlohmann::json::parse(*page, nullptr, false);
+  }
+
+  if (!parsed_discovery_doc.is_object()) {
+    // TODO(sdhart): figure out if we can get more error info from nhlomann as
+    // to why the parsing failed and put it into ErrorInfo.
+    return internal::InvalidArgumentError("Error parsing Discovery Doc");
+  }
+
+  return parsed_discovery_doc;
+}
+
 Status GenerateProtosFromDiscoveryDoc(nlohmann::json const& discovery_doc,
                                       std::string const&, std::string const&,
                                       std::string const& output_path) {
-  auto default_hostname =
-      google::cloud::generator_internal::DefaultHostFromRootUrl(discovery_doc);
+  auto default_hostname = DefaultHostFromRootUrl(discovery_doc);
   if (!default_hostname) return std::move(default_hostname).status();
 
   DiscoveryDocumentProperties document_properties{

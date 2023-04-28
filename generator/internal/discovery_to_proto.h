@@ -71,7 +71,7 @@ std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
     DiscoveryDocumentProperties const& document_properties,
     std::string const& output_path);
 
-// Extract hostname from typically found in Discovery Documents in the form:
+// Extract hostname typically found in Discovery Documents in the form:
 // https://hostname/
 StatusOr<std::string> DefaultHostFromRootUrl(nlohmann::json const& json);
 
