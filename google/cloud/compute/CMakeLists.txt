@@ -136,8 +136,10 @@ include(GoogleCloudCppCommon)
 include(CompileProtos)
 google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
 
-# google_cloud_cpp_load_protolist( proto_list
-# "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/sql.list")
+google_cloud_cpp_load_protolist(
+    proto_list
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/compute.list"
+    "${PROJECT_SOURCE_DIR}")
 google_cloud_cpp_load_protodeps(
     proto_deps
     "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/compute.deps")
@@ -147,103 +149,8 @@ file(GLOB proto_files RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}"
 list(SORT proto_files)
 
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_compute_protos
-    # cmake-format: sort
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/accelerator_types/v1/accelerator_types.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/addresses/v1/addresses.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/autoscalers/v1/autoscalers.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/backend_buckets/v1/backend_buckets.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/backend_services/v1/backend_services.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/disks/v1/disks.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/disk_types/v1/disk_types.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/firewall_policies/v1/firewall_policies.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/firewalls/v1/firewalls.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/forwarding_rules/v1/forwarding_rules.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/global_addresses/v1/global_addresses.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/global_operations/v1/global_operations.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/global_organization_operations/v1/global_organization_operations.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/health_checks/v1/health_checks.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/http_health_checks/v1/http_health_checks.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/https_health_checks/v1/https_health_checks.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/image_family_views/v1/image_family_views.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/images/v1/images.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/instance_groups/v1/instance_groups.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/instances/v1/instances.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/instance_templates/v1/instance_templates.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/interconnect_locations/v1/interconnect_locations.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/interconnects/v1/interconnects.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/license_codes/v1/license_codes.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/licenses/v1/licenses.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/machine_images/v1/machine_images.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/machine_types/v1/machine_types.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/network_attachments/v1/network_attachments.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/network_firewall_policies/v1/network_firewall_policies.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/networks/v1/networks.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/node_groups/v1/node_groups.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/node_templates/v1/node_templates.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/node_types/v1/node_types.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/packet_mirrorings/v1/packet_mirrorings.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/projects/v1/projects.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/region_autoscalers/v1/region_autoscalers.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/region_backend_services/v1/region_backend_services.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/region_commitments/v1/region_commitments.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/region_disks/v1/region_disks.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/region_disk_types/v1/region_disk_types.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/region_health_check_services/v1/region_health_check_services.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/region_health_checks/v1/region_health_checks.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/region_instance_group_managers/v1/region_instance_group_managers.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/region_instance_groups/v1/region_instance_groups.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/region_instances/v1/region_instances.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/region_instance_templates/v1/region_instance_templates.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/region_operations/v1/region_operations.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/region_security_policies/v1/region_security_policies.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/regions/v1/regions.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/region_target_tcp_proxies/v1/region_target_tcp_proxies.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/region_url_maps/v1/region_url_maps.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/reservations/v1/reservations.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/resource_policies/v1/resource_policies.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/routers/v1/routers.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/routes/v1/routes.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/security_policies/v1/security_policies.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/service_attachments/v1/service_attachments.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/snapshots/v1/snapshots.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/ssl_certificates/v1/ssl_certificates.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/ssl_policies/v1/ssl_policies.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/subnetworks/v1/subnetworks.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/target_http_proxies/v1/target_http_proxies.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/target_https_proxies/v1/target_https_proxies.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/target_instances/v1/target_instances.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/target_pools/v1/target_pools.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/url_maps/v1/url_maps.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/v1/internal/common.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/vpn_gateways/v1/vpn_gateways.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/zone_operations/v1/zone_operations.proto
-    ${PROJECT_SOURCE_DIR}/google/cloud/compute/zones/v1/zones.proto
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-    "${PROTO_INCLUDE_DIR}"
+    google_cloud_cpp_compute_protos ${proto_list} PROTO_PATH_DIRECTORIES
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}"
     "${PROJECT_SOURCE_DIR}")
 external_googleapis_set_version_and_alias(compute_protos)
 target_link_libraries(google_cloud_cpp_compute_protos PUBLIC ${proto_deps})
