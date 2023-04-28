@@ -29,7 +29,6 @@ helpers, retry policies, configuration parameters, and infrastructure to mock
 application.
 <!-- inject-client-list-end -->
 
-
 ## Retry, Backoff, and Idempotency Policies.
 
 The library automatically retries requests that fail with transient errors, and
@@ -48,4 +47,3 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/container/quickstart/README%2Emd
 
 */
-

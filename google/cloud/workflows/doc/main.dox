@@ -35,7 +35,6 @@ when testing your application.
 - [`workflows_v1::WorkflowsClient`](@ref google::cloud::workflows_v1::WorkflowsClient)
 <!-- inject-client-list-end -->
 
-
 ## Retry, Backoff, and Idempotency Policies.
 
 The library automatically retries requests that fail with transient errors, and
@@ -53,4 +52,3 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/workflows/quickstart/README%2Emd
 
 */
-

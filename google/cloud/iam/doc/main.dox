@@ -69,7 +69,6 @@ when testing your application.
 - [`iam_v2::PoliciesClient`](@ref google::cloud::iam_v2::PoliciesClient)
 <!-- inject-client-list-end -->
 
-
 ## Next Steps
 
 * @ref iam-mock
@@ -85,4 +84,3 @@ when testing your application.
 [status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
 
 */
-

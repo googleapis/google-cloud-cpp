@@ -36,7 +36,6 @@ when testing your application.
 - [`servicecontrol_v2::ServiceControllerClient`](@ref google::cloud::servicecontrol_v2::ServiceControllerClient)
 <!-- inject-client-list-end -->
 
-
 ## Retry, Backoff, and Idempotency Policies.
 
 The library automatically retries requests that fail with transient errors, and
@@ -55,4 +54,3 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/servicecontrol/quickstart/README%2Emd
 
 */
-

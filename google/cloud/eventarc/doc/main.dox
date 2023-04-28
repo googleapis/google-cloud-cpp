@@ -34,7 +34,6 @@ when testing your application.
 - [`eventarc_v1::EventarcClient`](@ref google::cloud::eventarc_v1::EventarcClient)
 <!-- inject-client-list-end -->
 
-
 ## Retry, Backoff, and Idempotency Policies.
 
 The library automatically retries requests that fail with transient errors, and
@@ -53,4 +52,3 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/eventarc/quickstart/README%2Emd
 
 */
-

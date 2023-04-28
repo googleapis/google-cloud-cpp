@@ -35,7 +35,6 @@ when testing your application.
 - [`notebooks_v1::NotebookServiceClient`](@ref google::cloud::notebooks_v1::NotebookServiceClient)
 <!-- inject-client-list-end -->
 
-
 ## Retry, Backoff, and Idempotency Policies.
 
 The library automatically retries requests that fail with transient errors, and
@@ -55,4 +54,3 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/notebooks/quickstart/README%2Emd
 
 */
-

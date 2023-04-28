@@ -42,7 +42,6 @@ when testing your application.
 - [`video_transcoder_v1::TranscoderServiceClient`](@ref google::cloud::video_transcoder_v1::TranscoderServiceClient)
 <!-- inject-client-list-end -->
 
-
 ## Retry, Backoff, and Idempotency Policies.
 
 The library automatically retries requests that fail with transient errors, and
@@ -63,4 +62,3 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/video/quickstart/README%2Emd
 
 */
-

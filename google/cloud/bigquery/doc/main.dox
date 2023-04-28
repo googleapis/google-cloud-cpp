@@ -73,7 +73,6 @@ when testing your application.
 - [`bigquery_storage_v1::BigQueryWriteClient`](@ref google::cloud::bigquery_storage_v1::BigQueryWriteClient)
 <!-- inject-client-list-end -->
 
-
 ## Next Steps
 
 * @ref bigquery-read-mock
@@ -88,4 +87,3 @@ when testing your application.
 [status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
 
 */
-

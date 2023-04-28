@@ -38,7 +38,6 @@ when testing your application.
 - [`talent_v4::TenantServiceClient`](@ref google::cloud::talent_v4::TenantServiceClient)
 <!-- inject-client-list-end -->
 
-
 ## Retry, Backoff, and Idempotency Policies.
 
 The library automatically retries requests that fail with transient errors, and
@@ -57,4 +56,3 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/talent/quickstart/README%2Emd
 
 */
-

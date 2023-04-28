@@ -40,7 +40,6 @@ when testing your application.
 - [`retail_v2::UserEventServiceClient`](@ref google::cloud::retail_v2::UserEventServiceClient)
 <!-- inject-client-list-end -->
 
-
 ## Retry, Backoff, and Idempotency Policies.
 
 The library automatically retries requests that fail with transient errors, and
@@ -59,4 +58,3 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/retail/quickstart/README%2Emd
 
 */
-
