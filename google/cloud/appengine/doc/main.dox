@@ -17,6 +17,29 @@ which should give you a taste of the App Engine Admin API C++ client library API
 
 @snippet quickstart.cc all
 
+## Main classes
+
+<!-- inject-client-list-start -->
+This library offers multiple `*Client` classes, which are listed below. Each
+one of these classes exposes all the RPCs for a gRPC `service` as member
+functions of the class. This library groups multiple gRPC services because they
+are part of the same product or are often used together. A typical example may
+be the administrative and data plane operations for a single product.
+
+The library also has other classes that provide helpers, retry policies,
+configuration parameters, and infrastructure to mock the `*Client` classes
+when testing your application.
+
+- [`appengine_v1::ApplicationsClient`](@ref google::cloud::appengine_v1::ApplicationsClient)
+- [`appengine_v1::AuthorizedCertificatesClient`](@ref google::cloud::appengine_v1::AuthorizedCertificatesClient)
+- [`appengine_v1::AuthorizedDomainsClient`](@ref google::cloud::appengine_v1::AuthorizedDomainsClient)
+- [`appengine_v1::DomainMappingsClient`](@ref google::cloud::appengine_v1::DomainMappingsClient)
+- [`appengine_v1::FirewallClient`](@ref google::cloud::appengine_v1::FirewallClient)
+- [`appengine_v1::InstancesClient`](@ref google::cloud::appengine_v1::InstancesClient)
+- [`appengine_v1::ServicesClient`](@ref google::cloud::appengine_v1::ServicesClient)
+- [`appengine_v1::VersionsClient`](@ref google::cloud::appengine_v1::VersionsClient)
+<!-- inject-client-list-end -->
+
 ## Override the default endpoint
 
 In some cases, you may need to override the default endpoint used by the client

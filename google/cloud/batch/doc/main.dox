@@ -16,6 +16,17 @@ which should give you a taste of the Batch API C++ client library API.
 
 @snippet quickstart.cc all
 
+## Main classes
+
+<!-- inject-client-list-start -->
+The main class in this library is
+[`batch_v1::BatchServiceClient`](@ref google::cloud::batch_v1::BatchServiceClient).
+All RPCs are exposed as member functions of this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`batch_v1::BatchServiceClient`](@ref google::cloud::batch_v1::BatchServiceClient) when testing your
+application.
+<!-- inject-client-list-end -->
+
 ## Override the default endpoint
 
 In some cases, you may need to override the default endpoint used by the client

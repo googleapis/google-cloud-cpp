@@ -18,6 +18,25 @@ which should give you a taste of the Game Services API C++ client library API.
 
 @snippet quickstart.cc all
 
+## Main classes
+
+<!-- inject-client-list-start -->
+This library offers multiple `*Client` classes, which are listed below. Each
+one of these classes exposes all the RPCs for a gRPC `service` as member
+functions of the class. This library groups multiple gRPC services because they
+are part of the same product or are often used together. A typical example may
+be the administrative and data plane operations for a single product.
+
+The library also has other classes that provide helpers, retry policies,
+configuration parameters, and infrastructure to mock the `*Client` classes
+when testing your application.
+
+- [`gameservices_v1::GameServerClustersServiceClient`](@ref google::cloud::gameservices_v1::GameServerClustersServiceClient)
+- [`gameservices_v1::GameServerConfigsServiceClient`](@ref google::cloud::gameservices_v1::GameServerConfigsServiceClient)
+- [`gameservices_v1::GameServerDeploymentsServiceClient`](@ref google::cloud::gameservices_v1::GameServerDeploymentsServiceClient)
+- [`gameservices_v1::RealmsServiceClient`](@ref google::cloud::gameservices_v1::RealmsServiceClient)
+<!-- inject-client-list-end -->
+
 ## Override the default endpoint
 
 In some cases, you may need to override the default endpoint used by the client

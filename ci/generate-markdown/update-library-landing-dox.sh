@@ -69,6 +69,43 @@ EOT
 IFS= mapfile -d $'\0' -t samples_cc < <(git ls-files -z -- "${LIB}/*samples/*_client_samples.cc")
 
 (
+  sed '/<!-- inject-client-list-start -->/q' "${MAIN_DOX}"
+  if [[ ${#samples_cc[@]} -eq 0 ]]; then
+    true
+  elif [[ ${#samples_cc[@]} -eq 1 ]]; then
+    sample_cc="${samples_cc[0]}"
+    client_name="$(sed -n '/main-dox-marker: / s;// main-dox-marker: \(.*\);\1;p' "${sample_cc}")"
+    cat <<_EOF_
+The main class in this library is
+[\`${client_name}\`](@ref google::cloud::${client_name}).
+All RPCs are exposed as member functions of this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[\`${client_name}\`](@ref google::cloud::${client_name}) when testing your
+application.
+_EOF_
+  else
+    cat <<'_EOF_'
+This library offers multiple `*Client` classes, which are listed below. Each
+one of these classes exposes all the RPCs for a gRPC `service` as member
+functions of the class. This library groups multiple gRPC services because they
+are part of the same product or are often used together. A typical example may
+be the administrative and data plane operations for a single product.
+
+The library also has other classes that provide helpers, retry policies,
+configuration parameters, and infrastructure to mock the `*Client` classes
+when testing your application.
+
+_EOF_
+    for sample_cc in "${samples_cc[@]}"; do
+      client_name="$(sed -n '/main-dox-marker: / s;// main-dox-marker: \(.*\);\1;p' "${sample_cc}")"
+      # shellcheck disable=SC2016
+      printf -- '- [`%s`](@ref google::cloud::%s)\n' "${client_name}" "${client_name}"
+    done
+  fi
+  sed -n '/<!-- inject-client-list-end -->/,$p' "${MAIN_DOX}"
+) | sponge "${MAIN_DOX}"
+
+(
   sed '/<!-- inject-endpoint-snippet-start -->/q' "${MAIN_DOX}"
   if [[ ${#samples_cc[@]} -gt 0 ]]; then
     sample_cc="${samples_cc[0]}"

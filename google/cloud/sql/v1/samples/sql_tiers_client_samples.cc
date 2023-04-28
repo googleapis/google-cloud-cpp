@@ -27,7 +27,9 @@
 #include <string>
 #include <vector>
 
+// clang-format off
 // main-dox-marker: sql_v1::SqlTiersServiceClient
+// clang-format on
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

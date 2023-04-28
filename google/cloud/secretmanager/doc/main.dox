@@ -19,6 +19,17 @@ which should give you a taste of the Secret Manager API C++ client library API.
 
 @snippet quickstart.cc all
 
+## Main classes
+
+<!-- inject-client-list-start -->
+The main class in this library is
+[`secretmanager_v1::SecretManagerServiceClient`](@ref google::cloud::secretmanager_v1::SecretManagerServiceClient).
+All RPCs are exposed as member functions of this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`secretmanager_v1::SecretManagerServiceClient`](@ref google::cloud::secretmanager_v1::SecretManagerServiceClient) when testing your
+application.
+<!-- inject-client-list-end -->
+
 ## Override the default endpoint
 
 In some cases, you may need to override the default endpoint used by the client

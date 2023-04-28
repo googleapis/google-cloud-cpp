@@ -50,6 +50,25 @@ the Cloud IAM C++ client library API.
 @snippet quickstart.cc all
 @endparblock
 
+## Main classes
+
+<!-- inject-client-list-start -->
+This library offers multiple `*Client` classes, which are listed below. Each
+one of these classes exposes all the RPCs for a gRPC `service` as member
+functions of the class. This library groups multiple gRPC services because they
+are part of the same product or are often used together. A typical example may
+be the administrative and data plane operations for a single product.
+
+The library also has other classes that provide helpers, retry policies,
+configuration parameters, and infrastructure to mock the `*Client` classes
+when testing your application.
+
+- [`iam_admin_v1::IAMClient`](@ref google::cloud::iam_admin_v1::IAMClient)
+- [`iam_credentials_v1::IAMCredentialsClient`](@ref google::cloud::iam_credentials_v1::IAMCredentialsClient)
+- [`iam_v1::IAMPolicyClient`](@ref google::cloud::iam_v1::IAMPolicyClient)
+- [`iam_v2::PoliciesClient`](@ref google::cloud::iam_v2::PoliciesClient)
+<!-- inject-client-list-end -->
+
 ## Override the default endpoint
 
 In some cases, you may need to override the default endpoint used by the client

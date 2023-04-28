@@ -20,6 +20,17 @@ which should give you a taste of the Datastream API C++ client library API.
 
 @snippet quickstart.cc all
 
+## Main classes
+
+<!-- inject-client-list-start -->
+The main class in this library is
+[`datastream_v1::DatastreamClient`](@ref google::cloud::datastream_v1::DatastreamClient).
+All RPCs are exposed as member functions of this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`datastream_v1::DatastreamClient`](@ref google::cloud::datastream_v1::DatastreamClient) when testing your
+application.
+<!-- inject-client-list-end -->
+
 ## Override the default endpoint
 
 In some cases, you may need to override the default endpoint used by the client

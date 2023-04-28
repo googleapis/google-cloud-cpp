@@ -20,6 +20,30 @@ which should give you a taste of the Cloud Monitoring API C++ client library API
 
 @snippet quickstart.cc all
 
+## Main classes
+
+<!-- inject-client-list-start -->
+This library offers multiple `*Client` classes, which are listed below. Each
+one of these classes exposes all the RPCs for a gRPC `service` as member
+functions of the class. This library groups multiple gRPC services because they
+are part of the same product or are often used together. A typical example may
+be the administrative and data plane operations for a single product.
+
+The library also has other classes that provide helpers, retry policies,
+configuration parameters, and infrastructure to mock the `*Client` classes
+when testing your application.
+
+- [`monitoring_dashboard_v1::DashboardsServiceClient`](@ref google::cloud::monitoring_dashboard_v1::DashboardsServiceClient)
+- [`monitoring_metricsscope_v1::MetricsScopesClient`](@ref google::cloud::monitoring_metricsscope_v1::MetricsScopesClient)
+- [`monitoring_v3::AlertPolicyServiceClient`](@ref google::cloud::monitoring_v3::AlertPolicyServiceClient)
+- [`monitoring_v3::GroupServiceClient`](@ref google::cloud::monitoring_v3::GroupServiceClient)
+- [`monitoring_v3::MetricServiceClient`](@ref google::cloud::monitoring_v3::MetricServiceClient)
+- [`monitoring_v3::NotificationChannelServiceClient`](@ref google::cloud::monitoring_v3::NotificationChannelServiceClient)
+- [`monitoring_v3::QueryServiceClient`](@ref google::cloud::monitoring_v3::QueryServiceClient)
+- [`monitoring_v3::ServiceMonitoringServiceClient`](@ref google::cloud::monitoring_v3::ServiceMonitoringServiceClient)
+- [`monitoring_v3::UptimeCheckServiceClient`](@ref google::cloud::monitoring_v3::UptimeCheckServiceClient)
+<!-- inject-client-list-end -->
+
 ## Override the default endpoint
 
 In some cases, you may need to override the default endpoint used by the client

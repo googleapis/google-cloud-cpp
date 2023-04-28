@@ -20,6 +20,37 @@ which should give you a taste of the Dialogflow API C++ client library API.
 
 @snippet quickstart.cc all
 
+## Main classes
+
+<!-- inject-client-list-start -->
+This library offers multiple `*Client` classes, which are listed below. Each
+one of these classes exposes all the RPCs for a gRPC `service` as member
+functions of the class. This library groups multiple gRPC services because they
+are part of the same product or are often used together. A typical example may
+be the administrative and data plane operations for a single product.
+
+The library also has other classes that provide helpers, retry policies,
+configuration parameters, and infrastructure to mock the `*Client` classes
+when testing your application.
+
+- [`dialogflow_cx::AgentsClient`](@ref google::cloud::dialogflow_cx::AgentsClient)
+- [`dialogflow_cx::ChangelogsClient`](@ref google::cloud::dialogflow_cx::ChangelogsClient)
+- [`dialogflow_cx::DeploymentsClient`](@ref google::cloud::dialogflow_cx::DeploymentsClient)
+- [`dialogflow_cx::EntityTypesClient`](@ref google::cloud::dialogflow_cx::EntityTypesClient)
+- [`dialogflow_cx::EnvironmentsClient`](@ref google::cloud::dialogflow_cx::EnvironmentsClient)
+- [`dialogflow_cx::ExperimentsClient`](@ref google::cloud::dialogflow_cx::ExperimentsClient)
+- [`dialogflow_cx::FlowsClient`](@ref google::cloud::dialogflow_cx::FlowsClient)
+- [`dialogflow_cx::IntentsClient`](@ref google::cloud::dialogflow_cx::IntentsClient)
+- [`dialogflow_cx::PagesClient`](@ref google::cloud::dialogflow_cx::PagesClient)
+- [`dialogflow_cx::SecuritySettingsServiceClient`](@ref google::cloud::dialogflow_cx::SecuritySettingsServiceClient)
+- [`dialogflow_cx::SessionEntityTypesClient`](@ref google::cloud::dialogflow_cx::SessionEntityTypesClient)
+- [`dialogflow_cx::SessionsClient`](@ref google::cloud::dialogflow_cx::SessionsClient)
+- [`dialogflow_cx::TestCasesClient`](@ref google::cloud::dialogflow_cx::TestCasesClient)
+- [`dialogflow_cx::TransitionRouteGroupsClient`](@ref google::cloud::dialogflow_cx::TransitionRouteGroupsClient)
+- [`dialogflow_cx::VersionsClient`](@ref google::cloud::dialogflow_cx::VersionsClient)
+- [`dialogflow_cx::WebhooksClient`](@ref google::cloud::dialogflow_cx::WebhooksClient)
+<!-- inject-client-list-end -->
+
 ## Override the default endpoint
 
 In some cases, you may need to override the default endpoint used by the client

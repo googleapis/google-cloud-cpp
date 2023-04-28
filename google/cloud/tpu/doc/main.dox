@@ -18,6 +18,23 @@ which should give you a taste of the Cloud TPU API C++ client library API.
 
 @snippet quickstart.cc all
 
+## Main classes
+
+<!-- inject-client-list-start -->
+This library offers multiple `*Client` classes, which are listed below. Each
+one of these classes exposes all the RPCs for a gRPC `service` as member
+functions of the class. This library groups multiple gRPC services because they
+are part of the same product or are often used together. A typical example may
+be the administrative and data plane operations for a single product.
+
+The library also has other classes that provide helpers, retry policies,
+configuration parameters, and infrastructure to mock the `*Client` classes
+when testing your application.
+
+- [`tpu_v1::TpuClient`](@ref google::cloud::tpu_v1::TpuClient)
+- [`tpu_v2::TpuClient`](@ref google::cloud::tpu_v2::TpuClient)
+<!-- inject-client-list-end -->
+
 ## Override the default endpoint
 
 In some cases, you may need to override the default endpoint used by the client
@@ -25,12 +42,11 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `tpu::TpuClient`:
+For example, this will override the default endpoint for `tpu_v1::TpuClient`:
 
 @snippet tpu_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [tpu::TpuClient](@ref tpu::TpuClient-endpoint-snippet)
  [tpu_v1::TpuClient](@ref tpu_v1::TpuClient-endpoint-snippet)
  [tpu_v2::TpuClient](@ref tpu_v2::TpuClient-endpoint-snippet)
 
@@ -47,7 +63,6 @@ to explicitly load a service account key file.
 @snippet tpu_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [tpu::TpuClient](@ref tpu::TpuClient-service-account-snippet)
  [tpu_v1::TpuClient](@ref tpu_v1::TpuClient-service-account-snippet)
  [tpu_v2::TpuClient](@ref tpu_v2::TpuClient-service-account-snippet)
 
@@ -83,18 +98,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page tpu::TpuClient-endpoint-snippet Override tpu::TpuClient Endpoint Configuration
-
-@snippet google/cloud/tpu/samples/tpu_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page tpu::TpuClient-service-account-snippet Override tpu::TpuClient Authentication Defaults
-
-@snippet google/cloud/tpu/samples/tpu_client_samples.cc with-service-account
-
-*/
 
 /*! @page tpu_v1::TpuClient-endpoint-snippet Override tpu_v1::TpuClient Endpoint Configuration
 

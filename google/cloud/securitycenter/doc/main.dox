@@ -17,6 +17,17 @@ which should give you a taste of the Security Command Center API C++ client libr
 
 @snippet quickstart.cc all
 
+## Main classes
+
+<!-- inject-client-list-start -->
+The main class in this library is
+[`securitycenter_v1::SecurityCenterClient`](@ref google::cloud::securitycenter_v1::SecurityCenterClient).
+All RPCs are exposed as member functions of this class. Other classes provide
+helpers, retry policies, configuration parameters, and infrastructure to mock
+[`securitycenter_v1::SecurityCenterClient`](@ref google::cloud::securitycenter_v1::SecurityCenterClient) when testing your
+application.
+<!-- inject-client-list-end -->
+
 ## Override the default endpoint
 
 In some cases, you may need to override the default endpoint used by the client

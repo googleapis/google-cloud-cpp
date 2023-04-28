@@ -50,6 +50,29 @@ the Cloud BigQuery C++ client library API.
 @snippet quickstart.cc all
 @endparblock
 
+## Main classes
+
+<!-- inject-client-list-start -->
+This library offers multiple `*Client` classes, which are listed below. Each
+one of these classes exposes all the RPCs for a gRPC `service` as member
+functions of the class. This library groups multiple gRPC services because they
+are part of the same product or are often used together. A typical example may
+be the administrative and data plane operations for a single product.
+
+The library also has other classes that provide helpers, retry policies,
+configuration parameters, and infrastructure to mock the `*Client` classes
+when testing your application.
+
+- [`bigquery_analyticshub_v1::AnalyticsHubServiceClient`](@ref google::cloud::bigquery_analyticshub_v1::AnalyticsHubServiceClient)
+- [`bigquery_connection_v1::ConnectionServiceClient`](@ref google::cloud::bigquery_connection_v1::ConnectionServiceClient)
+- [`bigquery_datapolicies_v1::DataPolicyServiceClient`](@ref google::cloud::bigquery_datapolicies_v1::DataPolicyServiceClient)
+- [`bigquery_datatransfer_v1::DataTransferServiceClient`](@ref google::cloud::bigquery_datatransfer_v1::DataTransferServiceClient)
+- [`bigquery_migration_v2::MigrationServiceClient`](@ref google::cloud::bigquery_migration_v2::MigrationServiceClient)
+- [`bigquery_reservation_v1::ReservationServiceClient`](@ref google::cloud::bigquery_reservation_v1::ReservationServiceClient)
+- [`bigquery_storage_v1::BigQueryReadClient`](@ref google::cloud::bigquery_storage_v1::BigQueryReadClient)
+- [`bigquery_storage_v1::BigQueryWriteClient`](@ref google::cloud::bigquery_storage_v1::BigQueryWriteClient)
+<!-- inject-client-list-end -->
+
 ## Override the default endpoint
 
 In some cases, you may need to override the default endpoint used by the client

@@ -19,6 +19,27 @@ which should give you a taste of the Retail API C++ client library API.
 
 @snippet quickstart.cc all
 
+## Main classes
+
+<!-- inject-client-list-start -->
+This library offers multiple `*Client` classes, which are listed below. Each
+one of these classes exposes all the RPCs for a gRPC `service` as member
+functions of the class. This library groups multiple gRPC services because they
+are part of the same product or are often used together. A typical example may
+be the administrative and data plane operations for a single product.
+
+The library also has other classes that provide helpers, retry policies,
+configuration parameters, and infrastructure to mock the `*Client` classes
+when testing your application.
+
+- [`retail_v2::CatalogServiceClient`](@ref google::cloud::retail_v2::CatalogServiceClient)
+- [`retail_v2::CompletionServiceClient`](@ref google::cloud::retail_v2::CompletionServiceClient)
+- [`retail_v2::PredictionServiceClient`](@ref google::cloud::retail_v2::PredictionServiceClient)
+- [`retail_v2::ProductServiceClient`](@ref google::cloud::retail_v2::ProductServiceClient)
+- [`retail_v2::SearchServiceClient`](@ref google::cloud::retail_v2::SearchServiceClient)
+- [`retail_v2::UserEventServiceClient`](@ref google::cloud::retail_v2::UserEventServiceClient)
+<!-- inject-client-list-end -->
+
 ## Override the default endpoint
 
 In some cases, you may need to override the default endpoint used by the client
