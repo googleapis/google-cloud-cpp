@@ -238,8 +238,9 @@ bool AppendIfPlainText(std::ostream& os, MarkdownContext const& ctx,
   auto const zwj = std::string_view{"&zwj;"};
   auto value = std::string{node.value()};
   auto const end = std::string::npos;
-  for (auto pos = value.find(zwj); pos != end; pos = value.find(zwj)) {
-    value = value.substr(0, pos) + value.substr(pos + zwj.size());
+  std::string::size_type pos = 0;
+  for (pos = value.find(zwj, pos); pos != end; pos = value.find(zwj, pos)) {
+    value = value.erase(pos, zwj.size());
   }
 
   for (auto const& d : ctx.decorators) os << d;
