@@ -566,10 +566,21 @@ TEST(Recordable, SetInstrumentationScope) {
   auto proto = std::move(rec).as_proto();
   EXPECT_THAT(proto.attributes(),
               Attributes(UnorderedElementsAre(
-                  Pair("otel.instrumentation_library.name",
-                       AttributeValue("test-name")),
-                  Pair("otel.instrumentation_library.version",
-                       AttributeValue("test-version")))));
+                  Pair("otel.scope.name", AttributeValue("test-name")),
+                  Pair("otel.scope.version", AttributeValue("test-version")))));
+}
+
+TEST(Recordable, SetInstrumentationScopeOmitsEmptyVersion) {
+  auto scope =
+      opentelemetry::sdk::instrumentationscope::InstrumentationScope::Create(
+          "test-name");
+
+  auto rec = Recordable(Project(kProjectId));
+  rec.SetInstrumentationScope(*scope);
+  auto proto = std::move(rec).as_proto();
+  EXPECT_THAT(proto.attributes(),
+              Attributes(UnorderedElementsAre(
+                  Pair("otel.scope.name", AttributeValue("test-name")))));
 }
 
 }  // namespace

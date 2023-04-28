@@ -301,10 +301,10 @@ void Recordable::SetDuration(std::chrono::nanoseconds duration) noexcept {
 void Recordable::SetInstrumentationScope(
     opentelemetry::sdk::instrumentationscope::InstrumentationScope const&
         instrumentation_scope) noexcept {
-  SetAttribute("otel.instrumentation_library.name",
-               instrumentation_scope.GetName());
-  SetAttribute("otel.instrumentation_library.version",
-               instrumentation_scope.GetVersion());
+  SetAttribute("otel.scope.name", instrumentation_scope.GetName());
+  if (!instrumentation_scope.GetVersion().empty()) {
+    SetAttribute("otel.scope.version", instrumentation_scope.GetVersion());
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
