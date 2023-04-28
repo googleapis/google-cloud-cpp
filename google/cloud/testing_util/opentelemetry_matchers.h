@@ -16,6 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_OPENTELEMETRY_MATCHERS_H
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include "google/cloud/internal/opentelemetry_options.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/context/propagation/text_map_propagator.h>
@@ -232,6 +234,13 @@ class MockTextMapPropagator
  * 2. the tests within a fixture do not execute in parallel
  */
 std::shared_ptr<MockTextMapPropagator> InstallMockPropagator();
+
+// Returns options with OpenTelemetry tracing enabled. Uses the global tracer
+// provider.
+Options EnableTracing(Options options);
+
+// Returns options with OpenTelemetry tracing disabled.
+Options DisableTracing(Options options);
 
 }  // namespace testing_util
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

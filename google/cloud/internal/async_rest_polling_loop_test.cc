@@ -565,7 +565,7 @@ TEST(AsyncRestPollingLoopTest, PollThenCancelDuringPoll) {
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
+using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::IsActive;
 using ::google::cloud::testing_util::SpanAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
@@ -602,8 +602,7 @@ TEST(AsyncRestPollingLoopTest, TracedAsyncBackoff) {
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
 
-  internal::OptionsSpan o(
-      Options{}.set<internal::OpenTelemetryTracingOption>(true));
+  internal::OptionsSpan o(EnableTracing(Options{}));
   (void)AsyncRestPollingLoop(cq, make_ready_future(make_status_or(starting_op)),
                              MakePoll(mock), MakeCancel(mock),
                              std::move(policy), "test-function")
@@ -658,8 +657,7 @@ TEST(AsyncRestPollingLoopTest, SpanActiveThroughout) {
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
 
   auto scope = opentelemetry::trace::Scope(span);
-  internal::OptionsSpan o(
-      Options{}.set<internal::OpenTelemetryTracingOption>(true));
+  internal::OptionsSpan o(EnableTracing(Options{}));
   auto pending = AsyncRestPollingLoop(
       cq, make_ready_future(make_status_or(starting_op)), MakePoll(mock),
       MakeCancel(mock), std::move(policy), "test-function");
@@ -691,8 +689,7 @@ TEST(AsyncRestPollingLoopTest, TraceCapturesOperationName) {
   CompletionQueue cq;
 
   auto scope = opentelemetry::trace::Scope(span);
-  internal::OptionsSpan o(
-      Options{}.set<internal::OpenTelemetryTracingOption>(true));
+  internal::OptionsSpan o(EnableTracing(Options{}));
   (void)AsyncRestPollingLoop(cq, make_ready_future(make_status_or(op)),
                              MakePoll(mock), MakeCancel(mock),
                              std::move(policy), "test-function")

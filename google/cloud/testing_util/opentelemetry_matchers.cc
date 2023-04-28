@@ -166,6 +166,14 @@ std::shared_ptr<MockTextMapPropagator> InstallMockPropagator() {
   return mock;
 }
 
+Options EnableTracing(Options options) {
+  return options.set<internal::OpenTelemetryTracingOption>(true);
+}
+
+Options DisableTracing(Options options) {
+  return options.set<internal::OpenTelemetryTracingOption>(false);
+}
+
 }  // namespace testing_util
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

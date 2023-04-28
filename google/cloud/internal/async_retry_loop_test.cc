@@ -561,7 +561,7 @@ TEST_F(AsyncRetryLoopCancelTest, ShutdownDuringTimer) {
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
+using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::IsActive;
 using ::google::cloud::testing_util::SpanNamed;
 using ::testing::AllOf;
@@ -571,7 +571,7 @@ using ::testing::SizeIs;
 TEST(AsyncRetryLoopTest, TracedBackoff) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
-  OptionsSpan o(Options{}.set<OpenTelemetryTracingOption>(true));
+  OptionsSpan o(EnableTracing(Options{}));
   AutomaticallyCreatedBackgroundThreads background;
   (void)AsyncRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
@@ -593,7 +593,7 @@ TEST(AsyncRetryLoopTest, CallSpanActiveThroughout) {
   AsyncSequencer<StatusOr<int>> sequencer;
   auto span = MakeSpan("span");
   auto scope = opentelemetry::trace::Scope(span);
-  OptionsSpan o(Options{}.set<OpenTelemetryTracingOption>(true));
+  OptionsSpan o(EnableTracing(Options{}));
 
   AutomaticallyCreatedBackgroundThreads background;
   future<StatusOr<int>> actual = AsyncRetryLoop(
@@ -616,7 +616,7 @@ TEST(AsyncRetryLoopTest, CallSpanActiveDuringCancel) {
 
   auto span = MakeSpan("span");
   auto scope = opentelemetry::trace::Scope(span);
-  OptionsSpan o(Options{}.set<OpenTelemetryTracingOption>(true));
+  OptionsSpan o(EnableTracing(Options{}));
 
   promise<StatusOr<int>> p([span] { EXPECT_THAT(span, IsActive()); });
 

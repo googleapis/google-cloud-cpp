@@ -36,7 +36,8 @@ using ::testing::ByMove;
 using ::testing::Return;
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
+using ::google::cloud::testing_util::DisableTracing;
+using ::google::cloud::testing_util::EnableTracing;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::SpanAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
@@ -153,7 +154,7 @@ TEST(OpenTelemetry, TracedAsyncBackoffEnabled) {
           make_status_or(std::chrono::system_clock::now())))));
   CompletionQueue cq(mock_cq);
 
-  OptionsSpan span(Options{}.set<OpenTelemetryTracingOption>(true));
+  OptionsSpan span(EnableTracing(Options{}));
   auto f = TracedAsyncBackoff(cq, duration);
   EXPECT_STATUS_OK(f.get());
 
@@ -176,7 +177,7 @@ TEST(OpenTelemetry, TracedAsyncBackoffDisabled) {
               CancelledError("cancelled")))));
   CompletionQueue cq(mock_cq);
 
-  OptionsSpan span(Options{}.set<OpenTelemetryTracingOption>(false));
+  OptionsSpan span(DisableTracing(Options{}));
   auto f = TracedAsyncBackoff(cq, duration);
   EXPECT_THAT(f.get(), StatusIs(StatusCode::kCancelled, "cancelled"));
 
