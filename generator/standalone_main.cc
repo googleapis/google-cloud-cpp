@@ -120,7 +120,14 @@ int WriteInstallDirectories(
     google::cloud::cpp::generator::GeneratorConfiguration const& config,
     std::string const& output_path) {
   std::vector<std::string> install_directories{".", "./lib64", "./lib64/cmake"};
-  for (auto const& service : config.service()) {
+  google::protobuf::RepeatedPtrField<
+      google::cloud::cpp::generator::ServiceConfiguration>
+      services = config.service();
+  for (auto const& p : config.discovery_products()) {
+    services.Add(p.rest_services().begin(), p.rest_services().end());
+  }
+
+  for (auto const& service : services) {
     if (service.product_path().empty()) {
       GCP_LOG(ERROR) << "Empty product path in config, service="
                      << service.DebugString() << "\n";
