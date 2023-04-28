@@ -231,6 +231,8 @@ endfunction ()
 #
 # ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/bigtable/v2/bigtable.proto
 #
+# ARGV2 can be specified as an optional path to substitute in lieu of
+# ${EXTERNAL_GOOGLEAPIS_SOURCE}
 function (google_cloud_cpp_load_protolist var file)
     file(READ "${file}" contents)
     string(REGEX REPLACE "\n" ";" contents "${contents}")
@@ -241,7 +243,11 @@ function (google_cloud_cpp_load_protolist var file)
         if ("${line}" STREQUAL "")
             continue()
         endif ()
-        list(APPEND protos "${EXTERNAL_GOOGLEAPIS_SOURCE}/${line}")
+        if (DEFINED ARGV2)
+            list(APPEND protos "${ARGV2}/${line}")
+        else ()
+            list(APPEND protos "${EXTERNAL_GOOGLEAPIS_SOURCE}/${line}")
+        endif ()
     endforeach ()
     set(${var}
         "${protos}"
