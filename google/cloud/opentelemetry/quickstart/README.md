@@ -17,16 +17,18 @@ does not).
 
 ### What it does
 
-The quickstart creates a single trace. The root span is named "quickstart". The
-quickstart makes some routine client calls, each of which are traced. These
-calls show up as children spans of the overarching "quickstart" span. Upon exit
-of the quickstart, the collected trace is sent to Cloud Trace.
+The quickstart installs a Cloud Trace [exporter]. It creates a GCS client, with
+tracing enabled. The client makes some routine calls, each of which are traced.
+Upon exit of the quickstart, the collected traces are sent to Cloud Trace.
 
 ### Viewing the trace in Cloud Trace
 
 To find the traces created by this quickstart, we can follow the documentation
-to [Find and view traces]. We can search using the filter `RootSpan:quickstart`
-in the Cloud Trace UI for the project ID we used to run the quickstart.
+to [Find and view traces]. We can open the Cloud Trace UI in the Google Cloud
+project we supplied to the quickstart. We can search using the filter
+`SpanName:storage::Client` to find any spans created by the GCS client.
+
+![google_cloud_cpp_opentelemetry_quickstart](https://user-images.githubusercontent.com/23088558/235268195-c19bf903-7358-4a0f-ac72-438b5286463b.png)
 
 For an overview of the Cloud Trace UI, see: [View traces overview].
 
@@ -98,40 +100,6 @@ Also note that we explicitly load OpenTelemetry's dependencies in the
 > :warning: If you are using Windows or macOS there are additional instructions
 > at the end of this document.
 
-### Package Managers
-
-`vcpkg` is the only package manager where `opentelemetry-cpp` is known to work
-alongside `abseil-cpp`.
-
-<!-- TODO(#11426): We need to add an opentelemetry feature to the vcpkg port
-after the next release. -->
-
-1. Install the dependencies with your favorite tools. As an example, if you use
-   [vcpkg](https://github.com/Microsoft/vcpkg.git):
-
-   ```bash
-   cd $HOME/vcpkg
-   ./vcpkg install google-cloud-cpp[core,trace,storage,experimental-opentelemetry]
-   ```
-
-   Note that, as it is often the case with C++ libraries, compiling these
-   dependencies may take several minutes.
-
-1. Configure CMake, if necessary, configure the directory where you installed
-   the dependencies:
-
-   ```bash
-   cd $HOME/google-cloud-cpp/google/cloud/opentelemetry/quickstart
-   cmake -H. -B.build -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
-   cmake --build .build
-   ```
-
-1. Run the example, changing the placeholders to appropriate values:
-
-   ```bash
-   .build/quickstart [BUCKET_NAME] [PROJECT_ID]
-   ```
-
 ### Building from Source
 
 #### Building `google-cloud-cpp`
@@ -142,8 +110,7 @@ The Google Cloud exporters are built as part of the feature,
 `experimental-opentelemetry`. This quickstart also uses the GCS client, from the
 `storage` feature.
 
-To enable these features, we build `google-cloud-cpp` with the following compile
-definition:
+To enable these features, add the following to your CMake configuration command:
 
 ```
 -DGOOGLE_CLOUD_CPP_ENABLE="storage,experimental-opentelemetry"
@@ -151,7 +118,8 @@ definition:
 
 #### Fetching `opentelemetry-cpp`
 
-Here is an example command to fetch and install `opentelemtry-cpp` on Fedora Linux.
+Here is an example command to fetch and install `opentelemetry-cpp` on Fedora
+Linux.
 
 ```Dockerfile
 WORKDIR /var/tmp/build/
@@ -183,6 +151,11 @@ It does not need to be C++14.
 OpenTelemetry only works when installed in a standard location that is on the
 [`find_package()`][find-package] search path. Also, `opentelemetry-cpp` does not
 install `*.pc` files, so it is not yet usable with `make`.
+
+### Package Managers
+
+We are working on this, but at the moment, no package managers support
+`google-cloud-cpp`'s native integration with Cloud Trace.
 
 ## Platform Specific Notes
 
@@ -217,6 +190,7 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 ```
 
 [bazel-install]: https://docs.bazel.build/versions/main/install.html
+[exporter]: https://opentelemetry.io/docs/concepts/signals/traces/#trace-exporters
 [find and view traces]: https://cloud.google.com/trace/docs/trace-overview
 [find-package]: https://cmake.org/cmake/help/latest/command/find_package.html
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571

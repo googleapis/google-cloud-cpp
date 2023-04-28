@@ -16,7 +16,6 @@
 #include "google/cloud/opentelemetry/configure_basic_tracing.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/internal/opentelemetry_options.h"
-#include <opentelemetry/trace/provider.h>
 #include <iostream>
 
 int main(int argc, char* argv[]) {
@@ -35,15 +34,6 @@ int main(int argc, char* argv[]) {
   // Trace. By default, spans are sent in batches and always sampled.
   auto project = gc::Project(project_id);
   auto configuration = gc::otel::ConfigureBasicTracing(project);
-
-  // Create a span that covers the work done by the application.
-  auto provider = opentelemetry::trace::Provider::GetTracerProvider();
-  auto tracer = provider->GetTracer("my_application");
-  auto span = tracer->StartSpan("quickstart");
-  // Mark the span as active, by wrapping the Span in a Scope object. The spans
-  // created by the client library on behalf of this application will show up as
-  // children of the "quickstart" span.
-  auto scope = opentelemetry::trace::Scope(span);
 
   // Create a client with OpenTelemetry tracing enabled.
   auto options =
@@ -70,9 +60,8 @@ int main(int argc, char* argv[]) {
   std::string contents{std::istreambuf_iterator<char>{reader}, {}};
   std::cout << contents << "\n";
 
-  // The Scope object created above goes out of scope, ending the "quickstart"
-  // span. The basic tracing configuration object also goes out of scope, and
-  // flushes the spans it has collected.
+  // The basic tracing configuration object goes out of scope. The collected
+  // spans are flushed to Cloud Trace.
 
   return 0;
 }
