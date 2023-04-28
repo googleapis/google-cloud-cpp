@@ -177,8 +177,8 @@ env -C "${out_dir}" ctest "${ctest_args[@]}"
 # Tests the installed artifacts by building and running the quickstarts.
 # shellcheck disable=SC2046
 feature_list="$(printf "%s;" $(features::libraries))"
-# GCS+gRPC is not a library, but it has a quickstart.
-feature_list="${feature_list}experimental-storage-grpc"
+# GCS+gRPC and OpenTelemetry also have quickstarts.
+feature_list="${feature_list}experimental-storage-grpc;experimental-opentelemetry"
 cmake -G Ninja \
   -S "${PROJECT_ROOT}/ci/verify_quickstart" \
   -B "${PROJECT_ROOT}/cmake-out/quickstart" \

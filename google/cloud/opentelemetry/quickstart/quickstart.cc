@@ -1,0 +1,79 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+//! [all]
+#include "google/cloud/opentelemetry/configure_basic_tracing.h"
+#include "google/cloud/storage/client.h"
+#include "google/cloud/internal/opentelemetry_options.h"
+#include <opentelemetry/trace/provider.h>
+#include <iostream>
+
+int main(int argc, char* argv[]) {
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " <bucket-name> <project-id>\n";
+    return 1;
+  }
+  std::string const bucket_name = argv[1];
+  std::string const project_id = argv[2];
+
+  // Create aliases to make the code easier to read.
+  namespace gc = ::google::cloud;
+  namespace gcs = ::google::cloud::storage;
+
+  // Instantiate a basic tracing configuration which exports traces to Cloud
+  // Trace. By default, spans are sent in batches and always sampled.
+  auto project = gc::Project(project_id);
+  auto configuration = gc::otel::ConfigureBasicTracing(project);
+
+  // Create a span that covers the work done by the application.
+  auto provider = opentelemetry::trace::Provider::GetTracerProvider();
+  auto tracer = provider->GetTracer("my_application");
+  auto span = tracer->StartSpan("quickstart");
+  // Mark the span as active, by wrapping the Span in a Scope object. The spans
+  // created by the client library on behalf of this application will show up as
+  // children of the "quickstart" span.
+  auto scope = opentelemetry::trace::Scope(span);
+
+  // Create a client with OpenTelemetry tracing enabled.
+  auto options =
+      gc::Options{}.set<gc::internal::OpenTelemetryTracingOption>(true);
+  auto client = gcs::Client(options);
+
+  auto writer = client.WriteObject(bucket_name, "quickstart.txt");
+  writer << "Hello World!";
+  writer.Close();
+  if (writer.metadata()) {
+    std::cout << "Successfully created object: " << *writer.metadata() << "\n";
+  } else {
+    std::cerr << "Error creating object: " << writer.metadata().status()
+              << "\n";
+    return 1;
+  }
+
+  auto reader = client.ReadObject(bucket_name, "quickstart.txt");
+  if (!reader) {
+    std::cerr << "Error reading object: " << reader.status() << "\n";
+    return 1;
+  }
+
+  std::string contents{std::istreambuf_iterator<char>{reader}, {}};
+  std::cout << contents << "\n";
+
+  // The Scope object created above goes out of scope, ending the "quickstart"
+  // span. The basic tracing configuration object also goes out of scope, and
+  // flushes the spans it has collected.
+
+  return 0;
+}
+//! [all]
