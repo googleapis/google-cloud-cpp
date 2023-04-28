@@ -170,5 +170,6 @@ upload_docs "google-cloud-common" "cmake-out/google/cloud/html"
 for feature in "${FEATURE_LIST[@]}"; do
   if [[ "${feature}" == "experimental-storage-grpc" ]]; then continue; fi
   if [[ "${feature}" == "grafeas" ]]; then continue; fi
+  if [[ "${feature}" == "experimental-opentelemetry" ]]; then feature="opentelemetry"; fi
   upload_docs "google-cloud-${feature}" "cmake-out/google/cloud/${feature}/html"
 done
