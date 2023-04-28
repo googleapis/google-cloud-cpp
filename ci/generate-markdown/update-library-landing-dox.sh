@@ -77,8 +77,8 @@ IFS= mapfile -d $'\0' -t samples_cc < <(git ls-files -z -- "${LIB}/*samples/*_cl
     client_name="$(sed -n '/main-dox-marker: / s;// main-dox-marker: \(.*\);\1;p' "${sample_cc}")"
     cat <<_EOF_
 The main class in this library is
-[\`${client_name}\`](@ref google::cloud::${client_name}),
-all RPCs are exposed as member functions in this class. Other classes provide
+[\`${client_name}\`](@ref google::cloud::${client_name}).
+All RPCs are exposed as member functions of this class. Other classes provide
 helpers, retry policies, configuration parameters, and infrastructure to mock
 [\`${client_name}\`](@ref google::cloud::${client_name}) when testing your
 application.
@@ -89,7 +89,7 @@ This library offers multiple `*Client` classes, which are listed below. Each
 one of these classes exposes all the RPCs for a gRPC `service` as member
 functions of the class. This library groups multiple gRPC services because they
 are part of the same product or are often used together. A typical example may
-be the administrative and data place operations for a single product.
+be the administrative and data plane operations for a single product.
 
 The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
