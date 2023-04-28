@@ -51,7 +51,9 @@ Status SampleGenerator::GenerateHeader() {
   HeaderSystemIncludes({"iostream", "fstream", "string", "vector"});
 
   HeaderPrint(R"""(
+// clang-format off
 // main-dox-marker: $product_namespace$::$client_class_name$
+// clang-format on
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
