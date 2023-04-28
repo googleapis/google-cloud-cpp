@@ -32,9 +32,9 @@ bool IsTrailByte(char x) { return static_cast<signed char>(x) < -0x40; }
 // Trace's semantics for label keys. So translate from one to the other.
 //
 // See: https://cloud.google.com/trace/docs/trace-labels#canonical_labels
-opentelemetry::nostd::string_view MapKey(
-    opentelemetry::nostd::string_view key) {
-  static auto const* m = new std::map<std::string, std::string>{
+void MapKey(opentelemetry::nostd::string_view& key) {
+  static auto const* m = new std::map<opentelemetry::nostd::string_view,
+                                      opentelemetry::nostd::string_view>{
       {"http.host", "/http/host"},
       {"http.method", "/http/method"},
       {"http.target", "/http/path"},
@@ -46,9 +46,8 @@ opentelemetry::nostd::string_view MapKey(
       {"http.scheme", "/http/client_protocol"},
       {"http.route", "/http/route"},
   };
-  auto it = m->find({key.data(), key.size()});
-  if (it == m->end()) return key;
-  return it->second;
+  auto it = m->find(key);
+  if (it != m->end()) key = it->second;
 }
 
 class AttributeVisitor {
@@ -117,7 +116,7 @@ class AttributeVisitor {
     // We drop attributes whose keys are too long.
     if (key_.size() > kAttributeKeyStringLimit) return nullptr;
 
-    key_ = MapKey(key_);
+    MapKey(key_);
 
     auto& map = *attributes_.mutable_attribute_map();
     // We do not do any sampling. We just accept the first N attributes we are
