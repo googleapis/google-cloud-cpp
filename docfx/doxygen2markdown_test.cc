@@ -478,6 +478,7 @@ TEST(Doxygen2Markdown, ParagraphSimpleContents) {
         <para id='test-010'><ref refid="classgoogle_1_1cloud_1_1Options" kindref="compound">Options</ref></para>
         <para id='test-011'>abc<zwj/>123</para>
         <para id='test-012'><ulink url="https://example.com/">google::cloud::Test</ulink></para>
+        <para id='test-013'><computeroutput>projects/*&zwj;/secrets/*&zwj;/versions/*</computeroutput></para>
     </doxygen>)xml";
 
   struct TestCase {
@@ -498,6 +499,7 @@ TEST(Doxygen2Markdown, ParagraphSimpleContents) {
       {"test-010", "\n\n[Options](xref:classgoogle_1_1cloud_1_1Options)"},
       {"test-011", "\n\nabc123"},
       {"test-012", "\n\n[`google::cloud::Test`](https://example.com/)"},
+      {"test-013", "\n\n`projects/*/secrets/*/versions/*`"},
   };
 
   pugi::xml_document doc;
