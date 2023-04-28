@@ -21,8 +21,8 @@ which should give you a taste of the API Gateway API C++ client library API.
 
 <!-- inject-client-list-start -->
 The main class in this library is
-[`apigateway_v1::ApiGatewayServiceClient`](@ref google::cloud::apigateway_v1::ApiGatewayServiceClient),
-all RPCs are exposed as member functions in this class. Other classes provide
+[`apigateway_v1::ApiGatewayServiceClient`](@ref google::cloud::apigateway_v1::ApiGatewayServiceClient).
+All RPCs are exposed as member functions of this class. Other classes provide
 helpers, retry policies, configuration parameters, and infrastructure to mock
 [`apigateway_v1::ApiGatewayServiceClient`](@ref google::cloud::apigateway_v1::ApiGatewayServiceClient) when testing your
 application.

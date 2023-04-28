@@ -24,8 +24,8 @@ which should give you a taste of the Cloud Workstations API C++ client library.
 
 <!-- inject-client-list-start -->
 The main class in this library is
-[`workstations_v1::WorkstationsClient`](@ref google::cloud::workstations_v1::WorkstationsClient),
-all RPCs are exposed as member functions in this class. Other classes provide
+[`workstations_v1::WorkstationsClient`](@ref google::cloud::workstations_v1::WorkstationsClient).
+All RPCs are exposed as member functions of this class. Other classes provide
 helpers, retry policies, configuration parameters, and infrastructure to mock
 [`workstations_v1::WorkstationsClient`](@ref google::cloud::workstations_v1::WorkstationsClient) when testing your
 application.

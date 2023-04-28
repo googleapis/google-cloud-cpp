@@ -22,8 +22,8 @@ which should give you a taste of the Cloud Optimization API C++ client library A
 
 <!-- inject-client-list-start -->
 The main class in this library is
-[`optimization_v1::FleetRoutingClient`](@ref google::cloud::optimization_v1::FleetRoutingClient),
-all RPCs are exposed as member functions in this class. Other classes provide
+[`optimization_v1::FleetRoutingClient`](@ref google::cloud::optimization_v1::FleetRoutingClient).
+All RPCs are exposed as member functions of this class. Other classes provide
 helpers, retry policies, configuration parameters, and infrastructure to mock
 [`optimization_v1::FleetRoutingClient`](@ref google::cloud::optimization_v1::FleetRoutingClient) when testing your
 application.
