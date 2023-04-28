@@ -463,8 +463,8 @@ Status GenerateProtosFromDiscoveryDoc(nlohmann::json const& discovery_doc,
   auto types = ExtractTypesFromSchema(document_properties, discovery_doc);
   if (!types) return std::move(types).status();
 
-  std::cerr << "output_path: " << output_path << "\n";
-  std::cerr << "num_schemas: " << types->size() << "\n";
+  //  std::cerr << "output_path: " << output_path << "\n";
+  //  std::cerr << "num_schemas: " << types->size() << "\n";
 
   auto resources = ExtractResources(document_properties, discovery_doc);
   if (resources.empty()) {
@@ -472,9 +472,9 @@ Status GenerateProtosFromDiscoveryDoc(nlohmann::json const& discovery_doc,
         "No resources found in Discovery Document.");
   }
 
-  EmitConfigTextProto(resources);
+  //  EmitConfigTextProto(resources);
 
-  std::cerr << "num_resources: " << resources.size() << "\n";
+  //  std::cerr << "num_resources: " << resources.size() << "\n";
 
   auto method_status = ProcessMethodRequestsAndResponses(resources, *types);
   if (!method_status.ok()) return method_status;
@@ -488,7 +488,7 @@ Status GenerateProtosFromDiscoveryDoc(nlohmann::json const& discovery_doc,
   std::vector<DiscoveryFile> files = AssignResourcesAndTypesToFiles(
       resources, *types, document_properties, output_path);
 
-  std::cerr << "num_files: " << files.size() << std::endl;
+  //  std::cerr << "num_files: " << files.size() << std::endl;
   // Determine common files and add imports
   // add import directives to "files" by using topological sort of types to
   //     determine starting types and walking needed_by edges

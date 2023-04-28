@@ -194,7 +194,6 @@ google::cloud::Status GenerateProtosForRestProducts(
       google::cloud::cpp::generator::ServiceConfiguration>
       services;
 
-  std::string output_path = generator_args.output_path;
   for (auto const& p : rest_products) {
     auto doc = google::cloud::generator_internal::GetDiscoveryDoc(
         p.discovery_document_url());
@@ -317,9 +316,6 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
     GCP_LOG(INFO) << "Generating service code using: "
                   << absl::StrJoin(args, ";") << "\n";
 
-    std::cerr << "Generating service code using: " << absl::StrJoin(args, ";")
-              << "\n";
-
     tasks.push_back(std::async(std::launch::async, [args] {
       google::protobuf::compiler::CommandLineInterface cli;
       google::cloud::generator::Generator generator;
@@ -390,7 +386,6 @@ int main(int argc, char** argv) {
 
   GCP_LOG(INFO) << "proto_path = " << args.protobuf_proto_path << "\n";
   GCP_LOG(INFO) << "googleapis_path = " << args.googleapis_proto_path << "\n";
-  std::cerr << "googleapis_path = " << args.googleapis_proto_path << "\n";
   GCP_LOG(INFO) << "config_file = " << args.config_file << "\n";
   GCP_LOG(INFO) << "output_path = " << args.output_path << "\n";
 
