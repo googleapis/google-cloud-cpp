@@ -28,9 +28,11 @@ foreach (dir IN LISTS service_dirs)
     string(REPLACE "/" "_" ns "${dir}")
     list(APPEND source_globs "${dir}*.h" "${dir}*.cc" "${dir}internal/*")
     list(APPEND mocks_globs "${dir}mocks/*.h")
-    list(APPEND DOXYGEN_EXAMPLE_PATH
-         "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
     list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "tpu_${ns}internal")
+    if (NOT dir STREQUAL "")
+        list(APPEND DOXYGEN_EXAMPLE_PATH
+             "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
+    endif ()
 endforeach ()
 
 include(GoogleCloudCppDoxygen)
