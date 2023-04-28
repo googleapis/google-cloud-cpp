@@ -27,7 +27,7 @@ namespace cloud {
 namespace otel {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-// Make an OpenTelemetry Trace Exporter for Google Cloud Trace.
+/// Make an OpenTelemetry Trace Exporter for Google Cloud Trace.
 std::unique_ptr<opentelemetry::sdk::trace::SpanExporter> MakeTraceExporter(
     Project project, Options options = {});
 
