@@ -28,6 +28,29 @@ namespace {
 // http://35.193.25.4/TensorFlow/models/research/syntaxnet/util/utf8/unilib_utf8_utils.h
 bool IsTrailByte(char x) { return static_cast<signed char>(x) < -0x40; }
 
+// OpenTelemetry's semantic conventions for attribute keys differ from Cloud
+// Trace's semantics for label keys. So translate from one to the other.
+//
+// See: https://cloud.google.com/trace/docs/trace-labels#canonical_labels
+opentelemetry::nostd::string_view MapKey(
+    opentelemetry::nostd::string_view key) {
+  static auto const* m = new std::map<std::string, std::string>{
+      {"http.host", "/http/host"},
+      {"http.method", "/http/method"},
+      {"http.target", "/http/path"},
+      {"http.status_code", "/http/status_code"},
+      {"http.url", "/http/url"},
+      {"http.user_agent", "/http/user_agent"},
+      {"http.request_content_length", "/http/request/size"},
+      {"http.response_content_length", "/http/response/size"},
+      {"http.scheme", "/http/client_protocol"},
+      {"http.route", "/http/route"},
+  };
+  auto it = m->find({key.data(), key.size()});
+  if (it == m->end()) return key;
+  return it->second;
+}
+
 class AttributeVisitor {
  public:
   AttributeVisitor(
@@ -93,6 +116,8 @@ class AttributeVisitor {
   google::devtools::cloudtrace::v2::AttributeValue* ProtoOrDrop() {
     // We drop attributes whose keys are too long.
     if (key_.size() > kAttributeKeyStringLimit) return nullptr;
+
+    key_ = MapKey(key_);
 
     auto& map = *attributes_.mutable_attribute_map();
     // We do not do any sampling. We just accept the first N attributes we are

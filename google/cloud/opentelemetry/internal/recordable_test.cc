@@ -304,6 +304,29 @@ TEST(AddAttribute, DropsCompositeAttributes) {
   }
 }
 
+TEST(AddAttribute, MapsKeysForCloudTrace) {
+  struct TestCase {
+    std::string input_key;
+    std::string expected_key;
+  };
+
+  for (auto const& t : std::vector<TestCase>{
+           {"http.host", "/http/host"},
+           {"http.method", "/http/method"},
+           {"http.target", "/http/path"},
+           {"http.status_code", "/http/status_code"},
+           {"http.url", "/http/url"},
+           {"http.user_agent", "/http/user_agent"},
+           {"http.request_content_length", "/http/request/size"},
+           {"http.response_content_length", "/http/response/size"},
+           {"http.scheme", "/http/client_protocol"},
+           {"http.route", "/http/route"}}) {
+    v2::Span::Attributes attributes;
+    AddAttribute(attributes, t.input_key, "value", /*limit=*/32);
+    EXPECT_THAT(attributes, Attributes(ElementsAre(Pair(t.expected_key, _))));
+  }
+}
+
 TEST(Recordable, AddEvent) {
   auto now = std::chrono::system_clock::now();
   auto expected_time = absl::FromChrono(now);
