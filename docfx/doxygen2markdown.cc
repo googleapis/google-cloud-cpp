@@ -233,8 +233,18 @@ bool AppendIfPlainText(std::ostream& os, MarkdownContext const& ctx,
   if (!std::string_view{node.name()}.empty() || !node.attributes().empty()) {
     return false;
   }
+  // Doxygen injects the following sequence when a zero-width joiner character
+  // is in the middle of a code span.  We need to remove them.
+  auto const zwj = std::string_view{"&zwj;"};
+  auto value = std::string{node.value()};
+  auto const end = std::string::npos;
+  std::string::size_type pos = 0;
+  for (pos = value.find(zwj, pos); pos != end; pos = value.find(zwj, pos)) {
+    value = value.erase(pos, zwj.size());
+  }
+
   for (auto const& d : ctx.decorators) os << d;
-  os << node.value();
+  os << value;
   for (auto i = ctx.decorators.rbegin(); i != ctx.decorators.rend(); ++i) {
     os << *i;
   }
