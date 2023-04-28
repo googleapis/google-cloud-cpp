@@ -124,6 +124,20 @@ TEST(DoxygenPages, PagesToc) {
           </briefdescription>
           <detaileddescription><para>More details about the index.</para></detaileddescription>
         </compounddef>
+        <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="secretmanager_v1_1_1SecretManagerServiceClient-endpoint-snippet" kind="page">
+          <compoundname>secretmanager_v1::SecretManagerServiceClient-endpoint-snippet</compoundname>
+          <title>Override secretmanager_v1::SecretManagerServiceClient Endpoint Configuration</title>
+          <briefdescription><para>Some brief description.</para>
+          </briefdescription>
+          <detaileddescription><para>More details about the snippet.</para></detaileddescription>
+        </compounddef>
+        <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="secretmanager_v1_1_1SecretManagerServiceClient-service-account-snippet" kind="page">
+          <compoundname>secretmanager_v1::SecretManagerServiceClient-service-account-snippet</compoundname>
+          <title>Override secretmanager_v1::SecretManagerServiceClient Authentication Default</title>
+          <briefdescription><para>Some brief description.</para>
+          </briefdescription>
+          <detaileddescription><para>More details about the snippet.</para></detaileddescription>
+        </compounddef>
       </doxygen>)xml";
 
   pugi::xml_document doc;
