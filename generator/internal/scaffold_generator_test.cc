@@ -274,6 +274,15 @@ to Provides a placeholder to write this test.
 )"""));
   EXPECT_THAT(actual, Not(HasSubstr("$status$")));
   EXPECT_THAT(actual, HasSubstr("**GA**"));
+  EXPECT_THAT(actual, HasSubstr(R"""(
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
+- @ref test-override-endpoint - describes how to override the default
+  endpoint.
+- @ref test-override-authentication - describes how to change the
+  authentication credentials used by the library.
+)"""));
 }
 
 TEST_F(ScaffoldGenerator, DoxygenOptionsPage) {
@@ -302,6 +311,26 @@ TEST_F(ScaffoldGenerator, DoxygenEnvironmentPage) {
 )"""),
                             HasSubstr(R"""(
 @section test-env-project Setting the Default Project
+)""")));
+}
+
+TEST_F(ScaffoldGenerator, OverrideAuthenticationPage) {
+  auto const vars = ScaffoldVars(path(), service(), false);
+  std::ostringstream os;
+  GenerateOverrideAuthenticationPage(os, vars);
+  auto const actual = std::move(os).str();
+  EXPECT_THAT(actual, AllOf(HasSubstr(R"""(
+@page test-override-authentication How to Override the Authentication Credentials
+)""")));
+}
+
+TEST_F(ScaffoldGenerator, OverrideEndpointPage) {
+  auto const vars = ScaffoldVars(path(), service(), false);
+  std::ostringstream os;
+  GenerateOverrideEndpointPage(os, vars);
+  auto const actual = std::move(os).str();
+  EXPECT_THAT(actual, AllOf(HasSubstr(R"""(
+@page test-override-endpoint How to Override the Default Endpoint
 )""")));
 }
 
