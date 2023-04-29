@@ -98,10 +98,10 @@ done
     client_name="${clients[${sample_cc}]}"
     cat <<_EOF_
 The main class in this library is
-[\`${client_name}\`](@ref google::cloud::${client_name}).
+[\\c ${client_name}](@ref google::cloud::${client_name}).
 All RPCs are exposed as member functions of this class. Other classes provide
 helpers, retry policies, configuration parameters, and infrastructure to mock
-[\`${client_name}\`](@ref google::cloud::${client_name}) when testing your
+[\\c ${client_name}](@ref google::cloud::${client_name}) when testing your
 application.
 _EOF_
   else
@@ -120,7 +120,7 @@ _EOF_
     for sample_cc in "${samples_cc[@]}"; do
       client_name="${clients[${sample_cc}]}"
       # shellcheck disable=SC2016
-      printf -- '- [`%s`](@ref google::cloud::%s)\n' "${client_name}" "${client_name}"
+      printf -- '- [\c %s](@ref google::cloud::%s)\n' "${client_name}" "${client_name}"
     done
   fi
   sed -n '/<!-- inject-client-list-end -->/,$p' "${MAIN_DOX}"
@@ -139,7 +139,7 @@ _EOF_
       for sample_cc in "${samples_cc[@]}"; do
         client_name="${clients[${sample_cc}]}"
         # shellcheck disable=SC2016
-        printf -- '- [`%s`](@ref %s-service-account-snippet)\n' "${client_name}" "${client_name}"
+        printf -- '- [\c %s](@ref %s-service-account-snippet)\n' "${client_name}" "${client_name}"
       done
     fi
   fi
@@ -172,7 +172,7 @@ _EOF_
       for sample_cc in "${samples_cc[@]}"; do
         client_name="${clients[${sample_cc}]}"
         # shellcheck disable=SC2016
-        printf -- '- [`%s`](@ref %s-endpoint-snippet)\n' "${client_name}" "${client_name}"
+        printf -- '- [\c %s](@ref %s-endpoint-snippet)\n' "${client_name}" "${client_name}"
       done
     fi
   fi
