@@ -17,6 +17,9 @@
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
 #include "google/cloud/testing_util/mock_fake_clock.h"
+#include "google/cloud/testing_util/mock_http_payload.h"
+#include "google/cloud/testing_util/mock_rest_client.h"
+#include "google/cloud/testing_util/mock_rest_response.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
@@ -28,6 +31,23 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace oauth2 {
+
+// Define a helper to test the specialization.
+struct ComputeEngineCredentialsTester {
+  static StatusOr<std::string> Header(
+      ComputeEngineCredentials<>& tested,
+      std::chrono::system_clock::time_point tp) {
+    return tested.AuthorizationHeaderForTesting(tp);
+  }
+
+  static ComputeEngineCredentials<> MakeComputeEngineCredentials(
+      std::string service_account_email,
+      oauth2_internal::HttpClientFactory factory) {
+    return ComputeEngineCredentials<>(std::move(service_account_email),
+                                      std::move(factory));
+  }
+};
+
 namespace {
 
 using ::google::cloud::storage::internal::GceMetadataHostname;
@@ -36,8 +56,13 @@ using ::google::cloud::storage::testing::MockHttpRequest;
 using ::google::cloud::storage::testing::MockHttpRequestBuilder;
 using ::google::cloud::testing_util::FakeClock;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsOkAndHolds;
+using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
+using ::google::cloud::testing_util::MockRestClient;
+using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
+using ::testing::ByMove;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Not;
@@ -406,6 +431,68 @@ TEST_F(ComputeEngineCredentialsTest, AccountEmail) {
   auto refreshed_email = credentials.AccountEmail();
   EXPECT_EQ(email, refreshed_email);
   EXPECT_EQ(credentials.service_account_email(), refreshed_email);
+}
+
+TEST_F(ComputeEngineCredentialsTest, Caching) {
+  // We need to mock the Compute Engine Metadata Service or this would be an
+  // integration test that only runs on GCE.
+  auto make_mock_client = [](std::string const& payload) {
+    auto response = std::make_unique<MockRestResponse>();
+    EXPECT_CALL(*response, StatusCode)
+        .WillRepeatedly(
+            Return(google::cloud::rest_internal::HttpStatusCode::kOk));
+    EXPECT_CALL(std::move(*response), ExtractPayload)
+        .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(payload))));
+    auto mock = std::make_unique<MockRestClient>();
+    EXPECT_CALL(*mock, Get)
+        .WillOnce(Return(ByMove(std::unique_ptr<rest_internal::RestResponse>(
+            std::move(response)))));
+    return std::unique_ptr<rest_internal::RestClient>(std::move(mock));
+  };
+
+  // We expect a call to the metadata service to get the service account
+  // metadata. Then one call to get the token (which is cached), and finally a
+  // call the refresh the token.
+  auto constexpr kPayload0 =
+      R"""({"email": "test-only-email", "scopes": ["s1", "s2]})""";
+  auto constexpr kPayload1 = R"""({
+            "access_token": "test-token-1",
+            "expires_in": 3600,
+            "token_type": "tokentype"
+        })""";
+  auto constexpr kPayload2 = R"""({
+            "access_token": "test-token-2",
+            "expires_in": 3600,
+            "token_type": "tokentype"
+        })""";
+
+  using MockHttpClientFactory =
+      ::testing::MockFunction<std::unique_ptr<rest_internal::RestClient>(
+          Options const&)>;
+  MockHttpClientFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call)
+      .WillOnce(Return(ByMove(make_mock_client(kPayload0))))
+      .WillOnce(Return(ByMove(make_mock_client(kPayload1))))
+      .WillOnce(Return(ByMove(make_mock_client(kPayload2))));
+
+  auto tested = ComputeEngineCredentialsTester::MakeComputeEngineCredentials(
+      "test-only", mock_factory.AsStdFunction());
+  auto const tp = std::chrono::system_clock::now();
+  auto initial = ComputeEngineCredentialsTester::Header(tested, tp);
+  ASSERT_STATUS_OK(initial);
+
+  auto cached = ComputeEngineCredentialsTester::Header(
+      tested, tp + std::chrono::seconds(30));
+  EXPECT_THAT(cached, IsOkAndHolds(*initial));
+
+  cached = ComputeEngineCredentialsTester::Header(
+      tested, tp + std::chrono::seconds(300));
+  EXPECT_THAT(cached, IsOkAndHolds(*initial));
+
+  auto uncached = ComputeEngineCredentialsTester::Header(
+      tested, tp + std::chrono::hours(2));
+  ASSERT_STATUS_OK(uncached);
+  EXPECT_NE(*initial, *uncached);
 }
 
 }  // namespace

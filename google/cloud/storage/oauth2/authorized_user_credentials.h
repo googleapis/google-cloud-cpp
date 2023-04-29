@@ -23,6 +23,7 @@
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/oauth2_authorized_user_credentials.h"
+#include "google/cloud/internal/oauth2_cached_credentials.h"
 #include "google/cloud/internal/oauth2_credential_constants.h"
 #include "google/cloud/status.h"
 #include <chrono>
@@ -114,11 +115,21 @@ class AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
       ChannelOptions const& channel_options = {});
 
   StatusOr<std::string> AuthorizationHeader() override {
-    return oauth2_internal::AuthorizationHeaderJoined(impl_);
+    return oauth2_internal::AuthorizationHeaderJoined(*impl_);
   }
 
  private:
-  google::cloud::oauth2_internal::AuthorizedUserCredentials impl_;
+  friend struct AuthorizedUserCredentialsTester;
+  AuthorizedUserCredentials(
+      google::cloud::oauth2_internal::AuthorizedUserCredentialsInfo,
+      Options options, oauth2_internal::HttpClientFactory client_factory);
+
+  StatusOr<std::string> AuthorizationHeaderForTesting(
+      std::chrono::system_clock::time_point tp) {
+    return oauth2_internal::AuthorizationHeaderJoined(*impl_, tp);
+  }
+
+  std::shared_ptr<google::cloud::oauth2_internal::Credentials> impl_;
 };
 
 /// @copydoc AuthorizedUserCredentials

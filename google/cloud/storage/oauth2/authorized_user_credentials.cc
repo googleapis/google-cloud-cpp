@@ -78,12 +78,22 @@ AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
     AuthorizedUserCredentials(
         google::cloud::oauth2_internal::AuthorizedUserCredentialsInfo info,
         ChannelOptions const& channel_options)
-    : impl_(
+    : AuthorizedUserCredentials(
           std::move(info),
           Options{}.set<CARootsFilePathOption>(channel_options.ssl_root_path()),
           [](Options const& o) {
             return rest_internal::MakeDefaultRestClient(std::string{}, o);
           }) {}
+
+AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
+                          std::chrono::system_clock>::
+    AuthorizedUserCredentials(
+        google::cloud::oauth2_internal::AuthorizedUserCredentialsInfo info,
+        Options options, oauth2_internal::HttpClientFactory client_factory)
+    : impl_(std::make_shared<oauth2_internal::CachedCredentials>(
+          std::make_shared<oauth2_internal::AuthorizedUserCredentials>(
+              std::move(info), std::move(options),
+              std::move(client_factory)))) {}
 
 }  // namespace oauth2
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
