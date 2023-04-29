@@ -9,9 +9,9 @@ client. If not, see the [GCS quickstart](/google/cloud/storage/quickstart).
 
 The quickstart also assumes the reader is familiar with how to build the Cloud
 Trace C++ client library. If not, see the
-[Cloud Trace quickstart](/google/cloud/trace/quickstart). (Note that the Cloud
-Trace Exporter requires dependencies on gRPC and Protobuf, which the GCS client
-does not).
+[Cloud Trace quickstart](/google/cloud/trace/quickstart). Note, for example,
+that the Cloud Trace Exporter requires dependencies on gRPC and Protobuf, which
+the GCS client does not.
 
 ## The Quickstart
 
@@ -28,7 +28,7 @@ to [Find and view traces]. We can open the Cloud Trace UI in the Google Cloud
 project we supplied to the quickstart. We can search using the filter
 `SpanName:storage::Client` to find any spans created by the GCS client.
 
-![google_cloud_cpp_opentelemetry_quickstart](https://user-images.githubusercontent.com/23088558/235268195-c19bf903-7358-4a0f-ac72-438b5286463b.png)
+![Screenshot of the Cloud Trace UI after running this quickstart.](assets/cloud_trace_ui.png)
 
 For an overview of the Cloud Trace UI, see: [View traces overview].
 
@@ -44,7 +44,7 @@ We will highlight the important points.
 
 ### Compatibility with Abseil
 
-OpenTelemetry backports Abseil types, defining them in `namespace absl`. The
+OpenTelemetry vendors-in Abseil types, defining them in `namespace absl`. The
 Google Cloud client libraries depends on Abseil, which also defines these types
 in the same namespace. In order to avoid ambiguous symbols, we must set certain
 flags when compiling `opentelemetry-cpp`.
@@ -52,7 +52,7 @@ flags when compiling `opentelemetry-cpp`.
 ### Testing
 
 The client library is only tested against the latest version of
-`opentelemetry-cpp`. That is v1.9.0, circa 2023-05.
+`opentelemetry-cpp`. As of 2023-05, that is [v1.9.0][opentelemetry-cpp-v1-9-0].
 
 ## Using with Bazel
 
@@ -83,8 +83,9 @@ The client library is only tested against the latest version of
 
 Note the following two feature flags explicitly set in the `.bazelrc`. Together,
 these flags enable OpenTelemetry tracing instrumentation in `google-cloud-cpp`.
+Without these flags, the above `bazel build ...` command would fail.
 
-```sh
+```bash
 # Required for OpenTelemetry + Abseil compatibility
 build --@io_opentelemetry_cpp//api:with_abseil
 
@@ -106,9 +107,8 @@ Also note that we explicitly load OpenTelemetry's dependencies in the
 
 The [packaging guide] contains instructions for how to build from source.
 
-The Google Cloud exporters are built as part of the feature,
-`experimental-opentelemetry`. This quickstart also uses the GCS client, from the
-`storage` feature.
+The Google Cloud exporters are built as part of the `experimental-opentelemetry`
+feature. This quickstart also uses the GCS client, from the `storage` feature.
 
 To enable these features, add the following to your CMake configuration command:
 
@@ -146,9 +146,14 @@ for compatibility with Abseil.
 
 We must also ensure that the `-DCMAKE_CXX_STANDARD` used to compile
 `opentelemetry-cpp` matches the language standard used to compile `abseil-cpp`.
-It does not need to be C++14.
 
-OpenTelemetry only works when installed in a standard location that is on the
+OpenTelemetry defaults the language standard if it is not explicitly set. So it
+is good practice to explicitly set the language standard.
+
+While OpenTelemetry supports C++>=11, `google-cloud-cpp` requires C++>=14. So
+you can use `-DCMAKE_CXX_STANDARD=14`, `-DCMAKE_CXX_STANDARD=17`, or higher.
+
+OpenTelemetry only works when installed in a location that is on the
 [`find_package()`][find-package] search path. Also, `opentelemetry-cpp` does not
 install `*.pc` files, so it is not yet usable with `make`.
 
@@ -197,5 +202,6 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 [opentelemetry]: https://opentelemetry.io
 [opentelemetry-cpp]: https://github.com/open-telemetry/opentelemetry-cpp
 [opentelemetry-cpp-install]: https://github.com/open-telemetry/opentelemetry-cpp/INSTALL.md
+[opentelemetry-cpp-v1-9-0]: https://github.com/open-telemetry/opentelemetry-cpp/releases/tag/v1.9.0
 [packaging guide]: https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging.md
 [view traces overview]: https://cloud.google.com/trace/docs/trace-overview
