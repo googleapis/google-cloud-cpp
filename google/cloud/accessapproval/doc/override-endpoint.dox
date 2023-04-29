@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `accessapproval_v1::AccessApprovalClient`:
+
+@snippet access_approval_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page accessapproval_v1::AccessApprovalClient-endpoint-snippet Override accessapproval_v1::AccessApprovalClient Endpoint Configuration
+
+@snippet google/cloud/accessapproval/v1/samples/access_approval_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

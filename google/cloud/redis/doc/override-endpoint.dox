@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `redis_v1::CloudRedisClient`:
+
+@snippet cloud_redis_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page redis_v1::CloudRedisClient-endpoint-snippet Override redis_v1::CloudRedisClient Endpoint Configuration
+
+@snippet google/cloud/redis/v1/samples/cloud_redis_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

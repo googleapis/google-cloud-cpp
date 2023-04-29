@@ -9,6 +9,8 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
+@snippet vmware_engine_client_samples.cc with-service-account
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -24,4 +26,10 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page vmwareengine_v1::VmwareEngineClient-service-account-snippet Override vmwareengine_v1::VmwareEngineClient Authentication Defaults
+
+@snippet google/cloud/vmwareengine/v1/samples/vmware_engine_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->

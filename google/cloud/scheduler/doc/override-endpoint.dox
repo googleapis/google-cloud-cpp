@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `scheduler_v1::CloudSchedulerClient`:
+
+@snippet cloud_scheduler_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page scheduler_v1::CloudSchedulerClient-endpoint-snippet Override scheduler_v1::CloudSchedulerClient Endpoint Configuration
+
+@snippet google/cloud/scheduler/v1/samples/cloud_scheduler_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `datastream_v1::DatastreamClient`:
+
+@snippet datastream_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page datastream_v1::DatastreamClient-endpoint-snippet Override datastream_v1::DatastreamClient Endpoint Configuration
+
+@snippet google/cloud/datastream/v1/samples/datastream_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

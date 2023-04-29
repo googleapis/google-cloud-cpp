@@ -9,6 +9,13 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
+@snippet agent_endpoint_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c osconfig_agentendpoint_v1::AgentEndpointServiceClient](@ref osconfig_agentendpoint_v1::AgentEndpointServiceClient-service-account-snippet)
+- [\c osconfig_v1::OsConfigServiceClient](@ref osconfig_v1::OsConfigServiceClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -24,4 +31,16 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page osconfig_agentendpoint_v1::AgentEndpointServiceClient-service-account-snippet Override osconfig_agentendpoint_v1::AgentEndpointServiceClient Authentication Defaults
+
+@snippet google/cloud/osconfig/agentendpoint/v1/samples/agent_endpoint_client_samples.cc with-service-account
+
+*/
+
+/*! @page osconfig_v1::OsConfigServiceClient-service-account-snippet Override osconfig_v1::OsConfigServiceClient Authentication Defaults
+
+@snippet google/cloud/osconfig/v1/samples/os_config_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->

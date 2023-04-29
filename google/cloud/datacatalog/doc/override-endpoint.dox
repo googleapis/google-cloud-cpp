@@ -7,9 +7,44 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `datacatalog_lineage_v1::LineageClient`:
+
+@snippet lineage_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c datacatalog_lineage_v1::LineageClient](@ref datacatalog_lineage_v1::LineageClient-endpoint-snippet)
+- [\c datacatalog_v1::DataCatalogClient](@ref datacatalog_v1::DataCatalogClient-endpoint-snippet)
+- [\c datacatalog_v1::PolicyTagManagerClient](@ref datacatalog_v1::PolicyTagManagerClient-endpoint-snippet)
+- [\c datacatalog_v1::PolicyTagManagerSerializationClient](@ref datacatalog_v1::PolicyTagManagerSerializationClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page datacatalog_lineage_v1::LineageClient-endpoint-snippet Override datacatalog_lineage_v1::LineageClient Endpoint Configuration
+
+@snippet google/cloud/datacatalog/lineage/v1/samples/lineage_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page datacatalog_v1::DataCatalogClient-endpoint-snippet Override datacatalog_v1::DataCatalogClient Endpoint Configuration
+
+@snippet google/cloud/datacatalog/v1/samples/data_catalog_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page datacatalog_v1::PolicyTagManagerClient-endpoint-snippet Override datacatalog_v1::PolicyTagManagerClient Endpoint Configuration
+
+@snippet google/cloud/datacatalog/v1/samples/policy_tag_manager_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page datacatalog_v1::PolicyTagManagerSerializationClient-endpoint-snippet Override datacatalog_v1::PolicyTagManagerSerializationClient Endpoint Configuration
+
+@snippet google/cloud/datacatalog/v1/samples/policy_tag_manager_serialization_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

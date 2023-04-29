@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `functions_v1::CloudFunctionsServiceClient`:
+
+@snippet cloud_functions_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page functions_v1::CloudFunctionsServiceClient-endpoint-snippet Override functions_v1::CloudFunctionsServiceClient Endpoint Configuration
+
+@snippet google/cloud/functions/v1/samples/cloud_functions_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

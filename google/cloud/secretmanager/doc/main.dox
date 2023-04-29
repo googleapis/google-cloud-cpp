@@ -23,10 +23,10 @@ which should give you a taste of the Secret Manager API C++ client library API.
 
 <!-- inject-client-list-start -->
 The main class in this library is
-[`secretmanager_v1::SecretManagerServiceClient`](@ref google::cloud::secretmanager_v1::SecretManagerServiceClient).
+[\c secretmanager_v1::SecretManagerServiceClient](@ref google::cloud::secretmanager_v1::SecretManagerServiceClient).
 All RPCs are exposed as member functions of this class. Other classes provide
 helpers, retry policies, configuration parameters, and infrastructure to mock
-[`secretmanager_v1::SecretManagerServiceClient`](@ref google::cloud::secretmanager_v1::SecretManagerServiceClient) when testing your
+[\c secretmanager_v1::SecretManagerServiceClient](@ref google::cloud::secretmanager_v1::SecretManagerServiceClient) when testing your
 application.
 <!-- inject-client-list-end -->
 

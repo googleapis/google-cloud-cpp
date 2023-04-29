@@ -31,8 +31,8 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`automl_v1::AutoMlClient`](@ref google::cloud::automl_v1::AutoMlClient)
-- [`automl_v1::PredictionServiceClient`](@ref google::cloud::automl_v1::PredictionServiceClient)
+- [\c automl_v1::AutoMlClient](@ref google::cloud::automl_v1::AutoMlClient)
+- [\c automl_v1::PredictionServiceClient](@ref google::cloud::automl_v1::PredictionServiceClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

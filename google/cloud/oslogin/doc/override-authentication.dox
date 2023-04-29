@@ -9,6 +9,8 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
+@snippet os_login_client_samples.cc with-service-account
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -24,4 +26,10 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page oslogin_v1::OsLoginServiceClient-service-account-snippet Override oslogin_v1::OsLoginServiceClient Authentication Defaults
+
+@snippet google/cloud/oslogin/v1/samples/os_login_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->

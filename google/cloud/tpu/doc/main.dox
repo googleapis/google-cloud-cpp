@@ -31,8 +31,8 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`tpu_v1::TpuClient`](@ref google::cloud::tpu_v1::TpuClient)
-- [`tpu_v2::TpuClient`](@ref google::cloud::tpu_v2::TpuClient)
+- [\c tpu_v1::TpuClient](@ref google::cloud::tpu_v1::TpuClient)
+- [\c tpu_v2::TpuClient](@ref google::cloud::tpu_v2::TpuClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

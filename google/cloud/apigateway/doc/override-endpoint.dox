@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `apigateway_v1::ApiGatewayServiceClient`:
+
+@snippet api_gateway_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page apigateway_v1::ApiGatewayServiceClient-endpoint-snippet Override apigateway_v1::ApiGatewayServiceClient Endpoint Configuration
+
+@snippet google/cloud/apigateway/v1/samples/api_gateway_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

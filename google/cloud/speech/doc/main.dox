@@ -30,8 +30,8 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`speech_v1::SpeechClient`](@ref google::cloud::speech_v1::SpeechClient)
-- [`speech_v2::SpeechClient`](@ref google::cloud::speech_v2::SpeechClient)
+- [\c speech_v1::SpeechClient](@ref google::cloud::speech_v1::SpeechClient)
+- [\c speech_v2::SpeechClient](@ref google::cloud::speech_v2::SpeechClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

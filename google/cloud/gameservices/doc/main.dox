@@ -31,10 +31,10 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`gameservices_v1::GameServerClustersServiceClient`](@ref google::cloud::gameservices_v1::GameServerClustersServiceClient)
-- [`gameservices_v1::GameServerConfigsServiceClient`](@ref google::cloud::gameservices_v1::GameServerConfigsServiceClient)
-- [`gameservices_v1::GameServerDeploymentsServiceClient`](@ref google::cloud::gameservices_v1::GameServerDeploymentsServiceClient)
-- [`gameservices_v1::RealmsServiceClient`](@ref google::cloud::gameservices_v1::RealmsServiceClient)
+- [\c gameservices_v1::GameServerClustersServiceClient](@ref google::cloud::gameservices_v1::GameServerClustersServiceClient)
+- [\c gameservices_v1::GameServerConfigsServiceClient](@ref google::cloud::gameservices_v1::GameServerConfigsServiceClient)
+- [\c gameservices_v1::GameServerDeploymentsServiceClient](@ref google::cloud::gameservices_v1::GameServerDeploymentsServiceClient)
+- [\c gameservices_v1::RealmsServiceClient](@ref google::cloud::gameservices_v1::RealmsServiceClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

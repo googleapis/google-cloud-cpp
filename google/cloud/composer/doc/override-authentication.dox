@@ -9,6 +9,13 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
+@snippet environments_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c composer_v1::EnvironmentsClient](@ref composer_v1::EnvironmentsClient-service-account-snippet)
+- [\c composer_v1::ImageVersionsClient](@ref composer_v1::ImageVersionsClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -24,4 +31,16 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page composer_v1::EnvironmentsClient-service-account-snippet Override composer_v1::EnvironmentsClient Authentication Defaults
+
+@snippet google/cloud/composer/v1/samples/environments_client_samples.cc with-service-account
+
+*/
+
+/*! @page composer_v1::ImageVersionsClient-service-account-snippet Override composer_v1::ImageVersionsClient Authentication Defaults
+
+@snippet google/cloud/composer/v1/samples/image_versions_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->

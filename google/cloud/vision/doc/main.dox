@@ -32,8 +32,8 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`vision_v1::ImageAnnotatorClient`](@ref google::cloud::vision_v1::ImageAnnotatorClient)
-- [`vision_v1::ProductSearchClient`](@ref google::cloud::vision_v1::ProductSearchClient)
+- [\c vision_v1::ImageAnnotatorClient](@ref google::cloud::vision_v1::ImageAnnotatorClient)
+- [\c vision_v1::ProductSearchClient](@ref google::cloud::vision_v1::ProductSearchClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

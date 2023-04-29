@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `assuredworkloads_v1::AssuredWorkloadsServiceClient`:
+
+@snippet assured_workloads_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page assuredworkloads_v1::AssuredWorkloadsServiceClient-endpoint-snippet Override assuredworkloads_v1::AssuredWorkloadsServiceClient Endpoint Configuration
+
+@snippet google/cloud/assuredworkloads/v1/samples/assured_workloads_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `connectors_v1::ConnectorsClient`:
+
+@snippet connectors_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page connectors_v1::ConnectorsClient-endpoint-snippet Override connectors_v1::ConnectorsClient Endpoint Configuration
+
+@snippet google/cloud/connectors/v1/samples/connectors_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

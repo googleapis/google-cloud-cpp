@@ -7,9 +7,30 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `pubsublite::AdminServiceClient`:
+
+@snippet admin_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c pubsublite::AdminServiceClient](@ref pubsublite::AdminServiceClient-endpoint-snippet)
+- [\c pubsublite::TopicStatsServiceClient](@ref pubsublite::TopicStatsServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page pubsublite::AdminServiceClient-endpoint-snippet Override pubsublite::AdminServiceClient Endpoint Configuration
+
+@snippet google/cloud/pubsublite/samples/admin_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page pubsublite::TopicStatsServiceClient-endpoint-snippet Override pubsublite::TopicStatsServiceClient Endpoint Configuration
+
+@snippet google/cloud/pubsublite/samples/topic_stats_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

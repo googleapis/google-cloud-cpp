@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `certificatemanager_v1::CertificateManagerClient`:
+
+@snippet certificate_manager_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page certificatemanager_v1::CertificateManagerClient-endpoint-snippet Override certificatemanager_v1::CertificateManagerClient Endpoint Configuration
+
+@snippet google/cloud/certificatemanager/v1/samples/certificate_manager_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

@@ -30,14 +30,14 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`appengine_v1::ApplicationsClient`](@ref google::cloud::appengine_v1::ApplicationsClient)
-- [`appengine_v1::AuthorizedCertificatesClient`](@ref google::cloud::appengine_v1::AuthorizedCertificatesClient)
-- [`appengine_v1::AuthorizedDomainsClient`](@ref google::cloud::appengine_v1::AuthorizedDomainsClient)
-- [`appengine_v1::DomainMappingsClient`](@ref google::cloud::appengine_v1::DomainMappingsClient)
-- [`appengine_v1::FirewallClient`](@ref google::cloud::appengine_v1::FirewallClient)
-- [`appengine_v1::InstancesClient`](@ref google::cloud::appengine_v1::InstancesClient)
-- [`appengine_v1::ServicesClient`](@ref google::cloud::appengine_v1::ServicesClient)
-- [`appengine_v1::VersionsClient`](@ref google::cloud::appengine_v1::VersionsClient)
+- [\c appengine_v1::ApplicationsClient](@ref google::cloud::appengine_v1::ApplicationsClient)
+- [\c appengine_v1::AuthorizedCertificatesClient](@ref google::cloud::appengine_v1::AuthorizedCertificatesClient)
+- [\c appengine_v1::AuthorizedDomainsClient](@ref google::cloud::appengine_v1::AuthorizedDomainsClient)
+- [\c appengine_v1::DomainMappingsClient](@ref google::cloud::appengine_v1::DomainMappingsClient)
+- [\c appengine_v1::FirewallClient](@ref google::cloud::appengine_v1::FirewallClient)
+- [\c appengine_v1::InstancesClient](@ref google::cloud::appengine_v1::InstancesClient)
+- [\c appengine_v1::ServicesClient](@ref google::cloud::appengine_v1::ServicesClient)
+- [\c appengine_v1::VersionsClient](@ref google::cloud::appengine_v1::VersionsClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

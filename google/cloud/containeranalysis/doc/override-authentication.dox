@@ -9,6 +9,13 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
+@snippet container_analysis_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c containeranalysis_v1::ContainerAnalysisClient](@ref containeranalysis_v1::ContainerAnalysisClient-service-account-snippet)
+- [\c containeranalysis_v1::GrafeasClient](@ref containeranalysis_v1::GrafeasClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -24,4 +31,16 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page containeranalysis_v1::ContainerAnalysisClient-service-account-snippet Override containeranalysis_v1::ContainerAnalysisClient Authentication Defaults
+
+@snippet google/cloud/containeranalysis/v1/samples/container_analysis_client_samples.cc with-service-account
+
+*/
+
+/*! @page containeranalysis_v1::GrafeasClient-service-account-snippet Override containeranalysis_v1::GrafeasClient Authentication Defaults
+
+@snippet google/cloud/containeranalysis/v1/samples/grafeas_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->

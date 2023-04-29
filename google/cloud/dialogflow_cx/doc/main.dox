@@ -33,22 +33,22 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`dialogflow_cx::AgentsClient`](@ref google::cloud::dialogflow_cx::AgentsClient)
-- [`dialogflow_cx::ChangelogsClient`](@ref google::cloud::dialogflow_cx::ChangelogsClient)
-- [`dialogflow_cx::DeploymentsClient`](@ref google::cloud::dialogflow_cx::DeploymentsClient)
-- [`dialogflow_cx::EntityTypesClient`](@ref google::cloud::dialogflow_cx::EntityTypesClient)
-- [`dialogflow_cx::EnvironmentsClient`](@ref google::cloud::dialogflow_cx::EnvironmentsClient)
-- [`dialogflow_cx::ExperimentsClient`](@ref google::cloud::dialogflow_cx::ExperimentsClient)
-- [`dialogflow_cx::FlowsClient`](@ref google::cloud::dialogflow_cx::FlowsClient)
-- [`dialogflow_cx::IntentsClient`](@ref google::cloud::dialogflow_cx::IntentsClient)
-- [`dialogflow_cx::PagesClient`](@ref google::cloud::dialogflow_cx::PagesClient)
-- [`dialogflow_cx::SecuritySettingsServiceClient`](@ref google::cloud::dialogflow_cx::SecuritySettingsServiceClient)
-- [`dialogflow_cx::SessionEntityTypesClient`](@ref google::cloud::dialogflow_cx::SessionEntityTypesClient)
-- [`dialogflow_cx::SessionsClient`](@ref google::cloud::dialogflow_cx::SessionsClient)
-- [`dialogflow_cx::TestCasesClient`](@ref google::cloud::dialogflow_cx::TestCasesClient)
-- [`dialogflow_cx::TransitionRouteGroupsClient`](@ref google::cloud::dialogflow_cx::TransitionRouteGroupsClient)
-- [`dialogflow_cx::VersionsClient`](@ref google::cloud::dialogflow_cx::VersionsClient)
-- [`dialogflow_cx::WebhooksClient`](@ref google::cloud::dialogflow_cx::WebhooksClient)
+- [\c dialogflow_cx::AgentsClient](@ref google::cloud::dialogflow_cx::AgentsClient)
+- [\c dialogflow_cx::ChangelogsClient](@ref google::cloud::dialogflow_cx::ChangelogsClient)
+- [\c dialogflow_cx::DeploymentsClient](@ref google::cloud::dialogflow_cx::DeploymentsClient)
+- [\c dialogflow_cx::EntityTypesClient](@ref google::cloud::dialogflow_cx::EntityTypesClient)
+- [\c dialogflow_cx::EnvironmentsClient](@ref google::cloud::dialogflow_cx::EnvironmentsClient)
+- [\c dialogflow_cx::ExperimentsClient](@ref google::cloud::dialogflow_cx::ExperimentsClient)
+- [\c dialogflow_cx::FlowsClient](@ref google::cloud::dialogflow_cx::FlowsClient)
+- [\c dialogflow_cx::IntentsClient](@ref google::cloud::dialogflow_cx::IntentsClient)
+- [\c dialogflow_cx::PagesClient](@ref google::cloud::dialogflow_cx::PagesClient)
+- [\c dialogflow_cx::SecuritySettingsServiceClient](@ref google::cloud::dialogflow_cx::SecuritySettingsServiceClient)
+- [\c dialogflow_cx::SessionEntityTypesClient](@ref google::cloud::dialogflow_cx::SessionEntityTypesClient)
+- [\c dialogflow_cx::SessionsClient](@ref google::cloud::dialogflow_cx::SessionsClient)
+- [\c dialogflow_cx::TestCasesClient](@ref google::cloud::dialogflow_cx::TestCasesClient)
+- [\c dialogflow_cx::TransitionRouteGroupsClient](@ref google::cloud::dialogflow_cx::TransitionRouteGroupsClient)
+- [\c dialogflow_cx::VersionsClient](@ref google::cloud::dialogflow_cx::VersionsClient)
+- [\c dialogflow_cx::WebhooksClient](@ref google::cloud::dialogflow_cx::WebhooksClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

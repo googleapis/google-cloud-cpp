@@ -31,8 +31,8 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`notebooks_v1::ManagedNotebookServiceClient`](@ref google::cloud::notebooks_v1::ManagedNotebookServiceClient)
-- [`notebooks_v1::NotebookServiceClient`](@ref google::cloud::notebooks_v1::NotebookServiceClient)
+- [\c notebooks_v1::ManagedNotebookServiceClient](@ref google::cloud::notebooks_v1::ManagedNotebookServiceClient)
+- [\c notebooks_v1::NotebookServiceClient](@ref google::cloud::notebooks_v1::NotebookServiceClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

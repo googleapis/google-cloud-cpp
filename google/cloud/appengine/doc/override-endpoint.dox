@@ -7,9 +7,72 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `appengine_v1::ApplicationsClient`:
+
+@snippet applications_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c appengine_v1::ApplicationsClient](@ref appengine_v1::ApplicationsClient-endpoint-snippet)
+- [\c appengine_v1::AuthorizedCertificatesClient](@ref appengine_v1::AuthorizedCertificatesClient-endpoint-snippet)
+- [\c appengine_v1::AuthorizedDomainsClient](@ref appengine_v1::AuthorizedDomainsClient-endpoint-snippet)
+- [\c appengine_v1::DomainMappingsClient](@ref appengine_v1::DomainMappingsClient-endpoint-snippet)
+- [\c appengine_v1::FirewallClient](@ref appengine_v1::FirewallClient-endpoint-snippet)
+- [\c appengine_v1::InstancesClient](@ref appengine_v1::InstancesClient-endpoint-snippet)
+- [\c appengine_v1::ServicesClient](@ref appengine_v1::ServicesClient-endpoint-snippet)
+- [\c appengine_v1::VersionsClient](@ref appengine_v1::VersionsClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page appengine_v1::ApplicationsClient-endpoint-snippet Override appengine_v1::ApplicationsClient Endpoint Configuration
+
+@snippet google/cloud/appengine/v1/samples/applications_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page appengine_v1::AuthorizedCertificatesClient-endpoint-snippet Override appengine_v1::AuthorizedCertificatesClient Endpoint Configuration
+
+@snippet google/cloud/appengine/v1/samples/authorized_certificates_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page appengine_v1::AuthorizedDomainsClient-endpoint-snippet Override appengine_v1::AuthorizedDomainsClient Endpoint Configuration
+
+@snippet google/cloud/appengine/v1/samples/authorized_domains_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page appengine_v1::DomainMappingsClient-endpoint-snippet Override appengine_v1::DomainMappingsClient Endpoint Configuration
+
+@snippet google/cloud/appengine/v1/samples/domain_mappings_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page appengine_v1::FirewallClient-endpoint-snippet Override appengine_v1::FirewallClient Endpoint Configuration
+
+@snippet google/cloud/appengine/v1/samples/firewall_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page appengine_v1::InstancesClient-endpoint-snippet Override appengine_v1::InstancesClient Endpoint Configuration
+
+@snippet google/cloud/appengine/v1/samples/instances_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page appengine_v1::ServicesClient-endpoint-snippet Override appengine_v1::ServicesClient Endpoint Configuration
+
+@snippet google/cloud/appengine/v1/samples/services_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page appengine_v1::VersionsClient-endpoint-snippet Override appengine_v1::VersionsClient Endpoint Configuration
+
+@snippet google/cloud/appengine/v1/samples/versions_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

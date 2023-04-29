@@ -30,8 +30,8 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`iap_v1::IdentityAwareProxyAdminServiceClient`](@ref google::cloud::iap_v1::IdentityAwareProxyAdminServiceClient)
-- [`iap_v1::IdentityAwareProxyOAuthServiceClient`](@ref google::cloud::iap_v1::IdentityAwareProxyOAuthServiceClient)
+- [\c iap_v1::IdentityAwareProxyAdminServiceClient](@ref google::cloud::iap_v1::IdentityAwareProxyAdminServiceClient)
+- [\c iap_v1::IdentityAwareProxyOAuthServiceClient](@ref google::cloud::iap_v1::IdentityAwareProxyOAuthServiceClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

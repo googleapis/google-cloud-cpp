@@ -7,9 +7,30 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `trace_v1::TraceServiceClient`:
+
+@snippet trace_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c trace_v1::TraceServiceClient](@ref trace_v1::TraceServiceClient-endpoint-snippet)
+- [\c trace_v2::TraceServiceClient](@ref trace_v2::TraceServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page trace_v1::TraceServiceClient-endpoint-snippet Override trace_v1::TraceServiceClient Endpoint Configuration
+
+@snippet google/cloud/trace/v1/samples/trace_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page trace_v2::TraceServiceClient-endpoint-snippet Override trace_v2::TraceServiceClient Endpoint Configuration
+
+@snippet google/cloud/trace/v2/samples/trace_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

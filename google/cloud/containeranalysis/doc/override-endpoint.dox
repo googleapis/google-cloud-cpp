@@ -7,9 +7,30 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `containeranalysis_v1::ContainerAnalysisClient`:
+
+@snippet container_analysis_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c containeranalysis_v1::ContainerAnalysisClient](@ref containeranalysis_v1::ContainerAnalysisClient-endpoint-snippet)
+- [\c containeranalysis_v1::GrafeasClient](@ref containeranalysis_v1::GrafeasClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page containeranalysis_v1::ContainerAnalysisClient-endpoint-snippet Override containeranalysis_v1::ContainerAnalysisClient Endpoint Configuration
+
+@snippet google/cloud/containeranalysis/v1/samples/container_analysis_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page containeranalysis_v1::GrafeasClient-endpoint-snippet Override containeranalysis_v1::GrafeasClient Endpoint Configuration
+
+@snippet google/cloud/containeranalysis/v1/samples/grafeas_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

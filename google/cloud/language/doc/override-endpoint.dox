@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `language_v1::LanguageServiceClient`:
+
+@snippet language_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page language_v1::LanguageServiceClient-endpoint-snippet Override language_v1::LanguageServiceClient Endpoint Configuration
+
+@snippet google/cloud/language/v1/samples/language_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

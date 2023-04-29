@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `profiler_v2::ProfilerServiceClient`:
+
+@snippet profiler_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page profiler_v2::ProfilerServiceClient-endpoint-snippet Override profiler_v2::ProfilerServiceClient Endpoint Configuration
+
+@snippet google/cloud/profiler/v2/samples/profiler_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

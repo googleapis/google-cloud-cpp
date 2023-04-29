@@ -7,9 +7,30 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `run_v2::RevisionsClient`:
+
+@snippet revisions_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c run_v2::RevisionsClient](@ref run_v2::RevisionsClient-endpoint-snippet)
+- [\c run_v2::ServicesClient](@ref run_v2::ServicesClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page run_v2::RevisionsClient-endpoint-snippet Override run_v2::RevisionsClient Endpoint Configuration
+
+@snippet google/cloud/run/v2/samples/revisions_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page run_v2::ServicesClient-endpoint-snippet Override run_v2::ServicesClient Endpoint Configuration
+
+@snippet google/cloud/run/v2/samples/services_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

@@ -30,8 +30,8 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`composer_v1::EnvironmentsClient`](@ref google::cloud::composer_v1::EnvironmentsClient)
-- [`composer_v1::ImageVersionsClient`](@ref google::cloud::composer_v1::ImageVersionsClient)
+- [\c composer_v1::EnvironmentsClient](@ref google::cloud::composer_v1::EnvironmentsClient)
+- [\c composer_v1::ImageVersionsClient](@ref google::cloud::composer_v1::ImageVersionsClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

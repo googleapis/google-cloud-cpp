@@ -32,12 +32,12 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`retail_v2::CatalogServiceClient`](@ref google::cloud::retail_v2::CatalogServiceClient)
-- [`retail_v2::CompletionServiceClient`](@ref google::cloud::retail_v2::CompletionServiceClient)
-- [`retail_v2::PredictionServiceClient`](@ref google::cloud::retail_v2::PredictionServiceClient)
-- [`retail_v2::ProductServiceClient`](@ref google::cloud::retail_v2::ProductServiceClient)
-- [`retail_v2::SearchServiceClient`](@ref google::cloud::retail_v2::SearchServiceClient)
-- [`retail_v2::UserEventServiceClient`](@ref google::cloud::retail_v2::UserEventServiceClient)
+- [\c retail_v2::CatalogServiceClient](@ref google::cloud::retail_v2::CatalogServiceClient)
+- [\c retail_v2::CompletionServiceClient](@ref google::cloud::retail_v2::CompletionServiceClient)
+- [\c retail_v2::PredictionServiceClient](@ref google::cloud::retail_v2::PredictionServiceClient)
+- [\c retail_v2::ProductServiceClient](@ref google::cloud::retail_v2::ProductServiceClient)
+- [\c retail_v2::SearchServiceClient](@ref google::cloud::retail_v2::SearchServiceClient)
+- [\c retail_v2::UserEventServiceClient](@ref google::cloud::retail_v2::UserEventServiceClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

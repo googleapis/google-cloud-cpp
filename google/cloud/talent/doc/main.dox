@@ -31,11 +31,11 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`talent_v4::CompanyServiceClient`](@ref google::cloud::talent_v4::CompanyServiceClient)
-- [`talent_v4::CompletionClient`](@ref google::cloud::talent_v4::CompletionClient)
-- [`talent_v4::EventServiceClient`](@ref google::cloud::talent_v4::EventServiceClient)
-- [`talent_v4::JobServiceClient`](@ref google::cloud::talent_v4::JobServiceClient)
-- [`talent_v4::TenantServiceClient`](@ref google::cloud::talent_v4::TenantServiceClient)
+- [\c talent_v4::CompanyServiceClient](@ref google::cloud::talent_v4::CompanyServiceClient)
+- [\c talent_v4::CompletionClient](@ref google::cloud::talent_v4::CompletionClient)
+- [\c talent_v4::EventServiceClient](@ref google::cloud::talent_v4::EventServiceClient)
+- [\c talent_v4::JobServiceClient](@ref google::cloud::talent_v4::JobServiceClient)
+- [\c talent_v4::TenantServiceClient](@ref google::cloud::talent_v4::TenantServiceClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

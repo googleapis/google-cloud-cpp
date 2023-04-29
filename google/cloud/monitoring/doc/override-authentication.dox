@@ -9,6 +9,20 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
+@snippet dashboards_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c monitoring_dashboard_v1::DashboardsServiceClient](@ref monitoring_dashboard_v1::DashboardsServiceClient-service-account-snippet)
+- [\c monitoring_metricsscope_v1::MetricsScopesClient](@ref monitoring_metricsscope_v1::MetricsScopesClient-service-account-snippet)
+- [\c monitoring_v3::AlertPolicyServiceClient](@ref monitoring_v3::AlertPolicyServiceClient-service-account-snippet)
+- [\c monitoring_v3::GroupServiceClient](@ref monitoring_v3::GroupServiceClient-service-account-snippet)
+- [\c monitoring_v3::MetricServiceClient](@ref monitoring_v3::MetricServiceClient-service-account-snippet)
+- [\c monitoring_v3::NotificationChannelServiceClient](@ref monitoring_v3::NotificationChannelServiceClient-service-account-snippet)
+- [\c monitoring_v3::QueryServiceClient](@ref monitoring_v3::QueryServiceClient-service-account-snippet)
+- [\c monitoring_v3::ServiceMonitoringServiceClient](@ref monitoring_v3::ServiceMonitoringServiceClient-service-account-snippet)
+- [\c monitoring_v3::UptimeCheckServiceClient](@ref monitoring_v3::UptimeCheckServiceClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -24,4 +38,58 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page monitoring_dashboard_v1::DashboardsServiceClient-service-account-snippet Override monitoring_dashboard_v1::DashboardsServiceClient Authentication Defaults
+
+@snippet google/cloud/monitoring/dashboard/v1/samples/dashboards_client_samples.cc with-service-account
+
+*/
+
+/*! @page monitoring_metricsscope_v1::MetricsScopesClient-service-account-snippet Override monitoring_metricsscope_v1::MetricsScopesClient Authentication Defaults
+
+@snippet google/cloud/monitoring/metricsscope/v1/samples/metrics_scopes_client_samples.cc with-service-account
+
+*/
+
+/*! @page monitoring_v3::AlertPolicyServiceClient-service-account-snippet Override monitoring_v3::AlertPolicyServiceClient Authentication Defaults
+
+@snippet google/cloud/monitoring/v3/samples/alert_policy_client_samples.cc with-service-account
+
+*/
+
+/*! @page monitoring_v3::GroupServiceClient-service-account-snippet Override monitoring_v3::GroupServiceClient Authentication Defaults
+
+@snippet google/cloud/monitoring/v3/samples/group_client_samples.cc with-service-account
+
+*/
+
+/*! @page monitoring_v3::MetricServiceClient-service-account-snippet Override monitoring_v3::MetricServiceClient Authentication Defaults
+
+@snippet google/cloud/monitoring/v3/samples/metric_client_samples.cc with-service-account
+
+*/
+
+/*! @page monitoring_v3::NotificationChannelServiceClient-service-account-snippet Override monitoring_v3::NotificationChannelServiceClient Authentication Defaults
+
+@snippet google/cloud/monitoring/v3/samples/notification_channel_client_samples.cc with-service-account
+
+*/
+
+/*! @page monitoring_v3::QueryServiceClient-service-account-snippet Override monitoring_v3::QueryServiceClient Authentication Defaults
+
+@snippet google/cloud/monitoring/v3/samples/query_client_samples.cc with-service-account
+
+*/
+
+/*! @page monitoring_v3::ServiceMonitoringServiceClient-service-account-snippet Override monitoring_v3::ServiceMonitoringServiceClient Authentication Defaults
+
+@snippet google/cloud/monitoring/v3/samples/service_monitoring_client_samples.cc with-service-account
+
+*/
+
+/*! @page monitoring_v3::UptimeCheckServiceClient-service-account-snippet Override monitoring_v3::UptimeCheckServiceClient Authentication Defaults
+
+@snippet google/cloud/monitoring/v3/samples/uptime_check_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->

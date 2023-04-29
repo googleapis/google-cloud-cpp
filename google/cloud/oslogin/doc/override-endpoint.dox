@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `oslogin_v1::OsLoginServiceClient`:
+
+@snippet os_login_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page oslogin_v1::OsLoginServiceClient-endpoint-snippet Override oslogin_v1::OsLoginServiceClient Endpoint Configuration
+
+@snippet google/cloud/oslogin/v1/samples/os_login_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

@@ -9,6 +9,14 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
+@snippet budget_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c billing_budgets_v1::BudgetServiceClient](@ref billing_budgets_v1::BudgetServiceClient-service-account-snippet)
+- [\c billing_v1::CloudBillingClient](@ref billing_v1::CloudBillingClient-service-account-snippet)
+- [\c billing_v1::CloudCatalogClient](@ref billing_v1::CloudCatalogClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -24,4 +32,22 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page billing_budgets_v1::BudgetServiceClient-service-account-snippet Override billing_budgets_v1::BudgetServiceClient Authentication Defaults
+
+@snippet google/cloud/billing/budgets/v1/samples/budget_client_samples.cc with-service-account
+
+*/
+
+/*! @page billing_v1::CloudBillingClient-service-account-snippet Override billing_v1::CloudBillingClient Authentication Defaults
+
+@snippet google/cloud/billing/v1/samples/cloud_billing_client_samples.cc with-service-account
+
+*/
+
+/*! @page billing_v1::CloudCatalogClient-service-account-snippet Override billing_v1::CloudCatalogClient Authentication Defaults
+
+@snippet google/cloud/billing/v1/samples/cloud_catalog_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->

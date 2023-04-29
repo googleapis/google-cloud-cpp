@@ -23,10 +23,10 @@ which should give you a taste of the Cloud Tasks API C++ client library API.
 
 <!-- inject-client-list-start -->
 The main class in this library is
-[`tasks_v2::CloudTasksClient`](@ref google::cloud::tasks_v2::CloudTasksClient).
+[\c tasks_v2::CloudTasksClient](@ref google::cloud::tasks_v2::CloudTasksClient).
 All RPCs are exposed as member functions of this class. Other classes provide
 helpers, retry policies, configuration parameters, and infrastructure to mock
-[`tasks_v2::CloudTasksClient`](@ref google::cloud::tasks_v2::CloudTasksClient) when testing your
+[\c tasks_v2::CloudTasksClient](@ref google::cloud::tasks_v2::CloudTasksClient) when testing your
 application.
 <!-- inject-client-list-end -->
 

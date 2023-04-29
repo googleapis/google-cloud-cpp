@@ -24,10 +24,10 @@ which should give you a taste of the Network Connectivity API C++ client library
 
 <!-- inject-client-list-start -->
 The main class in this library is
-[`networkconnectivity_v1::HubServiceClient`](@ref google::cloud::networkconnectivity_v1::HubServiceClient).
+[\c networkconnectivity_v1::HubServiceClient](@ref google::cloud::networkconnectivity_v1::HubServiceClient).
 All RPCs are exposed as member functions of this class. Other classes provide
 helpers, retry policies, configuration parameters, and infrastructure to mock
-[`networkconnectivity_v1::HubServiceClient`](@ref google::cloud::networkconnectivity_v1::HubServiceClient) when testing your
+[\c networkconnectivity_v1::HubServiceClient](@ref google::cloud::networkconnectivity_v1::HubServiceClient) when testing your
 application.
 <!-- inject-client-list-end -->
 

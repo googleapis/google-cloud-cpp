@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `gkehub_v1::GkeHubClient`:
+
+@snippet gke_hub_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page gkehub_v1::GkeHubClient-endpoint-snippet Override gkehub_v1::GkeHubClient Endpoint Configuration
+
+@snippet google/cloud/gkehub/v1/samples/gke_hub_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

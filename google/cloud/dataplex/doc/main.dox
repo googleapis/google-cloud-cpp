@@ -31,9 +31,9 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`dataplex_v1::ContentServiceClient`](@ref google::cloud::dataplex_v1::ContentServiceClient)
-- [`dataplex_v1::DataplexServiceClient`](@ref google::cloud::dataplex_v1::DataplexServiceClient)
-- [`dataplex_v1::MetadataServiceClient`](@ref google::cloud::dataplex_v1::MetadataServiceClient)
+- [\c dataplex_v1::ContentServiceClient](@ref google::cloud::dataplex_v1::ContentServiceClient)
+- [\c dataplex_v1::DataplexServiceClient](@ref google::cloud::dataplex_v1::DataplexServiceClient)
+- [\c dataplex_v1::MetadataServiceClient](@ref google::cloud::dataplex_v1::MetadataServiceClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

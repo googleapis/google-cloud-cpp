@@ -32,10 +32,10 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`kms_inventory_v1::KeyDashboardServiceClient`](@ref google::cloud::kms_inventory_v1::KeyDashboardServiceClient)
-- [`kms_inventory_v1::KeyTrackingServiceClient`](@ref google::cloud::kms_inventory_v1::KeyTrackingServiceClient)
-- [`kms_v1::EkmServiceClient`](@ref google::cloud::kms_v1::EkmServiceClient)
-- [`kms_v1::KeyManagementServiceClient`](@ref google::cloud::kms_v1::KeyManagementServiceClient)
+- [\c kms_inventory_v1::KeyDashboardServiceClient](@ref google::cloud::kms_inventory_v1::KeyDashboardServiceClient)
+- [\c kms_inventory_v1::KeyTrackingServiceClient](@ref google::cloud::kms_inventory_v1::KeyTrackingServiceClient)
+- [\c kms_v1::EkmServiceClient](@ref google::cloud::kms_v1::EkmServiceClient)
+- [\c kms_v1::KeyManagementServiceClient](@ref google::cloud::kms_v1::KeyManagementServiceClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `iot_v1::DeviceManagerClient`:
+
+@snippet device_manager_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page iot_v1::DeviceManagerClient-endpoint-snippet Override iot_v1::DeviceManagerClient Endpoint Configuration
+
+@snippet google/cloud/iot/v1/samples/device_manager_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

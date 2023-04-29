@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `contactcenterinsights_v1::ContactCenterInsightsClient`:
+
+@snippet contact_center_insights_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page contactcenterinsights_v1::ContactCenterInsightsClient-endpoint-snippet Override contactcenterinsights_v1::ContactCenterInsightsClient Endpoint Configuration
+
+@snippet google/cloud/contactcenterinsights/v1/samples/contact_center_insights_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

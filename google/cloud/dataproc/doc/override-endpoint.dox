@@ -7,9 +7,51 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `dataproc_v1::AutoscalingPolicyServiceClient`:
+
+@snippet autoscaling_policy_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c dataproc_v1::AutoscalingPolicyServiceClient](@ref dataproc_v1::AutoscalingPolicyServiceClient-endpoint-snippet)
+- [\c dataproc_v1::BatchControllerClient](@ref dataproc_v1::BatchControllerClient-endpoint-snippet)
+- [\c dataproc_v1::ClusterControllerClient](@ref dataproc_v1::ClusterControllerClient-endpoint-snippet)
+- [\c dataproc_v1::JobControllerClient](@ref dataproc_v1::JobControllerClient-endpoint-snippet)
+- [\c dataproc_v1::WorkflowTemplateServiceClient](@ref dataproc_v1::WorkflowTemplateServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page dataproc_v1::AutoscalingPolicyServiceClient-endpoint-snippet Override dataproc_v1::AutoscalingPolicyServiceClient Endpoint Configuration
+
+@snippet google/cloud/dataproc/v1/samples/autoscaling_policy_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dataproc_v1::BatchControllerClient-endpoint-snippet Override dataproc_v1::BatchControllerClient Endpoint Configuration
+
+@snippet google/cloud/dataproc/v1/samples/batch_controller_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dataproc_v1::ClusterControllerClient-endpoint-snippet Override dataproc_v1::ClusterControllerClient Endpoint Configuration
+
+@snippet google/cloud/dataproc/v1/samples/cluster_controller_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dataproc_v1::JobControllerClient-endpoint-snippet Override dataproc_v1::JobControllerClient Endpoint Configuration
+
+@snippet google/cloud/dataproc/v1/samples/job_controller_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dataproc_v1::WorkflowTemplateServiceClient-endpoint-snippet Override dataproc_v1::WorkflowTemplateServiceClient Endpoint Configuration
+
+@snippet google/cloud/dataproc/v1/samples/workflow_template_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

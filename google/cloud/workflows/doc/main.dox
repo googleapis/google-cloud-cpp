@@ -31,8 +31,8 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`workflows_executions_v1::ExecutionsClient`](@ref google::cloud::workflows_executions_v1::ExecutionsClient)
-- [`workflows_v1::WorkflowsClient`](@ref google::cloud::workflows_v1::WorkflowsClient)
+- [\c workflows_executions_v1::ExecutionsClient](@ref google::cloud::workflows_executions_v1::ExecutionsClient)
+- [\c workflows_v1::WorkflowsClient](@ref google::cloud::workflows_v1::WorkflowsClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

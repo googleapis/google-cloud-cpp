@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `recommender_v1::RecommenderClient`:
+
+@snippet recommender_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page recommender_v1::RecommenderClient-endpoint-snippet Override recommender_v1::RecommenderClient Endpoint Configuration
+
+@snippet google/cloud/recommender/v1/samples/recommender_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

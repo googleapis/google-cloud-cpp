@@ -32,8 +32,8 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`containeranalysis_v1::ContainerAnalysisClient`](@ref google::cloud::containeranalysis_v1::ContainerAnalysisClient)
-- [`containeranalysis_v1::GrafeasClient`](@ref google::cloud::containeranalysis_v1::GrafeasClient)
+- [\c containeranalysis_v1::ContainerAnalysisClient](@ref google::cloud::containeranalysis_v1::ContainerAnalysisClient)
+- [\c containeranalysis_v1::GrafeasClient](@ref google::cloud::containeranalysis_v1::GrafeasClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

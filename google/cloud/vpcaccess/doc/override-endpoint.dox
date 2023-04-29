@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `vpcaccess_v1::VpcAccessServiceClient`:
+
+@snippet vpc_access_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page vpcaccess_v1::VpcAccessServiceClient-endpoint-snippet Override vpcaccess_v1::VpcAccessServiceClient Endpoint Configuration
+
+@snippet google/cloud/vpcaccess/v1/samples/vpc_access_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

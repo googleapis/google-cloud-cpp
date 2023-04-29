@@ -9,6 +9,15 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
+@snippet key_dashboard_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c kms_inventory_v1::KeyDashboardServiceClient](@ref kms_inventory_v1::KeyDashboardServiceClient-service-account-snippet)
+- [\c kms_inventory_v1::KeyTrackingServiceClient](@ref kms_inventory_v1::KeyTrackingServiceClient-service-account-snippet)
+- [\c kms_v1::EkmServiceClient](@ref kms_v1::EkmServiceClient-service-account-snippet)
+- [\c kms_v1::KeyManagementServiceClient](@ref kms_v1::KeyManagementServiceClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -24,4 +33,28 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page kms_inventory_v1::KeyDashboardServiceClient-service-account-snippet Override kms_inventory_v1::KeyDashboardServiceClient Authentication Defaults
+
+@snippet google/cloud/kms/inventory/v1/samples/key_dashboard_client_samples.cc with-service-account
+
+*/
+
+/*! @page kms_inventory_v1::KeyTrackingServiceClient-service-account-snippet Override kms_inventory_v1::KeyTrackingServiceClient Authentication Defaults
+
+@snippet google/cloud/kms/inventory/v1/samples/key_tracking_client_samples.cc with-service-account
+
+*/
+
+/*! @page kms_v1::EkmServiceClient-service-account-snippet Override kms_v1::EkmServiceClient Authentication Defaults
+
+@snippet google/cloud/kms/v1/samples/ekm_client_samples.cc with-service-account
+
+*/
+
+/*! @page kms_v1::KeyManagementServiceClient-service-account-snippet Override kms_v1::KeyManagementServiceClient Authentication Defaults
+
+@snippet google/cloud/kms/v1/samples/key_management_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->

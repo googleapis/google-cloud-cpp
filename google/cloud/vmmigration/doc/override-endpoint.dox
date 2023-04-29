@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `vmmigration_v1::VmMigrationClient`:
+
+@snippet vm_migration_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page vmmigration_v1::VmMigrationClient-endpoint-snippet Override vmmigration_v1::VmMigrationClient Endpoint Configuration
+
+@snippet google/cloud/vmmigration/v1/samples/vm_migration_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

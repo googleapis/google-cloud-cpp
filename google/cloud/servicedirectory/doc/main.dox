@@ -31,8 +31,8 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`servicedirectory_v1::LookupServiceClient`](@ref google::cloud::servicedirectory_v1::LookupServiceClient)
-- [`servicedirectory_v1::RegistrationServiceClient`](@ref google::cloud::servicedirectory_v1::RegistrationServiceClient)
+- [\c servicedirectory_v1::LookupServiceClient](@ref google::cloud::servicedirectory_v1::LookupServiceClient)
+- [\c servicedirectory_v1::RegistrationServiceClient](@ref google::cloud::servicedirectory_v1::RegistrationServiceClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

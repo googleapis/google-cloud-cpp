@@ -9,6 +9,14 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
+@snippet attached_clusters_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c gkemulticloud_v1::AttachedClustersClient](@ref gkemulticloud_v1::AttachedClustersClient-service-account-snippet)
+- [\c gkemulticloud_v1::AwsClustersClient](@ref gkemulticloud_v1::AwsClustersClient-service-account-snippet)
+- [\c gkemulticloud_v1::AzureClustersClient](@ref gkemulticloud_v1::AzureClustersClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -24,4 +32,22 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page gkemulticloud_v1::AttachedClustersClient-service-account-snippet Override gkemulticloud_v1::AttachedClustersClient Authentication Defaults
+
+@snippet google/cloud/gkemulticloud/v1/samples/attached_clusters_client_samples.cc with-service-account
+
+*/
+
+/*! @page gkemulticloud_v1::AwsClustersClient-service-account-snippet Override gkemulticloud_v1::AwsClustersClient Authentication Defaults
+
+@snippet google/cloud/gkemulticloud/v1/samples/aws_clusters_client_samples.cc with-service-account
+
+*/
+
+/*! @page gkemulticloud_v1::AzureClustersClient-service-account-snippet Override gkemulticloud_v1::AzureClustersClient Authentication Defaults
+
+@snippet google/cloud/gkemulticloud/v1/samples/azure_clusters_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->

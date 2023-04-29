@@ -7,9 +7,79 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `sql_v1::SqlBackupRunsServiceClient`:
+
+@snippet sql_backup_runs_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c sql_v1::SqlBackupRunsServiceClient](@ref sql_v1::SqlBackupRunsServiceClient-endpoint-snippet)
+- [\c sql_v1::SqlConnectServiceClient](@ref sql_v1::SqlConnectServiceClient-endpoint-snippet)
+- [\c sql_v1::SqlDatabasesServiceClient](@ref sql_v1::SqlDatabasesServiceClient-endpoint-snippet)
+- [\c sql_v1::SqlFlagsServiceClient](@ref sql_v1::SqlFlagsServiceClient-endpoint-snippet)
+- [\c sql_v1::SqlInstancesServiceClient](@ref sql_v1::SqlInstancesServiceClient-endpoint-snippet)
+- [\c sql_v1::SqlOperationsServiceClient](@ref sql_v1::SqlOperationsServiceClient-endpoint-snippet)
+- [\c sql_v1::SqlSslCertsServiceClient](@ref sql_v1::SqlSslCertsServiceClient-endpoint-snippet)
+- [\c sql_v1::SqlTiersServiceClient](@ref sql_v1::SqlTiersServiceClient-endpoint-snippet)
+- [\c sql_v1::SqlUsersServiceClient](@ref sql_v1::SqlUsersServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page sql_v1::SqlBackupRunsServiceClient-endpoint-snippet Override sql_v1::SqlBackupRunsServiceClient Endpoint Configuration
+
+@snippet google/cloud/sql/v1/samples/sql_backup_runs_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page sql_v1::SqlConnectServiceClient-endpoint-snippet Override sql_v1::SqlConnectServiceClient Endpoint Configuration
+
+@snippet google/cloud/sql/v1/samples/sql_connect_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page sql_v1::SqlDatabasesServiceClient-endpoint-snippet Override sql_v1::SqlDatabasesServiceClient Endpoint Configuration
+
+@snippet google/cloud/sql/v1/samples/sql_databases_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page sql_v1::SqlFlagsServiceClient-endpoint-snippet Override sql_v1::SqlFlagsServiceClient Endpoint Configuration
+
+@snippet google/cloud/sql/v1/samples/sql_flags_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page sql_v1::SqlInstancesServiceClient-endpoint-snippet Override sql_v1::SqlInstancesServiceClient Endpoint Configuration
+
+@snippet google/cloud/sql/v1/samples/sql_instances_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page sql_v1::SqlOperationsServiceClient-endpoint-snippet Override sql_v1::SqlOperationsServiceClient Endpoint Configuration
+
+@snippet google/cloud/sql/v1/samples/sql_operations_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page sql_v1::SqlSslCertsServiceClient-endpoint-snippet Override sql_v1::SqlSslCertsServiceClient Endpoint Configuration
+
+@snippet google/cloud/sql/v1/samples/sql_ssl_certs_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page sql_v1::SqlTiersServiceClient-endpoint-snippet Override sql_v1::SqlTiersServiceClient Endpoint Configuration
+
+@snippet google/cloud/sql/v1/samples/sql_tiers_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page sql_v1::SqlUsersServiceClient-endpoint-snippet Override sql_v1::SqlUsersServiceClient Endpoint Configuration
+
+@snippet google/cloud/sql/v1/samples/sql_users_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

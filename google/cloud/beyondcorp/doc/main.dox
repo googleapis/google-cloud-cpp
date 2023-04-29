@@ -33,11 +33,11 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`beyondcorp_appconnections_v1::AppConnectionsServiceClient`](@ref google::cloud::beyondcorp_appconnections_v1::AppConnectionsServiceClient)
-- [`beyondcorp_appconnectors_v1::AppConnectorsServiceClient`](@ref google::cloud::beyondcorp_appconnectors_v1::AppConnectorsServiceClient)
-- [`beyondcorp_appgateways_v1::AppGatewaysServiceClient`](@ref google::cloud::beyondcorp_appgateways_v1::AppGatewaysServiceClient)
-- [`beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceClient`](@ref google::cloud::beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceClient)
-- [`beyondcorp_clientgateways_v1::ClientGatewaysServiceClient`](@ref google::cloud::beyondcorp_clientgateways_v1::ClientGatewaysServiceClient)
+- [\c beyondcorp_appconnections_v1::AppConnectionsServiceClient](@ref google::cloud::beyondcorp_appconnections_v1::AppConnectionsServiceClient)
+- [\c beyondcorp_appconnectors_v1::AppConnectorsServiceClient](@ref google::cloud::beyondcorp_appconnectors_v1::AppConnectorsServiceClient)
+- [\c beyondcorp_appgateways_v1::AppGatewaysServiceClient](@ref google::cloud::beyondcorp_appgateways_v1::AppGatewaysServiceClient)
+- [\c beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceClient](@ref google::cloud::beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceClient)
+- [\c beyondcorp_clientgateways_v1::ClientGatewaysServiceClient](@ref google::cloud::beyondcorp_clientgateways_v1::ClientGatewaysServiceClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

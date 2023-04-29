@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `resourcesettings_v1::ResourceSettingsServiceClient`:
+
+@snippet resource_settings_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page resourcesettings_v1::ResourceSettingsServiceClient-endpoint-snippet Override resourcesettings_v1::ResourceSettingsServiceClient Endpoint Configuration
+
+@snippet google/cloud/resourcesettings/v1/samples/resource_settings_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

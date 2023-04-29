@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `networkmanagement_v1::ReachabilityServiceClient`:
+
+@snippet reachability_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page networkmanagement_v1::ReachabilityServiceClient-endpoint-snippet Override networkmanagement_v1::ReachabilityServiceClient Endpoint Configuration
+
+@snippet google/cloud/networkmanagement/v1/samples/reachability_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

@@ -9,6 +9,13 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
+@snippet controller2_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c debugger_v2::Controller2Client](@ref debugger_v2::Controller2Client-service-account-snippet)
+- [\c debugger_v2::Debugger2Client](@ref debugger_v2::Debugger2Client-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -24,4 +31,16 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page debugger_v2::Controller2Client-service-account-snippet Override debugger_v2::Controller2Client Authentication Defaults
+
+@snippet google/cloud/debugger/v2/samples/controller2_client_samples.cc with-service-account
+
+*/
+
+/*! @page debugger_v2::Debugger2Client-service-account-snippet Override debugger_v2::Debugger2Client Authentication Defaults
+
+@snippet google/cloud/debugger/v2/samples/debugger2_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->

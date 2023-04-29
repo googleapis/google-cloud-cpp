@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `batch_v1::BatchServiceClient`:
+
+@snippet batch_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page batch_v1::BatchServiceClient-endpoint-snippet Override batch_v1::BatchServiceClient Endpoint Configuration
+
+@snippet google/cloud/batch/v1/samples/batch_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

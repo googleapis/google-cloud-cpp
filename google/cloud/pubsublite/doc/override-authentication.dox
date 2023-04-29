@@ -9,6 +9,13 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
+@snippet admin_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c pubsublite::AdminServiceClient](@ref pubsublite::AdminServiceClient-service-account-snippet)
+- [\c pubsublite::TopicStatsServiceClient](@ref pubsublite::TopicStatsServiceClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -24,4 +31,16 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page pubsublite::AdminServiceClient-service-account-snippet Override pubsublite::AdminServiceClient Authentication Defaults
+
+@snippet google/cloud/pubsublite/samples/admin_client_samples.cc with-service-account
+
+*/
+
+/*! @page pubsublite::TopicStatsServiceClient-service-account-snippet Override pubsublite::TopicStatsServiceClient Authentication Defaults
+
+@snippet google/cloud/pubsublite/samples/topic_stats_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->

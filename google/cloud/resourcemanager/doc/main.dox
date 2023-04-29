@@ -31,9 +31,9 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`resourcemanager_v3::FoldersClient`](@ref google::cloud::resourcemanager_v3::FoldersClient)
-- [`resourcemanager_v3::OrganizationsClient`](@ref google::cloud::resourcemanager_v3::OrganizationsClient)
-- [`resourcemanager_v3::ProjectsClient`](@ref google::cloud::resourcemanager_v3::ProjectsClient)
+- [\c resourcemanager_v3::FoldersClient](@ref google::cloud::resourcemanager_v3::FoldersClient)
+- [\c resourcemanager_v3::OrganizationsClient](@ref google::cloud::resourcemanager_v3::OrganizationsClient)
+- [\c resourcemanager_v3::ProjectsClient](@ref google::cloud::resourcemanager_v3::ProjectsClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `container_v1::ClusterManagerClient`:
+
+@snippet cluster_manager_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page container_v1::ClusterManagerClient-endpoint-snippet Override container_v1::ClusterManagerClient Endpoint Configuration
+
+@snippet google/cloud/container/v1/samples/cluster_manager_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

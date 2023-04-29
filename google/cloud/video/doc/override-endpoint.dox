@@ -7,9 +7,37 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `video_livestream_v1::LivestreamServiceClient`:
+
+@snippet livestream_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c video_livestream_v1::LivestreamServiceClient](@ref video_livestream_v1::LivestreamServiceClient-endpoint-snippet)
+- [\c video_stitcher_v1::VideoStitcherServiceClient](@ref video_stitcher_v1::VideoStitcherServiceClient-endpoint-snippet)
+- [\c video_transcoder_v1::TranscoderServiceClient](@ref video_transcoder_v1::TranscoderServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page video_livestream_v1::LivestreamServiceClient-endpoint-snippet Override video_livestream_v1::LivestreamServiceClient Endpoint Configuration
+
+@snippet google/cloud/video/livestream/v1/samples/livestream_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page video_stitcher_v1::VideoStitcherServiceClient-endpoint-snippet Override video_stitcher_v1::VideoStitcherServiceClient Endpoint Configuration
+
+@snippet google/cloud/video/stitcher/v1/samples/video_stitcher_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page video_transcoder_v1::TranscoderServiceClient-endpoint-snippet Override video_transcoder_v1::TranscoderServiceClient Endpoint Configuration
+
+@snippet google/cloud/video/transcoder/v1/samples/transcoder_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

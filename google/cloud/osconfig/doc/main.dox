@@ -31,8 +31,8 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`osconfig_agentendpoint_v1::AgentEndpointServiceClient`](@ref google::cloud::osconfig_agentendpoint_v1::AgentEndpointServiceClient)
-- [`osconfig_v1::OsConfigServiceClient`](@ref google::cloud::osconfig_v1::OsConfigServiceClient)
+- [\c osconfig_agentendpoint_v1::AgentEndpointServiceClient](@ref google::cloud::osconfig_agentendpoint_v1::AgentEndpointServiceClient)
+- [\c osconfig_v1::OsConfigServiceClient](@ref google::cloud::osconfig_v1::OsConfigServiceClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

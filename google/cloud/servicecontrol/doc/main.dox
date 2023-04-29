@@ -31,9 +31,9 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`servicecontrol_v1::QuotaControllerClient`](@ref google::cloud::servicecontrol_v1::QuotaControllerClient)
-- [`servicecontrol_v1::ServiceControllerClient`](@ref google::cloud::servicecontrol_v1::ServiceControllerClient)
-- [`servicecontrol_v2::ServiceControllerClient`](@ref google::cloud::servicecontrol_v2::ServiceControllerClient)
+- [\c servicecontrol_v1::QuotaControllerClient](@ref google::cloud::servicecontrol_v1::QuotaControllerClient)
+- [\c servicecontrol_v1::ServiceControllerClient](@ref google::cloud::servicecontrol_v1::ServiceControllerClient)
+- [\c servicecontrol_v2::ServiceControllerClient](@ref google::cloud::servicecontrol_v2::ServiceControllerClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

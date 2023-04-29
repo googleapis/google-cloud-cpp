@@ -9,6 +9,27 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
+@snippet agents_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c dialogflow_cx::AgentsClient](@ref dialogflow_cx::AgentsClient-service-account-snippet)
+- [\c dialogflow_cx::ChangelogsClient](@ref dialogflow_cx::ChangelogsClient-service-account-snippet)
+- [\c dialogflow_cx::DeploymentsClient](@ref dialogflow_cx::DeploymentsClient-service-account-snippet)
+- [\c dialogflow_cx::EntityTypesClient](@ref dialogflow_cx::EntityTypesClient-service-account-snippet)
+- [\c dialogflow_cx::EnvironmentsClient](@ref dialogflow_cx::EnvironmentsClient-service-account-snippet)
+- [\c dialogflow_cx::ExperimentsClient](@ref dialogflow_cx::ExperimentsClient-service-account-snippet)
+- [\c dialogflow_cx::FlowsClient](@ref dialogflow_cx::FlowsClient-service-account-snippet)
+- [\c dialogflow_cx::IntentsClient](@ref dialogflow_cx::IntentsClient-service-account-snippet)
+- [\c dialogflow_cx::PagesClient](@ref dialogflow_cx::PagesClient-service-account-snippet)
+- [\c dialogflow_cx::SecuritySettingsServiceClient](@ref dialogflow_cx::SecuritySettingsServiceClient-service-account-snippet)
+- [\c dialogflow_cx::SessionEntityTypesClient](@ref dialogflow_cx::SessionEntityTypesClient-service-account-snippet)
+- [\c dialogflow_cx::SessionsClient](@ref dialogflow_cx::SessionsClient-service-account-snippet)
+- [\c dialogflow_cx::TestCasesClient](@ref dialogflow_cx::TestCasesClient-service-account-snippet)
+- [\c dialogflow_cx::TransitionRouteGroupsClient](@ref dialogflow_cx::TransitionRouteGroupsClient-service-account-snippet)
+- [\c dialogflow_cx::VersionsClient](@ref dialogflow_cx::VersionsClient-service-account-snippet)
+- [\c dialogflow_cx::WebhooksClient](@ref dialogflow_cx::WebhooksClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -24,4 +45,100 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page dialogflow_cx::AgentsClient-service-account-snippet Override dialogflow_cx::AgentsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/agents_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::ChangelogsClient-service-account-snippet Override dialogflow_cx::ChangelogsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/changelogs_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::DeploymentsClient-service-account-snippet Override dialogflow_cx::DeploymentsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/deployments_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::EntityTypesClient-service-account-snippet Override dialogflow_cx::EntityTypesClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/entity_types_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::EnvironmentsClient-service-account-snippet Override dialogflow_cx::EnvironmentsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/environments_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::ExperimentsClient-service-account-snippet Override dialogflow_cx::ExperimentsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/experiments_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::FlowsClient-service-account-snippet Override dialogflow_cx::FlowsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/flows_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::IntentsClient-service-account-snippet Override dialogflow_cx::IntentsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/intents_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::PagesClient-service-account-snippet Override dialogflow_cx::PagesClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/pages_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::SecuritySettingsServiceClient-service-account-snippet Override dialogflow_cx::SecuritySettingsServiceClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/security_settings_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::SessionEntityTypesClient-service-account-snippet Override dialogflow_cx::SessionEntityTypesClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/session_entity_types_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::SessionsClient-service-account-snippet Override dialogflow_cx::SessionsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/sessions_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::TestCasesClient-service-account-snippet Override dialogflow_cx::TestCasesClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/test_cases_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::TransitionRouteGroupsClient-service-account-snippet Override dialogflow_cx::TransitionRouteGroupsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/transition_route_groups_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::VersionsClient-service-account-snippet Override dialogflow_cx::VersionsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/versions_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::WebhooksClient-service-account-snippet Override dialogflow_cx::WebhooksClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/webhooks_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->

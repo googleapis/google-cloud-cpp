@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `memcache_v1::CloudMemcacheClient`:
+
+@snippet cloud_memcache_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page memcache_v1::CloudMemcacheClient-endpoint-snippet Override memcache_v1::CloudMemcacheClient Endpoint Configuration
+
+@snippet google/cloud/memcache/v1/samples/cloud_memcache_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

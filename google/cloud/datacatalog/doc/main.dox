@@ -30,10 +30,10 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`datacatalog_lineage_v1::LineageClient`](@ref google::cloud::datacatalog_lineage_v1::LineageClient)
-- [`datacatalog_v1::DataCatalogClient`](@ref google::cloud::datacatalog_v1::DataCatalogClient)
-- [`datacatalog_v1::PolicyTagManagerClient`](@ref google::cloud::datacatalog_v1::PolicyTagManagerClient)
-- [`datacatalog_v1::PolicyTagManagerSerializationClient`](@ref google::cloud::datacatalog_v1::PolicyTagManagerSerializationClient)
+- [\c datacatalog_lineage_v1::LineageClient](@ref google::cloud::datacatalog_lineage_v1::LineageClient)
+- [\c datacatalog_v1::DataCatalogClient](@ref google::cloud::datacatalog_v1::DataCatalogClient)
+- [\c datacatalog_v1::PolicyTagManagerClient](@ref google::cloud::datacatalog_v1::PolicyTagManagerClient)
+- [\c datacatalog_v1::PolicyTagManagerSerializationClient](@ref google::cloud::datacatalog_v1::PolicyTagManagerSerializationClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

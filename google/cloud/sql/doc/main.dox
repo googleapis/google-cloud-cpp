@@ -33,15 +33,15 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`sql_v1::SqlBackupRunsServiceClient`](@ref google::cloud::sql_v1::SqlBackupRunsServiceClient)
-- [`sql_v1::SqlConnectServiceClient`](@ref google::cloud::sql_v1::SqlConnectServiceClient)
-- [`sql_v1::SqlDatabasesServiceClient`](@ref google::cloud::sql_v1::SqlDatabasesServiceClient)
-- [`sql_v1::SqlFlagsServiceClient`](@ref google::cloud::sql_v1::SqlFlagsServiceClient)
-- [`sql_v1::SqlInstancesServiceClient`](@ref google::cloud::sql_v1::SqlInstancesServiceClient)
-- [`sql_v1::SqlOperationsServiceClient`](@ref google::cloud::sql_v1::SqlOperationsServiceClient)
-- [`sql_v1::SqlSslCertsServiceClient`](@ref google::cloud::sql_v1::SqlSslCertsServiceClient)
-- [`sql_v1::SqlTiersServiceClient`](@ref google::cloud::sql_v1::SqlTiersServiceClient)
-- [`sql_v1::SqlUsersServiceClient`](@ref google::cloud::sql_v1::SqlUsersServiceClient)
+- [\c sql_v1::SqlBackupRunsServiceClient](@ref google::cloud::sql_v1::SqlBackupRunsServiceClient)
+- [\c sql_v1::SqlConnectServiceClient](@ref google::cloud::sql_v1::SqlConnectServiceClient)
+- [\c sql_v1::SqlDatabasesServiceClient](@ref google::cloud::sql_v1::SqlDatabasesServiceClient)
+- [\c sql_v1::SqlFlagsServiceClient](@ref google::cloud::sql_v1::SqlFlagsServiceClient)
+- [\c sql_v1::SqlInstancesServiceClient](@ref google::cloud::sql_v1::SqlInstancesServiceClient)
+- [\c sql_v1::SqlOperationsServiceClient](@ref google::cloud::sql_v1::SqlOperationsServiceClient)
+- [\c sql_v1::SqlSslCertsServiceClient](@ref google::cloud::sql_v1::SqlSslCertsServiceClient)
+- [\c sql_v1::SqlTiersServiceClient](@ref google::cloud::sql_v1::SqlTiersServiceClient)
+- [\c sql_v1::SqlUsersServiceClient](@ref google::cloud::sql_v1::SqlUsersServiceClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

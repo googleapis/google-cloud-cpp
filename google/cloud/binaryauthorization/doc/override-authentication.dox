@@ -9,6 +9,14 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
+@snippet binauthz_management_service_v1_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c binaryauthorization_v1::BinauthzManagementServiceV1Client](@ref binaryauthorization_v1::BinauthzManagementServiceV1Client-service-account-snippet)
+- [\c binaryauthorization_v1::SystemPolicyV1Client](@ref binaryauthorization_v1::SystemPolicyV1Client-service-account-snippet)
+- [\c binaryauthorization_v1::ValidationHelperV1Client](@ref binaryauthorization_v1::ValidationHelperV1Client-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -24,4 +32,22 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page binaryauthorization_v1::BinauthzManagementServiceV1Client-service-account-snippet Override binaryauthorization_v1::BinauthzManagementServiceV1Client Authentication Defaults
+
+@snippet google/cloud/binaryauthorization/v1/samples/binauthz_management_service_v1_client_samples.cc with-service-account
+
+*/
+
+/*! @page binaryauthorization_v1::SystemPolicyV1Client-service-account-snippet Override binaryauthorization_v1::SystemPolicyV1Client Authentication Defaults
+
+@snippet google/cloud/binaryauthorization/v1/samples/system_policy_v1_client_samples.cc with-service-account
+
+*/
+
+/*! @page binaryauthorization_v1::ValidationHelperV1Client-service-account-snippet Override binaryauthorization_v1::ValidationHelperV1Client Authentication Defaults
+
+@snippet google/cloud/binaryauthorization/v1/samples/validation_helper_v1_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->

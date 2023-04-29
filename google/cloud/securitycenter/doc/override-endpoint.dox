@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `securitycenter_v1::SecurityCenterClient`:
+
+@snippet security_center_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page securitycenter_v1::SecurityCenterClient-endpoint-snippet Override securitycenter_v1::SecurityCenterClient Endpoint Configuration
+
+@snippet google/cloud/securitycenter/v1/samples/security_center_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

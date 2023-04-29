@@ -30,8 +30,8 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`eventarc_publishing_v1::PublisherClient`](@ref google::cloud::eventarc_publishing_v1::PublisherClient)
-- [`eventarc_v1::EventarcClient`](@ref google::cloud::eventarc_v1::EventarcClient)
+- [\c eventarc_publishing_v1::PublisherClient](@ref google::cloud::eventarc_publishing_v1::PublisherClient)
+- [\c eventarc_v1::EventarcClient](@ref google::cloud::eventarc_v1::EventarcClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

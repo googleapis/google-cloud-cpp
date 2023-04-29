@@ -33,15 +33,15 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`monitoring_dashboard_v1::DashboardsServiceClient`](@ref google::cloud::monitoring_dashboard_v1::DashboardsServiceClient)
-- [`monitoring_metricsscope_v1::MetricsScopesClient`](@ref google::cloud::monitoring_metricsscope_v1::MetricsScopesClient)
-- [`monitoring_v3::AlertPolicyServiceClient`](@ref google::cloud::monitoring_v3::AlertPolicyServiceClient)
-- [`monitoring_v3::GroupServiceClient`](@ref google::cloud::monitoring_v3::GroupServiceClient)
-- [`monitoring_v3::MetricServiceClient`](@ref google::cloud::monitoring_v3::MetricServiceClient)
-- [`monitoring_v3::NotificationChannelServiceClient`](@ref google::cloud::monitoring_v3::NotificationChannelServiceClient)
-- [`monitoring_v3::QueryServiceClient`](@ref google::cloud::monitoring_v3::QueryServiceClient)
-- [`monitoring_v3::ServiceMonitoringServiceClient`](@ref google::cloud::monitoring_v3::ServiceMonitoringServiceClient)
-- [`monitoring_v3::UptimeCheckServiceClient`](@ref google::cloud::monitoring_v3::UptimeCheckServiceClient)
+- [\c monitoring_dashboard_v1::DashboardsServiceClient](@ref google::cloud::monitoring_dashboard_v1::DashboardsServiceClient)
+- [\c monitoring_metricsscope_v1::MetricsScopesClient](@ref google::cloud::monitoring_metricsscope_v1::MetricsScopesClient)
+- [\c monitoring_v3::AlertPolicyServiceClient](@ref google::cloud::monitoring_v3::AlertPolicyServiceClient)
+- [\c monitoring_v3::GroupServiceClient](@ref google::cloud::monitoring_v3::GroupServiceClient)
+- [\c monitoring_v3::MetricServiceClient](@ref google::cloud::monitoring_v3::MetricServiceClient)
+- [\c monitoring_v3::NotificationChannelServiceClient](@ref google::cloud::monitoring_v3::NotificationChannelServiceClient)
+- [\c monitoring_v3::QueryServiceClient](@ref google::cloud::monitoring_v3::QueryServiceClient)
+- [\c monitoring_v3::ServiceMonitoringServiceClient](@ref google::cloud::monitoring_v3::ServiceMonitoringServiceClient)
+- [\c monitoring_v3::UptimeCheckServiceClient](@ref google::cloud::monitoring_v3::UptimeCheckServiceClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

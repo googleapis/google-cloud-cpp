@@ -32,8 +32,8 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`pubsublite::AdminServiceClient`](@ref google::cloud::pubsublite::AdminServiceClient)
-- [`pubsublite::TopicStatsServiceClient`](@ref google::cloud::pubsublite::TopicStatsServiceClient)
+- [\c pubsublite::AdminServiceClient](@ref google::cloud::pubsublite::AdminServiceClient)
+- [\c pubsublite::TopicStatsServiceClient](@ref google::cloud::pubsublite::TopicStatsServiceClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

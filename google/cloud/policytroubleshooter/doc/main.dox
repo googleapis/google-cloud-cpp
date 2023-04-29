@@ -23,10 +23,10 @@ which should give you a taste of the Policy Troubleshooter API C++ client librar
 
 <!-- inject-client-list-start -->
 The main class in this library is
-[`policytroubleshooter_v1::IamCheckerClient`](@ref google::cloud::policytroubleshooter_v1::IamCheckerClient).
+[\c policytroubleshooter_v1::IamCheckerClient](@ref google::cloud::policytroubleshooter_v1::IamCheckerClient).
 All RPCs are exposed as member functions of this class. Other classes provide
 helpers, retry policies, configuration parameters, and infrastructure to mock
-[`policytroubleshooter_v1::IamCheckerClient`](@ref google::cloud::policytroubleshooter_v1::IamCheckerClient) when testing your
+[\c policytroubleshooter_v1::IamCheckerClient](@ref google::cloud::policytroubleshooter_v1::IamCheckerClient) when testing your
 application.
 <!-- inject-client-list-end -->
 

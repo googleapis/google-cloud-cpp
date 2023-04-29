@@ -37,9 +37,9 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`gkemulticloud_v1::AttachedClustersClient`](@ref google::cloud::gkemulticloud_v1::AttachedClustersClient)
-- [`gkemulticloud_v1::AwsClustersClient`](@ref google::cloud::gkemulticloud_v1::AwsClustersClient)
-- [`gkemulticloud_v1::AzureClustersClient`](@ref google::cloud::gkemulticloud_v1::AzureClustersClient)
+- [\c gkemulticloud_v1::AttachedClustersClient](@ref google::cloud::gkemulticloud_v1::AttachedClustersClient)
+- [\c gkemulticloud_v1::AwsClustersClient](@ref google::cloud::gkemulticloud_v1::AwsClustersClient)
+- [\c gkemulticloud_v1::AzureClustersClient](@ref google::cloud::gkemulticloud_v1::AzureClustersClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

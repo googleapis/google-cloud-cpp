@@ -33,10 +33,10 @@ which should give you a taste of the AlloyDB API C++ client library API.
 
 <!-- inject-client-list-start -->
 The main class in this library is
-[`alloydb_v1::AlloyDBAdminClient`](@ref google::cloud::alloydb_v1::AlloyDBAdminClient).
+[\c alloydb_v1::AlloyDBAdminClient](@ref google::cloud::alloydb_v1::AlloyDBAdminClient).
 All RPCs are exposed as member functions of this class. Other classes provide
 helpers, retry policies, configuration parameters, and infrastructure to mock
-[`alloydb_v1::AlloyDBAdminClient`](@ref google::cloud::alloydb_v1::AlloyDBAdminClient) when testing your
+[\c alloydb_v1::AlloyDBAdminClient](@ref google::cloud::alloydb_v1::AlloyDBAdminClient) when testing your
 application.
 <!-- inject-client-list-end -->
 

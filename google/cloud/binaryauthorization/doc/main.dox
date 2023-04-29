@@ -31,9 +31,9 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`binaryauthorization_v1::BinauthzManagementServiceV1Client`](@ref google::cloud::binaryauthorization_v1::BinauthzManagementServiceV1Client)
-- [`binaryauthorization_v1::SystemPolicyV1Client`](@ref google::cloud::binaryauthorization_v1::SystemPolicyV1Client)
-- [`binaryauthorization_v1::ValidationHelperV1Client`](@ref google::cloud::binaryauthorization_v1::ValidationHelperV1Client)
+- [\c binaryauthorization_v1::BinauthzManagementServiceV1Client](@ref google::cloud::binaryauthorization_v1::BinauthzManagementServiceV1Client)
+- [\c binaryauthorization_v1::SystemPolicyV1Client](@ref google::cloud::binaryauthorization_v1::SystemPolicyV1Client)
+- [\c binaryauthorization_v1::ValidationHelperV1Client](@ref google::cloud::binaryauthorization_v1::ValidationHelperV1Client)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `deploy_v1::CloudDeployClient`:
+
+@snippet cloud_deploy_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page deploy_v1::CloudDeployClient-endpoint-snippet Override deploy_v1::CloudDeployClient Endpoint Configuration
+
+@snippet google/cloud/deploy/v1/samples/cloud_deploy_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

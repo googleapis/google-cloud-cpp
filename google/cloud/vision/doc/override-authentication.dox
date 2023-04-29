@@ -9,6 +9,13 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
+@snippet image_annotator_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c vision_v1::ImageAnnotatorClient](@ref vision_v1::ImageAnnotatorClient-service-account-snippet)
+- [\c vision_v1::ProductSearchClient](@ref vision_v1::ProductSearchClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -24,4 +31,16 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page vision_v1::ImageAnnotatorClient-service-account-snippet Override vision_v1::ImageAnnotatorClient Authentication Defaults
+
+@snippet google/cloud/vision/v1/samples/image_annotator_client_samples.cc with-service-account
+
+*/
+
+/*! @page vision_v1::ProductSearchClient-service-account-snippet Override vision_v1::ProductSearchClient Authentication Defaults
+
+@snippet google/cloud/vision/v1/samples/product_search_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->

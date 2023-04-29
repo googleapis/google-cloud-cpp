@@ -63,10 +63,10 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`iam_admin_v1::IAMClient`](@ref google::cloud::iam_admin_v1::IAMClient)
-- [`iam_credentials_v1::IAMCredentialsClient`](@ref google::cloud::iam_credentials_v1::IAMCredentialsClient)
-- [`iam_v1::IAMPolicyClient`](@ref google::cloud::iam_v1::IAMPolicyClient)
-- [`iam_v2::PoliciesClient`](@ref google::cloud::iam_v2::PoliciesClient)
+- [\c iam_admin_v1::IAMClient](@ref google::cloud::iam_admin_v1::IAMClient)
+- [\c iam_credentials_v1::IAMCredentialsClient](@ref google::cloud::iam_credentials_v1::IAMCredentialsClient)
+- [\c iam_v1::IAMPolicyClient](@ref google::cloud::iam_v1::IAMPolicyClient)
+- [\c iam_v2::PoliciesClient](@ref google::cloud::iam_v2::PoliciesClient)
 <!-- inject-client-list-end -->
 
 ## Next Steps

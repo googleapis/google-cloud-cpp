@@ -9,6 +9,19 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
+@snippet analytics_hub_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c bigquery_analyticshub_v1::AnalyticsHubServiceClient](@ref bigquery_analyticshub_v1::AnalyticsHubServiceClient-service-account-snippet)
+- [\c bigquery_connection_v1::ConnectionServiceClient](@ref bigquery_connection_v1::ConnectionServiceClient-service-account-snippet)
+- [\c bigquery_datapolicies_v1::DataPolicyServiceClient](@ref bigquery_datapolicies_v1::DataPolicyServiceClient-service-account-snippet)
+- [\c bigquery_datatransfer_v1::DataTransferServiceClient](@ref bigquery_datatransfer_v1::DataTransferServiceClient-service-account-snippet)
+- [\c bigquery_migration_v2::MigrationServiceClient](@ref bigquery_migration_v2::MigrationServiceClient-service-account-snippet)
+- [\c bigquery_reservation_v1::ReservationServiceClient](@ref bigquery_reservation_v1::ReservationServiceClient-service-account-snippet)
+- [\c bigquery_storage_v1::BigQueryReadClient](@ref bigquery_storage_v1::BigQueryReadClient-service-account-snippet)
+- [\c bigquery_storage_v1::BigQueryWriteClient](@ref bigquery_storage_v1::BigQueryWriteClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -24,4 +37,52 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page bigquery_analyticshub_v1::AnalyticsHubServiceClient-service-account-snippet Override bigquery_analyticshub_v1::AnalyticsHubServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquery/analyticshub/v1/samples/analytics_hub_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery_connection_v1::ConnectionServiceClient-service-account-snippet Override bigquery_connection_v1::ConnectionServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquery/connection/v1/samples/connection_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery_datapolicies_v1::DataPolicyServiceClient-service-account-snippet Override bigquery_datapolicies_v1::DataPolicyServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquery/datapolicies/v1/samples/data_policy_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery_datatransfer_v1::DataTransferServiceClient-service-account-snippet Override bigquery_datatransfer_v1::DataTransferServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquery/datatransfer/v1/samples/data_transfer_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery_migration_v2::MigrationServiceClient-service-account-snippet Override bigquery_migration_v2::MigrationServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquery/migration/v2/samples/migration_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery_reservation_v1::ReservationServiceClient-service-account-snippet Override bigquery_reservation_v1::ReservationServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquery/reservation/v1/samples/reservation_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery_storage_v1::BigQueryReadClient-service-account-snippet Override bigquery_storage_v1::BigQueryReadClient Authentication Defaults
+
+@snippet google/cloud/bigquery/storage/v1/samples/bigquery_read_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery_storage_v1::BigQueryWriteClient-service-account-snippet Override bigquery_storage_v1::BigQueryWriteClient Authentication Defaults
+
+@snippet google/cloud/bigquery/storage/v1/samples/bigquery_write_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->

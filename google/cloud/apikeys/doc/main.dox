@@ -21,10 +21,10 @@ which should give you a taste of the API Keys API C++ client library API.
 
 <!-- inject-client-list-start -->
 The main class in this library is
-[`apikeys_v2::ApiKeysClient`](@ref google::cloud::apikeys_v2::ApiKeysClient).
+[\c apikeys_v2::ApiKeysClient](@ref google::cloud::apikeys_v2::ApiKeysClient).
 All RPCs are exposed as member functions of this class. Other classes provide
 helpers, retry policies, configuration parameters, and infrastructure to mock
-[`apikeys_v2::ApiKeysClient`](@ref google::cloud::apikeys_v2::ApiKeysClient) when testing your
+[\c apikeys_v2::ApiKeysClient](@ref google::cloud::apikeys_v2::ApiKeysClient) when testing your
 application.
 <!-- inject-client-list-end -->
 

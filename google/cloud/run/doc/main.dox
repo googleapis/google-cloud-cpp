@@ -39,8 +39,8 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`run_v2::RevisionsClient`](@ref google::cloud::run_v2::RevisionsClient)
-- [`run_v2::ServicesClient`](@ref google::cloud::run_v2::ServicesClient)
+- [\c run_v2::RevisionsClient](@ref google::cloud::run_v2::RevisionsClient)
+- [\c run_v2::ServicesClient](@ref google::cloud::run_v2::ServicesClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

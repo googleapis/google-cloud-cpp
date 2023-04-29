@@ -7,9 +7,30 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `debugger_v2::Controller2Client`:
+
+@snippet controller2_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c debugger_v2::Controller2Client](@ref debugger_v2::Controller2Client-endpoint-snippet)
+- [\c debugger_v2::Debugger2Client](@ref debugger_v2::Debugger2Client-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page debugger_v2::Controller2Client-endpoint-snippet Override debugger_v2::Controller2Client Endpoint Configuration
+
+@snippet google/cloud/debugger/v2/samples/controller2_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page debugger_v2::Debugger2Client-endpoint-snippet Override debugger_v2::Debugger2Client Endpoint Configuration
+
+@snippet google/cloud/debugger/v2/samples/debugger2_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `servicemanagement_v1::ServiceManagerClient`:
+
+@snippet service_manager_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page servicemanagement_v1::ServiceManagerClient-endpoint-snippet Override servicemanagement_v1::ServiceManagerClient Endpoint Configuration
+
+@snippet google/cloud/servicemanagement/v1/samples/service_manager_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

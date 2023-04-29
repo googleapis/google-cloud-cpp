@@ -9,6 +9,13 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
+@snippet managed_notebook_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c notebooks_v1::ManagedNotebookServiceClient](@ref notebooks_v1::ManagedNotebookServiceClient-service-account-snippet)
+- [\c notebooks_v1::NotebookServiceClient](@ref notebooks_v1::NotebookServiceClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -24,4 +31,16 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page notebooks_v1::ManagedNotebookServiceClient-service-account-snippet Override notebooks_v1::ManagedNotebookServiceClient Authentication Defaults
+
+@snippet google/cloud/notebooks/v1/samples/managed_notebook_client_samples.cc with-service-account
+
+*/
+
+/*! @page notebooks_v1::NotebookServiceClient-service-account-snippet Override notebooks_v1::NotebookServiceClient Authentication Defaults
+
+@snippet google/cloud/notebooks/v1/samples/notebook_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->

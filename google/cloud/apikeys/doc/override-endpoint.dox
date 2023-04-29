@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `apikeys_v2::ApiKeysClient`:
+
+@snippet api_keys_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page apikeys_v2::ApiKeysClient-endpoint-snippet Override apikeys_v2::ApiKeysClient Endpoint Configuration
+
+@snippet google/cloud/apikeys/v2/samples/api_keys_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

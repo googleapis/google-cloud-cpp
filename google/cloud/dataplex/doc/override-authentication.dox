@@ -9,6 +9,14 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
+@snippet content_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c dataplex_v1::ContentServiceClient](@ref dataplex_v1::ContentServiceClient-service-account-snippet)
+- [\c dataplex_v1::DataplexServiceClient](@ref dataplex_v1::DataplexServiceClient-service-account-snippet)
+- [\c dataplex_v1::MetadataServiceClient](@ref dataplex_v1::MetadataServiceClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -24,4 +32,22 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page dataplex_v1::ContentServiceClient-service-account-snippet Override dataplex_v1::ContentServiceClient Authentication Defaults
+
+@snippet google/cloud/dataplex/v1/samples/content_client_samples.cc with-service-account
+
+*/
+
+/*! @page dataplex_v1::DataplexServiceClient-service-account-snippet Override dataplex_v1::DataplexServiceClient Authentication Defaults
+
+@snippet google/cloud/dataplex/v1/samples/dataplex_client_samples.cc with-service-account
+
+*/
+
+/*! @page dataplex_v1::MetadataServiceClient-service-account-snippet Override dataplex_v1::MetadataServiceClient Authentication Defaults
+
+@snippet google/cloud/dataplex/v1/samples/metadata_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->

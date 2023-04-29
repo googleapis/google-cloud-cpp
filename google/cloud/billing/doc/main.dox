@@ -31,9 +31,9 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`billing_budgets_v1::BudgetServiceClient`](@ref google::cloud::billing_budgets_v1::BudgetServiceClient)
-- [`billing_v1::CloudBillingClient`](@ref google::cloud::billing_v1::CloudBillingClient)
-- [`billing_v1::CloudCatalogClient`](@ref google::cloud::billing_v1::CloudCatalogClient)
+- [\c billing_budgets_v1::BudgetServiceClient](@ref google::cloud::billing_budgets_v1::BudgetServiceClient)
+- [\c billing_v1::CloudBillingClient](@ref google::cloud::billing_v1::CloudBillingClient)
+- [\c billing_v1::CloudCatalogClient](@ref google::cloud::billing_v1::CloudCatalogClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

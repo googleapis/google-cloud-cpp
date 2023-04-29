@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `advisorynotifications_v1::AdvisoryNotificationsServiceClient`:
+
+@snippet advisory_notifications_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page advisorynotifications_v1::AdvisoryNotificationsServiceClient-endpoint-snippet Override advisorynotifications_v1::AdvisoryNotificationsServiceClient Endpoint Configuration
+
+@snippet google/cloud/advisorynotifications/v1/samples/advisory_notifications_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

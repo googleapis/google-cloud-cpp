@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `texttospeech_v1::TextToSpeechClient`:
+
+@snippet text_to_speech_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page texttospeech_v1::TextToSpeechClient-endpoint-snippet Override texttospeech_v1::TextToSpeechClient Endpoint Configuration
+
+@snippet google/cloud/texttospeech/v1/samples/text_to_speech_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

@@ -9,6 +9,16 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
+@snippet company_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c talent_v4::CompanyServiceClient](@ref talent_v4::CompanyServiceClient-service-account-snippet)
+- [\c talent_v4::CompletionClient](@ref talent_v4::CompletionClient-service-account-snippet)
+- [\c talent_v4::EventServiceClient](@ref talent_v4::EventServiceClient-service-account-snippet)
+- [\c talent_v4::JobServiceClient](@ref talent_v4::JobServiceClient-service-account-snippet)
+- [\c talent_v4::TenantServiceClient](@ref talent_v4::TenantServiceClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -24,4 +34,34 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page talent_v4::CompanyServiceClient-service-account-snippet Override talent_v4::CompanyServiceClient Authentication Defaults
+
+@snippet google/cloud/talent/v4/samples/company_client_samples.cc with-service-account
+
+*/
+
+/*! @page talent_v4::CompletionClient-service-account-snippet Override talent_v4::CompletionClient Authentication Defaults
+
+@snippet google/cloud/talent/v4/samples/completion_client_samples.cc with-service-account
+
+*/
+
+/*! @page talent_v4::EventServiceClient-service-account-snippet Override talent_v4::EventServiceClient Authentication Defaults
+
+@snippet google/cloud/talent/v4/samples/event_client_samples.cc with-service-account
+
+*/
+
+/*! @page talent_v4::JobServiceClient-service-account-snippet Override talent_v4::JobServiceClient Authentication Defaults
+
+@snippet google/cloud/talent/v4/samples/job_client_samples.cc with-service-account
+
+*/
+
+/*! @page talent_v4::TenantServiceClient-service-account-snippet Override talent_v4::TenantServiceClient Authentication Defaults
+
+@snippet google/cloud/talent/v4/samples/tenant_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->

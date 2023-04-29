@@ -9,6 +9,16 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
+@snippet autoscaling_policy_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c dataproc_v1::AutoscalingPolicyServiceClient](@ref dataproc_v1::AutoscalingPolicyServiceClient-service-account-snippet)
+- [\c dataproc_v1::BatchControllerClient](@ref dataproc_v1::BatchControllerClient-service-account-snippet)
+- [\c dataproc_v1::ClusterControllerClient](@ref dataproc_v1::ClusterControllerClient-service-account-snippet)
+- [\c dataproc_v1::JobControllerClient](@ref dataproc_v1::JobControllerClient-service-account-snippet)
+- [\c dataproc_v1::WorkflowTemplateServiceClient](@ref dataproc_v1::WorkflowTemplateServiceClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -24,4 +34,34 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page dataproc_v1::AutoscalingPolicyServiceClient-service-account-snippet Override dataproc_v1::AutoscalingPolicyServiceClient Authentication Defaults
+
+@snippet google/cloud/dataproc/v1/samples/autoscaling_policy_client_samples.cc with-service-account
+
+*/
+
+/*! @page dataproc_v1::BatchControllerClient-service-account-snippet Override dataproc_v1::BatchControllerClient Authentication Defaults
+
+@snippet google/cloud/dataproc/v1/samples/batch_controller_client_samples.cc with-service-account
+
+*/
+
+/*! @page dataproc_v1::ClusterControllerClient-service-account-snippet Override dataproc_v1::ClusterControllerClient Authentication Defaults
+
+@snippet google/cloud/dataproc/v1/samples/cluster_controller_client_samples.cc with-service-account
+
+*/
+
+/*! @page dataproc_v1::JobControllerClient-service-account-snippet Override dataproc_v1::JobControllerClient Authentication Defaults
+
+@snippet google/cloud/dataproc/v1/samples/job_controller_client_samples.cc with-service-account
+
+*/
+
+/*! @page dataproc_v1::WorkflowTemplateServiceClient-service-account-snippet Override dataproc_v1::WorkflowTemplateServiceClient Authentication Defaults
+
+@snippet google/cloud/dataproc/v1/samples/workflow_template_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->

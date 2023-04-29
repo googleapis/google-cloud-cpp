@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `serviceusage_v1::ServiceUsageClient`:
+
+@snippet service_usage_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page serviceusage_v1::ServiceUsageClient-endpoint-snippet Override serviceusage_v1::ServiceUsageClient Endpoint Configuration
+
+@snippet google/cloud/serviceusage/v1/samples/service_usage_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

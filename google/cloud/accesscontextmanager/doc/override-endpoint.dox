@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `accesscontextmanager_v1::AccessContextManagerClient`:
+
+@snippet access_context_manager_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page accesscontextmanager_v1::AccessContextManagerClient-endpoint-snippet Override accesscontextmanager_v1::AccessContextManagerClient Endpoint Configuration
+
+@snippet google/cloud/accesscontextmanager/v1/samples/access_context_manager_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

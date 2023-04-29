@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `alloydb_v1::AlloyDBAdminClient`:
+
+@snippet alloy_db_admin_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page alloydb_v1::AlloyDBAdminClient-endpoint-snippet Override alloydb_v1::AlloyDBAdminClient Endpoint Configuration
+
+@snippet google/cloud/alloydb/v1/samples/alloy_db_admin_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

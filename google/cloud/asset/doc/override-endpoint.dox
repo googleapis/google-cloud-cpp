@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `asset_v1::AssetServiceClient`:
+
+@snippet asset_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page asset_v1::AssetServiceClient-endpoint-snippet Override asset_v1::AssetServiceClient Endpoint Configuration
+
+@snippet google/cloud/asset/v1/samples/asset_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

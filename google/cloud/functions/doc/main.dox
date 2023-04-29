@@ -23,10 +23,10 @@ which should give you a taste of the Cloud Functions API C++ client library API.
 
 <!-- inject-client-list-start -->
 The main class in this library is
-[`functions_v1::CloudFunctionsServiceClient`](@ref google::cloud::functions_v1::CloudFunctionsServiceClient).
+[\c functions_v1::CloudFunctionsServiceClient](@ref google::cloud::functions_v1::CloudFunctionsServiceClient).
 All RPCs are exposed as member functions of this class. Other classes provide
 helpers, retry policies, configuration parameters, and infrastructure to mock
-[`functions_v1::CloudFunctionsServiceClient`](@ref google::cloud::functions_v1::CloudFunctionsServiceClient) when testing your
+[\c functions_v1::CloudFunctionsServiceClient](@ref google::cloud::functions_v1::CloudFunctionsServiceClient) when testing your
 application.
 <!-- inject-client-list-end -->
 

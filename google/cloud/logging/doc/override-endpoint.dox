@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `logging_v2::LoggingServiceV2Client`:
+
+@snippet logging_service_v2_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page logging_v2::LoggingServiceV2Client-endpoint-snippet Override logging_v2::LoggingServiceV2Client Endpoint Configuration
+
+@snippet google/cloud/logging/v2/samples/logging_service_v2_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

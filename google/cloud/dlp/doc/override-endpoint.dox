@@ -7,9 +7,19 @@ library. Use the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `dlp_v2::DlpServiceClient`:
+
+@snippet dlp_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page dlp_v2::DlpServiceClient-endpoint-snippet Override dlp_v2::DlpServiceClient Endpoint Configuration
+
+@snippet google/cloud/dlp/v2/samples/dlp_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

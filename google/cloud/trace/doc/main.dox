@@ -33,8 +33,8 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`trace_v1::TraceServiceClient`](@ref google::cloud::trace_v1::TraceServiceClient)
-- [`trace_v2::TraceServiceClient`](@ref google::cloud::trace_v2::TraceServiceClient)
+- [\c trace_v1::TraceServiceClient](@ref google::cloud::trace_v1::TraceServiceClient)
+- [\c trace_v2::TraceServiceClient](@ref google::cloud::trace_v2::TraceServiceClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.

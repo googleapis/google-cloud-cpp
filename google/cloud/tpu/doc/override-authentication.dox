@@ -9,6 +9,13 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
+@snippet tpu_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c tpu_v1::TpuClient](@ref tpu_v1::TpuClient-service-account-snippet)
+- [\c tpu_v2::TpuClient](@ref tpu_v2::TpuClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -24,4 +31,16 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page tpu_v1::TpuClient-service-account-snippet Override tpu_v1::TpuClient Authentication Defaults
+
+@snippet google/cloud/tpu/v1/samples/tpu_client_samples.cc with-service-account
+
+*/
+
+/*! @page tpu_v2::TpuClient-service-account-snippet Override tpu_v2::TpuClient Authentication Defaults
+
+@snippet google/cloud/tpu/v2/samples/tpu_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->

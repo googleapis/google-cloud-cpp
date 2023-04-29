@@ -9,6 +9,8 @@ this default. You can do so by providing the
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
+@snippet confidential_computing_client_samples.cc with-service-account
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -24,4 +26,10 @@ guide for more details.
 */
 
 // <!-- inject-authentication-pages-start -->
+
+/*! @page confidentialcomputing_v1::ConfidentialComputingClient-service-account-snippet Override confidentialcomputing_v1::ConfidentialComputingClient Authentication Defaults
+
+@snippet google/cloud/confidentialcomputing/v1/samples/confidential_computing_client_samples.cc with-service-account
+
+*/
 // <!-- inject-authentication-pages-end -->

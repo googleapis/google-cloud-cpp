@@ -37,9 +37,9 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`video_livestream_v1::LivestreamServiceClient`](@ref google::cloud::video_livestream_v1::LivestreamServiceClient)
-- [`video_stitcher_v1::VideoStitcherServiceClient`](@ref google::cloud::video_stitcher_v1::VideoStitcherServiceClient)
-- [`video_transcoder_v1::TranscoderServiceClient`](@ref google::cloud::video_transcoder_v1::TranscoderServiceClient)
+- [\c video_livestream_v1::LivestreamServiceClient](@ref google::cloud::video_livestream_v1::LivestreamServiceClient)
+- [\c video_stitcher_v1::VideoStitcherServiceClient](@ref google::cloud::video_stitcher_v1::VideoStitcherServiceClient)
+- [\c video_transcoder_v1::TranscoderServiceClient](@ref google::cloud::video_transcoder_v1::TranscoderServiceClient)
 <!-- inject-client-list-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
