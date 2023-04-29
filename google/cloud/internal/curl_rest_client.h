@@ -43,8 +43,7 @@ class CurlRestClient : public RestClient {
   static std::string HostHeader(Options const& options,
                                 std::string const& endpoint);
   CurlRestClient(std::string endpoint_address,
-                 std::shared_ptr<CurlHandleFactory> factory,
-                 std::shared_ptr<oauth2_internal::Credentials> credentials);
+                 std::shared_ptr<CurlHandleFactory> factory, Options options);
   ~CurlRestClient() override = default;
 
   CurlRestClient(CurlRestClient const&) = delete;
@@ -71,13 +70,15 @@ class CurlRestClient : public RestClient {
       std::vector<absl::Span<char const>> const& payload) override;
 
  private:
-  StatusOr<std::unique_ptr<CurlImpl>> CreateCurlImpl(
-      RestContext const& context, RestRequest const& request);
+  StatusOr<std::unique_ptr<CurlImpl>> CreateCurlImpl(RestContext const& context,
+                                                     RestRequest const& request,
+                                                     Options const& options);
 
   std::string endpoint_address_;
   std::shared_ptr<CurlHandleFactory> handle_factory_;
   std::string x_goog_api_client_header_;
   std::shared_ptr<oauth2_internal::Credentials> credentials_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

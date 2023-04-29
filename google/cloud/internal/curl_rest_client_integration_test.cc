@@ -155,13 +155,13 @@ TEST_F(RestClientIntegrationTest, Get) {
 
 TEST_F(RestClientIntegrationTest, Delete) {
   options_.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
+  options_.set<UserIpOption>("127.0.0.1");
   auto client = MakeDefaultRestClient(url_, options_);
   RestRequest request;
   request.SetPath("delete");
   request.AddQueryParameter({"key", "value"});
   auto response_status = RetryRestRequest([&] {
-    rest_internal::RestContext context(
-        Options{}.set<UserIpOption>("127.0.0.1"));
+    rest_internal::RestContext context;
     return client->Delete(context, request);
   });
   ASSERT_STATUS_OK(response_status);
