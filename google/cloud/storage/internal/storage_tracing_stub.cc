@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/storage_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/streaming_read_rpc_tracing.h"
+#include "google/cloud/internal/streaming_write_rpc_tracing.h"
 
 namespace google {
 namespace cloud {
@@ -245,11 +246,19 @@ StatusOr<google::storage::v2::Object> StorageTracingStub::UpdateObject(
                            child_->UpdateObject(context, request));
 }
 
-std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
-    google::storage::v2::WriteObjectRequest,
-    google::storage::v2::WriteObjectResponse>>
+std::unique_ptr<
+    internal::StreamingWriteRpc<google::storage::v2::WriteObjectRequest,
+                                google::storage::v2::WriteObjectResponse>>
 StorageTracingStub::WriteObject(std::shared_ptr<grpc::ClientContext> context) {
-  return child_->WriteObject(std::move(context));
+  auto span =
+      internal::MakeSpanGrpc("google.storage.v2.Storage", "WriteObject");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  auto stream = child_->WriteObject(context);
+  return std::make_unique<internal::StreamingWriteRpcTracing<
+      google::storage::v2::WriteObjectRequest,
+      google::storage::v2::WriteObjectResponse>>(
+      std::move(context), std::move(stream), std::move(span));
 }
 
 StatusOr<google::storage::v2::ListObjectsResponse>
