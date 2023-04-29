@@ -84,7 +84,7 @@ The client library is only tested against the latest version of
 Note the following two feature flags explicitly set in the `.bazelrc`. Together,
 these flags enable OpenTelemetry tracing instrumentation in `google-cloud-cpp`.
 
-```py
+```sh
 # Required for OpenTelemetry + Abseil compatibility
 build --@io_opentelemetry_cpp//api:with_abseil
 
