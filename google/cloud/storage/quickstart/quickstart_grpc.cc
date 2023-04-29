@@ -35,12 +35,11 @@ int main(int argc, char* argv[]) {
   writer << "Hello World!";
   writer.Close();
   if (writer.metadata()) {
-    std::cout << "Successfully created object: " << *writer.metadata() << "\n";
-  } else {
     std::cerr << "Error creating object: " << writer.metadata().status()
               << "\n";
     return 1;
   }
+  std::cout << "Successfully created object: " << *writer.metadata() << "\n";
 
   auto reader = client.ReadObject(bucket_name, "quickstart-grpc.txt");
   if (!reader) {

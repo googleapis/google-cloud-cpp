@@ -34,13 +34,12 @@ int main(int argc, char* argv[]) {
   auto writer = client.WriteObject(bucket_name, "quickstart.txt");
   writer << "Hello World!";
   writer.Close();
-  if (writer.metadata()) {
-    std::cout << "Successfully created object: " << *writer.metadata() << "\n";
-  } else {
+  if (!writer.metadata()) {
     std::cerr << "Error creating object: " << writer.metadata().status()
               << "\n";
     return 1;
   }
+  std::cout << "Successfully created object: " << *writer.metadata() << "\n";
 
   auto reader = client.ReadObject(bucket_name, "quickstart.txt");
   if (!reader) {
