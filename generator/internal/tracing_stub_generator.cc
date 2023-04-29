@@ -101,6 +101,9 @@ Status TracingStubGenerator::GenerateCc() {
                    HasStreamingReadMethod()
                        ? "google/cloud/internal/streaming_read_rpc_tracing.h"
                        : "",
+                   HasStreamingWriteMethod()
+                       ? "google/cloud/internal/streaming_write_rpc_tracing.h"
+                       : "",
                    "google/cloud/internal/grpc_opentelemetry.h"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
@@ -120,12 +123,16 @@ $tracing_stub_class_name$::$tracing_stub_class_name$(
   for (auto const& method : methods()) {
     if (IsStreamingWrite(method)) {
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
-std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
-    $request_type$,
-    $response_type$>>
+std::unique_ptr<internal::StreamingWriteRpc<$request_type$, $response_type$>>
 $tracing_stub_class_name$::$method_name$(
     std::shared_ptr<grpc::ClientContext> context) {
-  return child_->$method_name$(std::move(context));
+  auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  auto stream = child_->$method_name$(context);
+  return std::make_unique<
+      internal::StreamingWriteRpcTracing<$request_type$, $response_type$>>(
+      std::move(context), std::move(stream), std::move(span));
 }
 )""");
       continue;

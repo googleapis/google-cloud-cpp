@@ -266,8 +266,13 @@ TEST(GoldenKitchenSinkTracingStubTest, DoNothing) {
 }
 
 TEST(GoldenKitchenSinkTracingStubTest, StreamingWrite) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock_propagator = InstallMockPropagator();
+  EXPECT_CALL(*mock_propagator, Inject);
+
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
   EXPECT_CALL(*mock, StreamingWrite).WillOnce([](auto) {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
     auto stream = std::make_unique<MockStreamingWriteRpc>();
     EXPECT_CALL(*stream, Write).WillOnce(Return(false));
     EXPECT_CALL(*stream, Close)
@@ -281,6 +286,18 @@ TEST(GoldenKitchenSinkTracingStubTest, StreamingWrite) {
   EXPECT_FALSE(stream->Write(Request{}, grpc::WriteOptions()));
   auto response = stream->Close();
   EXPECT_THAT(response, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed(
+              "google.test.admin.database.v1.GoldenKitchenSink/StreamingWrite"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<std::string>("grpc.peer", _),
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingRead) {
