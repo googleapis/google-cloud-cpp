@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
   auto writer = client.WriteObject(bucket_name, "quickstart-grpc.txt");
   writer << "Hello World!";
   writer.Close();
-  if (writer.metadata()) {
+  if (!writer.metadata()) {
     std::cerr << "Error creating object: " << writer.metadata().status()
               << "\n";
     return 1;
