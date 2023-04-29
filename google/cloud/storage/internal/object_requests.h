@@ -111,8 +111,7 @@ class InsertObjectMediaRequest
           MD5HashValue, PredefinedAcl, Projection, UserProject,
           UploadFromOffset, UploadLimit, WithObjectMetadata> {
  public:
-  InsertObjectMediaRequest() = default;
-
+  InsertObjectMediaRequest();
   InsertObjectMediaRequest(std::string bucket_name, std::string object_name,
                            absl::string_view payload);
 

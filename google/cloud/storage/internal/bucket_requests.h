@@ -213,6 +213,7 @@ std::ostream& operator<<(std::ostream& os, GetBucketIamPolicyRequest const& r);
 class SetNativeBucketIamPolicyRequest
     : public GenericRequest<SetNativeBucketIamPolicyRequest, UserProject> {
  public:
+  SetNativeBucketIamPolicyRequest();
   explicit SetNativeBucketIamPolicyRequest(std::string bucket_name,
                                            NativeIamPolicy const& policy);
 

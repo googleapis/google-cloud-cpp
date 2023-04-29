@@ -161,6 +161,9 @@ std::ostream& operator<<(std::ostream& os, GetObjectMetadataRequest const& r) {
   return os << "}";
 }
 
+InsertObjectMediaRequest::InsertObjectMediaRequest()
+    : hash_function_(CreateHashFunction(*this)) {}
+
 InsertObjectMediaRequest::InsertObjectMediaRequest(std::string bucket_name,
                                                    std::string object_name,
                                                    absl::string_view payload)

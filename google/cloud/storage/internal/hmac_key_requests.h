@@ -118,6 +118,7 @@ class ListHmacKeysRequest
     : public GenericHmacKeyRequest<ListHmacKeysRequest, Deleted, MaxResults,
                                    ServiceAccountFilter> {
  public:
+  ListHmacKeysRequest() = default;
   explicit ListHmacKeysRequest(std::string project_id)
       : GenericHmacKeyRequest(std::move(project_id)) {}
 
@@ -150,6 +151,7 @@ std::ostream& operator<<(std::ostream& os, ListHmacKeysResponse const& r);
 class DeleteHmacKeyRequest
     : public GenericHmacKeyRequest<DeleteHmacKeyRequest> {
  public:
+  DeleteHmacKeyRequest() = default;
   explicit DeleteHmacKeyRequest(std::string project_id, std::string access_id)
       : GenericHmacKeyRequest(std::move(project_id)),
         access_id_(std::move(access_id)) {}
@@ -165,6 +167,7 @@ std::ostream& operator<<(std::ostream& os, DeleteHmacKeyRequest const& r);
 /// Represents a request to call the `HmacKeys: get` API.
 class GetHmacKeyRequest : public GenericHmacKeyRequest<GetHmacKeyRequest> {
  public:
+  GetHmacKeyRequest() = default;
   explicit GetHmacKeyRequest(std::string project_id, std::string access_id)
       : GenericHmacKeyRequest(std::move(project_id)),
         access_id_(std::move(access_id)) {}
@@ -181,6 +184,7 @@ std::ostream& operator<<(std::ostream& os, GetHmacKeyRequest const& r);
 class UpdateHmacKeyRequest
     : public GenericHmacKeyRequest<UpdateHmacKeyRequest> {
  public:
+  UpdateHmacKeyRequest() = default;
   explicit UpdateHmacKeyRequest(std::string project_id, std::string access_id,
                                 HmacKeyMetadata resource)
       : GenericHmacKeyRequest(std::move(project_id)),

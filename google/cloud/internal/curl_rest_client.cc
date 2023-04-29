@@ -94,37 +94,33 @@ std::string CurlRestClient::HostHeader(Options const& options,
   return {};
 }
 
-CurlRestClient::CurlRestClient(std::string endpoint_address,
-                               std::shared_ptr<CurlHandleFactory> factory,
-                               Options options)
+CurlRestClient::CurlRestClient(
+    std::string endpoint_address, std::shared_ptr<CurlHandleFactory> factory,
+    std::shared_ptr<oauth2_internal::Credentials> credentials)
     : endpoint_address_(std::move(endpoint_address)),
       handle_factory_(std::move(factory)),
       x_goog_api_client_header_("x-goog-api-client: " +
                                 google::cloud::internal::ApiClientHeader()),
-      options_(std::move(options)) {
-  if (options_.has<UnifiedCredentialsOption>()) {
-    credentials_ = MapCredentials(options_.get<UnifiedCredentialsOption>());
-  }
-}
+      credentials_(std::move(credentials)) {}
 
 StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
     RestContext const& context, RestRequest const& request) {
   auto handle = CurlHandle::MakeFromPool(*handle_factory_);
-  auto impl =
-      std::make_unique<CurlImpl>(std::move(handle), handle_factory_, options_);
+  auto impl = std::make_unique<CurlImpl>(std::move(handle), handle_factory_,
+                                         context.options());
   if (credentials_) {
     auto auth_header = oauth2_internal::AuthorizationHeader(*credentials_);
     if (!auth_header.ok()) return std::move(auth_header).status();
     impl->SetHeader(auth_header.value());
   }
-  impl->SetHeader(HostHeader(options_, endpoint_address_));
+  impl->SetHeader(HostHeader(context.options(), endpoint_address_));
   impl->SetHeader(x_goog_api_client_header_);
   impl->SetHeaders(context, request);
   RestRequest::HttpParameters additional_parameters;
   // The UserIp option has been deprecated in favor of quotaUser. Only add the
   // parameter if the option has been set.
-  if (options_.has<UserIpOption>()) {
-    auto user_ip = options_.get<UserIpOption>();
+  if (context.options().has<UserIpOption>()) {
+    auto user_ip = context.options().get<UserIpOption>();
     if (user_ip.empty()) user_ip = impl->LastClientIpAddress();
     if (!user_ip.empty()) additional_parameters.emplace_back("userIp", user_ip);
   }
@@ -145,7 +141,7 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Delete(
   auto response = (*impl)->MakeRequest(CurlImpl::HttpMethod::kDelete, context);
   if (!response.ok()) return response;
   return {std::unique_ptr<CurlRestResponse>(
-      new CurlRestResponse(options_, std::move(*impl)))};
+      new CurlRestResponse(context.options(), std::move(*impl)))};
 }
 
 StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Get(
@@ -155,7 +151,7 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Get(
   auto response = (*impl)->MakeRequest(CurlImpl::HttpMethod::kGet, context);
   if (!response.ok()) return response;
   return {std::unique_ptr<CurlRestResponse>(
-      new CurlRestResponse(options_, std::move(*impl)))};
+      new CurlRestResponse(context.options(), std::move(*impl)))};
 }
 
 StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Patch(
@@ -167,7 +163,7 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Patch(
                                            context, request, **impl, payload);
   if (!response.ok()) return response;
   return {std::unique_ptr<CurlRestResponse>(
-      new CurlRestResponse(options_, std::move(*impl)))};
+      new CurlRestResponse(context.options(), std::move(*impl)))};
 }
 
 StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Post(
@@ -179,7 +175,7 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Post(
                                            request, **impl, payload);
   if (!response.ok()) return response;
   return {std::unique_ptr<CurlRestResponse>(
-      new CurlRestResponse(options_, std::move(*impl)))};
+      new CurlRestResponse(context.options(), std::move(*impl)))};
 }
 
 StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Post(
@@ -198,7 +194,7 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Post(
                                            request, **impl, {form_payload});
   if (!response.ok()) return response;
   return {std::unique_ptr<CurlRestResponse>(
-      new CurlRestResponse(options_, std::move(*impl)))};
+      new CurlRestResponse(context.options(), std::move(*impl)))};
 }
 
 StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Put(
@@ -210,32 +206,45 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Put(
                                            request, **impl, payload);
   if (!response.ok()) return response;
   return {std::unique_ptr<CurlRestResponse>(
-      new CurlRestResponse(options_, std::move(*impl)))};
+      new CurlRestResponse(context.options(), std::move(*impl)))};
 }
 
-std::unique_ptr<RestClient> MakeDefaultRestClient(std::string endpoint_address,
-                                                  Options options) {
+std::unique_ptr<RestClient> MakeDefaultRestClient(
+    std::string endpoint_address,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    Options options) {
   auto factory = GetDefaultCurlHandleFactory(options);
+
+  auto credentials =
+      options.has<UnifiedCredentialsOption>()
+          ? MapCredentials(options.get<UnifiedCredentialsOption>())
+          : std::shared_ptr<oauth2_internal::Credentials>();
   return MakeTracingRestClient(std::make_unique<CurlRestClient>(
-      std::move(endpoint_address), std::move(factory), std::move(options)));
+      std::move(endpoint_address), std::move(factory), std::move(credentials)));
 }
 
-std::unique_ptr<RestClient> MakePooledRestClient(std::string endpoint_address,
-                                                 Options options) {
+std::unique_ptr<RestClient> MakePooledRestClient(
+    std::string endpoint_address,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    Options options) {
   std::size_t pool_size = kDefaultPooledCurlHandleFactorySize;
   if (options.has<ConnectionPoolSizeOption>()) {
     pool_size = options.get<ConnectionPoolSizeOption>();
   }
+  auto credentials =
+      options.has<UnifiedCredentialsOption>()
+          ? MapCredentials(options.get<UnifiedCredentialsOption>())
+          : std::shared_ptr<oauth2_internal::Credentials>();
 
   if (pool_size > 0) {
     auto pool = std::make_shared<PooledCurlHandleFactory>(pool_size, options);
     return MakeTracingRestClient(std::make_unique<CurlRestClient>(
-        std::move(endpoint_address), std::move(pool), std::move(options)));
+        std::move(endpoint_address), std::move(pool), std::move(credentials)));
   }
 
   auto pool = std::make_shared<DefaultCurlHandleFactory>(options);
   return MakeTracingRestClient(std::make_unique<CurlRestClient>(
-      std::move(endpoint_address), std::move(pool), std::move(options)));
+      std::move(endpoint_address), std::move(pool), std::move(credentials)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
