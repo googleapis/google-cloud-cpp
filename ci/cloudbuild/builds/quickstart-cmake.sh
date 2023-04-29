@@ -34,6 +34,8 @@ env -C "${vcpkg_dir}" ./vcpkg install google-cloud-cpp
 # shellcheck disable=SC2046
 libraries="$(printf ";%s" $(quickstart::libraries))"
 libraries="${libraries:1}"
+# TODO(#11426): We need to add an opentelemetry feature to our vcpkg port
+#libraries="${libraries};experimental-opentelemetry"
 cmake -G Ninja \
   -S "${PROJECT_ROOT}/ci/verify_quickstart" \
   -B "${PROJECT_ROOT}/cmake-out/quickstart" \
