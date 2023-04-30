@@ -66,13 +66,20 @@ std::vector<TocEntry> GroupsToc(pugi::xml_document const& doc) {
 
 std::string Group2Yaml(pugi::xml_node const& node) {
   auto const id = std::string{node.attribute("id").as_string()};
+  auto const title = [&] {
+    std::ostringstream os;
+    MarkdownContext ctx;
+    AppendTitle(os, ctx, node);
+    return std::move(os).str();
+  }();
+
   YAML::Emitter yaml;
   yaml << YAML::BeginMap                                  // top-level
        << YAML::Key << "items"                            //
        << YAML::Value << YAML::BeginSeq                   //
        << YAML::BeginMap                                  // group
        << YAML::Key << "uid" << YAML::Value << id         //
-       << YAML::Key << "name" << YAML::Value << id        //
+       << YAML::Key << "title" << YAML::Value << title    //
        << YAML::Key << "id" << YAML::Value << id          //
        << YAML::Key << "type" << YAML::Value << "module"  //
        << YAML::Key << "langs"                            //

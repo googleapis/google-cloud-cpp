@@ -52,7 +52,7 @@ TEST(DoxygenGroups, CommonPage) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: group__terminate
-    name: group__terminate
+    title: Intercepting Unrecoverable Errors
     id: group__terminate
     type: module
     langs:
