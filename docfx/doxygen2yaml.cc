@@ -119,6 +119,21 @@ void AppendDescription(YAML::Emitter& yaml, pugi::xml_node const& node) {
   }
 }
 
+bool IsOperator(pugi::xml_node const& node) {
+  auto const name = std::string_view{node.child("name").child_value()};
+  return name.find("operator") != std::string_view::npos;
+}
+
+bool IsConstructor(pugi::xml_node const& node) {
+  auto is_empty = [](auto const& child) {
+    auto const name = std::string_view{child.name()};
+    if (name == "ref") return std::string_view{child.child_value()}.empty();
+    return std::string_view{child.value()}.empty();
+  };
+  auto type = node.child("type");
+  return std::all_of(type.begin(), type.end(), is_empty);
+}
+
 }  // namespace
 
 std::vector<TocEntry> CompoundToc(Config const& cfg,
@@ -294,6 +309,12 @@ bool AppendIfFunction(YAML::Emitter& yaml, YamlContext const& ctx,
   auto const qualified_name =
       std::string_view{node.child("qualifiedname").child_value()};
 
+  auto type = std::string_view{"function"};
+  if (IsOperator(node)) {
+    type = "operator";
+  } else if (IsConstructor(node)) {
+    type = "constructor";
+  }
   yaml << YAML::BeginMap                                                    //
        << YAML::Key << "uid" << YAML::Value << id                           //
        << YAML::Key << "name" << YAML::Value << name                        //
@@ -301,7 +322,7 @@ bool AppendIfFunction(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Value << YAML::Literal << qualified_name                    //
        << YAML::Key << "id" << YAML::Value << id                            //
        << YAML::Key << "parent" << YAML::Value << ctx.parent_id             //
-       << YAML::Key << "type" << YAML::Value << "function"                  //
+       << YAML::Key << "type" << YAML::Value << type                        //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendFunctionSyntax(yaml, ctx, node);
   auto const summary = Summary(node);

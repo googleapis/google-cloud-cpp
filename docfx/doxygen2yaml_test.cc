@@ -996,7 +996,7 @@ items:
       google::cloud::RuntimeStatusError::RuntimeStatusError
     id: classgoogle_1_1cloud_1_1RuntimeStatusError_1aac6b78160cce6468696ce77eb1276a95
     parent: classgoogle_1_1cloud_1_1RuntimeStatusError
-    type: function
+    type: constructor
     langs:
       - cpp
     syntax:
