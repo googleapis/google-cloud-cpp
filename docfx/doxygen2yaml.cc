@@ -122,25 +122,6 @@ void AppendDescription(YAML::Emitter& yaml, pugi::xml_node node) {
 
 }  // namespace
 
-std::vector<TocEntry> CompoundToc(Config const& cfg,
-                                  pugi::xml_document const& doc) {
-  std::vector<TocEntry> result;
-  // Insert only namespaces in the TOC. Other entities (functions, typedefs,
-  // classes, structs) are always part of a namespace and will appear in the
-  // references from them.
-  for (auto const& i : doc.select_nodes("//compounddef[@kind='namespace']")) {
-    auto const node = i.node();
-    if (!IncludeInPublicDocuments(cfg, node)) continue;
-    auto const id = std::string{node.attribute("id").as_string()};
-    auto const name =
-        std::string_view{node.child("compoundname").child_value()};
-    result.push_back(TocEntry{id, std::string(name), id + ".yml"});
-  }
-  std::sort(result.begin(), result.end(),
-            [](auto const& a, auto const& b) { return a.name < b.name; });
-  return result;
-}
-
 std::string Compound2Yaml(Config const& cfg, pugi::xml_node node) {
   YAML::Emitter yaml;
   YamlContext ctx;

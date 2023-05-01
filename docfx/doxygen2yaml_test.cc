@@ -377,40 +377,6 @@ auto constexpr kClassXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
     </compounddef>
   </doxygen>)xml";
 
-TEST(Doxygen2Yaml, CompoundToc) {
-  auto constexpr kDocXml = R"xml(<?xml version="1.0" standalone="yes"?>
-    <doxygen version="1.9.1" xml:lang="en-US">
-      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacegoogle" kind="namespace" language="C++">
-        <compoundname>google</compoundname>
-        <innernamespace refid="namespacegoogle_1_1cloud">google::cloud</innernamespace>
-      </compounddef>
-      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacegoogle_1_1cloud" kind="namespace" language="C++">
-        <compoundname>google::cloud</compoundname>
-      </compounddef>
-      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacestd" kind="namespace" language="Unknown">
-        <compoundname>std</compoundname>
-      </compounddef>
-      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="classgoogle_1_1cloud_1_1future" kind="class" language="C++" prot="public" final="yes">
-        <compoundname>google::cloud::future</compoundname>
-        <basecompoundref prot="private" virt="non-virtual">internal::future_base&lt; T &gt;</basecompoundref>
-        <includes refid="future__generic_8h" local="no">google/cloud/future_generic.h</includes>
-        <templateparamlist>
-          <param>
-            <type>typename T</type>
-          </param>
-        </templateparamlist>
-      </compounddef>
-    </doxygen>)xml";
-
-  pugi::xml_document doc;
-  ASSERT_TRUE(doc.load_string(kDocXml));
-  auto const actual = CompoundToc(Config{"unused", "cloud", ""}, doc);
-
-  EXPECT_THAT(actual,
-              ElementsAre(TocEntry{"namespacegoogle_1_1cloud", "google::cloud",
-                                   "namespacegoogle_1_1cloud.yml"}));
-}
-
 void TestPre(YAML::Emitter& yaml) {
   yaml << YAML::BeginMap << YAML::Key << "items" << YAML::Value
        << YAML::BeginSeq;

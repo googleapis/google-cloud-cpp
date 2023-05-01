@@ -30,10 +30,6 @@ namespace docfx {
  */
 std::string Page2Markdown(pugi::xml_node node);
 
-// Get the table of contents for pages.
-std::vector<TocEntry> PagesToc(Config const& cfg,
-                               pugi::xml_document const& doc);
-
 }  // namespace docfx
 
 #endif  // GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN_PAGES_H

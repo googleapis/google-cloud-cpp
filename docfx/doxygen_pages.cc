@@ -117,32 +117,4 @@ std::string Page2Markdown(pugi::xml_node node) {
   return std::move(os).str();
 }
 
-std::vector<TocEntry> PagesToc(Config const& cfg,
-                               pugi::xml_document const& doc) {
-  auto nodes = doc.select_nodes("//*[@kind='page']");
-  std::vector<TocEntry> result;
-  result.reserve(nodes.size());
-  for (auto const& i : nodes) {
-    auto const page = i.node();
-    if (!IncludeInPublicDocuments(cfg, page)) continue;
-    auto const id = std::string_view{page.attribute("id").as_string()};
-    // Skip endpoint and authorization override snippets.
-    if (id.find("-endpoint-snippet") != std::string_view::npos) continue;
-    if (id.find("-account-snippet") != std::string_view::npos) continue;
-    std::ostringstream title;
-    AppendTitle(title, MarkdownContext{}, page);
-    auto filename =
-        std::string(id == "indexpage" ? std::string_view{"index"} : id) + ".md";
-    result.push_back({std::string{id}, title.str(), std::move(filename)});
-  };
-  std::sort(result.begin(), result.end(), [](auto const& a, auto const& b) {
-    // If there is an `indexpage` element (aka `index.md`) it should be the
-    // first entry.
-    if (b.uid == "indexpage") return false;
-    if (a.uid == "indexpage") return true;
-    return a.uid < b.uid;
-  });
-  return result;
-}
-
 }  // namespace docfx

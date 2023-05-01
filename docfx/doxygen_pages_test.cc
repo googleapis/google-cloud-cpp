@@ -100,56 +100,5 @@ This library contains common components shared by all the Google Cloud C++ Clien
   EXPECT_EQ(kExpected, actual);
 }
 
-TEST(DoxygenPages, PagesToc) {
-  auto constexpr kXml =
-      R"xml(<?xml version="1.0" standalone="yes"?><doxygen version="1.9.1" xml:lang="en-US">
-        <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="common-error-handling" kind="page">
-          <compoundname>common-error-handling</compoundname>
-          <title>Error Handling</title>
-          <briefdescription><para>An overview of error handling in the Google Cloud C++ client libraries.</para>
-          </briefdescription>
-          <detaileddescription><para>More details about error handling.</para></detaileddescription>
-        </compounddef>
-        <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="indexpage" kind="page">
-          <compoundname>index</compoundname>
-          <title>The Page Title</title>
-          <briefdescription><para>Some brief description.</para>
-          </briefdescription>
-          <detaileddescription><para>More details about the index.</para></detaileddescription>
-        </compounddef>
-        <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="deprecated" kind="page">
-          <compoundname>deprecated</compoundname>
-          <title>Deprecated List</title>
-          <briefdescription><para>Some brief description.</para>
-          </briefdescription>
-          <detaileddescription><para>More details about the index.</para></detaileddescription>
-        </compounddef>
-        <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="secretmanager_v1_1_1SecretManagerServiceClient-endpoint-snippet" kind="page">
-          <compoundname>secretmanager_v1::SecretManagerServiceClient-endpoint-snippet</compoundname>
-          <title>Override secretmanager_v1::SecretManagerServiceClient Endpoint Configuration</title>
-          <briefdescription><para>Some brief description.</para>
-          </briefdescription>
-          <detaileddescription><para>More details about the snippet.</para></detaileddescription>
-        </compounddef>
-        <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="secretmanager_v1_1_1SecretManagerServiceClient-service-account-snippet" kind="page">
-          <compoundname>secretmanager_v1::SecretManagerServiceClient-service-account-snippet</compoundname>
-          <title>Override secretmanager_v1::SecretManagerServiceClient Authentication Default</title>
-          <briefdescription><para>Some brief description.</para>
-          </briefdescription>
-          <detaileddescription><para>More details about the snippet.</para></detaileddescription>
-        </compounddef>
-      </doxygen>)xml";
-
-  pugi::xml_document doc;
-  ASSERT_TRUE(doc.load_string(kXml));
-  auto const actual = PagesToc(Config{"unused", "cloud", "unused"}, doc);
-
-  // The order matters, we want `indexpage` to be the first page.
-  EXPECT_THAT(actual,
-              ElementsAre(FieldsAre("indexpage", "The Page Title", "index.md"),
-                          FieldsAre("common-error-handling", "Error Handling",
-                                    "common-error-handling.md")));
-}
-
 }  // namespace
 }  // namespace docfx

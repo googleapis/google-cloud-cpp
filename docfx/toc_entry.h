@@ -15,26 +15,43 @@
 #ifndef GOOGLE_CLOUD_CPP_DOCFX_TOC_ENTRY_H
 #define GOOGLE_CLOUD_CPP_DOCFX_TOC_ENTRY_H
 
+#include <pugixml.hpp>
 #include <iosfwd>
+#include <list>
+#include <map>
+#include <memory>
 #include <string>
 
 namespace docfx {
 
-/// An entry in table of contents
+struct TocEntry;
+using TocItems = std::list<std::shared_ptr<TocEntry>>;
+
+/**
+ * An entry in the Table of Contents.
+ *
+ * The table of contents is a hierarchical data structure. Each node contains
+ * a name, an optional set of attributes and then a list of nodes.
+ *
+ * The attributes are optional, but the following values are common:
+ * - `href`: the name of a file that the node links to.
+ * - `uid`: the uid of the documented element.
+ */
 struct TocEntry {
-  std::string uid;
   std::string name;
-  std::string filename;
+  std::map<std::string, std::string> attr;
+  TocItems items;
 };
 
-inline bool operator==(TocEntry const& lhs, TocEntry const& rhs) {
-  return lhs.filename == rhs.filename && lhs.name == rhs.name;
-}
+/// Compare two ToC entries, used in unit tests.
+bool operator==(TocEntry const& lhs, TocEntry const& rhs);
 
+/// Compare two ToC entries, used in unit tests.
 inline bool operator!=(TocEntry const& lhs, TocEntry const& rhs) {
   return !(lhs == rhs);
 }
 
+/// Print out the tree, mostly for troubleshooting.
 std::ostream& operator<<(std::ostream& os, TocEntry const& entry);
 
 }  // namespace docfx
