@@ -46,15 +46,6 @@ struct DataClassificationTagList {
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DataClassificationTagList,
                                                 names);
 
-struct RoundingMode {
-  static RoundingMode UnSpecified();
-  static RoundingMode RoundHalfAwayFromZero();
-  static RoundingMode RoundHalfEven();
-
-  std::string value;
-};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(RoundingMode, value);
-
 struct FieldElementType {
   std::string type;
 };

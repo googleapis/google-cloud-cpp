@@ -92,8 +92,7 @@ Dataset MakeDataset() {
   expected.linked_dataset_source.source_dataset = dataset_ref;
   expected.external_dataset_reference.hive_database.catalog_id = "c1";
   expected.external_dataset_reference.hive_database.database = "d1";
-  expected.default_rounding_mode =
-      TableFieldSchemaRoundingMode::RoundHalfEven();
+  expected.default_rounding_mode = RoundingMode::RoundHalfEven();
   expected.storage_billing_model = StorageBillingModel::Logical();
 
   return expected;
@@ -370,7 +369,7 @@ TEST(DatasetTest, DatasetDebugString) {
       R"( })"
       R"( })"
       R"( default_rounding_mode {)"
-      R"( rounding_mode_value: "ROUND_HALF_EVEN")"
+      R"( value: "ROUND_HALF_EVEN")"
       R"( })"
       R"( storage_billing_model { storage_billing_model_value: "LOGICAL" })"
       R"( })");
@@ -429,7 +428,7 @@ TEST(DatasetTest, DatasetDebugString) {
       R"( })"
       R"( })"
       R"( default_rounding_mode {)"
-      R"( rounding_mode_value: "ROUND_H...<truncated>...")"
+      R"( value: "ROUND_H...<truncated>...")"
       R"( })"
       R"( storage_billing_model { storage_billing_model_value: "LOGICAL" })"
       R"( })");
@@ -525,7 +524,7 @@ TEST(DatasetTest, DatasetDebugString) {
     }
   }
   default_rounding_mode {
-    rounding_mode_value: "ROUND_HALF_EVEN"
+    value: "ROUND_HALF_EVEN"
   }
   storage_billing_model {
     storage_billing_model_value: "LOGICAL"

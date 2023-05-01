@@ -20,18 +20,6 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-RoundingMode RoundingMode::UnSpecified() {
-  return RoundingMode{"ROUNDING_MODE_UNSPECIFIED"};
-}
-
-RoundingMode RoundingMode::RoundHalfAwayFromZero() {
-  return RoundingMode{"ROUND_HALF_AWAY_FROM_ZERO"};
-}
-
-RoundingMode RoundingMode::RoundHalfEven() {
-  return RoundingMode{"ROUND_HALF_EVEN"};
-}
-
 // NOLINTBEGIN
 void to_json(nlohmann::json& j,
              std::vector<std::shared_ptr<TableFieldSchema>> const& t) {

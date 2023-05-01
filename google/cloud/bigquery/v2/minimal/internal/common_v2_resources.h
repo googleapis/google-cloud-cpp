@@ -15,7 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_COMMON_V2_RESOURCES_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_COMMON_V2_RESOURCES_H
 
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include "absl/strings/string_view.h"
 #include <nlohmann/json.hpp>
 #include <string>
 
@@ -38,12 +40,33 @@ struct TableReference {
   std::string project_id;
   std::string dataset_id;
   std::string table_id;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 
 struct DatasetReference {
   std::string dataset_id;
   std::string project_id;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
+
+struct RoundingMode {
+  static RoundingMode UnSpecified();
+  static RoundingMode RoundHalfAwayFromZero();
+  static RoundingMode RoundHalfEven();
+
+  std::string value;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
+};
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(RoundingMode, value);
 
 // Self referential and circular structures below is based on the bigquery v2
 // QueryParameterType and QueryParameterValue proto definitions. Disabling

@@ -22,59 +22,24 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StorageBillingModel StorageBillingModel::UnSpecified() {
-  StorageBillingModel model;
-  model.value = "STORAGE_BILLING_MODEL_UNSPECIFIED";
-  return model;
+  return StorageBillingModel{"STORAGE_BILLING_MODEL_UNSPECIFIED"};
 }
 
 StorageBillingModel StorageBillingModel::Logical() {
-  StorageBillingModel model;
-  model.value = "LOGICAL";
-  return model;
+  return StorageBillingModel{"LOGICAL"};
 }
 
 StorageBillingModel StorageBillingModel::Physical() {
-  StorageBillingModel model;
-  model.value = "PHYSICAL";
-  return model;
+  return StorageBillingModel{"PHYSICAL"};
 }
 
 TargetType TargetType::UnSpecified() {
-  TargetType type;
-  type.value = "TARGET_TYPE_UNSPECIFIED";
-  return type;
+  return TargetType{"TARGET_TYPE_UNSPECIFIED"};
 }
 
-TargetType TargetType::Views() {
-  TargetType type;
-  type.value = "VIEWS";
-  return type;
-}
+TargetType TargetType::Views() { return TargetType{"VIEWS"}; }
 
-TargetType TargetType::Routines() {
-  TargetType type;
-  type.value = "ROUTINES";
-  return type;
-}
-
-TableFieldSchemaRoundingMode TableFieldSchemaRoundingMode::UnSpecified() {
-  TableFieldSchemaRoundingMode mode;
-  mode.value = "ROUNDING_MODE_UNSPECIFIED";
-  return mode;
-}
-
-TableFieldSchemaRoundingMode
-TableFieldSchemaRoundingMode::RoundHalfAwayFromZero() {
-  TableFieldSchemaRoundingMode mode;
-  mode.value = "ROUND_HALF_AWAY_FROM_ZERO";
-  return mode;
-}
-
-TableFieldSchemaRoundingMode TableFieldSchemaRoundingMode::RoundHalfEven() {
-  TableFieldSchemaRoundingMode mode;
-  mode.value = "ROUND_HALF_EVEN";
-  return mode;
-}
+TargetType TargetType::Routines() { return TargetType{"ROUTINES"}; }
 
 void to_json(nlohmann::json& j, Dataset const& d) {
   j = nlohmann::json{
@@ -175,25 +140,6 @@ void from_json(nlohmann::json const& j, Dataset& d) {
     j.at("storage_billing_model").get_to(d.storage_billing_model);
 }
 
-std::string DatasetReference::DebugString(absl::string_view name,
-                                          TracingOptions const& options,
-                                          int indent) const {
-  return internal::DebugFormatter(name, options, indent)
-      .StringField("project_id", project_id)
-      .StringField("dataset_id", dataset_id)
-      .Build();
-}
-
-std::string TableReference::DebugString(absl::string_view name,
-                                        TracingOptions const& options,
-                                        int indent) const {
-  return internal::DebugFormatter(name, options, indent)
-      .StringField("project_id", project_id)
-      .StringField("dataset_id", dataset_id)
-      .StringField("table_id", table_id)
-      .Build();
-}
-
 std::string LinkedDatasetSource::DebugString(absl::string_view name,
                                              TracingOptions const& options,
                                              int indent) const {
@@ -225,13 +171,6 @@ std::string StorageBillingModel::DebugString(absl::string_view name,
                                              int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .StringField("storage_billing_model_value", value)
-      .Build();
-}
-
-std::string TableFieldSchemaRoundingMode::DebugString(
-    absl::string_view name, TracingOptions const& options, int indent) const {
-  return internal::DebugFormatter(name, options, indent)
-      .StringField("rounding_mode_value", value)
       .Build();
 }
 

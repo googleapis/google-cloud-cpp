@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/common_v2_resources.h"
+#include "google/cloud/internal/debug_string.h"
+#include "google/cloud/internal/format_time_point.h"
 
 namespace google {
 namespace cloud {
@@ -78,6 +80,45 @@ void from_json(nlohmann::json const& j, QueryParameterValue& q) {
     j.at("struct_values").get_to(q.struct_values);
 }
 // NOLINTEND
+
+RoundingMode RoundingMode::UnSpecified() {
+  return RoundingMode{"ROUNDING_MODE_UNSPECIFIED"};
+}
+
+RoundingMode RoundingMode::RoundHalfAwayFromZero() {
+  return RoundingMode{"ROUND_HALF_AWAY_FROM_ZERO"};
+}
+
+RoundingMode RoundingMode::RoundHalfEven() {
+  return RoundingMode{"ROUND_HALF_EVEN"};
+}
+
+std::string RoundingMode::DebugString(absl::string_view name,
+                                      TracingOptions const& options,
+                                      int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("value", value)
+      .Build();
+}
+
+std::string DatasetReference::DebugString(absl::string_view name,
+                                          TracingOptions const& options,
+                                          int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("project_id", project_id)
+      .StringField("dataset_id", dataset_id)
+      .Build();
+}
+
+std::string TableReference::DebugString(absl::string_view name,
+                                        TracingOptions const& options,
+                                        int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("project_id", project_id)
+      .StringField("dataset_id", dataset_id)
+      .StringField("table_id", table_id)
+      .Build();
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
