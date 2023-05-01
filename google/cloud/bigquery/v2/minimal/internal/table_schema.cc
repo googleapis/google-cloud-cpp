@@ -21,21 +21,15 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RoundingMode RoundingMode::UnSpecified() {
-  RoundingMode mode;
-  mode.value = "ROUNDING_MODE_UNSPECIFIED";
-  return mode;
+  return RoundingMode{"ROUNDING_MODE_UNSPECIFIED"};
 }
 
 RoundingMode RoundingMode::RoundHalfAwayFromZero() {
-  RoundingMode mode;
-  mode.value = "ROUND_HALF_AWAY_FROM_ZERO";
-  return mode;
+  return RoundingMode{"ROUND_HALF_AWAY_FROM_ZERO"};
 }
 
 RoundingMode RoundingMode::RoundHalfEven() {
-  RoundingMode mode;
-  mode.value = "ROUND_HALF_EVEN";
-  return mode;
+  return RoundingMode{"ROUND_HALF_EVEN"};
 }
 
 // NOLINTBEGIN

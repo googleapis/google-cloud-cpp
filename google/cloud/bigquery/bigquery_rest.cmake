@@ -187,6 +187,7 @@ function (bigquery_rest_define_tests)
         v2/minimal/internal/job_request_test.cc
         v2/minimal/internal/job_response_test.cc
         v2/minimal/internal/job_rest_stub_test.cc
+        v2/minimal/internal/job_test.cc
         v2/minimal/internal/table_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
