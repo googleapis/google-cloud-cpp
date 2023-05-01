@@ -23,6 +23,7 @@
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/oauth2_cached_credentials.h"
 #include "google/cloud/internal/oauth2_compute_engine_credentials.h"
 #include "google/cloud/status.h"
 #include <chrono>
@@ -106,10 +107,10 @@ class ComputeEngineCredentials<storage::internal::CurlRequestBuilder,
   explicit ComputeEngineCredentials(std::string service_account_email);
 
   StatusOr<std::string> AuthorizationHeader() override {
-    return oauth2_internal::AuthorizationHeaderJoined(impl_);
+    return oauth2_internal::AuthorizationHeaderJoined(*cached_);
   }
 
-  std::string AccountEmail() const override { return impl_.AccountEmail(); }
+  std::string AccountEmail() const override { return impl_->AccountEmail(); }
 
   /**
    * Returns the email or alias of this credential's service account.
@@ -120,7 +121,7 @@ class ComputeEngineCredentials<storage::internal::CurlRequestBuilder,
    * initializing this credential, that alias is returned as this credential's
    * email address if the credential has not been refreshed yet.
    */
-  std::string service_account_email() { return impl_.service_account_email(); }
+  std::string service_account_email() { return impl_->service_account_email(); }
 
   /**
    * Returns the set of scopes granted to this credential's service account.
@@ -129,10 +130,20 @@ class ComputeEngineCredentials<storage::internal::CurlRequestBuilder,
    * server to fetch service account metadata, this method will return an empty
    * set if the credential has not been refreshed yet.
    */
-  std::set<std::string> scopes() const { return impl_.scopes(); }
+  std::set<std::string> scopes() const { return impl_->scopes(); }
 
  private:
-  google::cloud::oauth2_internal::ComputeEngineCredentials impl_;
+  friend struct ComputeEngineCredentialsTester;
+  ComputeEngineCredentials(std::string service_account_email,
+                           oauth2_internal::HttpClientFactory client_factory);
+
+  StatusOr<std::string> AuthorizationHeaderForTesting(
+      std::chrono::system_clock::time_point tp) {
+    return oauth2_internal::AuthorizationHeaderJoined(*cached_, tp);
+  }
+
+  std::shared_ptr<oauth2_internal::ComputeEngineCredentials> impl_;
+  std::shared_ptr<oauth2_internal::CachedCredentials> cached_;
 };
 
 /// @copydoc ComputeEngineCredentials

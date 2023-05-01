@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/compute_engine_credentials.h"
+#include "google/cloud/internal/oauth2_cached_credentials.h"
 #include "google/cloud/internal/oauth2_compute_engine_credentials.h"
 #include <nlohmann/json.hpp>
 
@@ -61,9 +62,19 @@ ParseComputeEngineRefreshResponse(
 ComputeEngineCredentials<storage::internal::CurlRequestBuilder,
                          std::chrono::system_clock>::
     ComputeEngineCredentials(std::string service_account_email)
-    : impl_(std::move(service_account_email), Options{}, [](Options const& o) {
-        return rest_internal::MakeDefaultRestClient(std::string{}, o);
-      }) {}
+    : ComputeEngineCredentials(
+          std::move(service_account_email), [](Options const& o) {
+            return rest_internal::MakeDefaultRestClient(std::string{}, o);
+          }) {}
+
+ComputeEngineCredentials<storage::internal::CurlRequestBuilder,
+                         std::chrono::system_clock>::
+    ComputeEngineCredentials(std::string service_account_email,
+                             oauth2_internal::HttpClientFactory client_factory)
+    : impl_(std::make_shared<oauth2_internal::ComputeEngineCredentials>(
+          std::move(service_account_email), Options{},
+          std::move(client_factory))),
+      cached_(std::make_shared<oauth2_internal::CachedCredentials>(impl_)) {}
 
 }  // namespace oauth2
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
