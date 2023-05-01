@@ -48,6 +48,11 @@ google_cloud_cpp_bigquery_rest_hdrs = [
     "v2/minimal/internal/job_retry_policy.h",
     "v2/minimal/internal/log_wrapper.h",
     "v2/minimal/internal/rest_stub_utils.h",
+    "v2/minimal/internal/table.h",
+    "v2/minimal/internal/table_constraints.h",
+    "v2/minimal/internal/table_partition.h",
+    "v2/minimal/internal/table_schema.h",
+    "v2/minimal/internal/table_view.h",
 ]
 
 google_cloud_cpp_bigquery_rest_srcs = [
@@ -77,4 +82,7 @@ google_cloud_cpp_bigquery_rest_srcs = [
     "v2/minimal/internal/job_rest_connection_impl.cc",
     "v2/minimal/internal/job_rest_stub.cc",
     "v2/minimal/internal/job_rest_stub_factory.cc",
+    "v2/minimal/internal/table.cc",
+    "v2/minimal/internal/table_schema.cc",
+    "v2/minimal/internal/table_view.cc",
 ]
