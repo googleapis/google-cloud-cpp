@@ -12,25 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_DOCFX_TESTING_INPUTS_H
-#define GOOGLE_CLOUD_CPP_DOCFX_TESTING_INPUTS_H
+#ifndef GOOGLE_CLOUD_CPP_DOCFX_FUNCTION_CLASSIFIERS_H
+#define GOOGLE_CLOUD_CPP_DOCFX_FUNCTION_CLASSIFIERS_H
 
-#include <string>
+#include <pugixml.hpp>
 
-namespace docfx_testing {
+namespace docfx {
 
-std::string MockClass();
-std::string MockClassId();
-std::string MockedFunctionId();
+// Determine if a function is a constructor.
+bool IsConstructor(pugi::xml_node const& node);
 
-std::string FunctionXml();
-std::string FunctionXmlId();
+// Determine if a function is an operator.
+bool IsOperator(pugi::xml_node const& node);
 
-std::string StatusClassXml();
-std::string StatusDefaultConstructorId();
-std::string StatusMessageFunctionId();
-std::string StatusOperatorEqualId();
+}  // namespace docfx
 
-}  // namespace docfx_testing
-
-#endif  // GOOGLE_CLOUD_CPP_DOCFX_TESTING_INPUTS_H
+#endif  // GOOGLE_CLOUD_CPP_DOCFX_FUNCTION_CLASSIFIERS_H

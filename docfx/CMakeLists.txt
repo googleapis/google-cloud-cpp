@@ -51,6 +51,8 @@ add_library(
     doxygen_groups.h
     doxygen_pages.cc
     doxygen_pages.h
+    function_classifiers.cc
+    function_classifiers.h
     generate_metadata.cc
     generate_metadata.h
     parse_arguments.cc
@@ -98,6 +100,7 @@ set(unit_tests
     doxygen2yaml_test.cc
     doxygen_groups_test.cc
     doxygen_pages_test.cc
+    function_classifiers_test.cc
     generate_metadata_test.cc
     parse_arguments_test.cc
     public_docs_test.cc

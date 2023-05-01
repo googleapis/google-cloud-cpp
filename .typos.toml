@@ -31,4 +31,7 @@ extend-exclude = [
     "google/cloud/storage/testing/constants.h",
     "google/cloud/storage/tests/unified_credentials_integration_test.cc",
     "google/cloud/storage/tools/make_jwt_assertion_for_test_data.py",
+    # Input data for DocFX tests. It contains many long hex strings that confuse
+    # the spell checker.
+    "docfx/testing/inputs.cc",
 ]
