@@ -1,0 +1,36 @@
+/*!
+@page tpu-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `tpu_v1::TpuClient`:
+
+@snippet tpu_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c tpu_v1::TpuClient](@ref tpu_v1::TpuClient-endpoint-snippet)
+- [\c tpu_v2::TpuClient](@ref tpu_v2::TpuClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page tpu_v1::TpuClient-endpoint-snippet Override tpu_v1::TpuClient Endpoint Configuration
+
+@snippet google/cloud/tpu/v1/samples/tpu_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page tpu_v2::TpuClient-endpoint-snippet Override tpu_v2::TpuClient Endpoint Configuration
+
+@snippet google/cloud/tpu/v2/samples/tpu_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

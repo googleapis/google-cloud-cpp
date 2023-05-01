@@ -30,52 +30,9 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`composer_v1::EnvironmentsClient`](@ref google::cloud::composer_v1::EnvironmentsClient)
-- [`composer_v1::ImageVersionsClient`](@ref google::cloud::composer_v1::ImageVersionsClient)
+- [\c composer_v1::EnvironmentsClient](@ref google::cloud::composer_v1::EnvironmentsClient)
+- [\c composer_v1::ImageVersionsClient](@ref google::cloud::composer_v1::ImageVersionsClient)
 <!-- inject-client-list-end -->
-
-## Override the default endpoint
-
-In some cases, you may need to override the default endpoint used by the client
-library. Use the `google::cloud::EndpointOption` when initializing the client
-library to change this default.
-
-<!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `composer_v1::EnvironmentsClient`:
-
-@snippet environments_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [composer_v1::EnvironmentsClient](@ref composer_v1::EnvironmentsClient-endpoint-snippet)
- [composer_v1::ImageVersionsClient](@ref composer_v1::ImageVersionsClient-endpoint-snippet)
-
-<!-- inject-endpoint-snippet-end -->
-
-## Override the authentication configuration
-
-Some applications cannot use the default authentication mechanism (known as
-[Application Default Credentials]). You can override this default using
-`google::cloud::UnifiedCredentialsOption`. The following example shows how
-to explicitly load a service account key file.
-
-<!-- inject-service-account-snippet-start -->
-@snippet environments_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [composer_v1::EnvironmentsClient](@ref composer_v1::EnvironmentsClient-service-account-snippet)
- [composer_v1::ImageVersionsClient](@ref composer_v1::ImageVersionsClient-service-account-snippet)
-
-<!-- inject-service-account-snippet-end -->
-
-Keep in mind that we chose this as an example because it is relatively easy to
-understand. Consult the [Best practices for managing service account keys]
-guide for more details.
-
-@see @ref guac - for more information on the factory functions to create
-`google::cloud::Credentials` objects.
-
-[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
-[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
 
 ## Retry, Backoff, and Idempotency Policies.
 
@@ -86,6 +43,10 @@ can override the default policies.
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
+- @ref composer-override-endpoint - describes how to override the default
+  endpoint.
+- @ref composer-override-authentication - describes how to change the
+  authentication credentials used by the library.
 
 [cloud-service-docs]: https://cloud.google.com/composer
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
@@ -95,30 +56,3 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/composer/quickstart/README%2Emd
 
 */
-
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page composer_v1::EnvironmentsClient-endpoint-snippet Override composer_v1::EnvironmentsClient Endpoint Configuration
-
-@snippet google/cloud/composer/v1/samples/environments_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page composer_v1::EnvironmentsClient-service-account-snippet Override composer_v1::EnvironmentsClient Authentication Defaults
-
-@snippet google/cloud/composer/v1/samples/environments_client_samples.cc with-service-account
-
-*/
-
-/*! @page composer_v1::ImageVersionsClient-endpoint-snippet Override composer_v1::ImageVersionsClient Endpoint Configuration
-
-@snippet google/cloud/composer/v1/samples/image_versions_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page composer_v1::ImageVersionsClient-service-account-snippet Override composer_v1::ImageVersionsClient Authentication Defaults
-
-@snippet google/cloud/composer/v1/samples/image_versions_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

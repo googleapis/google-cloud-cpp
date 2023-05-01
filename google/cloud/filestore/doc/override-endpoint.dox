@@ -1,0 +1,25 @@
+/*!
+@page filestore-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `filestore_v1::CloudFilestoreManagerClient`:
+
+@snippet cloud_filestore_manager_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page filestore_v1::CloudFilestoreManagerClient-endpoint-snippet Override filestore_v1::CloudFilestoreManagerClient Endpoint Configuration
+
+@snippet google/cloud/filestore/v1/samples/cloud_filestore_manager_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

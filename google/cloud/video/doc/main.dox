@@ -37,55 +37,10 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`video_livestream_v1::LivestreamServiceClient`](@ref google::cloud::video_livestream_v1::LivestreamServiceClient)
-- [`video_stitcher_v1::VideoStitcherServiceClient`](@ref google::cloud::video_stitcher_v1::VideoStitcherServiceClient)
-- [`video_transcoder_v1::TranscoderServiceClient`](@ref google::cloud::video_transcoder_v1::TranscoderServiceClient)
+- [\c video_livestream_v1::LivestreamServiceClient](@ref google::cloud::video_livestream_v1::LivestreamServiceClient)
+- [\c video_stitcher_v1::VideoStitcherServiceClient](@ref google::cloud::video_stitcher_v1::VideoStitcherServiceClient)
+- [\c video_transcoder_v1::TranscoderServiceClient](@ref google::cloud::video_transcoder_v1::TranscoderServiceClient)
 <!-- inject-client-list-end -->
-
-## Override the default endpoint
-
-In some cases, you may need to override the default endpoint used by the client
-library. Use the `google::cloud::EndpointOption` when initializing the client
-library to change this default.
-
-<!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `video_livestream_v1::LivestreamServiceClient`:
-
-@snippet livestream_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [video_livestream_v1::LivestreamServiceClient](@ref video_livestream_v1::LivestreamServiceClient-endpoint-snippet)
- [video_stitcher_v1::VideoStitcherServiceClient](@ref video_stitcher_v1::VideoStitcherServiceClient-endpoint-snippet)
- [video_transcoder_v1::TranscoderServiceClient](@ref video_transcoder_v1::TranscoderServiceClient-endpoint-snippet)
-
-<!-- inject-endpoint-snippet-end -->
-
-## Override the authentication configuration
-
-Some applications cannot use the default authentication mechanism (known as
-[Application Default Credentials]). You can override this default using
-`google::cloud::UnifiedCredentialsOption`. The following example shows how
-to explicitly load a service account key file.
-
-<!-- inject-service-account-snippet-start -->
-@snippet livestream_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [video_livestream_v1::LivestreamServiceClient](@ref video_livestream_v1::LivestreamServiceClient-service-account-snippet)
- [video_stitcher_v1::VideoStitcherServiceClient](@ref video_stitcher_v1::VideoStitcherServiceClient-service-account-snippet)
- [video_transcoder_v1::TranscoderServiceClient](@ref video_transcoder_v1::TranscoderServiceClient-service-account-snippet)
-
-<!-- inject-service-account-snippet-end -->
-
-Keep in mind that we chose this as an example because it is relatively easy to
-understand. Consult the [Best practices for managing service account keys]
-guide for more details.
-
-@see @ref guac - for more information on the factory functions to create
-`google::cloud::Credentials` objects.
-
-[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
-[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
 
 ## Retry, Backoff, and Idempotency Policies.
 
@@ -96,6 +51,10 @@ can override the default policies.
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
+- @ref video-override-endpoint - describes how to override the default
+  endpoint.
+- @ref video-override-authentication - describes how to change the
+  authentication credentials used by the library.
 
 [livestream-service-docs]: https://cloud.google.com/livestream
 [transcoder-service-docs]: https://cloud.google.com/transcoder
@@ -107,42 +66,3 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/video/quickstart/README%2Emd
 
 */
-
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page video_livestream_v1::LivestreamServiceClient-endpoint-snippet Override video_livestream_v1::LivestreamServiceClient Endpoint Configuration
-
-@snippet google/cloud/video/livestream/v1/samples/livestream_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page video_livestream_v1::LivestreamServiceClient-service-account-snippet Override video_livestream_v1::LivestreamServiceClient Authentication Defaults
-
-@snippet google/cloud/video/livestream/v1/samples/livestream_client_samples.cc with-service-account
-
-*/
-
-/*! @page video_stitcher_v1::VideoStitcherServiceClient-endpoint-snippet Override video_stitcher_v1::VideoStitcherServiceClient Endpoint Configuration
-
-@snippet google/cloud/video/stitcher/v1/samples/video_stitcher_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page video_stitcher_v1::VideoStitcherServiceClient-service-account-snippet Override video_stitcher_v1::VideoStitcherServiceClient Authentication Defaults
-
-@snippet google/cloud/video/stitcher/v1/samples/video_stitcher_client_samples.cc with-service-account
-
-*/
-
-/*! @page video_transcoder_v1::TranscoderServiceClient-endpoint-snippet Override video_transcoder_v1::TranscoderServiceClient Endpoint Configuration
-
-@snippet google/cloud/video/transcoder/v1/samples/transcoder_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page video_transcoder_v1::TranscoderServiceClient-service-account-snippet Override video_transcoder_v1::TranscoderServiceClient Authentication Defaults
-
-@snippet google/cloud/video/transcoder/v1/samples/transcoder_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

@@ -1,0 +1,25 @@
+/*!
+@page workstations-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `workstations_v1::WorkstationsClient`:
+
+@snippet workstations_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page workstations_v1::WorkstationsClient-endpoint-snippet Override workstations_v1::WorkstationsClient Endpoint Configuration
+
+@snippet google/cloud/workstations/v1/samples/workstations_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

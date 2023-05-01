@@ -33,73 +33,16 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`sql_v1::SqlBackupRunsServiceClient`](@ref google::cloud::sql_v1::SqlBackupRunsServiceClient)
-- [`sql_v1::SqlConnectServiceClient`](@ref google::cloud::sql_v1::SqlConnectServiceClient)
-- [`sql_v1::SqlDatabasesServiceClient`](@ref google::cloud::sql_v1::SqlDatabasesServiceClient)
-- [`sql_v1::SqlFlagsServiceClient`](@ref google::cloud::sql_v1::SqlFlagsServiceClient)
-- [`sql_v1::SqlInstancesServiceClient`](@ref google::cloud::sql_v1::SqlInstancesServiceClient)
-- [`sql_v1::SqlOperationsServiceClient`](@ref google::cloud::sql_v1::SqlOperationsServiceClient)
-- [`sql_v1::SqlSslCertsServiceClient`](@ref google::cloud::sql_v1::SqlSslCertsServiceClient)
-- [`sql_v1::SqlTiersServiceClient`](@ref google::cloud::sql_v1::SqlTiersServiceClient)
-- [`sql_v1::SqlUsersServiceClient`](@ref google::cloud::sql_v1::SqlUsersServiceClient)
+- [\c sql_v1::SqlBackupRunsServiceClient](@ref google::cloud::sql_v1::SqlBackupRunsServiceClient)
+- [\c sql_v1::SqlConnectServiceClient](@ref google::cloud::sql_v1::SqlConnectServiceClient)
+- [\c sql_v1::SqlDatabasesServiceClient](@ref google::cloud::sql_v1::SqlDatabasesServiceClient)
+- [\c sql_v1::SqlFlagsServiceClient](@ref google::cloud::sql_v1::SqlFlagsServiceClient)
+- [\c sql_v1::SqlInstancesServiceClient](@ref google::cloud::sql_v1::SqlInstancesServiceClient)
+- [\c sql_v1::SqlOperationsServiceClient](@ref google::cloud::sql_v1::SqlOperationsServiceClient)
+- [\c sql_v1::SqlSslCertsServiceClient](@ref google::cloud::sql_v1::SqlSslCertsServiceClient)
+- [\c sql_v1::SqlTiersServiceClient](@ref google::cloud::sql_v1::SqlTiersServiceClient)
+- [\c sql_v1::SqlUsersServiceClient](@ref google::cloud::sql_v1::SqlUsersServiceClient)
 <!-- inject-client-list-end -->
-
-## Override the default endpoint
-
-In some cases, you may need to override the default endpoint used by the client
-library. Use the `google::cloud::EndpointOption` when initializing the client
-library to change this default.
-
-<!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `sql_v1::SqlBackupRunsServiceClient`:
-
-@snippet sql_backup_runs_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [sql_v1::SqlBackupRunsServiceClient](@ref sql_v1::SqlBackupRunsServiceClient-endpoint-snippet)
- [sql_v1::SqlConnectServiceClient](@ref sql_v1::SqlConnectServiceClient-endpoint-snippet)
- [sql_v1::SqlDatabasesServiceClient](@ref sql_v1::SqlDatabasesServiceClient-endpoint-snippet)
- [sql_v1::SqlFlagsServiceClient](@ref sql_v1::SqlFlagsServiceClient-endpoint-snippet)
- [sql_v1::SqlInstancesServiceClient](@ref sql_v1::SqlInstancesServiceClient-endpoint-snippet)
- [sql_v1::SqlOperationsServiceClient](@ref sql_v1::SqlOperationsServiceClient-endpoint-snippet)
- [sql_v1::SqlSslCertsServiceClient](@ref sql_v1::SqlSslCertsServiceClient-endpoint-snippet)
- [sql_v1::SqlTiersServiceClient](@ref sql_v1::SqlTiersServiceClient-endpoint-snippet)
- [sql_v1::SqlUsersServiceClient](@ref sql_v1::SqlUsersServiceClient-endpoint-snippet)
-
-<!-- inject-endpoint-snippet-end -->
-
-## Override the authentication configuration
-
-Some applications cannot use the default authentication mechanism (known as
-[Application Default Credentials]). You can override this default using
-`google::cloud::UnifiedCredentialsOption`. The following example shows how
-to explicitly load a service account key file.
-
-<!-- inject-service-account-snippet-start -->
-@snippet sql_backup_runs_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [sql_v1::SqlBackupRunsServiceClient](@ref sql_v1::SqlBackupRunsServiceClient-service-account-snippet)
- [sql_v1::SqlConnectServiceClient](@ref sql_v1::SqlConnectServiceClient-service-account-snippet)
- [sql_v1::SqlDatabasesServiceClient](@ref sql_v1::SqlDatabasesServiceClient-service-account-snippet)
- [sql_v1::SqlFlagsServiceClient](@ref sql_v1::SqlFlagsServiceClient-service-account-snippet)
- [sql_v1::SqlInstancesServiceClient](@ref sql_v1::SqlInstancesServiceClient-service-account-snippet)
- [sql_v1::SqlOperationsServiceClient](@ref sql_v1::SqlOperationsServiceClient-service-account-snippet)
- [sql_v1::SqlSslCertsServiceClient](@ref sql_v1::SqlSslCertsServiceClient-service-account-snippet)
- [sql_v1::SqlTiersServiceClient](@ref sql_v1::SqlTiersServiceClient-service-account-snippet)
- [sql_v1::SqlUsersServiceClient](@ref sql_v1::SqlUsersServiceClient-service-account-snippet)
-
-<!-- inject-service-account-snippet-end -->
-
-Keep in mind that we chose this as an example because it is relatively easy to
-understand. Consult the [Best practices for managing service account keys]
-guide for more details.
-
-@see @ref guac - for more information on the factory functions to create
-`google::cloud::Credentials` objects.
-
-[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
-[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
 
 ## Retry, Backoff, and Idempotency Policies.
 
@@ -110,6 +53,10 @@ can override the default policies.
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
+- @ref sql-override-endpoint - describes how to override the default
+  endpoint.
+- @ref sql-override-authentication - describes how to change the
+  authentication credentials used by the library.
 
 [cloud-service-docs]: https://cloud.google.com/sql
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
@@ -119,114 +66,3 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/sql/quickstart/README%2Emd
 
 */
-
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page sql_v1::SqlBackupRunsServiceClient-endpoint-snippet Override sql_v1::SqlBackupRunsServiceClient Endpoint Configuration
-
-@snippet google/cloud/sql/v1/samples/sql_backup_runs_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page sql_v1::SqlBackupRunsServiceClient-service-account-snippet Override sql_v1::SqlBackupRunsServiceClient Authentication Defaults
-
-@snippet google/cloud/sql/v1/samples/sql_backup_runs_client_samples.cc with-service-account
-
-*/
-
-/*! @page sql_v1::SqlConnectServiceClient-endpoint-snippet Override sql_v1::SqlConnectServiceClient Endpoint Configuration
-
-@snippet google/cloud/sql/v1/samples/sql_connect_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page sql_v1::SqlConnectServiceClient-service-account-snippet Override sql_v1::SqlConnectServiceClient Authentication Defaults
-
-@snippet google/cloud/sql/v1/samples/sql_connect_client_samples.cc with-service-account
-
-*/
-
-/*! @page sql_v1::SqlDatabasesServiceClient-endpoint-snippet Override sql_v1::SqlDatabasesServiceClient Endpoint Configuration
-
-@snippet google/cloud/sql/v1/samples/sql_databases_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page sql_v1::SqlDatabasesServiceClient-service-account-snippet Override sql_v1::SqlDatabasesServiceClient Authentication Defaults
-
-@snippet google/cloud/sql/v1/samples/sql_databases_client_samples.cc with-service-account
-
-*/
-
-/*! @page sql_v1::SqlFlagsServiceClient-endpoint-snippet Override sql_v1::SqlFlagsServiceClient Endpoint Configuration
-
-@snippet google/cloud/sql/v1/samples/sql_flags_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page sql_v1::SqlFlagsServiceClient-service-account-snippet Override sql_v1::SqlFlagsServiceClient Authentication Defaults
-
-@snippet google/cloud/sql/v1/samples/sql_flags_client_samples.cc with-service-account
-
-*/
-
-/*! @page sql_v1::SqlInstancesServiceClient-endpoint-snippet Override sql_v1::SqlInstancesServiceClient Endpoint Configuration
-
-@snippet google/cloud/sql/v1/samples/sql_instances_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page sql_v1::SqlInstancesServiceClient-service-account-snippet Override sql_v1::SqlInstancesServiceClient Authentication Defaults
-
-@snippet google/cloud/sql/v1/samples/sql_instances_client_samples.cc with-service-account
-
-*/
-
-/*! @page sql_v1::SqlOperationsServiceClient-endpoint-snippet Override sql_v1::SqlOperationsServiceClient Endpoint Configuration
-
-@snippet google/cloud/sql/v1/samples/sql_operations_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page sql_v1::SqlOperationsServiceClient-service-account-snippet Override sql_v1::SqlOperationsServiceClient Authentication Defaults
-
-@snippet google/cloud/sql/v1/samples/sql_operations_client_samples.cc with-service-account
-
-*/
-
-/*! @page sql_v1::SqlSslCertsServiceClient-endpoint-snippet Override sql_v1::SqlSslCertsServiceClient Endpoint Configuration
-
-@snippet google/cloud/sql/v1/samples/sql_ssl_certs_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page sql_v1::SqlSslCertsServiceClient-service-account-snippet Override sql_v1::SqlSslCertsServiceClient Authentication Defaults
-
-@snippet google/cloud/sql/v1/samples/sql_ssl_certs_client_samples.cc with-service-account
-
-*/
-
-/*! @page sql_v1::SqlTiersServiceClient-endpoint-snippet Override sql_v1::SqlTiersServiceClient Endpoint Configuration
-
-@snippet google/cloud/sql/v1/samples/sql_tiers_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page sql_v1::SqlTiersServiceClient-service-account-snippet Override sql_v1::SqlTiersServiceClient Authentication Defaults
-
-@snippet google/cloud/sql/v1/samples/sql_tiers_client_samples.cc with-service-account
-
-*/
-
-/*! @page sql_v1::SqlUsersServiceClient-endpoint-snippet Override sql_v1::SqlUsersServiceClient Endpoint Configuration
-
-@snippet google/cloud/sql/v1/samples/sql_users_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page sql_v1::SqlUsersServiceClient-service-account-snippet Override sql_v1::SqlUsersServiceClient Authentication Defaults
-
-@snippet google/cloud/sql/v1/samples/sql_users_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

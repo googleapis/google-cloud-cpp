@@ -1,0 +1,36 @@
+/*!
+@page iap-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `iap_v1::IdentityAwareProxyAdminServiceClient`:
+
+@snippet identity_aware_proxy_admin_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c iap_v1::IdentityAwareProxyAdminServiceClient](@ref iap_v1::IdentityAwareProxyAdminServiceClient-endpoint-snippet)
+- [\c iap_v1::IdentityAwareProxyOAuthServiceClient](@ref iap_v1::IdentityAwareProxyOAuthServiceClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page iap_v1::IdentityAwareProxyAdminServiceClient-endpoint-snippet Override iap_v1::IdentityAwareProxyAdminServiceClient Endpoint Configuration
+
+@snippet google/cloud/iap/v1/samples/identity_aware_proxy_admin_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page iap_v1::IdentityAwareProxyOAuthServiceClient-endpoint-snippet Override iap_v1::IdentityAwareProxyOAuthServiceClient Endpoint Configuration
+
+@snippet google/cloud/iap/v1/samples/identity_aware_proxy_o_auth_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

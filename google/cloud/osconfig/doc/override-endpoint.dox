@@ -1,0 +1,36 @@
+/*!
+@page osconfig-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `osconfig_agentendpoint_v1::AgentEndpointServiceClient`:
+
+@snippet agent_endpoint_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c osconfig_agentendpoint_v1::AgentEndpointServiceClient](@ref osconfig_agentendpoint_v1::AgentEndpointServiceClient-endpoint-snippet)
+- [\c osconfig_v1::OsConfigServiceClient](@ref osconfig_v1::OsConfigServiceClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page osconfig_agentendpoint_v1::AgentEndpointServiceClient-endpoint-snippet Override osconfig_agentendpoint_v1::AgentEndpointServiceClient Endpoint Configuration
+
+@snippet google/cloud/osconfig/agentendpoint/v1/samples/agent_endpoint_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page osconfig_v1::OsConfigServiceClient-endpoint-snippet Override osconfig_v1::OsConfigServiceClient Endpoint Configuration
+
+@snippet google/cloud/osconfig/v1/samples/os_config_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

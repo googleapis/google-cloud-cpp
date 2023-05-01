@@ -1,0 +1,25 @@
+/*!
+@page webrisk-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `webrisk_v1::WebRiskServiceClient`:
+
+@snippet web_risk_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page webrisk_v1::WebRiskServiceClient-endpoint-snippet Override webrisk_v1::WebRiskServiceClient Endpoint Configuration
+
+@snippet google/cloud/webrisk/v1/samples/web_risk_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

@@ -1,0 +1,36 @@
+/*!
+@page automl-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `automl_v1::AutoMlClient`:
+
+@snippet auto_ml_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c automl_v1::AutoMlClient](@ref automl_v1::AutoMlClient-endpoint-snippet)
+- [\c automl_v1::PredictionServiceClient](@ref automl_v1::PredictionServiceClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page automl_v1::AutoMlClient-endpoint-snippet Override automl_v1::AutoMlClient Endpoint Configuration
+
+@snippet google/cloud/automl/v1/samples/auto_ml_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page automl_v1::PredictionServiceClient-endpoint-snippet Override automl_v1::PredictionServiceClient Endpoint Configuration
+
+@snippet google/cloud/automl/v1/samples/prediction_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

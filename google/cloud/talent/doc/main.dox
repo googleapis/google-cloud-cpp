@@ -31,61 +31,12 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`talent_v4::CompanyServiceClient`](@ref google::cloud::talent_v4::CompanyServiceClient)
-- [`talent_v4::CompletionClient`](@ref google::cloud::talent_v4::CompletionClient)
-- [`talent_v4::EventServiceClient`](@ref google::cloud::talent_v4::EventServiceClient)
-- [`talent_v4::JobServiceClient`](@ref google::cloud::talent_v4::JobServiceClient)
-- [`talent_v4::TenantServiceClient`](@ref google::cloud::talent_v4::TenantServiceClient)
+- [\c talent_v4::CompanyServiceClient](@ref google::cloud::talent_v4::CompanyServiceClient)
+- [\c talent_v4::CompletionClient](@ref google::cloud::talent_v4::CompletionClient)
+- [\c talent_v4::EventServiceClient](@ref google::cloud::talent_v4::EventServiceClient)
+- [\c talent_v4::JobServiceClient](@ref google::cloud::talent_v4::JobServiceClient)
+- [\c talent_v4::TenantServiceClient](@ref google::cloud::talent_v4::TenantServiceClient)
 <!-- inject-client-list-end -->
-
-## Override the default endpoint
-
-In some cases, you may need to override the default endpoint used by the client
-library. Use the `google::cloud::EndpointOption` when initializing the client
-library to change this default.
-
-<!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `talent_v4::CompanyServiceClient`:
-
-@snippet company_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [talent_v4::CompanyServiceClient](@ref talent_v4::CompanyServiceClient-endpoint-snippet)
- [talent_v4::CompletionClient](@ref talent_v4::CompletionClient-endpoint-snippet)
- [talent_v4::EventServiceClient](@ref talent_v4::EventServiceClient-endpoint-snippet)
- [talent_v4::JobServiceClient](@ref talent_v4::JobServiceClient-endpoint-snippet)
- [talent_v4::TenantServiceClient](@ref talent_v4::TenantServiceClient-endpoint-snippet)
-
-<!-- inject-endpoint-snippet-end -->
-
-## Override the authentication configuration
-
-Some applications cannot use the default authentication mechanism (known as
-[Application Default Credentials]). You can override this default using
-`google::cloud::UnifiedCredentialsOption`. The following example shows how
-to explicitly load a service account key file.
-
-<!-- inject-service-account-snippet-start -->
-@snippet company_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [talent_v4::CompanyServiceClient](@ref talent_v4::CompanyServiceClient-service-account-snippet)
- [talent_v4::CompletionClient](@ref talent_v4::CompletionClient-service-account-snippet)
- [talent_v4::EventServiceClient](@ref talent_v4::EventServiceClient-service-account-snippet)
- [talent_v4::JobServiceClient](@ref talent_v4::JobServiceClient-service-account-snippet)
- [talent_v4::TenantServiceClient](@ref talent_v4::TenantServiceClient-service-account-snippet)
-
-<!-- inject-service-account-snippet-end -->
-
-Keep in mind that we chose this as an example because it is relatively easy to
-understand. Consult the [Best practices for managing service account keys]
-guide for more details.
-
-@see @ref guac - for more information on the factory functions to create
-`google::cloud::Credentials` objects.
-
-[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
-[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
 
 ## Retry, Backoff, and Idempotency Policies.
 
@@ -96,6 +47,10 @@ can override the default policies.
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
+- @ref talent-override-endpoint - describes how to override the default
+  endpoint.
+- @ref talent-override-authentication - describes how to change the
+  authentication credentials used by the library.
 
 [cloud-service-docs]: https://cloud.google.com/solutions/talent-solution
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
@@ -105,66 +60,3 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/talent/quickstart/README%2Emd
 
 */
-
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page talent_v4::CompanyServiceClient-endpoint-snippet Override talent_v4::CompanyServiceClient Endpoint Configuration
-
-@snippet google/cloud/talent/v4/samples/company_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page talent_v4::CompanyServiceClient-service-account-snippet Override talent_v4::CompanyServiceClient Authentication Defaults
-
-@snippet google/cloud/talent/v4/samples/company_client_samples.cc with-service-account
-
-*/
-
-/*! @page talent_v4::CompletionClient-endpoint-snippet Override talent_v4::CompletionClient Endpoint Configuration
-
-@snippet google/cloud/talent/v4/samples/completion_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page talent_v4::CompletionClient-service-account-snippet Override talent_v4::CompletionClient Authentication Defaults
-
-@snippet google/cloud/talent/v4/samples/completion_client_samples.cc with-service-account
-
-*/
-
-/*! @page talent_v4::EventServiceClient-endpoint-snippet Override talent_v4::EventServiceClient Endpoint Configuration
-
-@snippet google/cloud/talent/v4/samples/event_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page talent_v4::EventServiceClient-service-account-snippet Override talent_v4::EventServiceClient Authentication Defaults
-
-@snippet google/cloud/talent/v4/samples/event_client_samples.cc with-service-account
-
-*/
-
-/*! @page talent_v4::JobServiceClient-endpoint-snippet Override talent_v4::JobServiceClient Endpoint Configuration
-
-@snippet google/cloud/talent/v4/samples/job_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page talent_v4::JobServiceClient-service-account-snippet Override talent_v4::JobServiceClient Authentication Defaults
-
-@snippet google/cloud/talent/v4/samples/job_client_samples.cc with-service-account
-
-*/
-
-/*! @page talent_v4::TenantServiceClient-endpoint-snippet Override talent_v4::TenantServiceClient Endpoint Configuration
-
-@snippet google/cloud/talent/v4/samples/tenant_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page talent_v4::TenantServiceClient-service-account-snippet Override talent_v4::TenantServiceClient Authentication Defaults
-
-@snippet google/cloud/talent/v4/samples/tenant_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

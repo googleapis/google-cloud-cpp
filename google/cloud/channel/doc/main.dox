@@ -23,47 +23,12 @@ which should give you a taste of the Cloud Channel API C++ client library API.
 
 <!-- inject-client-list-start -->
 The main class in this library is
-[`channel_v1::CloudChannelServiceClient`](@ref google::cloud::channel_v1::CloudChannelServiceClient).
+[\c channel_v1::CloudChannelServiceClient](@ref google::cloud::channel_v1::CloudChannelServiceClient).
 All RPCs are exposed as member functions of this class. Other classes provide
 helpers, retry policies, configuration parameters, and infrastructure to mock
-[`channel_v1::CloudChannelServiceClient`](@ref google::cloud::channel_v1::CloudChannelServiceClient) when testing your
+[\c channel_v1::CloudChannelServiceClient](@ref google::cloud::channel_v1::CloudChannelServiceClient) when testing your
 application.
 <!-- inject-client-list-end -->
-
-## Override the default endpoint
-
-In some cases, you may need to override the default endpoint used by the client
-library. Use the `google::cloud::EndpointOption` when initializing the client
-library to change this default.
-
-<!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `channel_v1::CloudChannelServiceClient`:
-
-@snippet cloud_channel_client_samples.cc set-client-endpoint
-
-<!-- inject-endpoint-snippet-end -->
-
-## Override the authentication configuration
-
-Some applications cannot use the default authentication mechanism (known as
-[Application Default Credentials]). You can override this default using
-`google::cloud::UnifiedCredentialsOption`. The following example shows how
-to explicitly load a service account key file.
-
-<!-- inject-service-account-snippet-start -->
-@snippet cloud_channel_client_samples.cc with-service-account
-
-<!-- inject-service-account-snippet-end -->
-
-Keep in mind that we chose this as an example because it is relatively easy to
-understand. Consult the [Best practices for managing service account keys]
-guide for more details.
-
-@see @ref guac - for more information on the factory functions to create
-`google::cloud::Credentials` objects.
-
-[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
-[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
 
 ## Retry, Backoff, and Idempotency Policies.
 
@@ -74,6 +39,10 @@ can override the default policies.
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
+- @ref channel-override-endpoint - describes how to override the default
+  endpoint.
+- @ref channel-override-authentication - describes how to change the
+  authentication credentials used by the library.
 
 [cloud-service-docs]: https://cloud.google.com/channel
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
@@ -83,18 +52,3 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/channel/quickstart/README%2Emd
 
 */
-
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page channel_v1::CloudChannelServiceClient-endpoint-snippet Override channel_v1::CloudChannelServiceClient Endpoint Configuration
-
-@snippet google/cloud/channel/v1/samples/cloud_channel_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page channel_v1::CloudChannelServiceClient-service-account-snippet Override channel_v1::CloudChannelServiceClient Authentication Defaults
-
-@snippet google/cloud/channel/v1/samples/cloud_channel_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

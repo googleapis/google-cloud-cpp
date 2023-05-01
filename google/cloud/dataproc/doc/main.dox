@@ -33,61 +33,12 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`dataproc_v1::AutoscalingPolicyServiceClient`](@ref google::cloud::dataproc_v1::AutoscalingPolicyServiceClient)
-- [`dataproc_v1::BatchControllerClient`](@ref google::cloud::dataproc_v1::BatchControllerClient)
-- [`dataproc_v1::ClusterControllerClient`](@ref google::cloud::dataproc_v1::ClusterControllerClient)
-- [`dataproc_v1::JobControllerClient`](@ref google::cloud::dataproc_v1::JobControllerClient)
-- [`dataproc_v1::WorkflowTemplateServiceClient`](@ref google::cloud::dataproc_v1::WorkflowTemplateServiceClient)
+- [\c dataproc_v1::AutoscalingPolicyServiceClient](@ref google::cloud::dataproc_v1::AutoscalingPolicyServiceClient)
+- [\c dataproc_v1::BatchControllerClient](@ref google::cloud::dataproc_v1::BatchControllerClient)
+- [\c dataproc_v1::ClusterControllerClient](@ref google::cloud::dataproc_v1::ClusterControllerClient)
+- [\c dataproc_v1::JobControllerClient](@ref google::cloud::dataproc_v1::JobControllerClient)
+- [\c dataproc_v1::WorkflowTemplateServiceClient](@ref google::cloud::dataproc_v1::WorkflowTemplateServiceClient)
 <!-- inject-client-list-end -->
-
-## Override the default endpoint
-
-In some cases, you may need to override the default endpoint used by the client
-library. Use the `google::cloud::EndpointOption` when initializing the client
-library to change this default.
-
-<!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `dataproc_v1::AutoscalingPolicyServiceClient`:
-
-@snippet autoscaling_policy_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [dataproc_v1::AutoscalingPolicyServiceClient](@ref dataproc_v1::AutoscalingPolicyServiceClient-endpoint-snippet)
- [dataproc_v1::BatchControllerClient](@ref dataproc_v1::BatchControllerClient-endpoint-snippet)
- [dataproc_v1::ClusterControllerClient](@ref dataproc_v1::ClusterControllerClient-endpoint-snippet)
- [dataproc_v1::JobControllerClient](@ref dataproc_v1::JobControllerClient-endpoint-snippet)
- [dataproc_v1::WorkflowTemplateServiceClient](@ref dataproc_v1::WorkflowTemplateServiceClient-endpoint-snippet)
-
-<!-- inject-endpoint-snippet-end -->
-
-## Override the authentication configuration
-
-Some applications cannot use the default authentication mechanism (known as
-[Application Default Credentials]). You can override this default using
-`google::cloud::UnifiedCredentialsOption`. The following example shows how
-to explicitly load a service account key file.
-
-<!-- inject-service-account-snippet-start -->
-@snippet autoscaling_policy_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [dataproc_v1::AutoscalingPolicyServiceClient](@ref dataproc_v1::AutoscalingPolicyServiceClient-service-account-snippet)
- [dataproc_v1::BatchControllerClient](@ref dataproc_v1::BatchControllerClient-service-account-snippet)
- [dataproc_v1::ClusterControllerClient](@ref dataproc_v1::ClusterControllerClient-service-account-snippet)
- [dataproc_v1::JobControllerClient](@ref dataproc_v1::JobControllerClient-service-account-snippet)
- [dataproc_v1::WorkflowTemplateServiceClient](@ref dataproc_v1::WorkflowTemplateServiceClient-service-account-snippet)
-
-<!-- inject-service-account-snippet-end -->
-
-Keep in mind that we chose this as an example because it is relatively easy to
-understand. Consult the [Best practices for managing service account keys]
-guide for more details.
-
-@see @ref guac - for more information on the factory functions to create
-`google::cloud::Credentials` objects.
-
-[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
-[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
 
 ## Retry, Backoff, and Idempotency Policies.
 
@@ -98,6 +49,10 @@ can override the default policies.
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
+- @ref dataproc-override-endpoint - describes how to override the default
+  endpoint.
+- @ref dataproc-override-authentication - describes how to change the
+  authentication credentials used by the library.
 
 [cloud-service-docs]: https://cloud.google.com/dataproc
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
@@ -107,66 +62,3 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/dataproc/quickstart/README%2Emd
 
 */
-
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page dataproc_v1::AutoscalingPolicyServiceClient-endpoint-snippet Override dataproc_v1::AutoscalingPolicyServiceClient Endpoint Configuration
-
-@snippet google/cloud/dataproc/v1/samples/autoscaling_policy_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page dataproc_v1::AutoscalingPolicyServiceClient-service-account-snippet Override dataproc_v1::AutoscalingPolicyServiceClient Authentication Defaults
-
-@snippet google/cloud/dataproc/v1/samples/autoscaling_policy_client_samples.cc with-service-account
-
-*/
-
-/*! @page dataproc_v1::BatchControllerClient-endpoint-snippet Override dataproc_v1::BatchControllerClient Endpoint Configuration
-
-@snippet google/cloud/dataproc/v1/samples/batch_controller_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page dataproc_v1::BatchControllerClient-service-account-snippet Override dataproc_v1::BatchControllerClient Authentication Defaults
-
-@snippet google/cloud/dataproc/v1/samples/batch_controller_client_samples.cc with-service-account
-
-*/
-
-/*! @page dataproc_v1::ClusterControllerClient-endpoint-snippet Override dataproc_v1::ClusterControllerClient Endpoint Configuration
-
-@snippet google/cloud/dataproc/v1/samples/cluster_controller_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page dataproc_v1::ClusterControllerClient-service-account-snippet Override dataproc_v1::ClusterControllerClient Authentication Defaults
-
-@snippet google/cloud/dataproc/v1/samples/cluster_controller_client_samples.cc with-service-account
-
-*/
-
-/*! @page dataproc_v1::JobControllerClient-endpoint-snippet Override dataproc_v1::JobControllerClient Endpoint Configuration
-
-@snippet google/cloud/dataproc/v1/samples/job_controller_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page dataproc_v1::JobControllerClient-service-account-snippet Override dataproc_v1::JobControllerClient Authentication Defaults
-
-@snippet google/cloud/dataproc/v1/samples/job_controller_client_samples.cc with-service-account
-
-*/
-
-/*! @page dataproc_v1::WorkflowTemplateServiceClient-endpoint-snippet Override dataproc_v1::WorkflowTemplateServiceClient Endpoint Configuration
-
-@snippet google/cloud/dataproc/v1/samples/workflow_template_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page dataproc_v1::WorkflowTemplateServiceClient-service-account-snippet Override dataproc_v1::WorkflowTemplateServiceClient Authentication Defaults
-
-@snippet google/cloud/dataproc/v1/samples/workflow_template_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

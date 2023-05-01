@@ -1,0 +1,36 @@
+/*!
+@page vision-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `vision_v1::ImageAnnotatorClient`:
+
+@snippet image_annotator_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c vision_v1::ImageAnnotatorClient](@ref vision_v1::ImageAnnotatorClient-endpoint-snippet)
+- [\c vision_v1::ProductSearchClient](@ref vision_v1::ProductSearchClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page vision_v1::ImageAnnotatorClient-endpoint-snippet Override vision_v1::ImageAnnotatorClient Endpoint Configuration
+
+@snippet google/cloud/vision/v1/samples/image_annotator_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page vision_v1::ProductSearchClient-endpoint-snippet Override vision_v1::ProductSearchClient Endpoint Configuration
+
+@snippet google/cloud/vision/v1/samples/product_search_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

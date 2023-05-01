@@ -30,70 +30,15 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`appengine_v1::ApplicationsClient`](@ref google::cloud::appengine_v1::ApplicationsClient)
-- [`appengine_v1::AuthorizedCertificatesClient`](@ref google::cloud::appengine_v1::AuthorizedCertificatesClient)
-- [`appengine_v1::AuthorizedDomainsClient`](@ref google::cloud::appengine_v1::AuthorizedDomainsClient)
-- [`appengine_v1::DomainMappingsClient`](@ref google::cloud::appengine_v1::DomainMappingsClient)
-- [`appengine_v1::FirewallClient`](@ref google::cloud::appengine_v1::FirewallClient)
-- [`appengine_v1::InstancesClient`](@ref google::cloud::appengine_v1::InstancesClient)
-- [`appengine_v1::ServicesClient`](@ref google::cloud::appengine_v1::ServicesClient)
-- [`appengine_v1::VersionsClient`](@ref google::cloud::appengine_v1::VersionsClient)
+- [\c appengine_v1::ApplicationsClient](@ref google::cloud::appengine_v1::ApplicationsClient)
+- [\c appengine_v1::AuthorizedCertificatesClient](@ref google::cloud::appengine_v1::AuthorizedCertificatesClient)
+- [\c appengine_v1::AuthorizedDomainsClient](@ref google::cloud::appengine_v1::AuthorizedDomainsClient)
+- [\c appengine_v1::DomainMappingsClient](@ref google::cloud::appengine_v1::DomainMappingsClient)
+- [\c appengine_v1::FirewallClient](@ref google::cloud::appengine_v1::FirewallClient)
+- [\c appengine_v1::InstancesClient](@ref google::cloud::appengine_v1::InstancesClient)
+- [\c appengine_v1::ServicesClient](@ref google::cloud::appengine_v1::ServicesClient)
+- [\c appengine_v1::VersionsClient](@ref google::cloud::appengine_v1::VersionsClient)
 <!-- inject-client-list-end -->
-
-## Override the default endpoint
-
-In some cases, you may need to override the default endpoint used by the client
-library. Use the `google::cloud::EndpointOption` when initializing the client
-library to change this default.
-
-<!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `appengine_v1::ApplicationsClient`:
-
-@snippet applications_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [appengine_v1::ApplicationsClient](@ref appengine_v1::ApplicationsClient-endpoint-snippet)
- [appengine_v1::AuthorizedCertificatesClient](@ref appengine_v1::AuthorizedCertificatesClient-endpoint-snippet)
- [appengine_v1::AuthorizedDomainsClient](@ref appengine_v1::AuthorizedDomainsClient-endpoint-snippet)
- [appengine_v1::DomainMappingsClient](@ref appengine_v1::DomainMappingsClient-endpoint-snippet)
- [appengine_v1::FirewallClient](@ref appengine_v1::FirewallClient-endpoint-snippet)
- [appengine_v1::InstancesClient](@ref appengine_v1::InstancesClient-endpoint-snippet)
- [appengine_v1::ServicesClient](@ref appengine_v1::ServicesClient-endpoint-snippet)
- [appengine_v1::VersionsClient](@ref appengine_v1::VersionsClient-endpoint-snippet)
-
-<!-- inject-endpoint-snippet-end -->
-
-## Override the authentication configuration
-
-Some applications cannot use the default authentication mechanism (known as
-[Application Default Credentials]). You can override this default using
-`google::cloud::UnifiedCredentialsOption`. The following example shows how
-to explicitly load a service account key file.
-
-<!-- inject-service-account-snippet-start -->
-@snippet applications_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [appengine_v1::ApplicationsClient](@ref appengine_v1::ApplicationsClient-service-account-snippet)
- [appengine_v1::AuthorizedCertificatesClient](@ref appengine_v1::AuthorizedCertificatesClient-service-account-snippet)
- [appengine_v1::AuthorizedDomainsClient](@ref appengine_v1::AuthorizedDomainsClient-service-account-snippet)
- [appengine_v1::DomainMappingsClient](@ref appengine_v1::DomainMappingsClient-service-account-snippet)
- [appengine_v1::FirewallClient](@ref appengine_v1::FirewallClient-service-account-snippet)
- [appengine_v1::InstancesClient](@ref appengine_v1::InstancesClient-service-account-snippet)
- [appengine_v1::ServicesClient](@ref appengine_v1::ServicesClient-service-account-snippet)
- [appengine_v1::VersionsClient](@ref appengine_v1::VersionsClient-service-account-snippet)
-
-<!-- inject-service-account-snippet-end -->
-
-Keep in mind that we chose this as an example because it is relatively easy to
-understand. Consult the [Best practices for managing service account keys]
-guide for more details.
-
-@see @ref guac - for more information on the factory functions to create
-`google::cloud::Credentials` objects.
-
-[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
-[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
 
 ## Retry, Backoff, and Idempotency Policies.
 
@@ -104,6 +49,10 @@ can override the default policies.
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
+- @ref appengine-override-endpoint - describes how to override the default
+  endpoint.
+- @ref appengine-override-authentication - describes how to change the
+  authentication credentials used by the library.
 
 [cloud-service-docs]: https://cloud.google.com/appengine/docs/admin-api
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
@@ -113,102 +62,3 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/appengine/quickstart/README%2Emd
 
 */
-
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page appengine_v1::ApplicationsClient-endpoint-snippet Override appengine_v1::ApplicationsClient Endpoint Configuration
-
-@snippet google/cloud/appengine/v1/samples/applications_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page appengine_v1::ApplicationsClient-service-account-snippet Override appengine_v1::ApplicationsClient Authentication Defaults
-
-@snippet google/cloud/appengine/v1/samples/applications_client_samples.cc with-service-account
-
-*/
-
-/*! @page appengine_v1::AuthorizedCertificatesClient-endpoint-snippet Override appengine_v1::AuthorizedCertificatesClient Endpoint Configuration
-
-@snippet google/cloud/appengine/v1/samples/authorized_certificates_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page appengine_v1::AuthorizedCertificatesClient-service-account-snippet Override appengine_v1::AuthorizedCertificatesClient Authentication Defaults
-
-@snippet google/cloud/appengine/v1/samples/authorized_certificates_client_samples.cc with-service-account
-
-*/
-
-/*! @page appengine_v1::AuthorizedDomainsClient-endpoint-snippet Override appengine_v1::AuthorizedDomainsClient Endpoint Configuration
-
-@snippet google/cloud/appengine/v1/samples/authorized_domains_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page appengine_v1::AuthorizedDomainsClient-service-account-snippet Override appengine_v1::AuthorizedDomainsClient Authentication Defaults
-
-@snippet google/cloud/appengine/v1/samples/authorized_domains_client_samples.cc with-service-account
-
-*/
-
-/*! @page appengine_v1::DomainMappingsClient-endpoint-snippet Override appengine_v1::DomainMappingsClient Endpoint Configuration
-
-@snippet google/cloud/appengine/v1/samples/domain_mappings_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page appengine_v1::DomainMappingsClient-service-account-snippet Override appengine_v1::DomainMappingsClient Authentication Defaults
-
-@snippet google/cloud/appengine/v1/samples/domain_mappings_client_samples.cc with-service-account
-
-*/
-
-/*! @page appengine_v1::FirewallClient-endpoint-snippet Override appengine_v1::FirewallClient Endpoint Configuration
-
-@snippet google/cloud/appengine/v1/samples/firewall_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page appengine_v1::FirewallClient-service-account-snippet Override appengine_v1::FirewallClient Authentication Defaults
-
-@snippet google/cloud/appengine/v1/samples/firewall_client_samples.cc with-service-account
-
-*/
-
-/*! @page appengine_v1::InstancesClient-endpoint-snippet Override appengine_v1::InstancesClient Endpoint Configuration
-
-@snippet google/cloud/appengine/v1/samples/instances_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page appengine_v1::InstancesClient-service-account-snippet Override appengine_v1::InstancesClient Authentication Defaults
-
-@snippet google/cloud/appengine/v1/samples/instances_client_samples.cc with-service-account
-
-*/
-
-/*! @page appengine_v1::ServicesClient-endpoint-snippet Override appengine_v1::ServicesClient Endpoint Configuration
-
-@snippet google/cloud/appengine/v1/samples/services_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page appengine_v1::ServicesClient-service-account-snippet Override appengine_v1::ServicesClient Authentication Defaults
-
-@snippet google/cloud/appengine/v1/samples/services_client_samples.cc with-service-account
-
-*/
-
-/*! @page appengine_v1::VersionsClient-endpoint-snippet Override appengine_v1::VersionsClient Endpoint Configuration
-
-@snippet google/cloud/appengine/v1/samples/versions_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page appengine_v1::VersionsClient-service-account-snippet Override appengine_v1::VersionsClient Authentication Defaults
-
-@snippet google/cloud/appengine/v1/samples/versions_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

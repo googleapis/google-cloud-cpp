@@ -37,55 +37,10 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`gkemulticloud_v1::AttachedClustersClient`](@ref google::cloud::gkemulticloud_v1::AttachedClustersClient)
-- [`gkemulticloud_v1::AwsClustersClient`](@ref google::cloud::gkemulticloud_v1::AwsClustersClient)
-- [`gkemulticloud_v1::AzureClustersClient`](@ref google::cloud::gkemulticloud_v1::AzureClustersClient)
+- [\c gkemulticloud_v1::AttachedClustersClient](@ref google::cloud::gkemulticloud_v1::AttachedClustersClient)
+- [\c gkemulticloud_v1::AwsClustersClient](@ref google::cloud::gkemulticloud_v1::AwsClustersClient)
+- [\c gkemulticloud_v1::AzureClustersClient](@ref google::cloud::gkemulticloud_v1::AzureClustersClient)
 <!-- inject-client-list-end -->
-
-## Override the default endpoint
-
-In some cases, you may need to override the default endpoint used by the client
-library. Use the `google::cloud::EndpointOption` when initializing the client
-library to change this default.
-
-<!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `gkemulticloud_v1::AttachedClustersClient`:
-
-@snippet attached_clusters_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [gkemulticloud_v1::AttachedClustersClient](@ref gkemulticloud_v1::AttachedClustersClient-endpoint-snippet)
- [gkemulticloud_v1::AwsClustersClient](@ref gkemulticloud_v1::AwsClustersClient-endpoint-snippet)
- [gkemulticloud_v1::AzureClustersClient](@ref gkemulticloud_v1::AzureClustersClient-endpoint-snippet)
-
-<!-- inject-endpoint-snippet-end -->
-
-## Override the authentication configuration
-
-Some applications cannot use the default authentication mechanism (known as
-[Application Default Credentials]). You can override this default using
-`google::cloud::UnifiedCredentialsOption`. The following example shows how
-to explicitly load a service account key file.
-
-<!-- inject-service-account-snippet-start -->
-@snippet attached_clusters_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [gkemulticloud_v1::AttachedClustersClient](@ref gkemulticloud_v1::AttachedClustersClient-service-account-snippet)
- [gkemulticloud_v1::AwsClustersClient](@ref gkemulticloud_v1::AwsClustersClient-service-account-snippet)
- [gkemulticloud_v1::AzureClustersClient](@ref gkemulticloud_v1::AzureClustersClient-service-account-snippet)
-
-<!-- inject-service-account-snippet-end -->
-
-Keep in mind that we chose this as an example because it is relatively easy to
-understand. Consult the [Best practices for managing service account keys]
-guide for more details.
-
-@see @ref guac - for more information on the factory functions to create
-`google::cloud::Credentials` objects.
-
-[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
-[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
 
 ## Retry, Backoff, and Idempotency Policies.
 
@@ -96,6 +51,10 @@ can override the default policies.
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
+- @ref gkemulticloud-override-endpoint - describes how to override the default
+  endpoint.
+- @ref gkemulticloud-override-authentication - describes how to change the
+  authentication credentials used by the library.
 
 [cloud-service-docs]: https://cloud.google.com/anthos/clusters/docs/multi-cloud
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
@@ -105,42 +64,3 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/gkemulticloud/quickstart/README%2Emd
 
 */
-
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page gkemulticloud_v1::AttachedClustersClient-endpoint-snippet Override gkemulticloud_v1::AttachedClustersClient Endpoint Configuration
-
-@snippet google/cloud/gkemulticloud/v1/samples/attached_clusters_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page gkemulticloud_v1::AttachedClustersClient-service-account-snippet Override gkemulticloud_v1::AttachedClustersClient Authentication Defaults
-
-@snippet google/cloud/gkemulticloud/v1/samples/attached_clusters_client_samples.cc with-service-account
-
-*/
-
-/*! @page gkemulticloud_v1::AwsClustersClient-endpoint-snippet Override gkemulticloud_v1::AwsClustersClient Endpoint Configuration
-
-@snippet google/cloud/gkemulticloud/v1/samples/aws_clusters_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page gkemulticloud_v1::AwsClustersClient-service-account-snippet Override gkemulticloud_v1::AwsClustersClient Authentication Defaults
-
-@snippet google/cloud/gkemulticloud/v1/samples/aws_clusters_client_samples.cc with-service-account
-
-*/
-
-/*! @page gkemulticloud_v1::AzureClustersClient-endpoint-snippet Override gkemulticloud_v1::AzureClustersClient Endpoint Configuration
-
-@snippet google/cloud/gkemulticloud/v1/samples/azure_clusters_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page gkemulticloud_v1::AzureClustersClient-service-account-snippet Override gkemulticloud_v1::AzureClustersClient Authentication Defaults
-
-@snippet google/cloud/gkemulticloud/v1/samples/azure_clusters_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

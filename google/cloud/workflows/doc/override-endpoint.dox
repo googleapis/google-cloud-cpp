@@ -1,0 +1,36 @@
+/*!
+@page workflows-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `workflows_executions_v1::ExecutionsClient`:
+
+@snippet executions_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c workflows_executions_v1::ExecutionsClient](@ref workflows_executions_v1::ExecutionsClient-endpoint-snippet)
+- [\c workflows_v1::WorkflowsClient](@ref workflows_v1::WorkflowsClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page workflows_executions_v1::ExecutionsClient-endpoint-snippet Override workflows_executions_v1::ExecutionsClient Endpoint Configuration
+
+@snippet google/cloud/workflows/executions/v1/samples/executions_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page workflows_v1::WorkflowsClient-endpoint-snippet Override workflows_v1::WorkflowsClient Endpoint Configuration
+
+@snippet google/cloud/workflows/v1/samples/workflows_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

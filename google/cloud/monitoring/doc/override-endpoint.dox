@@ -1,0 +1,85 @@
+/*!
+@page monitoring-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `monitoring_dashboard_v1::DashboardsServiceClient`:
+
+@snippet dashboards_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c monitoring_dashboard_v1::DashboardsServiceClient](@ref monitoring_dashboard_v1::DashboardsServiceClient-endpoint-snippet)
+- [\c monitoring_metricsscope_v1::MetricsScopesClient](@ref monitoring_metricsscope_v1::MetricsScopesClient-endpoint-snippet)
+- [\c monitoring_v3::AlertPolicyServiceClient](@ref monitoring_v3::AlertPolicyServiceClient-endpoint-snippet)
+- [\c monitoring_v3::GroupServiceClient](@ref monitoring_v3::GroupServiceClient-endpoint-snippet)
+- [\c monitoring_v3::MetricServiceClient](@ref monitoring_v3::MetricServiceClient-endpoint-snippet)
+- [\c monitoring_v3::NotificationChannelServiceClient](@ref monitoring_v3::NotificationChannelServiceClient-endpoint-snippet)
+- [\c monitoring_v3::QueryServiceClient](@ref monitoring_v3::QueryServiceClient-endpoint-snippet)
+- [\c monitoring_v3::ServiceMonitoringServiceClient](@ref monitoring_v3::ServiceMonitoringServiceClient-endpoint-snippet)
+- [\c monitoring_v3::UptimeCheckServiceClient](@ref monitoring_v3::UptimeCheckServiceClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page monitoring_dashboard_v1::DashboardsServiceClient-endpoint-snippet Override monitoring_dashboard_v1::DashboardsServiceClient Endpoint Configuration
+
+@snippet google/cloud/monitoring/dashboard/v1/samples/dashboards_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page monitoring_metricsscope_v1::MetricsScopesClient-endpoint-snippet Override monitoring_metricsscope_v1::MetricsScopesClient Endpoint Configuration
+
+@snippet google/cloud/monitoring/metricsscope/v1/samples/metrics_scopes_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page monitoring_v3::AlertPolicyServiceClient-endpoint-snippet Override monitoring_v3::AlertPolicyServiceClient Endpoint Configuration
+
+@snippet google/cloud/monitoring/v3/samples/alert_policy_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page monitoring_v3::GroupServiceClient-endpoint-snippet Override monitoring_v3::GroupServiceClient Endpoint Configuration
+
+@snippet google/cloud/monitoring/v3/samples/group_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page monitoring_v3::MetricServiceClient-endpoint-snippet Override monitoring_v3::MetricServiceClient Endpoint Configuration
+
+@snippet google/cloud/monitoring/v3/samples/metric_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page monitoring_v3::NotificationChannelServiceClient-endpoint-snippet Override monitoring_v3::NotificationChannelServiceClient Endpoint Configuration
+
+@snippet google/cloud/monitoring/v3/samples/notification_channel_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page monitoring_v3::QueryServiceClient-endpoint-snippet Override monitoring_v3::QueryServiceClient Endpoint Configuration
+
+@snippet google/cloud/monitoring/v3/samples/query_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page monitoring_v3::ServiceMonitoringServiceClient-endpoint-snippet Override monitoring_v3::ServiceMonitoringServiceClient Endpoint Configuration
+
+@snippet google/cloud/monitoring/v3/samples/service_monitoring_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page monitoring_v3::UptimeCheckServiceClient-endpoint-snippet Override monitoring_v3::UptimeCheckServiceClient Endpoint Configuration
+
+@snippet google/cloud/monitoring/v3/samples/uptime_check_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

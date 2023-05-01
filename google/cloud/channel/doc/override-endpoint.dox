@@ -1,0 +1,25 @@
+/*!
+@page channel-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `channel_v1::CloudChannelServiceClient`:
+
+@snippet cloud_channel_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page channel_v1::CloudChannelServiceClient-endpoint-snippet Override channel_v1::CloudChannelServiceClient Endpoint Configuration
+
+@snippet google/cloud/channel/v1/samples/cloud_channel_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

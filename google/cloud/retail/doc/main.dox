@@ -32,64 +32,13 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`retail_v2::CatalogServiceClient`](@ref google::cloud::retail_v2::CatalogServiceClient)
-- [`retail_v2::CompletionServiceClient`](@ref google::cloud::retail_v2::CompletionServiceClient)
-- [`retail_v2::PredictionServiceClient`](@ref google::cloud::retail_v2::PredictionServiceClient)
-- [`retail_v2::ProductServiceClient`](@ref google::cloud::retail_v2::ProductServiceClient)
-- [`retail_v2::SearchServiceClient`](@ref google::cloud::retail_v2::SearchServiceClient)
-- [`retail_v2::UserEventServiceClient`](@ref google::cloud::retail_v2::UserEventServiceClient)
+- [\c retail_v2::CatalogServiceClient](@ref google::cloud::retail_v2::CatalogServiceClient)
+- [\c retail_v2::CompletionServiceClient](@ref google::cloud::retail_v2::CompletionServiceClient)
+- [\c retail_v2::PredictionServiceClient](@ref google::cloud::retail_v2::PredictionServiceClient)
+- [\c retail_v2::ProductServiceClient](@ref google::cloud::retail_v2::ProductServiceClient)
+- [\c retail_v2::SearchServiceClient](@ref google::cloud::retail_v2::SearchServiceClient)
+- [\c retail_v2::UserEventServiceClient](@ref google::cloud::retail_v2::UserEventServiceClient)
 <!-- inject-client-list-end -->
-
-## Override the default endpoint
-
-In some cases, you may need to override the default endpoint used by the client
-library. Use the `google::cloud::EndpointOption` when initializing the client
-library to change this default.
-
-<!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `retail_v2::CatalogServiceClient`:
-
-@snippet catalog_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [retail_v2::CatalogServiceClient](@ref retail_v2::CatalogServiceClient-endpoint-snippet)
- [retail_v2::CompletionServiceClient](@ref retail_v2::CompletionServiceClient-endpoint-snippet)
- [retail_v2::PredictionServiceClient](@ref retail_v2::PredictionServiceClient-endpoint-snippet)
- [retail_v2::ProductServiceClient](@ref retail_v2::ProductServiceClient-endpoint-snippet)
- [retail_v2::SearchServiceClient](@ref retail_v2::SearchServiceClient-endpoint-snippet)
- [retail_v2::UserEventServiceClient](@ref retail_v2::UserEventServiceClient-endpoint-snippet)
-
-<!-- inject-endpoint-snippet-end -->
-
-## Override the authentication configuration
-
-Some applications cannot use the default authentication mechanism (known as
-[Application Default Credentials]). You can override this default using
-`google::cloud::UnifiedCredentialsOption`. The following example shows how
-to explicitly load a service account key file.
-
-<!-- inject-service-account-snippet-start -->
-@snippet catalog_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [retail_v2::CatalogServiceClient](@ref retail_v2::CatalogServiceClient-service-account-snippet)
- [retail_v2::CompletionServiceClient](@ref retail_v2::CompletionServiceClient-service-account-snippet)
- [retail_v2::PredictionServiceClient](@ref retail_v2::PredictionServiceClient-service-account-snippet)
- [retail_v2::ProductServiceClient](@ref retail_v2::ProductServiceClient-service-account-snippet)
- [retail_v2::SearchServiceClient](@ref retail_v2::SearchServiceClient-service-account-snippet)
- [retail_v2::UserEventServiceClient](@ref retail_v2::UserEventServiceClient-service-account-snippet)
-
-<!-- inject-service-account-snippet-end -->
-
-Keep in mind that we chose this as an example because it is relatively easy to
-understand. Consult the [Best practices for managing service account keys]
-guide for more details.
-
-@see @ref guac - for more information on the factory functions to create
-`google::cloud::Credentials` objects.
-
-[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
-[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
 
 ## Retry, Backoff, and Idempotency Policies.
 
@@ -100,6 +49,10 @@ can override the default policies.
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
+- @ref retail-override-endpoint - describes how to override the default
+  endpoint.
+- @ref retail-override-authentication - describes how to change the
+  authentication credentials used by the library.
 
 [cloud-service-docs]: https://cloud.google.com/retail/docs
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
@@ -109,78 +62,3 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/retail/quickstart/README%2Emd
 
 */
-
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page retail_v2::CatalogServiceClient-endpoint-snippet Override retail_v2::CatalogServiceClient Endpoint Configuration
-
-@snippet google/cloud/retail/v2/samples/catalog_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page retail_v2::CatalogServiceClient-service-account-snippet Override retail_v2::CatalogServiceClient Authentication Defaults
-
-@snippet google/cloud/retail/v2/samples/catalog_client_samples.cc with-service-account
-
-*/
-
-/*! @page retail_v2::CompletionServiceClient-endpoint-snippet Override retail_v2::CompletionServiceClient Endpoint Configuration
-
-@snippet google/cloud/retail/v2/samples/completion_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page retail_v2::CompletionServiceClient-service-account-snippet Override retail_v2::CompletionServiceClient Authentication Defaults
-
-@snippet google/cloud/retail/v2/samples/completion_client_samples.cc with-service-account
-
-*/
-
-/*! @page retail_v2::PredictionServiceClient-endpoint-snippet Override retail_v2::PredictionServiceClient Endpoint Configuration
-
-@snippet google/cloud/retail/v2/samples/prediction_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page retail_v2::PredictionServiceClient-service-account-snippet Override retail_v2::PredictionServiceClient Authentication Defaults
-
-@snippet google/cloud/retail/v2/samples/prediction_client_samples.cc with-service-account
-
-*/
-
-/*! @page retail_v2::ProductServiceClient-endpoint-snippet Override retail_v2::ProductServiceClient Endpoint Configuration
-
-@snippet google/cloud/retail/v2/samples/product_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page retail_v2::ProductServiceClient-service-account-snippet Override retail_v2::ProductServiceClient Authentication Defaults
-
-@snippet google/cloud/retail/v2/samples/product_client_samples.cc with-service-account
-
-*/
-
-/*! @page retail_v2::SearchServiceClient-endpoint-snippet Override retail_v2::SearchServiceClient Endpoint Configuration
-
-@snippet google/cloud/retail/v2/samples/search_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page retail_v2::SearchServiceClient-service-account-snippet Override retail_v2::SearchServiceClient Authentication Defaults
-
-@snippet google/cloud/retail/v2/samples/search_client_samples.cc with-service-account
-
-*/
-
-/*! @page retail_v2::UserEventServiceClient-endpoint-snippet Override retail_v2::UserEventServiceClient Endpoint Configuration
-
-@snippet google/cloud/retail/v2/samples/user_event_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page retail_v2::UserEventServiceClient-service-account-snippet Override retail_v2::UserEventServiceClient Authentication Defaults
-
-@snippet google/cloud/retail/v2/samples/user_event_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

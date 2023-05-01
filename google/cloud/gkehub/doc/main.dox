@@ -22,47 +22,12 @@ which should give you a taste of the GKE Hub C++ client library API.
 
 <!-- inject-client-list-start -->
 The main class in this library is
-[`gkehub_v1::GkeHubClient`](@ref google::cloud::gkehub_v1::GkeHubClient).
+[\c gkehub_v1::GkeHubClient](@ref google::cloud::gkehub_v1::GkeHubClient).
 All RPCs are exposed as member functions of this class. Other classes provide
 helpers, retry policies, configuration parameters, and infrastructure to mock
-[`gkehub_v1::GkeHubClient`](@ref google::cloud::gkehub_v1::GkeHubClient) when testing your
+[\c gkehub_v1::GkeHubClient](@ref google::cloud::gkehub_v1::GkeHubClient) when testing your
 application.
 <!-- inject-client-list-end -->
-
-## Override the default endpoint
-
-In some cases, you may need to override the default endpoint used by the client
-library. Use the `google::cloud::EndpointOption` when initializing the client
-library to change this default.
-
-<!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `gkehub_v1::GkeHubClient`:
-
-@snippet gke_hub_client_samples.cc set-client-endpoint
-
-<!-- inject-endpoint-snippet-end -->
-
-## Override the authentication configuration
-
-Some applications cannot use the default authentication mechanism (known as
-[Application Default Credentials]). You can override this default using
-`google::cloud::UnifiedCredentialsOption`. The following example shows how
-to explicitly load a service account key file.
-
-<!-- inject-service-account-snippet-start -->
-@snippet gke_hub_client_samples.cc with-service-account
-
-<!-- inject-service-account-snippet-end -->
-
-Keep in mind that we chose this as an example because it is relatively easy to
-understand. Consult the [Best practices for managing service account keys]
-guide for more details.
-
-@see @ref guac - for more information on the factory functions to create
-`google::cloud::Credentials` objects.
-
-[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
-[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
 
 ## Retry, Backoff, and Idempotency Policies.
 
@@ -73,6 +38,10 @@ can override the default policies.
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
+- @ref gkehub-override-endpoint - describes how to override the default
+  endpoint.
+- @ref gkehub-override-authentication - describes how to change the
+  authentication credentials used by the library.
 
 [cloud-service-docs]: https://cloud.google.com/anthos
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
@@ -82,18 +51,3 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/gkehub/quickstart/README%2Emd
 
 */
-
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page gkehub_v1::GkeHubClient-endpoint-snippet Override gkehub_v1::GkeHubClient Endpoint Configuration
-
-@snippet google/cloud/gkehub/v1/samples/gke_hub_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page gkehub_v1::GkeHubClient-service-account-snippet Override gkehub_v1::GkeHubClient Authentication Defaults
-
-@snippet google/cloud/gkehub/v1/samples/gke_hub_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

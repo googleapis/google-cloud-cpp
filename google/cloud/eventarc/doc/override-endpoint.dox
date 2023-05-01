@@ -1,0 +1,36 @@
+/*!
+@page eventarc-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `eventarc_publishing_v1::PublisherClient`:
+
+@snippet publisher_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c eventarc_publishing_v1::PublisherClient](@ref eventarc_publishing_v1::PublisherClient-endpoint-snippet)
+- [\c eventarc_v1::EventarcClient](@ref eventarc_v1::EventarcClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page eventarc_publishing_v1::PublisherClient-endpoint-snippet Override eventarc_publishing_v1::PublisherClient Endpoint Configuration
+
+@snippet google/cloud/eventarc/publishing/v1/samples/publisher_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page eventarc_v1::EventarcClient-endpoint-snippet Override eventarc_v1::EventarcClient Endpoint Configuration
+
+@snippet google/cloud/eventarc/v1/samples/eventarc_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

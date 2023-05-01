@@ -23,47 +23,12 @@ which should give you a taste of the Connectors API C++ client library API.
 
 <!-- inject-client-list-start -->
 The main class in this library is
-[`connectors_v1::ConnectorsClient`](@ref google::cloud::connectors_v1::ConnectorsClient).
+[\c connectors_v1::ConnectorsClient](@ref google::cloud::connectors_v1::ConnectorsClient).
 All RPCs are exposed as member functions of this class. Other classes provide
 helpers, retry policies, configuration parameters, and infrastructure to mock
-[`connectors_v1::ConnectorsClient`](@ref google::cloud::connectors_v1::ConnectorsClient) when testing your
+[\c connectors_v1::ConnectorsClient](@ref google::cloud::connectors_v1::ConnectorsClient) when testing your
 application.
 <!-- inject-client-list-end -->
-
-## Override the default endpoint
-
-In some cases, you may need to override the default endpoint used by the client
-library. Use the `google::cloud::EndpointOption` when initializing the client
-library to change this default.
-
-<!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `connectors_v1::ConnectorsClient`:
-
-@snippet connectors_client_samples.cc set-client-endpoint
-
-<!-- inject-endpoint-snippet-end -->
-
-## Override the authentication configuration
-
-Some applications cannot use the default authentication mechanism (known as
-[Application Default Credentials]). You can override this default using
-`google::cloud::UnifiedCredentialsOption`. The following example shows how
-to explicitly load a service account key file.
-
-<!-- inject-service-account-snippet-start -->
-@snippet connectors_client_samples.cc with-service-account
-
-<!-- inject-service-account-snippet-end -->
-
-Keep in mind that we chose this as an example because it is relatively easy to
-understand. Consult the [Best practices for managing service account keys]
-guide for more details.
-
-@see @ref guac - for more information on the factory functions to create
-`google::cloud::Credentials` objects.
-
-[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
-[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
 
 ## Retry, Backoff, and Idempotency Policies.
 
@@ -74,6 +39,10 @@ can override the default policies.
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
+- @ref connectors-override-endpoint - describes how to override the default
+  endpoint.
+- @ref connectors-override-authentication - describes how to change the
+  authentication credentials used by the library.
 
 [cloud-service-docs]: https://cloud.google.com/apigee/docs/api-platform/connectors/about-connectors
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
@@ -83,18 +52,3 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/connectors/quickstart/README%2Emd
 
 */
-
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page connectors_v1::ConnectorsClient-endpoint-snippet Override connectors_v1::ConnectorsClient Endpoint Configuration
-
-@snippet google/cloud/connectors/v1/samples/connectors_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page connectors_v1::ConnectorsClient-service-account-snippet Override connectors_v1::ConnectorsClient Authentication Defaults
-
-@snippet google/cloud/connectors/v1/samples/connectors_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

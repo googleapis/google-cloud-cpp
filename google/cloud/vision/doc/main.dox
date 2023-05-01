@@ -32,52 +32,9 @@ The library also has other classes that provide helpers, retry policies,
 configuration parameters, and infrastructure to mock the `*Client` classes
 when testing your application.
 
-- [`vision_v1::ImageAnnotatorClient`](@ref google::cloud::vision_v1::ImageAnnotatorClient)
-- [`vision_v1::ProductSearchClient`](@ref google::cloud::vision_v1::ProductSearchClient)
+- [\c vision_v1::ImageAnnotatorClient](@ref google::cloud::vision_v1::ImageAnnotatorClient)
+- [\c vision_v1::ProductSearchClient](@ref google::cloud::vision_v1::ProductSearchClient)
 <!-- inject-client-list-end -->
-
-## Override the default endpoint
-
-In some cases, you may need to override the default endpoint used by the client
-library. Use the `google::cloud::EndpointOption` when initializing the client
-library to change this default.
-
-<!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `vision_v1::ImageAnnotatorClient`:
-
-@snippet image_annotator_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [vision_v1::ImageAnnotatorClient](@ref vision_v1::ImageAnnotatorClient-endpoint-snippet)
- [vision_v1::ProductSearchClient](@ref vision_v1::ProductSearchClient-endpoint-snippet)
-
-<!-- inject-endpoint-snippet-end -->
-
-## Override the authentication configuration
-
-Some applications cannot use the default authentication mechanism (known as
-[Application Default Credentials]). You can override this default using
-`google::cloud::UnifiedCredentialsOption`. The following example shows how
-to explicitly load a service account key file.
-
-<!-- inject-service-account-snippet-start -->
-@snippet image_annotator_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [vision_v1::ImageAnnotatorClient](@ref vision_v1::ImageAnnotatorClient-service-account-snippet)
- [vision_v1::ProductSearchClient](@ref vision_v1::ProductSearchClient-service-account-snippet)
-
-<!-- inject-service-account-snippet-end -->
-
-Keep in mind that we chose this as an example because it is relatively easy to
-understand. Consult the [Best practices for managing service account keys]
-guide for more details.
-
-@see @ref guac - for more information on the factory functions to create
-`google::cloud::Credentials` objects.
-
-[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
-[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
 
 ## Retry, Backoff, and Idempotency Policies.
 
@@ -88,6 +45,10 @@ can override the default policies.
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
+- @ref vision-override-endpoint - describes how to override the default
+  endpoint.
+- @ref vision-override-authentication - describes how to change the
+  authentication credentials used by the library.
 
 [cloud-service-docs]: https://cloud.google.com/vision
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
@@ -97,30 +58,3 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/vision/quickstart/README%2Emd
 
 */
-
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page vision_v1::ImageAnnotatorClient-endpoint-snippet Override vision_v1::ImageAnnotatorClient Endpoint Configuration
-
-@snippet google/cloud/vision/v1/samples/image_annotator_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page vision_v1::ImageAnnotatorClient-service-account-snippet Override vision_v1::ImageAnnotatorClient Authentication Defaults
-
-@snippet google/cloud/vision/v1/samples/image_annotator_client_samples.cc with-service-account
-
-*/
-
-/*! @page vision_v1::ProductSearchClient-endpoint-snippet Override vision_v1::ProductSearchClient Endpoint Configuration
-
-@snippet google/cloud/vision/v1/samples/product_search_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page vision_v1::ProductSearchClient-service-account-snippet Override vision_v1::ProductSearchClient Authentication Defaults
-
-@snippet google/cloud/vision/v1/samples/product_search_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

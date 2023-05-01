@@ -1,0 +1,36 @@
+/*!
+@page speech-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `speech_v1::SpeechClient`:
+
+@snippet speech_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c speech_v1::SpeechClient](@ref speech_v1::SpeechClient-endpoint-snippet)
+- [\c speech_v2::SpeechClient](@ref speech_v2::SpeechClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page speech_v1::SpeechClient-endpoint-snippet Override speech_v1::SpeechClient Endpoint Configuration
+
+@snippet google/cloud/speech/v1/samples/speech_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page speech_v2::SpeechClient-endpoint-snippet Override speech_v2::SpeechClient Endpoint Configuration
+
+@snippet google/cloud/speech/v2/samples/speech_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

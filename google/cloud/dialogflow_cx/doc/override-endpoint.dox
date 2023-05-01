@@ -1,0 +1,134 @@
+/*!
+@page dialogflow_cx-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `dialogflow_cx::AgentsClient`:
+
+@snippet agents_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c dialogflow_cx::AgentsClient](@ref dialogflow_cx::AgentsClient-endpoint-snippet)
+- [\c dialogflow_cx::ChangelogsClient](@ref dialogflow_cx::ChangelogsClient-endpoint-snippet)
+- [\c dialogflow_cx::DeploymentsClient](@ref dialogflow_cx::DeploymentsClient-endpoint-snippet)
+- [\c dialogflow_cx::EntityTypesClient](@ref dialogflow_cx::EntityTypesClient-endpoint-snippet)
+- [\c dialogflow_cx::EnvironmentsClient](@ref dialogflow_cx::EnvironmentsClient-endpoint-snippet)
+- [\c dialogflow_cx::ExperimentsClient](@ref dialogflow_cx::ExperimentsClient-endpoint-snippet)
+- [\c dialogflow_cx::FlowsClient](@ref dialogflow_cx::FlowsClient-endpoint-snippet)
+- [\c dialogflow_cx::IntentsClient](@ref dialogflow_cx::IntentsClient-endpoint-snippet)
+- [\c dialogflow_cx::PagesClient](@ref dialogflow_cx::PagesClient-endpoint-snippet)
+- [\c dialogflow_cx::SecuritySettingsServiceClient](@ref dialogflow_cx::SecuritySettingsServiceClient-endpoint-snippet)
+- [\c dialogflow_cx::SessionEntityTypesClient](@ref dialogflow_cx::SessionEntityTypesClient-endpoint-snippet)
+- [\c dialogflow_cx::SessionsClient](@ref dialogflow_cx::SessionsClient-endpoint-snippet)
+- [\c dialogflow_cx::TestCasesClient](@ref dialogflow_cx::TestCasesClient-endpoint-snippet)
+- [\c dialogflow_cx::TransitionRouteGroupsClient](@ref dialogflow_cx::TransitionRouteGroupsClient-endpoint-snippet)
+- [\c dialogflow_cx::VersionsClient](@ref dialogflow_cx::VersionsClient-endpoint-snippet)
+- [\c dialogflow_cx::WebhooksClient](@ref dialogflow_cx::WebhooksClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page dialogflow_cx::AgentsClient-endpoint-snippet Override dialogflow_cx::AgentsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/agents_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::ChangelogsClient-endpoint-snippet Override dialogflow_cx::ChangelogsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/changelogs_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::DeploymentsClient-endpoint-snippet Override dialogflow_cx::DeploymentsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/deployments_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::EntityTypesClient-endpoint-snippet Override dialogflow_cx::EntityTypesClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/entity_types_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::EnvironmentsClient-endpoint-snippet Override dialogflow_cx::EnvironmentsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/environments_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::ExperimentsClient-endpoint-snippet Override dialogflow_cx::ExperimentsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/experiments_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::FlowsClient-endpoint-snippet Override dialogflow_cx::FlowsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/flows_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::IntentsClient-endpoint-snippet Override dialogflow_cx::IntentsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/intents_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::PagesClient-endpoint-snippet Override dialogflow_cx::PagesClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/pages_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::SecuritySettingsServiceClient-endpoint-snippet Override dialogflow_cx::SecuritySettingsServiceClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/security_settings_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::SessionEntityTypesClient-endpoint-snippet Override dialogflow_cx::SessionEntityTypesClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/session_entity_types_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::SessionsClient-endpoint-snippet Override dialogflow_cx::SessionsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/sessions_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::TestCasesClient-endpoint-snippet Override dialogflow_cx::TestCasesClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/test_cases_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::TransitionRouteGroupsClient-endpoint-snippet Override dialogflow_cx::TransitionRouteGroupsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/transition_route_groups_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::VersionsClient-endpoint-snippet Override dialogflow_cx::VersionsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/versions_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::WebhooksClient-endpoint-snippet Override dialogflow_cx::WebhooksClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/webhooks_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

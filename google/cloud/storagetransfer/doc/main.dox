@@ -22,47 +22,12 @@ which should give you a taste of the Storage Transfer API C++ client library API
 
 <!-- inject-client-list-start -->
 The main class in this library is
-[`storagetransfer_v1::StorageTransferServiceClient`](@ref google::cloud::storagetransfer_v1::StorageTransferServiceClient).
+[\c storagetransfer_v1::StorageTransferServiceClient](@ref google::cloud::storagetransfer_v1::StorageTransferServiceClient).
 All RPCs are exposed as member functions of this class. Other classes provide
 helpers, retry policies, configuration parameters, and infrastructure to mock
-[`storagetransfer_v1::StorageTransferServiceClient`](@ref google::cloud::storagetransfer_v1::StorageTransferServiceClient) when testing your
+[\c storagetransfer_v1::StorageTransferServiceClient](@ref google::cloud::storagetransfer_v1::StorageTransferServiceClient) when testing your
 application.
 <!-- inject-client-list-end -->
-
-## Override the default endpoint
-
-In some cases, you may need to override the default endpoint used by the client
-library. Use the `google::cloud::EndpointOption` when initializing the client
-library to change this default.
-
-<!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `storagetransfer_v1::StorageTransferServiceClient`:
-
-@snippet storage_transfer_client_samples.cc set-client-endpoint
-
-<!-- inject-endpoint-snippet-end -->
-
-## Override the authentication configuration
-
-Some applications cannot use the default authentication mechanism (known as
-[Application Default Credentials]). You can override this default using
-`google::cloud::UnifiedCredentialsOption`. The following example shows how
-to explicitly load a service account key file.
-
-<!-- inject-service-account-snippet-start -->
-@snippet storage_transfer_client_samples.cc with-service-account
-
-<!-- inject-service-account-snippet-end -->
-
-Keep in mind that we chose this as an example because it is relatively easy to
-understand. Consult the [Best practices for managing service account keys]
-guide for more details.
-
-@see @ref guac - for more information on the factory functions to create
-`google::cloud::Credentials` objects.
-
-[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
-[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
 
 ## Retry, Backoff, and Idempotency Policies.
 
@@ -73,6 +38,10 @@ can override the default policies.
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
+- @ref storagetransfer-override-endpoint - describes how to override the default
+  endpoint.
+- @ref storagetransfer-override-authentication - describes how to change the
+  authentication credentials used by the library.
 
 [cloud-service-docs]: https://cloud.google.com/storage-transfer
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
@@ -82,18 +51,3 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storagetransfer/quickstart/README%2Emd
 
 */
-
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page storagetransfer_v1::StorageTransferServiceClient-endpoint-snippet Override storagetransfer_v1::StorageTransferServiceClient Endpoint Configuration
-
-@snippet google/cloud/storagetransfer/v1/samples/storage_transfer_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page storagetransfer_v1::StorageTransferServiceClient-service-account-snippet Override storagetransfer_v1::StorageTransferServiceClient Authentication Defaults
-
-@snippet google/cloud/storagetransfer/v1/samples/storage_transfer_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

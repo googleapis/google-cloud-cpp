@@ -87,6 +87,10 @@ void GenerateDoxygenOptionsPage(
     std::ostream& os, std::map<std::string, std::string> const& variables);
 void GenerateDoxygenEnvironmentPage(
     std::ostream& os, std::map<std::string, std::string> const& variables);
+void GenerateOverrideAuthenticationPage(
+    std::ostream& os, std::map<std::string, std::string> const& variables);
+void GenerateOverrideEndpointPage(
+    std::ostream& os, std::map<std::string, std::string> const& variables);
 void GenerateQuickstartReadme(
     std::ostream& os, std::map<std::string, std::string> const& variables);
 void GenerateQuickstartSkeleton(

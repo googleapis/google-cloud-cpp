@@ -22,47 +22,12 @@ which should give you a taste of the Cloud OS Login API C++ client library API.
 
 <!-- inject-client-list-start -->
 The main class in this library is
-[`oslogin_v1::OsLoginServiceClient`](@ref google::cloud::oslogin_v1::OsLoginServiceClient).
+[\c oslogin_v1::OsLoginServiceClient](@ref google::cloud::oslogin_v1::OsLoginServiceClient).
 All RPCs are exposed as member functions of this class. Other classes provide
 helpers, retry policies, configuration parameters, and infrastructure to mock
-[`oslogin_v1::OsLoginServiceClient`](@ref google::cloud::oslogin_v1::OsLoginServiceClient) when testing your
+[\c oslogin_v1::OsLoginServiceClient](@ref google::cloud::oslogin_v1::OsLoginServiceClient) when testing your
 application.
 <!-- inject-client-list-end -->
-
-## Override the default endpoint
-
-In some cases, you may need to override the default endpoint used by the client
-library. Use the `google::cloud::EndpointOption` when initializing the client
-library to change this default.
-
-<!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `oslogin_v1::OsLoginServiceClient`:
-
-@snippet os_login_client_samples.cc set-client-endpoint
-
-<!-- inject-endpoint-snippet-end -->
-
-## Override the authentication configuration
-
-Some applications cannot use the default authentication mechanism (known as
-[Application Default Credentials]). You can override this default using
-`google::cloud::UnifiedCredentialsOption`. The following example shows how
-to explicitly load a service account key file.
-
-<!-- inject-service-account-snippet-start -->
-@snippet os_login_client_samples.cc with-service-account
-
-<!-- inject-service-account-snippet-end -->
-
-Keep in mind that we chose this as an example because it is relatively easy to
-understand. Consult the [Best practices for managing service account keys]
-guide for more details.
-
-@see @ref guac - for more information on the factory functions to create
-`google::cloud::Credentials` objects.
-
-[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
-[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
 
 ## Retry, Backoff, and Idempotency Policies.
 
@@ -73,6 +38,10 @@ can override the default policies.
 ## More Information
 
 - @ref common-error-handling - describes how the library reports errors.
+- @ref oslogin-override-endpoint - describes how to override the default
+  endpoint.
+- @ref oslogin-override-authentication - describes how to change the
+  authentication credentials used by the library.
 
 [cloud-service-docs]: https://cloud.google.com/compute/docs/oslogin
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
@@ -82,18 +51,3 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/oslogin/quickstart/README%2Emd
 
 */
-
-// <!-- inject-endpoint-pages-start -->
-
-/*! @page oslogin_v1::OsLoginServiceClient-endpoint-snippet Override oslogin_v1::OsLoginServiceClient Endpoint Configuration
-
-@snippet google/cloud/oslogin/v1/samples/os_login_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page oslogin_v1::OsLoginServiceClient-service-account-snippet Override oslogin_v1::OsLoginServiceClient Authentication Defaults
-
-@snippet google/cloud/oslogin/v1/samples/os_login_client_samples.cc with-service-account
-
-*/
-// <!-- inject-endpoint-pages-end -->

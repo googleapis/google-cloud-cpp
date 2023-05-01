@@ -1,0 +1,43 @@
+/*!
+@page dataplex-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `dataplex_v1::ContentServiceClient`:
+
+@snippet content_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c dataplex_v1::ContentServiceClient](@ref dataplex_v1::ContentServiceClient-endpoint-snippet)
+- [\c dataplex_v1::DataplexServiceClient](@ref dataplex_v1::DataplexServiceClient-endpoint-snippet)
+- [\c dataplex_v1::MetadataServiceClient](@ref dataplex_v1::MetadataServiceClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page dataplex_v1::ContentServiceClient-endpoint-snippet Override dataplex_v1::ContentServiceClient Endpoint Configuration
+
+@snippet google/cloud/dataplex/v1/samples/content_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dataplex_v1::DataplexServiceClient-endpoint-snippet Override dataplex_v1::DataplexServiceClient Endpoint Configuration
+
+@snippet google/cloud/dataplex/v1/samples/dataplex_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dataplex_v1::MetadataServiceClient-endpoint-snippet Override dataplex_v1::MetadataServiceClient Endpoint Configuration
+
+@snippet google/cloud/dataplex/v1/samples/metadata_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

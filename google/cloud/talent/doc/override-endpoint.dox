@@ -1,0 +1,57 @@
+/*!
+@page talent-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `talent_v4::CompanyServiceClient`:
+
+@snippet company_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c talent_v4::CompanyServiceClient](@ref talent_v4::CompanyServiceClient-endpoint-snippet)
+- [\c talent_v4::CompletionClient](@ref talent_v4::CompletionClient-endpoint-snippet)
+- [\c talent_v4::EventServiceClient](@ref talent_v4::EventServiceClient-endpoint-snippet)
+- [\c talent_v4::JobServiceClient](@ref talent_v4::JobServiceClient-endpoint-snippet)
+- [\c talent_v4::TenantServiceClient](@ref talent_v4::TenantServiceClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page talent_v4::CompanyServiceClient-endpoint-snippet Override talent_v4::CompanyServiceClient Endpoint Configuration
+
+@snippet google/cloud/talent/v4/samples/company_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page talent_v4::CompletionClient-endpoint-snippet Override talent_v4::CompletionClient Endpoint Configuration
+
+@snippet google/cloud/talent/v4/samples/completion_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page talent_v4::EventServiceClient-endpoint-snippet Override talent_v4::EventServiceClient Endpoint Configuration
+
+@snippet google/cloud/talent/v4/samples/event_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page talent_v4::JobServiceClient-endpoint-snippet Override talent_v4::JobServiceClient Endpoint Configuration
+
+@snippet google/cloud/talent/v4/samples/job_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page talent_v4::TenantServiceClient-endpoint-snippet Override talent_v4::TenantServiceClient Endpoint Configuration
+
+@snippet google/cloud/talent/v4/samples/tenant_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

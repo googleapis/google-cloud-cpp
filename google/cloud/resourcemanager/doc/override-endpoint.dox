@@ -1,0 +1,43 @@
+/*!
+@page resourcemanager-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `resourcemanager_v3::FoldersClient`:
+
+@snippet folders_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c resourcemanager_v3::FoldersClient](@ref resourcemanager_v3::FoldersClient-endpoint-snippet)
+- [\c resourcemanager_v3::OrganizationsClient](@ref resourcemanager_v3::OrganizationsClient-endpoint-snippet)
+- [\c resourcemanager_v3::ProjectsClient](@ref resourcemanager_v3::ProjectsClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page resourcemanager_v3::FoldersClient-endpoint-snippet Override resourcemanager_v3::FoldersClient Endpoint Configuration
+
+@snippet google/cloud/resourcemanager/v3/samples/folders_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page resourcemanager_v3::OrganizationsClient-endpoint-snippet Override resourcemanager_v3::OrganizationsClient Endpoint Configuration
+
+@snippet google/cloud/resourcemanager/v3/samples/organizations_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page resourcemanager_v3::ProjectsClient-endpoint-snippet Override resourcemanager_v3::ProjectsClient Endpoint Configuration
+
+@snippet google/cloud/resourcemanager/v3/samples/projects_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

@@ -1,0 +1,46 @@
+/*!
+@page cloudbuild-override-authentication How to Override the Authentication Credentials
+
+Unless otherwise configured, the client libraries use
+[Application Default Credentials] to authenticate with Google Cloud Services.
+While this works for most applications, in some cases you may need to override
+this default. You can do so by providing the
+[`UnifiedCredentialsOption`](@ref google::cloud::UnifiedCredentialsOption)
+The following example shows how to explicitly load a service account key file:
+
+<!-- inject-service-account-snippet-start -->
+@snippet cloud_build_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c cloudbuild_v1::CloudBuildClient](@ref cloudbuild_v1::CloudBuildClient-service-account-snippet)
+- [\c cloudbuild_v2::RepositoryManagerClient](@ref cloudbuild_v2::RepositoryManagerClient-service-account-snippet)
+
+<!-- inject-service-account-snippet-end -->
+
+Keep in mind that we chose this as an example because it is relatively easy to
+understand. Consult the [Best practices for managing service account keys]
+guide for more details.
+
+@see @ref guac - for more information on the factory functions to create
+`google::cloud::Credentials` objects.
+
+[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
+[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
+
+*/
+
+// <!-- inject-authentication-pages-start -->
+
+/*! @page cloudbuild_v1::CloudBuildClient-service-account-snippet Override cloudbuild_v1::CloudBuildClient Authentication Defaults
+
+@snippet google/cloud/cloudbuild/v1/samples/cloud_build_client_samples.cc with-service-account
+
+*/
+
+/*! @page cloudbuild_v2::RepositoryManagerClient-service-account-snippet Override cloudbuild_v2::RepositoryManagerClient Authentication Defaults
+
+@snippet google/cloud/cloudbuild/v2/samples/repository_manager_client_samples.cc with-service-account
+
+*/
+// <!-- inject-authentication-pages-end -->

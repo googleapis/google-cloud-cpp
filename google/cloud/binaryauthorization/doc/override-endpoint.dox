@@ -1,0 +1,43 @@
+/*!
+@page binaryauthorization-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `binaryauthorization_v1::BinauthzManagementServiceV1Client`:
+
+@snippet binauthz_management_service_v1_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c binaryauthorization_v1::BinauthzManagementServiceV1Client](@ref binaryauthorization_v1::BinauthzManagementServiceV1Client-endpoint-snippet)
+- [\c binaryauthorization_v1::SystemPolicyV1Client](@ref binaryauthorization_v1::SystemPolicyV1Client-endpoint-snippet)
+- [\c binaryauthorization_v1::ValidationHelperV1Client](@ref binaryauthorization_v1::ValidationHelperV1Client-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page binaryauthorization_v1::BinauthzManagementServiceV1Client-endpoint-snippet Override binaryauthorization_v1::BinauthzManagementServiceV1Client Endpoint Configuration
+
+@snippet google/cloud/binaryauthorization/v1/samples/binauthz_management_service_v1_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page binaryauthorization_v1::SystemPolicyV1Client-endpoint-snippet Override binaryauthorization_v1::SystemPolicyV1Client Endpoint Configuration
+
+@snippet google/cloud/binaryauthorization/v1/samples/system_policy_v1_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page binaryauthorization_v1::ValidationHelperV1Client-endpoint-snippet Override binaryauthorization_v1::ValidationHelperV1Client Endpoint Configuration
+
+@snippet google/cloud/binaryauthorization/v1/samples/validation_helper_v1_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

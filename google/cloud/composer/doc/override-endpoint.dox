@@ -1,0 +1,36 @@
+/*!
+@page composer-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `composer_v1::EnvironmentsClient`:
+
+@snippet environments_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c composer_v1::EnvironmentsClient](@ref composer_v1::EnvironmentsClient-endpoint-snippet)
+- [\c composer_v1::ImageVersionsClient](@ref composer_v1::ImageVersionsClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page composer_v1::EnvironmentsClient-endpoint-snippet Override composer_v1::EnvironmentsClient Endpoint Configuration
+
+@snippet google/cloud/composer/v1/samples/environments_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page composer_v1::ImageVersionsClient-endpoint-snippet Override composer_v1::ImageVersionsClient Endpoint Configuration
+
+@snippet google/cloud/composer/v1/samples/image_versions_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

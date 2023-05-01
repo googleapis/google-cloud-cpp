@@ -1,0 +1,74 @@
+/*!
+@page retail-override-authentication How to Override the Authentication Credentials
+
+Unless otherwise configured, the client libraries use
+[Application Default Credentials] to authenticate with Google Cloud Services.
+While this works for most applications, in some cases you may need to override
+this default. You can do so by providing the
+[`UnifiedCredentialsOption`](@ref google::cloud::UnifiedCredentialsOption)
+The following example shows how to explicitly load a service account key file:
+
+<!-- inject-service-account-snippet-start -->
+@snippet catalog_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c retail_v2::CatalogServiceClient](@ref retail_v2::CatalogServiceClient-service-account-snippet)
+- [\c retail_v2::CompletionServiceClient](@ref retail_v2::CompletionServiceClient-service-account-snippet)
+- [\c retail_v2::PredictionServiceClient](@ref retail_v2::PredictionServiceClient-service-account-snippet)
+- [\c retail_v2::ProductServiceClient](@ref retail_v2::ProductServiceClient-service-account-snippet)
+- [\c retail_v2::SearchServiceClient](@ref retail_v2::SearchServiceClient-service-account-snippet)
+- [\c retail_v2::UserEventServiceClient](@ref retail_v2::UserEventServiceClient-service-account-snippet)
+
+<!-- inject-service-account-snippet-end -->
+
+Keep in mind that we chose this as an example because it is relatively easy to
+understand. Consult the [Best practices for managing service account keys]
+guide for more details.
+
+@see @ref guac - for more information on the factory functions to create
+`google::cloud::Credentials` objects.
+
+[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
+[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
+
+*/
+
+// <!-- inject-authentication-pages-start -->
+
+/*! @page retail_v2::CatalogServiceClient-service-account-snippet Override retail_v2::CatalogServiceClient Authentication Defaults
+
+@snippet google/cloud/retail/v2/samples/catalog_client_samples.cc with-service-account
+
+*/
+
+/*! @page retail_v2::CompletionServiceClient-service-account-snippet Override retail_v2::CompletionServiceClient Authentication Defaults
+
+@snippet google/cloud/retail/v2/samples/completion_client_samples.cc with-service-account
+
+*/
+
+/*! @page retail_v2::PredictionServiceClient-service-account-snippet Override retail_v2::PredictionServiceClient Authentication Defaults
+
+@snippet google/cloud/retail/v2/samples/prediction_client_samples.cc with-service-account
+
+*/
+
+/*! @page retail_v2::ProductServiceClient-service-account-snippet Override retail_v2::ProductServiceClient Authentication Defaults
+
+@snippet google/cloud/retail/v2/samples/product_client_samples.cc with-service-account
+
+*/
+
+/*! @page retail_v2::SearchServiceClient-service-account-snippet Override retail_v2::SearchServiceClient Authentication Defaults
+
+@snippet google/cloud/retail/v2/samples/search_client_samples.cc with-service-account
+
+*/
+
+/*! @page retail_v2::UserEventServiceClient-service-account-snippet Override retail_v2::UserEventServiceClient Authentication Defaults
+
+@snippet google/cloud/retail/v2/samples/user_event_client_samples.cc with-service-account
+
+*/
+// <!-- inject-authentication-pages-end -->

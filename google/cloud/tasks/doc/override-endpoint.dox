@@ -1,0 +1,25 @@
+/*!
+@page tasks-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `tasks_v2::CloudTasksClient`:
+
+@snippet cloud_tasks_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page tasks_v2::CloudTasksClient-endpoint-snippet Override tasks_v2::CloudTasksClient Endpoint Configuration
+
+@snippet google/cloud/tasks/v2/samples/cloud_tasks_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

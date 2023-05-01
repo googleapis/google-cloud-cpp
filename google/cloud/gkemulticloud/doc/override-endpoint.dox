@@ -1,0 +1,43 @@
+/*!
+@page gkemulticloud-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `gkemulticloud_v1::AttachedClustersClient`:
+
+@snippet attached_clusters_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c gkemulticloud_v1::AttachedClustersClient](@ref gkemulticloud_v1::AttachedClustersClient-endpoint-snippet)
+- [\c gkemulticloud_v1::AwsClustersClient](@ref gkemulticloud_v1::AwsClustersClient-endpoint-snippet)
+- [\c gkemulticloud_v1::AzureClustersClient](@ref gkemulticloud_v1::AzureClustersClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page gkemulticloud_v1::AttachedClustersClient-endpoint-snippet Override gkemulticloud_v1::AttachedClustersClient Endpoint Configuration
+
+@snippet google/cloud/gkemulticloud/v1/samples/attached_clusters_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page gkemulticloud_v1::AwsClustersClient-endpoint-snippet Override gkemulticloud_v1::AwsClustersClient Endpoint Configuration
+
+@snippet google/cloud/gkemulticloud/v1/samples/aws_clusters_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page gkemulticloud_v1::AzureClustersClient-endpoint-snippet Override gkemulticloud_v1::AzureClustersClient Endpoint Configuration
+
+@snippet google/cloud/gkemulticloud/v1/samples/azure_clusters_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

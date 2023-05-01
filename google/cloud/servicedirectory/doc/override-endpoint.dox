@@ -1,0 +1,36 @@
+/*!
+@page servicedirectory-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `servicedirectory_v1::LookupServiceClient`:
+
+@snippet lookup_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c servicedirectory_v1::LookupServiceClient](@ref servicedirectory_v1::LookupServiceClient-endpoint-snippet)
+- [\c servicedirectory_v1::RegistrationServiceClient](@ref servicedirectory_v1::RegistrationServiceClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page servicedirectory_v1::LookupServiceClient-endpoint-snippet Override servicedirectory_v1::LookupServiceClient Endpoint Configuration
+
+@snippet google/cloud/servicedirectory/v1/samples/lookup_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page servicedirectory_v1::RegistrationServiceClient-endpoint-snippet Override servicedirectory_v1::RegistrationServiceClient Endpoint Configuration
+
+@snippet google/cloud/servicedirectory/v1/samples/registration_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

@@ -1,0 +1,36 @@
+/*!
+@page notebooks-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `notebooks_v1::ManagedNotebookServiceClient`:
+
+@snippet managed_notebook_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c notebooks_v1::ManagedNotebookServiceClient](@ref notebooks_v1::ManagedNotebookServiceClient-endpoint-snippet)
+- [\c notebooks_v1::NotebookServiceClient](@ref notebooks_v1::NotebookServiceClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page notebooks_v1::ManagedNotebookServiceClient-endpoint-snippet Override notebooks_v1::ManagedNotebookServiceClient Endpoint Configuration
+
+@snippet google/cloud/notebooks/v1/samples/managed_notebook_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page notebooks_v1::NotebookServiceClient-endpoint-snippet Override notebooks_v1::NotebookServiceClient Endpoint Configuration
+
+@snippet google/cloud/notebooks/v1/samples/notebook_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

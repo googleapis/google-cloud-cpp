@@ -1,0 +1,50 @@
+/*!
+@page kms-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `kms_inventory_v1::KeyDashboardServiceClient`:
+
+@snippet key_dashboard_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c kms_inventory_v1::KeyDashboardServiceClient](@ref kms_inventory_v1::KeyDashboardServiceClient-endpoint-snippet)
+- [\c kms_inventory_v1::KeyTrackingServiceClient](@ref kms_inventory_v1::KeyTrackingServiceClient-endpoint-snippet)
+- [\c kms_v1::EkmServiceClient](@ref kms_v1::EkmServiceClient-endpoint-snippet)
+- [\c kms_v1::KeyManagementServiceClient](@ref kms_v1::KeyManagementServiceClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page kms_inventory_v1::KeyDashboardServiceClient-endpoint-snippet Override kms_inventory_v1::KeyDashboardServiceClient Endpoint Configuration
+
+@snippet google/cloud/kms/inventory/v1/samples/key_dashboard_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page kms_inventory_v1::KeyTrackingServiceClient-endpoint-snippet Override kms_inventory_v1::KeyTrackingServiceClient Endpoint Configuration
+
+@snippet google/cloud/kms/inventory/v1/samples/key_tracking_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page kms_v1::EkmServiceClient-endpoint-snippet Override kms_v1::EkmServiceClient Endpoint Configuration
+
+@snippet google/cloud/kms/v1/samples/ekm_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page kms_v1::KeyManagementServiceClient-endpoint-snippet Override kms_v1::KeyManagementServiceClient Endpoint Configuration
+
+@snippet google/cloud/kms/v1/samples/key_management_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

@@ -28,11 +28,27 @@ cd "${PROJECT_ROOT}"
 readonly LIBRARY=$1
 
 readonly LIB="google/cloud/${LIBRARY}"
-readonly MAIN_DOX="google/cloud/${LIBRARY}/doc/main.dox"
-readonly ENVIRONMENT_DOX="google/cloud/${LIBRARY}/doc/environment-variables.dox"
-if [[ ! -r "${MAIN_DOX}" ]]; then
+readonly DOCDIR="google/cloud/${LIBRARY}/doc"
+# Only generated libraries have a `main.dox`, exit successfully in other cases.
+if [[ ! -r "${DOCDIR}/main.dox" ]]; then
   exit 0
 fi
+# For other libraries we expect a number of files to exist.
+readonly EXPECTED=(
+  "environment-variables.dox"
+  "override-authentication.dox"
+  "override-endpoint.dox"
+)
+for file in "${EXPECTED[@]}"; do
+  if [[ ! -r "${DOCDIR}/${file}" ]]; then
+    echo "Missing ${file} for in ${DOCDIR}"
+    exit 1
+  fi
+done
+readonly MAIN_DOX="${DOCDIR}/main.dox"
+readonly ENVIRONMENT_DOX="${DOCDIR}/environment-variables.dox"
+readonly OVERRIDE_AUTHENTICATION_DOX="${DOCDIR}/override-authentication.dox"
+readonly OVERRIDE_ENDPOINT_DOX="${DOCDIR}/override-endpoint.dox"
 
 inject_start="<!-- inject-endpoint-env-vars-start -->"
 inject_end="<!-- inject-endpoint-env-vars-end -->"
@@ -68,19 +84,24 @@ EOT
 
 IFS= mapfile -d $'\0' -t samples_cc < <(git ls-files -z -- "${LIB}/*samples/*_client_samples.cc")
 
+declare -A clients
+for sample in "${samples_cc[@]}"; do
+  clients[$sample]="$(sed -n '/main-dox-marker: / s;// main-dox-marker: \(.*\);\1;p' "${sample}")"
+done
+
 (
   sed '/<!-- inject-client-list-start -->/q' "${MAIN_DOX}"
   if [[ ${#samples_cc[@]} -eq 0 ]]; then
     true
   elif [[ ${#samples_cc[@]} -eq 1 ]]; then
     sample_cc="${samples_cc[0]}"
-    client_name="$(sed -n '/main-dox-marker: / s;// main-dox-marker: \(.*\);\1;p' "${sample_cc}")"
+    client_name="${clients[${sample_cc}]}"
     cat <<_EOF_
 The main class in this library is
-[\`${client_name}\`](@ref google::cloud::${client_name}).
+[\\c ${client_name}](@ref google::cloud::${client_name}).
 All RPCs are exposed as member functions of this class. Other classes provide
 helpers, retry policies, configuration parameters, and infrastructure to mock
-[\`${client_name}\`](@ref google::cloud::${client_name}) when testing your
+[\\c ${client_name}](@ref google::cloud::${client_name}) when testing your
 application.
 _EOF_
   else
@@ -97,60 +118,74 @@ when testing your application.
 
 _EOF_
     for sample_cc in "${samples_cc[@]}"; do
-      client_name="$(sed -n '/main-dox-marker: / s;// main-dox-marker: \(.*\);\1;p' "${sample_cc}")"
+      client_name="${clients[${sample_cc}]}"
       # shellcheck disable=SC2016
-      printf -- '- [`%s`](@ref google::cloud::%s)\n' "${client_name}" "${client_name}"
+      printf -- '- [\c %s](@ref google::cloud::%s)\n' "${client_name}" "${client_name}"
     done
   fi
   sed -n '/<!-- inject-client-list-end -->/,$p' "${MAIN_DOX}"
 ) | sponge "${MAIN_DOX}"
 
 (
-  sed '/<!-- inject-endpoint-snippet-start -->/q' "${MAIN_DOX}"
+  sed '/<!-- inject-service-account-snippet-start -->/q' "${OVERRIDE_AUTHENTICATION_DOX}"
   if [[ ${#samples_cc[@]} -gt 0 ]]; then
     sample_cc="${samples_cc[0]}"
-    client_name="$(sed -n '/main-dox-marker: / s;// main-dox-marker: \(.*\);\1;p' "${sample_cc}")"
+    client_name="${clients[${sample_cc}]}"
+    echo "@snippet $(basename "${sample_cc}") with-service-account"
+    if [[ ${#samples_cc[@]} -gt 1 ]]; then
+      echo
+      echo "Follow these links to find examples for other \\c *Client classes:"
+      echo
+      for sample_cc in "${samples_cc[@]}"; do
+        client_name="${clients[${sample_cc}]}"
+        # shellcheck disable=SC2016
+        printf -- '- [\c %s](@ref %s-service-account-snippet)\n' "${client_name}" "${client_name}"
+      done
+    fi
+  fi
+  echo
+  sed -n '/<!-- inject-service-account-snippet-end -->/,$p' "${OVERRIDE_AUTHENTICATION_DOX}"
+) | sponge "${OVERRIDE_AUTHENTICATION_DOX}"
+
+(
+  sed '/<!-- inject-authentication-pages-start -->/q' "${OVERRIDE_AUTHENTICATION_DOX}"
+  for sample_cc in "${samples_cc[@]}"; do
+    client_name="${clients[${sample_cc}]}"
+    printf '\n/*! @page %s-service-account-snippet Override %s Authentication Defaults\n\n@snippet %s with-service-account\n\n*/\n' \
+      "${client_name}" "${client_name}" "${sample_cc}"
+  done
+  sed -n '/<!-- inject-authentication-pages-end -->/,$p' "${OVERRIDE_AUTHENTICATION_DOX}"
+) | sponge "${OVERRIDE_AUTHENTICATION_DOX}"
+
+(
+  sed '/<!-- inject-endpoint-snippet-start -->/q' "${OVERRIDE_ENDPOINT_DOX}"
+  if [[ ${#samples_cc[@]} -gt 0 ]]; then
+    sample_cc="${samples_cc[0]}"
+    client_name="${clients[${sample_cc}]}"
     echo 'For example, this will override the default endpoint for `'"${client_name}"'`:'
     echo
     echo "@snippet $(basename "${sample_cc}") set-client-endpoint"
     if [[ ${#samples_cc[@]} -gt 1 ]]; then
       echo
       echo "Follow these links to find examples for other \\c *Client classes:"
-      for sample_cc in "${samples_cc[@]}"; do
-        sed -n "/main-dox-marker: / s;// main-dox-marker: \(.*\); [\1](@ref \1-endpoint-snippet);p" "${sample_cc}"
-      done
-    fi
-  fi
-  echo
-  sed -n '/<!-- inject-endpoint-snippet-end -->/,$p' "${MAIN_DOX}"
-) | sponge "${MAIN_DOX}"
-
-(
-  sed '/<!-- inject-service-account-snippet-start -->/q' "${MAIN_DOX}"
-  if [[ ${#samples_cc[@]} -gt 0 ]]; then
-    sample_cc="${samples_cc[0]}"
-    client_name="$(sed -n '/main-dox-marker: / s;// main-dox-marker: \(.*\);\1;p' "${sample_cc}")"
-    echo "@snippet $(basename "${sample_cc}") with-service-account"
-    if [[ ${#samples_cc[@]} -gt 1 ]]; then
       echo
-      echo "Follow these links to find examples for other \\c *Client classes:"
       for sample_cc in "${samples_cc[@]}"; do
-        sed -n "/main-dox-marker: / s;// main-dox-marker: \(.*\); [\1](@ref \1-service-account-snippet);p" "${sample_cc}"
+        client_name="${clients[${sample_cc}]}"
+        # shellcheck disable=SC2016
+        printf -- '- [\c %s](@ref %s-endpoint-snippet)\n' "${client_name}" "${client_name}"
       done
     fi
   fi
   echo
-  sed -n '/<!-- inject-service-account-snippet-end -->/,$p' "${MAIN_DOX}"
-) | sponge "${MAIN_DOX}"
+  sed -n '/<!-- inject-endpoint-snippet-end -->/,$p' "${OVERRIDE_ENDPOINT_DOX}"
+) | sponge "${OVERRIDE_ENDPOINT_DOX}"
 
 (
-  sed '/<!-- inject-endpoint-pages-start -->/q' "${MAIN_DOX}"
+  sed '/<!-- inject-endpoint-pages-start -->/q' "${OVERRIDE_ENDPOINT_DOX}"
   for sample_cc in "${samples_cc[@]}"; do
-    client_name=$(sed -n "/main-dox-marker: / s;// main-dox-marker: \(.*\);\1;p" "${sample_cc}")
+    client_name="${clients[${sample_cc}]}"
     printf '\n/*! @page %s-endpoint-snippet Override %s Endpoint Configuration\n\n@snippet %s set-client-endpoint\n\n*/\n' \
       "${client_name}" "${client_name}" "${sample_cc}"
-    printf '\n/*! @page %s-service-account-snippet Override %s Authentication Defaults\n\n@snippet %s with-service-account\n\n*/\n' \
-      "${client_name}" "${client_name}" "${sample_cc}"
   done
-  sed -n '/<!-- inject-endpoint-pages-end -->/,$p' "${MAIN_DOX}"
-) | sponge "${MAIN_DOX}"
+  sed -n '/<!-- inject-endpoint-pages-end -->/,$p' "${OVERRIDE_ENDPOINT_DOX}"
+) | sponge "${OVERRIDE_ENDPOINT_DOX}"

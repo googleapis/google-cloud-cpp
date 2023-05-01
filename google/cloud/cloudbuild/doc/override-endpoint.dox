@@ -1,0 +1,36 @@
+/*!
+@page cloudbuild-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `cloudbuild_v1::CloudBuildClient`:
+
+@snippet cloud_build_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c cloudbuild_v1::CloudBuildClient](@ref cloudbuild_v1::CloudBuildClient-endpoint-snippet)
+- [\c cloudbuild_v2::RepositoryManagerClient](@ref cloudbuild_v2::RepositoryManagerClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page cloudbuild_v1::CloudBuildClient-endpoint-snippet Override cloudbuild_v1::CloudBuildClient Endpoint Configuration
+
+@snippet google/cloud/cloudbuild/v1/samples/cloud_build_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page cloudbuild_v2::RepositoryManagerClient-endpoint-snippet Override cloudbuild_v2::RepositoryManagerClient Endpoint Configuration
+
+@snippet google/cloud/cloudbuild/v2/samples/repository_manager_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->
