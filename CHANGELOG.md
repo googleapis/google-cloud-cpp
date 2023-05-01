@@ -119,7 +119,7 @@ info, see [#7463] and [#5976].
 
 </details>
 
-## v2.10.0 - TBD
+## v2.10.0 - 2023-05
 
 ### New Libraries
 
@@ -134,19 +134,34 @@ The following experimental libraries are now available:
 
 - [Cloud SQL Admin API](/google/cloud/sql/README.md)
 
-### [Service Control](/google/cloud/servicecontrol/README.md)
-
-The library has been expanded to include the v2 service.
-
 ### [Bigquery](/google/cloud/bigquery/README.md)
 
 - Removed bigquery/v2/model\*. There are no plans to implement gRPC endpoints for
   this service. Therefore the generated code will never be usable and never has
   been.
 
+### [Service Control](/google/cloud/servicecontrol/README.md)
+
+The library has been expanded to include the v2 service.
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- fix(spanner): propagate Options through SessionPool callbacks ([#11344](https://github.com/googleapis/google-cloud-cpp/pull/11344))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- fix(storage): cache legacy credentials ([#11271](https://github.com/googleapis/google-cloud-cpp/pull/11271))
+- fix(storage): support per-request options ([#11445](https://github.com/googleapis/google-cloud-cpp/pull/11445))
+- fix(storage): cache all credential types ([#11447](https://github.com/googleapis/google-cloud-cpp/pull/11447))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- doc: declutter main.dox pages ([#11405](https://github.com/googleapis/google-cloud-cpp/pull/11405))
+- doc(common): documentation improvements ([#11376](https://github.com/googleapis/google-cloud-cpp/pull/11376))
+
 ### Other Changes
 
-**Bazel Testing**: starting with v2.10.0 we only test with Bazel >= 5.4.0. We
+**Bazel Testing**: after v2.10.0 we will only test with Bazel >= 5.4.0. We
 do not consider this a breaking change, as Bazel 4.x has been in maintenance
 mode for several months.
 
