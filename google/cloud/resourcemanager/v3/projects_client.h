@@ -198,33 +198,28 @@ class ProjectsClient {
   ///  `resourcemanager.projects.get` permission to. If multiple fields are
   ///  included in the query, then it will return results that match any of the
   ///  fields. Some eligible fields are:
-  ///  ```
-  ///  | Field                   | Description |
-  ///  |-------------------------|----------------------------------------------|
-  ///  | displayName, name       | Filters by displayName. | | parent |
-  ///  Project's parent (for example: folders/123, organizations/*). Prefer
-  ///  parent field over parent.type and parent.id.| | parent.type             |
-  ///  Parent's type: `folder` or `organization`.   | | parent.id | Parent's id
-  ///  number (for example: 123)        | | id, projectId           | Filters by
-  ///  projectId.                        | | state, lifecycleState   | Filters
-  ///  by state.                            | | labels                  |
-  ///  Filters by label name or value.              | | labels.\<key\> (where
-  ///  *key* is the name of a label) | Filters by label name.|
-  ///  ```
-  ///  Search expressions are case insensitive.
-  ///  Some examples queries:
-  ///  ```
-  ///  | Query            | Description |
-  ///  |------------------|-----------------------------------------------------|
-  ///  | name:how*        | The project's name starts with "how". | | name:Howl
-  ///  | The project's name is `Howl` or `howl`.             | | name:HOWL |
-  ///  Equivalent to above.                                | | NAME:howl |
-  ///  Equivalent to above.                                | | labels.color:* |
-  ///  The project has the label `color`.                  | | labels.color:red
-  ///  | The project's label `color` has the value `red`.    | |
-  ///  labels.color:red labels.size:big | The project's label `color` has the
-  ///  value `red` or its label `size` has the value `big`. |
-  ///  ```
+  ///  - **`displayName`, `name`**: Filters by displayName.
+  ///  - **`parent`**: Project's parent (for example: `folders/123`,
+  ///  `organizations/*`). Prefer `parent` field over `parent.type` and
+  ///  `parent.id`.
+  ///  - **`parent.type`**: Parent's type: `folder` or `organization`.
+  ///  - **`parent.id`**: Parent's id number (for example: `123`).
+  ///  - **`id`, `projectId`**: Filters by projectId.
+  ///  - **`state`, `lifecycleState`**: Filters by state.
+  ///  - **`labels`**: Filters by label name or value.
+  ///  - **`labels.<key>` (where `<key>` is the name of a label)**: Filters by
+  ///  label name. Search expressions are case insensitive. Some examples
+  ///  queries:
+  ///
+  ///  - **`name:how*`**: The project's name starts with "how".
+  ///  - **`name:Howl`**: The project's name is `Howl` or `howl`.
+  ///  - **`name:HOWL`**: Equivalent to above.
+  ///  - **`NAME:howl`**: Equivalent to above.
+  ///  - **`labels.color:*`**: The project has the label `color`.
+  ///  - **`labels.color:red`**:  The project's label `color` has the value
+  ///  `red`.
+  ///  - **`labels.color:red labels.size:big`**: The project's label `color` has
+  ///  the value `red` or its label `size` has the value `big`.
   ///  If no query is specified, the call will return projects for which the
   ///  user has the `resourcemanager.projects.get` permission.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -293,7 +288,7 @@ class ProjectsClient {
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   /// [google.cloud.resourcemanager.v3.CreateProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L539}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L533}
   /// [google.cloud.resourcemanager.v3.Project]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
@@ -309,14 +304,14 @@ class ProjectsClient {
   /// `DeleteOperation`.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::CreateProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L539}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::CreateProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L533}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   /// [google.cloud.resourcemanager.v3.CreateProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L539}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L533}
   /// [google.cloud.resourcemanager.v3.Project]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
@@ -342,7 +337,7 @@ class ProjectsClient {
   /// [google.cloud.resourcemanager.v3.Project]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   /// [google.cloud.resourcemanager.v3.UpdateProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L575}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L569}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
       google::cloud::resourcemanager::v3::Project const& project,
@@ -357,7 +352,7 @@ class ProjectsClient {
   /// project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::UpdateProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L575}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::UpdateProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L569}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -366,7 +361,7 @@ class ProjectsClient {
   /// [google.cloud.resourcemanager.v3.Project]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   /// [google.cloud.resourcemanager.v3.UpdateProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L575}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L569}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
       google::cloud::resourcemanager::v3::UpdateProjectRequest const& request,
@@ -399,7 +394,7 @@ class ProjectsClient {
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   /// [google.cloud.resourcemanager.v3.MoveProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L591}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L585}
   /// [google.cloud.resourcemanager.v3.Project]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
@@ -426,14 +421,14 @@ class ProjectsClient {
   ///
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::MoveProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L591}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::MoveProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L585}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   /// [google.cloud.resourcemanager.v3.MoveProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L591}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L585}
   /// [google.cloud.resourcemanager.v3.Project]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
@@ -484,7 +479,7 @@ class ProjectsClient {
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   /// [google.cloud.resourcemanager.v3.DeleteProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L613}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L607}
   /// [google.cloud.resourcemanager.v3.Project]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   /// [google.cloud.resourcemanager.v3.Projects.SearchProjects]:
@@ -529,14 +524,14 @@ class ProjectsClient {
   /// this project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::DeleteProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L613}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::DeleteProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L607}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L295}
   ///
   /// [google.cloud.resourcemanager.v3.DeleteProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L613}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L607}
   /// [google.cloud.resourcemanager.v3.Project]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   /// [google.cloud.resourcemanager.v3.Projects.SearchProjects]:
@@ -568,7 +563,7 @@ class ProjectsClient {
   /// [google.cloud.resourcemanager.v3.Project]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   /// [google.cloud.resourcemanager.v3.UndeleteProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L630}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L624}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
       std::string const& name, Options opts = {});
@@ -585,7 +580,7 @@ class ProjectsClient {
   /// this project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::UndeleteProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L630}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::UndeleteProjectRequest,google/cloud/resourcemanager/v3/projects.proto#L624}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -594,7 +589,7 @@ class ProjectsClient {
   /// [google.cloud.resourcemanager.v3.Project]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
   /// [google.cloud.resourcemanager.v3.UndeleteProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L630}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L624}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
       google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request,
