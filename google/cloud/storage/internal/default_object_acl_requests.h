@@ -168,6 +168,7 @@ std::ostream& operator<<(std::ostream& os,
 class PatchDefaultObjectAclRequest
     : public GenericDefaultObjectAclRequest<PatchDefaultObjectAclRequest> {
  public:
+  PatchDefaultObjectAclRequest() = default;
   PatchDefaultObjectAclRequest(std::string bucket, std::string entity,
                                ObjectAccessControl const& original,
                                ObjectAccessControl const& new_acl);

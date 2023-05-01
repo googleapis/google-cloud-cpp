@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_CONTEXT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_REST_CONTEXT_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
 #include <chrono>
@@ -36,7 +37,13 @@ class RestContext {
  public:
   using HttpHeaders = std::unordered_map<std::string, std::vector<std::string>>;
   RestContext() = default;
-  explicit RestContext(HttpHeaders headers) : headers_(std::move(headers)) {}
+  explicit RestContext(Options options, HttpHeaders headers)
+      : options_(std::move(options)), headers_(std::move(headers)) {}
+  explicit RestContext(Options options) : RestContext(std::move(options), {}) {}
+  explicit RestContext(HttpHeaders headers)
+      : RestContext({}, std::move(headers)) {}
+
+  Options const& options() const { return options_; }
 
   HttpHeaders const& headers() const { return headers_; }
 
@@ -104,6 +111,7 @@ class RestContext {
 
  private:
   friend bool operator==(RestContext const& lhs, RestContext const& rhs);
+  Options options_;
   HttpHeaders headers_;
   absl::optional<std::string> local_ip_address_;
   absl::optional<std::int32_t> local_port_;

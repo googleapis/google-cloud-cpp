@@ -70,8 +70,9 @@ class CurlRestClient : public RestClient {
       std::vector<absl::Span<char const>> const& payload) override;
 
  private:
-  StatusOr<std::unique_ptr<CurlImpl>> CreateCurlImpl(
-      RestContext const& context, RestRequest const& request);
+  StatusOr<std::unique_ptr<CurlImpl>> CreateCurlImpl(RestContext const& context,
+                                                     RestRequest const& request,
+                                                     Options const& options);
 
   std::string endpoint_address_;
   std::shared_ptr<CurlHandleFactory> handle_factory_;

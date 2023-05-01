@@ -302,6 +302,10 @@ std::ostream& operator<<(std::ostream& os, GetBucketIamPolicyRequest const& r) {
   return os << "}";
 }
 
+SetNativeBucketIamPolicyRequest::SetNativeBucketIamPolicyRequest()
+    : SetNativeBucketIamPolicyRequest(
+          std::string{}, NativeIamPolicy(std::vector<NativeIamBinding>{})) {}
+
 SetNativeBucketIamPolicyRequest::SetNativeBucketIamPolicyRequest(
     std::string bucket_name, NativeIamPolicy const& policy)
     : bucket_name_(std::move(bucket_name)),

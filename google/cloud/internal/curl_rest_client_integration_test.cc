@@ -533,6 +533,31 @@ TEST_F(RestClientIntegrationTest, CaptureMetadata) {
   ASSERT_TRUE(parsed_response.is_object()) << "body=" << *body;
 }
 
+TEST_F(RestClientIntegrationTest, PerRequestOptions) {
+  auto client = MakeDefaultRestClient(url_, {});
+  RestRequest request;
+  request.SetPath("anything");
+  auto const version = google::cloud::version_string();
+  auto const p1 = "p1/" + google::cloud::version_string();
+  auto const p2 = "p2/" + google::cloud::version_string();
+  auto response_status = RetryRestRequest([&] {
+    rest_internal::RestContext context(
+        Options{}.set<UserAgentProductsOption>({p1, p2}));
+    return client->Get(context, request);
+  });
+  ASSERT_STATUS_OK(response_status);
+  auto response = *std::move(response_status);
+  ASSERT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
+  auto body = ReadAll(std::move(*response).ExtractPayload());
+  ASSERT_STATUS_OK(body);
+  auto parsed_response = nlohmann::json::parse(*body, nullptr, false);
+  ASSERT_TRUE(parsed_response.is_object()) << "body=" << *body;
+  auto headers = parsed_response.find("headers");
+  ASSERT_TRUE(headers != parsed_response.end()) << "body=" << *body;
+  EXPECT_THAT(headers->value("User-Agent", ""), HasSubstr(p1));
+  EXPECT_THAT(headers->value("User-Agent", ""), HasSubstr(p2));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal

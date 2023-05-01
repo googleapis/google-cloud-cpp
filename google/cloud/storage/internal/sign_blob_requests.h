@@ -48,6 +48,7 @@ namespace internal {
 class SignBlobRequest
     : public internal::GenericRequestBase<SignBlobRequest, CustomHeader> {
  public:
+  SignBlobRequest() = default;
   explicit SignBlobRequest(std::string service_account,
                            std::string base64_encoded_blob,
                            std::vector<std::string> delegates)
