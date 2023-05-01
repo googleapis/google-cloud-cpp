@@ -231,9 +231,21 @@ endfunction ()
 #
 # ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/bigtable/v2/bigtable.proto
 #
-# ARGV2 can be specified as an optional path to substitute in lieu of
-# ${EXTERNAL_GOOGLEAPIS_SOURCE}
 function (google_cloud_cpp_load_protolist var file)
+    cmake_parse_arguments(
+        _opt
+        # No boolean flags
+        ""
+        # If present PROTO_DIR overrides the default
+        # "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+        "PROTO_DIR"
+        # No multi-argument flags
+        ""
+        ${ARGN})
+    if (NOT DEFINED _opt_PROTO_DIR)
+        set(_opt_PROTO_DIR "${EXTERNAL_GOOGLEAPIS_SOURCE}")
+    endif ()
+
     file(READ "${file}" contents)
     string(REGEX REPLACE "\n" ";" contents "${contents}")
     set(protos)
@@ -243,11 +255,7 @@ function (google_cloud_cpp_load_protolist var file)
         if ("${line}" STREQUAL "")
             continue()
         endif ()
-        if (DEFINED ARGV2)
-            list(APPEND protos "${ARGV2}/${line}")
-        else ()
-            list(APPEND protos "${EXTERNAL_GOOGLEAPIS_SOURCE}/${line}")
-        endif ()
+        list(APPEND protos "${_opt_PROTO_DIR}/${line}")
     endforeach ()
     set(${var}
         "${protos}"
