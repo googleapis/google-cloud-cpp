@@ -219,6 +219,7 @@ declare -A -r LIBRARIES=(
   ["storage"]="@com_google_googleapis//google/storage/v2:storage_cc_grpc"
   ["storageinsights"]="@com_google_googleapis//google/cloud/storageinsights/v1:storageinsights_cc_grpc"
   ["storagetransfer"]="@com_google_googleapis//google/storagetransfer/v1:storagetransfer_cc_grpc"
+  ["support"]="@com_google_googleapis//google/cloud/support/v2:support_cc_grpc"
   ["talent"]="@com_google_googleapis//google/cloud/talent/v4:talent_cc_grpc"
   ["tasks"]="@com_google_googleapis//google/cloud/tasks/v2:tasks_cc_grpc"
   ["texttospeech"]="@com_google_googleapis//google/cloud/texttospeech/v1:texttospeech_cc_grpc"
