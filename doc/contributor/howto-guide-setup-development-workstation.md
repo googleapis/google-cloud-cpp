@@ -62,7 +62,7 @@ sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/c
 ```
 
 Note: newer versions of Ubuntu might require 
-````console
+```console
 sudo apt install -y clang libc++-dev libc++abi-dev cmake ninja-build
 ```
 
