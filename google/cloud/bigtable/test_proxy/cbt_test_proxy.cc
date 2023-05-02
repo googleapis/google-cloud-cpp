@@ -189,7 +189,6 @@ grpc::Status CbtTestProxy::ReadRows(::grpc::ServerContext*,
   Status status;
   for (auto const& row : reader) {
     if (row.ok()) {
-      // Row row_val = *std::move(row);
       *response->add_rows() = ConvertRowToV2(*std::move(row));
     } else {
       status = row.status();
