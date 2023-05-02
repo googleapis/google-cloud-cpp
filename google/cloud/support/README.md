@@ -1,7 +1,9 @@
 # Google Cloud Support API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Google Cloud Support API][cloud-service-docs], a service to Manages Google Cloud technical support cases for Customer Care support offerings.
+[Google Cloud Support API][cloud-service-docs], a service to integrate
+Cloud Customer Care with your organization's customer relationship
+management (CRM) system.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -16,7 +18,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/support/ EDIT HERE .h"
+#include "google/cloud/support/v2/case_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -26,13 +28,14 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace support = ::google::cloud::support;
-  auto client = support::Client(support::MakeConnection());
+  namespace support = ::google::cloud::support_v2;
+  auto client =
+      support::CaseServiceClient(support::MakeCaseServiceConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto c : client.ListCases(project.FullName())) {
+    if (!c) throw std::move(c).status();
+    std::cout << c->DebugString() << "\n";
   }
 
   return 0;
@@ -51,6 +54,6 @@ int main(int argc, char* argv[]) try {
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/support
+[cloud-service-docs]: http://cloud/support/docs/reference/support-api
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-support/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/support

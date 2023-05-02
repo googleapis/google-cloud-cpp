@@ -121,6 +121,13 @@ info, see [#7463] and [#5976].
 
 ## v2.11.0 - TBD
 
+### New Libraries
+
+We are happy to announce the following GA libraries.  Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Cloud Support API](/google/cloud/support/README.md)
+
 ## v2.10.0 - 2023-05
 
 ### New Libraries

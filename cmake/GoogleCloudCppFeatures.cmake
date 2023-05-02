@@ -118,6 +118,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "storage"
     "storageinsights"
     "storagetransfer"
+    "support"
     "talent"
     "tasks"
     "texttospeech"
