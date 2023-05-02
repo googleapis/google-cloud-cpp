@@ -3,7 +3,7 @@
 
 In some cases, you may need to override the default endpoint used by the client
 library. Use the
-[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->

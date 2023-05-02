@@ -660,7 +660,7 @@ Unless otherwise configured, the client libraries use
 [Application Default Credentials] to authenticate with Google Cloud Services.
 While this works for most applications, in some cases you may need to override
 this default. You can do so by providing the
-[`UnifiedCredentialsOption`](@ref google::cloud::UnifiedCredentialsOption)
+[UnifiedCredentialsOption](@ref google::cloud::UnifiedCredentialsOption)
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
@@ -693,7 +693,7 @@ void GenerateOverrideEndpointPage(
 
 In some cases, you may need to override the default endpoint used by the client
 library. Use the
-[`EndpointOption`](@ref google::cloud::EndpointOption) when initializing the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
 client library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
