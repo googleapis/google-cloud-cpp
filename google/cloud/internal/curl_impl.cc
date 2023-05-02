@@ -212,8 +212,9 @@ CurlImpl::CurlImpl(CurlHandle handle,
   socket_options_.send_buffer_size_ =
       options.get<MaximumCurlSocketSendSizeOption>();
 
-  auto const& agents = options.get<UserAgentProductsOption>();
-  user_agent_ = absl::StrCat(absl::StrJoin(agents, " "), UserAgentSuffix());
+  auto agents = options.get<UserAgentProductsOption>();
+  agents.push_back(UserAgentSuffix());
+  user_agent_ = absl::StrCat(absl::StrJoin(agents, " "));
 
   http_version_ = options.get<HttpVersionOption>();
 
