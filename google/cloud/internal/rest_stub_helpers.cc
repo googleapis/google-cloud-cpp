@@ -48,7 +48,7 @@ Status RestResponseToProto(google::protobuf::Message& destination,
 Status ProtoRequestToJsonPayload(google::protobuf::Message const& request,
                                  std::string& json_payload) {
   auto proto_to_json_status =
-      protobuf::util::MessageToJsonString(request, &json_payload);
+      google::protobuf::util::MessageToJsonString(request, &json_payload);
   if (!proto_to_json_status.ok()) {
     return internal::InternalError(
         std::string(proto_to_json_status.message()),
