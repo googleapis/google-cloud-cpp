@@ -224,7 +224,7 @@ TEST(GetDatasetResponseTest, DebugString) {
             R"( })"
             R"( })"
             R"( default_rounding_mode {)"
-            R"( rounding_mode_value: "")"
+            R"( value: "")"
             R"( })"
             R"( storage_billing_model {)"
             R"( storage_billing_model_value: "")"
@@ -283,7 +283,7 @@ TEST(GetDatasetResponseTest, DebugString) {
             R"( })"
             R"( })"
             R"( default_rounding_mode {)"
-            R"( rounding_mode_value: "")"
+            R"( value: "")"
             R"( })"
             R"( storage_billing_model {)"
             R"( storage_billing_model_value: "")"
@@ -352,7 +352,7 @@ TEST(GetDatasetResponseTest, DebugString) {
       }
     }
     default_rounding_mode {
-      rounding_mode_value: ""
+      value: ""
     }
     storage_billing_model {
       storage_billing_model_value: ""

@@ -15,6 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_DATASET_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_DATASET_H
 
+#include "google/cloud/bigquery/v2/minimal/internal/common_v2_resources.h"
+#include "google/cloud/bigquery/v2/minimal/internal/table_schema.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include "absl/strings/string_view.h"
@@ -58,31 +60,6 @@ struct TargetType {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TargetType, value);
 
-struct TableFieldSchemaRoundingMode {
-  static TableFieldSchemaRoundingMode UnSpecified();
-  static TableFieldSchemaRoundingMode RoundHalfAwayFromZero();
-  static TableFieldSchemaRoundingMode RoundHalfEven();
-
-  std::string value;
-
-  std::string DebugString(absl::string_view name,
-                          TracingOptions const& options = {},
-                          int indent = 0) const;
-};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TableFieldSchemaRoundingMode,
-                                                value);
-
-struct DatasetReference {
-  std::string dataset_id;
-  std::string project_id;
-
-  std::string DebugString(absl::string_view name,
-                          TracingOptions const& options = {},
-                          int indent = 0) const;
-};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DatasetReference, dataset_id,
-                                                project_id);
-
 struct LinkedDatasetSource {
   DatasetReference source_dataset;
 
@@ -92,18 +69,6 @@ struct LinkedDatasetSource {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(LinkedDatasetSource,
                                                 source_dataset);
-
-struct TableReference {
-  std::string project_id;
-  std::string dataset_id;
-  std::string table_id;
-
-  std::string DebugString(absl::string_view name,
-                          TracingOptions const& options = {},
-                          int indent = 0) const;
-};
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TableReference, dataset_id,
-                                                project_id, table_id);
 
 struct RoutineReference {
   std::string project_id;
@@ -227,7 +192,7 @@ struct Dataset {
   DatasetReference dataset_reference;
   LinkedDatasetSource linked_dataset_source;
   ExternalDatasetReference external_dataset_reference;
-  TableFieldSchemaRoundingMode default_rounding_mode;
+  RoundingMode default_rounding_mode;
 
   StorageBillingModel storage_billing_model;
 

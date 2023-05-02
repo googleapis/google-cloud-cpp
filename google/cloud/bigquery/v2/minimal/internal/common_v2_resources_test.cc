@@ -311,6 +311,143 @@ TEST(CommonV2ResourcesTest, QueryParameterToJson) {
   EXPECT_EQ(j, expected_text);
 }
 
+TEST(CommonV2ResourcesTest, DatasetReferenceFromJson) {
+  std::string text =
+      R"({
+          "dataset_id":"d123",
+          "project_id":"p123"
+      })";
+  auto json = nlohmann::json::parse(text, nullptr, false);
+  EXPECT_TRUE(json.is_object());
+
+  DatasetReference actual;
+  from_json(json, actual);
+
+  DatasetReference expected;
+  expected.dataset_id = "d123";
+  expected.project_id = "p123";
+
+  EXPECT_EQ(expected.dataset_id, actual.dataset_id);
+  EXPECT_EQ(expected.project_id, actual.project_id);
+}
+
+TEST(CommonV2ResourcesTest, DatasetReferenceToJson) {
+  auto const expected_json =
+      R"({
+          "dataset_id":"d123",
+          "project_id":"p123"
+      })"_json;
+
+  DatasetReference expected;
+  expected.dataset_id = "d123";
+  expected.project_id = "p123";
+
+  nlohmann::json actual_json;
+  to_json(actual_json, expected);
+
+  EXPECT_EQ(expected_json, actual_json);
+}
+
+TEST(CommonV2ResourcesTest, TableReferenceFromJson) {
+  std::string text =
+      R"({
+          "dataset_id":"d123",
+          "project_id":"p123",
+          "table_id":"t123"
+      })";
+  auto json = nlohmann::json::parse(text, nullptr, false);
+  EXPECT_TRUE(json.is_object());
+
+  TableReference actual;
+  from_json(json, actual);
+
+  TableReference expected;
+  expected.dataset_id = "d123";
+  expected.project_id = "p123";
+  expected.table_id = "t123";
+
+  EXPECT_EQ(expected.dataset_id, actual.dataset_id);
+  EXPECT_EQ(expected.project_id, actual.project_id);
+  EXPECT_EQ(expected.table_id, actual.table_id);
+}
+
+TEST(CommonV2ResourcesTest, TableReferenceToJson) {
+  auto const expected_json =
+      R"({
+          "dataset_id":"d123",
+          "project_id":"p123",
+          "table_id":"t123"
+      })"_json;
+
+  TableReference expected;
+  expected.dataset_id = "d123";
+  expected.project_id = "p123";
+  expected.table_id = "t123";
+
+  nlohmann::json actual_json;
+  to_json(actual_json, expected);
+
+  EXPECT_EQ(expected_json, actual_json);
+}
+
+TEST(CommonV2ResourcesTest, DatasetReferenceDebugString) {
+  DatasetReference dataset;
+  dataset.dataset_id = "d123";
+  dataset.project_id = "p123";
+
+  EXPECT_EQ(dataset.DebugString("DatasetReference", TracingOptions{}),
+            R"(DatasetReference {)"
+            R"( project_id: "p123")"
+            R"( dataset_id: "d123")"
+            R"( })");
+
+  EXPECT_EQ(dataset.DebugString("DatasetReference",
+                                TracingOptions{}.SetOptions(
+                                    "truncate_string_field_longer_than=2")),
+            R"(DatasetReference {)"
+            R"( project_id: "p1...<truncated>...")"
+            R"( dataset_id: "d1...<truncated>...")"
+            R"( })");
+
+  EXPECT_EQ(dataset.DebugString("DatasetReference", TracingOptions{}.SetOptions(
+                                                        "single_line_mode=F")),
+            R"(DatasetReference {
+  project_id: "p123"
+  dataset_id: "d123"
+})");
+}
+
+TEST(CommonV2ResourcesTest, TableReferenceDebugString) {
+  TableReference table;
+  table.dataset_id = "d123";
+  table.project_id = "p123";
+  table.table_id = "t123";
+
+  EXPECT_EQ(table.DebugString("TableReference", TracingOptions{}),
+            R"(TableReference {)"
+            R"( project_id: "p123")"
+            R"( dataset_id: "d123")"
+            R"( table_id: "t123")"
+            R"( })");
+
+  EXPECT_EQ(table.DebugString("TableReference",
+                              TracingOptions{}.SetOptions(
+                                  "truncate_string_field_longer_than=2")),
+            R"(TableReference {)"
+            R"( project_id: "p1...<truncated>...")"
+            R"( dataset_id: "d1...<truncated>...")"
+            R"( table_id: "t1...<truncated>...")"
+            R"( })");
+
+  EXPECT_EQ(table.DebugString("TableReference", TracingOptions{}.SetOptions(
+                                                    "single_line_mode=F")),
+            R"(TableReference {
+  project_id: "p123"
+  dataset_id: "d123"
+  table_id: "t123"
+})");
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
