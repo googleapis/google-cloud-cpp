@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/support/ EDIT HERE .h"
+#include "google/cloud/support/v2/case_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -23,13 +23,14 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace support = ::google::cloud::support;
-  auto client = support::Client(support::MakeConnection());
+  namespace support = ::google::cloud::support_v2;
+  auto client =
+      support::CaseServiceClient(support::MakeCaseServiceConnection());
 
   auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto c : client.ListCases(project.FullName())) {
+    if (!c) throw std::move(c).status();
+    std::cout << c->DebugString() << "\n";
   }
 
   return 0;
