@@ -5,7 +5,7 @@ Unless otherwise configured, the client libraries use
 [Application Default Credentials] to authenticate with Google Cloud Services.
 While this works for most applications, in some cases you may need to override
 this default. You can do so by providing the
-[`UnifiedCredentialsOption`](@ref google::cloud::UnifiedCredentialsOption)
+[UnifiedCredentialsOption](@ref google::cloud::UnifiedCredentialsOption)
 The following example shows how to explicitly load a service account key file:
 
 <!-- inject-service-account-snippet-start -->
