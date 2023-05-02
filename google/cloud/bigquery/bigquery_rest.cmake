@@ -75,7 +75,9 @@ add_library(
     v2/minimal/internal/rest_stub_utils.h
     v2/minimal/internal/table.cc
     v2/minimal/internal/table.h
+    v2/minimal/internal/table_constraints.cc
     v2/minimal/internal/table_constraints.h
+    v2/minimal/internal/table_partition.cc
     v2/minimal/internal/table_partition.h
     v2/minimal/internal/table_schema.cc
     v2/minimal/internal/table_schema.h

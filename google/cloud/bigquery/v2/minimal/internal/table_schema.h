@@ -16,7 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_TABLE_SCHEMA_H
 
 #include "google/cloud/bigquery/v2/minimal/internal/common_v2_resources.h"
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include "absl/strings/string_view.h"
 #include <nlohmann/json.hpp>
 #include <chrono>
 #include <string>
@@ -32,22 +34,38 @@ using namespace nlohmann::literals;  // NOLINT
 
 struct CategoryList {
   std::vector<std::string> names;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(CategoryList, names);
 
 struct PolicyTagList {
   std::vector<std::string> names;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(PolicyTagList, names);
 
 struct DataClassificationTagList {
   std::vector<std::string> names;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DataClassificationTagList,
                                                 names);
 
 struct FieldElementType {
   std::string type;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(FieldElementType, type);
 
@@ -73,10 +91,18 @@ struct TableFieldSchema {
   DataClassificationTagList data_classification_tags;
   RoundingMode rounding_mode;
   FieldElementType range_element_type;
+
+  std::string DebugString(absl::string_view fname,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 
 struct TableSchema {
   std::vector<TableFieldSchema> fields;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 
 void to_json(nlohmann::json& j, TableFieldSchema const& t);
