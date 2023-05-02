@@ -25,6 +25,7 @@ unit_tests = [
     "doxygen2yaml_test.cc",
     "doxygen_groups_test.cc",
     "doxygen_pages_test.cc",
+    "function_classifiers_test.cc",
     "generate_metadata_test.cc",
     "parse_arguments_test.cc",
     "public_docs_test.cc",
