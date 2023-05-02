@@ -1803,6 +1803,28 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Support
+service {
+  service_proto_path: "google/cloud/support/v2/attachment_service.proto"
+  product_path: "google/cloud/support/v2"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/support/v2/case_service.proto"
+  product_path: "google/cloud/support/v2"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/support/v2/comment_service.proto"
+  product_path: "google/cloud/support/v2"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Storage Transfer Service
 service {
   service_proto_path: "google/storagetransfer/v1/transfer.proto"
