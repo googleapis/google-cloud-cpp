@@ -157,8 +157,7 @@ grpc::Status CbtTestProxy::ReadRow(::grpc::ServerContext*,
       table->ReadRow(request->row_key(), Filter(request->filter()));
   if (row.ok()) {
     if (row->first) {
-      Row row_val = row->second;
-      *response->mutable_row() = ConvertRowToV2(row_val);
+      *response->mutable_row() = ConvertRowToV2(row->second);
     } else {
       GCP_LOG(INFO) << "Received empty row: " << request->row_key();
     }
@@ -182,23 +181,23 @@ grpc::Status CbtTestProxy::ReadRows(::grpc::ServerContext*,
     row_set.Append(RowRange(row_range));
   }
   Filter const filter(request->request().filter());
-  auto const rows_limit = request->request().rows_limit();
-  RowReader reader =
-      table->ReadRows(std::move(row_set),
-                      std::max(static_cast<int64_t>(0), rows_limit), filter);
+  RowReader reader = table->ReadRows(
+      std::move(row_set),
+      std::max(static_cast<int64_t>(0), request->request().rows_limit()),
+      filter);
 
   Status status;
   for (auto const& row : reader) {
     if (row.ok()) {
-      Row row_val = *std::move(row);
-      *response->add_row() = ConvertRowToV2(row_val);
+      // Row row_val = *std::move(row);
+      *response->add_rows() = ConvertRowToV2(*std::move(row));
     } else {
       status = row.status();
       GCP_LOG(INFO) << "Error reading row: " << row.status();
     }
 
     if (request->cancel_after_rows() > 0 &&
-        response->row_size() >= request->cancel_after_rows()) {
+        response->rows_size() >= request->cancel_after_rows()) {
       reader.Cancel();
       GCP_LOG(INFO) << "Canceling ReadRows() to respect cancel_after_rows="
                     << request->cancel_after_rows();
@@ -218,8 +217,7 @@ grpc::Status CbtTestProxy::MutateRow(::grpc::ServerContext*,
   if (!table.ok()) return ToGrpcStatus(std::move(table).status());
 
   SingleRowMutation mutation(request->request());
-  auto status = table->Apply(std::move(mutation));
-  *response->mutable_status() = ToRpcStatus(status);
+  *response->mutable_status() = ToRpcStatus(table->Apply(std::move(mutation)));
   return grpc::Status();
 }
 
@@ -237,7 +235,7 @@ grpc::Status CbtTestProxy::BulkMutateRows(
 
   auto failed = table->BulkApply(std::move(mutation));
   for (auto const& failure : failed) {
-    auto& entry = *response->add_entry();
+    auto& entry = *response->add_entries();
     entry.set_index(failure.original_index());
     *entry.mutable_status() = ToRpcStatus(failure.status());
   }
@@ -258,12 +256,12 @@ grpc::Status CbtTestProxy::CheckAndMutateRow(
   for (auto const& mutation_v2 : request->request().true_mutations()) {
     Mutation mutation;
     mutation.op = mutation_v2;
-    true_mutations.push_back(mutation);
+    true_mutations.emplace_back(mutation);
   }
   for (auto const& mutation_v2 : request->request().false_mutations()) {
     Mutation mutation;
     mutation.op = mutation_v2;
-    false_mutations.push_back(mutation);
+    false_mutations.emplace_back(mutation);
   }
   auto branch = table->CheckAndMutateRow(row_key, std::move(filter),
                                          std::move(true_mutations),
@@ -289,7 +287,7 @@ grpc::Status CbtTestProxy::SampleRowKeys(
   if (!samples.ok()) return grpc::Status();
 
   for (auto const& sample : *samples) {
-    auto& sample_key = *response->add_sample();
+    auto& sample_key = *response->add_samples();
     sample_key.set_row_key(sample.row_key);
     sample_key.set_offset_bytes(sample.offset_bytes);
   }
