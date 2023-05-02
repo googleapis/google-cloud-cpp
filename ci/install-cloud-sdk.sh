@@ -26,7 +26,11 @@ ARCH="$(uname -p)"
 if [[ "${ARCH}" == "aarch64" ]]; then
   # The tarball uses this name
   ARCH="arm"
-fi
+else 
+  # For x86_64, uname -p might give unknown 
+  ARCH="$(uname -m)"
+fi 
+
 readonly ARCH
 
 components=(
