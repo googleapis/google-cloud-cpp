@@ -13,12 +13,109 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/table.h"
+#include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/format_time_point.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+std::string CloneDefinition::DebugString(absl::string_view name,
+                                         TracingOptions const& options,
+                                         int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .SubMessage("base_table_reference", base_table_reference)
+      .Field("clone_time", clone_time)
+      .Build();
+}
+
+std::string Table::DebugString(absl::string_view name,
+                               TracingOptions const& options,
+                               int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("kind", kind)
+      .StringField("etag", etag)
+      .StringField("id", id)
+      .StringField("self_link", self_link)
+      .StringField("friendly_name", friendly_name)
+      .StringField("description", description)
+      .StringField("type", type)
+      .StringField("location", location)
+      .StringField("default_collation", default_collation)
+      .StringField("max_staleness", max_staleness)
+      .Field("require_partition_filter", require_partition_filter)
+      .Field("case_insensitive", case_insensitive)
+      .Field("creation_time", creation_time)
+      .Field("expiration_time", expiration_time)
+      .Field("last_modified_time", last_modified_time)
+      .Field("num_time_travel_physical_bytes", num_time_travel_physical_bytes)
+      .Field("num_total_logical_bytes", num_total_logical_bytes)
+      .Field("num_active_logical_bytes", num_active_logical_bytes)
+      .Field("num_long_term_logical_bytes", num_long_term_logical_bytes)
+      .Field("num_total_physical_bytes", num_total_physical_bytes)
+      .Field("num_active_physical_bytes", num_active_physical_bytes)
+      .Field("num_long_term_physical_bytes", num_long_term_physical_bytes)
+      .Field("num_partitions", num_partitions)
+      .Field("num_bytes", num_bytes)
+      .Field("num_physical_bytes", num_physical_bytes)
+      .Field("num_long_term_bytes", num_long_term_bytes)
+      .Field("labels", labels)
+      .SubMessage("table_reference", table_reference)
+      .SubMessage("schema", schema)
+      .SubMessage("default_rounding_mode", default_rounding_mode)
+      .SubMessage("time_partitioning", time_partitioning)
+      .SubMessage("range_partitioning", range_partitioning)
+      .SubMessage("clustering", clustering)
+      .SubMessage("clone_definition", clone_definition)
+      .SubMessage("table_constraints", table_constraints)
+      .SubMessage("view", view)
+      .SubMessage("materialized_view", materialized_view)
+      .SubMessage("materialized_view_status", materialized_view_status)
+      .Build();
+}
+
+std::string ListFormatView::DebugString(absl::string_view name,
+                                        TracingOptions const& options,
+                                        int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("use_legacy_sql", use_legacy_sql)
+      .Build();
+}
+
+std::string HivePartitioningOptions::DebugString(absl::string_view name,
+                                                 TracingOptions const& options,
+                                                 int indent) const {
+  // DebugFormatter does not support std::vector<std::string> currently.
+  // Uncomment the `fields` value once the support is available.
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("mode", mode)
+      .StringField("source_uri_prefix", source_uri_prefix)
+      .Field("require_partition_filter", require_partition_filter)
+      .Field("num_fields", fields.size())
+      // .Field("fields", fields)
+      .Build();
+}
+
+std::string ListFormatTable::DebugString(absl::string_view name,
+                                         TracingOptions const& options,
+                                         int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("kind", kind)
+      .StringField("id", id)
+      .StringField("friendly_name", friendly_name)
+      .StringField("type", type)
+      .SubMessage("table_reference", table_reference)
+      .SubMessage("time_partitioning", time_partitioning)
+      .SubMessage("range_partitioning", range_partitioning)
+      .SubMessage("clustering", clustering)
+      .SubMessage("hive_partitioning_options", hive_partitioning_options)
+      .SubMessage("view", view)
+      .Field("labels", labels)
+      .Field("creation_time", creation_time)
+      .Field("expiration_time", expiration_time)
+      .Build();
+}
 
 void to_json(nlohmann::json& j, CloneDefinition const& c) {
   j = nlohmann::json{
