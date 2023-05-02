@@ -3,8 +3,8 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-name: demo-alpine-stable-ci
+    branch: v2.10.x
+name: v2-10-x-demo-alpine-stable-ci
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-alpine-stable

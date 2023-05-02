@@ -3,9 +3,9 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.10.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: cxx14-pr
+name: v2-10-x-cxx14-pr
 substitutions:
   _BUILD_NAME: cxx14
   _DISTRO: fedora-37-cxx14
