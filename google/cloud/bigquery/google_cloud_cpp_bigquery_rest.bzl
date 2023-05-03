@@ -83,6 +83,8 @@ google_cloud_cpp_bigquery_rest_srcs = [
     "v2/minimal/internal/job_rest_stub.cc",
     "v2/minimal/internal/job_rest_stub_factory.cc",
     "v2/minimal/internal/table.cc",
+    "v2/minimal/internal/table_constraints.cc",
+    "v2/minimal/internal/table_partition.cc",
     "v2/minimal/internal/table_schema.cc",
     "v2/minimal/internal/table_view.cc",
 ]

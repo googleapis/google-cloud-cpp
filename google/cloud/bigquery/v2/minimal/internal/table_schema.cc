@@ -13,12 +13,74 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/table_schema.h"
+#include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/format_time_point.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+std::string CategoryList::DebugString(absl::string_view name,
+                                      TracingOptions const& options,
+                                      int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("names", names)
+      .Build();
+}
+
+std::string PolicyTagList::DebugString(absl::string_view name,
+                                       TracingOptions const& options,
+                                       int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("names", names)
+      .Build();
+}
+
+std::string FieldElementType::DebugString(absl::string_view name,
+                                          TracingOptions const& options,
+                                          int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("type", type)
+      .Build();
+}
+
+std::string DataClassificationTagList::DebugString(
+    absl::string_view name, TracingOptions const& options, int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("names", names)
+      .Build();
+}
+
+std::string TableFieldSchema::DebugString(absl::string_view fname,
+                                          TracingOptions const& options,
+                                          int indent) const {
+  return internal::DebugFormatter(fname, options, indent)
+      .StringField("name", name)
+      .StringField("type", type)
+      .StringField("mode", mode)
+      .StringField("description", description)
+      .StringField("collation", collation)
+      .StringField("default_value_expression", default_value_expression)
+      .Field("max_length", max_length)
+      .Field("precision", precision)
+      .Field("scale", scale)
+      .Field("is_measure", is_measure)
+      .SubMessage("categories", categories)
+      .SubMessage("policy_tags", policy_tags)
+      .SubMessage("data_classification_tags", data_classification_tags)
+      .SubMessage("rounding_mode", rounding_mode)
+      .SubMessage("range_element_type", range_element_type)
+      .Build();
+}
+
+std::string TableSchema::DebugString(absl::string_view name,
+                                     TracingOptions const& options,
+                                     int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .Field("fields", fields)
+      .Build();
+}
 
 // NOLINTBEGIN
 void to_json(nlohmann::json& j,

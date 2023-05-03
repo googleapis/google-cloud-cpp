@@ -93,6 +93,16 @@ RoundingMode RoundingMode::RoundHalfEven() {
   return RoundingMode{"ROUND_HALF_EVEN"};
 }
 
+std::string ErrorProto::DebugString(absl::string_view name,
+                                    TracingOptions const& options,
+                                    int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("reason", reason)
+      .StringField("location", location)
+      .StringField("message", message)
+      .Build();
+}
+
 std::string RoundingMode::DebugString(absl::string_view name,
                                       TracingOptions const& options,
                                       int indent) const {
