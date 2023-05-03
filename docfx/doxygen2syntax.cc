@@ -15,6 +15,7 @@
 #include "docfx/doxygen2syntax.h"
 #include "docfx/doxygen2markdown.h"
 #include "docfx/doxygen_errors.h"
+#include "docfx/function_classifiers.h"
 #include "docfx/yaml_emit.h"
 
 namespace docfx {
@@ -233,13 +234,11 @@ std::string VariableSyntaxContent(pugi::xml_node node) {
 
 std::string FriendSyntaxContent(pugi::xml_node node) {
   auto type = std::string_view{node.child_value("type")};
-  if (type == "class" || type == "struct") {
-    std::ostringstream os;
-    TemplateParamListSyntaxContent(os, node);
-    os << "friend " << type << " " << node.child_value("qualifiedname") << ";";
-    return std::move(os).str();
-  }
-  return FunctionSyntaxContent(node, "friend ");
+  if (IsFunction(node)) return FunctionSyntaxContent(node, "friend ");
+  std::ostringstream os;
+  TemplateParamListSyntaxContent(os, node);
+  os << "friend " << type << " " << node.child_value("qualifiedname") << ";";
+  return std::move(os).str();
 }
 
 std::string FunctionSyntaxContent(pugi::xml_node node,

@@ -25,6 +25,13 @@ bool IsConstructor(pugi::xml_node node);
 // Determine if a function is an operator.
 bool IsOperator(pugi::xml_node node);
 
+// Determine if a doxygen element describes a function.
+bool IsFunction(pugi::xml_node node);
+
+// Determine if a doxygen element is a function, but not a constructor or
+// operator.
+bool IsPlainFunction(pugi::xml_node node);
+
 }  // namespace docfx
 
 #endif  // GOOGLE_CLOUD_CPP_DOCFX_FUNCTION_CLASSIFIERS_H

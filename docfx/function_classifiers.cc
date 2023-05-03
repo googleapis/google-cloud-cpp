@@ -33,4 +33,18 @@ bool IsConstructor(pugi::xml_node node) {
   return std::all_of(type.begin(), type.end(), is_empty);
 }
 
+bool IsFunction(pugi::xml_node node) {
+  auto const kind = std::string_view{node.attribute("kind").as_string()};
+  if (kind == "function") return true;
+  if (kind != "friend") return false;
+  // Not all friends are functions, the `<type>` element can be used to
+  // determine if a friend is a struct or class.
+  auto const type = std::string_view{node.child_value("type")};
+  return type != "struct" && type != "class";
+}
+
+bool IsPlainFunction(pugi::xml_node node) {
+  return IsFunction(node) && !IsConstructor(node) && !IsOperator(node);
+}
+
 }  // namespace docfx
