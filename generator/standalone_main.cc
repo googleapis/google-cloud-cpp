@@ -120,9 +120,7 @@ int WriteInstallDirectories(
     google::cloud::cpp::generator::GeneratorConfiguration const& config,
     std::string const& output_path) {
   std::vector<std::string> install_directories{".", "./lib64", "./lib64/cmake"};
-  google::protobuf::RepeatedPtrField<
-      google::cloud::cpp::generator::ServiceConfiguration>
-      services = config.service();
+  auto services = config.service();
   for (auto const& p : config.discovery_products()) {
     services.Add(p.rest_services().begin(), p.rest_services().end());
   }
