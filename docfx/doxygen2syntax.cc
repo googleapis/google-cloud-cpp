@@ -101,7 +101,7 @@ void TemplateParamListSyntaxContent(std::ostream& os, pugi::xml_node node) {
   if (!templateparamlist) return;
   os << "template <";
   auto sep = std::string_view{"\n    "};
-  for (auto const& param : templateparamlist) {
+  for (auto const param : templateparamlist) {
     if (std::string_view{param.name()} != "param") {
       UnknownChildType(__func__, param);
     }
@@ -154,8 +154,8 @@ std::string ReturnDescription(YamlContext const& /*ctx*/, pugi::xml_node node) {
 // clang-format on
 bool ParameterItemMatchesName(std::string_view parameter_name,
                               pugi::xml_node item) {
-  for (auto const& list : item.children("parameternamelist")) {
-    for (auto const& name : list.children("parametername")) {
+  for (auto const list : item.children("parameternamelist")) {
+    for (auto const name : list.children("parametername")) {
       if (std::string_view{name.child_value()} == parameter_name) return true;
     }
   }
@@ -169,7 +169,7 @@ std::string ParameterDescription(YamlContext const& /*ctx*/,
   // part of the *function* description.
   auto selected = node.select_node(".//parameterlist[@kind='param']");
   if (!selected) return {};
-  for (auto const& item : selected.node()) {
+  for (auto const item : selected.node()) {
     if (!ParameterItemMatchesName(parameter_name, item)) continue;
     std::ostringstream os;
     MarkdownContext mdctx;
@@ -191,7 +191,7 @@ std::string TemplateParameterDescription(YamlContext const& /*ctx*/,
   // part of the *function* description.
   auto selected = node.select_node(".//parameterlist[@kind='templateparam']");
   if (!selected) return {};
-  for (auto const& item : selected.node()) {
+  for (auto const item : selected.node()) {
     if (!ParameterItemMatchesName(type, item)) continue;
     std::ostringstream os;
     MarkdownContext mdctx;

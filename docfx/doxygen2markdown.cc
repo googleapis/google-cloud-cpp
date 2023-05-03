@@ -996,7 +996,7 @@ void AppendTitle(std::ostream& os, MarkdownContext const& ctx,
                  pugi::xml_node node) {
   // The XML schema says there is only one of these, but it is easier to write
   // the loop.
-  for (auto const& title : node.children("title")) {
+  for (auto const title : node.children("title")) {
     for (auto const child : title) {
       if (AppendIfPlainText(os, ctx, child)) continue;
       UnknownChildType(__func__, child);
