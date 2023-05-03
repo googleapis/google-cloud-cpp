@@ -3,8 +3,8 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-name: msan-ci
+    branch: v2.10.x
+name: v2-10-x-msan-ci
 substitutions:
   _BUILD_NAME: msan
   _DISTRO: fedora-msan

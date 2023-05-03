@@ -3,8 +3,8 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-name: checkers-ci
+    branch: v2.10.x
+name: v2-10-x-checkers-ci
 substitutions:
   _BUILD_NAME: checkers
   _DISTRO: checkers

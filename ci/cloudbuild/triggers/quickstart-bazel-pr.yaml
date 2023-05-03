@@ -3,9 +3,9 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.10.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: quickstart-bazel-pr
+name: v2-10-x-quickstart-bazel-pr
 substitutions:
   _BUILD_NAME: quickstart-bazel
   _DISTRO: ubuntu-focal

@@ -3,9 +3,9 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.10.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: bazel-oldest-pr
+name: v2-10-x-bazel-oldest-pr
 substitutions:
   _BUILD_NAME: bazel-oldest
   _DISTRO: fedora-37-bazel
