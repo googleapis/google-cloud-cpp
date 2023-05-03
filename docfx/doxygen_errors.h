@@ -22,16 +22,15 @@ namespace docfx {
 
 /// Throws an exception indicating an expected attribute is missing.
 [[noreturn]] void MissingAttribute(std::string_view where,
-                                   std::string_view name,
-                                   pugi::xml_node const& node);
+                                   std::string_view name, pugi::xml_node node);
 
 /// Throws an exception indicating an expected element is missing.
 [[noreturn]] void MissingElement(std::string_view where, std::string_view name,
-                                 pugi::xml_node const& node);
+                                 pugi::xml_node node);
 
 /// Throws an exception indicating child node with an unknown type was found.
 [[noreturn]] void UnknownChildType(std::string_view where,
-                                   pugi::xml_node const& child);
+                                   pugi::xml_node child);
 
 }  // namespace docfx
 

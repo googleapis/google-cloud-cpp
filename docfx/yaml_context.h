@@ -36,8 +36,7 @@ struct YamlContext {
 };
 
 /// Creates a new context to recurse over @p node
-YamlContext NestedYamlContext(YamlContext const& ctx,
-                              pugi::xml_node const& node);
+YamlContext NestedYamlContext(YamlContext const& ctx, pugi::xml_node node);
 
 }  // namespace docfx
 

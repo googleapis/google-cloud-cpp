@@ -18,13 +18,13 @@
 
 namespace docfx {
 
-bool IsOperator(pugi::xml_node const& node) {
+bool IsOperator(pugi::xml_node node) {
   auto const name = std::string_view{node.child("name").child_value()};
   return name.find("operator") != std::string_view::npos;
 }
 
-bool IsConstructor(pugi::xml_node const& node) {
-  auto is_empty = [](auto const& child) {
+bool IsConstructor(pugi::xml_node node) {
+  auto is_empty = [](pugi::xml_node child) {
     auto const name = std::string_view{child.name()};
     if (name == "ref") return std::string_view{child.child_value()}.empty();
     return std::string_view{child.value()}.empty();

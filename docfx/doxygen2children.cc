@@ -20,11 +20,10 @@
 
 namespace docfx {
 
-std::vector<std::string> Children(YamlContext const& ctx,
-                                  pugi::xml_node const& node) {
+std::vector<std::string> Children(YamlContext const& ctx, pugi::xml_node node) {
   std::vector<std::string> children;
   auto const nested = NestedYamlContext(ctx, node);
-  for (auto const& child : node.children("sectiondef")) {
+  for (auto const child : node.children("sectiondef")) {
     if (!IncludeInPublicDocuments(nested.config, child)) continue;
     auto more = Children(nested, child);
     children.insert(children.end(), std::make_move_iterator(more.begin()),
@@ -34,19 +33,19 @@ std::vector<std::string> Children(YamlContext const& ctx,
   // (the left-side navigation). Repeating them as children renders incorrectly.
   // We could fix that, but we do not have enough namespaces to make this
   // worthwhile.
-  for (auto const& child : node.children("innerclass")) {
+  for (auto const child : node.children("innerclass")) {
     if (!IncludeInPublicDocuments(nested.config, child)) continue;
     auto const refid = std::string_view{child.attribute("refid").as_string()};
     if (!refid.empty()) children.emplace_back(refid);
   }
-  for (auto const& child : node.children("memberdef")) {
+  for (auto const child : node.children("memberdef")) {
     if (!IncludeInPublicDocuments(nested.config, child)) continue;
     auto id = std::string{child.attribute("id").as_string()};
     // Mocked functions are not children.
     if (nested.mocked_ids.count(id) != 0) continue;
     if (!id.empty()) children.push_back(std::move(id));
   }
-  for (auto const& child : node.children("enumvalue")) {
+  for (auto const child : node.children("enumvalue")) {
     if (!IncludeInPublicDocuments(nested.config, child)) continue;
     auto const id = std::string_view{child.attribute("id").as_string()};
     if (!id.empty()) children.emplace_back(id);

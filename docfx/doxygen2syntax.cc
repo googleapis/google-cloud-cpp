@@ -21,7 +21,7 @@ namespace docfx {
 namespace {
 
 void AppendLocation(YAML::Emitter& yaml, YamlContext const& ctx,
-                    pugi::xml_node const& node, char const* name_attribute) {
+                    pugi::xml_node node, char const* name_attribute) {
   auto const name = std::string_view{node.child(name_attribute).child_value()};
   auto const location = node.child("location");
   if (name.empty() || !location) return;
@@ -69,9 +69,9 @@ void AppendLocation(YAML::Emitter& yaml, YamlContext const& ctx,
 //     </xsd:simpleContent>
 //   </xsd:complexType>
 // clang-format on
-std::string LinkedTextType(pugi::xml_node const& node) {
+std::string LinkedTextType(pugi::xml_node node) {
   std::ostringstream os;
-  for (auto const& child : node) {
+  for (auto const child : node) {
     auto const name = std::string_view{child.name()};
     if (name == "ref") {
       os << child.child_value();
@@ -96,13 +96,12 @@ std::string HtmlEscape(std::string_view text) {
   return clean;
 }
 
-void TemplateParamListSyntaxContent(std::ostream& os,
-                                    pugi::xml_node const& node) {
+void TemplateParamListSyntaxContent(std::ostream& os, pugi::xml_node node) {
   auto templateparamlist = node.child("templateparamlist");
   if (!templateparamlist) return;
   os << "template <";
   auto sep = std::string_view{"\n    "};
-  for (auto const& param : templateparamlist) {
+  for (auto const param : templateparamlist) {
     if (std::string_view{param.name()} != "param") {
       UnknownChildType(__func__, param);
     }
@@ -116,8 +115,7 @@ void TemplateParamListSyntaxContent(std::ostream& os,
   os << ">\n";
 }
 
-std::string ReturnDescription(YamlContext const& /*ctx*/,
-                              pugi::xml_node const& node) {
+std::string ReturnDescription(YamlContext const& /*ctx*/, pugi::xml_node node) {
   // The return description, if present, is in a `<simplesect>` node that is
   // part of the *function* description.
   auto selected = node.select_node(".//simplesect[@kind='return']");
@@ -155,9 +153,9 @@ std::string ReturnDescription(YamlContext const& /*ctx*/,
 //   </xsd:complexType>
 // clang-format on
 bool ParameterItemMatchesName(std::string_view parameter_name,
-                              pugi::xml_node const& item) {
-  for (auto const& list : item.children("parameternamelist")) {
-    for (auto const& name : list.children("parametername")) {
+                              pugi::xml_node item) {
+  for (auto const list : item.children("parameternamelist")) {
+    for (auto const name : list.children("parametername")) {
       if (std::string_view{name.child_value()} == parameter_name) return true;
     }
   }
@@ -165,13 +163,13 @@ bool ParameterItemMatchesName(std::string_view parameter_name,
 }
 
 std::string ParameterDescription(YamlContext const& /*ctx*/,
-                                 pugi::xml_node const& node,
+                                 pugi::xml_node node,
                                  std::string_view parameter_name) {
   // The parameter description, if present, is in a `<simplesect>` node that is
   // part of the *function* description.
   auto selected = node.select_node(".//parameterlist[@kind='param']");
   if (!selected) return {};
-  for (auto const& item : selected.node()) {
+  for (auto const item : selected.node()) {
     if (!ParameterItemMatchesName(parameter_name, item)) continue;
     std::ostringstream os;
     MarkdownContext mdctx;
@@ -183,7 +181,7 @@ std::string ParameterDescription(YamlContext const& /*ctx*/,
 }
 
 std::string TemplateParameterDescription(YamlContext const& /*ctx*/,
-                                         pugi::xml_node const& node,
+                                         pugi::xml_node node,
                                          std::string_view type) {
   auto const prefix = std::string_view{"typename "};
   if (type.substr(0, prefix.size()) == prefix) {
@@ -193,7 +191,7 @@ std::string TemplateParameterDescription(YamlContext const& /*ctx*/,
   // part of the *function* description.
   auto selected = node.select_node(".//parameterlist[@kind='templateparam']");
   if (!selected) return {};
-  for (auto const& item : selected.node()) {
+  for (auto const item : selected.node()) {
     if (!ParameterItemMatchesName(type, item)) continue;
     std::ostringstream os;
     MarkdownContext mdctx;
@@ -206,12 +204,12 @@ std::string TemplateParameterDescription(YamlContext const& /*ctx*/,
 
 }  // namespace
 
-std::string EnumSyntaxContent(pugi::xml_node const& node) {
+std::string EnumSyntaxContent(pugi::xml_node node) {
   std::ostringstream os;
   auto const strong = std::string_view{node.attribute("strong").as_string()};
   os << "enum " << (strong == "yes" ? "class " : "")
      << node.child_value("qualifiedname") << " {\n";
-  for (auto const& child : node) {
+  for (auto const child : node) {
     if (std::string_view{child.name()} != "enumvalue") continue;
     os << "  " << child.child_value("name") << ",\n";
   }
@@ -219,21 +217,21 @@ std::string EnumSyntaxContent(pugi::xml_node const& node) {
   return std::move(os).str();
 }
 
-std::string TypedefSyntaxContent(pugi::xml_node const& node) {
+std::string TypedefSyntaxContent(pugi::xml_node node) {
   std::ostringstream os;
   os << "using " << node.child_value("qualifiedname") << " =\n"  //
      << "  " << LinkedTextType(node.child("type")) << ";";
   return std::move(os).str();
 }
 
-std::string VariableSyntaxContent(pugi::xml_node const& node) {
+std::string VariableSyntaxContent(pugi::xml_node node) {
   std::ostringstream os;
   os << LinkedTextType(node.child("type")) << " " << node.child_value("name")
      << ";";
   return std::move(os).str();
 }
 
-std::string FriendSyntaxContent(pugi::xml_node const& node) {
+std::string FriendSyntaxContent(pugi::xml_node node) {
   auto type = std::string_view{node.child_value("type")};
   if (type == "class" || type == "struct") {
     std::ostringstream os;
@@ -244,7 +242,7 @@ std::string FriendSyntaxContent(pugi::xml_node const& node) {
   return FunctionSyntaxContent(node, "friend ");
 }
 
-std::string FunctionSyntaxContent(pugi::xml_node const& node,
+std::string FunctionSyntaxContent(pugi::xml_node node,
                                   std::string_view prefix) {
   std::ostringstream os;
   TemplateParamListSyntaxContent(os, node);
@@ -268,8 +266,7 @@ std::string FunctionSyntaxContent(pugi::xml_node const& node,
   return std::move(os).str();
 }
 
-std::string ClassSyntaxContent(pugi::xml_node const& node,
-                               std::string_view prefix) {
+std::string ClassSyntaxContent(pugi::xml_node node, std::string_view prefix) {
   // struct vs class
   auto const* const kind = node.attribute("kind").as_string();
   // If the `node` is a  '<compounddef>' element, the name of the documented
@@ -287,19 +284,18 @@ std::string ClassSyntaxContent(pugi::xml_node const& node,
   return std::move(os).str();
 }
 
-std::string StructSyntaxContent(pugi::xml_node const& node,
-                                std::string_view prefix) {
+std::string StructSyntaxContent(pugi::xml_node node, std::string_view prefix) {
   return ClassSyntaxContent(node, prefix);
 }
 
-std::string NamespaceSyntaxContent(pugi::xml_node const& node) {
+std::string NamespaceSyntaxContent(pugi::xml_node node) {
   std::ostringstream os;
   os << "namespace " << node.child_value("compoundname") << " { ... };";
   return std::move(os).str();
 }
 
 void AppendEnumSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
-                      pugi::xml_node const& node) {
+                      pugi::xml_node node) {
   yaml << YAML::Key << "syntax" << YAML::Value                     //
        << YAML::BeginMap                                           //
        << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
@@ -309,7 +305,7 @@ void AppendEnumSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
 }
 
 void AppendTypedefSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
-                         pugi::xml_node const& node) {
+                         pugi::xml_node node) {
   yaml << YAML::Key << "syntax" << YAML::Value                     //
        << YAML::BeginMap                                           //
        << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
@@ -319,7 +315,7 @@ void AppendTypedefSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
 }
 
 void AppendFriendSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
-                        pugi::xml_node const& node) {
+                        pugi::xml_node node) {
   yaml << YAML::Key << "syntax" << YAML::Value                     //
        << YAML::BeginMap                                           //
        << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
@@ -329,7 +325,7 @@ void AppendFriendSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
 }
 
 void AppendVariableSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
-                          pugi::xml_node const& node) {
+                          pugi::xml_node node) {
   auto full_name = std::string{node.child("qualifiedname").child_value()};
   yaml << YAML::Key << "syntax" << YAML::Value                     //
        << YAML::BeginMap                                           //
@@ -340,7 +336,7 @@ void AppendVariableSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
 }
 
 void AppendFunctionSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
-                          pugi::xml_node const& node) {
+                          pugi::xml_node node) {
   yaml << YAML::Key << "syntax" << YAML::Value                     //
        << YAML::BeginMap                                           //
        << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
@@ -397,7 +393,7 @@ void AppendFunctionSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
 }
 
 void AppendClassSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
-                       pugi::xml_node const& node) {
+                       pugi::xml_node node) {
   yaml << YAML::Key << "syntax" << YAML::Value                     //
        << YAML::BeginMap                                           //
        << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
@@ -407,7 +403,7 @@ void AppendClassSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
 }
 
 void AppendStructSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
-                        pugi::xml_node const& node) {
+                        pugi::xml_node node) {
   yaml << YAML::Key << "syntax" << YAML::Value                     //
        << YAML::BeginMap                                           //
        << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
@@ -417,7 +413,7 @@ void AppendStructSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
 }
 
 void AppendNamespaceSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
-                           pugi::xml_node const& node) {
+                           pugi::xml_node node) {
   yaml << YAML::Key << "syntax" << YAML::Value                     //
        << YAML::BeginMap                                           //
        << YAML::Key << "contents" << YAML::Value << YAML::Literal  //

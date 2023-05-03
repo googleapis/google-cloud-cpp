@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) try {
   std::ofstream("toc.yml") << docfx::Doxygen2Toc(config, doc);
 
   for (auto const& i : doc.select_nodes("//compounddef")) {
-    auto const& node = i.node();
+    auto const node = i.node();
     if (!docfx::IncludeInPublicDocuments(config, node)) continue;
     auto const kind = std::string_view{node.attribute("kind").as_string()};
     auto const id = std::string{node.attribute("id").as_string()};
