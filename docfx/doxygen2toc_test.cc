@@ -56,8 +56,6 @@ name: cloud
 items:
   - name: The Page Title
     href: index.md
-  - uid: namespacegoogle
-    name: google
   - uid: namespacegoogle_1_1cloud
     name: google::cloud
   - name: Error Handling
