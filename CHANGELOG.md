@@ -119,6 +119,10 @@ info, see [#7463] and [#5976].
 
 </details>
 
+## v2.10.1 - 2023-05
+
+- fix(rest): missing user-agent separator (backport from [#11473](https://github.com/googleapis/google-cloud-cpp/pull/11473))
+
 ## v2.10.0 - 2023-05
 
 ### New Libraries

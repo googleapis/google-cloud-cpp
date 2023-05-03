@@ -346,7 +346,7 @@ TEST(CurlRequestTest, UserAgent) {
         HttpBinEndpoint() + "/headers",
         storage::internal::GetDefaultCurlHandleFactory());
     auto options = google::cloud::Options{}.set<UserAgentProductsOption>(
-        {"test-user-agent-prefix"});
+        {"test-user-agent-prefix-1", "test-user-agent-prefix-2"});
     builder.ApplyClientOptions(options);
     builder.AddHeader("Accept: application/json");
     builder.AddHeader("charsets: utf-8");
@@ -357,11 +357,13 @@ TEST(CurlRequestTest, UserAgent) {
   ASSERT_STATUS_OK(response);
   ASSERT_EQ(200, response->status_code) << "response=" << *response;
   auto payload = nlohmann::json::parse(response->payload);
-  ASSERT_EQ(1U, payload.count("headers"));
-  auto headers = payload["headers"];
-  EXPECT_THAT(headers.value("User-Agent", ""),
-              HasSubstr("test-user-agent-prefix"));
-  EXPECT_THAT(headers.value("User-Agent", ""), HasSubstr("gcloud-cpp/"));
+  ASSERT_TRUE(payload.is_object()) << "payload=" << response->payload;
+  ASSERT_TRUE(payload.contains("headers")) << "payload=" << response->payload;
+  auto const products = std::vector<std::string>(
+      absl::StrSplit(payload["headers"].value("User-Agent", ""), ' '));
+  EXPECT_THAT(products, AllOf(Contains("test-user-agent-prefix-1"),
+                              Contains("test-user-agent-prefix-2"),
+                              Contains(StartsWith("gcloud-cpp/"))));
 }
 
 #if CURL_AT_LEAST_VERSION(7, 43, 0)
