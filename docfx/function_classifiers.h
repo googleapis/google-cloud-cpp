@@ -28,7 +28,8 @@ bool IsOperator(pugi::xml_node const& node);
 // Determine if a doxygen element describes a function.
 bool IsFunction(pugi::xml_node node);
 
-// Determine if a doxygen element is a
+// Determine if a doxygen element is a function, but not a constructor or
+// operator.
 bool IsPlainFunction(pugi::xml_node node);
 
 }  // namespace docfx
