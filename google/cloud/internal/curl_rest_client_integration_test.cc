@@ -22,6 +22,7 @@
 #include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 
@@ -38,6 +39,7 @@ using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Pair;
+using ::testing::StartsWith;
 
 class RestClientIntegrationTest : public ::testing::Test {
  protected:
@@ -554,8 +556,10 @@ TEST_F(RestClientIntegrationTest, PerRequestOptions) {
   ASSERT_TRUE(parsed_response.is_object()) << "body=" << *body;
   auto headers = parsed_response.find("headers");
   ASSERT_TRUE(headers != parsed_response.end()) << "body=" << *body;
-  EXPECT_THAT(headers->value("User-Agent", ""), HasSubstr(p1));
-  EXPECT_THAT(headers->value("User-Agent", ""), HasSubstr(p2));
+  auto const products = std::vector<std::string>(
+      absl::StrSplit(headers->value("User-Agent", ""), ' '));
+  EXPECT_THAT(products, AllOf(Contains(p1), Contains(p2),
+                              Contains(StartsWith("gcloud-cpp/"))));
 }
 
 }  // namespace
