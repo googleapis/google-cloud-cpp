@@ -28,11 +28,11 @@
 namespace docfx {
 namespace {
 
-auto kind(pugi::xml_node const& node) {
+auto kind(pugi::xml_node node) {
   return std::string_view{node.attribute("kind").as_string()};
 }
 
-bool IgnoreForRecurse(pugi::xml_node const& node) {
+bool IgnoreForRecurse(pugi::xml_node node) {
   static auto const* const kNames = [] {
     return new std::set<std::string>{
         // Handled by each AppendIf*() function
@@ -64,8 +64,8 @@ bool IgnoreForRecurse(pugi::xml_node const& node) {
 }
 
 void CompoundRecurse(YAML::Emitter& yaml, YamlContext const& ctx,
-                     pugi::xml_node const& node) {
-  for (auto const& child : node) {
+                     pugi::xml_node node) {
+  for (auto const child : node) {
     if (!IncludeInPublicDocuments(ctx.config, child)) continue;
     if (IgnoreForRecurse(child)) continue;
     if (AppendIfSectionDef(yaml, ctx, child)) continue;
@@ -82,7 +82,7 @@ void CompoundRecurse(YAML::Emitter& yaml, YamlContext const& ctx,
   }
 }
 
-std::string Summary(pugi::xml_node const& node) {
+std::string Summary(pugi::xml_node node) {
   std::ostringstream os;
   MarkdownContext ctx;
   ctx.paragraph_start = "";
@@ -94,7 +94,7 @@ std::string Summary(pugi::xml_node const& node) {
   return std::move(os).str();
 }
 
-std::string Conceptual(pugi::xml_node const& node) {
+std::string Conceptual(pugi::xml_node node) {
   std::ostringstream os;
   MarkdownContext ctx;
   ctx.paragraph_start = "";
@@ -108,7 +108,7 @@ std::string Conceptual(pugi::xml_node const& node) {
   return std::move(os).str();
 }
 
-void AppendDescription(YAML::Emitter& yaml, pugi::xml_node const& node) {
+void AppendDescription(YAML::Emitter& yaml, pugi::xml_node node) {
   auto const summary = Summary(node);
   if (!summary.empty()) {
     yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
@@ -129,7 +129,7 @@ std::vector<TocEntry> CompoundToc(Config const& cfg,
   // classes, structs) are always part of a namespace and will appear in the
   // references from them.
   for (auto const& i : doc.select_nodes("//compounddef[@kind='namespace']")) {
-    auto const& node = i.node();
+    auto const node = i.node();
     if (!IncludeInPublicDocuments(cfg, node)) continue;
     auto const id = std::string{node.attribute("id").as_string()};
     auto const name =
@@ -141,7 +141,7 @@ std::vector<TocEntry> CompoundToc(Config const& cfg,
   return result;
 }
 
-std::string Compound2Yaml(Config const& cfg, pugi::xml_node const& node) {
+std::string Compound2Yaml(Config const& cfg, pugi::xml_node node) {
   YAML::Emitter yaml;
   YamlContext ctx;
   ctx.config = cfg;
@@ -171,7 +171,7 @@ std::string EndDocFxYaml(YAML::Emitter& yaml) {
 }
 
 bool AppendIfEnumValue(YAML::Emitter& yaml, YamlContext const& ctx,
-                       pugi::xml_node const& node) {
+                       pugi::xml_node node) {
   if (std::string_view{node.name()} != "enumvalue") return false;
   auto const id = std::string_view{node.attribute("id").as_string()};
   auto const name = std::string_view{node.child("name").child_value()};
@@ -189,7 +189,7 @@ bool AppendIfEnumValue(YAML::Emitter& yaml, YamlContext const& ctx,
 }
 
 bool AppendIfEnum(YAML::Emitter& yaml, YamlContext const& ctx,
-                  pugi::xml_node const& node) {
+                  pugi::xml_node node) {
   if (kind(node) != "enum") return false;
   if (node.attribute("id").empty()) MissingAttribute(__func__, "id", node);
   auto const id = std::string_view{node.attribute("id").as_string()};
@@ -210,14 +210,14 @@ bool AppendIfEnum(YAML::Emitter& yaml, YamlContext const& ctx,
   yaml << YAML::EndMap;
   auto nested = ctx;
   nested.parent_id = id;
-  for (auto const& child : node) {
+  for (auto const child : node) {
     if (AppendIfEnumValue(yaml, nested, child)) continue;
   }
   return true;
 }
 
 bool AppendIfTypedef(YAML::Emitter& yaml, YamlContext const& ctx,
-                     pugi::xml_node const& node) {
+                     pugi::xml_node node) {
   if (kind(node) != "typedef") return false;
   auto const id = std::string_view{node.attribute("id").as_string()};
   auto const name = std::string_view{node.child("name").child_value()};
@@ -239,7 +239,7 @@ bool AppendIfTypedef(YAML::Emitter& yaml, YamlContext const& ctx,
 }
 
 bool AppendIfFriend(YAML::Emitter& yaml, YamlContext const& ctx,
-                    pugi::xml_node const& node) {
+                    pugi::xml_node node) {
   if (kind(node) != "friend") return false;
   auto const id = std::string_view{node.attribute("id").as_string()};
   auto const name = std::string_view{node.child("name").child_value()};
@@ -261,7 +261,7 @@ bool AppendIfFriend(YAML::Emitter& yaml, YamlContext const& ctx,
 }
 
 bool AppendIfVariable(YAML::Emitter& yaml, YamlContext const& ctx,
-                      pugi::xml_node const& node) {
+                      pugi::xml_node node) {
   if (kind(node) != "variable") return false;
   auto const id = std::string_view{node.attribute("id").as_string()};
   auto const name = std::string_view{node.child("name").child_value()};
@@ -283,7 +283,7 @@ bool AppendIfVariable(YAML::Emitter& yaml, YamlContext const& ctx,
 }
 
 bool AppendIfFunction(YAML::Emitter& yaml, YamlContext const& ctx,
-                      pugi::xml_node const& node) {
+                      pugi::xml_node node) {
   if (kind(node) != "function") return false;
   auto const name = std::string{node.child("name").child_value()};
   if (name == "MOCK_METHOD") return true;
@@ -335,14 +335,14 @@ Consult the gMock documentation to use this mock in your tests.
 }
 
 bool AppendIfSectionDef(YAML::Emitter& yaml, YamlContext const& ctx,
-                        pugi::xml_node const& node) {
+                        pugi::xml_node node) {
   if (std::string_view{node.name()} != "sectiondef") return false;
   CompoundRecurse(yaml, ctx, node);
   return true;
 }
 
 bool AppendIfNamespace(YAML::Emitter& yaml, YamlContext const& ctx,
-                       pugi::xml_node const& node) {
+                       pugi::xml_node node) {
   if (kind(node) != "namespace") return false;
   auto const id = std::string_view{node.attribute("id").as_string()};
   auto const name = std::string_view{node.child("compoundname").child_value()};
@@ -365,7 +365,7 @@ bool AppendIfNamespace(YAML::Emitter& yaml, YamlContext const& ctx,
 }
 
 bool AppendIfClass(YAML::Emitter& yaml, YamlContext const& ctx,
-                   pugi::xml_node const& node) {
+                   pugi::xml_node node) {
   if (kind(node) != "class") return false;
   auto const id = std::string_view{node.attribute("id").as_string()};
   auto const name = std::string_view{node.child("compoundname").child_value()};
@@ -388,7 +388,7 @@ bool AppendIfClass(YAML::Emitter& yaml, YamlContext const& ctx,
 }
 
 bool AppendIfStruct(YAML::Emitter& yaml, YamlContext const& ctx,
-                    pugi::xml_node const& node) {
+                    pugi::xml_node node) {
   if (kind(node) != "struct") return false;
   auto const id = std::string_view{node.attribute("id").as_string()};
   auto const name = std::string_view{node.child("compoundname").child_value()};

@@ -26,7 +26,7 @@ namespace docfx {
 // member variables, private functions, or any names in the `*internal*`
 // namespaces. This helper allows us to short circuit the recursion over the
 // doxygen structure when an element is not needed for the public docs.
-bool IncludeInPublicDocuments(Config const& cfg, pugi::xml_node const& node);
+bool IncludeInPublicDocuments(Config const& cfg, pugi::xml_node node);
 
 }  // namespace docfx
 

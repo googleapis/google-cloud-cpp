@@ -27,10 +27,10 @@ namespace docfx {
 std::vector<TocEntry> GroupsToc(pugi::xml_document const& doc);
 
 /// Generates the YAML contents for a given group node.
-std::string Group2Yaml(pugi::xml_node const& node);
+std::string Group2Yaml(pugi::xml_node node);
 
 /// Generate the description of the group.
-std::string Group2SummaryMarkdown(pugi::xml_node const& node);
+std::string Group2SummaryMarkdown(pugi::xml_node node);
 
 }  // namespace docfx
 

@@ -20,10 +20,10 @@
 namespace docfx {
 
 // Determine if a function is a constructor.
-bool IsConstructor(pugi::xml_node const& node);
+bool IsConstructor(pugi::xml_node node);
 
 // Determine if a function is an operator.
-bool IsOperator(pugi::xml_node const& node);
+bool IsOperator(pugi::xml_node node);
 
 }  // namespace docfx
 

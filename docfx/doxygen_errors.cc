@@ -19,8 +19,7 @@
 namespace docfx {
 
 [[noreturn]] void MissingAttribute(std::string_view where,
-                                   std::string_view name,
-                                   pugi::xml_node const& node) {
+                                   std::string_view name, pugi::xml_node node) {
   std::ostringstream os;
   os << "Missing attribute <" << name << "> in " << where << "(): node=";
   node.print(os, /*indent=*/"", /*flags=*/pugi::format_raw);
@@ -28,7 +27,7 @@ namespace docfx {
 }
 
 [[noreturn]] void MissingElement(std::string_view where, std::string_view name,
-                                 pugi::xml_node const& node) {
+                                 pugi::xml_node node) {
   std::ostringstream os;
   os << "Missing element <" << name << " in " << where << "(): node=";
   node.print(os, /*indent=*/"", /*flags=*/pugi::format_raw);
@@ -36,7 +35,7 @@ namespace docfx {
 }
 
 [[noreturn]] void UnknownChildType(std::string_view where,
-                                   pugi::xml_node const& child) {
+                                   pugi::xml_node child) {
   std::ostringstream os;
   os << "Unknown child in " << where << "(): node=";
   child.print(os, /*indent=*/"", /*flags=*/pugi::format_raw);
