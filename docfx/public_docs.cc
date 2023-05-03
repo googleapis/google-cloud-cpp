@@ -40,10 +40,13 @@ bool IncludeInPublicDocuments(Config const& cfg, pugi::xml_node const& node) {
   // to add enough value (each symbol already says if it is deprecated), and
   // we need more work to render this correctly in the DocFX format.
   if (kind(node) == "page" && id == "deprecated") return false;
-  // Unless this is the 'cloud' library, we do not generate the `google::` or
-  // `google::cloud::` namespaces.
-  if (cfg.library != "cloud" &&
-      (id == "namespacegoogle" || id == "namespacegoogle_1_1cloud")) {
+  // Don't include the top-level `::google` namespace. This is shared with
+  // Protobuf and other libraries, we should not be including it in our
+  // documentation.
+  if (id == "namespacegoogle") return false;
+  // Unless this is the 'cloud' library, we do not generate the
+  // `google::cloud::` namespace.
+  if (cfg.library != "cloud" && id == "namespacegoogle_1_1cloud") {
     return false;
   }
   // We do not generate documentation for private members or sections.

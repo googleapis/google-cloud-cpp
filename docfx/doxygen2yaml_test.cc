@@ -406,11 +406,9 @@ TEST(Doxygen2Yaml, CompoundToc) {
   ASSERT_TRUE(doc.load_string(kDocXml));
   auto const actual = CompoundToc(Config{"unused", "cloud", ""}, doc);
 
-  EXPECT_THAT(
-      actual,
-      ElementsAre(TocEntry{"namespacegoogle", "google", "namespacegoogle.yml"},
-                  TocEntry{"namespacegoogle_1_1cloud", "google::cloud",
-                           "namespacegoogle_1_1cloud.yml"}));
+  EXPECT_THAT(actual,
+              ElementsAre(TocEntry{"namespacegoogle_1_1cloud", "google::cloud",
+                                   "namespacegoogle_1_1cloud.yml"}));
 }
 
 void TestPre(YAML::Emitter& yaml) {

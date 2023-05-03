@@ -61,21 +61,29 @@ TEST(PublicDocs, Basic) {
       {"namespacegoogle_1_1cloud", false},
   };
 
+  auto vars = pugi::xpath_variable_set();
+  vars.add("id", pugi::xpath_type_string);
+  auto query = pugi::xpath_query("//*[@id = string($id)]", &vars);
   for (auto const& test : cases) {
     SCOPED_TRACE("Running with id=" + test.id);
-    auto const filter = "//*[@id='" + test.id + "']";
-    auto selected = doc.select_node(filter.c_str());
+    vars.set("id", test.id.c_str());
+    auto selected = doc.select_node(query);
     ASSERT_TRUE(selected);
     auto const cfg = Config{"unused", "kms", "unused"};
     EXPECT_EQ(test.expected, IncludeInPublicDocuments(cfg, selected.node()));
   }
 
-  for (auto const* filter :
-       {"//*[@id='namespacegoogle']", "//*[@id='namespacegoogle_1_1cloud']"}) {
-    auto selected = doc.select_node(filter);
+  TestCase cloud_cases[] = {
+      {"namespacegoogle", false},
+      {"namespacegoogle_1_1cloud", true},
+  };
+  for (auto const& test : cloud_cases) {
+    SCOPED_TRACE("Running with id=" + test.id);
+    vars.set("id", test.id.c_str());
+    auto selected = doc.select_node(query);
     ASSERT_TRUE(selected);
     auto const cfg = Config{"unused", "cloud", "unused"};
-    EXPECT_TRUE(IncludeInPublicDocuments(cfg, selected.node()));
+    EXPECT_EQ(test.expected, IncludeInPublicDocuments(cfg, selected.node()));
   }
 }
 
