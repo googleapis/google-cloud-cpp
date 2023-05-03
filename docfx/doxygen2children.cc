@@ -30,10 +30,10 @@ std::vector<std::string> Children(YamlContext const& ctx,
     children.insert(children.end(), std::make_move_iterator(more.begin()),
                     std::make_move_iterator(more.end()));
   }
-  for (auto const& child : node.children("innernamespace")) {
-    auto const refid = std::string_view{child.attribute("refid").as_string()};
-    if (!refid.empty()) children.emplace_back(refid);
-  }
+  // Skip the <innernamespace> elements. All namespaces appear in the ToC
+  // (the left-side navigation). Repeating them as children renders incorrectly.
+  // We could fix that, but we do not have enough namespaces to make this
+  // worthwhile.
   for (auto const& child : node.children("innerclass")) {
     if (!IncludeInPublicDocuments(nested.config, child)) continue;
     auto const refid = std::string_view{child.attribute("refid").as_string()};

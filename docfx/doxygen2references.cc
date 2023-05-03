@@ -48,10 +48,8 @@ std::list<Reference> ExtractReferences(YamlContext const& ctx,
   if (!IncludeInPublicDocuments(ctx.config, node)) return {};
 
   auto const name = std::string_view{node.name()};
-  if (name == "innernamespace") {
-    auto const uid = std::string{node.attribute("refid").as_string()};
-    return {Reference(uid, node.child_value())};
-  }
+  // Skip <innernamespace> elements. They are listed in ToC (the left-side
+  // navigation).
   if (name == "innerclass") {
     auto const uid = std::string{node.attribute("refid").as_string()};
     return {Reference(uid, node.child_value())};
