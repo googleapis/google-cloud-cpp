@@ -214,7 +214,7 @@ CurlImpl::CurlImpl(CurlHandle handle,
 
   auto agents = options.get<UserAgentProductsOption>();
   agents.push_back(UserAgentSuffix());
-  user_agent_ = absl::StrCat(absl::StrJoin(agents, " "));
+  user_agent_ = absl::StrJoin(agents, " ");
 
   http_version_ = options.get<HttpVersionOption>();
 
