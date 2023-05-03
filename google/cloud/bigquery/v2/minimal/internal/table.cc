@@ -86,14 +86,11 @@ std::string ListFormatView::DebugString(absl::string_view name,
 std::string HivePartitioningOptions::DebugString(absl::string_view name,
                                                  TracingOptions const& options,
                                                  int indent) const {
-  // DebugFormatter does not support std::vector<std::string> currently.
-  // Uncomment the `fields` value once the support is available.
   return internal::DebugFormatter(name, options, indent)
       .StringField("mode", mode)
       .StringField("source_uri_prefix", source_uri_prefix)
       .Field("require_partition_filter", require_partition_filter)
-      .Field("num_fields", fields.size())
-      // .Field("fields", fields)
+      .Field("fields", fields)
       .Build();
 }
 

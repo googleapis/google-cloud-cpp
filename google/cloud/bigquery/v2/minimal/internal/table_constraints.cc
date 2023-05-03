@@ -24,11 +24,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::string PrimaryKey::DebugString(absl::string_view name,
                                     TracingOptions const& options,
                                     int indent) const {
-  // DebugFormatter does not support std::vector<std::string> currently.
-  // Uncomment the `columns` value once the support is available.
   return internal::DebugFormatter(name, options, indent)
-      .Field("num_columns", columns.size())
-      // .Field("columns", columns)
+      .Field("columns", columns)
       .Build();
 }
 

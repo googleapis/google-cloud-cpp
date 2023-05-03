@@ -24,22 +24,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::string CategoryList::DebugString(absl::string_view name,
                                       TracingOptions const& options,
                                       int indent) const {
-  // DebugFormatter does not support std::vector<std::string> currently.
-  // Uncomment the `names` value once the support is available.
   return internal::DebugFormatter(name, options, indent)
-      .Field("num_names", names.size())
-      //   .Field("names", names)
+      .Field("names", names)
       .Build();
 }
 
 std::string PolicyTagList::DebugString(absl::string_view name,
                                        TracingOptions const& options,
                                        int indent) const {
-  // DebugFormatter does not support std::vector<std::string> currently.
-  // Uncomment the `names` value once the support is available.
   return internal::DebugFormatter(name, options, indent)
-      .Field("num_names", names.size())
-      //   .Field("names", names)
+      .Field("names", names)
       .Build();
 }
 
@@ -53,19 +47,14 @@ std::string FieldElementType::DebugString(absl::string_view name,
 
 std::string DataClassificationTagList::DebugString(
     absl::string_view name, TracingOptions const& options, int indent) const {
-  // DebugFormatter does not support std::vector<std::string> currently.
-  // Uncomment the `names` value once the support is available.
   return internal::DebugFormatter(name, options, indent)
-      .Field("num_names", names.size())
-      // .Field("names", names)
+      .Field("names", names)
       .Build();
 }
 
 std::string TableFieldSchema::DebugString(absl::string_view fname,
                                           TracingOptions const& options,
                                           int indent) const {
-  // DebugFormatter does not support std::vector<std::string> currently.
-  // Uncomment the `fields` value once the support is available.
   return internal::DebugFormatter(fname, options, indent)
       .StringField("name", name)
       .StringField("type", type)
@@ -77,8 +66,6 @@ std::string TableFieldSchema::DebugString(absl::string_view fname,
       .Field("precision", precision)
       .Field("scale", scale)
       .Field("is_measure", is_measure)
-      .Field("num_fields", fields.size())
-      // .Field("fields", fields)
       .SubMessage("categories", categories)
       .SubMessage("policy_tags", policy_tags)
       .SubMessage("data_classification_tags", data_classification_tags)

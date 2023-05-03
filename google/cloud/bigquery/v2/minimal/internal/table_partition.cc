@@ -53,11 +53,8 @@ std::string RangePartitioning::DebugString(absl::string_view name,
 std::string Clustering::DebugString(absl::string_view name,
                                     TracingOptions const& options,
                                     int indent) const {
-  // DebugFormatter does not support std::vector<std::string> currently.
-  // Uncomment the `fields` value once the support is available.
   return internal::DebugFormatter(name, options, indent)
-      .Field("num_fields", fields.size())
-      // .Field("fields", fields)
+      .Field("fields", fields)
       .Build();
 }
 

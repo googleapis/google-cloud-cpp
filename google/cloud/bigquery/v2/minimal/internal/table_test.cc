@@ -443,10 +443,9 @@ TEST(TableTest, TableDebugString) {
       R"( precision: 0)"
       R"( scale: 0)"
       R"( is_measure: true)"
-      R"( num_fields: 0)"
-      R"( categories { num_names: 0 })"
-      R"( policy_tags { num_names: 0 })"
-      R"( data_classification_tags { num_names: 0 })"
+      R"( categories { })"
+      R"( policy_tags { })"
+      R"( data_classification_tags { })"
       R"( rounding_mode { value: "" })"
       R"( range_element_type {)"
       R"( type: "")"
@@ -470,7 +469,7 @@ TEST(TableTest, TableDebugString) {
       R"( })"
       R"( })"
       R"( clustering {)"
-      R"( num_fields: 1)"
+      R"( fields: "c-field-1")"
       R"( })"
       R"( clone_definition {)"
       R"( base_table_reference {)"
@@ -482,7 +481,7 @@ TEST(TableTest, TableDebugString) {
       R"( })"
       R"( table_constraints {)"
       R"( primary_key {)"
-      R"( num_columns: 1)"
+      R"( columns: "pcol-1")"
       R"( })"
       R"( foreign_keys {)"
       R"( key_name: "fkey-1")"
@@ -555,10 +554,9 @@ TEST(TableTest, TableDebugString) {
       R"( precision: 0)"
       R"( scale: 0)"
       R"( is_measure: true)"
-      R"( num_fields: 0)"
-      R"( categories { num_names: 0 })"
-      R"( policy_tags { num_names: 0 })"
-      R"( data_classification_tags { num_names: 0 })"
+      R"( categories { })"
+      R"( policy_tags { })"
+      R"( data_classification_tags { })"
       R"( rounding_mode { value: "" })"
       R"( range_element_type {)"
       R"( type: "")"
@@ -582,7 +580,7 @@ TEST(TableTest, TableDebugString) {
       R"( })"
       R"( })"
       R"( clustering {)"
-      R"( num_fields: 1)"
+      R"( fields: "c-field...<truncated>...")"
       R"( })"
       R"( clone_definition {)"
       R"( base_table_reference {)"
@@ -594,7 +592,7 @@ TEST(TableTest, TableDebugString) {
       R"( })"
       R"( table_constraints {)"
       R"( primary_key {)"
-      R"( num_columns: 1)"
+      R"( columns: "pcol-1")"
       R"( })"
       R"( foreign_keys {)"
       R"( key_name: "fkey-1")"
@@ -678,15 +676,11 @@ TEST(TableTest, TableDebugString) {
       precision: 0
       scale: 0
       is_measure: true
-      num_fields: 0
       categories {
-        num_names: 0
       }
       policy_tags {
-        num_names: 0
       }
       data_classification_tags {
-        num_names: 0
       }
       rounding_mode {
         value: ""
@@ -715,7 +709,7 @@ TEST(TableTest, TableDebugString) {
     }
   }
   clustering {
-    num_fields: 1
+    fields: "c-field-1"
   }
   clone_definition {
     base_table_reference {
@@ -729,7 +723,7 @@ TEST(TableTest, TableDebugString) {
   }
   table_constraints {
     primary_key {
-      num_columns: 1
+      columns: "pcol-1"
     }
     foreign_keys {
       key_name: "fkey-1"
@@ -766,6 +760,143 @@ TEST(TableTest, TableDebugString) {
     refresh_watermark {
       "1970-01-01T00:00:00.123Z"
     }
+  }
+})");
+}
+
+TEST(DatasetTest, ListFormatTableDebugString) {
+  auto table = MakeListFormatTable();
+
+  EXPECT_EQ(table.DebugString("Table", TracingOptions{}),
+            R"(Table {)"
+            R"( kind: "t-kind")"
+            R"( id: "t-id")"
+            R"( friendly_name: "t-friendlyname")"
+            R"( type: "t-type")"
+            R"( table_reference {)"
+            R"( project_id: "t-123")"
+            R"( dataset_id: "t-123")"
+            R"( table_id: "t-123")"
+            R"( })"
+            R"( time_partitioning {)"
+            R"( type: "")"
+            R"( expiration_time { "123ms" })"
+            R"( field: "time-partition-field")"
+            R"( })"
+            R"( range_partitioning {)"
+            R"( field: "range-partition-field")"
+            R"( range { start: "" end: "" interval: "" })"
+            R"( })"
+            R"( clustering {)"
+            R"( fields: "c-field-1")"
+            R"( })"
+            R"( hive_partitioning_options {)"
+            R"( mode: "h-mode")"
+            R"( source_uri_prefix: "")"
+            R"( require_partition_filter: true)"
+            R"( fields: "h-field-1")"
+            R"( } )"
+            R"(view {)"
+            R"( use_legacy_sql: true)"
+            R"( })"
+            R"( labels { key: "l1" value: "v1" })"
+            R"( labels { key: "l2" value: "v2" })"
+            R"( creation_time { "1ms" })"
+            R"( expiration_time { "1ms" })"
+            R"( })");
+
+  EXPECT_EQ(
+      table.DebugString("Table", TracingOptions{}.SetOptions(
+                                     "truncate_string_field_longer_than=7")),
+      R"(Table {)"
+      R"( kind: "t-kind")"
+      R"( id: "t-id")"
+      R"( friendly_name: "t-frien...<truncated>...")"
+      R"( type: "t-type")"
+      R"( table_reference {)"
+      R"( project_id: "t-123")"
+      R"( dataset_id: "t-123")"
+      R"( table_id: "t-123")"
+      R"( })"
+      R"( time_partitioning {)"
+      R"( type: "")"
+      R"( expiration_time { "123ms" })"
+      R"( field: "time-pa...<truncated>...")"
+      R"( })"
+      R"( range_partitioning {)"
+      R"( field: "range-p...<truncated>...")"
+      R"( range { start: "" end: "" interval: "" })"
+      R"( })"
+      R"( clustering {)"
+      R"( fields: "c-field...<truncated>...")"
+      R"( })"
+      R"( hive_partitioning_options {)"
+      R"( mode: "h-mode")"
+      R"( source_uri_prefix: "")"
+      R"( require_partition_filter: true)"
+      R"( fields: "h-field...<truncated>...")"
+      R"( } )"
+      R"(view {)"
+      R"( use_legacy_sql: true)"
+      R"( })"
+      R"( labels { key: "l1" value: "v1" })"
+      R"( labels { key: "l2" value: "v2" })"
+      R"( creation_time { "1ms" })"
+      R"( expiration_time { "1ms" })"
+      R"( })");
+
+  EXPECT_EQ(table.DebugString(
+                "Table", TracingOptions{}.SetOptions("single_line_mode=F")),
+            R"(Table {
+  kind: "t-kind"
+  id: "t-id"
+  friendly_name: "t-friendlyname"
+  type: "t-type"
+  table_reference {
+    project_id: "t-123"
+    dataset_id: "t-123"
+    table_id: "t-123"
+  }
+  time_partitioning {
+    type: ""
+    expiration_time {
+      "123ms"
+    }
+    field: "time-partition-field"
+  }
+  range_partitioning {
+    field: "range-partition-field"
+    range {
+      start: ""
+      end: ""
+      interval: ""
+    }
+  }
+  clustering {
+    fields: "c-field-1"
+  }
+  hive_partitioning_options {
+    mode: "h-mode"
+    source_uri_prefix: ""
+    require_partition_filter: true
+    fields: "h-field-1"
+  }
+  view {
+    use_legacy_sql: true
+  }
+  labels {
+    key: "l1"
+    value: "v1"
+  }
+  labels {
+    key: "l2"
+    value: "v2"
+  }
+  creation_time {
+    "1ms"
+  }
+  expiration_time {
+    "1ms"
   }
 })");
 }
