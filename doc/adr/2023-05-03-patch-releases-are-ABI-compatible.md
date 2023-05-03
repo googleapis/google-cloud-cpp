@@ -13,8 +13,8 @@ ever have to hotfix a bug in such a way that it breaks the API or ABI we will
 **not** use a patch release for such fixes. We will just use a new minor
 release.
 
-**Consequences**: applications will not be able to link two patch versions. That
+**Consequences**: Applications will not be able to link two patch versions. That
 is, they will not be able to link v4.2.1 and v4.2.2 at the same time. This is
-unlikely to cause problems, as recompiling / relinking against the newer version
+unlikely to cause problems as recompiling / relinking against the newer version
 is trivial. Package maintainers will be able to release packages with nicer
 compatibility guarantees.
