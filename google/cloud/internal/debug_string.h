@@ -57,6 +57,8 @@ class DebugFormatter {
       absl::string_view field_name,
       absl::optional<std::chrono::system_clock::time_point> value);
   DebugFormatter& Field(absl::string_view field_name,
+                        std::vector<std::string> const& value);
+  DebugFormatter& Field(absl::string_view field_name,
                         std::map<std::string, std::string> const& value);
   DebugFormatter& Field(absl::string_view field_name,
                         std::multimap<std::string, std::string> const& value);

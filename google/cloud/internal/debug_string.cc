@@ -52,6 +52,15 @@ DebugFormatter& DebugFormatter::Field(
   return value ? Field(field_name, *value) : *this;
 }
 
+DebugFormatter& DebugFormatter::Field(absl::string_view field_name,
+                                      std::vector<std::string> const& value) {
+  for (auto const& s : value) {
+    absl::StrAppend(&str_, Sep(), field_name, ": ", "\"",
+                    DebugString(s, options_), "\"");
+  }
+  return *this;
+}
+
 DebugFormatter& DebugFormatter::Field(
     absl::string_view field_name,
     std::map<std::string, std::string> const& value) {
