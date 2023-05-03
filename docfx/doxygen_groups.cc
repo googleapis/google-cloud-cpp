@@ -23,8 +23,8 @@
 namespace docfx {
 namespace {
 
-void AppendReferences(YAML::Emitter& yaml, pugi::xml_node const& node) {
-  for (auto const& child : node) {
+void AppendReferences(YAML::Emitter& yaml, pugi::xml_node node) {
+  for (auto child : node) {
     auto const name = std::string_view{child.name()};
     if (name == "sectiondef") {
       AppendReferences(yaml, child);
@@ -52,7 +52,7 @@ std::vector<TocEntry> GroupsToc(pugi::xml_document const& doc) {
   auto nodes = doc.select_nodes("//*[@kind='group']");
   std::transform(nodes.begin(), nodes.end(), std::back_inserter(result),
                  [](auto const& i) {
-                   auto const& group = i.node();
+                   auto const group = i.node();
                    auto const id =
                        std::string{group.attribute("id").as_string()};
                    std::ostringstream title;
@@ -64,7 +64,7 @@ std::vector<TocEntry> GroupsToc(pugi::xml_document const& doc) {
   return result;
 }
 
-std::string Group2Yaml(pugi::xml_node const& node) {
+std::string Group2Yaml(pugi::xml_node node) {
   auto const id = std::string{node.attribute("id").as_string()};
   auto const title = [&] {
     std::ostringstream os;
@@ -151,7 +151,7 @@ std::string Group2Yaml(pugi::xml_node const& node) {
 //   <xsd:attribute name="abstract" type="DoxBool" use="optional"/>
 // </xsd:complexType>
 // clang-format on
-std::string Group2SummaryMarkdown(pugi::xml_node const& node) {
+std::string Group2SummaryMarkdown(pugi::xml_node node) {
   if (std::string_view{node.name()} != "compounddef" ||
       std::string_view{node.attribute("kind").as_string()} != "group") {
     std::ostringstream os;
@@ -165,7 +165,7 @@ std::string Group2SummaryMarkdown(pugi::xml_node const& node) {
   os << "# ";
   AppendTitle(os, ctx, node);
   os << "\n";
-  for (auto const& child : node) {
+  for (auto child : node) {
     auto name = std::string_view(child.name());
     if (name == "compoundname") continue;      // no markdown output
     if (name == "briefdescription") continue;  // no markdown output

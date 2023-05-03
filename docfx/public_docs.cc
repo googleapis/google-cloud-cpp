@@ -17,13 +17,13 @@
 namespace docfx {
 namespace {
 
-auto kind(pugi::xml_node const& node) {
+auto kind(pugi::xml_node node) {
   return std::string_view{node.attribute("kind").as_string()};
 }
 
 }  // namespace
 
-bool IncludeInPublicDocuments(Config const& cfg, pugi::xml_node const& node) {
+bool IncludeInPublicDocuments(Config const& cfg, pugi::xml_node node) {
   // We do not generate documents for files and directories.
   if (kind(node) == "file" || kind(node) == "dir") return false;
   // Doxygen groups private attributes / functions in <sectiondef> elements of

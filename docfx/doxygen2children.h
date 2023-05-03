@@ -28,8 +28,7 @@ namespace docfx {
 // and represented as a YAML map. One of the elements in this map is a sequence
 // that lists all the "children" of that entity. For example, a class would
 // list all the uids for the (public) class member functions.
-std::vector<std::string> Children(YamlContext const& ctx,
-                                  pugi::xml_node const& node);
+std::vector<std::string> Children(YamlContext const& ctx, pugi::xml_node node);
 
 }  // namespace docfx
 

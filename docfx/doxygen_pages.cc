@@ -80,7 +80,7 @@ namespace docfx {
 //   <xsd:attribute name="abstract" type="DoxBool" use="optional"/>
 // </xsd:complexType>
 // clang-format on
-std::string Page2Markdown(pugi::xml_node const& node) {
+std::string Page2Markdown(pugi::xml_node node) {
   if (std::string_view{node.name()} != "compounddef" ||
       std::string_view{node.attribute("kind").as_string()} != "page") {
     std::ostringstream os;
@@ -99,7 +99,7 @@ std::string Page2Markdown(pugi::xml_node const& node) {
   MarkdownContext ctx;
   AppendTitle(os, ctx, node);
   os << "\n";
-  for (auto const& child : node) {
+  for (auto child : node) {
     auto name = std::string_view(child.name());
     if (name == "compoundname") continue;      // no markdown output
     if (name == "briefdescription") continue;  // no markdown output
@@ -123,7 +123,7 @@ std::vector<TocEntry> PagesToc(Config const& cfg,
   std::vector<TocEntry> result;
   result.reserve(nodes.size());
   for (auto const& i : nodes) {
-    auto const& page = i.node();
+    auto const page = i.node();
     if (!IncludeInPublicDocuments(cfg, page)) continue;
     auto const id = std::string_view{page.attribute("id").as_string()};
     // Skip endpoint and authorization override snippets.

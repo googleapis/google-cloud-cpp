@@ -32,14 +32,14 @@ namespace {
 // What we do is use the information from the inherited function (from 2) and
 // give it the `uid` from the `MOCK_METHOD()` (from 1).
 std::unordered_map<std::string, std::string> MockingFunctions(
-    Config const& config, pugi::xml_node const& node) {
+    Config const& config, pugi::xml_node node) {
   std::unordered_map<std::string, std::string> mocked;
-  for (auto const& child : node.children("sectiondef")) {
+  for (auto const child : node.children("sectiondef")) {
     if (!IncludeInPublicDocuments(config, node)) continue;
     auto more = MockingFunctions(config, child);
     mocked.insert(more.begin(), more.end());
   }
-  for (auto const& child : node.children("memberdef")) {
+  for (auto const child : node.children("memberdef")) {
     auto const id = std::string_view{child.attribute("id").as_string()};
     auto const kind = std::string_view{child.attribute("kind").as_string()};
     if (id.empty() || kind != "function") continue;
@@ -62,14 +62,14 @@ std::unordered_map<std::string, std::string> MockingFunctions(
 
 std::unordered_set<std::string> MockedIds(
     std::unordered_map<std::string, std::string> const& mocked_functions,
-    Config const& config, pugi::xml_node const& node) {
+    Config const& config, pugi::xml_node node) {
   std::unordered_set<std::string> mocked;
-  for (auto const& child : node.children("sectiondef")) {
+  for (auto const child : node.children("sectiondef")) {
     if (!IncludeInPublicDocuments(config, node)) continue;
     auto more = MockedIds(mocked_functions, config, child);
     mocked.insert(more.begin(), more.end());
   }
-  for (auto const& child : node.children("memberdef")) {
+  for (auto const child : node.children("memberdef")) {
     auto const id = std::string_view{child.attribute("id").as_string()};
     auto const kind = std::string_view{child.attribute("kind").as_string()};
     if (id.empty() || kind != "function") continue;
@@ -84,8 +84,7 @@ std::unordered_set<std::string> MockedIds(
 
 }  // namespace
 
-YamlContext NestedYamlContext(YamlContext const& ctx,
-                              pugi::xml_node const& node) {
+YamlContext NestedYamlContext(YamlContext const& ctx, pugi::xml_node node) {
   auto const id = std::string{node.attribute("id").as_string()};
   auto nested = ctx;
   nested.parent_id = id;
