@@ -20,8 +20,6 @@
 namespace docfx {
 namespace {
 
-using ::testing::ElementsAre;
-
 auto constexpr kEnumXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
       <memberdef kind="enum" id="namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c" prot="public" static="no" strong="yes">

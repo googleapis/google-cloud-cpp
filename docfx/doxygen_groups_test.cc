@@ -18,9 +18,6 @@
 namespace docfx {
 namespace {
 
-using ::testing::ElementsAre;
-using ::testing::FieldsAre;
-
 TEST(DoxygenGroups, CommonPage) {
   auto constexpr kXml =
       R"xml(<?xml version="1.0" standalone="yes"?><doxygen version="1.9.1" xml:lang="en-US">
