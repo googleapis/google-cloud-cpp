@@ -83,7 +83,7 @@ RUN curl -sSL https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.
 # We expose `absl::optional<>` in our public API. An Abseil LTS update will
 # break our `check-api` build, unless we disable the inline namespace.
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20230125.2.tar.gz | \
+RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     sed -i 's/^#define ABSL_OPTION_USE_INLINE_NAMESPACE 1$/#define ABSL_OPTION_USE_INLINE_NAMESPACE 0/' "absl/base/options.h" && \
