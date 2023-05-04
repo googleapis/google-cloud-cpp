@@ -100,30 +100,6 @@ std::string FormatMethodCommentsProtobufRequest(
  */
 bool CheckParameterCommentSubstitutions();
 
-struct HttpSimpleInfo {
-  std::string http_verb;
-  std::string url_path;
-  std::string body;
-};
-
-struct HttpExtensionInfo {
-  std::string http_verb;
-  std::string url_path;
-  std::string request_field_name;
-  std::string url_substitution;
-  std::string body;
-  std::string path_prefix;
-  std::string path_suffix;
-};
-
-/**
- * Parses the http extension providing resource routing info, if present,
- * for the provided method per AIP-4222. Output is also used for gRPC/HTTP
- * transcoding.
- */
-absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>
-ParseHttpExtension(google::protobuf::MethodDescriptor const& method);
-
 /// Our representation for a `google.api.RoutingParameter` message.
 struct RoutingParameter {
   /**
