@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/dataset_request.h"
+#include "google/cloud/bigquery/v2/minimal/internal/rest_stub_utils.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/debug_string.h"
@@ -25,23 +26,6 @@ namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-namespace {
-
-std::string GetDatasetsEndpoint(Options const& opts) {
-  std::string endpoint = opts.get<EndpointOption>();
-
-  if (!absl::StartsWith(endpoint, "https://") &&
-      !absl::StartsWith(endpoint, "http://")) {
-    endpoint = absl::StrCat("https://", endpoint);
-  }
-  if (!absl::EndsWith(endpoint, "/")) absl::StrAppend(&endpoint, "/");
-  absl::StrAppend(&endpoint, "bigquery/v2/projects/");
-
-  return endpoint;
-}
-
-}  // namespace
 
 std::string GetDatasetRequest::DebugString(absl::string_view name,
                                            TracingOptions const& options,
@@ -75,7 +59,7 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
 
   rest_internal::RestRequest request;
 
-  std::string endpoint = GetDatasetsEndpoint(opts);
+  std::string endpoint = GetBaseEndpoint(opts);
 
   std::string path =
       absl::StrCat(endpoint, r.project_id(), "/datasets/", r.dataset_id());
@@ -89,7 +73,7 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
   rest_internal::RestRequest request;
   auto const& opts = internal::CurrentOptions();
 
-  std::string endpoint = GetDatasetsEndpoint(opts);
+  std::string endpoint = GetBaseEndpoint(opts);
 
   std::string path = absl::StrCat(endpoint, r.project_id(), "/datasets");
   request.SetPath(std::move(path));

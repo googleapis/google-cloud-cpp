@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_request.h"
+#include "google/cloud/bigquery/v2/minimal/internal/rest_stub_utils.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/debug_string.h"
@@ -25,23 +26,6 @@ namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-namespace {
-
-std::string GetJobsEndpoint(Options const& opts) {
-  std::string endpoint = opts.get<EndpointOption>();
-
-  if (!absl::StartsWith(endpoint, "https://") &&
-      !absl::StartsWith(endpoint, "http://")) {
-    endpoint = absl::StrCat("https://", endpoint);
-  }
-  if (!absl::EndsWith(endpoint, "/")) absl::StrAppend(&endpoint, "/");
-  absl::StrAppend(&endpoint, "bigquery/v2/projects/");
-
-  return endpoint;
-}
-
-}  // namespace
 
 Projection Projection::Full() {
   Projection projection;
@@ -131,7 +115,7 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r) {
         "Invalid GetJobRequest: Job Id is empty", GCP_ERROR_INFO());
   }
   // Builds GetJob request path based on endpoint provided.
-  std::string endpoint = GetJobsEndpoint(opts);
+  std::string endpoint = GetBaseEndpoint(opts);
 
   std::string path =
       absl::StrCat(endpoint, r.project_id(), "/jobs/", r.job_id());
@@ -154,7 +138,7 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
         "Invalid ListJobsRequest: Project Id is empty", GCP_ERROR_INFO());
   }
   // Builds GetJob request path based on endpoint provided.
-  std::string endpoint = GetJobsEndpoint(opts);
+  std::string endpoint = GetBaseEndpoint(opts);
 
   std::string path = absl::StrCat(endpoint, r.project_id(), "/jobs");
   request.SetPath(std::move(path));

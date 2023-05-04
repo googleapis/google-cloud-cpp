@@ -72,6 +72,7 @@ add_library(
     v2/minimal/internal/job_rest_stub_factory.h
     v2/minimal/internal/job_retry_policy.h
     v2/minimal/internal/log_wrapper.h
+    v2/minimal/internal/rest_stub_utils.cc
     v2/minimal/internal/rest_stub_utils.h
     v2/minimal/internal/table.cc
     v2/minimal/internal/table.h
@@ -198,6 +199,7 @@ function (bigquery_rest_define_tests)
         v2/minimal/internal/job_test.cc
         v2/minimal/internal/table_request_test.cc
         v2/minimal/internal/table_response_test.cc
+        v2/minimal/internal/rest_stub_utils_test.cc
         v2/minimal/internal/table_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
