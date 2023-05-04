@@ -68,12 +68,13 @@ void CompoundRecurse(YAML::Emitter& yaml, YamlContext const& ctx,
   for (auto const child : node) {
     if (!IncludeInPublicDocuments(ctx.config, child)) continue;
     if (IgnoreForRecurse(child)) continue;
+    // Enums need to get their own files, so never recurse in them:
+    if (kind(child) == "enum") continue;
     if (AppendIfSectionDef(yaml, ctx, child)) continue;
     if (AppendIfNamespace(yaml, ctx, child)) continue;
     if (AppendIfClass(yaml, ctx, child)) continue;
     if (AppendIfStruct(yaml, ctx, child)) continue;
     if (AppendIfEnumValue(yaml, ctx, child)) continue;
-    if (AppendIfEnum(yaml, ctx, child)) continue;
     if (AppendIfTypedef(yaml, ctx, child)) continue;
     if (AppendIfFriend(yaml, ctx, child)) continue;
     if (AppendIfVariable(yaml, ctx, child)) continue;
@@ -157,12 +158,12 @@ bool AppendIfEnumValue(YAML::Emitter& yaml, YamlContext const& ctx,
   auto const id = std::string_view{node.attribute("id").as_string()};
   auto const name = std::string_view{node.child("name").child_value()};
 
-  yaml << YAML::BeginMap                                               //
-       << YAML::Key << "uid" << YAML::Value << id                      //
-       << YAML::Key << "name" << YAML::Value << YAML::Literal << name  //
-       << YAML::Key << "id" << YAML::Value << id                       //
-       << YAML::Key << "parent" << YAML::Value << ctx.parent_id        //
-       << YAML::Key << "type" << YAML::Value << "enumvalue"            //
+  yaml << YAML::BeginMap                                         //
+       << YAML::Key << "uid" << YAML::Value << id                //
+       << YAML::Key << "name" << YAML::Value << name             //
+       << YAML::Key << "id" << YAML::Value << id                 //
+       << YAML::Key << "parent" << YAML::Value << ctx.parent_id  //
+       << YAML::Key << "type" << YAML::Value << "enumvalue"      //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;
   AppendDescription(yaml, node);
   yaml << YAML::EndMap;
@@ -179,7 +180,7 @@ bool AppendIfEnum(YAML::Emitter& yaml, YamlContext const& ctx,
       std::string_view{node.child("qualifiedname").child_value()};
   yaml << YAML::BeginMap                                                    //
        << YAML::Key << "uid" << YAML::Value << id                           //
-       << YAML::Key << "name" << YAML::Value << YAML::Literal << name       //
+       << YAML::Key << "name" << YAML::Value << name                        //
        << YAML::Key << "fullName"                                           //
        << YAML::Value << YAML::Literal << full_name                         //
        << YAML::Key << "id" << YAML::Value << id                            //
@@ -188,6 +189,10 @@ bool AppendIfEnum(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendEnumSyntax(yaml, ctx, node);
   AppendDescription(yaml, node);
+  auto const children = Children(ctx, node);
+  if (!children.empty()) {
+    yaml << YAML::Key << "children" << YAML::Value << children;
+  }
   yaml << YAML::EndMap;
   auto nested = ctx;
   nested.parent_id = id;

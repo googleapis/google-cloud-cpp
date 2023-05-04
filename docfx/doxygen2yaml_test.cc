@@ -404,8 +404,7 @@ TEST(Doxygen2Yaml, EnumValue) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
-    name: |
-      kIdempotent
+    name: kIdempotent
     id: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
     parent: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
     type: enumvalue
@@ -436,8 +435,7 @@ TEST(Doxygen2Yaml, Enum) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
-    name: |
-      Idempotency
+    name: Idempotency
     fullName: |
       google::cloud::Idempotency
     id: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
@@ -487,9 +485,11 @@ items:
       - In some applications, creating a duplicate entry may
       be acceptable as the system will deduplicate them later. In such systems it may
       be preferable to retry the operation even though it is not idempotent.
+    children:
+      - namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
+      - namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9cae75d33e94f2dc4028d4d67bdaab75190
   - uid: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
-    name: |
-      kIdempotent
+    name: kIdempotent
     id: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
     parent: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
     type: enumvalue
@@ -498,8 +498,7 @@ items:
     summary: |
       The operation is idempotent and can be retried after a transient failure.
   - uid: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9cae75d33e94f2dc4028d4d67bdaab75190
-    name: |
-      kNonIdempotent
+    name: kNonIdempotent
     id: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9cae75d33e94f2dc4028d4d67bdaab75190
     parent: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
     type: enumvalue

@@ -50,6 +50,15 @@ int main(int argc, char* argv[]) try {
     std::ofstream(id + ".yml") << docfx::Compound2Yaml(config, node);
   }
 
+  // Enums need to be generated in their own file or DocFX cannot create links
+  // to them.
+  for (auto const& i : doc.select_nodes("//memberdef[@kind='enum']")) {
+    auto const node = i.node();
+    if (!docfx::IncludeInPublicDocuments(config, node)) continue;
+    auto const id = std::string{node.attribute("id").as_string()};
+    std::ofstream(id + ".yml") << docfx::Compound2Yaml(config, node);
+  }
+
   return 0;
 } catch (std::exception const& ex) {
   std::cerr << "Standard exception thrown: " << ex.what() << "\n";
