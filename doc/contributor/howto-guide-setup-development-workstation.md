@@ -61,7 +61,8 @@ sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang
 sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-10 100
 ```
 
-Note: newer versions of Ubuntu might require 
+Note: newer versions of Ubuntu might require:
+
 ```console
 sudo apt install -y clang libc++-dev libc++abi-dev cmake ninja-build
 ```

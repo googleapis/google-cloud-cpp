@@ -22,14 +22,11 @@ declare -A -r GOOGLE_CLOUD_CPP_SDK_SHA256=(
   ["arm"]="d3d7d8bdde1abc8e8279b813b3341d20fa3af1928268d97c61b0553a8e590124"
 )
 
-ARCH="$(uname -p)"
+ARCH="$(uname -m)"
 if [[ "${ARCH}" == "aarch64" ]]; then
   # The tarball uses this name
   ARCH="arm"
-else 
-  # For x86_64, uname -p might give unknown 
-  ARCH="$(uname -m)"
-fi 
+fi
 
 readonly ARCH
 
