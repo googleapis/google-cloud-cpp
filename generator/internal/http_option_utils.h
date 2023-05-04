@@ -31,6 +31,8 @@ struct HttpSimpleInfo {
 };
 
 struct HttpExtensionInfo {
+  using RestPathPiece =
+      std::function<std::string(google::protobuf::MethodDescriptor const&)>;
   std::string http_verb;
   std::string url_path;
   std::string request_field_name;
@@ -38,6 +40,7 @@ struct HttpExtensionInfo {
   std::string body;
   std::string path_prefix;
   std::string path_suffix;
+  std::vector<RestPathPiece> rest_path;
 };
 
 /**
