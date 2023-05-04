@@ -70,7 +70,7 @@ void CompoundRecurse(YAML::Emitter& yaml, YamlContext const& ctx,
     if (IgnoreForRecurse(child)) continue;
     // Enums need to get their own files, never recurse in them.
     // if (AppendIfEnum(yaml, ctx, child)) continue;
-    if (kind(node) == "enum") continue;
+    if (kind(child) == "enum") continue;
     if (AppendIfSectionDef(yaml, ctx, child)) continue;
     if (AppendIfNamespace(yaml, ctx, child)) continue;
     if (AppendIfClass(yaml, ctx, child)) continue;
