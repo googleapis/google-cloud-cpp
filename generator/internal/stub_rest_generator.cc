@@ -329,7 +329,7 @@ Default$stub_rest_class_name$::$method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       $request_type$ const& request) {
   return rest_internal::$method_http_verb$<$response_type$>(
-      *service_, rest_context, request,
+      *service_, rest_context, request$request_resource_field_name_accessor$,
       $method_rest_path$$method_http_query_parameters$);
 }
 )""");
