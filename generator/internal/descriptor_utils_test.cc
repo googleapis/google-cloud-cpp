@@ -41,7 +41,6 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
-using ::google::protobuf::MethodDescriptor;
 using ::testing::_;
 using ::testing::AllOf;
 using ::testing::Contains;
@@ -694,56 +693,6 @@ TEST_F(CreateMethodVarsTest, SkipMethodOverloadsWithDuplicateSignatures) {
   EXPECT_THAT(method_vars->second, Not(Contains(Pair("method_signature1", _))));
   EXPECT_THAT(method_vars->second, Contains(Pair("method_signature2", _)));
   EXPECT_THAT(method_vars->second, Not(Contains(Pair("method_signature3", _))));
-}
-
-TEST_F(CreateMethodVarsTest, ParseHttpExtensionWithPrefixAndSuffix) {
-  FileDescriptor const* service_file_descriptor =
-      pool_.FindFileByName("google/foo/v1/service.proto");
-  MethodDescriptor const* method =
-      service_file_descriptor->service(0)->method(5);
-  auto info = ParseHttpExtension(*method);
-  ASSERT_TRUE(absl::holds_alternative<HttpExtensionInfo>(info));
-  auto extension_info = absl::get<HttpExtensionInfo>(info);
-  EXPECT_THAT(extension_info.url_path,
-              Eq("/v1/{parent=projects/*/instances/*}/databases"));
-  EXPECT_THAT(extension_info.request_field_name, Eq("parent"));
-  EXPECT_THAT(extension_info.url_substitution, Eq("projects/*/instances/*"));
-  EXPECT_THAT(extension_info.body, Eq("*"));
-  EXPECT_THAT(extension_info.http_verb, Eq("Post"));
-  EXPECT_THAT(extension_info.path_prefix, Eq("/v1/"));
-  EXPECT_THAT(extension_info.path_suffix, Eq("/databases"));
-}
-
-TEST_F(CreateMethodVarsTest, ParseHttpExtensionWithOnlyPrefix) {
-  FileDescriptor const* service_file_descriptor =
-      pool_.FindFileByName("google/foo/v1/service.proto");
-  MethodDescriptor const* method =
-      service_file_descriptor->service(0)->method(1);
-  auto info = ParseHttpExtension(*method);
-  ASSERT_TRUE(absl::holds_alternative<HttpExtensionInfo>(info));
-  auto extension_info = absl::get<HttpExtensionInfo>(info);
-  EXPECT_THAT(extension_info.url_path,
-              Eq("/v1/{name=projects/*/instances/*/backups/*}"));
-  EXPECT_THAT(extension_info.request_field_name, Eq("name"));
-  EXPECT_THAT(extension_info.url_substitution,
-              Eq("projects/*/instances/*/backups/*"));
-  EXPECT_THAT(extension_info.body, Eq(""));
-  EXPECT_THAT(extension_info.http_verb, Eq("Delete"));
-  EXPECT_THAT(extension_info.path_prefix, Eq("/v1/"));
-  EXPECT_THAT(extension_info.path_suffix, Eq(""));
-}
-
-TEST_F(CreateMethodVarsTest, ParseHttpExtensionSimpleInfo) {
-  FileDescriptor const* service_file_descriptor =
-      pool_.FindFileByName("google/foo/v1/service.proto");
-  MethodDescriptor const* method =
-      service_file_descriptor->service(0)->method(9);
-  auto info = ParseHttpExtension(*method);
-  ASSERT_TRUE(absl::holds_alternative<HttpSimpleInfo>(info));
-  auto extension_info = absl::get<HttpSimpleInfo>(info);
-  EXPECT_THAT(extension_info.url_path, Eq("/v1/foo"));
-  EXPECT_THAT(extension_info.body, Eq("*"));
-  EXPECT_THAT(extension_info.http_verb, Eq("Get"));
 }
 
 TEST_P(CreateMethodVarsTest, KeySetCorrectly) {
