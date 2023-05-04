@@ -34,4 +34,5 @@ extend-exclude = [
     # Input data for DocFX tests. It contains many long hex strings that confuse
     # the spell checker.
     "docfx/testing/inputs.cc",
+    "docfx/doxygen2toc_test.cc",
 ]
