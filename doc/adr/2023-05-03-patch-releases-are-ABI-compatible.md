@@ -4,7 +4,7 @@
 
 **Context**: We create a few patch releases each year. These are always bug
 fixes. We have never introduced API changes in a patch release, nor should we.
-Prior to this ADR, our patch releases changed the ABI, as the patch number was
+Prior to this ADR, our patch releases changed the ABI as the patch number was
 embedded in the inline namespace `google::cloud::v$Major_$Minor_$Patch`.
 
 **Decision**: We will remove the patch number from our inline namespace. If we
