@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "docfx/doxygen2toc.h"
+#include "docfx/testing/inputs.h"
 #include <gmock/gmock.h>
 
 namespace docfx {
@@ -261,7 +262,7 @@ items:
                     uid: classgoogle_1_1cloud_1_1future
           - name: Enums
             items:
-              - name: google::cloud::Idempotency
+              - name: Idempotency
                 items:
                   - name: Overview
                     uid: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
@@ -273,6 +274,62 @@ items:
 
   pugi::xml_document doc;
   ASSERT_TRUE(doc.load_string(kDocXml));
+  auto const actual = Doxygen2Toc(Config{"unused", "cloud", ""}, doc);
+  EXPECT_EQ(actual, kExpected);
+}
+
+TEST(Doxygen2Toc, ClassToc) {
+  auto constexpr kExpected = R"""(### YamlMime:TableOfContent
+name: cloud.google.com/cpp/cloud
+items:
+  - name: Namespaces
+    items:
+      - name: google::cloud
+        items:
+          - name: Overview
+            uid: namespacegoogle_1_1cloud
+          - name: Classes
+            items:
+              - name: google::cloud::Status
+                items:
+                  - name: Overview
+                    uid: classgoogle_1_1cloud_1_1Status
+                  - name: Constructors
+                    items:
+                      - name: Status
+                        uid: classgoogle_1_1cloud_1_1Status_1aa3656155ad44d8bd75d92cd797123f4d
+                      - name: Status
+                        uid: classgoogle_1_1cloud_1_1Status_1afd186465a07fa176c10d437c1240f2de
+                      - name: Status
+                        uid: classgoogle_1_1cloud_1_1Status_1af3de0fb0dee8fb557e693195a812987f
+                      - name: ~Status
+                        uid: classgoogle_1_1cloud_1_1Status_1a739165d43975222a55f064dd87db5e1f
+                      - name: Status
+                        uid: classgoogle_1_1cloud_1_1Status_1af927a89141bbcf10f0e02d789ebade94
+                  - name: Operators
+                    items:
+                      - name: operator=
+                        uid: classgoogle_1_1cloud_1_1Status_1a675be7e53ab9b27d69ba776a3c1ca7bf
+                      - name: operator=
+                        uid: classgoogle_1_1cloud_1_1Status_1a23aaae701351564b3a17f47d5cb4e7cb
+                      - name: operator==
+                        uid: classgoogle_1_1cloud_1_1Status_1a8c00daab4bca2eeb428f816fabf59492
+                      - name: operator!=
+                        uid: classgoogle_1_1cloud_1_1Status_1a3624db9be409bca17dc8940db074ddff
+                  - name: Functions
+                    items:
+                      - name: ok
+                        uid: classgoogle_1_1cloud_1_1Status_1a18952043ffe5a4f74911c8146e8bb504
+                      - name: code
+                        uid: classgoogle_1_1cloud_1_1Status_1ac18337d2ceb00ca007725d21f2c63f9f
+                      - name: message
+                        uid: classgoogle_1_1cloud_1_1Status_1aaa8dea39008758d8494f29b12b92be02
+                      - name: error_info
+                        uid: classgoogle_1_1cloud_1_1Status_1a172e846ab5623d78d49e2ed128f49583
+)""";
+
+  pugi::xml_document doc;
+  ASSERT_TRUE(doc.load_string(docfx_testing::StatusClassXml().c_str()));
   auto const actual = Doxygen2Toc(Config{"unused", "cloud", ""}, doc);
   EXPECT_EQ(actual, kExpected);
 }

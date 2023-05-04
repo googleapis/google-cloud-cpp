@@ -46,11 +46,9 @@ std::shared_ptr<TocEntry> CompoundEntry(pugi::xml_node node) {
 
 std::shared_ptr<TocEntry> MemberEntry(pugi::xml_node node) {
   auto const id = std::string_view{node.attribute("id").as_string()};
-  auto const name = std::string_view{node.child("qualifiedname").child_value()};
-  auto overview = NamedEntry("Overview");
-  overview->attr.emplace("uid", id);
+  auto const name = std::string_view{node.child("name").child_value()};
   auto entry = NamedEntry(name);
-  entry->items.push_back(std::move(overview));
+  entry->attr.emplace("uid", id);
   return entry;
 }
 
@@ -217,7 +215,12 @@ TocItems ClassToc(Config const& cfg, pugi::xml_document const& doc,
 TocItems EnumToc(Config const& cfg, pugi::xml_document const& doc,
                  pugi::xml_node node) {
   if (!IncludeInPublicDocuments(cfg, node)) return {};
-  auto entry = MemberEntry(node);
+  auto const id = std::string_view{node.attribute("id").as_string()};
+  auto const name = std::string_view{node.child("name").child_value()};
+  auto entry = NamedEntry(name);
+  auto overview = NamedEntry("Overview");
+  overview->attr.emplace("uid", id);
+  entry->items.push_back(std::move(overview));
   for (auto const child : node) {
     if (!IncludeInPublicDocuments(cfg, child)) continue;
     auto const element = std::string_view{child.name()};
