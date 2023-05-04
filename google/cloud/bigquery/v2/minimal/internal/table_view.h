@@ -84,6 +84,20 @@ struct MaterializedViewStatus {
                           int indent = 0) const;
 };
 
+struct TableMetadataView {
+  static TableMetadataView UnSpecified();
+  static TableMetadataView Basic();
+  static TableMetadataView StrorageStats();
+  static TableMetadataView Full();
+
+  std::string value;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
+};
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TableMetadataView, value);
+
 void to_json(nlohmann::json& j, MaterializedViewDefinition const& m);
 void from_json(nlohmann::json const& j, MaterializedViewDefinition& m);
 

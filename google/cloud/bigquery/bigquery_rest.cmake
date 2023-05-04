@@ -79,6 +79,8 @@ add_library(
     v2/minimal/internal/table_constraints.h
     v2/minimal/internal/table_partition.cc
     v2/minimal/internal/table_partition.h
+    v2/minimal/internal/table_request.cc
+    v2/minimal/internal/table_request.h
     v2/minimal/internal/table_schema.cc
     v2/minimal/internal/table_schema.h
     v2/minimal/internal/table_view.cc
@@ -190,6 +192,7 @@ function (bigquery_rest_define_tests)
         v2/minimal/internal/job_response_test.cc
         v2/minimal/internal/job_rest_stub_test.cc
         v2/minimal/internal/job_test.cc
+        v2/minimal/internal/table_request_test.cc
         v2/minimal/internal/table_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain

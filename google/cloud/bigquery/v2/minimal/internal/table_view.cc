@@ -21,6 +21,30 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+TableMetadataView TableMetadataView::UnSpecified() {
+  return TableMetadataView{"TABLE_METADATA_VIEW_UNSPECIFIED"};
+}
+
+TableMetadataView TableMetadataView::Basic() {
+  return TableMetadataView{"BASIC"};
+}
+
+TableMetadataView TableMetadataView::StrorageStats() {
+  return TableMetadataView{"STORAGE_STATS"};
+}
+
+TableMetadataView TableMetadataView::Full() {
+  return TableMetadataView{"FULL"};
+}
+
+std::string TableMetadataView::DebugString(absl::string_view name,
+                                           TracingOptions const& options,
+                                           int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("value", value)
+      .Build();
+}
+
 std::string UserDefinedFunctionResource::DebugString(
     absl::string_view name, TracingOptions const& options, int indent) const {
   return internal::DebugFormatter(name, options, indent)
