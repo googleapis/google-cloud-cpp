@@ -68,8 +68,7 @@ void CompoundRecurse(YAML::Emitter& yaml, YamlContext const& ctx,
   for (auto const child : node) {
     if (!IncludeInPublicDocuments(ctx.config, child)) continue;
     if (IgnoreForRecurse(child)) continue;
-    // Enums need to get their own files, never recurse in them.
-    // if (AppendIfEnum(yaml, ctx, child)) continue;
+    // Enums need to get their own files, so never recurse in them:
     if (kind(child) == "enum") continue;
     if (AppendIfSectionDef(yaml, ctx, child)) continue;
     if (AppendIfNamespace(yaml, ctx, child)) continue;
