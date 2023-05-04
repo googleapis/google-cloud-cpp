@@ -86,13 +86,7 @@ void SetHttpDerivedMethodVars(
           absl::StrJoin(
               info.rest_path, ", ",
               [&](std::string* out, HttpExtensionInfo::RestPathPiece const& p) {
-                if (p.format_as_accessor) {
-                  out->append(absl::StrFormat(
-                      "request.%s()",
-                      FormatFieldAccessorCall(method, p.piece)));
-                } else {
-                  out->append(absl::StrFormat("\"%s\"", p.piece));
-                }
+                out->append(p(method));
               }),
           ")");
     }
@@ -259,16 +253,27 @@ ParseHttpExtension(google::protobuf::MethodDescriptor const& method) {
   std::size_t current = 0;
   for (auto open = url_pattern.find('{'); open != std::string::npos;
        open = url_pattern.find('{', current)) {
-    info.rest_path.emplace_back(url_pattern.substr(current, open - current),
-                                false);
+    info.rest_path.emplace_back(
+        [piece = url_pattern.substr(current, open - current)](
+            google::protobuf::MethodDescriptor const&) {
+          return absl::StrFormat("\"%s\"", piece);
+        });
     current = open + 1;
     auto close = url_pattern.find('}', current);
-    std::pair<std::string, std::string> foo = absl::StrSplit(
+    std::pair<std::string, std::string> param = absl::StrSplit(
         url_pattern.substr(current, close - current), absl::ByChar('='));
-    info.rest_path.emplace_back(foo.first, true);
+    info.rest_path.emplace_back(
+        [piece =
+             param.first](google::protobuf::MethodDescriptor const& method) {
+          return absl::StrFormat("request.%s()",
+                                 FormatFieldAccessorCall(method, piece));
+        });
     current = close + 1;
   }
-  info.rest_path.emplace_back(url_pattern.substr(current), false);
+  info.rest_path.emplace_back([piece = url_pattern.substr(current)](
+                                  google::protobuf::MethodDescriptor const&) {
+    return absl::StrFormat("\"%s\"", piece);
+  });
   return info;
 }
 

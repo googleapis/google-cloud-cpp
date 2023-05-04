@@ -367,9 +367,9 @@ TEST_F(HttpOptionUtilsTest,
                  "databases"));
   EXPECT_THAT(vars.at("method_request_body"), Eq("*"));
   EXPECT_THAT(vars.at("method_http_verb"), Eq("Post"));
-  EXPECT_THAT(vars.at("method_rest_path"),
-              Eq("absl::StrCat(\"/v1/projects/\", request.project(), "
-                 "\"/instances/\", request.instance(), \"/databases\")"));
+  auto const* expected_rest_path =
+      R"""(absl::StrCat("/v1/projects/", request.project(), "/instances/", request.instance(), "/databases"))""";
+  EXPECT_THAT(vars.at("method_rest_path"), Eq(expected_rest_path));
 }
 
 TEST_F(HttpOptionUtilsTest, SetHttpGetQueryParametersNonGet) {
