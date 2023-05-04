@@ -31,6 +31,12 @@ struct HttpSimpleInfo {
 };
 
 struct HttpExtensionInfo {
+  struct RestPathPiece {
+    RestPathPiece(std::string piece, bool format_as_accessor)
+        : piece(std::move(piece)), format_as_accessor(format_as_accessor) {}
+    std::string piece;
+    bool format_as_accessor;
+  };
   std::string http_verb;
   std::string url_path;
   std::string request_field_name;
@@ -38,6 +44,7 @@ struct HttpExtensionInfo {
   std::string body;
   std::string path_prefix;
   std::string path_suffix;
+  std::vector<RestPathPiece> rest_path;
 };
 
 /**

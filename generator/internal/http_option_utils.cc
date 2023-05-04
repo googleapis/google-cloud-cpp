@@ -73,15 +73,28 @@ void SetHttpDerivedMethodVars(
       method_vars["method_request_url_path"] = info.url_path;
       method_vars["method_request_url_substitution"] = info.url_substitution;
       std::string param = info.request_field_name;
+      // method_request_param_key and method_request_param_value are only used
+      // for gRPC transport.
       method_vars["method_request_param_key"] = param;
       method_vars["method_request_param_value"] =
           FormatFieldAccessorCall(method, param) + "()";
       method_vars["method_request_body"] = info.body;
       method_vars["method_http_verb"] = info.http_verb;
-      method_vars["method_rest_path"] =
-          absl::StrCat("absl::StrCat(\"", info.path_prefix, "\", request.",
-                       method_vars["method_request_param_value"], ", \"",
-                       info.path_suffix, "\")");
+      // method_rest_path is only used for REST transport.
+      method_vars["method_rest_path"] = absl::StrCat(
+          "absl::StrCat(",
+          absl::StrJoin(
+              info.rest_path, ", ",
+              [&](std::string* out, HttpExtensionInfo::RestPathPiece const& p) {
+                if (p.format_as_accessor) {
+                  out->append(absl::StrFormat(
+                      "request.%s()",
+                      FormatFieldAccessorCall(method, p.piece)));
+                } else {
+                  out->append(absl::StrFormat("\"%s\"", p.piece));
+                }
+              }),
+          ")");
     }
 
     // This visitor handles the case where no request field is specified in the
@@ -242,6 +255,20 @@ ParseHttpExtension(google::protobuf::MethodDescriptor const& method) {
   info.body = http_rule.body();
   info.path_prefix = match[1];
   info.path_suffix = match[4];
+
+  std::size_t current = 0;
+  for (auto open = url_pattern.find('{'); open != std::string::npos;
+       open = url_pattern.find('{', current)) {
+    info.rest_path.emplace_back(url_pattern.substr(current, open - current),
+                                false);
+    current = open + 1;
+    auto close = url_pattern.find('}', current);
+    std::pair<std::string, std::string> foo = absl::StrSplit(
+        url_pattern.substr(current, close - current), absl::ByChar('='));
+    info.rest_path.emplace_back(foo.first, true);
+    current = close + 1;
+  }
+  info.rest_path.emplace_back(url_pattern.substr(current), false);
   return info;
 }
 
