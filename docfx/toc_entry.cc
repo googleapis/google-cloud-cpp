@@ -19,9 +19,9 @@
 namespace docfx {
 
 bool operator==(TocEntry const& lhs, TocEntry const& rhs) {
-  if (lhs.name != rhs.name || lhs.attr != rhs.attr) return false;
-  return std::equal(lhs.items.begin(), lhs.items.end(), rhs.items.begin(),
-                    rhs.items.end(),
+  return lhs.name == rhs.name && lhs.attr == rhs.attr &&
+         std::equal(lhs.items.begin(), lhs.items.end(),  //
+                    rhs.items.begin(), rhs.items.end(),  //
                     [](auto const& a, auto const& b) { return *a == *b; });
 }
 
