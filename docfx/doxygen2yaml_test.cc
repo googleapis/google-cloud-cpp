@@ -551,19 +551,18 @@ TEST(Doxygen2Yaml, Typedef) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: namespacegoogle_1_1cloud_1a1498c1ea55d81842f37bbc42d003df1f
-    name: |
-      BackgroundThreadsFactory
-    fullName: |
-      google::cloud::BackgroundThreadsFactory
+    name: "BackgroundThreadsFactory"
+    fullName: "google::cloud::BackgroundThreadsFactory"
     id: namespacegoogle_1_1cloud_1a1498c1ea55d81842f37bbc42d003df1f
     parent: test-only-parent-id
-    type: typedef
+    type: typealias
     langs:
       - cpp
     syntax:
       contents: |
         using google::cloud::BackgroundThreadsFactory =
           std::function< std::unique_ptr< BackgroundThreads >()>;
+      aliasof: "std::function&lt; std::unique_ptr&lt; BackgroundThreads &gt;()&gt;"
       source:
         id: BackgroundThreadsFactory
         path: google/cloud/grpc_options.h
@@ -842,19 +841,18 @@ TEST(Doxygen2Yaml, SectionDef) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: structgoogle_1_1cloud_1_1AccessTokenLifetimeOption_1ad6b8a4672f1c196926849229f62d0de2
-    name: |
-      Type
-    fullName: |
-      google::cloud::AccessTokenLifetimeOption::Type
+    name: "Type"
+    fullName: "google::cloud::AccessTokenLifetimeOption::Type"
     id: structgoogle_1_1cloud_1_1AccessTokenLifetimeOption_1ad6b8a4672f1c196926849229f62d0de2
     parent: test-only-parent-id
-    type: typedef
+    type: typealias
     langs:
       - cpp
     syntax:
       contents: |
         using google::cloud::AccessTokenLifetimeOption::Type =
           std::chrono::seconds;
+      aliasof: "std::chrono::seconds"
       source:
         id: Type
         path: google/cloud/credentials.h
