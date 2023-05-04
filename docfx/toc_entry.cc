@@ -13,12 +13,33 @@
 // limitations under the License.
 
 #include "docfx/toc_entry.h"
+#include <algorithm>
 #include <iostream>
 
 namespace docfx {
 
+bool operator==(TocEntry const& lhs, TocEntry const& rhs) {
+  return lhs.name == rhs.name && lhs.attr == rhs.attr &&
+         std::equal(lhs.items.begin(), lhs.items.end(),  //
+                    rhs.items.begin(), rhs.items.end(),  //
+                    [](auto const& a, auto const& b) { return *a == *b; });
+}
+
 std::ostream& operator<<(std::ostream& os, TocEntry const& entry) {
-  return os << "filename=" << entry.filename << ", name=" << entry.name;
+  os << "{name=" << entry.name << ", attr={";
+  auto sep = std::string_view{", attr={"};
+  for (auto const& [key, value] : entry.attr) {
+    os << sep << key << "=" << value;
+    sep = ", ";
+  }
+  if (!entry.attr.empty()) os << "}";
+  sep = ", items=[";
+  for (auto const& item : entry.items) {
+    os << sep << *item;
+    sep = ", ";
+  }
+  if (!entry.items.empty()) os << "]";
+  return os << "}";
 }
 
 }  // namespace docfx

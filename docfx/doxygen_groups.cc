@@ -47,23 +47,6 @@ void AppendReferences(YAML::Emitter& yaml, pugi::xml_node node) {
 
 }  // namespace
 
-std::vector<TocEntry> GroupsToc(pugi::xml_document const& doc) {
-  std::vector<TocEntry> result;
-  auto nodes = doc.select_nodes("//*[@kind='group']");
-  std::transform(nodes.begin(), nodes.end(), std::back_inserter(result),
-                 [](auto const& i) {
-                   auto const group = i.node();
-                   auto const id =
-                       std::string{group.attribute("id").as_string()};
-                   std::ostringstream title;
-                   AppendTitle(title, MarkdownContext{}, group);
-                   return TocEntry{id, title.str(), id + ".yml"};
-                 });
-  std::sort(result.begin(), result.end(),
-            [](auto const& a, auto const& b) { return a.name < b.name; });
-  return result;
-}
-
 std::string Group2Yaml(pugi::xml_node node) {
   auto const id = std::string{node.attribute("id").as_string()};
   auto const title = [&] {

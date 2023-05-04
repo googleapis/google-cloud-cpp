@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN2TOC_H
 
 #include "docfx/config.h"
+#include "docfx/toc_entry.h"
 #include <pugixml.hpp>
 #include <string>
 
