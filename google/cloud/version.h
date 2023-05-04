@@ -20,7 +20,7 @@
 #include "google/cloud/internal/version_info.h"
 #include <string>
 
-#define GOOGLE_CLOUD_CPP_VCONCAT(Ma, Mi, Pa) v##Ma##_##Mi##_##Pa
+#define GOOGLE_CLOUD_CPP_VCONCAT(Ma, Mi, Pa) v##Ma##_##Mi
 #define GOOGLE_CLOUD_CPP_VEVAL(Ma, Mi, Pa) GOOGLE_CLOUD_CPP_VCONCAT(Ma, Mi, Pa)
 #define GOOGLE_CLOUD_CPP_NS                              \
   GOOGLE_CLOUD_CPP_VEVAL(GOOGLE_CLOUD_CPP_VERSION_MAJOR, \
