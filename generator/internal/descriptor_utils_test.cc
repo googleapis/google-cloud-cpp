@@ -947,8 +947,7 @@ INSTANTIATE_TEST_SUITE_P(
        std::make_pair("name", request.name())})"""),
         // Method11
         MethodVarsTestValues("google.protobuf.Service.Method11",
-                             "request_resource",
-                             "request.foo_resource()"),
+                             "request_resource", "request.foo_resource()"),
         // IAM idempotency defaults
         MethodVarsTestValues("google.protobuf.Service.GetIamPolicy",
                              "idempotency", "kIdempotent"),
