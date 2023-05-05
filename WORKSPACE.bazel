@@ -38,3 +38,7 @@ grpc_extra_deps()
 load("@io_opentelemetry_cpp//bazel:repository.bzl", "opentelemetry_cpp_deps")
 
 opentelemetry_cpp_deps()
+
+load("@com_google_benchmark//:bazel/benchmark_deps.bzl", "benchmark_deps")
+
+benchmark_deps()
