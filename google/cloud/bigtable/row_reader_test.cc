@@ -14,6 +14,8 @@
 
 #include "google/cloud/bigtable/row_reader.h"
 #include "google/cloud/bigtable/mocks/mock_row_reader.h"
+#include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -56,16 +58,15 @@ TEST(RowReaderTest, IteratorPostincrement) {
   EXPECT_EQ(it, reader.end());
 }
 
+class MockRowReader : public bigtable_internal::RowReaderImpl {
+ public:
+  MOCK_METHOD(void, Cancel, (), (override));
+  MOCK_METHOD((absl::variant<Status, bigtable::Row>), Advance, (), (override));
+};
+
 TEST(RowReaderTest, OptionsSpan) {
   struct TestOption {
     using Type = std::string;
-  };
-
-  class MockRowReader : public bigtable_internal::RowReaderImpl {
-   public:
-    MOCK_METHOD(void, Cancel, (), (override));
-    MOCK_METHOD((absl::variant<Status, bigtable::Row>), Advance, (),
-                (override));
   };
 
   auto mock = std::make_shared<MockRowReader>();
@@ -88,6 +89,39 @@ TEST(RowReaderTest, OptionsSpan) {
     EXPECT_STATUS_OK(sor);
   }
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+using ::google::cloud::testing_util::IsActive;
+
+TEST(RowReader, CallSpanActiveThroughout) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto span = google::cloud::internal::MakeSpan("call span");
+  auto mock = std::make_shared<MockRowReader>();
+
+  ::testing::InSequence s;
+  EXPECT_CALL(*mock, Advance).Times(3).WillRepeatedly([span] {
+    // Verify that the active span from construction applies for each Advance.
+    EXPECT_THAT(span, IsActive());
+    return Row("row", {});
+  });
+  EXPECT_CALL(*mock, Advance).WillOnce(Return(Status()));
+
+  auto reader = [span, mock] {
+    // Set "call span" as active.
+    auto scope = opentelemetry::trace::Scope(span);
+    return bigtable_internal::MakeRowReader(mock);
+  }();
+
+  // Clear the active span before we iterate.
+  auto overlay = google::cloud::internal::MakeSpan("overlay");
+  auto scope = opentelemetry::trace::Scope(overlay);
+  for (auto const& row : reader) {
+    EXPECT_THAT(overlay, IsActive());
+    EXPECT_STATUS_OK(row);
+  }
+}
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // anonymous namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
