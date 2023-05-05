@@ -83,11 +83,11 @@ def google_cloud_cpp_deps(name = None):
         http_archive,
         name = "com_google_benchmark",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_benchmark/v1.7.0.tar.gz",
-            "https://github.com/google/benchmark/archive/v1.7.0.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_benchmark/v1.8.0.tar.gz",
+            "https://github.com/google/benchmark/archive/v1.8.0.tar.gz",
         ],
-        sha256 = "3aff99169fa8bdee356eaa1f691e835a6e57b1efeadb8a0f9f228531158246ac",
-        strip_prefix = "benchmark-1.7.0",
+        sha256 = "ea2e94c24ddf6594d15c711c06ccd4486434d9cf3eca954e2af8a20c88f9f172",
+        strip_prefix = "benchmark-1.8.0",
     )
 
     # Load the googleapis dependency.
