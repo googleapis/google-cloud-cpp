@@ -287,8 +287,7 @@ TEST_F(BigtableStubFactory, TracingEnabled) {
   grpc::ClientContext context;
   (void)stub->MutateRow(context, {});
 
-  auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans,
+  EXPECT_THAT(span_catcher->GetSpans(),
               ElementsAre(SpanNamed("google.bigtable.v2.Bigtable/MutateRow")));
 }
 
@@ -318,8 +317,7 @@ TEST_F(BigtableStubFactory, TracingDisabled) {
   grpc::ClientContext context;
   (void)stub->MutateRow(context, {});
 
-  auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans, IsEmpty());
+  EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
 }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
