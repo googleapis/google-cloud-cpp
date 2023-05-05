@@ -58,6 +58,7 @@ bigtable_client_unit_tests = [
     "internal/legacy_row_reader_test.cc",
     "internal/logging_data_client_test.cc",
     "internal/prefix_range_end_test.cc",
+    "internal/traced_row_reader_test.cc",
     "legacy_table_test.cc",
     "metadata_update_policy_test.cc",
     "mocks/mock_row_reader_test.cc",
