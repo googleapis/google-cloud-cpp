@@ -37,7 +37,7 @@ class TracedRowReader : public bigtable_internal::RowReaderImpl {
   }
 
   /// Skips remaining rows and invalidates current iterator.
-  void Cancel() override{
+  void Cancel() override {
     span_->AddEvent("cancel");
     reader_.Cancel();
   };
@@ -69,7 +69,7 @@ bigtable::RowReader MakeTracedRowReader(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable_mocks
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
