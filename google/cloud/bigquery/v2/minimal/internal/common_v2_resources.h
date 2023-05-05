@@ -34,6 +34,10 @@ struct ErrorProto {
   std::string reason;
   std::string location;
   std::string message;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 
 struct TableReference {

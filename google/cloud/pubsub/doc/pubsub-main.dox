@@ -51,10 +51,10 @@ library.
 [Subscriber::Subscribe()]: @ref google::cloud::pubsub::Subscriber::Subscribe()
 [Subscriber::Pull()]: @ref google::cloud::pubsub::Subscriber::Pull()
 
+[github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 [project-readme]:  https://github.com/googleapis/google-cloud-cpp#readme
 [project-build]:   https://github.com/googleapis/google-cloud-cpp#building-and-installing
 [howto-setup-dev-workstation]: https://github.com/googleapis/google-cloud-cpp/blob/main/doc/contributor/howto-guide-setup-development-workstation.md
-[github-readme]:    https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/pubsub#readme
 [quickstart guide]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/pubsub/quickstart#readme
 [packaging guide]:  https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging%2Emd
 

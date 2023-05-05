@@ -1239,7 +1239,7 @@ StatusOr<google::storage::v2::Bucket> GrpcClient::ModifyDefaultAccessControl(
         "retrying BucketAccessControl change due to conflict, bucket=" +
             request.bucket_name());
   }
-  return *patch;
+  return patch;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

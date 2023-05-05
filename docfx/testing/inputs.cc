@@ -234,6 +234,14 @@ std::string FunctionXmlId() {
 std::string StatusClassXml() {
   return R"""(<?xml version='1.0' encoding='UTF-8' standalone='no'?>
     <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.5" xml:lang="en-US">
+      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacegoogle" kind="namespace" language="C++">
+        <compoundname>google</compoundname>
+        <innernamespace refid="namespacegoogle_1_1cloud">google::cloud</innernamespace>
+      </compounddef>
+      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacegoogle_1_1cloud" kind="namespace" language="C++">
+        <compoundname>google::cloud</compoundname>
+        <innerclass refid="classgoogle_1_1cloud_1_1Status">google::cloud::Status</innerclass>
+      </compounddef>
       <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="classgoogle_1_1cloud_1_1Status" kind="class" language="C++" prot="public">
           <compoundname>google::cloud::Status</compoundname>
           <includes refid="status_8h" local="no">google/cloud/status.h</includes>

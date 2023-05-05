@@ -448,6 +448,37 @@ TEST(CommonV2ResourcesTest, TableReferenceDebugString) {
 })");
 }
 
+TEST(CommonV2ResourcesTest, ErrorProtoDebugString) {
+  ErrorProto error;
+  error.reason = "e-reason";
+  error.location = "e-loc";
+  error.message = "e-mesg";
+
+  EXPECT_EQ(error.DebugString("ErrorProto", TracingOptions{}),
+            R"(ErrorProto {)"
+            R"( reason: "e-reason")"
+            R"( location: "e-loc")"
+            R"( message: "e-mesg")"
+            R"( })");
+
+  EXPECT_EQ(error.DebugString("ErrorProto",
+                              TracingOptions{}.SetOptions(
+                                  "truncate_string_field_longer_than=2")),
+            R"(ErrorProto {)"
+            R"( reason: "e-...<truncated>...")"
+            R"( location: "e-...<truncated>...")"
+            R"( message: "e-...<truncated>...")"
+            R"( })");
+
+  EXPECT_EQ(error.DebugString("ErrorProto", TracingOptions{}.SetOptions(
+                                                "single_line_mode=F")),
+            R"(ErrorProto {
+  reason: "e-reason"
+  location: "e-loc"
+  message: "e-mesg"
+})");
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

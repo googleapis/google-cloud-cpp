@@ -218,6 +218,24 @@ TEST(DebugFormatter, Vector) {
             R"( })");
 }
 
+TEST(DebugFormatter, VectorString) {
+  std::vector<std::string> v = {"foo", "bar", "baz"};
+  EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
+                .Field("field1", v)
+                .Build(),
+            R"(message_name {)"
+            R"( field1: "foo")"
+            R"( field1: "bar")"
+            R"( field1: "baz")"
+            R"( })");
+  v.clear();
+  EXPECT_EQ(DebugFormatter("message_name", TracingOptions{})
+                .Field("field1", v)
+                .Build(),
+            R"(message_name {)"
+            R"( })");
+}
+
 TEST(DebugString, TruncateString) {
   TracingOptions tracing_options;
   tracing_options.SetOptions("truncate_string_field_longer_than=8");

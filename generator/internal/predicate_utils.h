@@ -72,17 +72,6 @@ bool IsLongrunningMetadataTypeUsedAsResponse(
     google::protobuf::MethodDescriptor const& method);
 
 /**
- * Determines if the method contains a routing header as specified in AIP-4222.
- */
-bool HasRoutingHeader(google::protobuf::MethodDescriptor const& method);
-
-/**
- * Determines if the method contains a google.api.http annotation necessary for
- * supporting REST transport.
- */
-bool HasHttpAnnotation(google::protobuf::MethodDescriptor const& method);
-
-/**
  * Returns true if all predicates return true.
  */
 template <typename T, typename... Ps>

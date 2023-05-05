@@ -13,12 +13,78 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/table_view.h"
+#include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/format_time_point.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+TableMetadataView TableMetadataView::UnSpecified() {
+  return TableMetadataView{"TABLE_METADATA_VIEW_UNSPECIFIED"};
+}
+
+TableMetadataView TableMetadataView::Basic() {
+  return TableMetadataView{"BASIC"};
+}
+
+TableMetadataView TableMetadataView::StrorageStats() {
+  return TableMetadataView{"STORAGE_STATS"};
+}
+
+TableMetadataView TableMetadataView::Full() {
+  return TableMetadataView{"FULL"};
+}
+
+std::string TableMetadataView::DebugString(absl::string_view name,
+                                           TracingOptions const& options,
+                                           int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("value", value)
+      .Build();
+}
+
+std::string UserDefinedFunctionResource::DebugString(
+    absl::string_view name, TracingOptions const& options, int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("resource_uri", resource_uri)
+      .StringField("inline_code", inline_code)
+      .Build();
+}
+
+std::string ViewDefinition::DebugString(absl::string_view name,
+                                        TracingOptions const& options,
+                                        int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("query", query)
+      .Field("use_legacy_sql", use_legacy_sql)
+      .Field("use_explicit_column_names", use_explicit_column_names)
+      .Field("user_defined_function_resources", user_defined_function_resources)
+      .Build();
+}
+
+std::string MaterializedViewDefinition::DebugString(
+    absl::string_view name, TracingOptions const& options, int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .StringField("query", query)
+      .StringField("max_staleness", max_staleness)
+      .Field("allow_non_incremental_definition",
+             allow_non_incremental_definition)
+      .Field("enable_refresh", enable_refresh)
+      .Field("refresh_interval_time", refresh_interval_time)
+      .Field("last_refresh_time", last_refresh_time)
+      .Build();
+}
+
+std::string MaterializedViewStatus::DebugString(absl::string_view name,
+                                                TracingOptions const& options,
+                                                int indent) const {
+  return internal::DebugFormatter(name, options, indent)
+      .SubMessage("last_refresh_status", last_refresh_status)
+      .Field("refresh_watermark", refresh_watermark)
+      .Build();
+}
 
 void to_json(nlohmann::json& j, MaterializedViewDefinition const& m) {
   j = nlohmann::json{

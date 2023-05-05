@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) try {
   std::ofstream("toc.yml") << docfx::Doxygen2Toc(config, doc);
 
   for (auto const& i : doc.select_nodes("//compounddef")) {
-    auto const& node = i.node();
+    auto const node = i.node();
     if (!docfx::IncludeInPublicDocuments(config, node)) continue;
     auto const kind = std::string_view{node.attribute("kind").as_string()};
     auto const id = std::string{node.attribute("id").as_string()};
@@ -47,6 +47,15 @@ int main(int argc, char* argv[]) try {
       std::ofstream(id + ".yml") << docfx::Group2Yaml(node);
       continue;
     }
+    std::ofstream(id + ".yml") << docfx::Compound2Yaml(config, node);
+  }
+
+  // Enums need to be generated in their own file or DocFX cannot create links
+  // to them.
+  for (auto const& i : doc.select_nodes("//memberdef[@kind='enum']")) {
+    auto const node = i.node();
+    if (!docfx::IncludeInPublicDocuments(config, node)) continue;
+    auto const id = std::string{node.attribute("id").as_string()};
     std::ofstream(id + ".yml") << docfx::Compound2Yaml(config, node);
   }
 

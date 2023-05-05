@@ -152,7 +152,7 @@ message DiscoveryDocumentDefinedProduct {
 
   // Services that are generated from the protos created from the
   // discovery document.
-  repeated ServiceConfiguration rest_service = 2;
+  repeated ServiceConfiguration rest_services = 2;
 }
 
 message GeneratorConfiguration {

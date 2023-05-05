@@ -20,6 +20,7 @@
 #include "google/cloud/bigquery/v2/minimal/internal/table_partition.h"
 #include "google/cloud/bigquery/v2/minimal/internal/table_schema.h"
 #include "google/cloud/bigquery/v2/minimal/internal/table_view.h"
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include "absl/strings/string_view.h"
 #include "absl/types/optional.h"
@@ -39,6 +40,10 @@ using namespace nlohmann::literals;  // NOLINT
 struct CloneDefinition {
   TableReference base_table_reference;
   std::chrono::system_clock::time_point clone_time;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 
 struct Table {
@@ -88,10 +93,18 @@ struct Table {
   ViewDefinition view;
   MaterializedViewDefinition materialized_view;
   MaterializedViewStatus materialized_view_status;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 
 struct ListFormatView {
   bool use_legacy_sql = false;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ListFormatView, use_legacy_sql);
 
@@ -102,6 +115,10 @@ struct HivePartitioningOptions {
   bool require_partition_filter = false;
 
   std::vector<std::string> fields;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(HivePartitioningOptions, mode,
                                                 source_uri_prefix,
@@ -124,6 +141,10 @@ struct ListFormatTable {
   std::map<std::string, std::string> labels;
   std::chrono::milliseconds creation_time = std::chrono::milliseconds(0);
   std::chrono::milliseconds expiration_time = std::chrono::milliseconds(0);
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 
 void to_json(nlohmann::json& j, CloneDefinition const& c);

@@ -65,6 +65,8 @@ add_library(
     internal/forwarding_options_generator.cc
     internal/forwarding_options_generator.h
     internal/generator_interface.h
+    internal/http_option_utils.cc
+    internal/http_option_utils.h
     internal/idempotency_policy_generator.cc
     internal/idempotency_policy_generator.h
     internal/logging_decorator_generator.cc
@@ -202,6 +204,7 @@ function (google_cloud_cpp_generator_define_tests)
         internal/discovery_type_vertex_test.cc
         internal/format_class_comments_test.cc
         internal/format_method_comments_test.cc
+        internal/http_option_utils_test.cc
         internal/pagination_test.cc
         internal/predicate_utils_test.cc
         internal/printer_test.cc

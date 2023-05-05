@@ -30,7 +30,7 @@ source module ci/cloudbuild/builds/lib/git.sh
 export PATH="${HOME}/.local/bin:${PATH}"
 python3 -m pip uninstall -y --quiet googleapis-storage-testbench
 python3 -m pip install --upgrade --user --quiet --disable-pip-version-check \
-  "git+https://github.com/googleapis/storage-testbench@v0.35.0"
+  "git+https://github.com/googleapis/storage-testbench@v0.36.0"
 
 # Some of the tests will need a valid roots.pem file.
 rm -f /dev/shm/roots.pem
@@ -159,6 +159,8 @@ function integration::bazel_with_emulators() {
     "google/cloud/logging/..."
     # Pub/Sub Lite integration tests
     "google/cloud/pubsublite/..."
+    # Cloud Sql Admin integration tests
+    "google/cloud/sql/integration_tests/..."
     # Unified Rest Credentials test
     "google/cloud:internal_unified_rest_credentials_integration_test"
   )

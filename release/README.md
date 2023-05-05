@@ -168,11 +168,11 @@ take several weeks.
 
 In your development fork:
 
-- We will use `PATCH=v1.17.1` as an example, set that shell variable to an
-  appropriate value.
+- We will use `BRANCH=v1.17.x` and `PATCH=v1.17.1` as an example.
+- Set these shell variables to appropriate values.
 - Create a new branch
   ```shell
-  git branch chore-prepare-for-${PATCH}-release upstream/v1.17.x
+  git branch chore-prepare-for-${PATCH}-release upstream/${BRANCH}
   git checkout chore-prepare-for-${PATCH}-release
   ```
 - Bump the version numbers for the patch release
