@@ -117,8 +117,8 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r) {
   // Builds GetJob request path based on endpoint provided.
   std::string endpoint = GetBaseEndpoint(opts);
 
-  std::string path =
-      absl::StrCat(endpoint, r.project_id(), "/jobs/", r.job_id());
+  std::string path = absl::StrCat(endpoint, "/projects/", r.project_id(),
+                                  "/jobs/", r.job_id());
   request.SetPath(std::move(path));
 
   // Add query params.
@@ -140,7 +140,8 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
   // Builds GetJob request path based on endpoint provided.
   std::string endpoint = GetBaseEndpoint(opts);
 
-  std::string path = absl::StrCat(endpoint, r.project_id(), "/jobs");
+  std::string path =
+      absl::StrCat(endpoint, "/projects/", r.project_id(), "/jobs");
   request.SetPath(std::move(path));
 
   // Add query params.

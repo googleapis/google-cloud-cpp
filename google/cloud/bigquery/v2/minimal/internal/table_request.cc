@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/table_request.h"
+#include "google/cloud/bigquery/v2/minimal/internal/rest_stub_utils.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/debug_string.h"
@@ -25,23 +26,6 @@ namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-namespace {
-
-std::string GetTablesEndpoint(Options const& opts) {
-  std::string endpoint = opts.get<EndpointOption>();
-
-  if (!absl::StartsWith(endpoint, "https://") &&
-      !absl::StartsWith(endpoint, "http://")) {
-    endpoint = absl::StrCat("https://", endpoint);
-  }
-  if (!absl::EndsWith(endpoint, "/")) absl::StrAppend(&endpoint, "/");
-  absl::StrAppend(&endpoint, "bigquery/v2/projects/");
-
-  return endpoint;
-}
-
-}  // namespace
 
 std::string GetTableRequest::DebugString(absl::string_view name,
                                          TracingOptions const& options,
@@ -78,10 +62,11 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
 
   rest_internal::RestRequest request;
 
-  std::string endpoint = GetTablesEndpoint(opts);
+  std::string endpoint = GetBaseEndpoint(opts);
 
-  std::string path = absl::StrCat(endpoint, r.project_id(), "/datasets/",
-                                  r.dataset_id(), "/tables/", r.table_id());
+  std::string path =
+      absl::StrCat(endpoint, "/projects/", r.project_id(), "/datasets/",
+                   r.dataset_id(), "/tables/", r.table_id());
   request.SetPath(std::move(path));
 
   // Add query params.
@@ -112,10 +97,10 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
   rest_internal::RestRequest request;
   auto const& opts = internal::CurrentOptions();
 
-  std::string endpoint = GetTablesEndpoint(opts);
+  std::string endpoint = GetBaseEndpoint(opts);
 
-  std::string path = absl::StrCat(endpoint, r.project_id(), "/datasets/",
-                                  r.dataset_id(), "/tables");
+  std::string path = absl::StrCat(endpoint, "/projects/", r.project_id(),
+                                  "/datasets/", r.dataset_id(), "/tables");
   request.SetPath(std::move(path));
 
   // Add query params.

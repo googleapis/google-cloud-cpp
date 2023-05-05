@@ -31,7 +31,7 @@ std::string GetBaseEndpoint(Options const& opts) {
       endpoint = absl::StrCat("https://", endpoint);
     }
     if (!absl::EndsWith(endpoint, "/")) absl::StrAppend(&endpoint, "/");
-    absl::StrAppend(&endpoint, "bigquery/v2/projects/");
+    absl::StrAppend(&endpoint, "bigquery/v2");
   }
 
   return endpoint;

@@ -29,13 +29,13 @@ TEST(GetBaseEndpointTest, Success) {
     std::string expected;
   } cases[] = {
       {"https://bigquery.googleapis.com",
-       "https://bigquery.googleapis.com/bigquery/v2/projects/"},
+       "https://bigquery.googleapis.com/bigquery/v2"},
       {"http://bigquery.googleapis.com",
-       "http://bigquery.googleapis.com/bigquery/v2/projects/"},
+       "http://bigquery.googleapis.com/bigquery/v2"},
       {"bigquery.googleapis.com",
-       "https://bigquery.googleapis.com/bigquery/v2/projects/"},
+       "https://bigquery.googleapis.com/bigquery/v2"},
       {"https://bigquery.googleapis.com/",
-       "https://bigquery.googleapis.com/bigquery/v2/projects/"},
+       "https://bigquery.googleapis.com/bigquery/v2"},
       {"", ""},
   };
 

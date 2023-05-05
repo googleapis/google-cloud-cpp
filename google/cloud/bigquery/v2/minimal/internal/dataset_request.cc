@@ -61,8 +61,8 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
 
   std::string endpoint = GetBaseEndpoint(opts);
 
-  std::string path =
-      absl::StrCat(endpoint, r.project_id(), "/datasets/", r.dataset_id());
+  std::string path = absl::StrCat(endpoint, "/projects/", r.project_id(),
+                                  "/datasets/", r.dataset_id());
   request.SetPath(std::move(path));
 
   return request;
@@ -75,7 +75,8 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(
 
   std::string endpoint = GetBaseEndpoint(opts);
 
-  std::string path = absl::StrCat(endpoint, r.project_id(), "/datasets");
+  std::string path =
+      absl::StrCat(endpoint, "/projects/", r.project_id(), "/datasets");
   request.SetPath(std::move(path));
 
   // Add query params.
