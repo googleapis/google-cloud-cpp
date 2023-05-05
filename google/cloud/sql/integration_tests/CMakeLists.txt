@@ -53,3 +53,5 @@ function (google_cloud_cpp_sql_define_integration_tests)
         return()
     endif ()
 endfunction ()
+
+google_cloud_cpp_sql_define_integration_tests()
