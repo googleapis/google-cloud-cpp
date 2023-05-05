@@ -192,6 +192,8 @@ add_library(
     internal/row_reader_impl.h
     internal/rpc_policy_parameters.h
     internal/rpc_policy_parameters.inc
+    internal/traced_row_reader.cc
+    internal/traced_row_reader.h
     internal/unary_client_utils.h
     metadata_update_policy.cc
     metadata_update_policy.h
@@ -371,6 +373,7 @@ if (BUILD_TESTING)
         internal/legacy_row_reader_test.cc
         internal/logging_data_client_test.cc
         internal/prefix_range_end_test.cc
+        internal/traced_row_reader_test.cc
         legacy_table_test.cc
         metadata_update_policy_test.cc
         mocks/mock_row_reader_test.cc
