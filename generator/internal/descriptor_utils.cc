@@ -561,13 +561,13 @@ std::string FormatAdditionalPbHeaderPaths(VarsDictionary& vars) {
 
 std::string FormatResourceAccessor(
     google::protobuf::Descriptor const& request) {
-  for (int i = 0; i < request.field_count(); ++i) {
+  for (int i = 0; i != request.field_count(); ++i) {
     auto const* field = request.field(i);
     if (field->has_json_name() && field->json_name() == "resource") {
-      return absl::StrCat(".", field->name(), "()");
+      return absl::StrCat("request.", field->name(), "()");
     }
   }
-  return {};
+  return "request";
 }
 
 }  // namespace
@@ -931,10 +931,10 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
     }
     method_vars["method_name"] = method.name();
     method_vars["method_name_snake"] = CamelCaseToSnakeCase(method.name());
+    method_vars["request_resource"] =
+        FormatResourceAccessor(*method.input_type());
     method_vars["request_type"] =
         ProtoNameToCppName(method.input_type()->full_name());
-    method_vars["request_resource_field_name_accessor"] =
-        FormatResourceAccessor(*method.input_type());
     method_vars["response_message_type"] = method.output_type()->full_name();
     method_vars["response_type"] =
         ProtoNameToCppName(method.output_type()->full_name());

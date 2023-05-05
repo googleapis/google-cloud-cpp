@@ -934,7 +934,7 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_request_param_value",
                              "namespace_().name()"),
         MethodVarsTestValues("google.protobuf.Service.Method8",
-                             "request_resource_field_name_accessor", ""),
+                             "request_resource", "request"),
         MethodVarsTestValues(
             "google.protobuf.Service.Method8", "method_rest_path",
             "absl::StrCat(\"/v1/\", request.namespace_().name(), \"\")"),
@@ -947,8 +947,8 @@ INSTANTIATE_TEST_SUITE_P(
        std::make_pair("name", request.name())})"""),
         // Method11
         MethodVarsTestValues("google.protobuf.Service.Method11",
-                             "request_resource_field_name_accessor",
-                             ".foo_resource()"),
+                             "request_resource",
+                             "request.foo_resource()"),
         // IAM idempotency defaults
         MethodVarsTestValues("google.protobuf.Service.GetIamPolicy",
                              "idempotency", "kIdempotent"),
