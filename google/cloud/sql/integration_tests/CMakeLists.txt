@@ -14,44 +14,36 @@
 # limitations under the License.
 # ~~~
 
-function (google_cloud_cpp_sql_define_integration_tests)
-    # The tests require googletest to be installed. Force CMake to use the
-    # config file for googletest (that is, the CMake file installed by
-    # googletest itself), because the generic `FindGTest` module does not define
-    # the GTest::gmock target, and the target names are also weird.
-    find_package(GTest CONFIG REQUIRED)
+# The tests require googletest to be installed. Force CMake to use the config
+# file for googletest (that is, the CMake file installed by googletest itself),
+# because the generic `FindGTest` module does not define the GTest::gmock
+# target, and the target names are also weird.
+find_package(GTest CONFIG REQUIRED)
 
-    set(sql_client_integration_tests # cmake-format: sort
-                                     sql_integration_test.cc)
+set(sql_client_integration_tests # cmake-format: sort
+                                 sql_integration_test.cc)
 
-    # Create a custom target so we can say "build all the tests"
-    add_custom_target(sql-client-integration-tests)
+# Create a custom target so we can say "build all the tests"
+add_custom_target(sql-client-integration-tests)
 
-    # Generate a target for each unit test.
-    foreach (fname ${sql_client_integration_tests})
-        google_cloud_cpp_add_executable(target "sql" ${fname})
-        target_link_libraries(
-            ${target}
-            PRIVATE google-cloud-cpp::experimental-sql google_cloud_cpp_testing
-                    GTest::gmock_main GTest::gmock GTest::gtest)
-        google_cloud_cpp_add_common_options(${target})
+# Generate a target for each unit test.
+foreach (fname ${sql_client_integration_tests})
+    google_cloud_cpp_add_executable(target "sql" ${fname})
+    target_link_libraries(
+        ${target}
+        PRIVATE google-cloud-cpp::experimental-sql google_cloud_cpp_testing
+                GTest::gmock_main GTest::gmock GTest::gtest)
+    google_cloud_cpp_add_common_options(${target})
 
-        # With googletest it is relatively easy to exceed the default number of
-        # sections (~65,000) in a single .obj file. Add the /bigobj option to
-        # all the tests, even if it is not needed.
-        if (MSVC)
-            target_compile_options(${target} PRIVATE "/bigobj")
-        endif ()
-        add_test(NAME ${target} COMMAND ${target})
-        set_tests_properties(
-            ${target} PROPERTIES LABELS
-                                 "integration-test;integration-test-emulator")
-        add_dependencies(sql-client-integration-tests ${target})
-    endforeach ()
-
-    if (NOT GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
-        return()
+    # With googletest it is relatively easy to exceed the default number of
+    # sections (~65,000) in a single .obj file. Add the /bigobj option to all
+    # the tests, even if it is not needed.
+    if (MSVC)
+        target_compile_options(${target} PRIVATE "/bigobj")
     endif ()
-endfunction ()
-
-google_cloud_cpp_sql_define_integration_tests()
+    add_test(NAME ${target} COMMAND ${target})
+    set_tests_properties(
+        ${target} PROPERTIES LABELS
+                             "integration-test;integration-test-emulator")
+    add_dependencies(sql-client-integration-tests ${target})
+endforeach ()
