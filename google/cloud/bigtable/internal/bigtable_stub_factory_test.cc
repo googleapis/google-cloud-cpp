@@ -20,6 +20,8 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
+#include "google/cloud/internal/make_status.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
@@ -78,6 +80,7 @@ std::shared_ptr<BigtableStub> CreateTestStub(
       std::chrono::system_clock::now() + std::chrono::minutes(5));
   return CreateDecoratedStubs(std::move(cq),
                               google::cloud::Options{}
+                                  .set<EndpointOption>("localhost:1")
                                   .set<GrpcNumChannelsOption>(kTestChannels)
                                   .set<TracingComponentsOption>({"rpc"})
                                   .set<UnifiedCredentialsOption>(credentials),
@@ -250,6 +253,75 @@ TEST_F(BigtableStubFactory, AsyncMutateRow) {
   EXPECT_THAT(response.get(), StatusIs(StatusCode::kUnavailable));
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("AsyncMutateRow")));
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+using ::google::cloud::testing_util::DisableTracing;
+using ::google::cloud::testing_util::EnableTracing;
+using ::google::cloud::testing_util::SpanNamed;
+using ::testing::ElementsAre;
+using ::testing::IsEmpty;
+
+TEST_F(BigtableStubFactory, TracingEnabled) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+  auto propagator = testing_util::InstallMockPropagator();
+  EXPECT_CALL(*propagator, Inject);
+
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
+        auto mock = std::make_shared<MockBigtableStub>();
+        EXPECT_CALL(*mock, MutateRow)
+            .WillOnce(Return(internal::AbortedError("fail")));
+        return mock;
+      });
+
+  CompletionQueue cq;
+  auto stub = CreateDecoratedStubs(
+      std::move(cq),
+      EnableTracing(
+          Options{}
+              .set<EndpointOption>("localhost:1")
+              .set<GrpcNumChannelsOption>(1)
+              .set<UnifiedCredentialsOption>(MakeInsecureCredentials())),
+      factory.AsStdFunction());
+  grpc::ClientContext context;
+  (void)stub->MutateRow(context, {});
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans,
+              ElementsAre(SpanNamed("google.bigtable.v2.Bigtable/MutateRow")));
+}
+
+TEST_F(BigtableStubFactory, TracingDisabled) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+  auto propagator = testing_util::InstallMockPropagator();
+  EXPECT_CALL(*propagator, Inject).Times(0);
+
+  MockFactory factory;
+  EXPECT_CALL(factory, Call)
+      .WillOnce([](std::shared_ptr<grpc::Channel> const&) {
+        auto mock = std::make_shared<MockBigtableStub>();
+        EXPECT_CALL(*mock, MutateRow)
+            .WillOnce(Return(internal::AbortedError("fail")));
+        return mock;
+      });
+
+  CompletionQueue cq;
+  auto stub = CreateDecoratedStubs(
+      std::move(cq),
+      DisableTracing(
+          Options{}
+              .set<EndpointOption>("localhost:1")
+              .set<GrpcNumChannelsOption>(1)
+              .set<UnifiedCredentialsOption>(MakeInsecureCredentials())),
+      factory.AsStdFunction());
+  grpc::ClientContext context;
+  (void)stub->MutateRow(context, {});
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, IsEmpty());
+}
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
