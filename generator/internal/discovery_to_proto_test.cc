@@ -299,7 +299,8 @@ TEST(SynthesizeRequestTypeTest, OperationResponseWithRefRequestField) {
   },
   "foo_resource":{
     "$ref":"Foo",
-    "description":"The Foo for this request."
+    "description":"The Foo for this request.",
+    "is_resource":true
   },
   "project":{
     "operation_request_field":true,
@@ -371,7 +372,8 @@ TEST(SynthesizeRequestTypeTest,
   },
   "foo_resource":{
     "$ref":"FooResource",
-    "description":"The FooResource for this request."
+    "description":"The FooResource for this request.",
+    "is_resource": true
   },
   "project":{
     "operation_request_field":true,

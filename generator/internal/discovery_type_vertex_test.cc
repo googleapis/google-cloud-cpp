@@ -130,6 +130,22 @@ TEST(DiscoveryTypeVertexTest, FormatFieldOptionsRequiredOperationRequestField) {
          "REQUIRED,(google.cloud.operation_request_field) = \"test_field\"]"));
 }
 
+TEST(DiscoveryTypeVertexTest, FormatFieldOptionsRequiredIsResource) {
+  auto constexpr kRequiredIsResourceFieldJson = R"""(
+{
+  "type": "string",
+  "required": true,
+  "is_resource": true
+}
+)""";
+  auto json =
+      nlohmann::json::parse(kRequiredIsResourceFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("test_field", json),
+      Eq(" [(google.api.field_behavior) = REQUIRED,json_name=\"resource\"]"));
+}
+
 struct DetermineTypesSuccess {
   std::string json;
   std::string expected_name;
