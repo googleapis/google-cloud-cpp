@@ -23,15 +23,16 @@ source module ci/cloudbuild/builds/lib/integration.sh
 
 export CC=gcc
 export CXX=g++
-mapfile -t cmake_args < <(cmake::common_args)
-cmake_args+=(
-  # This is the build to test with C++20
-  -DCMAKE_CXX_STANDARD=20
-  # We should test all the GA libraries
-  -DGOOGLE_CLOUD_CPP_ENABLE="$(features::always_build_cmake),__ga_libraries__"
-)
 
-cmake "${cmake_args[@]}"
+mapfile -t cmake_args < <(cmake::common_args)
+read -r ENABLED_FEATURES < <(features::always_build_cmake)
+# We should test all the GA libraries
+ENABLED_FEATURES="${ENABLED_FEATURES},__ga_libraries__"
+readonly ENABLED_FEATURES
+
+cmake "${cmake_args[@]}" \
+  -DCMAKE_CXX_STANDARD=20 \
+  -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
 cmake --build cmake-out
 mapfile -t ctest_args < <(ctest::common_args)
 env -C cmake-out ctest "${ctest_args[@]}" -LE "integration-test"

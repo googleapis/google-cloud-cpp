@@ -21,9 +21,11 @@ source module ci/cloudbuild/builds/lib/cmake.sh
 
 export CC=gcc
 export CXX=g++
-mapfile -t cmake_args < <(cmake::common_args)
 
-INSTALL_PREFIX=/var/tmp/google-cloud-cpp
+mapfile -t cmake_args < <(cmake::common_args)
+readonly INSTALL_PREFIX=/var/tmp/google-cloud-cpp
+readonly ENABLED_FEATURES="__ga_libraries__"
+
 # abi-dumper wants us to use -Og, but that causes bogus warnings about
 # uninitialized values with GCC, so we disable that warning with
 # -Wno-maybe-uninitialized. See also:
@@ -33,7 +35,7 @@ cmake "${cmake_args[@]}" \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_SHARED_LIBS=ON \
   -DCMAKE_BUILD_TYPE=Debug \
-  -DGOOGLE_CLOUD_CPP_ENABLE="__ga_libraries__" \
+  -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}" \
   -DCMAKE_CXX_FLAGS="-Og -Wno-maybe-uninitialized"
 cmake --build cmake-out
 cmake --install cmake-out >/dev/null

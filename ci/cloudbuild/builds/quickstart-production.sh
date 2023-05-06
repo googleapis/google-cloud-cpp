@@ -18,16 +18,17 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
-source module ci/cloudbuild/builds/lib/quickstart.sh
 source module ci/cloudbuild/builds/lib/features.sh
+source module ci/cloudbuild/builds/lib/quickstart.sh
 
 export CC=gcc
 export CXX=g++
 
-read -r ENABLED_FEATURES < <(features::list_full_cmake)
 mapfile -t cmake_args < <(cmake::common_args)
+readonly INSTALL_PREFIX="/var/tmp/google-cloud-cpp"
+read -r ENABLED_FEATURES < <(features::list_full_cmake)
+readonly ENABLED_FEATURES
 
-INSTALL_PREFIX="/var/tmp/google-cloud-cpp"
 cmake "${cmake_args[@]}" \
   -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
   -DCMAKE_INSTALL_MESSAGE=NEVER \

@@ -18,20 +18,20 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
-source module ci/cloudbuild/builds/lib/integration.sh
 source module ci/cloudbuild/builds/lib/features.sh
+source module ci/cloudbuild/builds/lib/integration.sh
 
 export CC=clang
 export CXX=clang++
 export CTCACHE_DIR=~/.cache/ctcache
+
+mapfile -t cmake_args < <(cmake::common_args)
 read -r ENABLED_FEATURES < <(features::always_build_cmake)
 # Add some features that we don't always build, but we want to run clang-tidy
 # over them.
 ENABLED_FEATURES="${ENABLED_FEATURES},experimental-storage-grpc"
 ENABLED_FEATURES="${ENABLED_FEATURES},generator"
 readonly ENABLED_FEATURES
-
-mapfile -t cmake_args < <(cmake::common_args)
 
 # See https://github.com/matus-chochlik/ctcache for docs about the clang-tidy-cache
 # Note: we use C++14 for this build because we don't want tidy suggestions that

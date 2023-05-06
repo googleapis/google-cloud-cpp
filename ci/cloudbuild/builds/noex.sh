@@ -18,13 +18,19 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
+source module ci/cloudbuild/builds/lib/features.sh
 source module ci/cloudbuild/builds/lib/integration.sh
 
 export CC=gcc
 export CXX=g++
-mapfile -t cmake_args < <(cmake::common_args)
 
-cmake "${cmake_args[@]}" -DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=NO
+mapfile -t cmake_args < <(cmake::common_args)
+read -r ENABLED_FEATURES < <(features::always_build_cmake)
+readonly ENABLED_FEATURES
+
+cmake "${cmake_args[@]}" \
+  -DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=NO \
+  -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
 cmake --build cmake-out
 mapfile -t ctest_args < <(ctest::common_args)
 env -C cmake-out ctest "${ctest_args[@]}" -LE "integration-test"
