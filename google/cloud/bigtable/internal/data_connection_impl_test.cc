@@ -22,7 +22,6 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
-#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -1547,24 +1546,6 @@ TEST(DataConnectionTest, AsyncReadRowFailure) {
   internal::OptionsSpan span(CallOptions());
   auto resp = conn->AsyncReadRow(kTableName, "row", TestFilter()).get();
   EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
-}
-
-TEST(MakeDataConnection, DefaultsOptions) {
-  using ::google::cloud::testing_util::ScopedEnvironment;
-  ScopedEnvironment emulator_host("BIGTABLE_EMULATOR_HOST", "localhost:1");
-
-  auto conn = bigtable::MakeDataConnection(
-      Options{}
-          .set<bigtable::AppProfileIdOption>("user-supplied")
-          // Disable channel refreshing, which is not under test.
-          .set<bigtable::MaxConnectionRefreshOption>(ms(0))
-          // Create the minimum number of stubs.
-          .set<GrpcNumChannelsOption>(1));
-  auto options = conn->options();
-  EXPECT_TRUE(options.has<bigtable::DataRetryPolicyOption>())
-      << "Options are not defaulted in MakeDataConnection()";
-  EXPECT_EQ(options.get<bigtable::AppProfileIdOption>(), "user-supplied")
-      << "User supplied Options are overridden in MakeDataConnection()";
 }
 
 }  // namespace
