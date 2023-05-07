@@ -18,15 +18,21 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
+source module ci/cloudbuild/builds/lib/features.sh
 source module ci/cloudbuild/builds/lib/integration.sh
 
 export CC=gcc
 export CXX=g++
-mapfile -t cmake_args < <(cmake::common_args)
 
-cmake "${cmake_args[@]}"
+mapfile -t cmake_args < <(cmake::common_args)
+read -r ENABLED_FEATURES < <(features::always_build_cmake)
+readonly ENABLED_FEATURES
+
+cmake "${cmake_args[@]}" -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
 cmake --build cmake-out
 mapfile -t ctest_args < <(ctest::common_args)
-env -C cmake-out GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT=yes ctest "${ctest_args[@]}" -LE "integration-test"
+env -C cmake-out GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT=yes \
+  ctest "${ctest_args[@]}" -LE "integration-test"
 
-GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT=yes integration::ctest_with_emulators "cmake-out"
+GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT=yes \
+  integration::ctest_with_emulators "cmake-out"

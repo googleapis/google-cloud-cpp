@@ -18,18 +18,18 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
-source module ci/cloudbuild/builds/lib/quickstart.sh
 source module ci/cloudbuild/builds/lib/features.sh
+source module ci/cloudbuild/builds/lib/quickstart.sh
 source module ci/lib/io.sh
 
 export CC=clang
 export CXX=clang++
 
+mapfile -t cmake_args < <(cmake::common_args)
 INSTALL_PREFIX="$(mktemp -d)"
 readonly INSTALL_PREFIX
-
 read -r ENABLED_FEATURES < <(features::list_full_cmake)
-mapfile -t cmake_args < <(cmake::common_args)
+readonly ENABLED_FEATURES
 
 # Compiles and installs all libraries and headers.
 cmake "${cmake_args[@]}" \
