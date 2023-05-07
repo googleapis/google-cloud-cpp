@@ -18,7 +18,10 @@ set(DOXYGEN_EXCLUDE_SYMBOLS "generator_internal")
 set(DOXYGEN_EXAMPLE_PATH "")
 
 include(GoogleCloudCppCommon)
-find_package(Protobuf REQUIRED)
+find_package(Protobuf CONFIG QUIET)
+if (NOT Protobuf_FOUND)
+    find_package(Protobuf REQUIRED)
+endif ()
 include(IncludeNlohmannJson)
 
 add_library(
@@ -149,8 +152,17 @@ target_link_libraries(
     protobuf::libprotoc ${Protobuf_LIBRARIES})
 
 # Generate protobuf code and library
-protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS generator_config.proto)
-add_library(google_cloud_cpp_generator_config ${PROTO_HDRS} ${PROTO_SRCS})
+if (COMMAND protobuf_generate)
+    set(protobuf_PROTOC_EXE $<TARGET_FILE:protobuf::protoc>)
+    add_library(google_cloud_cpp_generator_config)
+    protobuf_generate(LANGUAGE cpp TARGET google_cloud_cpp_generator_config
+                      PROTOS generator_config.proto)
+elseif (COMMAND protobuf_generate_cpp)
+    protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS generator_config.proto)
+    add_library(google_cloud_cpp_generator_config ${PROTO_HDRS} ${PROTO_SRCS})
+else ()
+    message(FATAL_ERROR "Missing protobuf_generate_cpp and protobuf_generate")
+endif ()
 target_link_libraries(google_cloud_cpp_generator_config
                       PUBLIC protobuf::libprotobuf)
 set_target_properties(google_cloud_cpp_generator_config
