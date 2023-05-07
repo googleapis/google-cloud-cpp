@@ -53,7 +53,6 @@ std::vector<bigtable::Row> Rows(std::vector<std::string> row_keys) {
 
 TEST(TracedStreamRange, Success) {
   auto span_catcher = testing_util::InstallSpanCatcher();
-  bigtable::Row r{"r1", {}};
 
   auto reader = bigtable_mocks::MakeRowReader(Rows({"r1", "r2", "r3"}));
   auto traced = MakeTestRowReader(std::move(reader));
@@ -133,7 +132,6 @@ TEST(TracedStreamRange, SpanInactiveWhileIterating) {
 
 TEST(TracedStreamRange, Cancel) {
   auto span_catcher = testing_util::InstallSpanCatcher();
-  bigtable::Row r{"r1", {}};
 
   auto reader =
       bigtable_mocks::MakeRowReader({}, internal::CancelledError("cancelled"));
