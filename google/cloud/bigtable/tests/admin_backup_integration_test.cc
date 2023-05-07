@@ -96,7 +96,7 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
   EXPECT_EQ(backup->name(), backup_name);
 
   // Update backup
-  expire_time = expire_time + std::chrono::hours(12);
+  expire_time += std::chrono::hours(12);
   backup = table_admin_->UpdateBackup({cluster_id, backup_id, expire_time});
   ASSERT_STATUS_OK(backup);
 
