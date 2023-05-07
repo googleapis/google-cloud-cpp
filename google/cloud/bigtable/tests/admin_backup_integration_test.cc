@@ -20,8 +20,8 @@
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/contains_once.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
 #include <string>
 #include <vector>
@@ -32,8 +32,9 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::internal::ToProtoTimestamp;
 using ::google::cloud::testing_util::ContainsOnce;
-using ::google::protobuf::util::TimeUtil;
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::Contains;
 using ::testing::Not;
 namespace btadmin = ::google::bigtable::admin::v2;
@@ -77,12 +78,10 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
   auto const backup_name = cluster_name + "/backups/" + backup_id;
 
   // Create backup
-  google::protobuf::Timestamp expire_time =
-      TimeUtil::GetCurrentTime() + TimeUtil::HoursToDuration(12);
+  auto expire_time = std::chrono::system_clock::now() + std::chrono::hours(12);
 
   auto backup = table_admin_->CreateBackup(
-      {cluster_id, backup_id, table_id,
-       google::cloud::internal::ToChronoTimePoint(expire_time)});
+      {cluster_id, backup_id, table_id, expire_time});
   ASSERT_STATUS_OK(backup);
   EXPECT_EQ(backup->name(), backup_name);
 
@@ -97,17 +96,16 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
   EXPECT_EQ(backup->name(), backup_name);
 
   // Update backup
-  expire_time = expire_time + TimeUtil::HoursToDuration(12);
-  backup = table_admin_->UpdateBackup(
-      {cluster_id, backup_id,
-       google::cloud::internal::ToChronoTimePoint(expire_time)});
+  expire_time += std::chrono::hours(12);
+  backup = table_admin_->UpdateBackup({cluster_id, backup_id, expire_time});
   ASSERT_STATUS_OK(backup);
 
   // Verify the update
   backup = table_admin_->GetBackup(cluster_id, backup_id);
   ASSERT_STATUS_OK(backup);
   EXPECT_EQ(backup->name(), backup_name);
-  EXPECT_EQ(backup->expire_time(), expire_time);
+  EXPECT_THAT(backup->expire_time(),
+              IsProtoEqual(ToProtoTimestamp(expire_time)));
 
   // Delete table
   EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
