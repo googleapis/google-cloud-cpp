@@ -20,8 +20,8 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/contains_once.h"
-#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
@@ -34,10 +34,13 @@ namespace bigtable_admin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::internal::ToChronoTimePoint;
 using ::google::cloud::internal::ToProtoTimestamp;
 using ::google::cloud::testing_util::ContainsOnce;
-using ::google::cloud::testing_util::IsProtoEqual;
+using ::testing::AllOf;
 using ::testing::Contains;
+using ::testing::Ge;
+using ::testing::Le;
 using ::testing::Not;
 namespace btadmin = ::google::bigtable::admin::v2;
 
@@ -129,8 +132,11 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
   backup = client_.GetBackup(backup_name);
   ASSERT_STATUS_OK(backup);
   EXPECT_EQ(backup->name(), backup_name);
-  EXPECT_THAT(backup->expire_time(),
-              IsProtoEqual(ToProtoTimestamp(expire_time)));
+  // The proto documentation says backup expiration times are in "microsecond
+  // granularity"
+  auto const delta = expire_time - ToChronoTimePoint(backup->expire_time());
+  EXPECT_THAT(delta, AllOf(Le(std::chrono::microseconds(1)),
+                           Ge(-std::chrono::microseconds(1))));
 
   // Delete table
   EXPECT_STATUS_OK(client_.DeleteTable(table_name));
