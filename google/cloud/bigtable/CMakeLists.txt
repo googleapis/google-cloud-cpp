@@ -341,6 +341,7 @@ if (BUILD_TESTING)
         cluster_config_test.cc
         column_family_test.cc
         data_client_test.cc
+        data_connection_test.cc
         expr_test.cc
         filters_test.cc
         force_sanitizer_failures_test.cc
