@@ -26,7 +26,7 @@ ARCH="$(uname -m)"
 if [[ "${ARCH}" == "aarch64" ]]; then
   # The tarball uses this name
   ARCH="arm"
-fi 
+fi
 readonly ARCH
 
 components=(
