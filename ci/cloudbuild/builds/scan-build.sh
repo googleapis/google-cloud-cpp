@@ -22,15 +22,21 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
+source module ci/cloudbuild/builds/lib/features.sh
+source module ci/lib/io.sh
 
 export CC=clang
 export CXX=clang++
+
 mapfile -t cmake_args < <(cmake::common_args)
+read -r ENABLED_FEATURES < <(features::always_build_cmake)
+readonly ENABLED_FEATURES
 
 scan_build=(
   "scan-build"
   "-o"
   "${HOME}/scan-build"
 )
-"${scan_build[@]}" cmake "${cmake_args[@]}"
-"${scan_build[@]}" cmake --build cmake-out
+io::run "${scan_build[@]}" cmake "${cmake_args[@]}" \
+  -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
+io::run "${scan_build[@]}" cmake --build cmake-out

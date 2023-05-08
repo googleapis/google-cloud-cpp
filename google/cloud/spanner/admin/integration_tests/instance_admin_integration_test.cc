@@ -241,6 +241,10 @@ TEST_F(InstanceAdminClientTest, InstanceConfigUserManaged) {
   auto base_config_name = spanner_testing::PickInstanceConfig(
       project, generator_,
       [](google::spanner::admin::instance::v1::InstanceConfig const& config) {
+        // TODO(#11346): Remove once the incident clears out
+        for (auto const& replica_info : config.optional_replicas()) {
+          if (replica_info.location() == "europe-west9") return false;
+        }
         return !config.optional_replicas().empty();
       });
   ASSERT_THAT(base_config_name, Not(IsEmpty()));

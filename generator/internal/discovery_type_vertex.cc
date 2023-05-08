@@ -272,11 +272,18 @@ std::string DiscoveryTypeVertex::FormatFieldOptions(
     field_options.emplace_back("google.cloud.operation_request_field",
                                absl::StrCat("\"", field_name, "\""));
   }
+  if (field_json.value("is_resource", false)) {
+    field_options.emplace_back("json_name", "resource");
+  }
 
   if (!field_options.empty()) {
     auto formatter = [](std::string* s,
                         std::pair<std::string, std::string> const& p) {
-      *s += absl::StrFormat("(%s) = %s", p.first, p.second);
+      if (p.first == "json_name") {
+        *s += absl::StrFormat("%s=\"%s\"", p.first, p.second);
+      } else {
+        *s += absl::StrFormat("(%s) = %s", p.first, p.second);
+      }
     };
     return absl::StrCat(" [", absl::StrJoin(field_options, ",", formatter),
                         "]");

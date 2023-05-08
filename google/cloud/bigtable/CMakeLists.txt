@@ -169,6 +169,8 @@ add_library(
     internal/convert_policies.h
     internal/data_connection_impl.cc
     internal/data_connection_impl.h
+    internal/data_tracing_connection.cc
+    internal/data_tracing_connection.h
     internal/default_row_reader.cc
     internal/default_row_reader.h
     internal/defaults.cc
@@ -192,6 +194,8 @@ add_library(
     internal/row_reader_impl.h
     internal/rpc_policy_parameters.h
     internal/rpc_policy_parameters.inc
+    internal/traced_row_reader.cc
+    internal/traced_row_reader.h
     internal/unary_client_utils.h
     metadata_update_policy.cc
     metadata_update_policy.h
@@ -339,6 +343,7 @@ if (BUILD_TESTING)
         cluster_config_test.cc
         column_family_test.cc
         data_client_test.cc
+        data_connection_test.cc
         expr_test.cc
         filters_test.cc
         force_sanitizer_failures_test.cc
@@ -361,6 +366,7 @@ if (BUILD_TESTING)
         internal/connection_refresh_state_test.cc
         internal/convert_policies_test.cc
         internal/data_connection_impl_test.cc
+        internal/data_tracing_connection_test.cc
         internal/default_row_reader_test.cc
         internal/defaults_test.cc
         internal/google_bytes_traits_test.cc
@@ -371,6 +377,7 @@ if (BUILD_TESTING)
         internal/legacy_row_reader_test.cc
         internal/logging_data_client_test.cc
         internal/prefix_range_end_test.cc
+        internal/traced_row_reader_test.cc
         legacy_table_test.cc
         metadata_update_policy_test.cc
         mocks/mock_row_reader_test.cc

@@ -51,9 +51,5 @@ can override the default policies.
 
 [cloud-service]: https://cloud.google.com/tpu
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
-[github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
-<!-- The ugly %2E disables auto-linking in Doxygen -->
-[github-readme]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/tpu/README%2Emd
-[github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/tpu/quickstart/README%2Emd
 
 */

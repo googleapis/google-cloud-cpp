@@ -17,7 +17,9 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/common_v2_resources.h"
 #include "google/cloud/bigquery/v2/minimal/internal/table_partition.h"
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include "absl/strings/string_view.h"
 #include <nlohmann/json.hpp>
 #include <chrono>
 #include <string>
@@ -33,29 +35,45 @@ using namespace nlohmann::literals;  // NOLINT
 
 struct PrimaryKey {
   std::vector<std::string> columns;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(PrimaryKey, columns);
 
 struct ColumnReference {
   std::string referencing_column;
   std::string referenced_column;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ColumnReference,
                                                 referencing_column,
                                                 referenced_column);
 
 struct ForeignKey {
-  std::string name;
+  std::string key_name;
   TableReference referenced_table;
   std::vector<ColumnReference> column_references;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ForeignKey, name,
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ForeignKey, key_name,
                                                 referenced_table,
                                                 column_references);
 
 struct TableConstraints {
   PrimaryKey primary_key;
   std::vector<ForeignKey> foreign_keys;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TableConstraints, primary_key,
                                                 foreign_keys);

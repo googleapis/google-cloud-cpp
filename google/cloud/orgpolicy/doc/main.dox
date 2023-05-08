@@ -44,9 +44,5 @@ can override the default policies.
 
 [cloud-service-docs]: https://cloud.google.com/resource-manager/docs/organization-policy/overview
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
-[github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
-<!-- The ugly %2E disables auto-linking in Doxygen -->
-[github-readme]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/orgpolicy/README%2Emd
-[github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/orgpolicy/quickstart/README%2Emd
 
 */

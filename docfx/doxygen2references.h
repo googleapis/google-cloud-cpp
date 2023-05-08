@@ -54,7 +54,7 @@ YAML::Emitter& operator<<(YAML::Emitter& yaml, Reference const& rhs);
 
 // Generate the `references` element in a DocFX YAML.
 std::list<Reference> ExtractReferences(YamlContext const& ctx,
-                                       pugi::xml_node const& node);
+                                       pugi::xml_node node);
 
 }  // namespace docfx
 

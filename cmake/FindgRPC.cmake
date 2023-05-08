@@ -69,7 +69,10 @@ find_package(Threads REQUIRED)
 # `find_package()` because we (have to) install this module in non-standard
 # locations.
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}")
-find_package(Protobuf)
+find_package(Protobuf CONFIG QUIET)
+if (NOT Protobuf_FOUND)
+    find_package(Protobuf)
+endif ()
 
 # The gRPC::grpc_cpp_plugin target is sometimes defined, but without a
 # IMPORTED_LOCATION

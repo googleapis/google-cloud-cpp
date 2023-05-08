@@ -17,7 +17,9 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/testing_util/mock_minimal_iam_credentials_stub.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
@@ -38,6 +40,7 @@ using ::google::iam::credentials::v1::GenerateAccessTokenRequest;
 using ::google::iam::credentials::v1::GenerateAccessTokenResponse;
 using ::google::iam::credentials::v1::SignBlobRequest;
 using ::google::iam::credentials::v1::SignBlobResponse;
+using ::testing::_;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -184,6 +187,130 @@ TEST_F(MinimalIamCredentialsStubTest,
   auto const lines = log_.ExtractLines();
   EXPECT_THAT(lines, Not(Contains(HasSubstr("AsyncGenerateAccessToken"))));
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+using ::google::cloud::testing_util::DisableTracing;
+using ::google::cloud::testing_util::EnableTracing;
+using ::google::cloud::testing_util::SpanAttribute;
+using ::google::cloud::testing_util::SpanHasAttributes;
+using ::google::cloud::testing_util::SpanHasInstrumentationScope;
+using ::google::cloud::testing_util::SpanKindIsClient;
+using ::google::cloud::testing_util::SpanNamed;
+using ::google::cloud::testing_util::SpanWithStatus;
+using ::google::cloud::testing_util::ThereIsAnActiveSpan;
+using ::testing::IsEmpty;
+
+auto constexpr kErrorCode = static_cast<int>(StatusCode::kAborted);
+
+TEST_F(MinimalIamCredentialsStubTest, AsyncGenerateAccessTokenNoTracing) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+  auto mock_propagator = testing_util::InstallMockPropagator();
+  EXPECT_CALL(*mock_propagator, Inject).Times(0);
+
+  auto mock = std::make_shared<MockMinimalIamCredentialsStub>();
+  EXPECT_CALL(*mock, AsyncGenerateAccessToken).WillOnce([] {
+    EXPECT_FALSE(ThereIsAnActiveSpan());
+    return make_ready_future<StatusOr<GenerateAccessTokenResponse>>(
+        AbortedError("fail"));
+  });
+
+  auto stub =
+      DecorateMinimalIamCredentialsStub(mock, DisableTracing(Options{}));
+  CompletionQueue cq;
+  grpc::ClientContext context;
+  GenerateAccessTokenRequest request;
+  auto response = stub->AsyncGenerateAccessToken(
+      cq, std::make_shared<grpc::ClientContext>(), request);
+  EXPECT_THAT(response.get(), StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, IsEmpty());
+}
+
+TEST_F(MinimalIamCredentialsStubTest, AsyncGenerateAccessTokenTracing) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+  auto mock_propagator = testing_util::InstallMockPropagator();
+  EXPECT_CALL(*mock_propagator, Inject);
+
+  auto mock = std::make_shared<MockMinimalIamCredentialsStub>();
+  EXPECT_CALL(*mock, AsyncGenerateAccessToken).WillOnce([] {
+    EXPECT_FALSE(ThereIsAnActiveSpan());
+    return make_ready_future<StatusOr<GenerateAccessTokenResponse>>(
+        AbortedError("fail"));
+  });
+
+  auto stub = DecorateMinimalIamCredentialsStub(mock, EnableTracing(Options{}));
+  CompletionQueue cq;
+  grpc::ClientContext context;
+  GenerateAccessTokenRequest request;
+  auto response = stub->AsyncGenerateAccessToken(
+      cq, std::make_shared<grpc::ClientContext>(), request);
+  EXPECT_THAT(response.get(), StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed(
+              "google.iam.credentials.v1.IAMCredentials/GenerateAccessToken"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<std::string>("grpc.peer", _),
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+}
+
+TEST_F(MinimalIamCredentialsStubTest, SignBlobNoTracing) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+  auto mock_propagator = testing_util::InstallMockPropagator();
+  EXPECT_CALL(*mock_propagator, Inject).Times(0);
+
+  auto mock = std::make_shared<MockMinimalIamCredentialsStub>();
+  EXPECT_CALL(*mock, SignBlob).WillOnce([] {
+    EXPECT_FALSE(ThereIsAnActiveSpan());
+    return AbortedError("fail");
+  });
+
+  auto stub =
+      DecorateMinimalIamCredentialsStub(mock, DisableTracing(Options{}));
+  grpc::ClientContext context;
+  SignBlobRequest request;
+  auto response = stub->SignBlob(context, request);
+  EXPECT_THAT(response, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, IsEmpty());
+}
+
+TEST_F(MinimalIamCredentialsStubTest, SignBlobTracing) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+  auto mock_propagator = testing_util::InstallMockPropagator();
+  EXPECT_CALL(*mock_propagator, Inject);
+
+  auto mock = std::make_shared<MockMinimalIamCredentialsStub>();
+  EXPECT_CALL(*mock, SignBlob).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return AbortedError("fail");
+  });
+
+  auto stub = DecorateMinimalIamCredentialsStub(mock, EnableTracing(Options{}));
+  grpc::ClientContext context;
+  SignBlobRequest request;
+  auto response = stub->SignBlob(context, request);
+  EXPECT_THAT(response, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("google.iam.credentials.v1.IAMCredentials/SignBlob"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<std::string>("grpc.peer", _),
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+}
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 }  // namespace internal

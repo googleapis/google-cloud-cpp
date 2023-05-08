@@ -4243,7 +4243,13 @@ void RunAllSlowInstanceTests(
         Basename(google::cloud::spanner_testing::PickInstanceConfig(
             google::cloud::Project(project_id), generator,
             [](google::spanner::admin::instance::v1::InstanceConfig const&
-                   config) { return !config.optional_replicas().empty(); }));
+                   config) {
+              // TODO(#11346): Remove once the incident clears out
+              for (auto const& replica_info : config.optional_replicas()) {
+                if (replica_info.location() == "europe-west9") return false;
+              }
+              return !config.optional_replicas().empty();
+            }));
     if (base_config_id.empty()) {
       throw std::runtime_error("Failed to pick a base config");
     }

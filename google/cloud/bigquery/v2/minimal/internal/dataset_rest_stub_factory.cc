@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/dataset_rest_stub_factory.h"
+#include "google/cloud/bigquery/v2/minimal/internal/dataset_logging.h"
 #include "google/cloud/bigquery/v2/minimal/internal/dataset_metadata.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/algorithm.h"
@@ -38,7 +39,12 @@ std::shared_ptr<DatasetRestStub> CreateDefaultDatasetRestStub(
 
   stub = std::make_shared<DatasetMetadata>(std::move(stub));
 
-  // Yet to be implemented: Logging client creation for the stub.
+  if (internal::Contains(local_opts.get<TracingComponentsOption>(), "rpc")) {
+    GCP_LOG(INFO) << "Enabled logging for REST rpc calls";
+    stub = std::make_shared<DatasetLogging>(
+        std::move(stub), local_opts.get<RestTracingOptionsOption>(),
+        local_opts.get<TracingComponentsOption>());
+  }
 
   return stub;
 }

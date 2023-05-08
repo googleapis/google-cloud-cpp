@@ -142,8 +142,6 @@ TEST(Doxygen2ReferencesTest, Namespace) {
                     "google::cloud::AccessTokenLifetimeOption"),
           Reference("classgoogle_1_1cloud_1_1AsyncOperation",
                     "google::cloud::AsyncOperation"),
-          Reference("namespacegoogle_1_1cloud_1_1mocks",
-                    "google::cloud::mocks"),
           Reference(
               "namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c",
               "google::cloud::Idempotency")));

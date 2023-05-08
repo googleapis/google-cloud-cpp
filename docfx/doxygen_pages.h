@@ -28,11 +28,7 @@ namespace docfx {
  *
  * This creates the root MarkdownContext, so no need to consume it.
  */
-std::string Page2Markdown(pugi::xml_node const& node);
-
-// Get the table of contents for pages.
-std::vector<TocEntry> PagesToc(Config const& cfg,
-                               pugi::xml_document const& doc);
+std::string Page2Markdown(pugi::xml_node node);
 
 }  // namespace docfx
 

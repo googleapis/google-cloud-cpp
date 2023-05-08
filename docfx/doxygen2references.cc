@@ -21,7 +21,7 @@ namespace docfx {
 namespace {
 
 std::list<Reference> RecurseReferences(YamlContext const& ctx,
-                                       pugi::xml_node const& node) {
+                                       pugi::xml_node node) {
   std::list<Reference> references;
   for (auto const& c : node) {
     references.splice(references.end(), ExtractReferences(ctx, c));
@@ -44,14 +44,13 @@ YAML::Emitter& operator<<(YAML::Emitter& yaml, Reference const& rhs) {
 
 // Generate the `references` element in a DocFX YAML.
 std::list<Reference> ExtractReferences(YamlContext const& ctx,
-                                       pugi::xml_node const& node) {
+                                       pugi::xml_node node) {
   if (!IncludeInPublicDocuments(ctx.config, node)) return {};
 
   auto const name = std::string_view{node.name()};
-  if (name == "innernamespace") {
-    auto const uid = std::string{node.attribute("refid").as_string()};
-    return {Reference(uid, node.child_value())};
-  }
+  // Skip <innernamespace> elements. They are listed in ToC (the left-side
+  // navigation).
+  if (name == "innernamespace") return {};
   if (name == "innerclass") {
     auto const uid = std::string{node.attribute("refid").as_string()};
     return {Reference(uid, node.child_value())};

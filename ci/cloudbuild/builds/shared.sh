@@ -18,25 +18,27 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
-source module ci/cloudbuild/builds/lib/quickstart.sh
 source module ci/cloudbuild/builds/lib/features.sh
+source module ci/cloudbuild/builds/lib/quickstart.sh
+source module ci/lib/io.sh
 
 export CC=gcc
 export CXX=g++
 
-read -r ENABLED_FEATURES < <(features::list_full_cmake)
 mapfile -t cmake_args < <(cmake::common_args)
+readonly INSTALL_PREFIX="/var/tmp/google-cloud-cpp"
+read -r ENABLED_FEATURES < <(features::list_full_cmake)
+readonly ENABLED_FEATURES
 
-INSTALL_PREFIX="/var/tmp/google-cloud-cpp"
-cmake "${cmake_args[@]}" \
+io::run cmake "${cmake_args[@]}" \
   -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_SHARED_LIBS=ON \
   -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
-cmake --build cmake-out
+io::run cmake --build cmake-out
 mapfile -t ctest_args < <(ctest::common_args)
-env -C cmake-out ctest "${ctest_args[@]}" -LE "integration-test"
-cmake --install cmake-out
+io::run env -C cmake-out ctest "${ctest_args[@]}" -LE "integration-test"
+io::run cmake --install cmake-out
 
 # Tests the installed artifacts by building and running the quickstarts.
 quickstart::build_cmake_and_make "${INSTALL_PREFIX}"

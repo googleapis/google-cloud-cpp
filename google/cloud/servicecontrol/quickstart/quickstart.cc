@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) try {
     op.set_operation_id("TODO-use-UUID-4-or-UUID-5");
     op.set_operation_name("google.pubsub.v1.Publisher.Publish");
     op.set_consumer_id(project.FullName());
-    *op.mutable_start_time() = TimeUtil::GetCurrentTime();
+    *op.mutable_start_time() = (TimeUtil::GetCurrentTime)();
     return op;
   }();
 

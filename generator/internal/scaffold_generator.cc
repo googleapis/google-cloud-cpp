@@ -585,10 +585,6 @@ can override the default policies.
 
 [cloud-service-docs]: https://cloud.google.com/$site_root$
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
-[github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
-<!-- The ugly %2E disables auto-linking in Doxygen -->
-[github-readme]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/$library$/README%2Emd
-[github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/$library$/quickstart/README%2Emd
 
 */
 )""";

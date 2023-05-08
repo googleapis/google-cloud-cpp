@@ -18,9 +18,6 @@
 namespace docfx {
 namespace {
 
-using ::testing::ElementsAre;
-using ::testing::FieldsAre;
-
 TEST(DoxygenGroups, CommonPage) {
   auto constexpr kXml =
       R"xml(<?xml version="1.0" standalone="yes"?><doxygen version="1.9.1" xml:lang="en-US">
@@ -72,34 +69,6 @@ items:
   ASSERT_TRUE(selected);
   auto const actual = Group2Yaml(selected.node());
   EXPECT_EQ(kExpected, actual);
-}
-
-TEST(DoxygenGroups, GroupsToc) {
-  auto constexpr kXml =
-      R"xml(<?xml version="1.0" standalone="yes"?><doxygen version="1.9.1" xml:lang="en-US">
-        <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="group__g1" kind="group">
-          <compoundname>g1</compoundname>
-          <title>Group 1</title>
-          <briefdescription><para>The description for Group 1.</para>
-          </briefdescription>
-          <detaileddescription><para>More details about Group 1.</para></detaileddescription>
-        </compounddef>
-        <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="group__g2" kind="group">
-          <compoundname>g2</compoundname>
-          <title>Group 2</title>
-          <briefdescription><para>The description for Group 2.</para>
-          </briefdescription>
-          <detaileddescription><para>More details about Group 2.</para></detaileddescription>
-        </compounddef>
-      </doxygen>)xml";
-
-  pugi::xml_document doc;
-  ASSERT_TRUE(doc.load_string(kXml));
-  auto const actual = GroupsToc(doc);
-
-  EXPECT_THAT(actual,
-              ElementsAre(FieldsAre("group__g1", "Group 1", "group__g1.yml"),
-                          FieldsAre("group__g2", "Group 2", "group__g2.yml")));
 }
 
 }  // namespace

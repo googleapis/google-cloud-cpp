@@ -17,7 +17,9 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/common_v2_resources.h"
 #include "google/cloud/bigquery/v2/minimal/internal/table_partition.h"
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include "absl/strings/string_view.h"
 #include <nlohmann/json.hpp>
 #include <chrono>
 #include <string>
@@ -34,6 +36,10 @@ using namespace nlohmann::literals;  // NOLINT
 struct UserDefinedFunctionResource {
   std::string resource_uri;
   std::string inline_code;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(UserDefinedFunctionResource,
                                                 resource_uri, inline_code);
@@ -45,6 +51,10 @@ struct ViewDefinition {
   bool use_explicit_column_names = false;
 
   std::vector<UserDefinedFunctionResource> user_defined_function_resources;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(
     ViewDefinition, query, use_legacy_sql, use_explicit_column_names,
@@ -59,12 +69,34 @@ struct MaterializedViewDefinition {
 
   std::chrono::milliseconds refresh_interval_time;
   std::chrono::system_clock::time_point last_refresh_time;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
 
 struct MaterializedViewStatus {
   std::chrono::system_clock::time_point refresh_watermark;
   ErrorProto last_refresh_status;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
 };
+
+struct TableMetadataView {
+  static TableMetadataView UnSpecified();
+  static TableMetadataView Basic();
+  static TableMetadataView StrorageStats();
+  static TableMetadataView Full();
+
+  std::string value;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
+};
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TableMetadataView, value);
 
 void to_json(nlohmann::json& j, MaterializedViewDefinition const& m);
 void from_json(nlohmann::json const& j, MaterializedViewDefinition& m);

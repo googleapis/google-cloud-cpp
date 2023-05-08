@@ -59,10 +59,10 @@ int main(int argc, char* argv[]) try {
   span.set_name(std::string{"projects/"} + argv[1] + "/traces/" +
                 RandomHexDigits(gen, 32) + "/spans/" + span_id);
   span.set_span_id(std::move(span_id));
-  *span.mutable_start_time() = TimeUtil::GetCurrentTime();
+  *span.mutable_start_time() = (TimeUtil::GetCurrentTime)();
   // Simulate a call using a small sleep
   std::this_thread::sleep_for(std::chrono::milliseconds(2));
-  *span.mutable_end_time() = TimeUtil::GetCurrentTime();
+  *span.mutable_end_time() = (TimeUtil::GetCurrentTime)();
 
   auto response = client.CreateSpan(span);
   if (!response) throw std::move(response).status();

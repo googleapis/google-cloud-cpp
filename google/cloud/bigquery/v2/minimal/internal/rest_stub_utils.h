@@ -18,6 +18,7 @@
 #include "google/cloud/bigquery/v2/minimal/internal/bigquery_http_response.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/rest_request.h"
 #include "google/cloud/status_or.h"
 
 namespace google {
@@ -54,6 +55,8 @@ StatusOr<rest_internal::RestRequest> PrepareRestRequest(
 
   return rest_request;
 }
+
+std::string GetBaseEndpoint(Options const& opts);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
