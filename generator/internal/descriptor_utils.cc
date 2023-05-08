@@ -41,6 +41,7 @@
 #include "generator/internal/resolve_method_return.h"
 #include "generator/internal/retry_traits_generator.h"
 #include "generator/internal/round_robin_decorator_generator.h"
+#include "generator/internal/routing.h"
 #include "generator/internal/sample_generator.h"
 #include "generator/internal/scaffold_generator.h"
 #include "generator/internal/stub_factory_generator.h"
@@ -580,58 +581,6 @@ std::string FormatDoxygenLink(
   return absl::StrCat(
       "@googleapis_link{", ProtoNameToCppName(message_type.full_name()), ",",
       output_type_proto_file_name, "#L", loc.start_line + 1, "}");
-}
-
-ExplicitRoutingInfo ParseExplicitRoutingHeader(
-    google::protobuf::MethodDescriptor const& method) {
-  ExplicitRoutingInfo info;
-  if (!method.options().HasExtension(google::api::routing)) return info;
-  google::api::RoutingRule rule =
-      method.options().GetExtension(google::api::routing);
-
-  auto const& rps = rule.routing_parameters();
-  // We use reverse iterators so that "last wins" becomes "first wins".
-  for (auto it = rps.rbegin(); it != rps.rend(); ++it) {
-    std::vector<std::string> chunks;
-    auto const* input_type = method.input_type();
-    for (auto const& sv : absl::StrSplit(it->field(), '.')) {
-      auto const chunk = std::string(sv);
-      auto const* chunk_descriptor = input_type->FindFieldByName(chunk);
-      chunks.push_back(FieldName(chunk_descriptor));
-      input_type = chunk_descriptor->message_type();
-    }
-    auto field_name = absl::StrJoin(chunks, "().");
-    auto const& path_template = it->path_template();
-    // When a path_template is not supplied, we use the field name as the
-    // routing parameter key. The pattern matches the whole value of the field.
-    if (path_template.empty()) {
-      info[it->field()].push_back({std::move(field_name), "(.*)"});
-      continue;
-    }
-    // When a path_template is supplied, we convert the pattern from the proto
-    // into a std::regex. We extract the routing parameter key and set up a
-    // single capture group. For example:
-    //
-    // Input :
-    //   - path_template = "projects/*/{foo=instances/*}:**"
-    // Output:
-    //   - param         = "foo"
-    //   - pattern       = "projects/[^/]+/(instances/[^:]+):.*"
-    static std::regex const kPatternRegex(R"((.*)\{(.*)=(.*)\}(.*))");
-    std::smatch match;
-    if (!std::regex_match(path_template, match, kPatternRegex)) {
-      GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": "
-                     << "RoutingParameters path template is malformed: "
-                     << path_template;
-    }
-    auto pattern =
-        absl::StrCat(match[1].str(), "(", match[3].str(), ")", match[4].str());
-    pattern = absl::StrReplaceAll(
-        pattern,
-        {{"**", ".*"}, {"*):", "[^:]+):"}, {"*:", "[^:]+:"}, {"*", "[^/]+"}});
-    info[match[2].str()].push_back({std::move(field_name), std::move(pattern)});
-  }
-  return info;
 }
 
 std::string FormatMethodCommentsMethodSignature(
