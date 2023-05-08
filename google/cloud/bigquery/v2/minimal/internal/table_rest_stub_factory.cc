@@ -34,7 +34,7 @@ std::shared_ptr<TableRestStub> CreateDefaultTableRestStub(Options const& opts) {
   std::shared_ptr<TableRestStub> stub =
       std::make_shared<DefaultTableRestStub>(std::move(curl_rest_client));
 
-  // Yet to be implemented: Logging and metadata client creation for the stub.
+  // TODO(#11527): Add Logging and metadata client creation for the stub.
 
   return stub;
 }
