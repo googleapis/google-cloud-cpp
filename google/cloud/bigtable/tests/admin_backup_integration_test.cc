@@ -78,7 +78,11 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
   auto const backup_name = cluster_name + "/backups/" + backup_id;
 
   // Create backup
-  auto expire_time = std::chrono::system_clock::now() + std::chrono::hours(12);
+  // The proto documentation says backup expiration times are in "microseconds
+  // granularity":
+  //   https://cloud.google.com/bigtable/docs/reference/admin/rpc/google.bigtable.admin.v2#google.bigtable.admin.v2.Backup
+  auto expire_time = std::chrono::time_point_cast<std::chrono::microseconds>(
+      std::chrono::system_clock::now() + std::chrono::hours(12));
 
   auto backup = table_admin_->CreateBackup(
       {cluster_id, backup_id, table_id, expire_time});
