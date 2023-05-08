@@ -84,6 +84,10 @@ add_library(
     v2/minimal/internal/table_request.h
     v2/minimal/internal/table_response.cc
     v2/minimal/internal/table_response.h
+    v2/minimal/internal/table_rest_stub.cc
+    v2/minimal/internal/table_rest_stub.h
+    v2/minimal/internal/table_rest_stub_factory.cc
+    v2/minimal/internal/table_rest_stub_factory.h
     v2/minimal/internal/table_schema.cc
     v2/minimal/internal/table_schema.h
     v2/minimal/internal/table_view.cc
@@ -154,6 +158,7 @@ function (bigquery_rest_define_tests)
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/mock_log_backend.h
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/mock_dataset_rest_stub.h
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/mock_job_rest_stub.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/mock_table_rest_stub.h
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/table_test_utils.cc
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/table_test_utils.h)
     target_link_libraries(
@@ -200,6 +205,7 @@ function (bigquery_rest_define_tests)
         v2/minimal/internal/rest_stub_utils_test.cc
         v2/minimal/internal/table_request_test.cc
         v2/minimal/internal/table_response_test.cc
+        v2/minimal/internal/table_rest_stub_test.cc
         v2/minimal/internal/table_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain

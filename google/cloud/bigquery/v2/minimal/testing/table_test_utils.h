@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_TESTING_TABLE_TEST_UTILS_H
 
 #include "google/cloud/bigquery/v2/minimal/internal/table.h"
+#include "google/cloud/bigquery/v2/minimal/internal/table_request.h"
 #include "google/cloud/log.h"
 #include <gmock/gmock.h>
 
@@ -32,6 +33,10 @@ void AssertEquals(bigquery_v2_minimal_internal::ListFormatTable const& lhs,
                   bigquery_v2_minimal_internal::ListFormatTable const& rhs);
 std::string MakeTableJsonText();
 std::string MakeListFormatTableJsonText();
+std::string MakeListTablesResponseJsonText();
+
+bigquery_v2_minimal_internal::GetTableRequest MakeGetTableRequest();
+bigquery_v2_minimal_internal::ListTablesRequest MakeListTablesRequest();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_testing
