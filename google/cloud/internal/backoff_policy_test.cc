@@ -41,6 +41,18 @@ TEST(ExponentialBackoffPolicy, Simple) {
   EXPECT_GE(ms(100), delay);
 }
 
+/// @test Verify the minimum and maximum delay are respected.
+TEST(ExponentialBackoffPolicy, ValidateMinimumAndMaximumDelayAreRespected) {
+  ExponentialBackoffPolicy tested(ms(10), ms(11), 2.0);
+
+  auto delay = tested.OnCompletion();
+  EXPECT_LE(ms(10), delay);
+  EXPECT_GE(ms(11), delay);
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(10), delay);
+  EXPECT_GE(ms(11), delay);
+}
+
 /// @test Verify that the scaling factor is validated.
 TEST(ExponentialBackoffPolicy, ValidateScaling) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
