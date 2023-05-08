@@ -33,6 +33,8 @@ namespace internal {
 
 std::shared_ptr<CompletionQueueImpl> GetCompletionQueueImpl(
     CompletionQueue const& cq);
+std::shared_ptr<CompletionQueueImpl> GetCompletionQueueImpl(
+    CompletionQueue&& cq);
 
 template <typename Request, typename Response>
 future<StatusOr<Response>> MakeUnaryRpcImpl(
@@ -253,6 +255,8 @@ class CompletionQueue {
  private:
   friend std::shared_ptr<internal::CompletionQueueImpl>
   internal::GetCompletionQueueImpl(CompletionQueue const& cq);
+  friend std::shared_ptr<internal::CompletionQueueImpl>
+  internal::GetCompletionQueueImpl(CompletionQueue&& cq);
   std::shared_ptr<internal::CompletionQueueImpl> impl_;
 };
 
@@ -261,6 +265,11 @@ namespace internal {
 inline std::shared_ptr<CompletionQueueImpl> GetCompletionQueueImpl(
     CompletionQueue const& cq) {
   return cq.impl_;
+}
+
+inline std::shared_ptr<CompletionQueueImpl> GetCompletionQueueImpl(
+    CompletionQueue&& cq) {
+  return std::move(cq.impl_);
 }
 
 template <typename Request, typename Response>

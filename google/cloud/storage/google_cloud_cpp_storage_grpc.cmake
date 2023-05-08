@@ -46,6 +46,8 @@ else ()
         internal/grpc_bucket_request_parser.h
         internal/grpc_buffer_read_object_data.cc
         internal/grpc_buffer_read_object_data.h
+        internal/grpc_channel_refresh.cc
+        internal/grpc_channel_refresh.h
         internal/grpc_client.cc
         internal/grpc_client.h
         internal/grpc_configure_client_context.cc

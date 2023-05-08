@@ -14,9 +14,11 @@
 
 #include "google/cloud/storage/internal/async_connection_impl.h"
 #include "google/cloud/storage/internal/async_accumulate_read_object.h"
+#include "google/cloud/storage/internal/grpc_channel_refresh.h"
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/internal/grpc_configure_client_context.h"
 #include "google/cloud/storage/internal/grpc_object_request_parser.h"
+#include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/internal/async_retry_loop.h"
@@ -45,10 +47,11 @@ inline std::unique_ptr<storage::IdempotencyPolicy> idempotency_policy() {
 
 }  // namespace
 
-AsyncConnectionImpl::AsyncConnectionImpl(CompletionQueue cq,
-                                         std::shared_ptr<StorageStub> stub,
-                                         Options options)
+AsyncConnectionImpl::AsyncConnectionImpl(
+    CompletionQueue cq, std::shared_ptr<GrpcChannelRefresh> refresh,
+    std::shared_ptr<StorageStub> stub, Options options)
     : cq_(std::move(cq)),
+      refresh_(std::move(refresh)),
       stub_(std::move(stub)),
       options_(std::move(options)) {}
 
@@ -123,15 +126,17 @@ future<StatusOr<std::string>> AsyncConnectionImpl::AsyncStartResumableWrite(
 std::shared_ptr<AsyncConnection> MakeAsyncConnection(CompletionQueue cq,
                                                      Options options) {
   options = storage_internal::DefaultOptionsGrpc(std::move(options));
-  auto stub = CreateStorageStub(cq, options);
-  return MakeAsyncConnection(std::move(cq), std::move(stub),
-                             std::move(options));
+  auto p = CreateStorageStub(cq, options);
+  return std::make_shared<AsyncConnectionImpl>(
+      std::move(cq), std::move(p.first), std::move(p.second),
+      std::move(options));
 }
 
 std::shared_ptr<AsyncConnection> MakeAsyncConnection(
     CompletionQueue cq, std::shared_ptr<StorageStub> stub, Options options) {
-  return std::make_shared<AsyncConnectionImpl>(std::move(cq), std::move(stub),
-                                               std::move(options));
+  return std::make_shared<AsyncConnectionImpl>(
+      std::move(cq), std::shared_ptr<GrpcChannelRefresh>{}, std::move(stub),
+      std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
