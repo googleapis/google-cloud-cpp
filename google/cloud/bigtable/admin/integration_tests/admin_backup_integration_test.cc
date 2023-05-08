@@ -132,8 +132,9 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
   backup = client_.GetBackup(backup_name);
   ASSERT_STATUS_OK(backup);
   EXPECT_EQ(backup->name(), backup_name);
-  // The proto documentation says backup expiration times are in "microsecond
-  // granularity"
+  // The proto documentation says backup expiration times are in "microseconds
+  // granularity":
+  //   https://cloud.google.com/bigtable/docs/reference/admin/rpc/google.bigtable.admin.v2#google.bigtable.admin.v2.Backup
   auto const delta = expire_time - ToChronoTimePoint(backup->expire_time());
   EXPECT_THAT(delta, AllOf(Le(std::chrono::microseconds(1)),
                            Ge(-std::chrono::microseconds(1))));
