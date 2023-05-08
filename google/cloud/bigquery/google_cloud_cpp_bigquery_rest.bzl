@@ -18,6 +18,7 @@
 
 google_cloud_cpp_bigquery_rest_hdrs = [
     "v2/minimal/internal/bigquery_http_response.h",
+    "v2/minimal/internal/common_options.h",
     "v2/minimal/internal/common_v2_resources.h",
     "v2/minimal/internal/dataset.h",
     "v2/minimal/internal/dataset_client.h",
@@ -50,11 +51,14 @@ google_cloud_cpp_bigquery_rest_hdrs = [
     "v2/minimal/internal/rest_stub_utils.h",
     "v2/minimal/internal/table.h",
     "v2/minimal/internal/table_constraints.h",
+    "v2/minimal/internal/table_idempotency_policy.h",
+    "v2/minimal/internal/table_options.h",
     "v2/minimal/internal/table_partition.h",
     "v2/minimal/internal/table_request.h",
     "v2/minimal/internal/table_response.h",
     "v2/minimal/internal/table_rest_stub.h",
     "v2/minimal/internal/table_rest_stub_factory.h",
+    "v2/minimal/internal/table_retry_policy.h",
     "v2/minimal/internal/table_schema.h",
     "v2/minimal/internal/table_view.h",
 ]
@@ -89,6 +93,8 @@ google_cloud_cpp_bigquery_rest_srcs = [
     "v2/minimal/internal/rest_stub_utils.cc",
     "v2/minimal/internal/table.cc",
     "v2/minimal/internal/table_constraints.cc",
+    "v2/minimal/internal/table_idempotency_policy.cc",
+    "v2/minimal/internal/table_options.cc",
     "v2/minimal/internal/table_partition.cc",
     "v2/minimal/internal/table_request.cc",
     "v2/minimal/internal/table_response.cc",

@@ -18,6 +18,7 @@ add_library(
     google_cloud_cpp_bigquery_rest # cmake-format: sort
     v2/minimal/internal/bigquery_http_response.cc
     v2/minimal/internal/bigquery_http_response.h
+    v2/minimal/internal/common_options.h
     v2/minimal/internal/common_v2_resources.cc
     v2/minimal/internal/common_v2_resources.h
     v2/minimal/internal/dataset.cc
@@ -78,6 +79,10 @@ add_library(
     v2/minimal/internal/table.h
     v2/minimal/internal/table_constraints.cc
     v2/minimal/internal/table_constraints.h
+    v2/minimal/internal/table_idempotency_policy.cc
+    v2/minimal/internal/table_idempotency_policy.h
+    v2/minimal/internal/table_options.cc
+    v2/minimal/internal/table_options.h
     v2/minimal/internal/table_partition.cc
     v2/minimal/internal/table_partition.h
     v2/minimal/internal/table_request.cc
@@ -88,6 +93,7 @@ add_library(
     v2/minimal/internal/table_rest_stub.h
     v2/minimal/internal/table_rest_stub_factory.cc
     v2/minimal/internal/table_rest_stub_factory.h
+    v2/minimal/internal/table_retry_policy.h
     v2/minimal/internal/table_schema.cc
     v2/minimal/internal/table_schema.h
     v2/minimal/internal/table_view.cc
@@ -203,6 +209,8 @@ function (bigquery_rest_define_tests)
         v2/minimal/internal/job_rest_stub_test.cc
         v2/minimal/internal/job_test.cc
         v2/minimal/internal/rest_stub_utils_test.cc
+        v2/minimal/internal/table_idempotency_policy_test.cc
+        v2/minimal/internal/table_options_test.cc
         v2/minimal/internal/table_request_test.cc
         v2/minimal/internal/table_response_test.cc
         v2/minimal/internal/table_rest_stub_test.cc
