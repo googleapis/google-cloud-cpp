@@ -106,7 +106,8 @@ auto constexpr kDoFooRequestTypeJson = R"""({
       "description": "Description for fooId."
     },
     "my_foo_resource": {
-      "$ref": "Foo"
+      "$ref": "Foo",
+      "is_resource": true
     }
   },
   "request_resource_field_name": "my_foo_resource"
@@ -163,7 +164,7 @@ service MyResources {
 
   rpc DoFoo(DoFooRequest) returns (other.package.Operation) {
     option (google.api.http) = {
-      post: "my/service/projects/{project}/zones/{zone}/myResources/{foo_id}/doFoo"
+      post: "my/service/projects/{project=project}/zones/{zone=zone}/myResources/{foo_id=foo_id}/doFoo"
       body: "my_foo_resource"
     };
     option (google.api.method_signature) = "project,zone,foo_id,my_foo_resource";
@@ -173,7 +174,7 @@ service MyResources {
   // Description for the get method.
   rpc GetMyResources(GetMyResourcesRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      get: "my/service/projects/{project}/regions/{region}/myResources/{foo}"
+      get: "my/service/projects/{project=project}/regions/{region=region}/myResources/{foo=foo}"
     };
     option (google.api.method_signature) = "project,region,foo";
   }
@@ -183,7 +184,7 @@ message DoFooRequest {
   // Description for fooId.
   optional string foo_id = 1;
 
-  optional Foo my_foo_resource = 2;
+  optional Foo my_foo_resource = 2 [json_name="resource"];
 
   // Description for project.
   optional string project = 3;
@@ -264,7 +265,7 @@ service MyResources {
 
   rpc DoFoo(DoFooRequest) returns (other.package.Operation) {
     option (google.api.http) = {
-      post: "my/service/projects/{project}/zones/{zone}/myResources/{foo_id}/doFoo"
+      post: "my/service/projects/{project=project}/zones/{zone=zone}/myResources/{foo_id=foo_id}/doFoo"
       body: "my_foo_resource"
     };
     option (google.api.method_signature) = "project,zone,foo_id,my_foo_resource";
@@ -274,7 +275,7 @@ service MyResources {
   // Description for the get method.
   rpc GetMyResources(GetMyResourcesRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      get: "my/service/projects/{project}/regions/{region}/myResources/{foo}"
+      get: "my/service/projects/{project=project}/regions/{region=region}/myResources/{foo=foo}"
     };
     option (google.api.method_signature) = "project,region,foo";
   }
@@ -284,7 +285,7 @@ message DoFooRequest {
   // Description for fooId.
   optional string foo_id = 1;
 
-  optional Foo my_foo_resource = 2;
+  optional Foo my_foo_resource = 2 [json_name="resource"];
 
   // Description for project.
   optional string project = 3;
@@ -359,7 +360,7 @@ message DoFooRequest {
   // Description for fooId.
   optional string foo_id = 1;
 
-  optional Foo my_foo_resource = 2;
+  optional Foo my_foo_resource = 2 [json_name="resource"];
 
   // Description for project.
   optional string project = 3;

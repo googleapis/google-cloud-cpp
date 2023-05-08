@@ -208,6 +208,8 @@ StatusOr<DiscoveryTypeVertex> SynthesizeRequestType(
     synthesized_request["properties"][request_resource_field_name] =
         method_json["request"];
     synthesized_request["properties"][request_resource_field_name]
+                       ["is_resource"] = true;
+    synthesized_request["properties"][request_resource_field_name]
                        ["description"] = absl::StrFormat(
                            "The %s for this request.",
                            std::string((method_json["request"]["$ref"])));

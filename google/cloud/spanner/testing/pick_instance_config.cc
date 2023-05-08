@@ -36,8 +36,6 @@ std::string PickInstanceConfig(
       if (!instance_config->base_config().empty()) {
         continue;  // skip non-base configurations
       }
-      // TODO(#11346) - remove once the incident clears out
-      if (absl::StrContains(instance_config->name(), "europe-west9")) continue;
       if (instance_config_name.empty()) {
         // The fallback for when nothing satisfies the predicate, which is
         // only really useful for the emulator, which has a single config.

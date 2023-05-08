@@ -130,7 +130,6 @@ TEST(Doxygen2ChildrenTest, Namespace) {
       UnorderedElementsAre(
           "structgoogle_1_1cloud_1_1AccessTokenLifetimeOption",
           "classgoogle_1_1cloud_1_1AsyncOperation",
-          "namespacegoogle_1_1cloud_1_1mocks",
           "namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c"));
 }
 

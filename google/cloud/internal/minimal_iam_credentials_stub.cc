@@ -17,7 +17,9 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include <google/iam/credentials/v1/iamcredentials.grpc.pb.h>
 
@@ -153,6 +155,42 @@ class AsyncAccessTokenGeneratorLogging : public MinimalIamCredentialsStub {
   TracingOptions tracing_options_;
 };
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+class AsyncAccessTokenGeneratorTracing : public MinimalIamCredentialsStub {
+ public:
+  explicit AsyncAccessTokenGeneratorTracing(
+      std::shared_ptr<MinimalIamCredentialsStub> child)
+      : child_(std::move(child)) {}
+  ~AsyncAccessTokenGeneratorTracing() override = default;
+
+  future<StatusOr<GenerateAccessTokenResponse>> AsyncGenerateAccessToken(
+      CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
+      GenerateAccessTokenRequest const& request) override {
+    auto span = MakeSpanGrpc("google.iam.credentials.v1.IAMCredentials",
+                             "GenerateAccessToken");
+    {
+      auto scope = opentelemetry::trace::Scope(span);
+      InjectTraceContext(*context, CurrentOptions());
+    }
+    auto f = child_->AsyncGenerateAccessToken(cq, context, request);
+    return EndSpan(std::move(context), std::move(span), std::move(f));
+  }
+
+  StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
+      grpc::ClientContext& context,
+      google::iam::credentials::v1::SignBlobRequest const& request) override {
+    auto span =
+        MakeSpanGrpc("google.iam.credentials.v1.IAMCredentials", "SignBlob");
+    auto scope = opentelemetry::trace::Scope(span);
+    InjectTraceContext(context, CurrentOptions());
+    return EndSpan(context, *span, child_->SignBlob(context, request));
+  }
+
+ private:
+  std::shared_ptr<MinimalIamCredentialsStub> child_;
+};
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 }  // namespace
 
 std::shared_ptr<MinimalIamCredentialsStub> DecorateMinimalIamCredentialsStub(
@@ -162,6 +200,11 @@ std::shared_ptr<MinimalIamCredentialsStub> DecorateMinimalIamCredentialsStub(
     impl = std::make_shared<AsyncAccessTokenGeneratorLogging>(
         std::move(impl), options.get<GrpcTracingOptionsOption>());
   }
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (TracingEnabled(options)) {
+    impl = std::make_shared<AsyncAccessTokenGeneratorTracing>(std::move(impl));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return impl;
 }
 

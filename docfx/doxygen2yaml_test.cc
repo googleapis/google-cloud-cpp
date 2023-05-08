@@ -20,8 +20,6 @@
 namespace docfx {
 namespace {
 
-using ::testing::ElementsAre;
-
 auto constexpr kEnumXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
       <memberdef kind="enum" id="namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c" prot="public" static="no" strong="yes">
@@ -377,42 +375,6 @@ auto constexpr kClassXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
     </compounddef>
   </doxygen>)xml";
 
-TEST(Doxygen2Yaml, CompoundToc) {
-  auto constexpr kDocXml = R"xml(<?xml version="1.0" standalone="yes"?>
-    <doxygen version="1.9.1" xml:lang="en-US">
-      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacegoogle" kind="namespace" language="C++">
-        <compoundname>google</compoundname>
-        <innernamespace refid="namespacegoogle_1_1cloud">google::cloud</innernamespace>
-      </compounddef>
-      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacegoogle_1_1cloud" kind="namespace" language="C++">
-        <compoundname>google::cloud</compoundname>
-      </compounddef>
-      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacestd" kind="namespace" language="Unknown">
-        <compoundname>std</compoundname>
-      </compounddef>
-      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="classgoogle_1_1cloud_1_1future" kind="class" language="C++" prot="public" final="yes">
-        <compoundname>google::cloud::future</compoundname>
-        <basecompoundref prot="private" virt="non-virtual">internal::future_base&lt; T &gt;</basecompoundref>
-        <includes refid="future__generic_8h" local="no">google/cloud/future_generic.h</includes>
-        <templateparamlist>
-          <param>
-            <type>typename T</type>
-          </param>
-        </templateparamlist>
-      </compounddef>
-    </doxygen>)xml";
-
-  pugi::xml_document doc;
-  ASSERT_TRUE(doc.load_string(kDocXml));
-  auto const actual = CompoundToc(Config{"unused", "cloud", ""}, doc);
-
-  EXPECT_THAT(
-      actual,
-      ElementsAre(TocEntry{"namespacegoogle", "google", "namespacegoogle.yml"},
-                  TocEntry{"namespacegoogle_1_1cloud", "google::cloud",
-                           "namespacegoogle_1_1cloud.yml"}));
-}
-
 void TestPre(YAML::Emitter& yaml) {
   yaml << YAML::BeginMap << YAML::Key << "items" << YAML::Value
        << YAML::BeginSeq;
@@ -442,8 +404,7 @@ TEST(Doxygen2Yaml, EnumValue) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
-    name: |
-      kIdempotent
+    name: kIdempotent
     id: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
     parent: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
     type: enumvalue
@@ -474,8 +435,7 @@ TEST(Doxygen2Yaml, Enum) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
-    name: |
-      Idempotency
+    name: Idempotency
     fullName: |
       google::cloud::Idempotency
     id: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
@@ -525,9 +485,11 @@ items:
       - In some applications, creating a duplicate entry may
       be acceptable as the system will deduplicate them later. In such systems it may
       be preferable to retry the operation even though it is not idempotent.
+    children:
+      - namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
+      - namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9cae75d33e94f2dc4028d4d67bdaab75190
   - uid: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
-    name: |
-      kIdempotent
+    name: kIdempotent
     id: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
     parent: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
     type: enumvalue
@@ -536,8 +498,7 @@ items:
     summary: |
       The operation is idempotent and can be retried after a transient failure.
   - uid: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9cae75d33e94f2dc4028d4d67bdaab75190
-    name: |
-      kNonIdempotent
+    name: kNonIdempotent
     id: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9cae75d33e94f2dc4028d4d67bdaab75190
     parent: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
     type: enumvalue

@@ -59,11 +59,11 @@ def google_cloud_cpp_deps(name = None):
         http_archive,
         name = "com_google_absl",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_absl/20230125.2.tar.gz",
-            "https://github.com/abseil/abseil-cpp/archive/20230125.2.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_absl/20230125.3.tar.gz",
+            "https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz",
         ],
-        sha256 = "9a2b5752d7bfade0bdeee2701de17c9480620f8b237e1964c1b9967c75374906",
-        strip_prefix = "abseil-cpp-20230125.2",
+        sha256 = "5366d7e7fa7ba0d915014d387b66d0d002c03236448e1ba9ef98122c13b35c36",
+        strip_prefix = "abseil-cpp-20230125.3",
     )
 
     # Load a version of googletest that we know works.
@@ -83,11 +83,11 @@ def google_cloud_cpp_deps(name = None):
         http_archive,
         name = "com_google_benchmark",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_benchmark/v1.7.0.tar.gz",
-            "https://github.com/google/benchmark/archive/v1.7.0.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_benchmark/v1.8.0.tar.gz",
+            "https://github.com/google/benchmark/archive/v1.8.0.tar.gz",
         ],
-        sha256 = "3aff99169fa8bdee356eaa1f691e835a6e57b1efeadb8a0f9f228531158246ac",
-        strip_prefix = "benchmark-1.7.0",
+        sha256 = "ea2e94c24ddf6594d15c711c06ccd4486434d9cf3eca954e2af8a20c88f9f172",
+        strip_prefix = "benchmark-1.8.0",
     )
 
     # Load the googleapis dependency.

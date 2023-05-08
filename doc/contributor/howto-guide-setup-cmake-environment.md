@@ -87,6 +87,12 @@ env -C build-out/home ctest --output-on-failure -LE integration-test
 If you also want to run the integration tests you need to setup multiple
 [environment variables](/ci/etc/integration-tests-config.sh), and then run:
 
+To set up the environment variables, run the script using:
+
+```shell
+source ci/etc/integration-tests-config.sh
+```
+
 ```shell
 env -C build-out/home ctest --output-on-failure
 ```

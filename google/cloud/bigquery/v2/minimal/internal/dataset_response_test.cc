@@ -446,9 +446,9 @@ TEST(ListDatasetsResponseTest, DebugString) {
             R"( })");
 
   EXPECT_EQ(
-      response->DebugString("ListJobsResponse",
+      response->DebugString("ListDatasetsResponse",
                             TracingOptions{}.SetOptions("single_line_mode=F")),
-      R"(ListJobsResponse {
+      R"(ListDatasetsResponse {
   kind: "kind-1"
   etag: "tag-1"
   next_page_token: "npt-123"

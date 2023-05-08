@@ -24,6 +24,7 @@
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/internal/call_context.h"
 #include "google/cloud/stream_range.h"
 
 namespace google {
@@ -117,7 +118,7 @@ class RowReader {
   explicit RowReader(std::shared_ptr<bigtable_internal::RowReaderImpl> impl)
       : impl_(std::move(impl)) {}
 
-  Options options_ = google::cloud::internal::CurrentOptions();
+  google::cloud::internal::CallContext call_context_;
   StreamRange<Row> stream_;
   std::shared_ptr<bigtable_internal::RowReaderImpl> impl_;
 };

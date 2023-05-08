@@ -39,10 +39,6 @@ include(GoogleCloudCppDoxygen)
 google_cloud_cpp_doxygen_targets("dataproc" DEPENDS cloud-docs
                                  google-cloud-cpp::dataproc_protos)
 
-find_package(gRPC REQUIRED)
-find_package(Protobuf REQUIRED)
-find_package(absl CONFIG REQUIRED)
-
 include(GoogleCloudCppCommon)
 
 include(CompileProtos)

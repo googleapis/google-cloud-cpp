@@ -14,6 +14,7 @@
 
 #include "generator/internal/metadata_decorator_generator.h"
 #include "generator/internal/codegen_utils.h"
+#include "generator/internal/http_option_utils.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
@@ -36,7 +37,7 @@ std::string SetMetadataText(google::protobuf::MethodDescriptor const& method,
   // If there are no explicit routing headers, we fall back to the routing as
   // defined by the google.api.http annotation
   if (info.empty()) {
-    if (HasRoutingHeader(method)) {
+    if (HasHttpRoutingHeader(method)) {
       return "  SetMetadata(" + context +
              ", \"$method_request_param_key$=\" + "
              "request.$method_request_param_value$);";

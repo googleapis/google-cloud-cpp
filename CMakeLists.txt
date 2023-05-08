@@ -182,7 +182,14 @@ add_custom_target(all-docfx)
 find_package(absl CONFIG REQUIRED)
 if (${GOOGLE_CLOUD_CPP_ENABLE_GRPC})
     find_package(gRPC REQUIRED QUIET)
-    find_package(Protobuf REQUIRED QUIET)
+    set(GOOGLE_CLOUD_CPP_FIND_DEPENDENCY_PROTOBUF
+        "find_dependency(Protobuf CONFIG)")
+    find_package(Protobuf CONFIG QUIET)
+    if (NOT Protobuf_FOUND)
+        set(GOOGLE_CLOUD_CPP_FIND_DEPENDENCY_PROTOBUF
+            "find_dependency(Protobuf)")
+        find_package(Protobuf REQUIRED)
+    endif ()
     add_subdirectory(external/googleapis)
 endif ()
 

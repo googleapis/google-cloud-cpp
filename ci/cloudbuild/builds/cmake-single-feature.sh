@@ -17,8 +17,8 @@
 set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
-source module ci/lib/io.sh
 source module ci/cloudbuild/builds/lib/features.sh
+source module ci/lib/io.sh
 
 mapfile -t features < <(features::list_full)
 
