@@ -23,7 +23,6 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <algorithm>
 #include <string>
 #include <vector>
 
