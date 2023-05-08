@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/testing/table_test_utils.h"
+#include "google/cloud/bigquery/v2/minimal/internal/table_view.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -337,6 +338,37 @@ std::string MakeListFormatTableJsonText() {
          R"("dataset_id":"t-123","project_id":"t-123","table_id":"t-123"})"
          R"(,"time_partitioning":{"expiration_time":123,"field":"time-partition-field")"
          R"(,"type":""},"type":"t-type","view":{"use_legacy_sql":true}})";
+}
+
+std::string MakeListTablesResponseJsonText() {
+  auto tables_json_txt =
+      bigquery_v2_minimal_testing::MakeListFormatTableJsonText();
+  return R"({"etag": "tag-1",
+          "kind": "kind-1",
+          "next_page_token": "npt-123",
+          "total_items": "1",
+          "tables": [)" +
+         tables_json_txt + R"(]})";
+}
+
+bigquery_v2_minimal_internal::GetTableRequest MakeGetTableRequest() {
+  std::vector<std::string> fields;
+  fields.emplace_back("f1");
+  auto view = bigquery_v2_minimal_internal::TableMetadataView::Basic();
+
+  bigquery_v2_minimal_internal::GetTableRequest request("t-123", "t-123",
+                                                        "t-123");
+  request.set_selected_fields(fields);
+  request.set_view(view);
+
+  return request;
+}
+
+bigquery_v2_minimal_internal::ListTablesRequest MakeListTablesRequest() {
+  bigquery_v2_minimal_internal::ListTablesRequest request("t-123", "t-123");
+  request.set_max_results(10).set_page_token("123");
+
+  return request;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
