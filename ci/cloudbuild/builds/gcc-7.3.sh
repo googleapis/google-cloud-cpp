@@ -18,22 +18,23 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
+source module ci/lib/io.sh
 
 # We run this test in a docker image that includes the oldest GCC that we
 # support, which happens to be 7.3 currently.
 export CC=gcc
 export CXX=g++
 
-cmake -GNinja -H. -Bcmake-out \
+io::run cmake -GNinja -H. -Bcmake-out \
   -DGOOGLE_CLOUD_CPP_ENABLE="$(features::always_build_cmake)" \
   -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON \
   -DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON \
   -DBUILD_SHARED_LIBS=yes
-cmake --build cmake-out
+io::run cmake --build cmake-out
 mapfile -t ctest_args < <(ctest::common_args)
 # Cannot use `env -C` as the version of env on Ubuntu:16.04 this does not
 # support it
 (
   cd cmake-out
-  ctest "${ctest_args[@]}" -LE "integration-test"
+  io::run ctest "${ctest_args[@]}" -LE "integration-test"
 )

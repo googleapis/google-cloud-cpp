@@ -22,8 +22,8 @@ if ((CI_CLOUDBUILD_BUILDS_LIB_CMAKE_SH__++ != 0)); then
   return 0
 fi # include guard
 
-source module ci/lib/io.sh
 source module ci/cloudbuild/builds/lib/features.sh
+source module ci/lib/io.sh
 
 io::log "Using CMake version"
 cmake --version

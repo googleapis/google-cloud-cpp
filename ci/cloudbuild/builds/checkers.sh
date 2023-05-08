@@ -17,9 +17,9 @@
 set -euo pipefail
 
 source "$(dirname "$0")/../../lib/init.sh"
-source module ci/lib/io.sh
-source module ci/cloudbuild/builds/lib/git.sh
 source module ci/cloudbuild/builds/lib/features.sh
+source module ci/cloudbuild/builds/lib/git.sh
+source module ci/lib/io.sh
 
 # Runs sed expressions (specified after -e) over the given files, editing them
 # in place. This function is exported so it can be run in subshells, such as
