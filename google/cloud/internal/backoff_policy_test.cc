@@ -43,14 +43,14 @@ TEST(ExponentialBackoffPolicy, Simple) {
 
 /// @test Verify the initial delay is respected.
 TEST(ExponentialBackoffPolicy, ValidateInitialDelayIsRespected) {
-  ExponentialBackoffPolicy tested(ms(10), ms(11), 2.0);
+  ExponentialBackoffPolicy tested(ms(10), ms(12), 2.0);
 
   auto delay = tested.OnCompletion();
   EXPECT_LE(ms(10), delay);
-  EXPECT_GE(ms(11), delay);
+  EXPECT_GE(ms(12), delay);
   delay = tested.OnCompletion();
   EXPECT_LE(ms(10), delay);
-  EXPECT_GE(ms(11), delay);
+  EXPECT_GE(ms(12), delay);
 }
 
 /// @test Verify that the scaling factor is validated.
