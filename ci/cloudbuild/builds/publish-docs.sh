@@ -19,6 +19,7 @@ set -euo pipefail
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
 source module ci/cloudbuild/builds/lib/features.sh
+source module ci/lib/io.sh
 
 mapfile -t FEATURE_LIST < <(features::list_full)
 read -r ENABLED_FEATURES < <(features::list_full_cmake)
@@ -64,13 +65,13 @@ fi
 
 export CC=clang
 export CXX=clang++
-cmake -GNinja "${doc_args[@]}" -S . -B cmake-out
+io::run cmake -GNinja "${doc_args[@]}" -S . -B cmake-out
 # Doxygen needs the proto-generated headers, but there are race conditions
 # between CMake generating these files and doxygen scanning for them. We could
 # fix this by avoiding parallelism with `-j 1`, or as we do here, we'll
 # pre-generate all the proto headers, then call doxygen.
-cmake --build cmake-out --target google-cloud-cpp-protos
-cmake --build cmake-out --target doxygen-docs all-docfx
+io::run cmake --build cmake-out --target google-cloud-cpp-protos
+io::run cmake --build cmake-out --target doxygen-docs all-docfx
 
 if [[ "${PROJECT_ID:-}" != "cloud-cpp-testing-resources" ]]; then
   io::log_h2 "Skipping upload of docs," \

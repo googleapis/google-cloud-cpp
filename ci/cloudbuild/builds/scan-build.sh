@@ -23,6 +23,7 @@ set -euo pipefail
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
 source module ci/cloudbuild/builds/lib/features.sh
+source module ci/lib/io.sh
 
 export CC=clang
 export CXX=clang++
@@ -36,6 +37,6 @@ scan_build=(
   "-o"
   "${HOME}/scan-build"
 )
-"${scan_build[@]}" cmake "${cmake_args[@]}" \
+io::run "${scan_build[@]}" cmake "${cmake_args[@]}" \
   -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
-"${scan_build[@]}" cmake --build cmake-out
+io::run "${scan_build[@]}" cmake --build cmake-out

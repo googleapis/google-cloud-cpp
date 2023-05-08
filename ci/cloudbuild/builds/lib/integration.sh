@@ -23,8 +23,8 @@ if ((CI_CLOUDBUILD_BUILDS_LIB_INTEGRATION_SH__++ != 0)); then
 fi # include guard
 
 source module ci/etc/integration-tests-config.sh
-source module ci/lib/io.sh
 source module ci/cloudbuild/builds/lib/git.sh
+source module ci/lib/io.sh
 
 # To run the integration tests we need to install the dependencies for the storage emulator
 export PATH="${HOME}/.local/bin:${PATH}"

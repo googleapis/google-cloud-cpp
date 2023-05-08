@@ -20,6 +20,7 @@ source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
 source module ci/cloudbuild/builds/lib/features.sh
 source module ci/cloudbuild/builds/lib/integration.sh
+source module ci/lib/io.sh
 
 export CC=gcc
 export CXX=g++
@@ -31,11 +32,11 @@ ENABLED_FEATURES="${ENABLED_FEATURES},__ga_libraries__"
 readonly ENABLED_FEATURES
 
 # This is the build to test with -m32, which requires a toolchain file.
-cmake "${cmake_args[@]}" \
+io::run cmake "${cmake_args[@]}" \
   "--toolchain" "${PROJECT_ROOT}/ci/etc/m32-toolchain.cmake" \
   -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
-cmake --build cmake-out
+io::run cmake --build cmake-out
 mapfile -t ctest_args < <(ctest::common_args)
-env -C cmake-out ctest "${ctest_args[@]}" -LE "integration-test"
+io::run env -C cmake-out ctest "${ctest_args[@]}" -LE "integration-test"
 
 integration::ctest_with_emulators "cmake-out"
