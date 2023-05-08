@@ -67,12 +67,8 @@ TEST(ListTablesResponseTest, Success) {
   BigQueryHttpResponse http_response;
   auto tables_json_txt =
       bigquery_v2_minimal_testing::MakeListFormatTableJsonText();
-  http_response.payload = R"({"etag": "tag-1",
-          "kind": "kind-1",
-          "next_page_token": "npt-123",
-          "total_items": "1",
-          "tables": [)" + tables_json_txt +
-                          R"(]})";
+  http_response.payload =
+      bigquery_v2_minimal_testing::MakeListTablesResponseJsonText();
 
   auto const list_tables_response =
       ListTablesResponse::BuildFromHttpResponse(http_response);
