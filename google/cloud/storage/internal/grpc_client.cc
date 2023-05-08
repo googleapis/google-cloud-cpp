@@ -264,8 +264,11 @@ GrpcClient::GrpcClient(Options opts)
       backwards_compatibility_options_(
           storage::internal::MakeBackwardsCompatibleClientOptions(options_)),
       background_(MakeBackgroundThreadsFactory(options_)()),
-      stub_(CreateStorageStub(background_->cq(), options_)),
-      iam_stub_(CreateStorageIamStub(background_->cq(), options_)) {}
+      iam_stub_(CreateStorageIamStub(background_->cq(), options_)) {
+  auto p = CreateStorageStub(background_->cq(), options_);
+  refresh_ = std::move(p.first);
+  stub_ = std::move(p.second);
+}
 
 GrpcClient::GrpcClient(
     std::shared_ptr<StorageStub> stub,
