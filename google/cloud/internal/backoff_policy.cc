@@ -42,7 +42,7 @@ std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion() {
     generator_ = google::cloud::internal::MakeDefaultPRNG();
   }
   std::uniform_int_distribution<microseconds::rep> rng_distribution(
-      current_delay_range_.count() / 2, current_delay_range_.count());
+      std::max(initial_delay_.count(), current_delay_range_.count() / 2), current_delay_range_.count());
   // Randomized sleep period because it is possible that after some time all
   // client have same sleep period if we use only exponential backoff policy.
   auto delay = microseconds(rng_distribution(*generator_));
