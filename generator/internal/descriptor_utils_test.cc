@@ -442,6 +442,12 @@ char const* const kServiceProto =
     "  // namespace $field comment.\n"
     "  Namespace namespace = 1;\n"
     "}\n"
+    "// Leading comments about message Baz.\n"
+    "message Baz {\n"
+    "  string project = 1;\n"
+    "  string instance = 2;\n"
+    "  Foo foo_resource = 3 [json_name=\"resource\"];\n"
+    "}\n"
     "// Leading comments about service Service.\n"
     "service Service {\n"
     "  // Leading comments about rpc Method0$.\n"
@@ -536,6 +542,15 @@ char const* const kServiceProto =
     "    option (google.api.method_signature) = \"parent\";\n"
     "    option (google.api.method_signature) = \"name,parent,number\";\n"
     "    option (google.api.method_signature) = \"name,title,number\";\n"
+    "  }\n"
+    "  // Leading comments about rpc Method11.\n"
+    "  rpc Method11(Baz) returns (Empty) {\n"
+    "    option (google.api.http) = {\n"
+    "       post: "
+    "\"/v1/projects/{project=project}/instances/{instance=instance}/"
+    "databases\"\n"
+    "       body: \"*\"\n"
+    "    };\n"
     "  }\n"
     "  // Test that the method defaults to kIdempotent.\n"
     "  rpc GetIamPolicy(google.iam.v1.GetIamPolicyRequest)\n"
@@ -918,6 +933,8 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method8",
                              "method_request_param_value",
                              "namespace_().name()"),
+        MethodVarsTestValues("google.protobuf.Service.Method8",
+                             "request_resource", "request"),
         MethodVarsTestValues(
             "google.protobuf.Service.Method8", "method_rest_path",
             "absl::StrCat(\"/v1/\", request.namespace_().name(), \"\")"),
@@ -928,6 +945,9 @@ INSTANTIATE_TEST_SUITE_P(
       {std::make_pair("page_size", std::to_string(request.page_size())),
        std::make_pair("page_token", request.page_token()),
        std::make_pair("name", request.name())})"""),
+        // Method11
+        MethodVarsTestValues("google.protobuf.Service.Method11",
+                             "request_resource", "request.foo_resource()"),
         // IAM idempotency defaults
         MethodVarsTestValues("google.protobuf.Service.GetIamPolicy",
                              "idempotency", "kIdempotent"),
