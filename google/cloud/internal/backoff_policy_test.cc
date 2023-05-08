@@ -41,8 +41,8 @@ TEST(ExponentialBackoffPolicy, Simple) {
   EXPECT_GE(ms(100), delay);
 }
 
-/// @test Verify the minimum and maximum delay are respected.
-TEST(ExponentialBackoffPolicy, ValidateMinimumAndMaximumDelayAreRespected) {
+/// @test Verify the initial delay is respected.
+TEST(ExponentialBackoffPolicy, ValidateInitialDelayIsRespected) {
   ExponentialBackoffPolicy tested(ms(10), ms(11), 2.0);
 
   auto delay = tested.OnCompletion();
