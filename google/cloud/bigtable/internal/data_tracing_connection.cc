@@ -22,130 +22,147 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+namespace {
+class DataTracingConnection : public bigtable::DataConnection {
+ public:
+  ~DataTracingConnection() override = default;
 
-Status DataTracingConnection::Apply(std::string const& table_name,
-                                    bigtable::SingleRowMutation mut) {
-  auto span = internal::MakeSpan("bigtable::Table::Apply");
-  auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->Apply(table_name, std::move(mut)));
-}
+  explicit DataTracingConnection(
+      std::shared_ptr<bigtable::DataConnection> child)
+      : child_(std::move(child)) {}
 
-future<Status> DataTracingConnection::AsyncApply(
-    std::string const& table_name, bigtable::SingleRowMutation mut) {
-  auto span = internal::MakeSpan("bigtable::Table::AsyncApply");
-  auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->AsyncApply(table_name, std::move(mut)));
-}
+  Options options() override { return child_->options(); }
 
-std::vector<bigtable::FailedMutation> DataTracingConnection::BulkApply(
-    std::string const& table_name, bigtable::BulkMutation mut) {
-  return child_->BulkApply(table_name, std::move(mut));
-}
+  Status Apply(std::string const& table_name,
+               bigtable::SingleRowMutation mut) override {
+    auto span = internal::MakeSpan("bigtable::Table::Apply");
+    auto scope = opentelemetry::trace::Scope(span);
+    return internal::EndSpan(*span, child_->Apply(table_name, std::move(mut)));
+  }
 
-future<std::vector<bigtable::FailedMutation>>
-DataTracingConnection::AsyncBulkApply(std::string const& table_name,
-                                      bigtable::BulkMutation mut) {
-  return child_->AsyncBulkApply(table_name, std::move(mut));
-}
+  future<Status> AsyncApply(std::string const& table_name,
+                            bigtable::SingleRowMutation mut) override {
+    auto span = internal::MakeSpan("bigtable::Table::AsyncApply");
+    auto scope = opentelemetry::trace::Scope(span);
+    return internal::EndSpan(std::move(span),
+                             child_->AsyncApply(table_name, std::move(mut)));
+  }
 
-bigtable::RowReader DataTracingConnection::ReadRows(
-    std::string const& table_name, bigtable::RowSet row_set,
-    std::int64_t rows_limit, bigtable::Filter filter) {
-  return child_->ReadRows(table_name, std::move(row_set), rows_limit,
+  std::vector<bigtable::FailedMutation> BulkApply(
+      std::string const& table_name, bigtable::BulkMutation mut) override {
+    return child_->BulkApply(table_name, std::move(mut));
+  }
+
+  future<std::vector<bigtable::FailedMutation>> AsyncBulkApply(
+      std::string const& table_name, bigtable::BulkMutation mut) override {
+    return child_->AsyncBulkApply(table_name, std::move(mut));
+  }
+
+  bigtable::RowReader ReadRows(std::string const& table_name,
+                               bigtable::RowSet row_set,
+                               std::int64_t rows_limit,
+                               bigtable::Filter filter) override {
+    return child_->ReadRows(table_name, std::move(row_set), rows_limit,
+                            std::move(filter));
+  }
+
+  StatusOr<std::pair<bool, bigtable::Row>> ReadRow(
+      std::string const& table_name, std::string row_key,
+      bigtable::Filter filter) override {
+    return child_->ReadRow(table_name, std::move(row_key), std::move(filter));
+  }
+
+  StatusOr<bigtable::MutationBranch> CheckAndMutateRow(
+      std::string const& table_name, std::string row_key,
+      bigtable::Filter filter, std::vector<bigtable::Mutation> true_mutations,
+      std::vector<bigtable::Mutation> false_mutations) override {
+    auto span = internal::MakeSpan("bigtable::Table::CheckAndMutateRow");
+    auto scope = opentelemetry::trace::Scope(span);
+    return internal::EndSpan(
+        *span, child_->CheckAndMutateRow(
+                   table_name, std::move(row_key), std::move(filter),
+                   std::move(true_mutations), std::move(false_mutations)));
+  }
+
+  future<StatusOr<bigtable::MutationBranch>> AsyncCheckAndMutateRow(
+      std::string const& table_name, std::string row_key,
+      bigtable::Filter filter, std::vector<bigtable::Mutation> true_mutations,
+      std::vector<bigtable::Mutation> false_mutations) override {
+    auto span = internal::MakeSpan("bigtable::Table::AsyncCheckAndMutateRow");
+    auto scope = opentelemetry::trace::Scope(span);
+    return internal::EndSpan(
+        std::move(span),
+        child_->AsyncCheckAndMutateRow(
+            table_name, std::move(row_key), std::move(filter),
+            std::move(true_mutations), std::move(false_mutations)));
+  }
+
+  StatusOr<std::vector<bigtable::RowKeySample>> SampleRows(
+      std::string const& table_name) override {
+    auto span = internal::MakeSpan("bigtable::Table::SampleRows");
+    auto scope = opentelemetry::trace::Scope(span);
+    return internal::EndSpan(*span, child_->SampleRows(table_name));
+  }
+
+  future<StatusOr<std::vector<bigtable::RowKeySample>>> AsyncSampleRows(
+      std::string const& table_name) override {
+    auto span = internal::MakeSpan("bigtable::Table::AsyncSampleRows");
+    auto scope = opentelemetry::trace::Scope(span);
+    return internal::EndSpan(std::move(span),
+                             child_->AsyncSampleRows(table_name));
+  }
+
+  StatusOr<bigtable::Row> ReadModifyWriteRow(
+      google::bigtable::v2::ReadModifyWriteRowRequest request) override {
+    auto span = internal::MakeSpan("bigtable::Table::ReadModifyWriteRow");
+    auto scope = opentelemetry::trace::Scope(span);
+    return internal::EndSpan(*span,
+                             child_->ReadModifyWriteRow(std::move(request)));
+  }
+
+  future<StatusOr<bigtable::Row>> AsyncReadModifyWriteRow(
+      google::bigtable::v2::ReadModifyWriteRowRequest request) override {
+    auto span = internal::MakeSpan("bigtable::Table::AsyncReadModifyWriteRow");
+    auto scope = opentelemetry::trace::Scope(span);
+    return internal::EndSpan(
+        std::move(span), child_->AsyncReadModifyWriteRow(std::move(request)));
+  }
+
+  void AsyncReadRows(std::string const& table_name,
+                     std::function<future<bool>(bigtable::Row)> on_row,
+                     std::function<void(Status)> on_finish,
+                     bigtable::RowSet row_set, std::int64_t rows_limit,
+                     bigtable::Filter filter) override {
+    child_->AsyncReadRows(table_name, std::move(on_row), std::move(on_finish),
+                          std::move(row_set), std::move(rows_limit),
                           std::move(filter));
-}
+  }
 
-StatusOr<std::pair<bool, bigtable::Row>> DataTracingConnection::ReadRow(
-    std::string const& table_name, std::string row_key,
-    bigtable::Filter filter) {
-  return child_->ReadRow(table_name, std::move(row_key), std::move(filter));
-}
+  future<StatusOr<std::pair<bool, bigtable::Row>>> AsyncReadRow(
+      std::string const& table_name, std::string row_key,
+      bigtable::Filter filter) override {
+    return child_->AsyncReadRow(table_name, std::move(row_key),
+                                std::move(filter));
+  }
 
-StatusOr<bigtable::MutationBranch> DataTracingConnection::CheckAndMutateRow(
-    std::string const& table_name, std::string row_key, bigtable::Filter filter,
-    std::vector<bigtable::Mutation> true_mutations,
-    std::vector<bigtable::Mutation> false_mutations) {
-  auto span = internal::MakeSpan("bigtable::Table::CheckAndMutateRow");
-  auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(
-      *span, child_->CheckAndMutateRow(
-                 table_name, std::move(row_key), std::move(filter),
-                 std::move(true_mutations), std::move(false_mutations)));
-}
-
-future<StatusOr<bigtable::MutationBranch>>
-DataTracingConnection::AsyncCheckAndMutateRow(
-    std::string const& table_name, std::string row_key, bigtable::Filter filter,
-    std::vector<bigtable::Mutation> true_mutations,
-    std::vector<bigtable::Mutation> false_mutations) {
-  auto span = internal::MakeSpan("bigtable::Table::AsyncCheckAndMutateRow");
-  auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->AsyncCheckAndMutateRow(
-          table_name, std::move(row_key), std::move(filter),
-          std::move(true_mutations), std::move(false_mutations)));
-}
-
-StatusOr<std::vector<bigtable::RowKeySample>> DataTracingConnection::SampleRows(
-    std::string const& table_name) {
-  auto span = internal::MakeSpan("bigtable::Table::SampleRows");
-  auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->SampleRows(table_name));
-}
-
-future<StatusOr<std::vector<bigtable::RowKeySample>>>
-DataTracingConnection::AsyncSampleRows(std::string const& table_name) {
-  auto span = internal::MakeSpan("bigtable::Table::AsyncSampleRows");
-  auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->AsyncSampleRows(table_name));
-}
-
-StatusOr<bigtable::Row> DataTracingConnection::ReadModifyWriteRow(
-    google::bigtable::v2::ReadModifyWriteRowRequest request) {
-  auto span = internal::MakeSpan("bigtable::Table::ReadModifyWriteRow");
-  auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span,
-                           child_->ReadModifyWriteRow(std::move(request)));
-}
-
-future<StatusOr<bigtable::Row>> DataTracingConnection::AsyncReadModifyWriteRow(
-    google::bigtable::v2::ReadModifyWriteRowRequest request) {
-  auto span = internal::MakeSpan("bigtable::Table::AsyncReadModifyWriteRow");
-  auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->AsyncReadModifyWriteRow(std::move(request)));
-}
-
-void DataTracingConnection::AsyncReadRows(
-    std::string const& table_name,
-    std::function<future<bool>(bigtable::Row)> on_row,
-    std::function<void(Status)> on_finish, bigtable::RowSet row_set,
-    std::int64_t rows_limit, bigtable::Filter filter) {
-  child_->AsyncReadRows(table_name, std::move(on_row), std::move(on_finish),
-                        std::move(row_set), std::move(rows_limit),
-                        std::move(filter));
-}
-
-future<StatusOr<std::pair<bool, bigtable::Row>>>
-DataTracingConnection::AsyncReadRow(std::string const& table_name,
-                                    std::string row_key,
-                                    bigtable::Filter filter) {
-  return child_->AsyncReadRow(table_name, std::move(row_key),
-                              std::move(filter));
-}
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+ private:
+  std::shared_ptr<bigtable::DataConnection> child_;
+};
+}  // namespace
 
 std::shared_ptr<bigtable::DataConnection> MakeDataTracingConnection(
     std::shared_ptr<bigtable::DataConnection> conn) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-  conn = std::make_shared<DataTracingConnection>(std::move(conn));
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<DataTracingConnection>(std::move(conn));
+}
+
+#else
+
+std::shared_ptr<bigtable::DataConnection> MakeDataTracingConnection(
+    std::shared_ptr<bigtable::DataConnection> conn) {
   return conn;
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
