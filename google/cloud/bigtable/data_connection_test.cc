@@ -17,6 +17,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -24,8 +25,10 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::ScopedEnvironment;
+using ms = std::chrono::milliseconds;
+
 TEST(MakeDataConnection, DefaultsOptions) {
-  using ::google::cloud::testing_util::ScopedEnvironment;
   ScopedEnvironment emulator_host("BIGTABLE_EMULATOR_HOST", "localhost:1");
 
   auto conn = MakeDataConnection(
