@@ -45,6 +45,9 @@ class AsyncConnectionImpl : public AsyncConnection {
   AsyncReadObjectRange(
       storage::internal::ReadObjectRangeRequest request) override;
 
+  future<StatusOr<storage::ObjectMetadata>> AsyncComposeObject(
+      storage::internal::ComposeObjectRequest request) override;
+
   future<Status> AsyncDeleteObject(
       storage::internal::DeleteObjectRequest request) override;
 

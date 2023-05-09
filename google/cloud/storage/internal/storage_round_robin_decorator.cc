@@ -223,6 +223,14 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageRoundRobin::UpdateHmacKey(
   return Child()->UpdateHmacKey(context, request);
 }
 
+future<StatusOr<google::storage::v2::Object>>
+StorageRoundRobin::AsyncComposeObject(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::storage::v2::ComposeObjectRequest const& request) {
+  return Child()->AsyncComposeObject(cq, std::move(context), request);
+}
+
 future<Status> StorageRoundRobin::AsyncDeleteObject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

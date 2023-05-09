@@ -400,6 +400,20 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageLogging::UpdateHmacKey(
       context, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::storage::v2::Object>>
+StorageLogging::AsyncComposeObject(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::storage::v2::ComposeObjectRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::storage::v2::ComposeObjectRequest const& request) {
+        return child_->AsyncComposeObject(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
 future<Status> StorageLogging::AsyncDeleteObject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
