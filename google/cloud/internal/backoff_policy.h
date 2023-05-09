@@ -128,13 +128,14 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
                            double scaling)
       : initial_delay_(std::chrono::duration_cast<std::chrono::microseconds>(
             initial_delay)),
-        current_delay_range_(2 * initial_delay_),
         maximum_delay_(std::chrono::duration_cast<std::chrono::microseconds>(
             maximum_delay)),
+        current_delay_start_(initial_delay_),
+        current_delay_end_(
+            (std::min)(std::chrono::duration_cast<std::chrono::microseconds>(
+                           scaling * initial_delay_),
+                       maximum_delay_)),
         scaling_(scaling) {
-    if (current_delay_range_ > maximum_delay_) {
-      current_delay_range_ = maximum_delay_;
-    } 
     if (scaling_ <= 1.0) {
       google::cloud::internal::ThrowInvalidArgument(
           "scaling factor must be > 1.0");
@@ -147,8 +148,9 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
   //  - We want uncorrelated data streams for each copy anyway.
   ExponentialBackoffPolicy(ExponentialBackoffPolicy const& rhs) noexcept
       : initial_delay_(rhs.initial_delay_),
-        current_delay_range_(rhs.current_delay_range_),
         maximum_delay_(rhs.maximum_delay_),
+        current_delay_start_(rhs.current_delay_start_),
+        current_delay_end_(rhs.current_delay_end_),
         scaling_(rhs.scaling_) {}
 
   std::unique_ptr<BackoffPolicy> clone() const override;
@@ -156,8 +158,10 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
 
  private:
   std::chrono::microseconds initial_delay_;
-  std::chrono::microseconds current_delay_range_;
   std::chrono::microseconds maximum_delay_;
+  // Stores both ends of the current delay range.
+  std::chrono::microseconds current_delay_start_;
+  std::chrono::microseconds current_delay_end_;
   double scaling_;
   absl::optional<DefaultPRNG> generator_;
 };
