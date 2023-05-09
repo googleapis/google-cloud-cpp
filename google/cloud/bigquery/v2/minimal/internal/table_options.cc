@@ -12,9 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigquery/v2/minimal/internal/dataset_options.h"
+#include "google/cloud/bigquery/v2/minimal/internal/table_options.h"
 #include "google/cloud/bigquery/v2/minimal/internal/common_options.h"
-#include "google/cloud/bigquery/v2/minimal/internal/dataset_retry_policy.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include <memory>
 #include <thread>
@@ -24,28 +23,28 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-Options DatasetDefaultOptions(Options options) {
+Options TableDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "GOOGLE_CLOUD_CPP_BIGQUERY_V2_DATASET_ENDPOINT", "",
-      "GOOGLE_CLOUD_CPP_BIGQUERY_V2_DATASET_AUTHORITY",
+      std::move(options), "GOOGLE_CLOUD_CPP_BIGQUERY_V2_TABLE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_BIGQUERY_V2_TABLE_AUTHORITY",
       "bigquery.googleapis.com");
 
-  if (!options.has<DatasetRetryPolicyOption>()) {
-    options.set<DatasetRetryPolicyOption>(
-        DatasetLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone());
+  if (!options.has<TableRetryPolicyOption>()) {
+    options.set<TableRetryPolicyOption>(
+        TableLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone());
   }
-  if (!options.has<DatasetBackoffPolicyOption>()) {
-    options.set<DatasetBackoffPolicyOption>(
+  if (!options.has<TableBackoffPolicyOption>()) {
+    options.set<TableBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<DatasetIdempotencyPolicyOption>()) {
-    options.set<DatasetIdempotencyPolicyOption>(
-        MakeDefaultDatasetIdempotencyPolicy());
+  if (!options.has<TableIdempotencyPolicyOption>()) {
+    options.set<TableIdempotencyPolicyOption>(
+        MakeDefaultTableIdempotencyPolicy());
   }
-  if (!options.has<DatasetConnectionPoolSizeOption>()) {
-    options.set<DatasetConnectionPoolSizeOption>(DefaultConnectionPoolSize());
+  if (!options.has<TableConnectionPoolSizeOption>()) {
+    options.set<TableConnectionPoolSizeOption>(DefaultConnectionPoolSize());
   }
 
   return options;

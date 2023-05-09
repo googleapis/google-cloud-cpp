@@ -164,6 +164,11 @@ class StorageMetadata : public StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::UpdateHmacKeyRequest const& request) override;
 
+  future<StatusOr<google::storage::v2::Object>> AsyncComposeObject(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::storage::v2::ComposeObjectRequest const& request) override;
+
   future<Status> AsyncDeleteObject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

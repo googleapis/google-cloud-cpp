@@ -51,6 +51,9 @@ class AsyncConnection {
   virtual future<storage_experimental::AsyncReadObjectRangeResponse>
   AsyncReadObjectRange(storage::internal::ReadObjectRangeRequest request) = 0;
 
+  virtual future<StatusOr<storage::ObjectMetadata>> AsyncComposeObject(
+      storage::internal::ComposeObjectRequest request) = 0;
+
   virtual future<Status> AsyncDeleteObject(
       storage::internal::DeleteObjectRequest request) = 0;
 

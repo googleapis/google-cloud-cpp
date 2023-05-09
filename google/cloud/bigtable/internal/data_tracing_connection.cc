@@ -62,8 +62,11 @@ class DataTracingConnection : public bigtable::DataConnection {
                                bigtable::RowSet row_set,
                                std::int64_t rows_limit,
                                bigtable::Filter filter) override {
-    return child_->ReadRows(table_name, std::move(row_set), rows_limit,
-                            std::move(filter));
+    auto span = internal::MakeSpan("bigtable::Table::ReadRows");
+    auto scope = opentelemetry::trace::Scope(span);
+    auto reader = child_->ReadRows(table_name, std::move(row_set), rows_limit,
+                                   std::move(filter));
+    return MakeTracedRowReader(std::move(span), std::move(reader));
   }
 
   StatusOr<std::pair<bool, bigtable::Row>> ReadRow(

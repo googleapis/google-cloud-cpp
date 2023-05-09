@@ -308,7 +308,9 @@ void AppendTypedefSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
   yaml << YAML::Key << "syntax" << YAML::Value                     //
        << YAML::BeginMap                                           //
        << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
-       << TypedefSyntaxContent(node);
+       << TypedefSyntaxContent(node)                               //
+       << YAML::Key << "aliasof" << YAML::Value << YAML::DoubleQuoted
+       << HtmlEscape(LinkedTextType(node.child("type")));
   AppendLocation(yaml, ctx, node, "name");
   yaml << YAML::EndMap;
 }

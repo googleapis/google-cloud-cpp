@@ -17,7 +17,6 @@
 
 #include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/internal/async_connection.h"
-#include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/completion_queue.h"
@@ -29,10 +28,13 @@ namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+class GrpcChannelRefresh;
+class StorageStub;
 
 class AsyncConnectionImpl : public AsyncConnection {
  public:
   explicit AsyncConnectionImpl(CompletionQueue cq,
+                               std::shared_ptr<GrpcChannelRefresh> refresh,
                                std::shared_ptr<StorageStub> stub,
                                Options options);
   ~AsyncConnectionImpl() override = default;
@@ -43,6 +45,9 @@ class AsyncConnectionImpl : public AsyncConnection {
   AsyncReadObjectRange(
       storage::internal::ReadObjectRangeRequest request) override;
 
+  future<StatusOr<storage::ObjectMetadata>> AsyncComposeObject(
+      storage::internal::ComposeObjectRequest request) override;
+
   future<Status> AsyncDeleteObject(
       storage::internal::DeleteObjectRequest request) override;
 
@@ -51,6 +56,7 @@ class AsyncConnectionImpl : public AsyncConnection {
 
  private:
   CompletionQueue cq_;
+  std::shared_ptr<GrpcChannelRefresh> refresh_;
   std::shared_ptr<StorageStub> stub_;
   Options options_;
 };

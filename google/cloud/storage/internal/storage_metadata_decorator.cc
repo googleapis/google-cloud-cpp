@@ -657,6 +657,26 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageMetadata::UpdateHmacKey(
   return child_->UpdateHmacKey(context, request);
 }
 
+future<StatusOr<google::storage::v2::Object>>
+StorageMetadata::AsyncComposeObject(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::storage::v2::ComposeObjectRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  if (!request.destination().bucket().empty()) {
+    params.push_back("bucket=" + request.destination().bucket());
+  }
+
+  if (params.empty()) {
+    SetMetadata(*context);
+  } else {
+    SetMetadata(*context, absl::StrJoin(params, "&"));
+  }
+  return child_->AsyncComposeObject(cq, std::move(context), request);
+}
+
 future<Status> StorageMetadata::AsyncDeleteObject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

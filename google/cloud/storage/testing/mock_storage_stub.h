@@ -154,6 +154,11 @@ class MockStorageStub : public storage_internal::StorageStub {
               (grpc::ClientContext&,
                google::storage::v2::UpdateHmacKeyRequest const&),
               (override));
+  MOCK_METHOD(future<StatusOr<google::storage::v2::Object>>, AsyncComposeObject,
+              (google::cloud::CompletionQueue&,
+               std::shared_ptr<grpc::ClientContext>,
+               google::storage::v2::ComposeObjectRequest const&),
+              (override));
   MOCK_METHOD(future<Status>, AsyncDeleteObject,
               (google::cloud::CompletionQueue&,
                std::shared_ptr<grpc::ClientContext>,

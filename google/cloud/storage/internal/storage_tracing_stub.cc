@@ -378,6 +378,21 @@ StorageTracingStub::UpdateHmacKey(
                            child_->UpdateHmacKey(context, request));
 }
 
+future<StatusOr<google::storage::v2::Object>>
+StorageTracingStub::AsyncComposeObject(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::storage::v2::ComposeObjectRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.storage.v2.Storage", "ComposeObject");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncComposeObject(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
 future<Status> StorageTracingStub::AsyncDeleteObject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
