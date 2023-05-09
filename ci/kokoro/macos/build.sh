@@ -77,12 +77,13 @@ export HOMEBREW_NO_INSTALL_CLEANUP=1
 brew list --versions --formula
 brew list --versions --cask
 brew list --versions coreutils || brew install coreutils
-if [[ "${RUNNING_CI:-}" = "yes" ]]; then
-  # We use `gcloud alpha storage` as it significantly improves the
-  # upload and download performance of the cache.  If this step fails
-  # the build will fail anyway.
-  ci/retry-command.sh 3 120 gcloud components install gcloud-crc32c alpha
-fi
+# TODO(#11549): figure out how to resolve this with kokoro
+#if [[ "${RUNNING_CI:-}" = "yes" ]]; then
+# We use `gcloud alpha storage` as it significantly improves the
+# upload and download performance of the cache.  If this step fails
+# the build will fail anyway.
+# ci/retry-command.sh 3 120 gcloud components install gcloud-crc32c alpha
+#fi
 
 readonly KOKORO_GFILE_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
 # We need this environment variable because on macOS gRPC crashes if it cannot
