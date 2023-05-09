@@ -88,6 +88,9 @@ AsyncConnectionImpl::AsyncComposeObject(
     return make_ready_future(
         StatusOr<storage::ObjectMetadata>(std::move(proto).status()));
   }
+  auto const idempotency = idempotency_policy()->IsIdempotent(request)
+                               ? Idempotency::kIdempotent
+                               : Idempotency::kNonIdempotent;
   auto call = [stub = stub_, request = std::move(request)](
                   CompletionQueue& cq,
                   std::shared_ptr<grpc::ClientContext> context,
@@ -95,9 +98,6 @@ AsyncConnectionImpl::AsyncComposeObject(
     ApplyQueryParameters(*context, request);
     return stub->AsyncComposeObject(cq, std::move(context), proto);
   };
-  auto const idempotency = idempotency_policy()->IsIdempotent(request)
-                               ? Idempotency::kIdempotent
-                               : Idempotency::kNonIdempotent;
   auto const& current = internal::CurrentOptions();
   return google::cloud::internal::AsyncRetryLoop(
              retry_policy(), backoff_policy(), idempotency, cq_,
