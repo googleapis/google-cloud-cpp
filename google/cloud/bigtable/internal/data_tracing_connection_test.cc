@@ -130,10 +130,10 @@ TEST(DataTracingConnection, BulkApplySuccess) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanNamed("bigtable::Table::BulkApply"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanHasAttributes(
-              SpanAttribute<std::size_t>("gcloud.bigtable.failed_mutations", 0),
-              SpanAttribute<std::size_t>("gcloud.bigtable.successful_mutations",
-                                         1)))));
+          SpanHasAttributes(SpanAttribute<std::uint32_t>(
+                                "gcloud.bigtable.failed_mutations", 0),
+                            SpanAttribute<std::uint32_t>(
+                                "gcloud.bigtable.successful_mutations", 1)))));
 }
 
 TEST(DataTracingConnection, BulkApplyFailure) {
@@ -159,10 +159,10 @@ TEST(DataTracingConnection, BulkApplyFailure) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanNamed("bigtable::Table::BulkApply"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError),
-          SpanHasAttributes(
-              SpanAttribute<std::size_t>("gcloud.bigtable.failed_mutations", 2),
-              SpanAttribute<std::size_t>("gcloud.bigtable.successful_mutations",
-                                         8)))));
+          SpanHasAttributes(SpanAttribute<std::uint32_t>(
+                                "gcloud.bigtable.failed_mutations", 2),
+                            SpanAttribute<std::uint32_t>(
+                                "gcloud.bigtable.successful_mutations", 8)))));
 }
 
 TEST(DataTracingConnection, AsyncBulkApplySuccess) {
@@ -184,10 +184,10 @@ TEST(DataTracingConnection, AsyncBulkApplySuccess) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanNamed("bigtable::Table::AsyncBulkApply"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanHasAttributes(
-              SpanAttribute<std::size_t>("gcloud.bigtable.failed_mutations", 0),
-              SpanAttribute<std::size_t>("gcloud.bigtable.successful_mutations",
-                                         1)))));
+          SpanHasAttributes(SpanAttribute<std::uint32_t>(
+                                "gcloud.bigtable.failed_mutations", 0),
+                            SpanAttribute<std::uint32_t>(
+                                "gcloud.bigtable.successful_mutations", 1)))));
 }
 
 TEST(DataTracingConnection, AsyncBulkApplyFailure) {
@@ -213,10 +213,10 @@ TEST(DataTracingConnection, AsyncBulkApplyFailure) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanNamed("bigtable::Table::AsyncBulkApply"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError),
-          SpanHasAttributes(
-              SpanAttribute<std::size_t>("gcloud.bigtable.failed_mutations", 2),
-              SpanAttribute<std::size_t>("gcloud.bigtable.successful_mutations",
-                                         8)))));
+          SpanHasAttributes(SpanAttribute<std::uint32_t>(
+                                "gcloud.bigtable.failed_mutations", 2),
+                            SpanAttribute<std::uint32_t>(
+                                "gcloud.bigtable.successful_mutations", 8)))));
 }
 
 TEST(DataTracingConnection, ReadRows) {

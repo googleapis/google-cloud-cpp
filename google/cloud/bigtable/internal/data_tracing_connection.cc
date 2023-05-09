@@ -29,9 +29,11 @@ std::vector<bigtable::FailedMutation> EndBulkApplySpan(
     std::vector<bigtable::FailedMutation> failures) {
   span.SetStatus(failures.empty() ? opentelemetry::trace::StatusCode::kOk
                                   : opentelemetry::trace::StatusCode::kError);
-  span.SetAttribute("gcloud.bigtable.failed_mutations", failures.size());
-  span.SetAttribute("gcloud.bigtable.successful_mutations",
-                    total_mutations - failures.size());
+  span.SetAttribute("gcloud.bigtable.failed_mutations",
+                    static_cast<std::uint32_t>(failures.size()));
+  span.SetAttribute(
+      "gcloud.bigtable.successful_mutations",
+      static_cast<std::uint32_t>(total_mutations - failures.size()));
   span.End();
   return failures;
 }
