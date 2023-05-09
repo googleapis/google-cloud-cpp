@@ -56,7 +56,7 @@ TEST(ExponentialBackoffPolicy, InitialAndMaximumDelayRespected) {
 /// @test Verify the floating point scaling factor is used to compute the delay
 /// range.
 TEST(ExponentialBackoffPolicy, FloatScalingFactor) {
-  ExponentialBackoffPolicy tested(ms(10), ms(12), 1.1);
+  ExponentialBackoffPolicy tested(ms(10), ms(13), 1.1);
 
   auto delay = tested.OnCompletion();
   EXPECT_LE(ms(10), delay);
