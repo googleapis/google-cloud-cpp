@@ -81,6 +81,8 @@ add_library(
     v2/minimal/internal/table_constraints.h
     v2/minimal/internal/table_idempotency_policy.cc
     v2/minimal/internal/table_idempotency_policy.h
+    v2/minimal/internal/table_logging.cc
+    v2/minimal/internal/table_logging.h
     v2/minimal/internal/table_options.cc
     v2/minimal/internal/table_options.h
     v2/minimal/internal/table_partition.cc
@@ -210,6 +212,7 @@ function (bigquery_rest_define_tests)
         v2/minimal/internal/job_test.cc
         v2/minimal/internal/rest_stub_utils_test.cc
         v2/minimal/internal/table_idempotency_policy_test.cc
+        v2/minimal/internal/table_logging_test.cc
         v2/minimal/internal/table_options_test.cc
         v2/minimal/internal/table_request_test.cc
         v2/minimal/internal/table_response_test.cc
