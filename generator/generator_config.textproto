@@ -1788,6 +1788,7 @@ service {
   omit_stub_factory: true
   generate_round_robin_decorator: true
   gen_async_rpcs: [
+    "ComposeObject",
     "DeleteObject",
     "ReadObject",
     "StartResumableWrite",
