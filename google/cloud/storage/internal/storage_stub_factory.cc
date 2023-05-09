@@ -17,7 +17,7 @@
 #include "google/cloud/storage/internal/storage_auth_decorator.h"
 #include "google/cloud/storage/internal/storage_logging_decorator.h"
 #include "google/cloud/storage/internal/storage_metadata_decorator.h"
-#include "google/cloud/storage/internal/storage_round_robin.h"
+#include "google/cloud/storage/internal/storage_round_robin_decorator.h"
 #include "google/cloud/storage/internal/storage_tracing_stub.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
