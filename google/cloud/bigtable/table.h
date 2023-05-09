@@ -213,172 +213,6 @@ class Table {
         metadata_update_policy_(bigtable_internal::MakeMetadataUpdatePolicy(
             table_name_, app_profile_id())) {}
 
-  /**
-   * Constructor with default policies.
-   *
-   * @param client how to communicate with Cloud Bigtable, including
-   *     credentials, the project id, and the instance id.
-   * @param table_id the table id within the instance defined by client.  The
-   *     full table name is `client->instance_name() + "/tables/" + table_id`.
-   *
-   * @deprecated #google::cloud::bigtable::DataConnection is the preferred way
-   *     to communicate with the Bigtable Data API. To migrate existing code,
-   *     see @ref migrating-from-dataclient "Migrating from DataClient".
-   */
-  Table(std::shared_ptr<DataClient> client, std::string const& table_id)
-      : Table(std::move(client), std::string{}, table_id) {}
-
-  /**
-   * Constructor with default policies.
-   *
-   * @param client how to communicate with Cloud Bigtable, including
-   *     credentials, the project id, and the instance id.
-   * @param app_profile_id the app_profile_id needed for using the replication
-   * API.
-   * @param table_id the table id within the instance defined by client.  The
-   *     full table name is `client->instance_name() + "/tables/" + table_id`.
-   *
-   * @deprecated #google::cloud::bigtable::DataConnection is the preferred way
-   *     to communicate with the Bigtable Data API. To migrate existing code,
-   *     see @ref migrating-from-dataclient "Migrating from DataClient".
-   */
-  Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
-        std::string const& table_id)
-      : client_(std::move(client)),
-        table_(client_->project_id(), client_->instance_id(), table_id),
-        table_name_(table_.FullName()),
-        rpc_retry_policy_prototype_(
-            bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
-        rpc_backoff_policy_prototype_(
-            bigtable::DefaultRPCBackoffPolicy(internal::kBigtableLimits)),
-        idempotent_mutation_policy_(
-            bigtable::DefaultIdempotentMutationPolicy()),
-        background_threads_(client_->BackgroundThreadsFactory()()),
-        options_(Options{}.set<AppProfileIdOption>(std::move(app_profile_id))),
-        metadata_update_policy_(bigtable_internal::MakeMetadataUpdatePolicy(
-            table_name_, this->app_profile_id())) {}
-
-  /**
-   * Constructor with explicit policies.
-   *
-   * The policies are passed by value, because this makes it easy for
-   * applications to create them.
-   *
-   * @par Example
-   * @code
-   * using namespace std::chrono_literals; // assuming C++14.
-   * auto client = bigtable::MakeClient(...); // details omitted
-   * bigtable::Table table(client, "my-table",
-   *                       // Allow up to 20 minutes to retry operations
-   *                       bigtable::LimitedTimeRetryPolicy(20min),
-   *                       // Start with 50 milliseconds backoff, grow
-   *                       // exponentially to 5 minutes.
-   *                       bigtable::ExponentialBackoffPolicy(50ms, 5min),
-   *                       // Only retry idempotent mutations.
-   *                       bigtable::SafeIdempotentMutationPolicy());
-   * @endcode
-   *
-   * @param client how to communicate with Cloud Bigtable, including
-   *     credentials, the project id, and the instance id.
-   * @param table_id the table id within the instance defined by client.  The
-   *     full table name is `client->instance_name() + "/tables/" + table_id`.
-   * @param policies the set of policy overrides for this object.
-   * @tparam Policies the types of the policies to override, the types must
-   *     derive from one of the following types:
-   *
-   *     - `IdempotentMutationPolicy` which mutations are retried. Use
-   *       `SafeIdempotentMutationPolicy` to only retry idempotent operations,
-   *       use `AlwaysRetryMutationPolicy` to retry all operations. Read the
-   *       caveats in the class definition to understand the downsides of the
-   *       latter. You can also create your own policies that decide which
-   *       mutations to retry.
-   *     - `RPCBackoffPolicy` how to backoff from a failed RPC. Currently only
-   *       `ExponentialBackoffPolicy` is implemented. You can also create your
-   *       own policies that backoff using a different algorithm.
-   *     - `RPCRetryPolicy` for how long to retry failed RPCs. Use
-   *       `LimitedErrorCountRetryPolicy` to limit the number of failures
-   *       allowed. Use `LimitedTimeRetryPolicy` to bound the time for any
-   *       request. You can also create your own policies that combine time and
-   *       error counts.
-   *
-   * @see SafeIdempotentMutationPolicy, AlwaysRetryMutationPolicy,
-   *     ExponentialBackoffPolicy, LimitedErrorCountRetryPolicy,
-   *     LimitedTimeRetryPolicy.
-   *
-   * @deprecated #google::cloud::bigtable::DataConnection is the preferred way
-   *     to communicate with the Bigtable Data API. To migrate existing code,
-   *     see @ref migrating-from-dataclient "Migrating from DataClient".
-   */
-  template <
-      typename... Policies,
-      typename std::enable_if<ValidPolicies<Policies...>::value, int>::type = 0>
-  Table(std::shared_ptr<DataClient> client, std::string const& table_id,
-        Policies&&... policies)
-      : Table(std::move(client), table_id) {
-    ChangePolicies(std::forward<Policies>(policies)...);
-  }
-
-  /**
-   * Constructor with explicit policies.
-   *
-   * The policies are passed by value, because this makes it easy for
-   * applications to create them.
-   *
-   * @par Example
-   * @code
-   * using namespace std::chrono_literals; // assuming C++14.
-   * auto client = bigtable::MakeClient(...); // details omitted
-   * bigtable::Table table(client, "app_id", "my-table",
-   *                       // Allow up to 20 minutes to retry operations
-   *                       bigtable::LimitedTimeRetryPolicy(20min),
-   *                       // Start with 50 milliseconds backoff, grow
-   *                       // exponentially to 5 minutes.
-   *                       bigtable::ExponentialBackoffPolicy(50ms, 5min),
-   *                       // Only retry idempotent mutations.
-   *                       bigtable::SafeIdempotentMutationPolicy());
-   * @endcode
-   *
-   * @param client how to communicate with Cloud Bigtable, including
-   *     credentials, the project id, and the instance id.
-   * @param app_profile_id the app_profile_id needed for using the replication
-   * API.
-   * @param table_id the table id within the instance defined by client.  The
-   *     full table name is `client->instance_name() + "/tables/" + table_id`.
-   * @param policies the set of policy overrides for this object.
-   * @tparam Policies the types of the policies to override, the types must
-   *     derive from one of the following types:
-   *     - `IdempotentMutationPolicy` which mutations are retried. Use
-   *       `SafeIdempotentMutationPolicy` to only retry idempotent operations,
-   *       use `AlwaysRetryMutationPolicy` to retry all operations. Read the
-   *       caveats in the class definition to understand the downsides of the
-   *       latter. You can also create your own policies that decide which
-   *       mutations to retry.
-   *     - `RPCBackoffPolicy` how to backoff from a failed RPC. Currently only
-   *       `ExponentialBackoffPolicy` is implemented. You can also create your
-   *       own policies that backoff using a different algorithm.
-   *     - `RPCRetryPolicy` for how long to retry failed RPCs. Use
-   *       `LimitedErrorCountRetryPolicy` to limit the number of failures
-   *       allowed. Use `LimitedTimeRetryPolicy` to bound the time for any
-   *       request. You can also create your own policies that combine time and
-   *       error counts.
-   *
-   * @see SafeIdempotentMutationPolicy, AlwaysRetryMutationPolicy,
-   *     ExponentialBackoffPolicy, LimitedErrorCountRetryPolicy,
-   *     LimitedTimeRetryPolicy.
-   *
-   * @deprecated #google::cloud::bigtable::DataConnection is the preferred way
-   *     to communicate with the Bigtable Data API. To migrate existing code,
-   *     see @ref migrating-from-dataclient "Migrating from DataClient".
-   */
-  template <
-      typename... Policies,
-      typename std::enable_if<ValidPolicies<Policies...>::value, int>::type = 0>
-  Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
-        std::string const& table_id, Policies&&... policies)
-      : Table(std::move(client), std::move(app_profile_id), table_id) {
-    ChangePolicies(std::forward<Policies>(policies)...);
-  }
-
   std::string const& table_name() const { return table_name_; }
   std::string const& app_profile_id() const {
     return options_.get<AppProfileIdOption>();
@@ -1018,6 +852,172 @@ class Table {
   future<StatusOr<std::pair<bool, Row>>> AsyncReadRow(std::string row_key,
                                                       Filter filter,
                                                       Options opts = {});
+
+  /**
+   * Constructor with default policies.
+   *
+   * @param client how to communicate with Cloud Bigtable, including
+   *     credentials, the project id, and the instance id.
+   * @param table_id the table id within the instance defined by client.  The
+   *     full table name is `client->instance_name() + "/tables/" + table_id`.
+   *
+   * @deprecated #google::cloud::bigtable::DataConnection is the preferred way
+   *     to communicate with the Bigtable Data API. To migrate existing code,
+   *     see @ref migrating-from-dataclient "Migrating from DataClient".
+   */
+  Table(std::shared_ptr<DataClient> client, std::string const& table_id)
+      : Table(std::move(client), std::string{}, table_id) {}
+
+  /**
+   * Constructor with default policies.
+   *
+   * @param client how to communicate with Cloud Bigtable, including
+   *     credentials, the project id, and the instance id.
+   * @param app_profile_id the app_profile_id needed for using the replication
+   * API.
+   * @param table_id the table id within the instance defined by client.  The
+   *     full table name is `client->instance_name() + "/tables/" + table_id`.
+   *
+   * @deprecated #google::cloud::bigtable::DataConnection is the preferred way
+   *     to communicate with the Bigtable Data API. To migrate existing code,
+   *     see @ref migrating-from-dataclient "Migrating from DataClient".
+   */
+  Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
+        std::string const& table_id)
+      : client_(std::move(client)),
+        table_(client_->project_id(), client_->instance_id(), table_id),
+        table_name_(table_.FullName()),
+        rpc_retry_policy_prototype_(
+            bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
+        rpc_backoff_policy_prototype_(
+            bigtable::DefaultRPCBackoffPolicy(internal::kBigtableLimits)),
+        idempotent_mutation_policy_(
+            bigtable::DefaultIdempotentMutationPolicy()),
+        background_threads_(client_->BackgroundThreadsFactory()()),
+        options_(Options{}.set<AppProfileIdOption>(std::move(app_profile_id))),
+        metadata_update_policy_(bigtable_internal::MakeMetadataUpdatePolicy(
+            table_name_, this->app_profile_id())) {}
+
+  /**
+   * Constructor with explicit policies.
+   *
+   * The policies are passed by value, because this makes it easy for
+   * applications to create them.
+   *
+   * @par Example
+   * @code
+   * using namespace std::chrono_literals; // assuming C++14.
+   * auto client = bigtable::MakeClient(...); // details omitted
+   * bigtable::Table table(client, "my-table",
+   *                       // Allow up to 20 minutes to retry operations
+   *                       bigtable::LimitedTimeRetryPolicy(20min),
+   *                       // Start with 50 milliseconds backoff, grow
+   *                       // exponentially to 5 minutes.
+   *                       bigtable::ExponentialBackoffPolicy(50ms, 5min),
+   *                       // Only retry idempotent mutations.
+   *                       bigtable::SafeIdempotentMutationPolicy());
+   * @endcode
+   *
+   * @param client how to communicate with Cloud Bigtable, including
+   *     credentials, the project id, and the instance id.
+   * @param table_id the table id within the instance defined by client.  The
+   *     full table name is `client->instance_name() + "/tables/" + table_id`.
+   * @param policies the set of policy overrides for this object.
+   * @tparam Policies the types of the policies to override, the types must
+   *     derive from one of the following types:
+   *
+   *     - `IdempotentMutationPolicy` which mutations are retried. Use
+   *       `SafeIdempotentMutationPolicy` to only retry idempotent operations,
+   *       use `AlwaysRetryMutationPolicy` to retry all operations. Read the
+   *       caveats in the class definition to understand the downsides of the
+   *       latter. You can also create your own policies that decide which
+   *       mutations to retry.
+   *     - `RPCBackoffPolicy` how to backoff from a failed RPC. Currently only
+   *       `ExponentialBackoffPolicy` is implemented. You can also create your
+   *       own policies that backoff using a different algorithm.
+   *     - `RPCRetryPolicy` for how long to retry failed RPCs. Use
+   *       `LimitedErrorCountRetryPolicy` to limit the number of failures
+   *       allowed. Use `LimitedTimeRetryPolicy` to bound the time for any
+   *       request. You can also create your own policies that combine time and
+   *       error counts.
+   *
+   * @see SafeIdempotentMutationPolicy, AlwaysRetryMutationPolicy,
+   *     ExponentialBackoffPolicy, LimitedErrorCountRetryPolicy,
+   *     LimitedTimeRetryPolicy.
+   *
+   * @deprecated #google::cloud::bigtable::DataConnection is the preferred way
+   *     to communicate with the Bigtable Data API. To migrate existing code,
+   *     see @ref migrating-from-dataclient "Migrating from DataClient".
+   */
+  template <
+      typename... Policies,
+      typename std::enable_if<ValidPolicies<Policies...>::value, int>::type = 0>
+  Table(std::shared_ptr<DataClient> client, std::string const& table_id,
+        Policies&&... policies)
+      : Table(std::move(client), table_id) {
+    ChangePolicies(std::forward<Policies>(policies)...);
+  }
+
+  /**
+   * Constructor with explicit policies.
+   *
+   * The policies are passed by value, because this makes it easy for
+   * applications to create them.
+   *
+   * @par Example
+   * @code
+   * using namespace std::chrono_literals; // assuming C++14.
+   * auto client = bigtable::MakeClient(...); // details omitted
+   * bigtable::Table table(client, "app_id", "my-table",
+   *                       // Allow up to 20 minutes to retry operations
+   *                       bigtable::LimitedTimeRetryPolicy(20min),
+   *                       // Start with 50 milliseconds backoff, grow
+   *                       // exponentially to 5 minutes.
+   *                       bigtable::ExponentialBackoffPolicy(50ms, 5min),
+   *                       // Only retry idempotent mutations.
+   *                       bigtable::SafeIdempotentMutationPolicy());
+   * @endcode
+   *
+   * @param client how to communicate with Cloud Bigtable, including
+   *     credentials, the project id, and the instance id.
+   * @param app_profile_id the app_profile_id needed for using the replication
+   * API.
+   * @param table_id the table id within the instance defined by client.  The
+   *     full table name is `client->instance_name() + "/tables/" + table_id`.
+   * @param policies the set of policy overrides for this object.
+   * @tparam Policies the types of the policies to override, the types must
+   *     derive from one of the following types:
+   *     - `IdempotentMutationPolicy` which mutations are retried. Use
+   *       `SafeIdempotentMutationPolicy` to only retry idempotent operations,
+   *       use `AlwaysRetryMutationPolicy` to retry all operations. Read the
+   *       caveats in the class definition to understand the downsides of the
+   *       latter. You can also create your own policies that decide which
+   *       mutations to retry.
+   *     - `RPCBackoffPolicy` how to backoff from a failed RPC. Currently only
+   *       `ExponentialBackoffPolicy` is implemented. You can also create your
+   *       own policies that backoff using a different algorithm.
+   *     - `RPCRetryPolicy` for how long to retry failed RPCs. Use
+   *       `LimitedErrorCountRetryPolicy` to limit the number of failures
+   *       allowed. Use `LimitedTimeRetryPolicy` to bound the time for any
+   *       request. You can also create your own policies that combine time and
+   *       error counts.
+   *
+   * @see SafeIdempotentMutationPolicy, AlwaysRetryMutationPolicy,
+   *     ExponentialBackoffPolicy, LimitedErrorCountRetryPolicy,
+   *     LimitedTimeRetryPolicy.
+   *
+   * @deprecated #google::cloud::bigtable::DataConnection is the preferred way
+   *     to communicate with the Bigtable Data API. To migrate existing code,
+   *     see @ref migrating-from-dataclient "Migrating from DataClient".
+   */
+  template <
+      typename... Policies,
+      typename std::enable_if<ValidPolicies<Policies...>::value, int>::type = 0>
+  Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
+        std::string const& table_id, Policies&&... policies)
+      : Table(std::move(client), std::move(app_profile_id), table_id) {
+    ChangePolicies(std::forward<Policies>(policies)...);
+  }
 
  private:
   /**
