@@ -101,7 +101,7 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
    * @endcode
    *
    * @param initial_delay how long to wait after the first (unsuccessful)
-   *     operation.
+   *     operation and the minimum value for the delay between operations.
    * @param maximum_delay the maximum value for the delay between operations.
    * @param scaling how fast does the delay increase between iterations.
    *
@@ -130,12 +130,12 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
             initial_delay)),
         maximum_delay_(std::chrono::duration_cast<std::chrono::microseconds>(
             maximum_delay)),
+        scaling_(scaling),
         current_delay_start_(initial_delay_),
         current_delay_end_(
             (std::min)(std::chrono::duration_cast<std::chrono::microseconds>(
-                           scaling * initial_delay_),
-                       maximum_delay_)),
-        scaling_(scaling) {
+                           scaling_ * initial_delay_),
+                       maximum_delay_)) {
     if (scaling_ <= 1.0) {
       google::cloud::internal::ThrowInvalidArgument(
           "scaling factor must be > 1.0");
@@ -149,9 +149,9 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
   ExponentialBackoffPolicy(ExponentialBackoffPolicy const& rhs) noexcept
       : initial_delay_(rhs.initial_delay_),
         maximum_delay_(rhs.maximum_delay_),
+        scaling_(rhs.scaling_),
         current_delay_start_(rhs.current_delay_start_),
-        current_delay_end_(rhs.current_delay_end_),
-        scaling_(rhs.scaling_) {}
+        current_delay_end_(rhs.current_delay_end_) {}
 
   std::unique_ptr<BackoffPolicy> clone() const override;
   std::chrono::milliseconds OnCompletion() override;
@@ -159,10 +159,10 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
  private:
   std::chrono::microseconds initial_delay_;
   std::chrono::microseconds maximum_delay_;
+  double scaling_;
   // Stores both ends of the current delay range.
   std::chrono::microseconds current_delay_start_;
   std::chrono::microseconds current_delay_end_;
-  double scaling_;
   absl::optional<DefaultPRNG> generator_;
 };
 
