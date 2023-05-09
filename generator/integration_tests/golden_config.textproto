@@ -49,6 +49,7 @@ service {
     {rpc_name: "GoldenThingAdmin.DropDatabase", idempotency: IDEMPOTENT},
     {rpc_name: "GoldenKitchenSink.ListLogs", idempotency: NON_IDEMPOTENT}
   ]
+  omit_metadata: true
 }
 
 service {

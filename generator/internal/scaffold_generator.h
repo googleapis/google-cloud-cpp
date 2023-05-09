@@ -17,6 +17,7 @@
 
 #include "generator/generator_config.pb.h"
 #include "absl/types/optional.h"
+#include <nlohmann/json.hpp>
 #include <iosfwd>
 #include <map>
 #include <string>
@@ -60,19 +61,48 @@ std::string ServiceSubdirectory(std::string const& product_path);
  */
 std::string OptionsGroup(std::string const& product_path);
 
+/**
+ * Load the `api-index-v1.json` file stored in the googleapis repository.
+ *
+ * If this is not available, it returns a JSON object with an empty list of
+ * APIs.
+ */
+nlohmann::json LoadApiIndex(std::string const& googleapis_path);
+
+/**
+ * Capture the information about @service as a set of "variables".
+ *
+ * This searches the API index file loaded in @p index for the details about
+ * @p service and generates a map of "variables" representing that information.
+ * If a service config YAML file is available, it loads some key information
+ * from that file too.
+ *
+ * @return a map with the variables needed to generate the build scaffold for
+ *     @p service. We use a map (instead of a more idiomatic / safe `struct`),
+ *     because we will feed this information to the protobuf compiler template
+ *     engine.
+ */
 std::map<std::string, std::string> ScaffoldVars(
-    std::string const& googleapis_path,
+    std::string const& googleapis_path, nlohmann::json const& index,
     google::cloud::cpp::generator::ServiceConfiguration const& service,
     bool experimental);
 
 void MakeDirectory(std::string const& path);
 
-void GenerateScaffold(
-    std::string const& googleapis_path,
-    std::string const& scaffold_templates_path, std::string const& output_path,
-    google::cloud::cpp::generator::ServiceConfiguration const& service,
-    bool experimental);
+/// Generates (if possible) a `.repo-metadata.json` file for @p service.
+void GenerateMetadata(
+    std::map<std::string, std::string> const& vars,
+    std::string const& output_path,
+    google::cloud::cpp::generator::ServiceConfiguration const& service);
 
+/// Generates the build and documentation scaffold for @p service.
+void GenerateScaffold(
+    std::map<std::string, std::string> const& vars,
+    std::string const& scaffold_templates_path, std::string const& output_path,
+    google::cloud::cpp::generator::ServiceConfiguration const& service);
+
+///@{
+/// @name Generators for each scaffold file.
 void GenerateCmakeConfigIn(std::ostream& os,
                            std::map<std::string, std::string> const& variables);
 void GenerateReadme(std::ostream& os,
@@ -106,6 +136,7 @@ void GenerateQuickstartBuild(
     std::ostream& os, std::map<std::string, std::string> const& variables);
 void GenerateQuickstartBazelrc(
     std::ostream& os, std::map<std::string, std::string> const& variables);
+///@}
 
 }  // namespace generator_internal
 }  // namespace cloud
