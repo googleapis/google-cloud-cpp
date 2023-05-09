@@ -38,8 +38,10 @@ using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::AllOf;
+using ::testing::IsEmpty;
 using ::testing::ElementsAre;
 using ::testing::Return;
+using ::testing::SizeIs;
 using ms = std::chrono::milliseconds;
 
 auto constexpr kErrorCode = static_cast<int>(StatusCode::kAborted);
@@ -107,6 +109,114 @@ TEST(DataTracingConnection, AsyncApply) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+}
+
+TEST(DataTracingConnection, BulkApplySuccess) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, BulkApply).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return std::vector<bigtable::FailedMutation>{};
+  });
+
+  auto under_test = MakeDataTracingConnection(mock);
+  auto failures = under_test->BulkApply(kTableName, Mutation());
+  EXPECT_THAT(failures, IsEmpty());
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("bigtable::Table::BulkApply"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+          SpanHasAttributes(
+              SpanAttribute<std::size_t>("gcloud.bigtable.failed_mutations", 0),
+              SpanAttribute<std::size_t>("gcloud.bigtable.successful_mutations",
+                                         1)))));
+}
+
+TEST(DataTracingConnection, BulkApplyFailure) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, BulkApply).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return std::vector<bigtable::FailedMutation>{
+        {internal::AbortedError("fail"), 1},
+        {internal::AbortedError("fail"), 2}};
+  });
+
+  bigtable::BulkMutation mut;
+  for (auto i = 0; i != 10; ++i) mut.push_back(Mutation());
+  auto under_test = MakeDataTracingConnection(mock);
+  auto failures = under_test->BulkApply(kTableName, std::move(mut));
+  EXPECT_THAT(failures, SizeIs(2));
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("bigtable::Table::BulkApply"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError),
+          SpanHasAttributes(
+              SpanAttribute<std::size_t>("gcloud.bigtable.failed_mutations", 2),
+              SpanAttribute<std::size_t>("gcloud.bigtable.successful_mutations",
+                                         8)))));
+}
+
+TEST(DataTracingConnection, AsyncBulkApplySuccess) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncBulkApply).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return make_ready_future(std::vector<bigtable::FailedMutation>{});
+  });
+
+  auto under_test = MakeDataTracingConnection(mock);
+  auto failures = under_test->AsyncBulkApply(kTableName, Mutation());
+  EXPECT_THAT(failures.get(), IsEmpty());
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("bigtable::Table::AsyncBulkApply"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+          SpanHasAttributes(
+              SpanAttribute<std::size_t>("gcloud.bigtable.failed_mutations", 0),
+              SpanAttribute<std::size_t>("gcloud.bigtable.successful_mutations",
+                                         1)))));
+}
+
+TEST(DataTracingConnection, AsyncBulkApplyFailure) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncBulkApply).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return make_ready_future(std::vector<bigtable::FailedMutation>{
+        {internal::AbortedError("fail"), 1},
+        {internal::AbortedError("fail"), 2}});
+  });
+
+  bigtable::BulkMutation mut;
+  for (auto i = 0; i != 10; ++i) mut.push_back(Mutation());
+  auto under_test = MakeDataTracingConnection(mock);
+  auto failures = under_test->AsyncBulkApply(kTableName, std::move(mut));
+  EXPECT_THAT(failures.get(), SizeIs(2));
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("bigtable::Table::AsyncBulkApply"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError),
+          SpanHasAttributes(
+              SpanAttribute<std::size_t>("gcloud.bigtable.failed_mutations", 2),
+              SpanAttribute<std::size_t>("gcloud.bigtable.successful_mutations",
+                                         8)))));
 }
 
 TEST(DataTracingConnection, ReadRows) {
