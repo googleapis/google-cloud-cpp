@@ -32,7 +32,7 @@ using ::google::protobuf::FileDescriptorProto;
 using ::google::protobuf::MethodDescriptor;
 using ::google::protobuf::TextFormat;
 using ::testing::Contains;
-using ::testing::IsNull;
+using ::testing::NotNull;
 using ::testing::Pair;
 
 TEST(LongrunningTest, IsLongrunningOperation) {
@@ -328,14 +328,12 @@ class LongrunningMethodVarsTest : public testing::Test {
 };
 
 TEST_F(LongrunningMethodVarsTest, FilesParseSuccessfully) {
-  EXPECT_THAT(pool_.FindFileByName("google/api/client.proto"), Not(IsNull()));
-  EXPECT_THAT(pool_.FindFileByName("google/api/http.proto"), Not(IsNull()));
-  EXPECT_THAT(pool_.FindFileByName("google/api/annotations.proto"),
-              Not(IsNull()));
+  EXPECT_THAT(pool_.FindFileByName("google/api/client.proto"), NotNull());
+  EXPECT_THAT(pool_.FindFileByName("google/api/http.proto"), NotNull());
+  EXPECT_THAT(pool_.FindFileByName("google/api/annotations.proto"), NotNull());
   EXPECT_THAT(pool_.FindFileByName("google/longrunning/operation.proto"),
-              Not(IsNull()));
-  EXPECT_THAT(pool_.FindFileByName("google/foo/v1/service.proto"),
-              Not(IsNull()));
+              NotNull());
+  EXPECT_THAT(pool_.FindFileByName("google/foo/v1/service.proto"), NotNull());
 }
 
 TEST_F(LongrunningMethodVarsTest,
