@@ -42,7 +42,7 @@ TEST(ExponentialBackoffPolicy, Simple) {
 }
 
 /// @test Verify the initial and maximum delay are respected.
-TEST(ExponentialBackoffPolicy, ValidateInitialAndMaximumDelayAreRespected) {
+TEST(ExponentialBackoffPolicy, InitialAndMaximumDelayRespected) {
   ExponentialBackoffPolicy tested(ms(10), ms(12), 2.0);
 
   auto delay = tested.OnCompletion();
@@ -51,6 +51,25 @@ TEST(ExponentialBackoffPolicy, ValidateInitialAndMaximumDelayAreRespected) {
   delay = tested.OnCompletion();
   EXPECT_LE(ms(10), delay);
   EXPECT_GE(ms(12), delay);
+}
+
+/// @test Verify the floating point scaling factor is used to compute the delay
+/// range.
+TEST(ExponentialBackoffPolicy, FloatScalingFactor) {
+  ExponentialBackoffPolicy tested(ms(10), ms(13), 1.1);
+
+  auto delay = tested.OnCompletion();
+  EXPECT_LE(ms(10), delay);
+  EXPECT_GE(ms(11), delay);
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(11), delay);
+  EXPECT_GE(ms(12), delay);
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(12), delay);
+  EXPECT_GE(ms(13), delay);
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(12), delay);
+  EXPECT_GE(ms(13), delay);
 }
 
 /// @test Verify that the scaling factor is validated.
@@ -74,7 +93,7 @@ TEST(ExponentialBackoffPolicy, DifferentParameters) {
 
   auto delay = tested.OnCompletion();
   EXPECT_LE(ms(100), delay) << "delay=" << delay.count() << "ms";
-  EXPECT_GE(ms(200), delay) << "delay=" << delay.count() << "ms";
+  EXPECT_GE(ms(150), delay) << "delay=" << delay.count() << "ms";
   delay = tested.OnCompletion();
   EXPECT_LE(ms(150), delay) << "delay=" << delay.count() << "ms";
   EXPECT_GE(ms(300), delay) << "delay=" << delay.count() << "ms";
