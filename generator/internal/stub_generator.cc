@@ -15,6 +15,7 @@
 #include "generator/internal/stub_generator.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/descriptor_utils.h"
+#include "generator/internal/longrunning.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"

@@ -15,6 +15,7 @@
 #include "generator/internal/format_method_comments.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/descriptor_utils.h"
+#include "generator/internal/longrunning.h"
 #include "generator/internal/pagination.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/resolve_comment_references.h"
