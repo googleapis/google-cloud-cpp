@@ -14,6 +14,7 @@
 
 #include "generator/internal/tracing_stub_generator.h"
 #include "generator/internal/codegen_utils.h"
+#include "generator/internal/longrunning.h"
 #include "generator/internal/predicate_utils.h"
 
 namespace google {

@@ -55,21 +55,9 @@ bool IsStreamingWrite(google::protobuf::MethodDescriptor const& method);
 bool IsBidirStreaming(google::protobuf::MethodDescriptor const& method);
 
 /**
- * Determines if the given method is a long running operation.
- */
-bool IsLongrunningOperation(google::protobuf::MethodDescriptor const& method);
-
-/**
  * Determines if the given method returns `google::protobug::Empty`.
  */
 bool IsResponseTypeEmpty(google::protobuf::MethodDescriptor const& method);
-
-/**
- * Determines if the given method's response is contained in the longrunning
- * metadata field.
- */
-bool IsLongrunningMetadataTypeUsedAsResponse(
-    google::protobuf::MethodDescriptor const& method);
 
 /**
  * Returns true if all predicates return true.

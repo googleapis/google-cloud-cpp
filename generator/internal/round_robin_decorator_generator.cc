@@ -14,6 +14,7 @@
 
 #include "generator/internal/round_robin_decorator_generator.h"
 #include "generator/internal/codegen_utils.h"
+#include "generator/internal/longrunning.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
 #include "absl/strings/str_split.h"
