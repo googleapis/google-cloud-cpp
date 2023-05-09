@@ -220,6 +220,10 @@ class Table {
    *     credentials, the project id, and the instance id.
    * @param table_id the table id within the instance defined by client.  The
    *     full table name is `client->instance_name() + "/tables/" + table_id`.
+   *
+   * @deprecated #google::cloud::bigtable::DataConnection is the preferred way
+   *     to communicate with the Bigtable Data API. To migrate existing code,
+   *     see @ref migrating-from-dataclient "Migrating from DataClient".
    */
   Table(std::shared_ptr<DataClient> client, std::string const& table_id)
       : Table(std::move(client), std::string{}, table_id) {}
@@ -233,6 +237,10 @@ class Table {
    * API.
    * @param table_id the table id within the instance defined by client.  The
    *     full table name is `client->instance_name() + "/tables/" + table_id`.
+   *
+   * @deprecated #google::cloud::bigtable::DataConnection is the preferred way
+   *     to communicate with the Bigtable Data API. To migrate existing code,
+   *     see @ref migrating-from-dataclient "Migrating from DataClient".
    */
   Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
         std::string const& table_id)
@@ -296,6 +304,10 @@ class Table {
    * @see SafeIdempotentMutationPolicy, AlwaysRetryMutationPolicy,
    *     ExponentialBackoffPolicy, LimitedErrorCountRetryPolicy,
    *     LimitedTimeRetryPolicy.
+   *
+   * @deprecated #google::cloud::bigtable::DataConnection is the preferred way
+   *     to communicate with the Bigtable Data API. To migrate existing code,
+   *     see @ref migrating-from-dataclient "Migrating from DataClient".
    */
   template <
       typename... Policies,
@@ -353,6 +365,10 @@ class Table {
    * @see SafeIdempotentMutationPolicy, AlwaysRetryMutationPolicy,
    *     ExponentialBackoffPolicy, LimitedErrorCountRetryPolicy,
    *     LimitedTimeRetryPolicy.
+   *
+   * @deprecated #google::cloud::bigtable::DataConnection is the preferred way
+   *     to communicate with the Bigtable Data API. To migrate existing code,
+   *     see @ref migrating-from-dataclient "Migrating from DataClient".
    */
   template <
       typename... Policies,

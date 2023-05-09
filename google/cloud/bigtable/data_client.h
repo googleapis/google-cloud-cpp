@@ -58,6 +58,10 @@ class LoggingDataClient;
  * workflows with Google Cloud Platform. These operations can take many
  * milliseconds, therefore applications should try to reuse the same
  * `DataClient` instances when possible.
+ *
+ * @deprecated #google::cloud::bigtable::DataConnection is the preferred way to
+ *     communicate with the Bigtable Data API. To migrate existing code, see
+ *     @ref migrating-from-dataclient "Migrating from DataClient".
  */
 class DataClient {
  public:
