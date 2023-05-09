@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/grpc_channel_refresh.h"
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/internal/grpc_configure_client_context.h"
+#include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc_object_request_parser.h"
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/storage/internal/storage_stub_factory.h"
@@ -76,6 +77,35 @@ AsyncConnectionImpl::AsyncReadObjectRange(
       .then([current](
                 future<storage_internal::AsyncAccumulateReadObjectResult> f) {
         return ToResponse(f.get(), current);
+      });
+}
+
+future<StatusOr<storage::ObjectMetadata>>
+AsyncConnectionImpl::AsyncComposeObject(
+    storage::internal::ComposeObjectRequest request) {
+  auto proto = ToProto(request);
+  if (!proto) {
+    return make_ready_future(
+        StatusOr<storage::ObjectMetadata>(std::move(proto).status()));
+  }
+  auto call = [stub = stub_, request = std::move(request)](
+                  CompletionQueue& cq,
+                  std::shared_ptr<grpc::ClientContext> context,
+                  google::storage::v2::ComposeObjectRequest const& proto) {
+    ApplyQueryParameters(*context, request);
+    return stub->AsyncComposeObject(cq, std::move(context), proto);
+  };
+  auto const idempotency = idempotency_policy()->IsIdempotent(request)
+                               ? Idempotency::kIdempotent
+                               : Idempotency::kNonIdempotent;
+  auto const& current = internal::CurrentOptions();
+  return google::cloud::internal::AsyncRetryLoop(
+             retry_policy(), backoff_policy(), idempotency, cq_,
+             std::move(call), *std::move(proto), __func__)
+      .then([current](auto f) -> StatusOr<storage::ObjectMetadata> {
+        auto response = f.get();
+        if (!response) return std::move(response).status();
+        return FromProto(*response, current);
       });
 }
 
