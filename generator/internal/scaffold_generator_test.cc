@@ -87,6 +87,19 @@ TEST(ScaffoldGeneratorTest, OptionsGroup) {
   EXPECT_EQ("foo-bar-service-options", OptionsGroup("foo/bar/service"));
 }
 
+nlohmann::json MockIndex() {
+  auto api = nlohmann::json{
+      {"id", "google.cloud.test.v1"},
+      {"directory", "google/cloud/test/v1"},
+      {"version", "v1"},
+      {"majorversion", "v1"},
+      {"hostName", "test.googleapis.com"},
+      {"title", "Test Only API"},
+      {"description", "Provides a placeholder to write this test."},
+  };
+  return nlohmann::json{{"apis", std::vector<nlohmann::json>{api}}};
+}
+
 class ScaffoldGenerator : public ::testing::Test {
  protected:
   ~ScaffoldGenerator() override {
@@ -110,19 +123,7 @@ class ScaffoldGenerator : public ::testing::Test {
     path_ = ::testing::TempDir() + directory;
     MakeDirectory(path_);
     for (auto const* s : kHierarchy) MakeDirectory(path_ + s);
-    std::ofstream(path_ + "/api-index-v1.json") << R"""({
-    "apis": [
-      {
-        "id": "google.cloud.test.v1",
-        "directory": "google/cloud/test/v1",
-        "version": "v1",
-        "majorVersion": "v1",
-        "hostName": "test.googleapis.com",
-        "title": "Test Only API",
-        "description": "Provides a placeholder to write this test."
-      }
-    ]
-})""";
+    std::ofstream(path_ + "/api-index-v1.json") << MockIndex().dump(4) << "\n";
 
     std::ofstream(path_ + "/external/googleapis/protolists/test.list")
         << R"""(@com_google_googleapis//google/cloud/test/v1:foo.proto
@@ -157,7 +158,7 @@ class ScaffoldGenerator : public ::testing::Test {
 };
 
 TEST_F(ScaffoldGenerator, Vars) {
-  auto const ga = ScaffoldVars(path(), service(), false);
+  auto const ga = ScaffoldVars(path(), MockIndex(), service(), false);
   EXPECT_THAT(
       ga,
       AllOf(Contains(Pair("title", "Test Only API")),
@@ -172,7 +173,7 @@ TEST_F(ScaffoldGenerator, Vars) {
             Contains(Pair("construction", "")),
             Contains(Pair("status", HasSubstr("**GA**")))));
 
-  auto const experimental = ScaffoldVars(path(), service(), true);
+  auto const experimental = ScaffoldVars(path(), MockIndex(), service(), true);
   EXPECT_THAT(
       experimental,
       AllOf(Contains(Pair("title", "Test Only API")),
@@ -189,7 +190,7 @@ TEST_F(ScaffoldGenerator, Vars) {
 }
 
 TEST_F(ScaffoldGenerator, CmakeConfigIn) {
-  auto const vars = ScaffoldVars(path(), service(), false);
+  auto const vars = ScaffoldVars(path(), MockIndex(), service(), false);
   std::ostringstream os;
   GenerateCmakeConfigIn(os, vars);
   auto const actual = std::move(os).str();
@@ -202,7 +203,7 @@ TEST_F(ScaffoldGenerator, CmakeConfigIn) {
 }
 
 TEST_F(ScaffoldGenerator, Readme) {
-  auto const vars = ScaffoldVars(path(), service(), false);
+  auto const vars = ScaffoldVars(path(), MockIndex(), service(), false);
   std::ostringstream os;
   GenerateReadme(os, vars);
   auto const actual = std::move(os).str();
@@ -217,7 +218,7 @@ TEST_F(ScaffoldGenerator, Readme) {
 }
 
 TEST_F(ScaffoldGenerator, Build) {
-  auto const vars = ScaffoldVars(path(), service(), false);
+  auto const vars = ScaffoldVars(path(), MockIndex(), service(), false);
   std::ostringstream os;
   GenerateBuild(os, vars);
   auto const actual = std::move(os).str();
@@ -231,7 +232,7 @@ TEST_F(ScaffoldGenerator, Build) {
 }
 
 TEST_F(ScaffoldGenerator, CMakeLists) {
-  auto const vars = ScaffoldVars(path(), service(), false);
+  auto const vars = ScaffoldVars(path(), MockIndex(), service(), false);
   std::ostringstream os;
   GenerateCMakeLists(os, vars);
   auto const actual = std::move(os).str();
@@ -261,7 +262,7 @@ target_link_libraries(google_cloud_cpp_test_protos PUBLIC ${proto_deps})
 }
 
 TEST_F(ScaffoldGenerator, DoxygenMainPage) {
-  auto const vars = ScaffoldVars(path(), service(), false);
+  auto const vars = ScaffoldVars(path(), MockIndex(), service(), false);
   std::ostringstream os;
   GenerateDoxygenMainPage(os, vars);
   auto const actual = std::move(os).str();
@@ -286,7 +287,7 @@ to Provides a placeholder to write this test.
 }
 
 TEST_F(ScaffoldGenerator, DoxygenOptionsPage) {
-  auto const vars = ScaffoldVars(path(), service(), false);
+  auto const vars = ScaffoldVars(path(), MockIndex(), service(), false);
   std::ostringstream os;
   GenerateDoxygenOptionsPage(os, vars);
   auto const actual = std::move(os).str();
@@ -296,7 +297,7 @@ TEST_F(ScaffoldGenerator, DoxygenOptionsPage) {
 }
 
 TEST_F(ScaffoldGenerator, DoxygenEnvironmentPage) {
-  auto const vars = ScaffoldVars(path(), service(), false);
+  auto const vars = ScaffoldVars(path(), MockIndex(), service(), false);
   std::ostringstream os;
   GenerateDoxygenEnvironmentPage(os, vars);
   auto const actual = std::move(os).str();
@@ -315,7 +316,7 @@ TEST_F(ScaffoldGenerator, DoxygenEnvironmentPage) {
 }
 
 TEST_F(ScaffoldGenerator, OverrideAuthenticationPage) {
-  auto const vars = ScaffoldVars(path(), service(), false);
+  auto const vars = ScaffoldVars(path(), MockIndex(), service(), false);
   std::ostringstream os;
   GenerateOverrideAuthenticationPage(os, vars);
   auto const actual = std::move(os).str();
@@ -325,7 +326,7 @@ TEST_F(ScaffoldGenerator, OverrideAuthenticationPage) {
 }
 
 TEST_F(ScaffoldGenerator, OverrideEndpointPage) {
-  auto const vars = ScaffoldVars(path(), service(), false);
+  auto const vars = ScaffoldVars(path(), MockIndex(), service(), false);
   std::ostringstream os;
   GenerateOverrideEndpointPage(os, vars);
   auto const actual = std::move(os).str();
@@ -335,7 +336,7 @@ TEST_F(ScaffoldGenerator, OverrideEndpointPage) {
 }
 
 TEST_F(ScaffoldGenerator, QuickstartReadme) {
-  auto const vars = ScaffoldVars(path(), service(), false);
+  auto const vars = ScaffoldVars(path(), MockIndex(), service(), false);
   std::ostringstream os;
   GenerateQuickstartReadme(os, vars);
   auto const actual = std::move(os).str();
@@ -346,7 +347,7 @@ TEST_F(ScaffoldGenerator, QuickstartReadme) {
 }
 
 TEST_F(ScaffoldGenerator, QuickstartSkeleton) {
-  auto const vars = ScaffoldVars(path(), service(), false);
+  auto const vars = ScaffoldVars(path(), MockIndex(), service(), false);
   std::ostringstream os;
   GenerateQuickstartSkeleton(os, vars);
   auto const actual = std::move(os).str();
@@ -355,7 +356,7 @@ TEST_F(ScaffoldGenerator, QuickstartSkeleton) {
 }
 
 TEST_F(ScaffoldGenerator, QuickstartCMake) {
-  auto const vars = ScaffoldVars(path(), service(), false);
+  auto const vars = ScaffoldVars(path(), MockIndex(), service(), false);
   std::ostringstream os;
   GenerateQuickstartCMake(os, vars);
   auto const actual = std::move(os).str();
@@ -365,7 +366,7 @@ TEST_F(ScaffoldGenerator, QuickstartCMake) {
 }
 
 TEST_F(ScaffoldGenerator, QuickstartMakefile) {
-  auto const vars = ScaffoldVars(path(), service(), false);
+  auto const vars = ScaffoldVars(path(), MockIndex(), service(), false);
   std::ostringstream os;
   GenerateQuickstartMakefile(os, vars);
   auto const actual = std::move(os).str();
@@ -382,7 +383,7 @@ TEST_F(ScaffoldGenerator, QuickstartWorkspace) {
 workspace(name = "qs")
 )""";
 
-  auto const vars = ScaffoldVars(path(), service(), false);
+  auto const vars = ScaffoldVars(path(), MockIndex(), service(), false);
   std::ostringstream os;
   GenerateQuickstartWorkspace(os, vars, kContents);
   auto const actual = std::move(os).str();
@@ -396,7 +397,7 @@ workspace(name = "qs")
 }
 
 TEST_F(ScaffoldGenerator, QuickstartBuild) {
-  auto const vars = ScaffoldVars(path(), service(), false);
+  auto const vars = ScaffoldVars(path(), MockIndex(), service(), false);
   std::ostringstream os;
   GenerateQuickstartBuild(os, vars);
   auto const actual = std::move(os).str();
@@ -406,7 +407,7 @@ TEST_F(ScaffoldGenerator, QuickstartBuild) {
 }
 
 TEST_F(ScaffoldGenerator, QuickstartBazelrc) {
-  auto const vars = ScaffoldVars(path(), service(), false);
+  auto const vars = ScaffoldVars(path(), MockIndex(), service(), false);
   std::ostringstream os;
   GenerateQuickstartBazelrc(os, vars);
   auto const actual = std::move(os).str();

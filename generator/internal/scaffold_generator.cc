@@ -21,8 +21,10 @@
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
 #include <nlohmann/json.hpp>
+#include <yaml-cpp/yaml.h>
 #include <fstream>
 #include <iterator>
+#include <regex>
 #ifdef _WIN32
 #include <direct.h>
 #else
@@ -93,10 +95,7 @@ std::string SiteRoot(
   return LibraryName(service.product_path());
 }
 
-std::map<std::string, std::string> ScaffoldVars(
-    std::string const& googleapis_path,
-    google::cloud::cpp::generator::ServiceConfiguration const& service,
-    bool experimental) {
+nlohmann::json LoadApiIndex(std::string const& googleapis_path) {
   auto const api_index_path = googleapis_path + "/" + kApiIndexFilename;
   auto status = google::cloud::internal::status(api_index_path);
   if (!exists(status)) {
@@ -108,21 +107,31 @@ std::map<std::string, std::string> ScaffoldVars(
   if (index.is_null()) {
     GCP_LOG(WARNING) << "Cannot parse API index file (" << api_index_path
                      << ")";
-    return {};
+    return nlohmann::json{{"apis", std::vector<nlohmann::json>{}}};
   }
   if (!index.contains("apis")) {
     GCP_LOG(WARNING) << "Missing `apis` field in API index file ("
                      << api_index_path << ")";
-    return {};
+    return nlohmann::json{{"apis", std::vector<nlohmann::json>{}}};
   }
+  return index;
+}
+
+std::map<std::string, std::string> ScaffoldVars(
+    std::string const& googleapis_path, nlohmann::json const& index,
+    google::cloud::cpp::generator::ServiceConfiguration const& service,
+    bool experimental) {
   std::map<std::string, std::string> vars;
   for (auto const& api : index["apis"]) {
     if (!api.contains("directory")) continue;
     auto const directory = api["directory"].get<std::string>() + "/";
     if (!absl::StartsWith(service.service_proto_path(), directory)) continue;
+    vars.emplace("id", api.value("id", ""));
     vars.emplace("title", api.value("title", ""));
     vars.emplace("description", api.value("description", ""));
     vars.emplace("directory", api.value("directory", ""));
+    vars.emplace("nameInServiceConfig", api.value("nameInServiceConfig", ""));
+    vars.emplace("configFile", api.value("configFile", ""));
   }
   auto const library = LibraryName(service.product_path());
   vars["copyright_year"] = service.initial_copyright_year();
@@ -138,6 +147,60 @@ std::map<std::string, std::string> ScaffoldVars(
                      "to change without notice.\n\nPlease,"
                    : "While this library is **GA**, please";
 
+  // Try to load the service config YAML file. On failure just return the
+  // existing vars.
+  auto const config_file = vars.find("configFile");
+  auto const directory = vars.find("directory");
+  if (config_file == vars.end() || directory == vars.end()) {
+    GCP_LOG(WARNING) << "Missing directory and/or YAML config file name for: "
+                     << service.service_proto_path();
+    return vars;
+  }
+
+  auto const path =
+      googleapis_path + "/" + directory->second + "/" + config_file->second;
+  auto status = google::cloud::internal::status(path);
+  if (!exists(status)) {
+    GCP_LOG(WARNING) << "Cannot find YAML service config file (" << path
+                     << ") for: " << service.service_proto_path();
+    return vars;
+  }
+  auto config = YAML::LoadFile(path);
+  if (config.Type() != YAML::NodeType::Map) {
+    GCP_LOG(WARNING) << "Error loading YAML config file (" << path
+                     << ") for: " << service.service_proto_path()
+                     << "  error=" << config.Type();
+    return vars;
+  }
+  auto publishing = config["publishing"];
+  // This error is too common at the moment. Most libraries lack a
+  // 'publishing' section.
+  if (publishing.Type() != YAML::NodeType::Map) return vars;
+
+  for (std::string const name : {
+           "api_short_name",
+           "documentation_uri",
+           "new_issue_uri",
+       }) {
+    auto node = publishing[name];
+    if (node.Type() != YAML::NodeType::Scalar) continue;
+    vars[name] = node.as<std::string>();
+  }
+  // The YAML configuration includes a link to create new issues. If possible,
+  // convert that to a link to list issues, which is what we want to generate.
+  auto l = vars.find("new_issue_uri");
+  if (l != vars.end()) {
+    auto issue_tracker = l->second;
+    auto const re = std::regex(
+        R"re((https://issuetracker.google.com/issues).*[^a-z]component=([0-9]*).*)re");
+    std::smatch match;
+    if (std::regex_match(issue_tracker, match, re)) {
+      issue_tracker = absl::StrCat(
+          match[1].str(), "?q=componentid:", match[2].str(), " status=open");
+    }
+    vars["issue_tracker"] = issue_tracker;
+  }
+
   return vars;
 }
 
@@ -149,11 +212,68 @@ void MakeDirectory(std::string const& path) {
 #endif  // _WIN32
 }
 
+void GenerateMetadata(
+    std::map<std::string, std::string> const& vars,
+    std::string const& output_path,
+    google::cloud::cpp::generator::ServiceConfiguration const& service) {
+  auto const destination = [&]() {
+    MakeDirectory(output_path);
+    auto d = output_path + "/" + LibraryPath(service.product_path());
+    MakeDirectory(d);
+    auto l = vars.find("service_subdirectory");
+    if (l == vars.end()) return d;
+    if (l->second.empty()) return d;
+    d += l->second;
+    d += "/";
+    MakeDirectory(d);
+    return d;
+  }();
+
+  nlohmann::json metadata{
+      {"language", "cpp"},
+      {"repo", "googleapis/google-cloud-cpp"},
+      {"release_level", service.experimental() ? "beta" : "ga"},
+      // In other languages this is the name of the package. In C++ there are
+      // many package managers, and this seems to be the most common name.
+      {"distribution_name", "google-cloud-cpp"},
+      // This seems to be largely unused, but better to put a value.
+      {"requires_billing", true},
+  };
+  auto library = vars.find("library");
+  if (library == vars.end()) {
+    GCP_LOG(WARNING) << "Cannot find field `library` in configuration vars for:"
+                     << service.service_proto_path();
+    return;
+  }
+  metadata["client_documentation"] =
+      "https://cloud.google.com/cpp/reference/" + library->second + "/latest";
+
+  struct MapVars {
+    std::string metadata_name;
+    std::string var_name;
+  } map_vars[] = {
+      {"name_pretty", "title"},
+      {"api_id", "nameInServiceConfig"},
+      {"name", "api_short_name"},
+      {"product_documentation", "documentation_uri"},
+      {"issue_tracker", "issue_tracker"},
+  };
+  for (auto const& kv : map_vars) {
+    auto const l = vars.find(kv.var_name);
+    // At the moment, too many proto directories lack a `publishing` section
+    // in their YAML file.
+    if (l == vars.end()) return;
+    metadata[kv.metadata_name] = l->second;
+  }
+
+  std::ofstream(destination + ".repo-metadata.json")
+      << metadata.dump(4) << "\n";
+}
+
 void GenerateScaffold(
-    std::string const& googleapis_path,
+    std::map<std::string, std::string> const& vars,
     std::string const& scaffold_templates_path, std::string const& output_path,
-    google::cloud::cpp::generator::ServiceConfiguration const& service,
-    bool experimental) {
+    google::cloud::cpp::generator::ServiceConfiguration const& service) {
   using Generator = std::function<void(
       std::ostream&, std::map<std::string, std::string> const&)>;
   struct Destination {
@@ -177,7 +297,6 @@ void GenerateScaffold(
       {"quickstart/.bazelrc", GenerateQuickstartBazelrc},
   };
 
-  auto const vars = ScaffoldVars(googleapis_path, service, experimental);
   MakeDirectory(output_path + "/");
   auto const destination =
       output_path + "/" + LibraryPath(service.product_path());
