@@ -211,12 +211,12 @@ bool AppendIfTypedef(YAML::Emitter& yaml, YamlContext const& ctx,
       std::string_view{node.child("qualifiedname").child_value()};
   yaml << YAML::BeginMap                                                    //
        << YAML::Key << "uid" << YAML::Value << id                           //
-       << YAML::Key << "name" << YAML::Value << YAML::Literal << name       //
+       << YAML::Key << "name" << YAML::Value << YAML::DoubleQuoted << name  //
        << YAML::Key << "fullName"                                           //
-       << YAML::Value << YAML::Literal << full_name                         //
+       << YAML::Value << YAML::DoubleQuoted << full_name                    //
        << YAML::Key << "id" << YAML::Value << id                            //
        << YAML::Key << "parent" << YAML::Value << ctx.parent_id             //
-       << YAML::Key << "type" << YAML::Value << "typedef"                   //
+       << YAML::Key << "type" << YAML::Value << "typealias"                 //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendTypedefSyntax(yaml, ctx, node);
   AppendDescription(yaml, node);
