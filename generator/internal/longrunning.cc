@@ -19,17 +19,18 @@
 #include <google/longrunning/operations.pb.h>
 #include <string>
 
+using ::google::protobuf::Descriptor;
 using ::google::protobuf::MethodDescriptor;
+using ::google::protobuf::SourceLocation;
 
 namespace google {
 namespace cloud {
 namespace generator_internal {
 namespace {
 
-absl::variant<std::string, google::protobuf::Descriptor const*>
-FullyQualifyMessageType(google::protobuf::MethodDescriptor const& method,
-                        std::string message_type) {
-  google::protobuf::Descriptor const* output_type =
+absl::variant<std::string, Descriptor const*> FullyQualifyMessageType(
+    MethodDescriptor const& method, std::string message_type) {
+  Descriptor const* output_type =
       method.file()->pool()->FindMessageTypeByName(message_type);
   if (output_type != nullptr) {
     return output_type;
@@ -44,17 +45,14 @@ FullyQualifyMessageType(google::protobuf::MethodDescriptor const& method,
 
 struct FullyQualifiedMessageTypeVisitor {
   std::string operator()(std::string const& s) const { return s; }
-  std::string operator()(google::protobuf::Descriptor const* d) const {
-    return d->full_name();
-  }
+  std::string operator()(Descriptor const* d) const { return d->full_name(); }
 };
 
 // TODO(#11545): once this function exists in a header outside of
 // descriptor_utils.h, include the new header instead and remove this
 // implementation.
-std::string FormatDoxygenLink(
-    google::protobuf::Descriptor const& message_type) {
-  google::protobuf::SourceLocation loc;
+std::string FormatDoxygenLink(Descriptor const& message_type) {
+  SourceLocation loc;
   message_type.GetSourceLocation(&loc);
   std::string output_type_proto_file_name = message_type.file()->name();
   return absl::StrCat(
@@ -72,9 +70,9 @@ struct FormatDoxygenLinkVisitor {
   }
 };
 
-absl::variant<std::string, google::protobuf::Descriptor const*>
+absl::variant<std::string, Descriptor const*>
 DeduceLongrunningOperationResponseType(
-    google::protobuf::MethodDescriptor const& method,
+    MethodDescriptor const& method,
     google::longrunning::OperationInfo const& operation_info) {
   std::string deduced_response_type =
       operation_info.response_type() == "google.protobuf.Empty"
@@ -98,9 +96,8 @@ bool IsLongrunningMetadataTypeUsedAsResponse(MethodDescriptor const& method) {
   return false;
 }
 
-void SetLongrunningOperationMethodVars(
-    google::protobuf::MethodDescriptor const& method,
-    VarsDictionary& method_vars) {
+void SetLongrunningOperationMethodVars(MethodDescriptor const& method,
+                                       VarsDictionary& method_vars) {
   if (method.output_type()->full_name() == "google.longrunning.Operation") {
     auto operation_info =
         method.options().GetExtension(google::longrunning::operation_info);

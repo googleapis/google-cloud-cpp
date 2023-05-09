@@ -30,6 +30,10 @@ using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
 using ::google::protobuf::MethodDescriptor;
+using ::google::protobuf::TextFormat;
+using ::testing::Contains;
+using ::testing::IsNull;
+using ::testing::Pair;
 
 TEST(LongrunningTest, IsLongrunningOperation) {
   FileDescriptorProto service_file;
@@ -54,8 +58,7 @@ TEST(LongrunningTest, IsLongrunningOperation) {
     }
   )pb";
   /// @endcond
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
-                                                            &service_file));
+  ASSERT_TRUE(TextFormat::ParseFromString(kServiceText, &service_file));
   DescriptorPool pool;
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_TRUE(
@@ -71,9 +74,8 @@ TEST(LongrunningTest, IsLongrunningMetadataTypeUsedAsResponseEmptyResponse) {
     package: "google.longrunning"
     message_type { name: "Operation" }
   )pb";
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kLongrunningText,
-                                                            &longrunning_file));
-  google::protobuf::FileDescriptorProto service_file;
+  ASSERT_TRUE(TextFormat::ParseFromString(kLongrunningText, &longrunning_file));
+  FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
     name: "google/foo/v1/service.proto"
@@ -100,8 +102,7 @@ TEST(LongrunningTest, IsLongrunningMetadataTypeUsedAsResponseEmptyResponse) {
     }
   )pb";
   /// @endcond
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
-                                                            &service_file));
+  ASSERT_TRUE(TextFormat::ParseFromString(kServiceText, &service_file));
   DescriptorPool pool;
   pool.BuildFile(longrunning_file);
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
@@ -116,9 +117,8 @@ TEST(LongrunningTest, IsLongrunningMetadataTypeUsedAsResponseNonEmptyResponse) {
     package: "google.longrunning"
     message_type { name: "Operation" }
   )pb";
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kLongrunningText,
-                                                            &longrunning_file));
-  google::protobuf::FileDescriptorProto service_file;
+  ASSERT_TRUE(TextFormat::ParseFromString(kLongrunningText, &longrunning_file));
+  FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
     name: "google/foo/v1/service.proto"
@@ -145,8 +145,7 @@ TEST(LongrunningTest, IsLongrunningMetadataTypeUsedAsResponseNonEmptyResponse) {
     }
   )pb";
   /// @endcond
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
-                                                            &service_file));
+  ASSERT_TRUE(TextFormat::ParseFromString(kServiceText, &service_file));
   DescriptorPool pool;
   pool.BuildFile(longrunning_file);
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
@@ -155,7 +154,7 @@ TEST(LongrunningTest, IsLongrunningMetadataTypeUsedAsResponseNonEmptyResponse) {
 }
 
 TEST(LongrunningTest, IsLongrunningMetadataTypeUsedAsResponseNotLongrunning) {
-  google::protobuf::FileDescriptorProto service_file;
+  FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
     name: "google/foo/v1/service.proto"
@@ -177,8 +176,7 @@ TEST(LongrunningTest, IsLongrunningMetadataTypeUsedAsResponseNotLongrunning) {
     }
   )pb";
   /// @endcond
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
-                                                            &service_file));
+  ASSERT_TRUE(TextFormat::ParseFromString(kServiceText, &service_file));
   DescriptorPool pool;
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_FALSE(IsLongrunningMetadataTypeUsedAsResponse(
@@ -330,12 +328,14 @@ class LongrunningMethodVarsTest : public testing::Test {
 };
 
 TEST_F(LongrunningMethodVarsTest, FilesParseSuccessfully) {
-  EXPECT_NE(nullptr, pool_.FindFileByName("google/api/client.proto"));
-  EXPECT_NE(nullptr, pool_.FindFileByName("google/api/http.proto"));
-  EXPECT_NE(nullptr, pool_.FindFileByName("google/api/annotations.proto"));
-  EXPECT_NE(nullptr,
-            pool_.FindFileByName("google/longrunning/operation.proto"));
-  EXPECT_NE(nullptr, pool_.FindFileByName("google/foo/v1/service.proto"));
+  EXPECT_THAT(pool_.FindFileByName("google/api/client.proto"), Not(IsNull()));
+  EXPECT_THAT(pool_.FindFileByName("google/api/http.proto"), Not(IsNull()));
+  EXPECT_THAT(pool_.FindFileByName("google/api/annotations.proto"),
+              Not(IsNull()));
+  EXPECT_THAT(pool_.FindFileByName("google/longrunning/operation.proto"),
+              Not(IsNull()));
+  EXPECT_THAT(pool_.FindFileByName("google/foo/v1/service.proto"),
+              Not(IsNull()));
 }
 
 TEST_F(LongrunningMethodVarsTest,
@@ -346,18 +346,15 @@ TEST_F(LongrunningMethodVarsTest,
       service_file_descriptor->service(0)->method(0);
   VarsDictionary vars;
   SetLongrunningOperationMethodVars(*method, vars);
-  EXPECT_THAT(vars, ::testing::Contains(
-                        ::testing::Pair("longrunning_metadata_type",
-                                        "google::protobuf::Method2Metadata")));
-  EXPECT_THAT(vars, ::testing::Contains(::testing::Pair(
-                        "longrunning_response_type", "google::protobuf::Bar")));
-  EXPECT_THAT(vars, ::testing::Contains(::testing::Pair(
-                        "longrunning_deduced_response_message_type",
-                        "google.protobuf.Bar")));
-  EXPECT_THAT(
-      vars, ::testing::Contains(::testing::Pair(
-                "longrunning_deduced_response_type", "google::protobuf::Bar")));
-  EXPECT_THAT(vars, ::testing::Contains(::testing::Pair(
+  EXPECT_THAT(vars, Contains(Pair("longrunning_metadata_type",
+                                  "google::protobuf::Method2Metadata")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_response_type",
+                                  "google::protobuf::Bar")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_deduced_response_message_type",
+                                  "google.protobuf.Bar")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_deduced_response_type",
+                                  "google::protobuf::Bar")));
+  EXPECT_THAT(vars, Contains(Pair(
                         "method_longrunning_deduced_return_doxygen_link",
                         "@googleapis_link{google::protobuf::Bar,google/foo/v1/"
                         "service.proto#L8}")));
@@ -371,21 +368,17 @@ TEST_F(LongrunningMethodVarsTest,
       service_file_descriptor->service(0)->method(1);
   VarsDictionary vars;
   SetLongrunningOperationMethodVars(*method, vars);
+  EXPECT_THAT(vars, Contains(Pair("longrunning_metadata_type",
+                                  "google::protobuf::Struct")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_response_type",
+                                  "google::protobuf::Empty")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_deduced_response_message_type",
+                                  "google.protobuf.Struct")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_deduced_response_type",
+                                  "google::protobuf::Struct")));
   EXPECT_THAT(vars,
-              ::testing::Contains(::testing::Pair("longrunning_metadata_type",
-                                                  "google::protobuf::Struct")));
-  EXPECT_THAT(vars,
-              ::testing::Contains(::testing::Pair("longrunning_response_type",
-                                                  "google::protobuf::Empty")));
-  EXPECT_THAT(vars, ::testing::Contains(::testing::Pair(
-                        "longrunning_deduced_response_message_type",
-                        "google.protobuf.Struct")));
-  EXPECT_THAT(vars, ::testing::Contains(
-                        ::testing::Pair("longrunning_deduced_response_type",
-                                        "google::protobuf::Struct")));
-  EXPECT_THAT(vars, ::testing::Contains(::testing::Pair(
-                        "method_longrunning_deduced_return_doxygen_link",
-                        "google::protobuf::Struct")));
+              Contains(Pair("method_longrunning_deduced_return_doxygen_link",
+                            "google::protobuf::Struct")));
 }
 
 TEST_F(LongrunningMethodVarsTest,
@@ -396,18 +389,15 @@ TEST_F(LongrunningMethodVarsTest,
       service_file_descriptor->service(0)->method(2);
   VarsDictionary vars;
   SetLongrunningOperationMethodVars(*method, vars);
-  EXPECT_THAT(vars, ::testing::Contains(
-                        ::testing::Pair("longrunning_metadata_type",
-                                        "google::protobuf::Method2Metadata")));
-  EXPECT_THAT(vars, ::testing::Contains(::testing::Pair(
-                        "longrunning_response_type", "google::protobuf::Bar")));
-  EXPECT_THAT(vars, ::testing::Contains(::testing::Pair(
-                        "longrunning_deduced_response_message_type",
-                        "google.protobuf.Bar")));
-  EXPECT_THAT(
-      vars, ::testing::Contains(::testing::Pair(
-                "longrunning_deduced_response_type", "google::protobuf::Bar")));
-  EXPECT_THAT(vars, ::testing::Contains(::testing::Pair(
+  EXPECT_THAT(vars, Contains(Pair("longrunning_metadata_type",
+                                  "google::protobuf::Method2Metadata")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_response_type",
+                                  "google::protobuf::Bar")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_deduced_response_message_type",
+                                  "google.protobuf.Bar")));
+  EXPECT_THAT(vars, Contains(Pair("longrunning_deduced_response_type",
+                                  "google::protobuf::Bar")));
+  EXPECT_THAT(vars, Contains(Pair(
                         "method_longrunning_deduced_return_doxygen_link",
                         "@googleapis_link{google::protobuf::Bar,google/foo/v1/"
                         "service.proto#L8}")));
