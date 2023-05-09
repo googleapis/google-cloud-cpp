@@ -126,16 +126,19 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
   ExponentialBackoffPolicy(std::chrono::duration<Rep1, Period1> initial_delay,
                            std::chrono::duration<Rep2, Period2> maximum_delay,
                            double scaling)
-      : initial_delay_(std::chrono::duration_cast<std::chrono::microseconds>(
-            initial_delay)),
-        maximum_delay_(std::chrono::duration_cast<std::chrono::microseconds>(
-            maximum_delay)),
+      : initial_delay_(
+            std::chrono::duration_cast<
+                std::chrono::duration<double, std::micro>>(initial_delay)),
+        maximum_delay_(
+            std::chrono::duration_cast<
+                std::chrono::duration<double, std::micro>>(maximum_delay)),
         scaling_(scaling),
         current_delay_start_(initial_delay_),
-        current_delay_end_(
-            (std::min)(std::chrono::duration_cast<std::chrono::microseconds>(
-                           scaling_ * initial_delay_),
-                       maximum_delay_)) {
+        current_delay_end_((std::min)(
+            std::chrono::duration_cast<
+                std::chrono::duration<double, std::micro>>(scaling_ *
+                                                           initial_delay_),
+            maximum_delay_)) {
     if (scaling_ <= 1.0) {
       google::cloud::internal::ThrowInvalidArgument(
           "scaling factor must be > 1.0");
@@ -157,12 +160,11 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
   std::chrono::milliseconds OnCompletion() override;
 
  private:
-  std::chrono::microseconds initial_delay_;
-  std::chrono::microseconds maximum_delay_;
+  std::chrono::duration<double, std::micro> initial_delay_;
+  std::chrono::duration<double, std::micro> maximum_delay_;
   double scaling_;
-  // Stores both ends of the current delay range.
-  std::chrono::microseconds current_delay_start_;
-  std::chrono::microseconds current_delay_end_;
+  std::chrono::duration<double, std::micro> current_delay_start_;
+  std::chrono::duration<double, std::micro> current_delay_end_;
   absl::optional<DefaultPRNG> generator_;
 };
 

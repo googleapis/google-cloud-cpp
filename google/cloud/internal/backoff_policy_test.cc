@@ -42,7 +42,7 @@ TEST(ExponentialBackoffPolicy, Simple) {
 }
 
 /// @test Verify the initial and maximum delay are respected.
-TEST(ExponentialBackoffPolicy, InitialAndMaximumDelayRespected) {
+TEST(ExponentialBackoffPolicy, RespectMinimumAndMaximumDelay) {
   ExponentialBackoffPolicy tested(ms(10), ms(12), 2.0);
 
   auto delay = tested.OnCompletion();
@@ -53,23 +53,13 @@ TEST(ExponentialBackoffPolicy, InitialAndMaximumDelayRespected) {
   EXPECT_GE(ms(12), delay);
 }
 
-/// @test Verify the floating point scaling factor is used to compute the delay
-/// range.
-TEST(ExponentialBackoffPolicy, FloatScalingFactor) {
-  ExponentialBackoffPolicy tested(ms(10), ms(13), 1.1);
+/// @test Verify the delay range is determined by the scaling factor.
+TEST(ExponentialBackoffPolicy, DetermineRangeUsingScalingFactor) {
+  ExponentialBackoffPolicy tested(ms(1000), ms(2000), 1.001);
 
   auto delay = tested.OnCompletion();
-  EXPECT_LE(ms(10), delay);
-  EXPECT_GE(ms(11), delay);
-  delay = tested.OnCompletion();
-  EXPECT_LE(ms(11), delay);
-  EXPECT_GE(ms(12), delay);
-  delay = tested.OnCompletion();
-  EXPECT_LE(ms(12), delay);
-  EXPECT_GE(ms(13), delay);
-  delay = tested.OnCompletion();
-  EXPECT_LE(ms(12), delay);
-  EXPECT_GE(ms(13), delay);
+  EXPECT_LE(ms(1000), delay);
+  EXPECT_GE(ms(1001), delay);
 }
 
 /// @test Verify that the scaling factor is validated.
@@ -96,10 +86,10 @@ TEST(ExponentialBackoffPolicy, DifferentParameters) {
   EXPECT_GE(ms(150), delay) << "delay=" << delay.count() << "ms";
   delay = tested.OnCompletion();
   EXPECT_LE(ms(150), delay) << "delay=" << delay.count() << "ms";
-  EXPECT_GE(ms(300), delay) << "delay=" << delay.count() << "ms";
+  EXPECT_GE(ms(225), delay) << "delay=" << delay.count() << "ms";
   delay = tested.OnCompletion();
   EXPECT_LE(ms(225), delay) << "delay=" << delay.count() << "ms";
-  EXPECT_GE(ms(450), delay) << "delay=" << delay.count() << "ms";
+  EXPECT_GE(ms(338), delay) << "delay=" << delay.count() << "ms";
 }
 
 /// @test Test cloning for ExponentialBackoffPolicy.
