@@ -1,0 +1,13 @@
+{
+    "api_id": "datalineage.googleapis.com",
+    "client_documentation": "https://cloud.google.com/cpp/reference/datacatalog/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "",
+    "language": "cpp",
+    "name": "",
+    "name_pretty": "Data Lineage API",
+    "product_documentation": "",
+    "release_level": "beta",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}
