@@ -22,7 +22,7 @@
 #include "google/cloud/status.h"
 #include <gmock/gmock.h>
 #include <grpcpp/client_context.h>
-#include <grpcpp/impl/codegen/status.h>
+#include <grpcpp/support/status.h>
 #include <chrono>
 #include <memory>
 
