@@ -29,6 +29,7 @@ namespace {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 using ::google::cloud::bigtable_mocks::MockDataConnection;
 using ::google::cloud::testing_util::InstallSpanCatcher;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::SpanAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
@@ -37,9 +38,13 @@ using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
+using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
+using ::testing::IsEmpty;
+using ::testing::Pair;
 using ::testing::Return;
+using ::testing::SizeIs;
 using ms = std::chrono::milliseconds;
 
 auto constexpr kErrorCode = static_cast<int>(StatusCode::kAborted);
@@ -109,6 +114,114 @@ TEST(DataTracingConnection, AsyncApply) {
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
+TEST(DataTracingConnection, BulkApplySuccess) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, BulkApply).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return std::vector<bigtable::FailedMutation>{};
+  });
+
+  auto under_test = MakeDataTracingConnection(mock);
+  auto failures = under_test->BulkApply(kTableName, Mutation());
+  EXPECT_THAT(failures, IsEmpty());
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("bigtable::Table::BulkApply"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+          SpanHasAttributes(SpanAttribute<std::uint32_t>(
+                                "gcloud.bigtable.failed_mutations", 0),
+                            SpanAttribute<std::uint32_t>(
+                                "gcloud.bigtable.successful_mutations", 1)))));
+}
+
+TEST(DataTracingConnection, BulkApplyFailure) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, BulkApply).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return std::vector<bigtable::FailedMutation>{
+        {internal::AbortedError("fail"), 1},
+        {internal::AbortedError("fail"), 2}};
+  });
+
+  bigtable::BulkMutation mut;
+  for (auto i = 0; i != 10; ++i) mut.push_back(Mutation());
+  auto under_test = MakeDataTracingConnection(mock);
+  auto failures = under_test->BulkApply(kTableName, std::move(mut));
+  EXPECT_THAT(failures, SizeIs(2));
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("bigtable::Table::BulkApply"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError),
+          SpanHasAttributes(SpanAttribute<std::uint32_t>(
+                                "gcloud.bigtable.failed_mutations", 2),
+                            SpanAttribute<std::uint32_t>(
+                                "gcloud.bigtable.successful_mutations", 8)))));
+}
+
+TEST(DataTracingConnection, AsyncBulkApplySuccess) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncBulkApply).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return make_ready_future(std::vector<bigtable::FailedMutation>{});
+  });
+
+  auto under_test = MakeDataTracingConnection(mock);
+  auto failures = under_test->AsyncBulkApply(kTableName, Mutation());
+  EXPECT_THAT(failures.get(), IsEmpty());
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("bigtable::Table::AsyncBulkApply"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+          SpanHasAttributes(SpanAttribute<std::uint32_t>(
+                                "gcloud.bigtable.failed_mutations", 0),
+                            SpanAttribute<std::uint32_t>(
+                                "gcloud.bigtable.successful_mutations", 1)))));
+}
+
+TEST(DataTracingConnection, AsyncBulkApplyFailure) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncBulkApply).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return make_ready_future(std::vector<bigtable::FailedMutation>{
+        {internal::AbortedError("fail"), 1},
+        {internal::AbortedError("fail"), 2}});
+  });
+
+  bigtable::BulkMutation mut;
+  for (auto i = 0; i != 10; ++i) mut.push_back(Mutation());
+  auto under_test = MakeDataTracingConnection(mock);
+  auto failures = under_test->AsyncBulkApply(kTableName, std::move(mut));
+  EXPECT_THAT(failures.get(), SizeIs(2));
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("bigtable::Table::AsyncBulkApply"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError),
+          SpanHasAttributes(SpanAttribute<std::uint32_t>(
+                                "gcloud.bigtable.failed_mutations", 2),
+                            SpanAttribute<std::uint32_t>(
+                                "gcloud.bigtable.successful_mutations", 8)))));
+}
+
 TEST(DataTracingConnection, ReadRows) {
   auto span_catcher = InstallSpanCatcher();
 
@@ -133,6 +246,80 @@ TEST(DataTracingConnection, ReadRows) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+}
+
+TEST(DataTracingConnection, ReadRowFound) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, ReadRow).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return std::pair<bool, bigtable::Row>{true, {"row", {}}};
+  });
+
+  auto under_test = MakeDataTracingConnection(mock);
+  auto row =
+      under_test->ReadRow(kTableName, "row", bigtable::Filter::PassAllFilter());
+  EXPECT_THAT(row, IsOkAndHolds(Pair(true, _)));
+
+  EXPECT_THAT(span_catcher->GetSpans(),
+              ElementsAre(AllOf(
+                  SpanHasInstrumentationScope(), SpanKindIsClient(),
+                  SpanNamed("bigtable::Table::ReadRow"),
+                  SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                  SpanHasAttributes(SpanAttribute<int>("gcloud.status_code", 0),
+                                    SpanAttribute<bool>(
+                                        "gcloud.bigtable.row_found", true)))));
+}
+
+TEST(DataTracingConnection, ReadRowNotFound) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, ReadRow).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return std::pair<bool, bigtable::Row>{false, {"row", {}}};
+  });
+
+  auto under_test = MakeDataTracingConnection(mock);
+  auto row =
+      under_test->ReadRow(kTableName, "row", bigtable::Filter::PassAllFilter());
+  EXPECT_THAT(row, IsOkAndHolds(Pair(false, _)));
+
+  EXPECT_THAT(span_catcher->GetSpans(),
+              ElementsAre(AllOf(
+                  SpanHasInstrumentationScope(), SpanKindIsClient(),
+                  SpanNamed("bigtable::Table::ReadRow"),
+                  SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                  SpanHasAttributes(SpanAttribute<int>("gcloud.status_code", 0),
+                                    SpanAttribute<bool>(
+                                        "gcloud.bigtable.row_found", false)))));
+}
+
+TEST(DataTracingConnection, ReadRowFailure) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, ReadRow).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return internal::AbortedError("fail");
+  });
+
+  auto under_test = MakeDataTracingConnection(mock);
+  auto row =
+      under_test->ReadRow(kTableName, "row", bigtable::Filter::PassAllFilter());
+  EXPECT_THAT(row, StatusIs(StatusCode::kAborted));
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("bigtable::Table::ReadRow"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)),
+          Not(SpanHasAttributes(
+              SpanAttribute<bool>("gcloud.bigtable.row_found", _))))));
 }
 
 TEST(DataTracingConnection, CheckAndMutateRow) {
@@ -276,6 +463,83 @@ TEST(DataTracingConnection, AsyncReadModifyWriteRow) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+}
+
+TEST(DataTracingConnection, AsyncReadRowFound) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncReadRow).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return make_ready_future(
+        make_status_or<std::pair<bool, bigtable::Row>>({true, {"row", {}}}));
+  });
+
+  auto under_test = MakeDataTracingConnection(mock);
+  auto row = under_test->AsyncReadRow(kTableName, "row",
+                                      bigtable::Filter::PassAllFilter());
+  EXPECT_THAT(row.get(), IsOkAndHolds(Pair(true, _)));
+
+  EXPECT_THAT(span_catcher->GetSpans(),
+              ElementsAre(AllOf(
+                  SpanHasInstrumentationScope(), SpanKindIsClient(),
+                  SpanNamed("bigtable::Table::AsyncReadRow"),
+                  SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                  SpanHasAttributes(SpanAttribute<int>("gcloud.status_code", 0),
+                                    SpanAttribute<bool>(
+                                        "gcloud.bigtable.row_found", true)))));
+}
+
+TEST(DataTracingConnection, AsyncReadRowNotFound) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncReadRow).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return make_ready_future(
+        make_status_or<std::pair<bool, bigtable::Row>>({false, {"row", {}}}));
+  });
+
+  auto under_test = MakeDataTracingConnection(mock);
+  auto row = under_test->AsyncReadRow(kTableName, "row",
+                                      bigtable::Filter::PassAllFilter());
+  EXPECT_THAT(row.get(), IsOkAndHolds(Pair(false, _)));
+
+  EXPECT_THAT(span_catcher->GetSpans(),
+              ElementsAre(AllOf(
+                  SpanHasInstrumentationScope(), SpanKindIsClient(),
+                  SpanNamed("bigtable::Table::AsyncReadRow"),
+                  SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                  SpanHasAttributes(SpanAttribute<int>("gcloud.status_code", 0),
+                                    SpanAttribute<bool>(
+                                        "gcloud.bigtable.row_found", false)))));
+}
+
+TEST(DataTracingConnection, AsyncReadRowFailure) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncReadRow).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return make_ready_future<StatusOr<std::pair<bool, bigtable::Row>>>(
+        internal::AbortedError("fail"));
+  });
+
+  auto under_test = MakeDataTracingConnection(mock);
+  auto row = under_test->AsyncReadRow(kTableName, "row",
+                                      bigtable::Filter::PassAllFilter());
+  EXPECT_THAT(row.get(), StatusIs(StatusCode::kAborted));
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("bigtable::Table::AsyncReadRow"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)),
+          Not(SpanHasAttributes(
+              SpanAttribute<bool>("gcloud.bigtable.row_found", _))))));
 }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 

@@ -14,6 +14,7 @@
 
 #include "google/cloud/opentelemetry/trace_exporter.h"
 #include "google/cloud/trace/v2/trace_client.h"
+#include "google/cloud/log.h"
 
 namespace google {
 namespace cloud {
@@ -45,8 +46,10 @@ class TraceExporter final : public opentelemetry::sdk::trace::SpanExporter {
     }
 
     auto status = client_.BatchWriteSpans(request);
-    return status.ok() ? opentelemetry::sdk::common::ExportResult::kSuccess
-                       : opentelemetry::sdk::common::ExportResult::kFailure;
+    if (status.ok()) return opentelemetry::sdk::common::ExportResult::kSuccess;
+    GCP_LOG(WARNING) << "Cloud Trace Export of " << request.spans().size()
+                     << " span(s) failed with status=" << status;
+    return opentelemetry::sdk::common::ExportResult::kFailure;
   }
 
   bool Shutdown(std::chrono::microseconds) noexcept override { return true; }

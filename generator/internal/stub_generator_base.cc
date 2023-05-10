@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/stub_generator_base.h"
+#include "generator/internal/longrunning.h"
 #include "generator/internal/predicate_utils.h"
 #include <google/protobuf/descriptor.h>
 

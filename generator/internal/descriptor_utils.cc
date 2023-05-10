@@ -31,13 +31,13 @@
 #include "generator/internal/idempotency_policy_generator.h"
 #include "generator/internal/logging_decorator_generator.h"
 #include "generator/internal/logging_decorator_rest_generator.h"
+#include "generator/internal/longrunning.h"
 #include "generator/internal/metadata_decorator_generator.h"
 #include "generator/internal/metadata_decorator_rest_generator.h"
 #include "generator/internal/mock_connection_generator.h"
 #include "generator/internal/option_defaults_generator.h"
 #include "generator/internal/options_generator.h"
 #include "generator/internal/pagination.h"
-#include "generator/internal/predicate_utils.h"
 #include "generator/internal/resolve_method_return.h"
 #include "generator/internal/retry_traits_generator.h"
 #include "generator/internal/round_robin_decorator_generator.h"
@@ -100,73 +100,6 @@ std::string CppTypeToString(FieldDescriptor const* field) {
                  << " not handled";
   /*NOTREACHED*/
   return field->cpp_type_name();
-}
-
-absl::variant<std::string, google::protobuf::Descriptor const*>
-FullyQualifyMessageType(google::protobuf::MethodDescriptor const& method,
-                        std::string message_type) {
-  google::protobuf::Descriptor const* output_type =
-      method.file()->pool()->FindMessageTypeByName(message_type);
-  if (output_type != nullptr) {
-    return output_type;
-  }
-  output_type = method.file()->pool()->FindMessageTypeByName(
-      absl::StrCat(method.file()->package(), ".", message_type));
-  if (output_type != nullptr) {
-    return output_type;
-  }
-  return message_type;
-}
-
-absl::variant<std::string, google::protobuf::Descriptor const*>
-DeduceLongrunningOperationResponseType(
-    google::protobuf::MethodDescriptor const& method,
-    google::longrunning::OperationInfo const& operation_info) {
-  std::string deduced_response_type =
-      operation_info.response_type() == "google.protobuf.Empty"
-          ? operation_info.metadata_type()
-          : operation_info.response_type();
-  return FullyQualifyMessageType(method, deduced_response_type);
-}
-
-struct FullyQualifiedMessageTypeVisitor {
-  std::string operator()(std::string const& s) const { return s; }
-  std::string operator()(google::protobuf::Descriptor const* d) const {
-    return d->full_name();
-  }
-};
-
-struct FormatDoxygenLinkVisitor {
-  explicit FormatDoxygenLinkVisitor() = default;
-  std::string operator()(std::string const& s) const {
-    return ProtoNameToCppName(s);
-  }
-  std::string operator()(google::protobuf::Descriptor const* d) const {
-    return FormatDoxygenLink(*d);
-  }
-};
-
-void SetLongrunningOperationMethodVars(
-    google::protobuf::MethodDescriptor const& method,
-    VarsDictionary& method_vars) {
-  if (method.output_type()->full_name() == "google.longrunning.Operation") {
-    auto operation_info =
-        method.options().GetExtension(google::longrunning::operation_info);
-    method_vars["longrunning_metadata_type"] = ProtoNameToCppName(absl::visit(
-        FullyQualifiedMessageTypeVisitor(),
-        FullyQualifyMessageType(method, operation_info.metadata_type())));
-    method_vars["longrunning_response_type"] = ProtoNameToCppName(absl::visit(
-        FullyQualifiedMessageTypeVisitor(),
-        FullyQualifyMessageType(method, operation_info.response_type())));
-    auto deduced_response_type =
-        DeduceLongrunningOperationResponseType(method, operation_info);
-    method_vars["longrunning_deduced_response_message_type"] =
-        absl::visit(FullyQualifiedMessageTypeVisitor(), deduced_response_type);
-    method_vars["longrunning_deduced_response_type"] = ProtoNameToCppName(
-        method_vars["longrunning_deduced_response_message_type"]);
-    method_vars["method_longrunning_deduced_return_doxygen_link"] =
-        absl::visit(FormatDoxygenLinkVisitor{}, deduced_response_type);
-  }
 }
 
 void SetMethodSignatureMethodVars(
@@ -573,6 +506,7 @@ std::string FormatResourceAccessor(
 
 }  // namespace
 
+// TODO(#11545): relocate this function to a separate TU.
 std::string FormatDoxygenLink(
     google::protobuf::Descriptor const& message_type) {
   google::protobuf::SourceLocation loc;
