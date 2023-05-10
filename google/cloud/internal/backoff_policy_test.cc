@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/backoff_policy.h"
+#include "google/cloud/testing_util/chrono_output.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <vector>

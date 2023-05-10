@@ -26,7 +26,7 @@ std::unique_ptr<BackoffPolicy> ExponentialBackoffPolicy::clone() const {
 
 std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion() {
   using std::chrono::duration_cast;
-  using std::chrono::microseconds;
+  using microseconds = std::chrono::duration<double, std::micro>;
   using std::chrono::milliseconds;
   // We do not want to copy the seed in `clone()` because then all operations
   // will have the same sequence of backoffs. Nor do we want to use a shared
@@ -47,7 +47,7 @@ std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion() {
     current_delay_end_ = maximum_delay_;
   }
 
-  std::uniform_int_distribution<microseconds::rep> rng_distribution(
+  std::uniform_real_distribution<microseconds::rep> rng_distribution(
       current_delay_start_.count(), current_delay_end_.count());
   // Randomized sleep period because it is possible that after some time all
   // client have same sleep period if we use only exponential backoff policy.
