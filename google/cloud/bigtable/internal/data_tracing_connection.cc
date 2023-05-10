@@ -38,6 +38,13 @@ std::vector<bigtable::FailedMutation> EndBulkApplySpan(
   return failures;
 }
 
+StatusOr<std::pair<bool, bigtable::Row>> EndReadRowSpan(
+    opentelemetry::trace::Span& span,
+    StatusOr<std::pair<bool, bigtable::Row>> result) {
+  if (result) span.SetAttribute("gcloud.bigtable.row_found", result->first);
+  return internal::EndSpan(span, std::move(result));
+}
+
 class DataTracingConnection : public bigtable::DataConnection {
  public:
   ~DataTracingConnection() override = default;
@@ -97,7 +104,10 @@ class DataTracingConnection : public bigtable::DataConnection {
   StatusOr<std::pair<bool, bigtable::Row>> ReadRow(
       std::string const& table_name, std::string row_key,
       bigtable::Filter filter) override {
-    return child_->ReadRow(table_name, std::move(row_key), std::move(filter));
+    auto span = internal::MakeSpan("bigtable::Table::ReadRow");
+    auto scope = opentelemetry::trace::Scope(span);
+    return EndReadRowSpan(*span, child_->ReadRow(table_name, std::move(row_key),
+                                                 std::move(filter)));
   }
 
   StatusOr<bigtable::MutationBranch> CheckAndMutateRow(
@@ -169,8 +179,13 @@ class DataTracingConnection : public bigtable::DataConnection {
   future<StatusOr<std::pair<bool, bigtable::Row>>> AsyncReadRow(
       std::string const& table_name, std::string row_key,
       bigtable::Filter filter) override {
-    return child_->AsyncReadRow(table_name, std::move(row_key),
-                                std::move(filter));
+    auto span = internal::MakeSpan("bigtable::Table::AsyncReadRow");
+    auto scope = opentelemetry::trace::Scope(span);
+    return child_
+        ->AsyncReadRow(table_name, std::move(row_key), std::move(filter))
+        .then([s = std::move(span)](auto f) {
+          return EndReadRowSpan(*s, f.get());
+        });
   }
 
  private:
