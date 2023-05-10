@@ -134,11 +134,9 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
                 std::chrono::duration<double, std::micro>>(maximum_delay)),
         scaling_(scaling),
         current_delay_start_(initial_delay_),
-        current_delay_end_((std::min)(
-            std::chrono::duration_cast<
-                std::chrono::duration<double, std::micro>>(scaling_ *
-                                                           initial_delay_),
-            maximum_delay_)) {
+        current_delay_end_(std::chrono::duration_cast<
+                           std::chrono::duration<double, std::micro>>(
+            scaling_ * initial_delay_)) {
     if (scaling_ <= 1.0) {
       google::cloud::internal::ThrowInvalidArgument(
           "scaling factor must be > 1.0");

@@ -54,7 +54,7 @@ std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion() {
   auto delay = microseconds(rng_distribution(*generator_));
 
   current_delay_start_ = current_delay_end_;
-  current_delay_end_ = current_delay_end_ * scaling_;
+  current_delay_end_ *= scaling_;
 
   return duration_cast<milliseconds>(delay);
 }
