@@ -171,9 +171,14 @@ class DataTracingConnection : public bigtable::DataConnection {
                      std::function<void(Status)> on_finish,
                      bigtable::RowSet row_set, std::int64_t rows_limit,
                      bigtable::Filter filter) override {
-    child_->AsyncReadRows(table_name, std::move(on_row), std::move(on_finish),
-                          std::move(row_set), std::move(rows_limit),
-                          std::move(filter));
+    auto span = internal::MakeSpan("bigtable::Table::AsyncReadRows");
+    auto traced_on_finish = [s = std::move(span),
+                             on_finish](Status const& status) {
+      return on_finish(internal::EndSpan(*s, status));
+    };
+    child_->AsyncReadRows(table_name, std::move(on_row),
+                          std::move(traced_on_finish), std::move(row_set),
+                          std::move(rows_limit), std::move(filter));
   }
 
   future<StatusOr<std::pair<bool, bigtable::Row>>> AsyncReadRow(
