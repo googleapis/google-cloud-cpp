@@ -18,7 +18,7 @@
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <grpcpp/support/status_code_enum.h>
+#include <grpcpp/support/status.h>
 #include <chrono>
 
 namespace google {
