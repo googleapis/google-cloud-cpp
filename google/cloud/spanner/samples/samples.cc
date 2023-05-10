@@ -3802,6 +3802,16 @@ void QueryInformationSchemaDatabaseOptions(
 }
 // [END spanner_query_information_schema_database_options]
 
+// [START spanner_set_batching_delay]
+void CommitWithBatchingDelay(google::cloud::spanner::Client client,
+			     google::cloud::spanner::Mutations mutations,
+			     absl::Duration batching_delay) {
+  google::cloud::spanner::CommitOptions options;
+  auto result = client.Commit(mutations, options);
+  if (!result) throw std::move(result).status();
+}
+// [END spanner_set_batching_delay]
+
 std::string Basename(absl::string_view name) {
   auto last_sep = name.find_last_of("/\\");
   if (last_sep != absl::string_view::npos) name.remove_prefix(last_sep + 1);
