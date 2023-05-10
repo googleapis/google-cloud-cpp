@@ -42,6 +42,7 @@ using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
+using ::testing::MockFunction;
 using ::testing::Pair;
 using ::testing::Return;
 using ::testing::SizeIs;
@@ -460,6 +461,53 @@ TEST(DataTracingConnection, AsyncReadModifyWriteRow) {
       ElementsAre(AllOf(
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanNamed("bigtable::Table::AsyncReadModifyWriteRow"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+}
+
+TEST(DataTracingConnection, AsyncReadRows) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](std::string const&,
+                   std::function<future<bool>(bigtable::Row)> const& on_row,
+                   std::function<void(Status)> const& on_finish,
+                   bigtable::RowSet const&, std::int64_t,
+                   bigtable::Filter const&) {
+        // Invoke the callbacks.
+        on_row(bigtable::Row("r1", {})).get();
+        on_row(bigtable::Row("r2", {})).get();
+        on_finish(internal::AbortedError("fail"));
+      });
+
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call)
+      .WillOnce([](bigtable::Row const& row) {
+        EXPECT_EQ("r1", row.row_key());
+        return make_ready_future(true);
+      })
+      .WillOnce([](bigtable::Row const& row) {
+        EXPECT_EQ("r2", row.row_key());
+        return make_ready_future(true);
+      });
+
+  MockFunction<void(Status)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    EXPECT_THAT(status, StatusIs(StatusCode::kAborted));
+  });
+
+  auto under_test = MakeDataTracingConnection(mock);
+  under_test->AsyncReadRows(kTableName, on_row.AsStdFunction(),
+                            on_finish.AsStdFunction(), bigtable::RowSet(), 42,
+                            bigtable::Filter::PassAllFilter());
+
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("bigtable::Table::AsyncReadRows"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
