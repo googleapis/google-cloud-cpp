@@ -1,10 +1,11 @@
 {
     "api_id": "alloydb.googleapis.com",
+    "api_short_name": "alloydb",
     "client_documentation": "https://cloud.google.com/cpp/reference/alloydb/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/issues?q=componentid:1029828 status=open",
     "language": "cpp",
-    "name": "alloydb",
+    "library_type": "GAPIC_AUTO",
     "name_pretty": "AlloyDB API",
     "product_documentation": "https://cloud.google.com/alloydb/docs",
     "release_level": "ga",

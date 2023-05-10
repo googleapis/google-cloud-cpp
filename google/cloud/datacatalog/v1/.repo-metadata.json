@@ -1,10 +1,11 @@
 {
     "api_id": "datacatalog.googleapis.com",
+    "api_short_name": "datacatalog",
     "client_documentation": "https://cloud.google.com/cpp/reference/datacatalog/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/issues?q=componentid:655468 status=open",
     "language": "cpp",
-    "name": "datacatalog",
+    "library_type": "GAPIC_AUTO",
     "name_pretty": "Google Cloud Data Catalog API",
     "product_documentation": "https://cloud.google.com/data-catalog/docs",
     "release_level": "ga",
