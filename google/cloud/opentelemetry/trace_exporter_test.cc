@@ -15,6 +15,8 @@
 #include "google/cloud/opentelemetry/trace_exporter.h"
 #include "google/cloud/trace/v2/mocks/mock_trace_connection.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
 #include <algorithm>
@@ -28,8 +30,13 @@ namespace otel {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::testing_util::ScopedLog;
 using ::google::devtools::cloudtrace::v2::BatchWriteSpansRequest;
+using ::testing::Contains;
 using ::testing::ElementsAre;
+using ::testing::HasSubstr;
+using ::testing::Return;
 
 std::vector<std::string> SpanNames(BatchWriteSpansRequest const& request) {
   auto const& spans = request.spans();
@@ -79,6 +86,31 @@ TEST(TraceExporter, Failure) {
 
   auto result = exporter->Export({&recordable, 1});
   EXPECT_EQ(result, opentelemetry::sdk::common::ExportResult::kFailure);
+}
+
+TEST(TraceExporter, LogsOnError) {
+  // Disable library logging for a more conclusive test.
+  ScopedEnvironment env{"GOOGLE_CLOUD_CPP_ENABLE_TRACING", absl::nullopt};
+
+  ScopedLog log;
+
+  auto mock = std::make_shared<trace_v2_mocks::MockTraceServiceConnection>();
+  EXPECT_CALL(*mock, BatchWriteSpans)
+      .WillOnce(Return(internal::UnavailableError("try again later")));
+
+  auto exporter = otel_internal::MakeTraceExporter(Project("test-project"),
+                                                   std::move(mock));
+
+  auto recordable = exporter->MakeRecordable();
+  recordable->SetName("span");
+
+  auto result = exporter->Export({&recordable, 1});
+  EXPECT_EQ(result, opentelemetry::sdk::common::ExportResult::kFailure);
+
+  EXPECT_THAT(
+      log.ExtractLines(),
+      Contains(AllOf(HasSubstr("Cloud Trace Export"), HasSubstr("1 span(s)"),
+                     HasSubstr("UNAVAILABLE"), HasSubstr("try again later"))));
 }
 
 }  // namespace
