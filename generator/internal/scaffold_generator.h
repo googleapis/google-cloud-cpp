@@ -89,11 +89,18 @@ std::map<std::string, std::string> ScaffoldVars(
 
 void MakeDirectory(std::string const& path);
 
-/// Generates (if possible) a `.repo-metadata.json` file for @p service.
+/**
+ * Generates (if possible) a `.repo-metadata.json` file for @p service.
+ *
+ * If @p allow_placeholders is true then the configuration file will be
+ * generated even if some information is missing.  This is used during the
+ * scaffold generation, and the developer is expected to fill any gaps.
+ */
 void GenerateMetadata(
     std::map<std::string, std::string> const& vars,
     std::string const& output_path,
-    google::cloud::cpp::generator::ServiceConfiguration const& service);
+    google::cloud::cpp::generator::ServiceConfiguration const& service,
+    bool allow_placeholders);
 
 /// Generates the build and documentation scaffold for @p service.
 void GenerateScaffold(

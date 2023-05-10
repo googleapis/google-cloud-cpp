@@ -226,12 +226,15 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
     auto scaffold_vars =
         ScaffoldVars(generator_args.googleapis_proto_path, api_index, service,
                      generator_args.experimental_scaffold);
-    if (LibraryPath(service.product_path()) == generator_args.scaffold) {
+    auto const generate_scaffold =
+        LibraryPath(service.product_path()) == generator_args.scaffold;
+    if (generate_scaffold) {
       GenerateScaffold(scaffold_vars, generator_args.scaffold_templates_path,
                        generator_args.output_path, service);
     }
     if (!service.omit_metadata()) {
-      GenerateMetadata(scaffold_vars, generator_args.output_path, service);
+      GenerateMetadata(scaffold_vars, generator_args.output_path, service,
+                       generate_scaffold);
     }
 
     std::vector<std::string> args;

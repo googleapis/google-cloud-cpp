@@ -184,7 +184,9 @@ std::map<std::string, std::string> ScaffoldVars(
        }) {
     auto node = publishing[name];
     if (node.Type() != YAML::NodeType::Scalar) continue;
-    vars[name] = node.as<std::string>();
+    auto value = node.as<std::string>();
+    if (value.empty()) continue;
+    vars[name] = std::move(value);
   }
   // The YAML configuration includes a link to create new issues. If possible,
   // convert that to a link to list issues, which is what we want to generate.
@@ -215,7 +217,8 @@ void MakeDirectory(std::string const& path) {
 void GenerateMetadata(
     std::map<std::string, std::string> const& vars,
     std::string const& output_path,
-    google::cloud::cpp::generator::ServiceConfiguration const& service) {
+    google::cloud::cpp::generator::ServiceConfiguration const& service,
+    bool allow_placeholders) {
   auto const destination = [&]() {
     MakeDirectory(output_path);
     auto d = output_path + "/" + LibraryPath(service.product_path());
@@ -238,6 +241,10 @@ void GenerateMetadata(
       {"distribution_name", "google-cloud-cpp"},
       // This seems to be largely unused, but better to put a value.
       {"requires_billing", true},
+      // Assume the library is automatically generated. For hand-crafted
+      // libraries we will set `omit_metadata: true` in
+      // generator_config.textproto.
+      {"library_type", "GAPIC_AUTO"},
   };
   auto library = vars.find("library");
   if (library == vars.end()) {
@@ -254,15 +261,19 @@ void GenerateMetadata(
   } map_vars[] = {
       {"name_pretty", "title"},
       {"api_id", "nameInServiceConfig"},
-      {"name", "api_short_name"},
+      {"api_short_name", "api_short_name"},
       {"product_documentation", "documentation_uri"},
       {"issue_tracker", "issue_tracker"},
   };
   for (auto const& kv : map_vars) {
     auto const l = vars.find(kv.var_name);
-    // At the moment, too many proto directories lack a `publishing` section
-    // in their YAML file.
-    if (l == vars.end()) return;
+    if (l == vars.end()) {
+      // At the moment, too many proto directories lack a `publishing` section
+      // in their YAML file.
+      if (!allow_placeholders) return;
+      metadata[kv.metadata_name] = "EDIT HERE: missing data";
+      continue;
+    }
     metadata[kv.metadata_name] = l->second;
   }
 
