@@ -23,6 +23,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 namespace {
+
+std::vector<bigtable::FailedMutation> EndBulkApplySpan(
+    opentelemetry::trace::Span& span, std::size_t total_mutations,
+    std::vector<bigtable::FailedMutation> failures) {
+  span.SetStatus(failures.empty() ? opentelemetry::trace::StatusCode::kOk
+                                  : opentelemetry::trace::StatusCode::kError);
+  span.SetAttribute("gcloud.bigtable.failed_mutations",
+                    static_cast<std::uint32_t>(failures.size()));
+  span.SetAttribute(
+      "gcloud.bigtable.successful_mutations",
+      static_cast<std::uint32_t>(total_mutations - failures.size()));
+  span.End();
+  return failures;
+}
+
 class DataTracingConnection : public bigtable::DataConnection {
  public:
   ~DataTracingConnection() override = default;
@@ -50,12 +65,22 @@ class DataTracingConnection : public bigtable::DataConnection {
 
   std::vector<bigtable::FailedMutation> BulkApply(
       std::string const& table_name, bigtable::BulkMutation mut) override {
-    return child_->BulkApply(table_name, std::move(mut));
+    auto span = internal::MakeSpan("bigtable::Table::BulkApply");
+    auto scope = opentelemetry::trace::Scope(span);
+    auto total_mutations = mut.size();
+    return EndBulkApplySpan(*span, total_mutations,
+                            child_->BulkApply(table_name, std::move(mut)));
   }
 
   future<std::vector<bigtable::FailedMutation>> AsyncBulkApply(
       std::string const& table_name, bigtable::BulkMutation mut) override {
-    return child_->AsyncBulkApply(table_name, std::move(mut));
+    auto span = internal::MakeSpan("bigtable::Table::AsyncBulkApply");
+    auto scope = opentelemetry::trace::Scope(span);
+    auto total_mutations = mut.size();
+    auto failures = child_->AsyncBulkApply(table_name, std::move(mut));
+    return failures.then([s = std::move(span), total_mutations](auto f) {
+      return EndBulkApplySpan(*s, total_mutations, f.get());
+    });
   }
 
   bigtable::RowReader ReadRows(std::string const& table_name,
