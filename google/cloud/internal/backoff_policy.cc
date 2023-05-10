@@ -25,7 +25,6 @@ std::unique_ptr<BackoffPolicy> ExponentialBackoffPolicy::clone() const {
 }
 
 std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion() {
-  using DoubleMicroseconds = std::chrono::duration<double, std::micro>;
   // We do not want to copy the seed in `clone()` because then all operations
   // will have the same sequence of backoffs. Nor do we want to use a shared
   // PRNG because that would require locking and some more complicated lifecycle

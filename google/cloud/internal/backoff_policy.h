@@ -152,11 +152,12 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
   std::chrono::milliseconds OnCompletion() override;
 
  private:
-  std::chrono::duration<double, std::micro> initial_delay_;
-  std::chrono::duration<double, std::micro> maximum_delay_;
+  using DoubleMicroseconds = std::chrono::duration<double, std::micro>;
+  DoubleMicroseconds initial_delay_;
+  DoubleMicroseconds maximum_delay_;
   double scaling_;
-  std::chrono::duration<double, std::micro> current_delay_start_;
-  std::chrono::duration<double, std::micro> current_delay_end_;
+  DoubleMicroseconds current_delay_start_;
+  DoubleMicroseconds current_delay_end_;
   absl::optional<DefaultPRNG> generator_;
 };
 
