@@ -126,12 +126,8 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
   ExponentialBackoffPolicy(std::chrono::duration<Rep1, Period1> initial_delay,
                            std::chrono::duration<Rep2, Period2> maximum_delay,
                            double scaling)
-      : initial_delay_(
-            std::chrono::duration_cast<
-                std::chrono::duration<double, std::micro>>(initial_delay)),
-        maximum_delay_(
-            std::chrono::duration_cast<
-                std::chrono::duration<double, std::micro>>(maximum_delay)),
+      : initial_delay_(initial_delay),
+        maximum_delay_(maximum_delay),
         scaling_(scaling),
         current_delay_start_(initial_delay_),
         current_delay_end_(scaling_ * initial_delay_) {
