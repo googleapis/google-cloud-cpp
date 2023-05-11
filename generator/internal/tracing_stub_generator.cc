@@ -98,14 +98,18 @@ Status TracingStubGenerator::GenerateCc() {
 
   // includes
   CcPrint("\n");
-  CcLocalIncludes({vars("tracing_stub_header_path"),
-                   HasStreamingReadMethod()
-                       ? "google/cloud/internal/streaming_read_rpc_tracing.h"
-                       : "",
-                   HasStreamingWriteMethod()
-                       ? "google/cloud/internal/streaming_write_rpc_tracing.h"
-                       : "",
-                   "google/cloud/internal/grpc_opentelemetry.h"});
+  CcLocalIncludes(
+      {vars("tracing_stub_header_path"),
+       HasAsynchronousStreamingReadMethod()
+           ? "google/cloud/internal/async_streaming_read_rpc_tracing.h"
+           : "",
+       HasStreamingReadMethod()
+           ? "google/cloud/internal/streaming_read_rpc_tracing.h"
+           : "",
+       HasStreamingWriteMethod()
+           ? "google/cloud/internal/streaming_write_rpc_tracing.h"
+           : "",
+       "google/cloud/internal/grpc_opentelemetry.h"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
@@ -205,13 +209,18 @@ $tracing_stub_class_name$::$method_name$(
   for (auto const& method : async_methods()) {
     if (IsStreamingRead(method)) {
       auto constexpr kDefinition = R"""(
-std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
-    $response_type$>>
+std::unique_ptr<internal::AsyncStreamingReadRpc<$response_type$>>
 $tracing_stub_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     $request_type$ const& request) {
-  return child_->Async$method_name$(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  auto stream = child_->Async$method_name$(cq, context, request);
+  return std::make_unique<
+      internal::AsyncStreamingReadRpcTracing<$response_type$>>(
+      std::move(context), std::move(stream), std::move(span));
 }
 )""";
       CcPrintMethod(method, __FILE__, __LINE__, kDefinition);

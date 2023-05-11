@@ -17,6 +17,7 @@
 // source: google/storage/v2/storage.proto
 
 #include "google/cloud/storage/internal/storage_tracing_stub.h"
+#include "google/cloud/internal/async_streaming_read_rpc_tracing.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/streaming_read_rpc_tracing.h"
 #include "google/cloud/internal/streaming_write_rpc_tracing.h"
@@ -407,13 +408,19 @@ future<Status> StorageTracingStub::AsyncDeleteObject(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
-    google::storage::v2::ReadObjectResponse>>
+std::unique_ptr<
+    internal::AsyncStreamingReadRpc<google::storage::v2::ReadObjectResponse>>
 StorageTracingStub::AsyncReadObject(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::ReadObjectRequest const& request) {
-  return child_->AsyncReadObject(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.storage.v2.Storage", "ReadObject");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  auto stream = child_->AsyncReadObject(cq, context, request);
+  return std::make_unique<internal::AsyncStreamingReadRpcTracing<
+      google::storage::v2::ReadObjectResponse>>(
+      std::move(context), std::move(stream), std::move(span));
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
