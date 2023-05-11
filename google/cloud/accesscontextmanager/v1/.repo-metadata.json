@@ -1,0 +1,13 @@
+{
+    "api_id": "accesscontextmanager.googleapis.com",
+    "api_short_name": "accesscontextmanager",
+    "client_documentation": "https://cloud.google.com/cpp/reference/accesscontextmanager/latest",
+    "distribution_name": "google-cloud-cpp",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Access Context Manager API",
+    "product_documentation": "https://cloud.google.com/access-context-manager",
+    "release_level": "ga",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}
