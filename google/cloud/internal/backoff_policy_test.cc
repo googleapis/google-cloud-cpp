@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/backoff_policy.h"
+#include "google/cloud/testing_util/chrono_output.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <vector>
@@ -41,6 +42,27 @@ TEST(ExponentialBackoffPolicy, Simple) {
   EXPECT_GE(ms(100), delay);
 }
 
+/// @test Verify the initial and maximum delay are respected.
+TEST(ExponentialBackoffPolicy, RespectMinimumAndMaximumDelay) {
+  ExponentialBackoffPolicy tested(ms(10), ms(12), 2.0);
+
+  auto delay = tested.OnCompletion();
+  EXPECT_LE(ms(10), delay);
+  EXPECT_GE(ms(12), delay);
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(10), delay);
+  EXPECT_GE(ms(12), delay);
+}
+
+/// @test Verify the delay range is determined by the scaling factor.
+TEST(ExponentialBackoffPolicy, DetermineRangeUsingScalingFactor) {
+  ExponentialBackoffPolicy tested(ms(1000), ms(2000), 1.001);
+
+  auto delay = tested.OnCompletion();
+  EXPECT_LE(ms(1000), delay);
+  EXPECT_GE(ms(1001), delay);
+}
+
 /// @test Verify that the scaling factor is validated.
 TEST(ExponentialBackoffPolicy, ValidateScaling) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -62,13 +84,13 @@ TEST(ExponentialBackoffPolicy, DifferentParameters) {
 
   auto delay = tested.OnCompletion();
   EXPECT_LE(ms(100), delay) << "delay=" << delay.count() << "ms";
-  EXPECT_GE(ms(200), delay) << "delay=" << delay.count() << "ms";
+  EXPECT_GE(ms(150), delay) << "delay=" << delay.count() << "ms";
   delay = tested.OnCompletion();
   EXPECT_LE(ms(150), delay) << "delay=" << delay.count() << "ms";
-  EXPECT_GE(ms(300), delay) << "delay=" << delay.count() << "ms";
+  EXPECT_GE(ms(225), delay) << "delay=" << delay.count() << "ms";
   delay = tested.OnCompletion();
   EXPECT_LE(ms(225), delay) << "delay=" << delay.count() << "ms";
-  EXPECT_GE(ms(450), delay) << "delay=" << delay.count() << "ms";
+  EXPECT_GE(ms(338), delay) << "delay=" << delay.count() << "ms";
 }
 
 /// @test Test cloning for ExponentialBackoffPolicy.

@@ -101,7 +101,7 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
    * @endcode
    *
    * @param initial_delay how long to wait after the first (unsuccessful)
-   *     operation.
+   *     operation and the minimum value for the delay between operations.
    * @param maximum_delay the maximum value for the delay between operations.
    * @param scaling how fast does the delay increase between iterations.
    *
@@ -126,12 +126,11 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
   ExponentialBackoffPolicy(std::chrono::duration<Rep1, Period1> initial_delay,
                            std::chrono::duration<Rep2, Period2> maximum_delay,
                            double scaling)
-      : initial_delay_(std::chrono::duration_cast<std::chrono::microseconds>(
-            initial_delay)),
-        current_delay_range_(2 * initial_delay_),
-        maximum_delay_(std::chrono::duration_cast<std::chrono::microseconds>(
-            maximum_delay)),
-        scaling_(scaling) {
+      : initial_delay_(initial_delay),
+        maximum_delay_(maximum_delay),
+        scaling_(scaling),
+        current_delay_start_(initial_delay_),
+        current_delay_end_(scaling_ * initial_delay_) {
     if (scaling_ <= 1.0) {
       google::cloud::internal::ThrowInvalidArgument(
           "scaling factor must be > 1.0");
@@ -144,18 +143,21 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
   //  - We want uncorrelated data streams for each copy anyway.
   ExponentialBackoffPolicy(ExponentialBackoffPolicy const& rhs) noexcept
       : initial_delay_(rhs.initial_delay_),
-        current_delay_range_(rhs.current_delay_range_),
         maximum_delay_(rhs.maximum_delay_),
-        scaling_(rhs.scaling_) {}
+        scaling_(rhs.scaling_),
+        current_delay_start_(rhs.current_delay_start_),
+        current_delay_end_(rhs.current_delay_end_) {}
 
   std::unique_ptr<BackoffPolicy> clone() const override;
   std::chrono::milliseconds OnCompletion() override;
 
  private:
-  std::chrono::microseconds initial_delay_;
-  std::chrono::microseconds current_delay_range_;
-  std::chrono::microseconds maximum_delay_;
+  using DoubleMicroseconds = std::chrono::duration<double, std::micro>;
+  DoubleMicroseconds initial_delay_;
+  DoubleMicroseconds maximum_delay_;
   double scaling_;
+  DoubleMicroseconds current_delay_start_;
+  DoubleMicroseconds current_delay_end_;
   absl::optional<DefaultPRNG> generator_;
 };
 
