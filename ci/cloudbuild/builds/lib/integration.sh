@@ -34,7 +34,7 @@ python3 -m pip install --upgrade --user --quiet --disable-pip-version-check \
 
 # Some of the tests will need a valid roots.pem file.
 rm -f /dev/shm/roots.pem
-ci/retry-command.sh 3 120 curl -sSL -o /dev/shm/roots.pem https://pki.google.com/roots.pem
+ci/retry-command.sh 3 120 curl -fsSL -o /dev/shm/roots.pem https://pki.google.com/roots.pem
 
 # Outputs a list of Bazel arguments that should be used when running
 # integration tests. These do not include the common `bazel::common_args`.

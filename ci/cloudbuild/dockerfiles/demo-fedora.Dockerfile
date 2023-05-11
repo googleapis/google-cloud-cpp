@@ -46,7 +46,7 @@ RUN dnf makecache && \
 
 # ```bash
 WORKDIR /var/tmp/build/pkg-config-cpp
-RUN curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+RUN curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     ./configure --with-internal-glib && \
     make -j ${NCPU:-4} && \
@@ -81,7 +81,7 @@ ENV PKG_CONFIG_PATH=/usr/local/share/pkgconfig:/usr/lib64/pkgconfig
 
 # ```bash
 WORKDIR /var/tmp/build/json
-RUN curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \

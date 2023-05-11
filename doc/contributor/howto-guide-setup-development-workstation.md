@@ -70,7 +70,7 @@ sudo apt install -y clang libc++-dev libc++abi-dev cmake ninja-build
 Install the buildifier tool, which we use to format `BUILD.bazel` files:
 
 ```console
-sudo curl -sSL -o /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/6.0.0/buildifier-linux-amd64
+sudo curl -fsSL -o /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/6.0.0/buildifier-linux-amd64
 sudo chmod 755 /usr/bin/buildifier
 ```
 

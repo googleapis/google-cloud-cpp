@@ -34,7 +34,7 @@ jobs:
         working-directory: "${{runner.temp}}"
         run: |
           mkdir -p vcpkg
-          curl -sSL "https://github.com/microsoft/vcpkg/archive/${{ steps.vcpkg-version.outputs.version }}.tar.gz" |
+          curl -fsSL "https://github.com/microsoft/vcpkg/archive/${{ steps.vcpkg-version.outputs.version }}.tar.gz" |
               tar -C vcpkg --strip-components=1 -zxf -
           vcpkg/bootstrap-vcpkg.sh -disableMetrics
       - name: cache-vcpkg

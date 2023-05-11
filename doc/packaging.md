@@ -158,7 +158,7 @@ https://github.com/googleapis/google-cloud-cpp/issues/7052.
 
 ```bash
 mkdir -p $HOME/Downloads/pkg-config-cpp && cd $HOME/Downloads/pkg-config-cpp
-curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     ./configure --with-internal-glib && \
     make -j ${NCPU:-4} && \
@@ -185,7 +185,7 @@ source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -249,7 +249,7 @@ not, `sudo dnf install pkgconfig` should work.
 
 ```bash
 mkdir -p $HOME/Downloads/pkg-config-cpp && cd $HOME/Downloads/pkg-config-cpp
-curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     ./configure --with-internal-glib && \
     make -j ${NCPU:-4} && \
@@ -284,7 +284,7 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -357,7 +357,7 @@ use `absl::any`, `absl::string_view`, and `absl::variant`. See
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -377,7 +377,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -397,7 +397,7 @@ distributes c-ares-1.9. Manually install a newer version:
 
 ```bash
 mkdir -p $HOME/Downloads/c-ares && cd $HOME/Downloads/c-ares
-curl -sSL https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz | \
+curl -fsSL https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     ./buildconf && ./configure && make -j ${NCPU:-4} && \
 sudo make install && \
@@ -411,7 +411,7 @@ Cloud Platform proto files. We manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -437,7 +437,7 @@ source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -460,7 +460,7 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -522,7 +522,7 @@ for more information.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -542,7 +542,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -562,7 +562,7 @@ Cloud Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -588,7 +588,7 @@ source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -611,7 +611,7 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -672,7 +672,7 @@ use `absl::any`, `absl::string_view`, and `absl::variant`. See
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -692,7 +692,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -713,7 +713,7 @@ you are not planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -sSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
+curl -fsSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -731,7 +731,7 @@ Cloud Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -757,7 +757,7 @@ source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -780,7 +780,7 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -840,7 +840,7 @@ use `absl::any`, `absl::string_view`, and `absl::variant`. See
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -860,7 +860,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -879,7 +879,7 @@ We need a newer version of RE2 than the system package provides.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -sSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
+curl -fsSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -897,7 +897,7 @@ Cloud Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -923,7 +923,7 @@ source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -946,7 +946,7 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -1007,7 +1007,7 @@ use `absl::any`, `absl::string_view`, and `absl::variant`. See
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -1027,7 +1027,7 @@ source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1059,7 +1059,7 @@ Google Cloud. We need to build from source:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1079,7 +1079,7 @@ you are not planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -sSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
+curl -fsSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -1096,7 +1096,7 @@ Finally, we build gRPC from source:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1162,7 +1162,7 @@ use `absl::any`, `absl::string_view`, and `absl::variant`. See
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -1182,7 +1182,7 @@ source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1205,7 +1205,7 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -1226,7 +1226,7 @@ Google Cloud. We need to build from source:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1246,7 +1246,7 @@ you are not planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -sSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
+curl -fsSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -1263,7 +1263,7 @@ Finally, we build gRPC from source:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1323,7 +1323,7 @@ binary. If not, `sudo dnf install pkgconfig` should work.
 
 ```bash
 mkdir -p $HOME/Downloads/pkg-config-cpp && cd $HOME/Downloads/pkg-config-cpp
-curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     ./configure --with-internal-glib && \
     make -j ${NCPU:-4} && \
@@ -1359,7 +1359,7 @@ use `absl::any`, `absl::string_view`, and `absl::variant`. See
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -1379,7 +1379,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1400,7 +1400,7 @@ you are not planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -sSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
+curl -fsSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -1418,7 +1418,7 @@ Cloud Platform proto files. We manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1444,7 +1444,7 @@ source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1467,7 +1467,7 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -1521,7 +1521,7 @@ binary. If not, `sudo dnf install pkgconfig` should work.
 
 ```bash
 mkdir -p $HOME/Downloads/pkg-config-cpp && cd $HOME/Downloads/pkg-config-cpp
-curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     ./configure --with-internal-glib && \
     make -j ${NCPU:-4} && \
@@ -1559,7 +1559,7 @@ compiler defaults to C++17. Therefore, we change `absl/base/options.h` to
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 1/' "absl/base/options.h" && \
     cmake \
@@ -1580,7 +1580,7 @@ install Protobuf (and any downstream packages) from source.
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1601,7 +1601,7 @@ you are not planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -sSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
+curl -fsSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -1621,7 +1621,7 @@ manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=17 \
@@ -1648,7 +1648,7 @@ source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1671,7 +1671,7 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -1737,7 +1737,7 @@ newer. If not, `sudo yum install pkgconfig` should work instead.
 
 ```bash
 mkdir -p $HOME/Downloads/pkg-config-cpp && cd $HOME/Downloads/pkg-config-cpp
-curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     ./configure --with-internal-glib && \
     make -j ${NCPU:-4} && \
@@ -1773,7 +1773,7 @@ use `absl::any`, `absl::string_view`, and `absl::variant`. See
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -sSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -1793,7 +1793,7 @@ Google Cloud Platform proto files:
 
 ```bash
 mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
-curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1813,7 +1813,7 @@ distributes c-ares-1.10. Manually install a newer version:
 
 ```bash
 mkdir -p $HOME/Downloads/c-ares && cd $HOME/Downloads/c-ares
-curl -sSL https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz | \
+curl -fsSL https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     ./buildconf && ./configure && make -j ${NCPU:-4} && \
 sudo make install && \
@@ -1827,7 +1827,7 @@ Cloud Platform proto files. We manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+curl -fsSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1853,7 +1853,7 @@ source:
 
 ```bash
 mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
-curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1876,7 +1876,7 @@ This leaves your environment without support for CMake pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
-curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \

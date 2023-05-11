@@ -58,7 +58,7 @@ RUN echo 'root:' | chpasswd
 # For more details see
 #     https://github.com/googleapis/google-cloud-cpp/issues/7052
 WORKDIR /var/tmp/build/pkg-config-cpp
-RUN curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+RUN curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     ./configure --with-internal-glib && \
     make -j ${NCPU:-4} && \
@@ -70,7 +70,7 @@ ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib
 # leaves trailing whitespace in the output:
 #     https://github.com/jbeder/yaml-cpp/pull/1005
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz | \
+RUN curl -fsSL https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -83,7 +83,7 @@ RUN curl -sSL https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.
 # We expose `absl::optional<>` in our public API. An Abseil LTS update will
 # break our `check-api` build, unless we disable the inline namespace.
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
+RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     sed -i 's/^#define ABSL_OPTION_USE_INLINE_NAMESPACE 1$/#define ABSL_OPTION_USE_INLINE_NAMESPACE 0/' "absl/base/options.h" && \
@@ -96,7 +96,7 @@ RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/google/googletest/archive/v1.13.0.tar.gz | \
+RUN curl -fsSL https://github.com/google/googletest/archive/v1.13.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \
@@ -106,7 +106,7 @@ RUN curl -sSL https://github.com/google/googletest/archive/v1.13.0.tar.gz | \
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/google/benchmark/archive/v1.8.0.tar.gz | \
+RUN curl -fsSL https://github.com/google/benchmark/archive/v1.8.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \
@@ -117,7 +117,7 @@ RUN curl -sSL https://github.com/google/benchmark/archive/v1.8.0.tar.gz | \
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+RUN curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -130,7 +130,7 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -142,7 +142,7 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/protobuf
-RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -157,7 +157,7 @@ RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz 
 # files. This may be fixed in Fedora:38, but until then it is easier to just
 # install the source code.
 WORKDIR /var/tmp/build/re2
-RUN curl -sSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
+RUN curl -fsSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -169,7 +169,7 @@ RUN curl -sSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
 
 WORKDIR /var/tmp/build/grpc
 RUN dnf makecache && dnf install -y c-ares-devel
-RUN curl -sSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -187,7 +187,7 @@ RUN curl -sSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/
-RUN curl -sSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.9.0.tar.gz | \
+RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.9.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=14 \
@@ -204,7 +204,7 @@ RUN curl -sSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.9.0
 
 # Install ctcache to speed up our clang-tidy build
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/matus-chochlik/ctcache/archive/0ad2e227e8a981a9c1a6060ee6c8ec144bb976c6.tar.gz | \
+RUN curl -fsSL https://github.com/matus-chochlik/ctcache/archive/0ad2e227e8a981a9c1a6060ee6c8ec144bb976c6.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cp clang-tidy /usr/local/bin/clang-tidy-wrapper && \
     cp clang-tidy-cache /usr/local/bin/clang-tidy-cache && \
@@ -213,7 +213,7 @@ RUN curl -sSL https://github.com/matus-chochlik/ctcache/archive/0ad2e227e8a981a9
 # Installs Universal Ctags (which is different than the default "Exuberant
 # Ctags"), which is needed by the ABI checker. See https://ctags.io/
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/universal-ctags/ctags/archive/refs/tags/p5.9.20210418.0.tar.gz | \
+RUN curl -fsSL https://github.com/universal-ctags/ctags/archive/refs/tags/p5.9.20210418.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     ./autogen.sh && \
     ./configure --prefix=/usr/local && \
@@ -225,7 +225,7 @@ RUN curl -sSL https://github.com/universal-ctags/ctags/archive/refs/tags/p5.9.20
 # https://github.com/lvc/abi-dumper/pull/29. We can switch back to `dnf install
 # abi-dumper` once it has the fix.
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/lvc/abi-dumper/archive/16bb467cd7d343dd3a16782b151b56cf15509594.tar.gz | \
+RUN curl -fsSL https://github.com/lvc/abi-dumper/archive/16bb467cd7d343dd3a16782b151b56cf15509594.tar.gz | \
     tar -xzf - --strip-components=1 && \
     mv abi-dumper.pl /usr/local/bin/abi-dumper && \
     chmod +x /usr/local/bin/abi-dumper

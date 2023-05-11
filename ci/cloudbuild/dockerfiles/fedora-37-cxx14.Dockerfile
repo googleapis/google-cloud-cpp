@@ -49,7 +49,7 @@ RUN echo 'root:' | chpasswd
 # from this bottleneck. For more details see
 # https://github.com/googleapis/google-cloud-cpp/issues/7052
 WORKDIR /var/tmp/build/pkg-config-cpp
-RUN curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
+RUN curl -fsSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     ./configure --with-internal-glib && \
     make -j ${NCPU:-4} && \
@@ -60,7 +60,7 @@ ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib
 # Install Abseil, remove the downloaded files and the temporary artifacts
 # after a successful build to keep the image smaller (and with fewer layers)
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
+RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -76,7 +76,7 @@ RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20230125.3.tar.gz | \
 # Install googletest, remove the downloaded files and the temporary artifacts
 # after a successful build to keep the image smaller (and with fewer layers)
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/google/googletest/archive/v1.13.0.tar.gz | \
+RUN curl -fsSL https://github.com/google/googletest/archive/v1.13.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_CXX_STANDARD=14 \
@@ -89,7 +89,7 @@ RUN curl -sSL https://github.com/google/googletest/archive/v1.13.0.tar.gz | \
 
 # Download and compile Google microbenchmark support library:
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/google/benchmark/archive/v1.8.0.tar.gz | \
+RUN curl -fsSL https://github.com/google/benchmark/archive/v1.8.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=14 \
@@ -102,7 +102,7 @@ RUN curl -sSL https://github.com/google/benchmark/archive/v1.8.0.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
+RUN curl -fsSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_CXX_STANDARD=14 \
@@ -117,7 +117,7 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
+RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_CXX_STANDARD=14 \
@@ -131,7 +131,7 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/protobuf
-RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=14 \
@@ -148,7 +148,7 @@ RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz 
 # files. This is fixed in Fedora:38, but until then it is easier to just install
 # the source code.
 WORKDIR /var/tmp/build/re2
-RUN curl -sSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
+RUN curl -fsSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -159,7 +159,7 @@ RUN curl -sSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
     ldconfig
 
 WORKDIR /var/tmp/build/grpc
-RUN curl -sSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=14 \
@@ -179,7 +179,7 @@ RUN curl -sSL https://github.com/grpc/grpc/archive/v1.54.0.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/
-RUN curl -sSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.9.0.tar.gz | \
+RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.9.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=14 \

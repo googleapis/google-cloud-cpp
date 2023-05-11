@@ -18,5 +18,5 @@ ARG ARCH=amd64
 
 RUN apt-get update && apt-get install -y curl git
 WORKDIR /var/tmp
-RUN curl -sSL -o gh.deb https://github.com/cli/cli/releases/download/v1.9.1/gh_1.9.1_linux_${ARCH}.deb && \
+RUN curl -fsSL -o gh.deb https://github.com/cli/cli/releases/download/v1.9.1/gh_1.9.1_linux_${ARCH}.deb && \
     dpkg --install gh.deb
