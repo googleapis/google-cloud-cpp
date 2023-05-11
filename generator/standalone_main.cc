@@ -60,10 +60,13 @@ ABSL_FLAG(bool, generate_discovery_protos, false,
 
 namespace {
 
-using google::cloud::generator_internal::GenerateScaffold;
-using google::cloud::generator_internal::LibraryName;
-using google::cloud::generator_internal::LibraryPath;
-using google::cloud::generator_internal::SafeReplaceAll;
+using ::google::cloud::generator_internal::GenerateMetadata;
+using ::google::cloud::generator_internal::GenerateScaffold;
+using ::google::cloud::generator_internal::LibraryName;
+using ::google::cloud::generator_internal::LibraryPath;
+using ::google::cloud::generator_internal::LoadApiIndex;
+using ::google::cloud::generator_internal::SafeReplaceAll;
+using ::google::cloud::generator_internal::ScaffoldVars;
 
 struct CommandLineArgs {
   std::string config_file;
@@ -218,12 +221,20 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
     google::protobuf::RepeatedPtrField<
         google::cloud::cpp::generator::ServiceConfiguration> const& services) {
   std::vector<std::future<google::cloud::Status>> tasks;
+  auto const api_index = LoadApiIndex(generator_args.googleapis_proto_path);
   for (auto const& service : services) {
-    if (LibraryPath(service.product_path()) == generator_args.scaffold) {
-      GenerateScaffold(generator_args.googleapis_proto_path,
-                       generator_args.scaffold_templates_path,
-                       generator_args.output_path, service,
-                       generator_args.experimental_scaffold);
+    auto scaffold_vars =
+        ScaffoldVars(generator_args.googleapis_proto_path, api_index, service,
+                     generator_args.experimental_scaffold);
+    auto const generate_scaffold =
+        LibraryPath(service.product_path()) == generator_args.scaffold;
+    if (generate_scaffold) {
+      GenerateScaffold(scaffold_vars, generator_args.scaffold_templates_path,
+                       generator_args.output_path, service);
+    }
+    if (!service.omit_repo_metadata()) {
+      GenerateMetadata(scaffold_vars, generator_args.output_path, service,
+                       generate_scaffold);
     }
 
     std::vector<std::string> args;

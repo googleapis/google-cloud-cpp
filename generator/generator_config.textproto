@@ -282,7 +282,8 @@ service {
     "ReadModifyWriteRow",
     "ReadRows",
     "SampleRowKeys"
-  ]
+  ],
+  omit_repo_metadata: true
 }
 
 service {
@@ -292,6 +293,7 @@ service {
   emulator_endpoint_env_var: "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST"
   retryable_status_codes: ["kUnavailable", "kAborted"]
   omitted_rpcs: ["DeleteAppProfile(std::string const&)"]
+  omit_repo_metadata: true
 }
 
 service {
@@ -311,6 +313,7 @@ service {
   idempotency_overrides: [
     {rpc_name: "BigtableTableAdmin.CheckConsistency", idempotency: IDEMPOTENT}
   ]
+  omit_repo_metadata: true
 }
 
 # Billing
@@ -1375,6 +1378,7 @@ service {
     "ModifyAckDeadline",
     "Publish"
   ]
+  omit_repo_metadata: true
 }
 
 service {
@@ -1395,6 +1399,7 @@ service {
   initial_copyright_year: "2021"
   gen_async_rpcs: ["GetTopicPartitions"]
   retryable_status_codes: ["kInternal", "kUnavailable"]
+  omit_repo_metadata: true
 }
 
 service {
@@ -1403,6 +1408,7 @@ service {
   initial_copyright_year: "2022"
   omit_client: true
   omit_connection: true
+  omit_repo_metadata: true
 }
 
 service {
@@ -1411,6 +1417,7 @@ service {
   initial_copyright_year: "2022"
   omit_client: true
   omit_connection: true
+  omit_repo_metadata: true
 }
 
 service {
@@ -1419,6 +1426,7 @@ service {
   initial_copyright_year: "2022"
   omit_client: true
   omit_connection: true
+  omit_repo_metadata: true
 }
 
 service {
@@ -1426,6 +1434,7 @@ service {
   product_path: "google/cloud/pubsublite"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kInternal", "kUnavailable"]
+  omit_repo_metadata: true
 }
 
 # Recommender
@@ -1656,6 +1665,7 @@ service {
   backwards_compatibility_namespace_alias: true
   retryable_status_codes: ["kUnavailable"]
   generate_rest_transport: true
+  omit_repo_metadata: true
 }
 
 service {
@@ -1667,6 +1677,7 @@ service {
   backwards_compatibility_namespace_alias: true
   retryable_status_codes: ["kUnavailable"]
   generate_rest_transport: true
+  omit_repo_metadata: true
 }
 
 # Speech
@@ -1795,6 +1806,7 @@ service {
     "QueryWriteStatus",
     "WriteObject"
   ]
+  omit_repo_metadata: true
 }
 
 # Storage Insights

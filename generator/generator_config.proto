@@ -144,6 +144,10 @@ message ServiceConfiguration {
   // This need not be explicitly set to true as the generator will check if the
   // field has been set, and assign a value of true if not set.
   optional bool generate_grpc_transport = 22;
+
+  // If set to `true` the generator will *NOT* create a .repo-metadata.json
+  // file. This is useful when multiple services target the same directory.
+  bool omit_repo_metadata = 23;
 }
 
 message DiscoveryDocumentDefinedProduct {

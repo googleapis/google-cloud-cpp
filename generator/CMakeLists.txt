@@ -23,6 +23,7 @@ if (NOT Protobuf_FOUND)
     find_package(Protobuf REQUIRED)
 endif ()
 include(IncludeNlohmannJson)
+find_package(yaml-cpp CONFIG REQUIRED)
 
 add_library(
     google_cloud_cpp_generator # cmake-format: sort
@@ -136,7 +137,8 @@ target_link_libraries(
            google-cloud-cpp::api_routing_protos
            google-cloud-cpp::longrunning_operations_protos
            absl::str_format
-           protobuf::libprotoc)
+           protobuf::libprotoc
+           yaml-cpp)
 google_cloud_cpp_add_common_options(google_cloud_cpp_generator)
 target_compile_options(google_cloud_cpp_generator
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
