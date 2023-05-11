@@ -197,8 +197,9 @@ std::map<std::string, std::string> ScaffoldVars(
         R"re((https://issuetracker.google.com/issues).*[^a-z]component=([0-9]*).*)re");
     std::smatch match;
     if (std::regex_match(issue_tracker, match, re)) {
-      issue_tracker = absl::StrCat(
-          match[1].str(), "?q=componentid:", match[2].str(), " status=open");
+      issue_tracker =
+          absl::StrCat(match[1].str(), "?q=componentid:", match[2].str(), "%20",
+                       "status=open");
     }
     vars["issue_tracker"] = issue_tracker;
   }
@@ -227,7 +228,6 @@ void GenerateMetadata(
     if (l == vars.end()) return d;
     if (l->second.empty()) return d;
     d += l->second;
-    d += "/";
     MakeDirectory(d);
     return d;
   }();
@@ -242,7 +242,7 @@ void GenerateMetadata(
       // This seems to be largely unused, but better to put a value.
       {"requires_billing", true},
       // Assume the library is automatically generated. For hand-crafted
-      // libraries we will set `omit_metadata: true` in
+      // libraries we will set `omit_repo_metadata: true` in
       // generator_config.textproto.
       {"library_type", "GAPIC_AUTO"},
   };

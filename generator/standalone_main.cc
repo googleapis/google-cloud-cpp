@@ -232,7 +232,7 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
       GenerateScaffold(scaffold_vars, generator_args.scaffold_templates_path,
                        generator_args.output_path, service);
     }
-    if (!service.omit_metadata()) {
+    if (!service.omit_repo_metadata()) {
       GenerateMetadata(scaffold_vars, generator_args.output_path, service,
                        generate_scaffold);
     }

@@ -147,7 +147,7 @@ message ServiceConfiguration {
 
   // If set to `true` the generator will *NOT* create a .repo-metadata.json
   // file. This is useful when multiple services target the same directory.
-  bool omit_metadata = 23;
+  bool omit_repo_metadata = 23;
 }
 
 message DiscoveryDocumentDefinedProduct {
