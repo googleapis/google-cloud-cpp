@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/table_rest_stub_factory.h"
+#include "google/cloud/bigquery/v2/minimal/internal/table_logging.h"
+#include "google/cloud/bigquery/v2/minimal/internal/table_metadata.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
@@ -34,7 +36,14 @@ std::shared_ptr<TableRestStub> CreateDefaultTableRestStub(Options const& opts) {
   std::shared_ptr<TableRestStub> stub =
       std::make_shared<DefaultTableRestStub>(std::move(curl_rest_client));
 
-  // TODO(#11527): Add Logging and metadata client creation for the stub.
+  stub = std::make_shared<TableMetadata>(std::move(stub));
+
+  if (internal::Contains(local_opts.get<TracingComponentsOption>(), "rpc")) {
+    GCP_LOG(INFO) << "Enabled logging for REST rpc calls";
+    stub = std::make_shared<TableLogging>(
+        std::move(stub), local_opts.get<RestTracingOptionsOption>(),
+        local_opts.get<TracingComponentsOption>());
+  }
 
   return stub;
 }
