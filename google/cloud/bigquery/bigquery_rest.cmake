@@ -77,6 +77,10 @@ add_library(
     v2/minimal/internal/rest_stub_utils.h
     v2/minimal/internal/table.cc
     v2/minimal/internal/table.h
+    v2/minimal/internal/table_client.cc
+    v2/minimal/internal/table_client.h
+    v2/minimal/internal/table_connection.cc
+    v2/minimal/internal/table_connection.h
     v2/minimal/internal/table_constraints.cc
     v2/minimal/internal/table_constraints.h
     v2/minimal/internal/table_idempotency_policy.cc
@@ -91,6 +95,8 @@ add_library(
     v2/minimal/internal/table_request.h
     v2/minimal/internal/table_response.cc
     v2/minimal/internal/table_response.h
+    v2/minimal/internal/table_rest_connection_impl.cc
+    v2/minimal/internal/table_rest_connection_impl.h
     v2/minimal/internal/table_rest_stub.cc
     v2/minimal/internal/table_rest_stub.h
     v2/minimal/internal/table_rest_stub_factory.cc
@@ -127,7 +133,8 @@ target_sources(
     google_cloud_cpp_bigquery_rest_mocks
     INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/mocks/mock_dataset_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/mocks/mock_job_connection.h)
+        ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/mocks/mock_job_connection.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/mocks/mock_table_connection.h)
 target_link_libraries(
     google_cloud_cpp_bigquery_rest_mocks
     INTERFACE google-cloud-cpp::experimental-bigquery_rest GTest::gmock_main
@@ -211,6 +218,8 @@ function (bigquery_rest_define_tests)
         v2/minimal/internal/job_rest_stub_test.cc
         v2/minimal/internal/job_test.cc
         v2/minimal/internal/rest_stub_utils_test.cc
+        v2/minimal/internal/table_client_test.cc
+        v2/minimal/internal/table_connection_test.cc
         v2/minimal/internal/table_idempotency_policy_test.cc
         v2/minimal/internal/table_logging_test.cc
         v2/minimal/internal/table_options_test.cc
