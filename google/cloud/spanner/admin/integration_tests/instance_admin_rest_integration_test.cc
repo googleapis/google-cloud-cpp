@@ -25,6 +25,7 @@
 #include "google/cloud/spanner/testing/random_instance_name.h"
 #include "google/cloud/spanner/update_instance_request_builder.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
@@ -79,6 +80,7 @@ MakeInstanceAdminConnectionRestEmulator() {
   if (internal::GetEnv("SPANNER_EMULATOR_REST_HOST").has_value()) {
     options.set<EndpointOption>(
         internal::GetEnv("SPANNER_EMULATOR_REST_HOST").value());
+    options.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
   }
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
@@ -97,6 +99,7 @@ MakeDatabaseAdminConnectionRestEmulator() {
   if (internal::GetEnv("SPANNER_EMULATOR_REST_HOST").has_value()) {
     options.set<EndpointOption>(
         internal::GetEnv("SPANNER_EMULATOR_REST_HOST").value());
+    options.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
   }
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
