@@ -1,0 +1,43 @@
+/*!
+@page support-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `support_v2::CaseAttachmentServiceClient`:
+
+@snippet case_attachment_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c support_v2::CaseAttachmentServiceClient](@ref support_v2::CaseAttachmentServiceClient-endpoint-snippet)
+- [\c support_v2::CaseServiceClient](@ref support_v2::CaseServiceClient-endpoint-snippet)
+- [\c support_v2::CommentServiceClient](@ref support_v2::CommentServiceClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page support_v2::CaseAttachmentServiceClient-endpoint-snippet Override support_v2::CaseAttachmentServiceClient Endpoint Configuration
+
+@snippet google/cloud/support/v2/samples/case_attachment_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page support_v2::CaseServiceClient-endpoint-snippet Override support_v2::CaseServiceClient Endpoint Configuration
+
+@snippet google/cloud/support/v2/samples/case_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page support_v2::CommentServiceClient-endpoint-snippet Override support_v2::CommentServiceClient Endpoint Configuration
+
+@snippet google/cloud/support/v2/samples/comment_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->
