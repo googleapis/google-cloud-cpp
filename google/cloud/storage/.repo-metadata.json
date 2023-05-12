@@ -1,6 +1,6 @@
 {
     "api_id": "storage.googleapis.com",
-    "api_short_name": "storage",
+    "api_shortname": "storage",
     "client_documentation": "https://cloud.google.com/cpp/reference/storage/latest",
     "distribution_name": "google-cloud-cpp",
     "issue_tracker": "https://issuetracker.google.com/savedsearches/559782",
@@ -8,7 +8,7 @@
     "library_type": "GAPIC_COMBO",
     "name_pretty": "Cloud Storage API",
     "product_documentation": "https://cloud.google.com/storage/docs",
-    "release_level": "ga",
+    "release_level": "stable",
     "repo": "googleapis/google-cloud-cpp",
     "requires_billing": true
 }
