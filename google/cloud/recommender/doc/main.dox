@@ -42,6 +42,7 @@ can override the default policies.
   endpoint.
 - @ref recommender-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref recommender-env - describes environment variables that can configure the behavior of the library.
 
 [cloud-service-docs]: https://cloud.google.com/recommender
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff

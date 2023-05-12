@@ -49,6 +49,7 @@ can override the default policies.
   endpoint.
 - @ref resourcemanager-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref resourcemanager-env - describes environment variables that can configure the behavior of the library.
 
 [cloud-product]: https://cloud.google.com/resource-manager
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff

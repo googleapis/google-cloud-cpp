@@ -712,6 +712,8 @@ can override the default policies.
   endpoint.
 - @ref $library$-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref $library$-env - describes environment variables that can configure the
+  behavior of the library.
 
 [cloud-service-docs]: https://cloud.google.com/$site_root$
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff

@@ -71,16 +71,19 @@ when testing your application.
 
 ## Next Steps
 
-* @ref iam-mock
-* @ref iam-credentials-mock
+- @ref common-error-handling - describes how the library reports errors.
+- @ref iam-override-endpoint - describes how to override the default
+  endpoint.
+- @ref iam-override-authentication - describes how to change the
+  authentication credentials used by the library.
+- @ref iam-env - describes environment variables that can configure the behavior of the library.
+- @ref iam-mock
+- @ref iam-credentials-mock
 
 [resource-link]: https://console.cloud.google.com/cloud-resource-manager 'Console Resource Manager'
 [billing-link]: https://cloud.google.com/billing/docs/how-to/modify-project 'How to: Modify Project'
 [concepts-link]: https://cloud.google.com/iam/docs/concepts 'IAM Concepts'
-[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
-[gcloud-quickstart]: https://cloud.google.com/sdk/docs/quickstarts
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 [quickstart-link]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iam/quickstart
-[status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
 
 */

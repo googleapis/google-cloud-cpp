@@ -55,6 +55,7 @@ can override the default policies.
   endpoint.
 - @ref video-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref video-env - describes environment variables that can configure the behavior of the library.
 
 [livestream-service-docs]: https://cloud.google.com/livestream
 [transcoder-service-docs]: https://cloud.google.com/transcoder
