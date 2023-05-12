@@ -148,6 +148,10 @@ class MockDataplexServiceConnection
               (google::cloud::dataplex::v1::ListJobsRequest request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::RunTaskResponse>, RunTask,
+              (google::cloud::dataplex::v1::RunTaskRequest const& request),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Job>, GetJob,
               (google::cloud::dataplex::v1::GetJobRequest const& request),
               (override));

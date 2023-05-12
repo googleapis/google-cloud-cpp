@@ -72,6 +72,12 @@ class MockEkmServiceConnection : public kms_v1::EkmServiceConnection {
   MOCK_METHOD(StatusOr<google::cloud::kms::v1::EkmConfig>, UpdateEkmConfig,
               (google::cloud::kms::v1::UpdateEkmConfigRequest const& request),
               (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>,
+      VerifyConnectivity,
+      (google::cloud::kms::v1::VerifyConnectivityRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

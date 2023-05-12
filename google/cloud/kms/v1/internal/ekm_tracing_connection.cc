@@ -87,6 +87,15 @@ EkmServiceTracingConnection::UpdateEkmConfig(
   return internal::EndSpan(*span, child_->UpdateEkmConfig(request));
 }
 
+StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
+EkmServiceTracingConnection::VerifyConnectivity(
+    google::cloud::kms::v1::VerifyConnectivityRequest const& request) {
+  auto span =
+      internal::MakeSpan("kms_v1::EkmServiceConnection::VerifyConnectivity");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->VerifyConnectivity(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<kms_v1::EkmServiceConnection> MakeEkmServiceTracingConnection(

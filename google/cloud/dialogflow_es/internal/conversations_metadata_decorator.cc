@@ -83,6 +83,16 @@ ConversationsMetadata::SuggestConversationSummary(
   return child_->SuggestConversationSummary(context, request);
 }
 
+StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
+ConversationsMetadata::GenerateStatelessSummary(
+    grpc::ClientContext& context,
+    google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
+        request) {
+  SetMetadata(context, "stateless_conversation.parent=" +
+                           request.stateless_conversation().parent());
+  return child_->GenerateStatelessSummary(context, request);
+}
+
 void ConversationsMetadata::SetMetadata(grpc::ClientContext& context,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

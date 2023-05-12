@@ -148,6 +148,10 @@ class DataplexServiceTracingStub : public DataplexServiceStub {
       grpc::ClientContext& context,
       google::cloud::dataplex::v1::ListJobsRequest const& request) override;
 
+  StatusOr<google::cloud::dataplex::v1::RunTaskResponse> RunTask(
+      grpc::ClientContext& context,
+      google::cloud::dataplex::v1::RunTaskRequest const& request) override;
+
   StatusOr<google::cloud::dataplex::v1::Job> GetJob(
       grpc::ClientContext& context,
       google::cloud::dataplex::v1::GetJobRequest const& request) override;

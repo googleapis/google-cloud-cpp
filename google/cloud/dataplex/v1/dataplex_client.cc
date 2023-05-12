@@ -427,6 +427,21 @@ StreamRange<google::cloud::dataplex::v1::Job> DataplexServiceClient::ListJobs(
   return connection_->ListJobs(std::move(request));
 }
 
+StatusOr<google::cloud::dataplex::v1::RunTaskResponse>
+DataplexServiceClient::RunTask(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::RunTaskRequest request;
+  request.set_name(name);
+  return connection_->RunTask(request);
+}
+
+StatusOr<google::cloud::dataplex::v1::RunTaskResponse>
+DataplexServiceClient::RunTask(
+    google::cloud::dataplex::v1::RunTaskRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RunTask(request);
+}
+
 StatusOr<google::cloud::dataplex::v1::Job> DataplexServiceClient::GetJob(
     std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

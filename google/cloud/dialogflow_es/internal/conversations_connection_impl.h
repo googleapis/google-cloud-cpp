@@ -72,6 +72,11 @@ class ConversationsConnectionImpl
       google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
           request) override;
 
+  StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
+  GenerateStatelessSummary(
+      google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
+          request) override;
+
  private:
   std::unique_ptr<dialogflow_es::ConversationsRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();

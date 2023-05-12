@@ -368,12 +368,12 @@ class SpeechClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::RecognizeResponse,google/cloud/speech/v2/cloud_speech.proto#L1067}
+  /// @googleapis_link{google::cloud::speech::v2::RecognizeResponse,google/cloud/speech/v2/cloud_speech.proto#L1030}
   ///
   /// [google.cloud.speech.v2.RecognizeRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L920}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L883}
   /// [google.cloud.speech.v2.RecognizeResponse]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1067}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1030}
   ///
   StatusOr<google::cloud::speech::v2::RecognizeResponse> Recognize(
       std::string const& recognizer,
@@ -386,16 +386,16 @@ class SpeechClient {
   /// has been sent and processed.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::RecognizeRequest,google/cloud/speech/v2/cloud_speech.proto#L920}
+  /// @googleapis_link{google::cloud::speech::v2::RecognizeRequest,google/cloud/speech/v2/cloud_speech.proto#L883}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::RecognizeResponse,google/cloud/speech/v2/cloud_speech.proto#L1067}
+  /// @googleapis_link{google::cloud::speech::v2::RecognizeResponse,google/cloud/speech/v2/cloud_speech.proto#L1030}
   ///
   /// [google.cloud.speech.v2.RecognizeRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L920}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L883}
   /// [google.cloud.speech.v2.RecognizeResponse]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1067}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1030}
   ///
   StatusOr<google::cloud::speech::v2::RecognizeResponse> Recognize(
       google::cloud::speech::v2::RecognizeRequest const& request,
@@ -408,14 +408,14 @@ class SpeechClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A bidirectional streaming interface with request (write) type:
-  /// @googleapis_link{google::cloud::speech::v2::StreamingRecognizeRequest,google/cloud/speech/v2/cloud_speech.proto#L1151}
+  /// @googleapis_link{google::cloud::speech::v2::StreamingRecognizeRequest,google/cloud/speech/v2/cloud_speech.proto#L1114}
   /// and response (read) type:
-  /// @googleapis_link{google::cloud::speech::v2::StreamingRecognizeResponse,google/cloud/speech/v2/cloud_speech.proto#L1428}
+  /// @googleapis_link{google::cloud::speech::v2::StreamingRecognizeResponse,google/cloud/speech/v2/cloud_speech.proto#L1405}
   ///
   /// [google.cloud.speech.v2.StreamingRecognizeRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1151}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1114}
   /// [google.cloud.speech.v2.StreamingRecognizeResponse]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1428}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1405}
   ///
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::speech::v2::StreamingRecognizeRequest,
@@ -454,12 +454,12 @@ class SpeechClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::BatchRecognizeResponse,google/cloud/speech/v2/cloud_speech.proto#L1249}
+  /// @googleapis_link{google::cloud::speech::v2::BatchRecognizeResponse,google/cloud/speech/v2/cloud_speech.proto#L1226}
   ///
   /// [google.cloud.speech.v2.BatchRecognizeRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1180}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1143}
   /// [google.cloud.speech.v2.BatchRecognizeResponse]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1249}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1226}
   ///
   future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
   BatchRecognize(
@@ -476,16 +476,16 @@ class SpeechClient {
   /// when the transcriptions are finished.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::BatchRecognizeRequest,google/cloud/speech/v2/cloud_speech.proto#L1180}
+  /// @googleapis_link{google::cloud::speech::v2::BatchRecognizeRequest,google/cloud/speech/v2/cloud_speech.proto#L1143}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::BatchRecognizeResponse,google/cloud/speech/v2/cloud_speech.proto#L1249}
+  /// @googleapis_link{google::cloud::speech::v2::BatchRecognizeResponse,google/cloud/speech/v2/cloud_speech.proto#L1226}
   ///
   /// [google.cloud.speech.v2.BatchRecognizeRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1180}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1143}
   /// [google.cloud.speech.v2.BatchRecognizeResponse]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1249}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1226}
   ///
   future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
   BatchRecognize(
@@ -502,12 +502,12 @@ class SpeechClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::Config,google/cloud/speech/v2/cloud_speech.proto#L1477}
+  /// @googleapis_link{google::cloud::speech::v2::Config,google/cloud/speech/v2/cloud_speech.proto#L1454}
   ///
   /// [google.cloud.speech.v2.Config]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1477}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1454}
   /// [google.cloud.speech.v2.GetConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1508}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1485}
   ///
   StatusOr<google::cloud::speech::v2::Config> GetConfig(std::string const& name,
                                                         Options opts = {});
@@ -516,16 +516,16 @@ class SpeechClient {
   /// Returns the requested [Config][google.cloud.speech.v2.Config].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::GetConfigRequest,google/cloud/speech/v2/cloud_speech.proto#L1508}
+  /// @googleapis_link{google::cloud::speech::v2::GetConfigRequest,google/cloud/speech/v2/cloud_speech.proto#L1485}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::Config,google/cloud/speech/v2/cloud_speech.proto#L1477}
+  /// @googleapis_link{google::cloud::speech::v2::Config,google/cloud/speech/v2/cloud_speech.proto#L1454}
   ///
   /// [google.cloud.speech.v2.Config]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1477}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1454}
   /// [google.cloud.speech.v2.GetConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1508}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1485}
   ///
   StatusOr<google::cloud::speech::v2::Config> GetConfig(
       google::cloud::speech::v2::GetConfigRequest const& request,
@@ -541,12 +541,12 @@ class SpeechClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::Config,google/cloud/speech/v2/cloud_speech.proto#L1477}
+  /// @googleapis_link{google::cloud::speech::v2::Config,google/cloud/speech/v2/cloud_speech.proto#L1454}
   ///
   /// [google.cloud.speech.v2.Config]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1477}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1454}
   /// [google.cloud.speech.v2.UpdateConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1520}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1497}
   ///
   StatusOr<google::cloud::speech::v2::Config> UpdateConfig(
       google::cloud::speech::v2::Config const& config,
@@ -556,16 +556,16 @@ class SpeechClient {
   /// Updates the [Config][google.cloud.speech.v2.Config].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::UpdateConfigRequest,google/cloud/speech/v2/cloud_speech.proto#L1520}
+  /// @googleapis_link{google::cloud::speech::v2::UpdateConfigRequest,google/cloud/speech/v2/cloud_speech.proto#L1497}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::Config,google/cloud/speech/v2/cloud_speech.proto#L1477}
+  /// @googleapis_link{google::cloud::speech::v2::Config,google/cloud/speech/v2/cloud_speech.proto#L1454}
   ///
   /// [google.cloud.speech.v2.Config]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1477}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1454}
   /// [google.cloud.speech.v2.UpdateConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1520}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1497}
   ///
   StatusOr<google::cloud::speech::v2::Config> UpdateConfig(
       google::cloud::speech::v2::UpdateConfigRequest const& request,
@@ -586,12 +586,12 @@ class SpeechClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1511}
   ///
   /// [google.cloud.speech.v2.CreateCustomClassRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1759}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1736}
   /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1511}
   ///
   future<StatusOr<google::cloud::speech::v2::CustomClass>> CreateCustomClass(
       std::string const& parent,
@@ -602,16 +602,16 @@ class SpeechClient {
   /// Creates a [CustomClass][google.cloud.speech.v2.CustomClass].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::CreateCustomClassRequest,google/cloud/speech/v2/cloud_speech.proto#L1759}
+  /// @googleapis_link{google::cloud::speech::v2::CreateCustomClassRequest,google/cloud/speech/v2/cloud_speech.proto#L1736}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1511}
   ///
   /// [google.cloud.speech.v2.CreateCustomClassRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1759}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1736}
   /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1511}
   ///
   future<StatusOr<google::cloud::speech::v2::CustomClass>> CreateCustomClass(
       google::cloud::speech::v2::CreateCustomClassRequest const& request,
@@ -626,12 +626,12 @@ class SpeechClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1511}
   ///
   /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1511}
   /// [google.cloud.speech.v2.ListCustomClassesRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1786}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1763}
   ///
   StreamRange<google::cloud::speech::v2::CustomClass> ListCustomClasses(
       std::string const& parent, Options opts = {});
@@ -640,16 +640,16 @@ class SpeechClient {
   /// Lists CustomClasses.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::ListCustomClassesRequest,google/cloud/speech/v2/cloud_speech.proto#L1786}
+  /// @googleapis_link{google::cloud::speech::v2::ListCustomClassesRequest,google/cloud/speech/v2/cloud_speech.proto#L1763}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1511}
   ///
   /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1511}
   /// [google.cloud.speech.v2.ListCustomClassesRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1786}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1763}
   ///
   StreamRange<google::cloud::speech::v2::CustomClass> ListCustomClasses(
       google::cloud::speech::v2::ListCustomClassesRequest request,
@@ -665,12 +665,12 @@ class SpeechClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1511}
   ///
   /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1511}
   /// [google.cloud.speech.v2.GetCustomClassRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1830}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1807}
   ///
   StatusOr<google::cloud::speech::v2::CustomClass> GetCustomClass(
       std::string const& name, Options opts = {});
@@ -680,16 +680,16 @@ class SpeechClient {
   /// [CustomClass][google.cloud.speech.v2.CustomClass].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::GetCustomClassRequest,google/cloud/speech/v2/cloud_speech.proto#L1830}
+  /// @googleapis_link{google::cloud::speech::v2::GetCustomClassRequest,google/cloud/speech/v2/cloud_speech.proto#L1807}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1511}
   ///
   /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1511}
   /// [google.cloud.speech.v2.GetCustomClassRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1830}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1807}
   ///
   StatusOr<google::cloud::speech::v2::CustomClass> GetCustomClass(
       google::cloud::speech::v2::GetCustomClassRequest const& request,
@@ -708,12 +708,12 @@ class SpeechClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1511}
   ///
   /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1511}
   /// [google.cloud.speech.v2.UpdateCustomClassRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1843}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1820}
   ///
   future<StatusOr<google::cloud::speech::v2::CustomClass>> UpdateCustomClass(
       google::cloud::speech::v2::CustomClass const& custom_class,
@@ -723,16 +723,16 @@ class SpeechClient {
   /// Updates the [CustomClass][google.cloud.speech.v2.CustomClass].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::UpdateCustomClassRequest,google/cloud/speech/v2/cloud_speech.proto#L1843}
+  /// @googleapis_link{google::cloud::speech::v2::UpdateCustomClassRequest,google/cloud/speech/v2/cloud_speech.proto#L1820}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1511}
   ///
   /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1511}
   /// [google.cloud.speech.v2.UpdateCustomClassRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1843}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1820}
   ///
   future<StatusOr<google::cloud::speech::v2::CustomClass>> UpdateCustomClass(
       google::cloud::speech::v2::UpdateCustomClassRequest const& request,
@@ -747,12 +747,12 @@ class SpeechClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1511}
   ///
   /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1511}
   /// [google.cloud.speech.v2.DeleteCustomClassRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1862}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1839}
   ///
   future<StatusOr<google::cloud::speech::v2::CustomClass>> DeleteCustomClass(
       std::string const& name, Options opts = {});
@@ -761,16 +761,16 @@ class SpeechClient {
   /// Deletes the [CustomClass][google.cloud.speech.v2.CustomClass].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::DeleteCustomClassRequest,google/cloud/speech/v2/cloud_speech.proto#L1862}
+  /// @googleapis_link{google::cloud::speech::v2::DeleteCustomClassRequest,google/cloud/speech/v2/cloud_speech.proto#L1839}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1511}
   ///
   /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1511}
   /// [google.cloud.speech.v2.DeleteCustomClassRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1862}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1839}
   ///
   future<StatusOr<google::cloud::speech::v2::CustomClass>> DeleteCustomClass(
       google::cloud::speech::v2::DeleteCustomClassRequest const& request,
@@ -785,12 +785,12 @@ class SpeechClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1511}
   ///
   /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1511}
   /// [google.cloud.speech.v2.UndeleteCustomClassRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1890}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1867}
   ///
   future<StatusOr<google::cloud::speech::v2::CustomClass>> UndeleteCustomClass(
       std::string const& name, Options opts = {});
@@ -799,16 +799,16 @@ class SpeechClient {
   /// Undeletes the [CustomClass][google.cloud.speech.v2.CustomClass].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::UndeleteCustomClassRequest,google/cloud/speech/v2/cloud_speech.proto#L1890}
+  /// @googleapis_link{google::cloud::speech::v2::UndeleteCustomClassRequest,google/cloud/speech/v2/cloud_speech.proto#L1867}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_link{google::cloud::speech::v2::CustomClass,google/cloud/speech/v2/cloud_speech.proto#L1511}
   ///
   /// [google.cloud.speech.v2.CustomClass]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1534}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1511}
   /// [google.cloud.speech.v2.UndeleteCustomClassRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1890}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1867}
   ///
   future<StatusOr<google::cloud::speech::v2::CustomClass>> UndeleteCustomClass(
       google::cloud::speech::v2::UndeleteCustomClassRequest const& request,
@@ -829,12 +829,12 @@ class SpeechClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1611}
   ///
   /// [google.cloud.speech.v2.CreatePhraseSetRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1913}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1890}
   /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1611}
   ///
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> CreatePhraseSet(
       std::string const& parent,
@@ -845,16 +845,16 @@ class SpeechClient {
   /// Creates a [PhraseSet][google.cloud.speech.v2.PhraseSet].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::CreatePhraseSetRequest,google/cloud/speech/v2/cloud_speech.proto#L1913}
+  /// @googleapis_link{google::cloud::speech::v2::CreatePhraseSetRequest,google/cloud/speech/v2/cloud_speech.proto#L1890}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1611}
   ///
   /// [google.cloud.speech.v2.CreatePhraseSetRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1913}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1890}
   /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1611}
   ///
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> CreatePhraseSet(
       google::cloud::speech::v2::CreatePhraseSetRequest const& request,
@@ -869,12 +869,12 @@ class SpeechClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1611}
   ///
   /// [google.cloud.speech.v2.ListPhraseSetsRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1940}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1917}
   /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1611}
   ///
   StreamRange<google::cloud::speech::v2::PhraseSet> ListPhraseSets(
       std::string const& parent, Options opts = {});
@@ -883,16 +883,16 @@ class SpeechClient {
   /// Lists PhraseSets.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::ListPhraseSetsRequest,google/cloud/speech/v2/cloud_speech.proto#L1940}
+  /// @googleapis_link{google::cloud::speech::v2::ListPhraseSetsRequest,google/cloud/speech/v2/cloud_speech.proto#L1917}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1611}
   ///
   /// [google.cloud.speech.v2.ListPhraseSetsRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1940}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1917}
   /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1611}
   ///
   StreamRange<google::cloud::speech::v2::PhraseSet> ListPhraseSets(
       google::cloud::speech::v2::ListPhraseSetsRequest request,
@@ -908,12 +908,12 @@ class SpeechClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1611}
   ///
   /// [google.cloud.speech.v2.GetPhraseSetRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1983}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1960}
   /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1611}
   ///
   StatusOr<google::cloud::speech::v2::PhraseSet> GetPhraseSet(
       std::string const& name, Options opts = {});
@@ -923,16 +923,16 @@ class SpeechClient {
   /// [PhraseSet][google.cloud.speech.v2.PhraseSet].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::GetPhraseSetRequest,google/cloud/speech/v2/cloud_speech.proto#L1983}
+  /// @googleapis_link{google::cloud::speech::v2::GetPhraseSetRequest,google/cloud/speech/v2/cloud_speech.proto#L1960}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1611}
   ///
   /// [google.cloud.speech.v2.GetPhraseSetRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1983}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1960}
   /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1611}
   ///
   StatusOr<google::cloud::speech::v2::PhraseSet> GetPhraseSet(
       google::cloud::speech::v2::GetPhraseSetRequest const& request,
@@ -951,12 +951,12 @@ class SpeechClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1611}
   ///
   /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1611}
   /// [google.cloud.speech.v2.UpdatePhraseSetRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1996}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1973}
   ///
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> UpdatePhraseSet(
       google::cloud::speech::v2::PhraseSet const& phrase_set,
@@ -966,16 +966,16 @@ class SpeechClient {
   /// Updates the [PhraseSet][google.cloud.speech.v2.PhraseSet].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::UpdatePhraseSetRequest,google/cloud/speech/v2/cloud_speech.proto#L1996}
+  /// @googleapis_link{google::cloud::speech::v2::UpdatePhraseSetRequest,google/cloud/speech/v2/cloud_speech.proto#L1973}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1611}
   ///
   /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1611}
   /// [google.cloud.speech.v2.UpdatePhraseSetRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1996}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1973}
   ///
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> UpdatePhraseSet(
       google::cloud::speech::v2::UpdatePhraseSetRequest const& request,
@@ -989,12 +989,12 @@ class SpeechClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1611}
   ///
   /// [google.cloud.speech.v2.DeletePhraseSetRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2014}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1991}
   /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1611}
   ///
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> DeletePhraseSet(
       std::string const& name, Options opts = {});
@@ -1003,16 +1003,16 @@ class SpeechClient {
   /// Deletes the [PhraseSet][google.cloud.speech.v2.PhraseSet].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::DeletePhraseSetRequest,google/cloud/speech/v2/cloud_speech.proto#L2014}
+  /// @googleapis_link{google::cloud::speech::v2::DeletePhraseSetRequest,google/cloud/speech/v2/cloud_speech.proto#L1991}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1611}
   ///
   /// [google.cloud.speech.v2.DeletePhraseSetRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2014}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1991}
   /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1611}
   ///
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> DeletePhraseSet(
       google::cloud::speech::v2::DeletePhraseSetRequest const& request,
@@ -1026,12 +1026,12 @@ class SpeechClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1611}
   ///
   /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1611}
   /// [google.cloud.speech.v2.UndeletePhraseSetRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2041}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2018}
   ///
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> UndeletePhraseSet(
       std::string const& name, Options opts = {});
@@ -1040,16 +1040,16 @@ class SpeechClient {
   /// Undeletes the [PhraseSet][google.cloud.speech.v2.PhraseSet].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::speech::v2::UndeletePhraseSetRequest,google/cloud/speech/v2/cloud_speech.proto#L2041}
+  /// @googleapis_link{google::cloud::speech::v2::UndeletePhraseSetRequest,google/cloud/speech/v2/cloud_speech.proto#L2018}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_link{google::cloud::speech::v2::PhraseSet,google/cloud/speech/v2/cloud_speech.proto#L1611}
   ///
   /// [google.cloud.speech.v2.PhraseSet]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1634}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1611}
   /// [google.cloud.speech.v2.UndeletePhraseSetRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2041}
+  /// @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2018}
   ///
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> UndeletePhraseSet(
       google::cloud::speech::v2::UndeletePhraseSetRequest const& request,

@@ -264,6 +264,15 @@ DataplexServiceTracingConnection::ListJobs(
       std::move(span), std::move(sr));
 }
 
+StatusOr<google::cloud::dataplex::v1::RunTaskResponse>
+DataplexServiceTracingConnection::RunTask(
+    google::cloud::dataplex::v1::RunTaskRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::RunTask");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RunTask(request));
+}
+
 StatusOr<google::cloud::dataplex::v1::Job>
 DataplexServiceTracingConnection::GetJob(
     google::cloud::dataplex::v1::GetJobRequest const& request) {

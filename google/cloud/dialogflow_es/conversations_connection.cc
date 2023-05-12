@@ -76,6 +76,12 @@ ConversationsConnection::SuggestConversationSummary(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
+ConversationsConnection::GenerateStatelessSummary(
+    google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<ConversationsConnection> MakeConversationsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

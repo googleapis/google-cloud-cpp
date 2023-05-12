@@ -80,6 +80,10 @@ class EkmServiceConnection {
 
   virtual StatusOr<google::cloud::kms::v1::EkmConfig> UpdateEkmConfig(
       google::cloud::kms::v1::UpdateEkmConfigRequest const& request);
+
+  virtual StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
+  VerifyConnectivity(
+      google::cloud::kms::v1::VerifyConnectivityRequest const& request);
 };
 
 /**

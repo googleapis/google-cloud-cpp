@@ -106,6 +106,18 @@ StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceLogging::UpdateEkmConfig(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
+EkmServiceLogging::VerifyConnectivity(
+    grpc::ClientContext& context,
+    google::cloud::kms::v1::VerifyConnectivityRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::kms::v1::VerifyConnectivityRequest const& request) {
+        return child_->VerifyConnectivity(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_v1_internal
 }  // namespace cloud

@@ -54,6 +54,9 @@ class EkmServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency UpdateEkmConfig(
       google::cloud::kms::v1::UpdateEkmConfigRequest const& request);
+
+  virtual google::cloud::Idempotency VerifyConnectivity(
+      google::cloud::kms::v1::VerifyConnectivityRequest const& request);
 };
 
 std::unique_ptr<EkmServiceConnectionIdempotencyPolicy>

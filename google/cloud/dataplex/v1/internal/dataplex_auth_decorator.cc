@@ -362,6 +362,15 @@ DataplexServiceAuth::ListJobs(
   return child_->ListJobs(context, request);
 }
 
+StatusOr<google::cloud::dataplex::v1::RunTaskResponse>
+DataplexServiceAuth::RunTask(
+    grpc::ClientContext& context,
+    google::cloud::dataplex::v1::RunTaskRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RunTask(context, request);
+}
+
 StatusOr<google::cloud::dataplex::v1::Job> DataplexServiceAuth::GetJob(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetJobRequest const& request) {

@@ -106,7 +106,7 @@ class LoggingServiceV2Client {
   ///     backoff policies.
   ///
   /// [google.logging.v2.DeleteLogRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L137}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L136}
   ///
   Status DeleteLog(std::string const& log_name, Options opts = {});
 
@@ -117,12 +117,12 @@ class LoggingServiceV2Client {
   /// delete operation with a timestamp before the operation will be deleted.
   ///
   /// @param request
-  /// @googleapis_link{google::logging::v2::DeleteLogRequest,google/logging/v2/logging.proto#L137}
+  /// @googleapis_link{google::logging::v2::DeleteLogRequest,google/logging/v2/logging.proto#L136}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.logging.v2.DeleteLogRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L137}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L136}
   ///
   Status DeleteLog(google::logging::v2::DeleteLogRequest const& request,
                    Options opts = {});
@@ -187,12 +187,12 @@ class LoggingServiceV2Client {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L241}
+  /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L239}
   ///
   /// [google.logging.v2.WriteLogEntriesRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L160}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L157}
   /// [google.logging.v2.WriteLogEntriesResponse]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L241}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L239}
   ///
   StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
       std::string const& log_name,
@@ -211,16 +211,16 @@ class LoggingServiceV2Client {
   /// folders)
   ///
   /// @param request
-  /// @googleapis_link{google::logging::v2::WriteLogEntriesRequest,google/logging/v2/logging.proto#L160}
+  /// @googleapis_link{google::logging::v2::WriteLogEntriesRequest,google/logging/v2/logging.proto#L157}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L241}
+  /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L239}
   ///
   /// [google.logging.v2.WriteLogEntriesRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L160}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L157}
   /// [google.logging.v2.WriteLogEntriesResponse]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L241}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L239}
   ///
   StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
       google::logging::v2::WriteLogEntriesRequest const& request,
@@ -245,15 +245,13 @@ class LoggingServiceV2Client {
   ///   * `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]`
   ///   * `folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]`
   ///  Projects listed in the `project_ids` field are added to this list.
-  /// @param filter  Optional. A filter that chooses which log entries to
-  /// return.  See [Advanced
-  ///  Logs
-  ///  Queries](https://cloud.google.com/logging/docs/view/advanced-queries).
-  ///  Only log entries that match the filter are returned.  An empty filter
-  ///  matches all log entries in the resources listed in `resource_names`.
-  ///  Referencing a parent resource that is not listed in `resource_names` will
-  ///  cause the filter to return no results. The maximum length of the filter
-  ///  is 20000 characters.
+  ///  A maximum of 100 resources may be specified in a single request.
+  /// @param filter  Optional. Only log entries that match the filter are
+  /// returned.  An empty
+  ///  filter matches all log entries in the resources listed in
+  ///  `resource_names`. Referencing a parent resource that is not listed in
+  ///  `resource_names` will cause the filter to return no results. The maximum
+  ///  length of a filter is 20,000 characters.
   /// @param order_by  Optional. How the results should be sorted.  Presently,
   /// the only permitted
   ///  values are `"timestamp asc"` (default) and `"timestamp desc"`. The first
@@ -267,7 +265,7 @@ class LoggingServiceV2Client {
   /// @googleapis_link{google::logging::v2::LogEntry,google/logging/v2/log_entry.proto#L38}
   ///
   /// [google.logging.v2.ListLogEntriesRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L257}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L253}
   /// [google.logging.v2.LogEntry]:
   /// @googleapis_reference_link{google/logging/v2/log_entry.proto#L38}
   ///
@@ -282,14 +280,14 @@ class LoggingServiceV2Client {
   /// Logs](https://cloud.google.com/logging/docs/export).
   ///
   /// @param request
-  /// @googleapis_link{google::logging::v2::ListLogEntriesRequest,google/logging/v2/logging.proto#L257}
+  /// @googleapis_link{google::logging::v2::ListLogEntriesRequest,google/logging/v2/logging.proto#L253}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::logging::v2::LogEntry,google/logging/v2/log_entry.proto#L38}
   ///
   /// [google.logging.v2.ListLogEntriesRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L257}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L253}
   /// [google.logging.v2.LogEntry]:
   /// @googleapis_reference_link{google/logging/v2/log_entry.proto#L38}
   ///
@@ -300,7 +298,7 @@ class LoggingServiceV2Client {
   /// Lists the descriptors for monitored resource types used by Logging.
   ///
   /// @param request
-  /// @googleapis_link{google::logging::v2::ListMonitoredResourceDescriptorsRequest,google/logging/v2/logging.proto#L332}
+  /// @googleapis_link{google::logging::v2::ListMonitoredResourceDescriptorsRequest,google/logging/v2/logging.proto#L327}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -309,7 +307,7 @@ class LoggingServiceV2Client {
   /// [google.api.MonitoredResourceDescriptor]:
   /// @googleapis_reference_link{google/api/monitored_resource.proto#L41}
   /// [google.logging.v2.ListMonitoredResourceDescriptorsRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L332}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L327}
   ///
   StreamRange<google::api::MonitoredResourceDescriptor>
   ListMonitoredResourceDescriptors(
@@ -320,7 +318,7 @@ class LoggingServiceV2Client {
   /// Lists the logs in projects, organizations, folders, or billing accounts.
   /// Only logs that have entries are listed.
   ///
-  /// @param parent  Required. The resource name that owns the logs:
+  /// @param parent  Required. The resource name to list logs for:
   ///  *  `projects/[PROJECT_ID]`
   ///  *  `organizations/[ORGANIZATION_ID]`
   ///  *  `billingAccounts/[BILLING_ACCOUNT_ID]`
@@ -330,7 +328,7 @@ class LoggingServiceV2Client {
   /// @return std::string
   ///
   /// [google.logging.v2.ListLogsRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L357}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L352}
   ///
   StreamRange<std::string> ListLogs(std::string const& parent,
                                     Options opts = {});
@@ -340,13 +338,13 @@ class LoggingServiceV2Client {
   /// Only logs that have entries are listed.
   ///
   /// @param request
-  /// @googleapis_link{google::logging::v2::ListLogsRequest,google/logging/v2/logging.proto#L357}
+  /// @googleapis_link{google::logging::v2::ListLogsRequest,google/logging/v2/logging.proto#L352}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return std::string
   ///
   /// [google.logging.v2.ListLogsRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L357}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L352}
   ///
   StreamRange<std::string> ListLogs(
       google::logging::v2::ListLogsRequest request, Options opts = {});
@@ -358,14 +356,14 @@ class LoggingServiceV2Client {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A bidirectional streaming interface with request (write) type:
-  /// @googleapis_link{google::logging::v2::TailLogEntriesRequest,google/logging/v2/logging.proto#L417}
+  /// @googleapis_link{google::logging::v2::TailLogEntriesRequest,google/logging/v2/logging.proto#L414}
   /// and response (read) type:
-  /// @googleapis_link{google::logging::v2::TailLogEntriesResponse,google/logging/v2/logging.proto#L450}
+  /// @googleapis_link{google::logging::v2::TailLogEntriesResponse,google/logging/v2/logging.proto#L446}
   ///
   /// [google.logging.v2.TailLogEntriesRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L417}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L414}
   /// [google.logging.v2.TailLogEntriesResponse]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L450}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L446}
   ///
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,
@@ -432,12 +430,12 @@ class LoggingServiceV2Client {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L241}
+  /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L239}
   ///
   /// [google.logging.v2.WriteLogEntriesRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L160}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L157}
   /// [google.logging.v2.WriteLogEntriesResponse]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L241}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L239}
   ///
   future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
   AsyncWriteLogEntries(
@@ -457,16 +455,16 @@ class LoggingServiceV2Client {
   /// folders)
   ///
   /// @param request
-  /// @googleapis_link{google::logging::v2::WriteLogEntriesRequest,google/logging/v2/logging.proto#L160}
+  /// @googleapis_link{google::logging::v2::WriteLogEntriesRequest,google/logging/v2/logging.proto#L157}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L241}
+  /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L239}
   ///
   /// [google.logging.v2.WriteLogEntriesRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L160}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L157}
   /// [google.logging.v2.WriteLogEntriesResponse]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L241}
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L239}
   ///
   future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
   AsyncWriteLogEntries(

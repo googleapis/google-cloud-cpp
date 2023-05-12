@@ -89,6 +89,12 @@ class ConversationsConnection {
   SuggestConversationSummary(
       google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
           request);
+
+  virtual StatusOr<
+      google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
+  GenerateStatelessSummary(
+      google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
+          request);
 };
 
 /**

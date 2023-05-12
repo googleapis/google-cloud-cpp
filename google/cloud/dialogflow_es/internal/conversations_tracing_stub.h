@@ -68,6 +68,12 @@ class ConversationsTracingStub : public ConversationsStub {
       google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
           request) override;
 
+  StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
+  GenerateStatelessSummary(
+      grpc::ClientContext& context,
+      google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
+          request) override;
+
  private:
   std::shared_ptr<ConversationsStub> child_;
 };

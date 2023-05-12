@@ -189,7 +189,7 @@ class DocumentsClient {
   /// [google.cloud.dialogflow.v2.Document]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L261}
   /// [google.cloud.dialogflow.v2.KnowledgeOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L641}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L646}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::Document>> CreateDocument(
       std::string const& parent,
@@ -219,7 +219,7 @@ class DocumentsClient {
   /// [google.cloud.dialogflow.v2.Document]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L261}
   /// [google.cloud.dialogflow.v2.KnowledgeOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L641}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L646}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::Document>> CreateDocument(
       google::cloud::dialogflow::v2::CreateDocumentRequest const& request,
@@ -251,7 +251,7 @@ class DocumentsClient {
   /// [google.cloud.dialogflow.v2.ImportDocumentsResponse]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L539}
   /// [google.cloud.dialogflow.v2.KnowledgeOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L641}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L646}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
   ImportDocuments(
@@ -276,12 +276,12 @@ class DocumentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeOperationMetadata,google/cloud/dialogflow/v2/document.proto#L641}
+  /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeOperationMetadata,google/cloud/dialogflow/v2/document.proto#L646}
   ///
   /// [google.cloud.dialogflow.v2.DeleteDocumentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L546}
   /// [google.cloud.dialogflow.v2.KnowledgeOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L641}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L646}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
   DeleteDocument(std::string const& name, Options opts = {});
@@ -303,12 +303,12 @@ class DocumentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeOperationMetadata,google/cloud/dialogflow/v2/document.proto#L641}
+  /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeOperationMetadata,google/cloud/dialogflow/v2/document.proto#L646}
   ///
   /// [google.cloud.dialogflow.v2.DeleteDocumentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L546}
   /// [google.cloud.dialogflow.v2.KnowledgeOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L641}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L646}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
   DeleteDocument(
@@ -338,7 +338,7 @@ class DocumentsClient {
   /// [google.cloud.dialogflow.v2.Document]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L261}
   /// [google.cloud.dialogflow.v2.KnowledgeOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L641}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L646}
   /// [google.cloud.dialogflow.v2.UpdateDocumentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L560}
   ///
@@ -367,7 +367,7 @@ class DocumentsClient {
   /// [google.cloud.dialogflow.v2.Document]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L261}
   /// [google.cloud.dialogflow.v2.KnowledgeOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L641}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L646}
   /// [google.cloud.dialogflow.v2.UpdateDocumentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L560}
   ///
@@ -408,7 +408,7 @@ class DocumentsClient {
   /// [google.cloud.dialogflow.v2.Document]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L261}
   /// [google.cloud.dialogflow.v2.KnowledgeOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L641}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L646}
   /// [google.cloud.dialogflow.v2.ReloadDocumentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L573}
   ///
@@ -443,7 +443,7 @@ class DocumentsClient {
   /// [google.cloud.dialogflow.v2.Document]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L261}
   /// [google.cloud.dialogflow.v2.KnowledgeOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L641}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L646}
   /// [google.cloud.dialogflow.v2.ReloadDocumentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L573}
   ///
@@ -464,7 +464,7 @@ class DocumentsClient {
   /// - `response`: [Document][google.cloud.dialogflow.v2.Document]
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ExportDocumentRequest,google/cloud/dialogflow/v2/document.proto#L608}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ExportDocumentRequest,google/cloud/dialogflow/v2/document.proto#L613}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -473,9 +473,9 @@ class DocumentsClient {
   /// [google.cloud.dialogflow.v2.Document]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L261}
   /// [google.cloud.dialogflow.v2.ExportDocumentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L608}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L613}
   /// [google.cloud.dialogflow.v2.KnowledgeOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L641}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L646}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::Document>> ExportDocument(
       google::cloud::dialogflow::v2::ExportDocumentRequest const& request,

@@ -154,6 +154,11 @@ Idempotency DataplexServiceConnectionIdempotencyPolicy::ListJobs(
   return Idempotency::kIdempotent;
 }
 
+Idempotency DataplexServiceConnectionIdempotencyPolicy::RunTask(
+    google::cloud::dataplex::v1::RunTaskRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency DataplexServiceConnectionIdempotencyPolicy::GetJob(
     google::cloud::dataplex::v1::GetJobRequest const&) {
   return Idempotency::kIdempotent;
