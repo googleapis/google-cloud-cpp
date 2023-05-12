@@ -1,4 +1,8 @@
-# C++ OpenTelemetry Exporters for Google Cloud Platform services.
+# Google Cloud C++ OpenTelemetry Exporters
+
+This directory contains the [OpenTelemetry] [trace exporter] for [Cloud Trace].
+It also contains helpers to install the Cloud Trace exporter with reasonable
+defaults.
 
 :construction:
 
@@ -90,10 +94,12 @@ int main(int argc, char* argv[]) {
 
 - If you want to learn more about the [OpenTelemetry] for C++ SDKs, consult
   their [online documentation](https://opentelemetry-cpp.readthedocs.io/).
-- [Reference doxygen documentation][doxygen-link] for each release of this client library
+- [Reference doxygen documentation][doxygen-link] for each release of this library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[doxygen-link]: https://googleapis.dev/cpp/google-cloud-storage/latest/
+[cloud trace]: https://cloud.google.com/trace
+[doxygen-link]: https://googleapis.dev/cpp/google-cloud-opentelemetry/latest/
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
 [opentelemetry]: https://opentelemetry.io/
-[source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/storage
+[source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/opentelemetry
+[trace exporter]: https://opentelemetry.io/docs/concepts/signals/traces/#trace-exporters
