@@ -14,8 +14,12 @@
 
 #include "google/cloud/bigtable/internal/async_bulk_apply.h"
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
+#include "google/cloud/internal/async_streaming_read_rpc_impl.h"
+#include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <grpcpp/support/status.h>
@@ -657,6 +661,74 @@ TEST(AsyncBulkApplyTest, RetriesOkStreamWithFailedMutations) {
 
   CheckFailedMutations(actual.get(), expected);
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+using ::google::cloud::testing_util::EnableTracing;
+using ::google::cloud::testing_util::IsActive;
+using ::google::cloud::testing_util::SpanNamed;
+using ::testing::AllOf;
+using ::testing::Each;
+using ::testing::SizeIs;
+using ErrorStream =
+    internal::AsyncStreamingReadRpcError<v2::MutateRowsResponse>;
+
+TEST(AsyncBulkApplyTest, TracedBackoff) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncMutateRows).Times(kNumRetries + 1).WillRepeatedly([] {
+    return std::make_unique<ErrorStream>(TransientError());
+  });
+
+  internal::AutomaticallyCreatedBackgroundThreads background;
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(kNumRetries);
+  auto idempotency = bigtable::DefaultIdempotentMutationPolicy();
+  bigtable::BulkMutation mut(IdempotentMutation("r0"),
+                             IdempotentMutation("r1"));
+
+  internal::OptionsSpan o(EnableTracing(Options{}));
+  (void)AsyncBulkApplier::Create(background.cq(), mock, std::move(retry),
+                                 std::move(mock_b), *idempotency, kAppProfile,
+                                 kTableName, std::move(mut))
+      .get();
+
+  EXPECT_THAT(span_catcher->GetSpans(),
+              AllOf(SizeIs(kNumRetries), Each(SpanNamed("Async Backoff"))));
+}
+
+TEST(AsyncBulkApplyTest, CallSpanActiveThroughout) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto span = internal::MakeSpan("span");
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncMutateRows)
+      .Times(kNumRetries + 1)
+      .WillRepeatedly([span] {
+        EXPECT_THAT(span, IsActive());
+        return std::make_unique<ErrorStream>(TransientError());
+      });
+
+  internal::AutomaticallyCreatedBackgroundThreads background;
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(kNumRetries);
+  auto idempotency = bigtable::DefaultIdempotentMutationPolicy();
+  bigtable::BulkMutation mut(IdempotentMutation("r0"),
+                             IdempotentMutation("r1"));
+
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::OptionsSpan o(EnableTracing(Options{}));
+  auto f = AsyncBulkApplier::Create(background.cq(), mock, std::move(retry),
+                                    std::move(mock_b), *idempotency,
+                                    kAppProfile, kTableName, std::move(mut));
+
+  auto overlay = opentelemetry::trace::Scope(internal::MakeSpan("overlay"));
+  (void)f.get();
+}
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
