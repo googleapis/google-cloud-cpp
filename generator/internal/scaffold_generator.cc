@@ -235,7 +235,7 @@ void GenerateMetadata(
   nlohmann::json metadata{
       {"language", "cpp"},
       {"repo", "googleapis/google-cloud-cpp"},
-      {"release_level", service.experimental() ? "beta" : "ga"},
+      {"release_level", service.experimental() ? "preview" : "stable"},
       // In other languages this is the name of the package. In C++ there are
       // many package managers, and this seems to be the most common name.
       {"distribution_name", "google-cloud-cpp"},
@@ -261,7 +261,7 @@ void GenerateMetadata(
   } map_vars[] = {
       {"name_pretty", "title"},
       {"api_id", "nameInServiceConfig"},
-      {"api_short_name", "api_short_name"},
+      {"api_shortname", "api_short_name"},
       {"product_documentation", "documentation_uri"},
       {"issue_tracker", "issue_tracker"},
   };
