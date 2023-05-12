@@ -47,8 +47,8 @@ can override the default policies.
 - @ref workflows-override-endpoint - describes how to override the default
   endpoint.
 - @ref workflows-override-authentication - describes how to change the
-- @ref workflows-env - describes environment variables that can configure the behavior of the library.
   authentication credentials used by the library.
+- @ref workflows-env - describes environment variables that can configure the behavior of the library.
 
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 

@@ -130,7 +130,6 @@ period between retries.
 
 */
 
-- @ref spanner-env - describes environment variables that can configure the behavior of the library.
 /*! @page InstanceAdminClient-with-service-account-snippet Override InstanceAdminClient Default Authentication
 
 @snippet google/cloud/spanner/admin/samples/instance_admin_client_samples.cc with-service-account

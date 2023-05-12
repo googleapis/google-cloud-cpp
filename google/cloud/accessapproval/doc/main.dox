@@ -42,13 +42,8 @@ can override the default policies.
   endpoint.
 - @ref accessapproval-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref accessapproval-env - describes environment variables that can configure the behavior of the library.
 
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
-[gcs-quickstart]: https://cloud.google.com/cloud-provider-access-management/access-approval/docs/quickstart 'Quickstarts'
-[resource-link]: https://console.cloud.google.com/cloud-resource-manager 'Console Resource Manager'
-- @ref accessapproval-env - describes environment variables that can configure the behavior of the library.
-[billing-link]: https://cloud.google.com/billing/docs/how-to/modify-project 'How to: Modify Project'
-[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
-[gcloud-quickstart]: https://cloud.google.com/sdk/docs/quickstarts
 
 */

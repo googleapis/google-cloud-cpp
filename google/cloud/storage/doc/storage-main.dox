@@ -136,7 +136,6 @@ more conservative approach:
 @see [ExponentialBackoffPolicy](@ref google::cloud::storage::ExponentialBackoffPolicy)
    to configure different parameters for the exponential backoff policy.
 
-- @ref storage-env - describes environment variables that can configure the behavior of the library.
 @see [AlwaysRetryIdempotencyPolicy](@ref google::cloud::storage::AlwaysRetryIdempotencyPolicy)
    and [StrictIdempotencyPolicy](@ref google::cloud::storage::StrictIdempotencyPolicy)
    for alternative idempotency policies.

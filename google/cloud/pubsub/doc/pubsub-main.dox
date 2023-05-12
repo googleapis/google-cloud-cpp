@@ -176,7 +176,6 @@ Follow these links for additional examples
 
 */
 
-- @ref pubsub-env - describes environment variables that can configure the behavior of the library.
 /*! @page SchemaServiceClient-service-account-snippet Override @c SchemaServiceClient Default Authentication
 
 @snippet google/cloud/pubsub/samples/schema_client_samples.cc with-service-account

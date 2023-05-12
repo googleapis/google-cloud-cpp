@@ -48,8 +48,8 @@ can override the default policies.
 - @ref pubsublite-override-endpoint - describes how to override the default
   endpoint.
 - @ref pubsublite-override-authentication - describes how to change the
-- @ref pubsublite-env - describes environment variables that can configure the behavior of the library.
   authentication credentials used by the library.
+- @ref pubsublite-env - describes environment variables that can configure the behavior of the library.
 
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 
