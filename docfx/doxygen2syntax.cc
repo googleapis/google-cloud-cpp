@@ -16,6 +16,7 @@
 #include "docfx/doxygen2markdown.h"
 #include "docfx/doxygen_errors.h"
 #include "docfx/function_classifiers.h"
+#include "docfx/linked_text_type.h"
 #include "docfx/yaml_emit.h"
 
 namespace docfx {
@@ -46,41 +47,6 @@ void AppendLocation(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "path" << YAML::Value << path       //
        << YAML::EndMap                                     // remote
        << YAML::EndMap;                                    // source
-}
-
-// A `linkedTextType` is defined as below. It is basically a sequence of
-// references (links) mixed with plain text. We ignore the references in the
-// formatting of the syntax content.
-//
-// clang-format off
-//   <xsd:complexType name="linkedTextType" mixed="true">
-//     <xsd:sequence>
-//     <xsd:element name="ref" type="refTextType" minOccurs="0" maxOccurs="unbounded" />
-//     </xsd:sequence>
-//   </xsd:complexType>
-// ... ..
-//   <xsd:complexType name="refTextType">
-//     <xsd:simpleContent>
-//       <xsd:extension base="xsd:string">
-//        <xsd:attribute name="refid" type="xsd:string" />
-//        <xsd:attribute name="kindref" type="DoxRefKind" />
-//        <xsd:attribute name="external" type="xsd:string" use="optional"/>
-//        <xsd:attribute name="tooltip" type="xsd:string" use="optional"/>
-//       </xsd:extension>
-//     </xsd:simpleContent>
-//   </xsd:complexType>
-// clang-format on
-std::string LinkedTextType(pugi::xml_node node) {
-  std::ostringstream os;
-  for (auto const child : node) {
-    auto const name = std::string_view{child.name()};
-    if (name == "ref") {
-      os << child.child_value();
-    } else {
-      os << child.value();
-    }
-  }
-  return std::move(os).str();
 }
 
 std::string HtmlEscape(std::string_view text) {
