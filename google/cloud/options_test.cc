@@ -270,6 +270,30 @@ TEST(MergeOptions, Basics) {
   EXPECT_EQ(a.get<IntOption>(), 42);           // From a
 }
 
+TEST(ExtractOption, Basics) {
+  auto opts = Options{}.set<StringOption>("foo").set<IntOption>(42);
+
+  auto b = internal::ExtractOption<BoolOption>(opts);
+  EXPECT_FALSE(opts.has<BoolOption>());
+  EXPECT_TRUE(opts.has<IntOption>());
+  EXPECT_TRUE(opts.has<StringOption>());
+  EXPECT_FALSE(b.has_value());
+
+  auto i = internal::ExtractOption<IntOption>(opts);
+  EXPECT_FALSE(opts.has<BoolOption>());
+  EXPECT_FALSE(opts.has<IntOption>());
+  EXPECT_TRUE(opts.has<StringOption>());
+  ASSERT_TRUE(i.has_value());
+  EXPECT_EQ(*i, 42);
+
+  auto s = internal::ExtractOption<StringOption>(opts);
+  EXPECT_FALSE(opts.has<BoolOption>());
+  EXPECT_FALSE(opts.has<IntOption>());
+  EXPECT_FALSE(opts.has<StringOption>());
+  ASSERT_TRUE(s.has_value());
+  EXPECT_EQ(*s, "foo");
+}
+
 TEST(OptionsSpan, Basics) {
   EXPECT_FALSE(internal::CurrentOptions().has<IntOption>());
   {

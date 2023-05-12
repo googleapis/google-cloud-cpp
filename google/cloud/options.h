@@ -18,6 +18,7 @@
 #include "google/cloud/internal/type_list.h"
 #include "google/cloud/version.h"
 #include "absl/base/attributes.h"
+#include "absl/types/optional.h"
 #include <memory>
 #include <set>
 #include <typeindex>
@@ -35,6 +36,8 @@ void CheckExpectedOptionsImpl(std::set<std::type_index> const&, Options const&,
                               char const*);
 // TODO(#8800) - Remove when bigtable::Table no longer uses bigtable::DataClient
 bool IsEmpty(Options const&);
+template <typename T>
+absl::optional<typename T::Type> ExtractOption(Options&);
 template <typename T>
 inline T const& DefaultValue() {
   static auto const* const kDefaultValue = new T{};
@@ -214,6 +217,8 @@ class Options {
   friend void internal::CheckExpectedOptionsImpl(
       std::set<std::type_index> const&, Options const&, char const*);
   friend bool internal::IsEmpty(Options const&);
+  template <typename T>
+  friend absl::optional<typename T::Type> internal::ExtractOption(Options&);
 
   // The type-erased data holder of all the option values.
   class DataHolder {
@@ -319,6 +324,22 @@ void CheckExpectedOptions(Options const& opts, char const* caller) {
  * of the values in @p alternatives.
  */
 Options MergeOptions(Options preferred, Options alternatives);
+
+/**
+ * Extracts and returns the value for `T` from @p opts, or nullopt if `T` was
+ * not set.  This is intended for code paths that want to consume an option,
+ * for example, a client call that passes the option's value via conventional
+ * mechanisms, rather than though an OptionsSpan.
+ */
+template <typename T>
+absl::optional<typename T::Type> ExtractOption(Options& opts) {
+  // Use std::unordered_map::extract() when minimum language version >= C++17.
+  auto const it = opts.m_.find(typeid(T));
+  if (it == opts.m_.end()) return absl::nullopt;
+  auto dh = std::move(it->second);
+  opts.m_.erase(it);
+  return std::move(*reinterpret_cast<typename T::Type*>(dh->data_address()));
+}
 
 /**
  * The prevailing options for the current operation.
