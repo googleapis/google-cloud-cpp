@@ -24,7 +24,8 @@ namespace docfx {
  * Returns an element of type `linkedTextType` as a simple string.
  *
  * Doxygen nodes of `linkedTextType` appear in many contexts. We often need to
- * format them as simple strings to appear in function prototypes, t
+ * format them as simple strings as they appear in the name of documented
+ * elements, including function prototypes and template parameters.
  */
 std::string LinkedTextType(pugi::xml_node node);
 
