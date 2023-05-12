@@ -61,6 +61,11 @@ class EkmServiceMetadata : public EkmServiceStub {
       grpc::ClientContext& context,
       google::cloud::kms::v1::UpdateEkmConfigRequest const& request) override;
 
+  StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
+  VerifyConnectivity(grpc::ClientContext& context,
+                     google::cloud::kms::v1::VerifyConnectivityRequest const&
+                         request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);

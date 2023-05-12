@@ -80,6 +80,14 @@ StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceMetadata::UpdateEkmConfig(
   return child_->UpdateEkmConfig(context, request);
 }
 
+StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
+EkmServiceMetadata::VerifyConnectivity(
+    grpc::ClientContext& context,
+    google::cloud::kms::v1::VerifyConnectivityRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->VerifyConnectivity(context, request);
+}
+
 void EkmServiceMetadata::SetMetadata(grpc::ClientContext& context,
                                      std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

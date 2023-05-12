@@ -110,6 +110,9 @@ class DataplexServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListJobs(
       google::cloud::dataplex::v1::ListJobsRequest request);
 
+  virtual google::cloud::Idempotency RunTask(
+      google::cloud::dataplex::v1::RunTaskRequest const& request);
+
   virtual google::cloud::Idempotency GetJob(
       google::cloud::dataplex::v1::GetJobRequest const& request);
 

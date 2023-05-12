@@ -345,6 +345,18 @@ DataplexServiceLogging::ListJobs(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::dataplex::v1::RunTaskResponse>
+DataplexServiceLogging::RunTask(
+    grpc::ClientContext& context,
+    google::cloud::dataplex::v1::RunTaskRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::dataplex::v1::RunTaskRequest const& request) {
+        return child_->RunTask(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::dataplex::v1::Job> DataplexServiceLogging::GetJob(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetJobRequest const& request) {

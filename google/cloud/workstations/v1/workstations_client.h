@@ -96,7 +96,7 @@ class WorkstationsClient {
   /// @googleapis_link{google::cloud::workstations::v1::WorkstationCluster,google/cloud/workstations/v1/workstations.proto#L280}
   ///
   /// [google.cloud.workstations.v1.GetWorkstationClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L693}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L707}
   /// [google.cloud.workstations.v1.WorkstationCluster]:
   /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
   ///
@@ -107,14 +107,14 @@ class WorkstationsClient {
   /// Returns the requested workstation cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::GetWorkstationClusterRequest,google/cloud/workstations/v1/workstations.proto#L693}
+  /// @googleapis_link{google::cloud::workstations::v1::GetWorkstationClusterRequest,google/cloud/workstations/v1/workstations.proto#L707}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::workstations::v1::WorkstationCluster,google/cloud/workstations/v1/workstations.proto#L280}
   ///
   /// [google.cloud.workstations.v1.GetWorkstationClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L693}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L707}
   /// [google.cloud.workstations.v1.WorkstationCluster]:
   /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
   ///
@@ -134,7 +134,7 @@ class WorkstationsClient {
   /// @googleapis_link{google::cloud::workstations::v1::WorkstationCluster,google/cloud/workstations/v1/workstations.proto#L280}
   ///
   /// [google.cloud.workstations.v1.ListWorkstationClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L704}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L718}
   /// [google.cloud.workstations.v1.WorkstationCluster]:
   /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
   ///
@@ -145,14 +145,14 @@ class WorkstationsClient {
   /// Returns all workstation clusters in the specified location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::ListWorkstationClustersRequest,google/cloud/workstations/v1/workstations.proto#L704}
+  /// @googleapis_link{google::cloud::workstations::v1::ListWorkstationClustersRequest,google/cloud/workstations/v1/workstations.proto#L718}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::workstations::v1::WorkstationCluster,google/cloud/workstations/v1/workstations.proto#L280}
   ///
   /// [google.cloud.workstations.v1.ListWorkstationClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L704}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L718}
   /// [google.cloud.workstations.v1.WorkstationCluster]:
   /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
   ///
@@ -174,7 +174,7 @@ class WorkstationsClient {
   /// @googleapis_link{google::cloud::workstations::v1::WorkstationCluster,google/cloud/workstations/v1/workstations.proto#L280}
   ///
   /// [google.cloud.workstations.v1.CreateWorkstationClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L734}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L748}
   /// [google.cloud.workstations.v1.WorkstationCluster]:
   /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
   ///
@@ -189,14 +189,14 @@ class WorkstationsClient {
   /// Creates a new workstation cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::CreateWorkstationClusterRequest,google/cloud/workstations/v1/workstations.proto#L734}
+  /// @googleapis_link{google::cloud::workstations::v1::CreateWorkstationClusterRequest,google/cloud/workstations/v1/workstations.proto#L748}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::workstations::v1::WorkstationCluster,google/cloud/workstations/v1/workstations.proto#L280}
   ///
   /// [google.cloud.workstations.v1.CreateWorkstationClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L734}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L748}
   /// [google.cloud.workstations.v1.WorkstationCluster]:
   /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
   ///
@@ -219,7 +219,7 @@ class WorkstationsClient {
   /// @googleapis_link{google::cloud::workstations::v1::WorkstationCluster,google/cloud/workstations/v1/workstations.proto#L280}
   ///
   /// [google.cloud.workstations.v1.UpdateWorkstationClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L756}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L770}
   /// [google.cloud.workstations.v1.WorkstationCluster]:
   /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
   ///
@@ -233,14 +233,14 @@ class WorkstationsClient {
   /// Updates an existing workstation cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::UpdateWorkstationClusterRequest,google/cloud/workstations/v1/workstations.proto#L756}
+  /// @googleapis_link{google::cloud::workstations::v1::UpdateWorkstationClusterRequest,google/cloud/workstations/v1/workstations.proto#L770}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::workstations::v1::WorkstationCluster,google/cloud/workstations/v1/workstations.proto#L280}
   ///
   /// [google.cloud.workstations.v1.UpdateWorkstationClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L756}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L770}
   /// [google.cloud.workstations.v1.WorkstationCluster]:
   /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
   ///
@@ -260,7 +260,7 @@ class WorkstationsClient {
   /// @googleapis_link{google::cloud::workstations::v1::WorkstationCluster,google/cloud/workstations/v1/workstations.proto#L280}
   ///
   /// [google.cloud.workstations.v1.DeleteWorkstationClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L776}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L790}
   /// [google.cloud.workstations.v1.WorkstationCluster]:
   /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
   ///
@@ -271,14 +271,14 @@ class WorkstationsClient {
   /// Deletes the specified workstation cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::DeleteWorkstationClusterRequest,google/cloud/workstations/v1/workstations.proto#L776}
+  /// @googleapis_link{google::cloud::workstations::v1::DeleteWorkstationClusterRequest,google/cloud/workstations/v1/workstations.proto#L790}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::workstations::v1::WorkstationCluster,google/cloud/workstations/v1/workstations.proto#L280}
   ///
   /// [google.cloud.workstations.v1.DeleteWorkstationClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L776}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L790}
   /// [google.cloud.workstations.v1.WorkstationCluster]:
   /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L280}
   ///
@@ -295,12 +295,12 @@ class WorkstationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
   ///
   /// [google.cloud.workstations.v1.GetWorkstationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L799}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L813}
   /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
   StatusOr<google::cloud::workstations::v1::WorkstationConfig>
   GetWorkstationConfig(std::string const& name, Options opts = {});
@@ -309,16 +309,16 @@ class WorkstationsClient {
   /// Returns the requested workstation configuration.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::GetWorkstationConfigRequest,google/cloud/workstations/v1/workstations.proto#L799}
+  /// @googleapis_link{google::cloud::workstations::v1::GetWorkstationConfigRequest,google/cloud/workstations/v1/workstations.proto#L813}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
   ///
   /// [google.cloud.workstations.v1.GetWorkstationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L799}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L813}
   /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
   StatusOr<google::cloud::workstations::v1::WorkstationConfig>
   GetWorkstationConfig(
@@ -327,36 +327,36 @@ class WorkstationsClient {
       Options opts = {});
 
   ///
-  /// Returns all WorkstationConfigs in the specified cluster.
+  /// Returns all workstation configurations in the specified cluster.
   ///
   /// @param parent  Required. Parent resource name.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
   ///
   /// [google.cloud.workstations.v1.ListWorkstationConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L810}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L824}
   /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
   StreamRange<google::cloud::workstations::v1::WorkstationConfig>
   ListWorkstationConfigs(std::string const& parent, Options opts = {});
 
   ///
-  /// Returns all WorkstationConfigs in the specified cluster.
+  /// Returns all workstation configurations in the specified cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::ListWorkstationConfigsRequest,google/cloud/workstations/v1/workstations.proto#L810}
+  /// @googleapis_link{google::cloud::workstations::v1::ListWorkstationConfigsRequest,google/cloud/workstations/v1/workstations.proto#L824}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
   ///
   /// [google.cloud.workstations.v1.ListWorkstationConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L810}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L824}
   /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
   StreamRange<google::cloud::workstations::v1::WorkstationConfig>
   ListWorkstationConfigs(
@@ -371,12 +371,12 @@ class WorkstationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
   ///
   /// [google.cloud.workstations.v1.ListUsableWorkstationConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L840}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L854}
   /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
   StreamRange<google::cloud::workstations::v1::WorkstationConfig>
   ListUsableWorkstationConfigs(std::string const& parent, Options opts = {});
@@ -386,16 +386,16 @@ class WorkstationsClient {
   /// the caller has the "workstations.workstation.create" permission.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest,google/cloud/workstations/v1/workstations.proto#L840}
+  /// @googleapis_link{google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest,google/cloud/workstations/v1/workstations.proto#L854}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
   ///
   /// [google.cloud.workstations.v1.ListUsableWorkstationConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L840}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L854}
   /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
   StreamRange<google::cloud::workstations::v1::WorkstationConfig>
   ListUsableWorkstationConfigs(
@@ -408,16 +408,17 @@ class WorkstationsClient {
   ///
   /// @param parent  Required. Parent resource name.
   /// @param workstation_config  Required. Config to create.
-  /// @param workstation_config_id  Required. ID to use for the config.
+  /// @param workstation_config_id  Required. ID to use for the workstation
+  /// configuration.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
   ///
   /// [google.cloud.workstations.v1.CreateWorkstationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L870}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L884}
   /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   CreateWorkstationConfig(
@@ -430,16 +431,16 @@ class WorkstationsClient {
   /// Creates a new workstation configuration.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::CreateWorkstationConfigRequest,google/cloud/workstations/v1/workstations.proto#L870}
+  /// @googleapis_link{google::cloud::workstations::v1::CreateWorkstationConfigRequest,google/cloud/workstations/v1/workstations.proto#L884}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
   ///
   /// [google.cloud.workstations.v1.CreateWorkstationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L870}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L884}
   /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   CreateWorkstationConfig(
@@ -451,17 +452,18 @@ class WorkstationsClient {
   /// Updates an existing workstation configuration.
   ///
   /// @param workstation_config  Required. Config to update.
-  /// @param update_mask  Required. Mask specifying which fields in the config
-  /// should be updated.
+  /// @param update_mask  Required. Mask specifying which fields in the
+  /// workstation configuration
+  ///  should be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
   ///
   /// [google.cloud.workstations.v1.UpdateWorkstationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L892}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L906}
   /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   UpdateWorkstationConfig(
@@ -473,16 +475,16 @@ class WorkstationsClient {
   /// Updates an existing workstation configuration.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::UpdateWorkstationConfigRequest,google/cloud/workstations/v1/workstations.proto#L892}
+  /// @googleapis_link{google::cloud::workstations::v1::UpdateWorkstationConfigRequest,google/cloud/workstations/v1/workstations.proto#L906}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
   ///
   /// [google.cloud.workstations.v1.UpdateWorkstationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L892}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L906}
   /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   UpdateWorkstationConfig(
@@ -493,16 +495,16 @@ class WorkstationsClient {
   ///
   /// Deletes the specified workstation configuration.
   ///
-  /// @param name  Required. Name of the config to delete.
+  /// @param name  Required. Name of the workstation configuration to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
   ///
   /// [google.cloud.workstations.v1.DeleteWorkstationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L911}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L927}
   /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   DeleteWorkstationConfig(std::string const& name, Options opts = {});
@@ -511,16 +513,16 @@ class WorkstationsClient {
   /// Deletes the specified workstation configuration.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::DeleteWorkstationConfigRequest,google/cloud/workstations/v1/workstations.proto#L911}
+  /// @googleapis_link{google::cloud::workstations::v1::DeleteWorkstationConfigRequest,google/cloud/workstations/v1/workstations.proto#L927}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_link{google::cloud::workstations::v1::WorkstationConfig,google/cloud/workstations/v1/workstations.proto#L380}
   ///
   /// [google.cloud.workstations.v1.DeleteWorkstationConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L911}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L927}
   /// [google.cloud.workstations.v1.WorkstationConfig]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L374}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L380}
   ///
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   DeleteWorkstationConfig(
@@ -535,12 +537,12 @@ class WorkstationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
   ///
   /// [google.cloud.workstations.v1.GetWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L934}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L951}
   /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
   StatusOr<google::cloud::workstations::v1::Workstation> GetWorkstation(
       std::string const& name, Options opts = {});
@@ -549,90 +551,90 @@ class WorkstationsClient {
   /// Returns the requested workstation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::GetWorkstationRequest,google/cloud/workstations/v1/workstations.proto#L934}
+  /// @googleapis_link{google::cloud::workstations::v1::GetWorkstationRequest,google/cloud/workstations/v1/workstations.proto#L951}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
   ///
   /// [google.cloud.workstations.v1.GetWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L934}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L951}
   /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
   StatusOr<google::cloud::workstations::v1::Workstation> GetWorkstation(
       google::cloud::workstations::v1::GetWorkstationRequest const& request,
       Options opts = {});
 
   ///
-  /// Returns all Workstations using the specified config.
+  /// Returns all Workstations using the specified workstation configuration.
   ///
   /// @param parent  Required. Parent resource name.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
   ///
   /// [google.cloud.workstations.v1.ListWorkstationsRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L945}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L962}
   /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
   StreamRange<google::cloud::workstations::v1::Workstation> ListWorkstations(
       std::string const& parent, Options opts = {});
 
   ///
-  /// Returns all Workstations using the specified config.
+  /// Returns all Workstations using the specified workstation configuration.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::ListWorkstationsRequest,google/cloud/workstations/v1/workstations.proto#L945}
+  /// @googleapis_link{google::cloud::workstations::v1::ListWorkstationsRequest,google/cloud/workstations/v1/workstations.proto#L962}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
   ///
   /// [google.cloud.workstations.v1.ListWorkstationsRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L945}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L962}
   /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
   StreamRange<google::cloud::workstations::v1::Workstation> ListWorkstations(
       google::cloud::workstations::v1::ListWorkstationsRequest request,
       Options opts = {});
 
   ///
-  /// Returns all Workstations using the specified config on which the caller
-  /// has the "workstations.workstations.use" permission.
+  /// Returns all workstations using the specified workstation configuration
+  /// on which the caller has the "workstations.workstations.use" permission.
   ///
   /// @param parent  Required. Parent resource name.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
   ///
   /// [google.cloud.workstations.v1.ListUsableWorkstationsRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L975}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L992}
   /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
   StreamRange<google::cloud::workstations::v1::Workstation>
   ListUsableWorkstations(std::string const& parent, Options opts = {});
 
   ///
-  /// Returns all Workstations using the specified config on which the caller
-  /// has the "workstations.workstations.use" permission.
+  /// Returns all workstations using the specified workstation configuration
+  /// on which the caller has the "workstations.workstations.use" permission.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::ListUsableWorkstationsRequest,google/cloud/workstations/v1/workstations.proto#L975}
+  /// @googleapis_link{google::cloud::workstations::v1::ListUsableWorkstationsRequest,google/cloud/workstations/v1/workstations.proto#L992}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
   ///
   /// [google.cloud.workstations.v1.ListUsableWorkstationsRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L975}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L992}
   /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
   StreamRange<google::cloud::workstations::v1::Workstation>
   ListUsableWorkstations(
@@ -648,12 +650,12 @@ class WorkstationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
   ///
   /// [google.cloud.workstations.v1.CreateWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1005}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1022}
   /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   CreateWorkstation(
@@ -665,16 +667,16 @@ class WorkstationsClient {
   /// Creates a new workstation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::CreateWorkstationRequest,google/cloud/workstations/v1/workstations.proto#L1005}
+  /// @googleapis_link{google::cloud::workstations::v1::CreateWorkstationRequest,google/cloud/workstations/v1/workstations.proto#L1022}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
   ///
   /// [google.cloud.workstations.v1.CreateWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1005}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1022}
   /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   CreateWorkstation(
@@ -685,17 +687,18 @@ class WorkstationsClient {
   /// Updates an existing workstation.
   ///
   /// @param workstation  Required. Workstation to update.
-  /// @param update_mask  Required. Mask specifying which fields in the config
-  /// should be updated.
+  /// @param update_mask  Required. Mask specifying which fields in the
+  /// workstation configuration
+  ///  should be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
   ///
   /// [google.cloud.workstations.v1.UpdateWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1026}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1043}
   /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   UpdateWorkstation(
@@ -706,16 +709,16 @@ class WorkstationsClient {
   /// Updates an existing workstation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::UpdateWorkstationRequest,google/cloud/workstations/v1/workstations.proto#L1026}
+  /// @googleapis_link{google::cloud::workstations::v1::UpdateWorkstationRequest,google/cloud/workstations/v1/workstations.proto#L1043}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
   ///
   /// [google.cloud.workstations.v1.UpdateWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1026}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1043}
   /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   UpdateWorkstation(
@@ -729,12 +732,12 @@ class WorkstationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
   ///
   /// [google.cloud.workstations.v1.DeleteWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1044}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1063}
   /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   DeleteWorkstation(std::string const& name, Options opts = {});
@@ -743,16 +746,16 @@ class WorkstationsClient {
   /// Deletes the specified workstation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::DeleteWorkstationRequest,google/cloud/workstations/v1/workstations.proto#L1044}
+  /// @googleapis_link{google::cloud::workstations::v1::DeleteWorkstationRequest,google/cloud/workstations/v1/workstations.proto#L1063}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
   ///
   /// [google.cloud.workstations.v1.DeleteWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1044}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1063}
   /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   DeleteWorkstation(
@@ -766,12 +769,12 @@ class WorkstationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
   ///
   /// [google.cloud.workstations.v1.StartWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1063}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1082}
   /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   StartWorkstation(std::string const& name, Options opts = {});
@@ -780,16 +783,16 @@ class WorkstationsClient {
   /// Starts running a workstation so that users can connect to it.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::StartWorkstationRequest,google/cloud/workstations/v1/workstations.proto#L1063}
+  /// @googleapis_link{google::cloud::workstations::v1::StartWorkstationRequest,google/cloud/workstations/v1/workstations.proto#L1082}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
   ///
   /// [google.cloud.workstations.v1.StartWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1063}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1082}
   /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   StartWorkstation(
@@ -803,12 +806,12 @@ class WorkstationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
   ///
   /// [google.cloud.workstations.v1.StopWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1082}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1101}
   /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   StopWorkstation(std::string const& name, Options opts = {});
@@ -817,16 +820,16 @@ class WorkstationsClient {
   /// Stops running a workstation, reducing costs.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::StopWorkstationRequest,google/cloud/workstations/v1/workstations.proto#L1082}
+  /// @googleapis_link{google::cloud::workstations::v1::StopWorkstationRequest,google/cloud/workstations/v1/workstations.proto#L1101}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_link{google::cloud::workstations::v1::Workstation,google/cloud/workstations/v1/workstations.proto#L632}
   ///
   /// [google.cloud.workstations.v1.StopWorkstationRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1082}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1101}
   /// [google.cloud.workstations.v1.Workstation]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L618}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L632}
   ///
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   StopWorkstation(
@@ -843,12 +846,12 @@ class WorkstationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::GenerateAccessTokenResponse,google/cloud/workstations/v1/workstations.proto#L1127}
+  /// @googleapis_link{google::cloud::workstations::v1::GenerateAccessTokenResponse,google/cloud/workstations/v1/workstations.proto#L1146}
   ///
   /// [google.cloud.workstations.v1.GenerateAccessTokenRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1101}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1120}
   /// [google.cloud.workstations.v1.GenerateAccessTokenResponse]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1127}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1146}
   ///
   StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(std::string const& workstation, Options opts = {});
@@ -858,16 +861,16 @@ class WorkstationsClient {
   /// and authorized traffic to a workstation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::workstations::v1::GenerateAccessTokenRequest,google/cloud/workstations/v1/workstations.proto#L1101}
+  /// @googleapis_link{google::cloud::workstations::v1::GenerateAccessTokenRequest,google/cloud/workstations/v1/workstations.proto#L1120}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::workstations::v1::GenerateAccessTokenResponse,google/cloud/workstations/v1/workstations.proto#L1127}
+  /// @googleapis_link{google::cloud::workstations::v1::GenerateAccessTokenResponse,google/cloud/workstations/v1/workstations.proto#L1146}
   ///
   /// [google.cloud.workstations.v1.GenerateAccessTokenRequest]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1101}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1120}
   /// [google.cloud.workstations.v1.GenerateAccessTokenResponse]:
-  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1127}
+  /// @googleapis_reference_link{google/cloud/workstations/v1/workstations.proto#L1146}
   ///
   StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(

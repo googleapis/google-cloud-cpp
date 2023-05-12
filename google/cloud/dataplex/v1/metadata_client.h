@@ -254,12 +254,12 @@ class MetadataServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Partition,google/cloud/dataplex/v1/metadata.proto#L473}
+  /// @googleapis_link{google::cloud::dataplex::v1::Partition,google/cloud/dataplex/v1/metadata.proto#L480}
   ///
   /// [google.cloud.dataplex.v1.CreatePartitionRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L288}
   /// [google.cloud.dataplex.v1.Partition]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L473}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
   ///
   StatusOr<google::cloud::dataplex::v1::Partition> CreatePartition(
       std::string const& parent,
@@ -274,12 +274,12 @@ class MetadataServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Partition,google/cloud/dataplex/v1/metadata.proto#L473}
+  /// @googleapis_link{google::cloud::dataplex::v1::Partition,google/cloud/dataplex/v1/metadata.proto#L480}
   ///
   /// [google.cloud.dataplex.v1.CreatePartitionRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L288}
   /// [google.cloud.dataplex.v1.Partition]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L473}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
   ///
   StatusOr<google::cloud::dataplex::v1::Partition> CreatePartition(
       google::cloud::dataplex::v1::CreatePartitionRequest const& request,
@@ -326,12 +326,12 @@ class MetadataServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Partition,google/cloud/dataplex/v1/metadata.proto#L473}
+  /// @googleapis_link{google::cloud::dataplex::v1::Partition,google/cloud/dataplex/v1/metadata.proto#L480}
   ///
   /// [google.cloud.dataplex.v1.GetPartitionRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L333}
   /// [google.cloud.dataplex.v1.Partition]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L473}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
   ///
   StatusOr<google::cloud::dataplex::v1::Partition> GetPartition(
       std::string const& name, Options opts = {});
@@ -344,12 +344,12 @@ class MetadataServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Partition,google/cloud/dataplex/v1/metadata.proto#L473}
+  /// @googleapis_link{google::cloud::dataplex::v1::Partition,google/cloud/dataplex/v1/metadata.proto#L480}
   ///
   /// [google.cloud.dataplex.v1.GetPartitionRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L333}
   /// [google.cloud.dataplex.v1.Partition]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L473}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
   ///
   StatusOr<google::cloud::dataplex::v1::Partition> GetPartition(
       google::cloud::dataplex::v1::GetPartitionRequest const& request,
@@ -363,12 +363,12 @@ class MetadataServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Partition,google/cloud/dataplex/v1/metadata.proto#L473}
+  /// @googleapis_link{google::cloud::dataplex::v1::Partition,google/cloud/dataplex/v1/metadata.proto#L480}
   ///
   /// [google.cloud.dataplex.v1.ListPartitionsRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L245}
   /// [google.cloud.dataplex.v1.Partition]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L473}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
   ///
   StreamRange<google::cloud::dataplex::v1::Partition> ListPartitions(
       std::string const& parent, Options opts = {});
@@ -381,12 +381,12 @@ class MetadataServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataplex::v1::Partition,google/cloud/dataplex/v1/metadata.proto#L473}
+  /// @googleapis_link{google::cloud::dataplex::v1::Partition,google/cloud/dataplex/v1/metadata.proto#L480}
   ///
   /// [google.cloud.dataplex.v1.ListPartitionsRequest]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L245}
   /// [google.cloud.dataplex.v1.Partition]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L473}
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L480}
   ///
   StreamRange<google::cloud::dataplex::v1::Partition> ListPartitions(
       google::cloud::dataplex::v1::ListPartitionsRequest request,

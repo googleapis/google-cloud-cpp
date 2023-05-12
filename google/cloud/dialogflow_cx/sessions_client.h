@@ -129,12 +129,12 @@ class SessionsClient {
   /// @return A bidirectional streaming interface with request (write) type:
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,google/cloud/dialogflow/cx/v3/session.proto#L234}
   /// and response (read) type:
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse,google/cloud/dialogflow/cx/v3/session.proto#L300}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse,google/cloud/dialogflow/cx/v3/session.proto#L368}
   ///
   /// [google.cloud.dialogflow.cx.v3.StreamingDetectIntentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L234}
   /// [google.cloud.dialogflow.cx.v3.StreamingDetectIntentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L300}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L368}
   ///
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
@@ -146,16 +146,16 @@ class SessionsClient {
   /// status.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::MatchIntentRequest,google/cloud/dialogflow/cx/v3/session.proto#L811}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::MatchIntentRequest,google/cloud/dialogflow/cx/v3/session.proto#L885}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::MatchIntentResponse,google/cloud/dialogflow/cx/v3/session.proto#L842}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::MatchIntentResponse,google/cloud/dialogflow/cx/v3/session.proto#L916}
   ///
   /// [google.cloud.dialogflow.cx.v3.MatchIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L811}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L885}
   /// [google.cloud.dialogflow.cx.v3.MatchIntentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L842}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L916}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse> MatchIntent(
       google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request,
@@ -171,18 +171,18 @@ class SessionsClient {
   /// Otherwise, the behavior is undefined.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::FulfillIntentRequest,google/cloud/dialogflow/cx/v3/session.proto#L878}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::FulfillIntentRequest,google/cloud/dialogflow/cx/v3/session.proto#L952}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::FulfillIntentResponse,google/cloud/dialogflow/cx/v3/session.proto#L891}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::FulfillIntentResponse,google/cloud/dialogflow/cx/v3/session.proto#L965}
   ///
   /// [google.cloud.dialogflow.cx.v3.FulfillIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L878}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L952}
   /// [google.cloud.dialogflow.cx.v3.FulfillIntentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L891}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L965}
   /// [google.cloud.dialogflow.cx.v3.MatchIntentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L842}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L916}
   /// [google.cloud.dialogflow.cx.v3.Sessions.MatchIntent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L88}
   ///

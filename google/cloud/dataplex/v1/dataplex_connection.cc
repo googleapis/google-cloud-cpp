@@ -217,6 +217,12 @@ DataplexServiceConnection::ListJobs(
       StreamRange<google::cloud::dataplex::v1::Job>>();
 }
 
+StatusOr<google::cloud::dataplex::v1::RunTaskResponse>
+DataplexServiceConnection::RunTask(
+    google::cloud::dataplex::v1::RunTaskRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::dataplex::v1::Job> DataplexServiceConnection::GetJob(
     google::cloud::dataplex::v1::GetJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");

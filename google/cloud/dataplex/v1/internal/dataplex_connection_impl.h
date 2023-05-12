@@ -124,6 +124,9 @@ class DataplexServiceConnectionImpl
   StreamRange<google::cloud::dataplex::v1::Job> ListJobs(
       google::cloud::dataplex::v1::ListJobsRequest request) override;
 
+  StatusOr<google::cloud::dataplex::v1::RunTaskResponse> RunTask(
+      google::cloud::dataplex::v1::RunTaskRequest const& request) override;
+
   StatusOr<google::cloud::dataplex::v1::Job> GetJob(
       google::cloud::dataplex::v1::GetJobRequest const& request) override;
 

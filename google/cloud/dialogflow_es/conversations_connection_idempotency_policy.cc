@@ -65,6 +65,11 @@ ConversationsConnectionIdempotencyPolicy::SuggestConversationSummary(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ConversationsConnectionIdempotencyPolicy::GenerateStatelessSummary(
+    google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<ConversationsConnectionIdempotencyPolicy>
 MakeDefaultConversationsConnectionIdempotencyPolicy() {
   return std::make_unique<ConversationsConnectionIdempotencyPolicy>();

@@ -378,6 +378,18 @@ DefaultDataplexServiceStub::ListJobs(
   return response;
 }
 
+StatusOr<google::cloud::dataplex::v1::RunTaskResponse>
+DefaultDataplexServiceStub::RunTask(
+    grpc::ClientContext& client_context,
+    google::cloud::dataplex::v1::RunTaskRequest const& request) {
+  google::cloud::dataplex::v1::RunTaskResponse response;
+  auto status = grpc_stub_->RunTask(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::dataplex::v1::Job> DefaultDataplexServiceStub::GetJob(
     grpc::ClientContext& client_context,
     google::cloud::dataplex::v1::GetJobRequest const& request) {

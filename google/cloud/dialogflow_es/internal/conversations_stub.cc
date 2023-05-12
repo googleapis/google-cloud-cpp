@@ -107,6 +107,20 @@ DefaultConversationsStub::SuggestConversationSummary(
   return response;
 }
 
+StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
+DefaultConversationsStub::GenerateStatelessSummary(
+    grpc::ClientContext& client_context,
+    google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
+        request) {
+  google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse response;
+  auto status =
+      grpc_stub_->GenerateStatelessSummary(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
 }  // namespace cloud

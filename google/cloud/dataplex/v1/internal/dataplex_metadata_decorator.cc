@@ -234,6 +234,14 @@ DataplexServiceMetadata::ListJobs(
   return child_->ListJobs(context, request);
 }
 
+StatusOr<google::cloud::dataplex::v1::RunTaskResponse>
+DataplexServiceMetadata::RunTask(
+    grpc::ClientContext& context,
+    google::cloud::dataplex::v1::RunTaskRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->RunTask(context, request);
+}
+
 StatusOr<google::cloud::dataplex::v1::Job> DataplexServiceMetadata::GetJob(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetJobRequest const& request) {

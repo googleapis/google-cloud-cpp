@@ -66,6 +66,13 @@ class ConversationsStub {
       grpc::ClientContext& context,
       google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
           request) = 0;
+
+  virtual StatusOr<
+      google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
+  GenerateStatelessSummary(
+      grpc::ClientContext& context,
+      google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
+          request) = 0;
 };
 
 class DefaultConversationsStub : public ConversationsStub {
@@ -106,6 +113,12 @@ class DefaultConversationsStub : public ConversationsStub {
   SuggestConversationSummary(
       grpc::ClientContext& client_context,
       google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
+          request) override;
+
+  StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
+  GenerateStatelessSummary(
+      grpc::ClientContext& client_context,
+      google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
           request) override;
 
  private:

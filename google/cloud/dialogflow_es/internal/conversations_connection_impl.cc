@@ -161,6 +161,22 @@ ConversationsConnectionImpl::SuggestConversationSummary(
       request, __func__);
 }
 
+StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
+ConversationsConnectionImpl::GenerateStatelessSummary(
+    google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GenerateStatelessSummary(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
+              request) {
+        return stub_->GenerateStatelessSummary(context, request);
+      },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
 }  // namespace cloud

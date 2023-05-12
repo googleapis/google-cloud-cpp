@@ -138,6 +138,19 @@ EkmServiceConnectionImpl::UpdateEkmConfig(
       request, __func__);
 }
 
+StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
+EkmServiceConnectionImpl::VerifyConnectivity(
+    google::cloud::kms::v1::VerifyConnectivityRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->VerifyConnectivity(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::kms::v1::VerifyConnectivityRequest const& request) {
+        return stub_->VerifyConnectivity(context, request);
+      },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_v1_internal
 }  // namespace cloud

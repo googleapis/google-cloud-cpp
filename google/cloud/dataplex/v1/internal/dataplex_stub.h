@@ -147,6 +147,10 @@ class DataplexServiceStub {
       grpc::ClientContext& context,
       google::cloud::dataplex::v1::ListJobsRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::dataplex::v1::RunTaskResponse> RunTask(
+      grpc::ClientContext& context,
+      google::cloud::dataplex::v1::RunTaskRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::dataplex::v1::Job> GetJob(
       grpc::ClientContext& context,
       google::cloud::dataplex::v1::GetJobRequest const& request) = 0;
@@ -318,6 +322,10 @@ class DefaultDataplexServiceStub : public DataplexServiceStub {
   StatusOr<google::cloud::dataplex::v1::ListJobsResponse> ListJobs(
       grpc::ClientContext& client_context,
       google::cloud::dataplex::v1::ListJobsRequest const& request) override;
+
+  StatusOr<google::cloud::dataplex::v1::RunTaskResponse> RunTask(
+      grpc::ClientContext& client_context,
+      google::cloud::dataplex::v1::RunTaskRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::Job> GetJob(
       grpc::ClientContext& client_context,

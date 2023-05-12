@@ -684,6 +684,18 @@ DataplexServiceConnectionImpl::ListJobs(
       });
 }
 
+StatusOr<google::cloud::dataplex::v1::RunTaskResponse>
+DataplexServiceConnectionImpl::RunTask(
+    google::cloud::dataplex::v1::RunTaskRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(), idempotency_policy()->RunTask(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::dataplex::v1::RunTaskRequest const& request) {
+        return stub_->RunTask(context, request);
+      },
+      request, __func__);
+}
+
 StatusOr<google::cloud::dataplex::v1::Job>
 DataplexServiceConnectionImpl::GetJob(
     google::cloud::dataplex::v1::GetJobRequest const& request) {

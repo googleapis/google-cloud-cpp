@@ -139,6 +139,9 @@ class DataplexServiceConnection {
   virtual StreamRange<google::cloud::dataplex::v1::Job> ListJobs(
       google::cloud::dataplex::v1::ListJobsRequest request);
 
+  virtual StatusOr<google::cloud::dataplex::v1::RunTaskResponse> RunTask(
+      google::cloud::dataplex::v1::RunTaskRequest const& request);
+
   virtual StatusOr<google::cloud::dataplex::v1::Job> GetJob(
       google::cloud::dataplex::v1::GetJobRequest const& request);
 

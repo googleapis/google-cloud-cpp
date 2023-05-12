@@ -193,12 +193,12 @@ class SessionsClient {
   /// @return A bidirectional streaming interface with request (write) type:
   /// @googleapis_link{google::cloud::dialogflow::v2::StreamingDetectIntentRequest,google/cloud/dialogflow/v2/session.proto#L418}
   /// and response (read) type:
-  /// @googleapis_link{google::cloud::dialogflow::v2::StreamingDetectIntentResponse,google/cloud/dialogflow/v2/session.proto#L502}
+  /// @googleapis_link{google::cloud::dialogflow::v2::StreamingDetectIntentResponse,google/cloud/dialogflow/v2/session.proto#L570}
   ///
   /// [google.cloud.dialogflow.v2.StreamingDetectIntentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L418}
   /// [google.cloud.dialogflow.v2.StreamingDetectIntentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L502}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L570}
   ///
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::v2::StreamingDetectIntentRequest,

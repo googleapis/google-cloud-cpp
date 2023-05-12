@@ -343,6 +343,17 @@ DataplexServiceTracingStub::ListJobs(
   return internal::EndSpan(context, *span, child_->ListJobs(context, request));
 }
 
+StatusOr<google::cloud::dataplex::v1::RunTaskResponse>
+DataplexServiceTracingStub::RunTask(
+    grpc::ClientContext& context,
+    google::cloud::dataplex::v1::RunTaskRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
+                                     "RunTask");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->RunTask(context, request));
+}
+
 StatusOr<google::cloud::dataplex::v1::Job> DataplexServiceTracingStub::GetJob(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetJobRequest const& request) {

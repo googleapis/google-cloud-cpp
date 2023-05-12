@@ -93,12 +93,12 @@ class DatastreamClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::ConnectionProfile,google/cloud/datastream/v1/datastream_resources.proto#L275}
+  /// @googleapis_link{google::cloud::datastream::v1::ConnectionProfile,google/cloud/datastream/v1/datastream_resources.proto#L278}
   ///
   /// [google.cloud.datastream.v1.ConnectionProfile]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L275}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L278}
   /// [google.cloud.datastream.v1.ListConnectionProfilesRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L386}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L403}
   ///
   StreamRange<google::cloud::datastream::v1::ConnectionProfile>
   ListConnectionProfiles(std::string const& parent, Options opts = {});
@@ -108,16 +108,16 @@ class DatastreamClient {
   /// location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::ListConnectionProfilesRequest,google/cloud/datastream/v1/datastream.proto#L386}
+  /// @googleapis_link{google::cloud::datastream::v1::ListConnectionProfilesRequest,google/cloud/datastream/v1/datastream.proto#L403}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::ConnectionProfile,google/cloud/datastream/v1/datastream_resources.proto#L275}
+  /// @googleapis_link{google::cloud::datastream::v1::ConnectionProfile,google/cloud/datastream/v1/datastream_resources.proto#L278}
   ///
   /// [google.cloud.datastream.v1.ConnectionProfile]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L275}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L278}
   /// [google.cloud.datastream.v1.ListConnectionProfilesRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L386}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L403}
   ///
   StreamRange<google::cloud::datastream::v1::ConnectionProfile>
   ListConnectionProfiles(
@@ -131,12 +131,12 @@ class DatastreamClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::ConnectionProfile,google/cloud/datastream/v1/datastream_resources.proto#L275}
+  /// @googleapis_link{google::cloud::datastream::v1::ConnectionProfile,google/cloud/datastream/v1/datastream_resources.proto#L278}
   ///
   /// [google.cloud.datastream.v1.ConnectionProfile]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L275}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L278}
   /// [google.cloud.datastream.v1.GetConnectionProfileRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L428}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L445}
   ///
   StatusOr<google::cloud::datastream::v1::ConnectionProfile>
   GetConnectionProfile(std::string const& name, Options opts = {});
@@ -145,16 +145,16 @@ class DatastreamClient {
   /// Use this method to get details about a connection profile.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::GetConnectionProfileRequest,google/cloud/datastream/v1/datastream.proto#L428}
+  /// @googleapis_link{google::cloud::datastream::v1::GetConnectionProfileRequest,google/cloud/datastream/v1/datastream.proto#L445}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::ConnectionProfile,google/cloud/datastream/v1/datastream_resources.proto#L275}
+  /// @googleapis_link{google::cloud::datastream::v1::ConnectionProfile,google/cloud/datastream/v1/datastream_resources.proto#L278}
   ///
   /// [google.cloud.datastream.v1.ConnectionProfile]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L275}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L278}
   /// [google.cloud.datastream.v1.GetConnectionProfileRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L428}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L445}
   ///
   StatusOr<google::cloud::datastream::v1::ConnectionProfile>
   GetConnectionProfile(
@@ -172,12 +172,12 @@ class DatastreamClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::ConnectionProfile,google/cloud/datastream/v1/datastream_resources.proto#L275}
+  /// @googleapis_link{google::cloud::datastream::v1::ConnectionProfile,google/cloud/datastream/v1/datastream_resources.proto#L278}
   ///
   /// [google.cloud.datastream.v1.ConnectionProfile]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L275}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L278}
   /// [google.cloud.datastream.v1.CreateConnectionProfileRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L439}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L456}
   ///
   future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
   CreateConnectionProfile(
@@ -190,16 +190,16 @@ class DatastreamClient {
   /// Use this method to create a connection profile in a project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::CreateConnectionProfileRequest,google/cloud/datastream/v1/datastream.proto#L439}
+  /// @googleapis_link{google::cloud::datastream::v1::CreateConnectionProfileRequest,google/cloud/datastream/v1/datastream.proto#L456}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::ConnectionProfile,google/cloud/datastream/v1/datastream_resources.proto#L275}
+  /// @googleapis_link{google::cloud::datastream::v1::ConnectionProfile,google/cloud/datastream/v1/datastream_resources.proto#L278}
   ///
   /// [google.cloud.datastream.v1.ConnectionProfile]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L275}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L278}
   /// [google.cloud.datastream.v1.CreateConnectionProfileRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L439}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L456}
   ///
   future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
   CreateConnectionProfile(
@@ -220,12 +220,12 @@ class DatastreamClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::ConnectionProfile,google/cloud/datastream/v1/datastream_resources.proto#L275}
+  /// @googleapis_link{google::cloud::datastream::v1::ConnectionProfile,google/cloud/datastream/v1/datastream_resources.proto#L278}
   ///
   /// [google.cloud.datastream.v1.ConnectionProfile]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L275}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L278}
   /// [google.cloud.datastream.v1.UpdateConnectionProfileRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L478}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L496}
   ///
   future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
   UpdateConnectionProfile(
@@ -237,16 +237,16 @@ class DatastreamClient {
   /// Use this method to update the parameters of a connection profile.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::UpdateConnectionProfileRequest,google/cloud/datastream/v1/datastream.proto#L478}
+  /// @googleapis_link{google::cloud::datastream::v1::UpdateConnectionProfileRequest,google/cloud/datastream/v1/datastream.proto#L496}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::ConnectionProfile,google/cloud/datastream/v1/datastream_resources.proto#L275}
+  /// @googleapis_link{google::cloud::datastream::v1::ConnectionProfile,google/cloud/datastream/v1/datastream_resources.proto#L278}
   ///
   /// [google.cloud.datastream.v1.ConnectionProfile]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L275}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L278}
   /// [google.cloud.datastream.v1.UpdateConnectionProfileRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L478}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L496}
   ///
   future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
   UpdateConnectionProfile(
@@ -262,12 +262,12 @@ class DatastreamClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::OperationMetadata,google/cloud/datastream/v1/datastream.proto#L785}
+  /// @googleapis_link{google::cloud::datastream::v1::OperationMetadata,google/cloud/datastream/v1/datastream.proto#L809}
   ///
   /// [google.cloud.datastream.v1.DeleteConnectionProfileRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L513}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L533}
   /// [google.cloud.datastream.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L785}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L809}
   ///
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeleteConnectionProfile(std::string const& name, Options opts = {});
@@ -276,16 +276,16 @@ class DatastreamClient {
   /// Use this method to delete a connection profile.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::DeleteConnectionProfileRequest,google/cloud/datastream/v1/datastream.proto#L513}
+  /// @googleapis_link{google::cloud::datastream::v1::DeleteConnectionProfileRequest,google/cloud/datastream/v1/datastream.proto#L533}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::OperationMetadata,google/cloud/datastream/v1/datastream.proto#L785}
+  /// @googleapis_link{google::cloud::datastream::v1::OperationMetadata,google/cloud/datastream/v1/datastream.proto#L809}
   ///
   /// [google.cloud.datastream.v1.DeleteConnectionProfileRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L513}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L533}
   /// [google.cloud.datastream.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L785}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L809}
   ///
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeleteConnectionProfile(
@@ -300,16 +300,16 @@ class DatastreamClient {
   /// parent data object that's optionally supplied in the request.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::DiscoverConnectionProfileRequest,google/cloud/datastream/v1/datastream.proto#L299}
+  /// @googleapis_link{google::cloud::datastream::v1::DiscoverConnectionProfileRequest,google/cloud/datastream/v1/datastream.proto#L316}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::DiscoverConnectionProfileResponse,google/cloud/datastream/v1/datastream.proto#L342}
+  /// @googleapis_link{google::cloud::datastream::v1::DiscoverConnectionProfileResponse,google/cloud/datastream/v1/datastream.proto#L359}
   ///
   /// [google.cloud.datastream.v1.DiscoverConnectionProfileRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L299}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L316}
   /// [google.cloud.datastream.v1.DiscoverConnectionProfileResponse]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L342}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L359}
   ///
   StatusOr<google::cloud::datastream::v1::DiscoverConnectionProfileResponse>
   DiscoverConnectionProfile(
@@ -324,12 +324,12 @@ class DatastreamClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::Stream,google/cloud/datastream/v1/datastream_resources.proto#L705}
+  /// @googleapis_link{google::cloud::datastream::v1::Stream,google/cloud/datastream/v1/datastream_resources.proto#L725}
   ///
   /// [google.cloud.datastream.v1.ListStreamsRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L539}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L559}
   /// [google.cloud.datastream.v1.Stream]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L705}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L725}
   ///
   StreamRange<google::cloud::datastream::v1::Stream> ListStreams(
       std::string const& parent, Options opts = {});
@@ -338,16 +338,16 @@ class DatastreamClient {
   /// Use this method to list streams in a project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::ListStreamsRequest,google/cloud/datastream/v1/datastream.proto#L539}
+  /// @googleapis_link{google::cloud::datastream::v1::ListStreamsRequest,google/cloud/datastream/v1/datastream.proto#L559}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::Stream,google/cloud/datastream/v1/datastream_resources.proto#L705}
+  /// @googleapis_link{google::cloud::datastream::v1::Stream,google/cloud/datastream/v1/datastream_resources.proto#L725}
   ///
   /// [google.cloud.datastream.v1.ListStreamsRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L539}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L559}
   /// [google.cloud.datastream.v1.Stream]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L705}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L725}
   ///
   StreamRange<google::cloud::datastream::v1::Stream> ListStreams(
       google::cloud::datastream::v1::ListStreamsRequest request,
@@ -360,12 +360,12 @@ class DatastreamClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::Stream,google/cloud/datastream/v1/datastream_resources.proto#L705}
+  /// @googleapis_link{google::cloud::datastream::v1::Stream,google/cloud/datastream/v1/datastream_resources.proto#L725}
   ///
   /// [google.cloud.datastream.v1.GetStreamRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L581}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L601}
   /// [google.cloud.datastream.v1.Stream]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L705}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L725}
   ///
   StatusOr<google::cloud::datastream::v1::Stream> GetStream(
       std::string const& name, Options opts = {});
@@ -374,16 +374,16 @@ class DatastreamClient {
   /// Use this method to get details about a stream.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::GetStreamRequest,google/cloud/datastream/v1/datastream.proto#L581}
+  /// @googleapis_link{google::cloud::datastream::v1::GetStreamRequest,google/cloud/datastream/v1/datastream.proto#L601}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::Stream,google/cloud/datastream/v1/datastream_resources.proto#L705}
+  /// @googleapis_link{google::cloud::datastream::v1::Stream,google/cloud/datastream/v1/datastream_resources.proto#L725}
   ///
   /// [google.cloud.datastream.v1.GetStreamRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L581}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L601}
   /// [google.cloud.datastream.v1.Stream]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L705}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L725}
   ///
   StatusOr<google::cloud::datastream::v1::Stream> GetStream(
       google::cloud::datastream::v1::GetStreamRequest const& request,
@@ -398,12 +398,12 @@ class DatastreamClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::Stream,google/cloud/datastream/v1/datastream_resources.proto#L705}
+  /// @googleapis_link{google::cloud::datastream::v1::Stream,google/cloud/datastream/v1/datastream_resources.proto#L725}
   ///
   /// [google.cloud.datastream.v1.CreateStreamRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L592}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L612}
   /// [google.cloud.datastream.v1.Stream]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L705}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L725}
   ///
   future<StatusOr<google::cloud::datastream::v1::Stream>> CreateStream(
       std::string const& parent,
@@ -414,16 +414,16 @@ class DatastreamClient {
   /// Use this method to create a stream.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::CreateStreamRequest,google/cloud/datastream/v1/datastream.proto#L592}
+  /// @googleapis_link{google::cloud::datastream::v1::CreateStreamRequest,google/cloud/datastream/v1/datastream.proto#L612}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::Stream,google/cloud/datastream/v1/datastream_resources.proto#L705}
+  /// @googleapis_link{google::cloud::datastream::v1::Stream,google/cloud/datastream/v1/datastream_resources.proto#L725}
   ///
   /// [google.cloud.datastream.v1.CreateStreamRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L592}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L612}
   /// [google.cloud.datastream.v1.Stream]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L705}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L725}
   ///
   future<StatusOr<google::cloud::datastream::v1::Stream>> CreateStream(
       google::cloud::datastream::v1::CreateStreamRequest const& request,
@@ -442,12 +442,12 @@ class DatastreamClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::Stream,google/cloud/datastream/v1/datastream_resources.proto#L705}
+  /// @googleapis_link{google::cloud::datastream::v1::Stream,google/cloud/datastream/v1/datastream_resources.proto#L725}
   ///
   /// [google.cloud.datastream.v1.Stream]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L705}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L725}
   /// [google.cloud.datastream.v1.UpdateStreamRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L631}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L651}
   ///
   future<StatusOr<google::cloud::datastream::v1::Stream>> UpdateStream(
       google::cloud::datastream::v1::Stream const& stream,
@@ -457,16 +457,16 @@ class DatastreamClient {
   /// Use this method to update the configuration of a stream.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::UpdateStreamRequest,google/cloud/datastream/v1/datastream.proto#L631}
+  /// @googleapis_link{google::cloud::datastream::v1::UpdateStreamRequest,google/cloud/datastream/v1/datastream.proto#L651}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::Stream,google/cloud/datastream/v1/datastream_resources.proto#L705}
+  /// @googleapis_link{google::cloud::datastream::v1::Stream,google/cloud/datastream/v1/datastream_resources.proto#L725}
   ///
   /// [google.cloud.datastream.v1.Stream]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L705}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L725}
   /// [google.cloud.datastream.v1.UpdateStreamRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L631}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L651}
   ///
   future<StatusOr<google::cloud::datastream::v1::Stream>> UpdateStream(
       google::cloud::datastream::v1::UpdateStreamRequest const& request,
@@ -479,12 +479,12 @@ class DatastreamClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::OperationMetadata,google/cloud/datastream/v1/datastream.proto#L785}
+  /// @googleapis_link{google::cloud::datastream::v1::OperationMetadata,google/cloud/datastream/v1/datastream.proto#L809}
   ///
   /// [google.cloud.datastream.v1.DeleteStreamRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L666}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L687}
   /// [google.cloud.datastream.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L785}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L809}
   ///
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeleteStream(std::string const& name, Options opts = {});
@@ -493,16 +493,16 @@ class DatastreamClient {
   /// Use this method to delete a stream.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::DeleteStreamRequest,google/cloud/datastream/v1/datastream.proto#L666}
+  /// @googleapis_link{google::cloud::datastream::v1::DeleteStreamRequest,google/cloud/datastream/v1/datastream.proto#L687}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::OperationMetadata,google/cloud/datastream/v1/datastream.proto#L785}
+  /// @googleapis_link{google::cloud::datastream::v1::OperationMetadata,google/cloud/datastream/v1/datastream.proto#L809}
   ///
   /// [google.cloud.datastream.v1.DeleteStreamRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L666}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L687}
   /// [google.cloud.datastream.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L785}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L809}
   ///
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeleteStream(
@@ -516,12 +516,12 @@ class DatastreamClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::StreamObject,google/cloud/datastream/v1/datastream_resources.proto#L811}
+  /// @googleapis_link{google::cloud::datastream::v1::StreamObject,google/cloud/datastream/v1/datastream_resources.proto#L833}
   ///
   /// [google.cloud.datastream.v1.GetStreamObjectRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L692}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L713}
   /// [google.cloud.datastream.v1.StreamObject]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L811}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L833}
   ///
   StatusOr<google::cloud::datastream::v1::StreamObject> GetStreamObject(
       std::string const& name, Options opts = {});
@@ -530,16 +530,16 @@ class DatastreamClient {
   /// Use this method to get details about a stream object.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::GetStreamObjectRequest,google/cloud/datastream/v1/datastream.proto#L692}
+  /// @googleapis_link{google::cloud::datastream::v1::GetStreamObjectRequest,google/cloud/datastream/v1/datastream.proto#L713}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::StreamObject,google/cloud/datastream/v1/datastream_resources.proto#L811}
+  /// @googleapis_link{google::cloud::datastream::v1::StreamObject,google/cloud/datastream/v1/datastream_resources.proto#L833}
   ///
   /// [google.cloud.datastream.v1.GetStreamObjectRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L692}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L713}
   /// [google.cloud.datastream.v1.StreamObject]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L811}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L833}
   ///
   StatusOr<google::cloud::datastream::v1::StreamObject> GetStreamObject(
       google::cloud::datastream::v1::GetStreamObjectRequest const& request,
@@ -550,16 +550,16 @@ class DatastreamClient {
   /// identifier.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::LookupStreamObjectRequest,google/cloud/datastream/v1/datastream.proto#L704}
+  /// @googleapis_link{google::cloud::datastream::v1::LookupStreamObjectRequest,google/cloud/datastream/v1/datastream.proto#L725}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::StreamObject,google/cloud/datastream/v1/datastream_resources.proto#L811}
+  /// @googleapis_link{google::cloud::datastream::v1::StreamObject,google/cloud/datastream/v1/datastream_resources.proto#L833}
   ///
   /// [google.cloud.datastream.v1.LookupStreamObjectRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L704}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L725}
   /// [google.cloud.datastream.v1.StreamObject]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L811}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L833}
   ///
   StatusOr<google::cloud::datastream::v1::StreamObject> LookupStreamObject(
       google::cloud::datastream::v1::LookupStreamObjectRequest const& request,
@@ -573,12 +573,12 @@ class DatastreamClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::StreamObject,google/cloud/datastream/v1/datastream_resources.proto#L811}
+  /// @googleapis_link{google::cloud::datastream::v1::StreamObject,google/cloud/datastream/v1/datastream_resources.proto#L833}
   ///
   /// [google.cloud.datastream.v1.ListStreamObjectsRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L753}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L777}
   /// [google.cloud.datastream.v1.StreamObject]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L811}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L833}
   ///
   StreamRange<google::cloud::datastream::v1::StreamObject> ListStreamObjects(
       std::string const& parent, Options opts = {});
@@ -587,16 +587,16 @@ class DatastreamClient {
   /// Use this method to list the objects of a specific stream.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::ListStreamObjectsRequest,google/cloud/datastream/v1/datastream.proto#L753}
+  /// @googleapis_link{google::cloud::datastream::v1::ListStreamObjectsRequest,google/cloud/datastream/v1/datastream.proto#L777}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::StreamObject,google/cloud/datastream/v1/datastream_resources.proto#L811}
+  /// @googleapis_link{google::cloud::datastream::v1::StreamObject,google/cloud/datastream/v1/datastream_resources.proto#L833}
   ///
   /// [google.cloud.datastream.v1.ListStreamObjectsRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L753}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L777}
   /// [google.cloud.datastream.v1.StreamObject]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L811}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L833}
   ///
   StreamRange<google::cloud::datastream::v1::StreamObject> ListStreamObjects(
       google::cloud::datastream::v1::ListStreamObjectsRequest request,
@@ -606,16 +606,17 @@ class DatastreamClient {
   /// Use this method to start a backfill job for the specified stream object.
   ///
   /// @param object  Required. The name of the stream object resource to start a
-  /// backfill job for.
+  /// backfill job
+  ///  for.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::StartBackfillJobResponse,google/cloud/datastream/v1/datastream.proto#L729}
+  /// @googleapis_link{google::cloud::datastream::v1::StartBackfillJobResponse,google/cloud/datastream/v1/datastream.proto#L752}
   ///
   /// [google.cloud.datastream.v1.StartBackfillJobRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L718}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L740}
   /// [google.cloud.datastream.v1.StartBackfillJobResponse]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L729}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L752}
   ///
   StatusOr<google::cloud::datastream::v1::StartBackfillJobResponse>
   StartBackfillJob(std::string const& object, Options opts = {});
@@ -624,16 +625,16 @@ class DatastreamClient {
   /// Use this method to start a backfill job for the specified stream object.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::StartBackfillJobRequest,google/cloud/datastream/v1/datastream.proto#L718}
+  /// @googleapis_link{google::cloud::datastream::v1::StartBackfillJobRequest,google/cloud/datastream/v1/datastream.proto#L740}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::StartBackfillJobResponse,google/cloud/datastream/v1/datastream.proto#L729}
+  /// @googleapis_link{google::cloud::datastream::v1::StartBackfillJobResponse,google/cloud/datastream/v1/datastream.proto#L752}
   ///
   /// [google.cloud.datastream.v1.StartBackfillJobRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L718}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L740}
   /// [google.cloud.datastream.v1.StartBackfillJobResponse]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L729}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L752}
   ///
   StatusOr<google::cloud::datastream::v1::StartBackfillJobResponse>
   StartBackfillJob(
@@ -644,16 +645,17 @@ class DatastreamClient {
   /// Use this method to stop a backfill job for the specified stream object.
   ///
   /// @param object  Required. The name of the stream object resource to stop
-  /// the backfill job for.
+  /// the backfill job
+  ///  for.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::StopBackfillJobResponse,google/cloud/datastream/v1/datastream.proto#L747}
+  /// @googleapis_link{google::cloud::datastream::v1::StopBackfillJobResponse,google/cloud/datastream/v1/datastream.proto#L771}
   ///
   /// [google.cloud.datastream.v1.StopBackfillJobRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L736}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L759}
   /// [google.cloud.datastream.v1.StopBackfillJobResponse]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L747}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L771}
   ///
   StatusOr<google::cloud::datastream::v1::StopBackfillJobResponse>
   StopBackfillJob(std::string const& object, Options opts = {});
@@ -662,16 +664,16 @@ class DatastreamClient {
   /// Use this method to stop a backfill job for the specified stream object.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::StopBackfillJobRequest,google/cloud/datastream/v1/datastream.proto#L736}
+  /// @googleapis_link{google::cloud::datastream::v1::StopBackfillJobRequest,google/cloud/datastream/v1/datastream.proto#L759}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::StopBackfillJobResponse,google/cloud/datastream/v1/datastream.proto#L747}
+  /// @googleapis_link{google::cloud::datastream::v1::StopBackfillJobResponse,google/cloud/datastream/v1/datastream.proto#L771}
   ///
   /// [google.cloud.datastream.v1.StopBackfillJobRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L736}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L759}
   /// [google.cloud.datastream.v1.StopBackfillJobResponse]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L747}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L771}
   ///
   StatusOr<google::cloud::datastream::v1::StopBackfillJobResponse>
   StopBackfillJob(
@@ -683,14 +685,14 @@ class DatastreamClient {
   /// Datastream.
   ///
   /// @param name  Required. The resource name for the location for which static
-  /// IPs should be returned.
-  ///  Must be in the format `projects/*/locations/*`.
+  /// IPs should be
+  ///  returned. Must be in the format `projects/*/locations/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return std::string
   ///
   /// [google.cloud.datastream.v1.FetchStaticIpsRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L357}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L374}
   ///
   StreamRange<std::string> FetchStaticIps(std::string const& name,
                                           Options opts = {});
@@ -700,13 +702,13 @@ class DatastreamClient {
   /// Datastream.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::FetchStaticIpsRequest,google/cloud/datastream/v1/datastream.proto#L357}
+  /// @googleapis_link{google::cloud::datastream::v1::FetchStaticIpsRequest,google/cloud/datastream/v1/datastream.proto#L374}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return std::string
   ///
   /// [google.cloud.datastream.v1.FetchStaticIpsRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L357}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L374}
   ///
   StreamRange<std::string> FetchStaticIps(
       google::cloud::datastream::v1::FetchStaticIpsRequest request,
@@ -724,12 +726,12 @@ class DatastreamClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::PrivateConnection,google/cloud/datastream/v1/datastream_resources.proto#L153}
+  /// @googleapis_link{google::cloud::datastream::v1::PrivateConnection,google/cloud/datastream/v1/datastream_resources.proto#L151}
   ///
   /// [google.cloud.datastream.v1.CreatePrivateConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L815}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L843}
   /// [google.cloud.datastream.v1.PrivateConnection]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L153}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L151}
   ///
   future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
   CreatePrivateConnection(
@@ -742,16 +744,16 @@ class DatastreamClient {
   /// Use this method to create a private connectivity configuration.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::CreatePrivateConnectionRequest,google/cloud/datastream/v1/datastream.proto#L815}
+  /// @googleapis_link{google::cloud::datastream::v1::CreatePrivateConnectionRequest,google/cloud/datastream/v1/datastream.proto#L843}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::PrivateConnection,google/cloud/datastream/v1/datastream_resources.proto#L153}
+  /// @googleapis_link{google::cloud::datastream::v1::PrivateConnection,google/cloud/datastream/v1/datastream_resources.proto#L151}
   ///
   /// [google.cloud.datastream.v1.CreatePrivateConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L815}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L843}
   /// [google.cloud.datastream.v1.PrivateConnection]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L153}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L151}
   ///
   future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
   CreatePrivateConnection(
@@ -767,12 +769,12 @@ class DatastreamClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::PrivateConnection,google/cloud/datastream/v1/datastream_resources.proto#L153}
+  /// @googleapis_link{google::cloud::datastream::v1::PrivateConnection,google/cloud/datastream/v1/datastream_resources.proto#L151}
   ///
   /// [google.cloud.datastream.v1.GetPrivateConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L921}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L954}
   /// [google.cloud.datastream.v1.PrivateConnection]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L153}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L151}
   ///
   StatusOr<google::cloud::datastream::v1::PrivateConnection>
   GetPrivateConnection(std::string const& name, Options opts = {});
@@ -781,16 +783,16 @@ class DatastreamClient {
   /// Use this method to get details about a private connectivity configuration.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::GetPrivateConnectionRequest,google/cloud/datastream/v1/datastream.proto#L921}
+  /// @googleapis_link{google::cloud::datastream::v1::GetPrivateConnectionRequest,google/cloud/datastream/v1/datastream.proto#L954}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::PrivateConnection,google/cloud/datastream/v1/datastream_resources.proto#L153}
+  /// @googleapis_link{google::cloud::datastream::v1::PrivateConnection,google/cloud/datastream/v1/datastream_resources.proto#L151}
   ///
   /// [google.cloud.datastream.v1.GetPrivateConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L921}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L954}
   /// [google.cloud.datastream.v1.PrivateConnection]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L153}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L151}
   ///
   StatusOr<google::cloud::datastream::v1::PrivateConnection>
   GetPrivateConnection(
@@ -802,16 +804,17 @@ class DatastreamClient {
   /// and location.
   ///
   /// @param parent  Required. The parent that owns the collection of private
-  /// connectivity configurations.
+  /// connectivity
+  ///  configurations.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::PrivateConnection,google/cloud/datastream/v1/datastream_resources.proto#L153}
+  /// @googleapis_link{google::cloud::datastream::v1::PrivateConnection,google/cloud/datastream/v1/datastream_resources.proto#L151}
   ///
   /// [google.cloud.datastream.v1.ListPrivateConnectionsRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L847}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L879}
   /// [google.cloud.datastream.v1.PrivateConnection]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L153}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L151}
   ///
   StreamRange<google::cloud::datastream::v1::PrivateConnection>
   ListPrivateConnections(std::string const& parent, Options opts = {});
@@ -821,16 +824,16 @@ class DatastreamClient {
   /// and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::ListPrivateConnectionsRequest,google/cloud/datastream/v1/datastream.proto#L847}
+  /// @googleapis_link{google::cloud::datastream::v1::ListPrivateConnectionsRequest,google/cloud/datastream/v1/datastream.proto#L879}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::PrivateConnection,google/cloud/datastream/v1/datastream_resources.proto#L153}
+  /// @googleapis_link{google::cloud::datastream::v1::PrivateConnection,google/cloud/datastream/v1/datastream_resources.proto#L151}
   ///
   /// [google.cloud.datastream.v1.ListPrivateConnectionsRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L847}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L879}
   /// [google.cloud.datastream.v1.PrivateConnection]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L153}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L151}
   ///
   StreamRange<google::cloud::datastream::v1::PrivateConnection>
   ListPrivateConnections(
@@ -845,12 +848,12 @@ class DatastreamClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::OperationMetadata,google/cloud/datastream/v1/datastream.proto#L785}
+  /// @googleapis_link{google::cloud::datastream::v1::OperationMetadata,google/cloud/datastream/v1/datastream.proto#L809}
   ///
   /// [google.cloud.datastream.v1.DeletePrivateConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L891}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L924}
   /// [google.cloud.datastream.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L785}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L809}
   ///
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeletePrivateConnection(std::string const& name, Options opts = {});
@@ -859,16 +862,16 @@ class DatastreamClient {
   /// Use this method to delete a private connectivity configuration.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::DeletePrivateConnectionRequest,google/cloud/datastream/v1/datastream.proto#L891}
+  /// @googleapis_link{google::cloud::datastream::v1::DeletePrivateConnectionRequest,google/cloud/datastream/v1/datastream.proto#L924}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::OperationMetadata,google/cloud/datastream/v1/datastream.proto#L785}
+  /// @googleapis_link{google::cloud::datastream::v1::OperationMetadata,google/cloud/datastream/v1/datastream.proto#L809}
   ///
   /// [google.cloud.datastream.v1.DeletePrivateConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L891}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L924}
   /// [google.cloud.datastream.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L785}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L809}
   ///
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeletePrivateConnection(
@@ -886,12 +889,12 @@ class DatastreamClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::Route,google/cloud/datastream/v1/datastream_resources.proto#L219}
+  /// @googleapis_link{google::cloud::datastream::v1::Route,google/cloud/datastream/v1/datastream_resources.proto#L220}
   ///
   /// [google.cloud.datastream.v1.CreateRouteRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L932}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L965}
   /// [google.cloud.datastream.v1.Route]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L219}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L220}
   ///
   future<StatusOr<google::cloud::datastream::v1::Route>> CreateRoute(
       std::string const& parent,
@@ -903,16 +906,16 @@ class DatastreamClient {
   /// in a project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::CreateRouteRequest,google/cloud/datastream/v1/datastream.proto#L932}
+  /// @googleapis_link{google::cloud::datastream::v1::CreateRouteRequest,google/cloud/datastream/v1/datastream.proto#L965}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::Route,google/cloud/datastream/v1/datastream_resources.proto#L219}
+  /// @googleapis_link{google::cloud::datastream::v1::Route,google/cloud/datastream/v1/datastream_resources.proto#L220}
   ///
   /// [google.cloud.datastream.v1.CreateRouteRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L932}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L965}
   /// [google.cloud.datastream.v1.Route]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L219}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L220}
   ///
   future<StatusOr<google::cloud::datastream::v1::Route>> CreateRoute(
       google::cloud::datastream::v1::CreateRouteRequest const& request,
@@ -925,12 +928,12 @@ class DatastreamClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::Route,google/cloud/datastream/v1/datastream_resources.proto#L219}
+  /// @googleapis_link{google::cloud::datastream::v1::Route,google/cloud/datastream/v1/datastream_resources.proto#L220}
   ///
   /// [google.cloud.datastream.v1.GetRouteRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L1034}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L1067}
   /// [google.cloud.datastream.v1.Route]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L219}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L220}
   ///
   StatusOr<google::cloud::datastream::v1::Route> GetRoute(
       std::string const& name, Options opts = {});
@@ -939,16 +942,16 @@ class DatastreamClient {
   /// Use this method to get details about a route.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::GetRouteRequest,google/cloud/datastream/v1/datastream.proto#L1034}
+  /// @googleapis_link{google::cloud::datastream::v1::GetRouteRequest,google/cloud/datastream/v1/datastream.proto#L1067}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::Route,google/cloud/datastream/v1/datastream_resources.proto#L219}
+  /// @googleapis_link{google::cloud::datastream::v1::Route,google/cloud/datastream/v1/datastream_resources.proto#L220}
   ///
   /// [google.cloud.datastream.v1.GetRouteRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L1034}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L1067}
   /// [google.cloud.datastream.v1.Route]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L219}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L220}
   ///
   StatusOr<google::cloud::datastream::v1::Route> GetRoute(
       google::cloud::datastream::v1::GetRouteRequest const& request,
@@ -962,12 +965,12 @@ class DatastreamClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::Route,google/cloud/datastream/v1/datastream_resources.proto#L219}
+  /// @googleapis_link{google::cloud::datastream::v1::Route,google/cloud/datastream/v1/datastream_resources.proto#L220}
   ///
   /// [google.cloud.datastream.v1.ListRoutesRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L964}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L997}
   /// [google.cloud.datastream.v1.Route]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L219}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L220}
   ///
   StreamRange<google::cloud::datastream::v1::Route> ListRoutes(
       std::string const& parent, Options opts = {});
@@ -977,16 +980,16 @@ class DatastreamClient {
   /// configuration in a project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::ListRoutesRequest,google/cloud/datastream/v1/datastream.proto#L964}
+  /// @googleapis_link{google::cloud::datastream::v1::ListRoutesRequest,google/cloud/datastream/v1/datastream.proto#L997}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::Route,google/cloud/datastream/v1/datastream_resources.proto#L219}
+  /// @googleapis_link{google::cloud::datastream::v1::Route,google/cloud/datastream/v1/datastream_resources.proto#L220}
   ///
   /// [google.cloud.datastream.v1.ListRoutesRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L964}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L997}
   /// [google.cloud.datastream.v1.Route]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L219}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream_resources.proto#L220}
   ///
   StreamRange<google::cloud::datastream::v1::Route> ListRoutes(
       google::cloud::datastream::v1::ListRoutesRequest request,
@@ -999,12 +1002,12 @@ class DatastreamClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::OperationMetadata,google/cloud/datastream/v1/datastream.proto#L785}
+  /// @googleapis_link{google::cloud::datastream::v1::OperationMetadata,google/cloud/datastream/v1/datastream.proto#L809}
   ///
   /// [google.cloud.datastream.v1.DeleteRouteRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L1008}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L1041}
   /// [google.cloud.datastream.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L785}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L809}
   ///
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeleteRoute(std::string const& name, Options opts = {});
@@ -1013,16 +1016,16 @@ class DatastreamClient {
   /// Use this method to delete a route.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datastream::v1::DeleteRouteRequest,google/cloud/datastream/v1/datastream.proto#L1008}
+  /// @googleapis_link{google::cloud::datastream::v1::DeleteRouteRequest,google/cloud/datastream/v1/datastream.proto#L1041}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datastream::v1::OperationMetadata,google/cloud/datastream/v1/datastream.proto#L785}
+  /// @googleapis_link{google::cloud::datastream::v1::OperationMetadata,google/cloud/datastream/v1/datastream.proto#L809}
   ///
   /// [google.cloud.datastream.v1.DeleteRouteRequest]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L1008}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L1041}
   /// [google.cloud.datastream.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L785}
+  /// @googleapis_reference_link{google/cloud/datastream/v1/datastream.proto#L809}
   ///
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeleteRoute(google::cloud::datastream::v1::DeleteRouteRequest const& request,
