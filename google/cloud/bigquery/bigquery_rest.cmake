@@ -73,6 +73,12 @@ add_library(
     v2/minimal/internal/job_rest_stub_factory.h
     v2/minimal/internal/job_retry_policy.h
     v2/minimal/internal/log_wrapper.h
+    v2/minimal/internal/project.cc
+    v2/minimal/internal/project.h
+    v2/minimal/internal/project_request.cc
+    v2/minimal/internal/project_request.h
+    v2/minimal/internal/project_response.cc
+    v2/minimal/internal/project_response.h
     v2/minimal/internal/rest_stub_utils.cc
     v2/minimal/internal/rest_stub_utils.h
     v2/minimal/internal/table.cc
@@ -176,6 +182,8 @@ function (bigquery_rest_define_tests)
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/mock_dataset_rest_stub.h
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/mock_job_rest_stub.h
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/mock_table_rest_stub.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/project_test_utils.cc
+            ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/project_test_utils.h
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/table_test_utils.cc
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/table_test_utils.h)
     target_link_libraries(
@@ -219,6 +227,9 @@ function (bigquery_rest_define_tests)
         v2/minimal/internal/job_response_test.cc
         v2/minimal/internal/job_rest_stub_test.cc
         v2/minimal/internal/job_test.cc
+        v2/minimal/internal/project_request_test.cc
+        v2/minimal/internal/project_response_test.cc
+        v2/minimal/internal/project_test.cc
         v2/minimal/internal/rest_stub_utils_test.cc
         v2/minimal/internal/table_client_test.cc
         v2/minimal/internal/table_connection_test.cc
