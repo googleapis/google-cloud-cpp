@@ -471,7 +471,7 @@ our customers, in the form of better performance, easier-to-understand APIs,
 and/or more consistent APIs across services. When these benefits warrant it, we
 will announce these changes prominently in our `CHANGELOG.md` file and in the
 affected release's notes. Nevertheless, though we take commercially reasonable
-efforts to prevent this. It is possible that backwards incompatible changes go
+efforts to prevent this, it is possible that backwards incompatible changes go
 undetected and, therefore, undocumented. We apologize if this is the case and
 welcome feedback or bug reports to rectify the problem.
 
