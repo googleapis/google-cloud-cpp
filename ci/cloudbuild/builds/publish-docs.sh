@@ -158,7 +158,7 @@ for feature in "${FEATURE_LIST[@]}"; do
   if [[ "${feature}" == "experimental-storage-grpc" ]]; then continue; fi
   if [[ "${feature}" == "grafeas" ]]; then continue; fi
   # TODO(#11430) - slowly change this limit until all libraries are published
-  if [[ "${feature}" < "z" ]]; then continue; fi
+  if [[ "${feature}" < "v" ]]; then continue; fi
   upload_docfx "google-cloud-${feature}" "cmake-out/google/cloud/${feature}/docfx"
 done
 
