@@ -329,7 +329,7 @@ Options MergeOptions(Options preferred, Options alternatives);
  * Extracts and returns the value for `T` from @p opts, or nullopt if `T` was
  * not set.  This is intended for code paths that want to consume an option,
  * for example, a client call that passes the option's value via conventional
- * mechanisms, rather than though an OptionsSpan.
+ * mechanisms, rather than through an OptionsSpan.
  */
 template <typename T>
 absl::optional<typename T::Type> ExtractOption(Options& opts) {

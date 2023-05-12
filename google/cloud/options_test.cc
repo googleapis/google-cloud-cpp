@@ -26,6 +26,8 @@ namespace {
 using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::ContainsRegex;
+using ::testing::Optional;
+using ::testing::StrEq;
 using ::testing::UnorderedElementsAre;
 
 struct IntOption {
@@ -283,15 +285,13 @@ TEST(ExtractOption, Basics) {
   EXPECT_FALSE(opts.has<BoolOption>());
   EXPECT_FALSE(opts.has<IntOption>());
   EXPECT_TRUE(opts.has<StringOption>());
-  ASSERT_TRUE(i.has_value());
-  EXPECT_EQ(*i, 42);
+  EXPECT_THAT(i, Optional(42));
 
   auto s = internal::ExtractOption<StringOption>(opts);
   EXPECT_FALSE(opts.has<BoolOption>());
   EXPECT_FALSE(opts.has<IntOption>());
   EXPECT_FALSE(opts.has<StringOption>());
-  ASSERT_TRUE(s.has_value());
-  EXPECT_EQ(*s, "foo");
+  EXPECT_THAT(s, Optional(StrEq("foo")));
 }
 
 TEST(OptionsSpan, Basics) {
