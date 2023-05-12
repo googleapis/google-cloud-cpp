@@ -53,26 +53,26 @@ TEST(Doxygen2Toc, Simple) {
     </doxygen>)xml";
 
   auto constexpr kExpected = R"""(### YamlMime:TableOfContent
-name: cloud.google.com/cpp/cloud
+name: "cloud.google.com/cpp/cloud"
 items:
-  - name: The Page Title
+  - name: "The Page Title"
     href: index.md
     uid: indexpage
-  - name: In-Depth Topics
+  - name: "In-Depth Topics"
     items:
-      - name: Error Handling
+      - name: "Error Handling"
         href: common-error-handling.md
         uid: common-error-handling
-  - name: Modules
+  - name: "Modules"
     items:
-      - name: Terminate Group Title
+      - name: "Terminate Group Title"
         href: group__terminate.yml
         uid: group__terminate
-  - name: Namespaces
+  - name: "Namespaces"
     items:
-      - name: google::cloud
+      - name: "google::cloud"
         items:
-          - name: Overview
+          - name: "Overview"
             uid: namespacegoogle_1_1cloud
 )""";
 
@@ -125,14 +125,14 @@ TEST(Doxygen2Toc, PagesToc) {
       </doxygen>)xml";
 
   auto constexpr kExpected = R"""(### YamlMime:TableOfContent
-name: cloud.google.com/cpp/cloud
+name: "cloud.google.com/cpp/cloud"
 items:
-  - name: The Page Title
+  - name: "The Page Title"
     href: index.md
     uid: indexpage
-  - name: In-Depth Topics
+  - name: "In-Depth Topics"
     items:
-      - name: Error Handling
+      - name: "Error Handling"
         href: common-error-handling.md
         uid: common-error-handling
 )""";
@@ -163,14 +163,14 @@ TEST(Doxygen2Toc, GroupsToc) {
       </doxygen>)xml";
 
   auto constexpr kExpected = R"""(### YamlMime:TableOfContent
-name: cloud.google.com/cpp/cloud
+name: "cloud.google.com/cpp/cloud"
 items:
-  - name: Modules
+  - name: "Modules"
     items:
-      - name: Group 1
+      - name: "Group 1"
         href: group__g1.yml
         uid: group__g1
-      - name: Group 2
+      - name: "Group 2"
         href: group__g2.yml
         uid: group__g2
 )""";
@@ -246,29 +246,29 @@ TEST(Doxygen2Toc, CompoundToc) {
     </doxygen>)xml";
 
   auto constexpr kExpected = R"""(### YamlMime:TableOfContent
-name: cloud.google.com/cpp/cloud
+name: "cloud.google.com/cpp/cloud"
 items:
-  - name: Namespaces
+  - name: "Namespaces"
     items:
-      - name: google::cloud
+      - name: "google::cloud"
         items:
-          - name: Overview
+          - name: "Overview"
             uid: namespacegoogle_1_1cloud
-          - name: Classes
+          - name: "Classes"
             items:
-              - name: google::cloud::future
+              - name: "future<T>"
                 items:
-                  - name: Overview
+                  - name: "Overview"
                     uid: classgoogle_1_1cloud_1_1future
-          - name: Enums
+          - name: "Enums"
             items:
-              - name: Idempotency
+              - name: "Idempotency"
                 items:
-                  - name: Overview
+                  - name: "Overview"
                     uid: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
-                  - name: kIdempotent
+                  - name: "kIdempotent"
                     uid: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
-                  - name: kNonIdempotent
+                  - name: "kNonIdempotent"
                     uid: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9cae75d33e94f2dc4028d4d67bdaab75190
 )""";
 
@@ -280,51 +280,51 @@ items:
 
 TEST(Doxygen2Toc, ClassToc) {
   auto constexpr kExpected = R"""(### YamlMime:TableOfContent
-name: cloud.google.com/cpp/cloud
+name: "cloud.google.com/cpp/cloud"
 items:
-  - name: Namespaces
+  - name: "Namespaces"
     items:
-      - name: google::cloud
+      - name: "google::cloud"
         items:
-          - name: Overview
+          - name: "Overview"
             uid: namespacegoogle_1_1cloud
-          - name: Classes
+          - name: "Classes"
             items:
-              - name: google::cloud::Status
+              - name: "Status"
                 items:
-                  - name: Overview
+                  - name: "Overview"
                     uid: classgoogle_1_1cloud_1_1Status
-                  - name: Constructors
+                  - name: "Constructors"
                     items:
-                      - name: Status
+                      - name: "Status(Status const &)"
                         uid: classgoogle_1_1cloud_1_1Status_1aa3656155ad44d8bd75d92cd797123f4d
-                      - name: Status
+                      - name: "Status(Status &&)"
                         uid: classgoogle_1_1cloud_1_1Status_1afd186465a07fa176c10d437c1240f2de
-                      - name: Status
+                      - name: "Status()"
                         uid: classgoogle_1_1cloud_1_1Status_1af3de0fb0dee8fb557e693195a812987f
-                      - name: ~Status
+                      - name: "~Status()"
                         uid: classgoogle_1_1cloud_1_1Status_1a739165d43975222a55f064dd87db5e1f
-                      - name: Status
+                      - name: "Status(StatusCode, std::string, ErrorInfo)"
                         uid: classgoogle_1_1cloud_1_1Status_1af927a89141bbcf10f0e02d789ebade94
-                  - name: Operators
+                  - name: "Operators"
                     items:
-                      - name: operator=
+                      - name: "operator=(Status const &)"
                         uid: classgoogle_1_1cloud_1_1Status_1a675be7e53ab9b27d69ba776a3c1ca7bf
-                      - name: operator=
+                      - name: "operator=(Status &&)"
                         uid: classgoogle_1_1cloud_1_1Status_1a23aaae701351564b3a17f47d5cb4e7cb
-                      - name: operator==
+                      - name: "operator==(Status const &, Status const &)"
                         uid: classgoogle_1_1cloud_1_1Status_1a8c00daab4bca2eeb428f816fabf59492
-                      - name: operator!=
+                      - name: "operator!=(Status const &, Status const &)"
                         uid: classgoogle_1_1cloud_1_1Status_1a3624db9be409bca17dc8940db074ddff
-                  - name: Functions
+                  - name: "Functions"
                     items:
-                      - name: ok
+                      - name: "ok() const"
                         uid: classgoogle_1_1cloud_1_1Status_1a18952043ffe5a4f74911c8146e8bb504
-                      - name: code
+                      - name: "code() const"
                         uid: classgoogle_1_1cloud_1_1Status_1ac18337d2ceb00ca007725d21f2c63f9f
-                      - name: message
+                      - name: "message() const"
                         uid: classgoogle_1_1cloud_1_1Status_1aaa8dea39008758d8494f29b12b92be02
-                      - name: error_info
+                      - name: "error_info() const"
                         uid: classgoogle_1_1cloud_1_1Status_1a172e846ab5623d78d49e2ed128f49583
 )""";
 
