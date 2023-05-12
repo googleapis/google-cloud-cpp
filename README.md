@@ -602,7 +602,8 @@ such, and the recommended alternatives, include:
 
 Environment variables referenced in our documentation come with the same
 guarantees as our public APIs. That is, we are committed to supporting their
-behavior unless they contain keywords such as `*EXPERIMENTAL*`.
+behavior unless the behavior affects experimental components, or the environment
+variable itself is experimental.
 
 ### Telemetry Data
 
@@ -610,8 +611,8 @@ The library can be configured to produce telemetry data, such as logs or traces.
 We make no guarantees around the **contents** of such data. For example, we may
 change the format of our logs, or the names of our spans without notice.
 
-This says nothing about the APIs that programmatically enable logging and
-tracing. Those APIs are no different than any other public APIs in our library.
+The APIs to programmatically enable logging and tracing have the same guarantees
+as any other public APIs in our libraries.
 
 ### Documentation and Comments
 
