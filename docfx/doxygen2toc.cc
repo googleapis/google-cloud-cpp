@@ -18,6 +18,7 @@
 #include "docfx/doxygen_groups.h"
 #include "docfx/doxygen_pages.h"
 #include "docfx/function_classifiers.h"
+#include "docfx/node_name.h"
 #include "docfx/public_docs.h"
 #include <yaml-cpp/yaml.h>
 #include <functional>
@@ -36,26 +37,23 @@ std::shared_ptr<TocEntry> NamedEntry(std::string_view name) {
 
 std::shared_ptr<TocEntry> CompoundEntry(pugi::xml_node node) {
   auto const id = std::string_view{node.attribute("id").as_string()};
-  auto const name = std::string_view{node.child("compoundname").child_value()};
   auto overview = NamedEntry("Overview");
   overview->attr.emplace("uid", id);
-  auto entry = NamedEntry(name);
+  auto entry = NamedEntry(NodeName(node));
   entry->items.push_back(std::move(overview));
   return entry;
 }
 
 std::shared_ptr<TocEntry> MemberEntry(pugi::xml_node node) {
   auto const id = std::string_view{node.attribute("id").as_string()};
-  auto const name = std::string_view{node.child("name").child_value()};
-  auto entry = NamedEntry(name);
+  auto entry = NamedEntry(NodeName(node));
   entry->attr.emplace("uid", id);
   return entry;
 }
 
 std::shared_ptr<TocEntry> EnumValueEntry(pugi::xml_node node) {
   auto const id = std::string_view{node.attribute("id").as_string()};
-  auto const name = std::string_view{node.child("name").child_value()};
-  auto entry = NamedEntry(name);
+  auto entry = NamedEntry(NodeName(node));
   entry->attr.emplace("uid", id);
   return entry;
 }
@@ -216,8 +214,7 @@ TocItems EnumToc(Config const& cfg, pugi::xml_document const& doc,
                  pugi::xml_node node) {
   if (!IncludeInPublicDocuments(cfg, node)) return {};
   auto const id = std::string_view{node.attribute("id").as_string()};
-  auto const name = std::string_view{node.child("name").child_value()};
-  auto entry = NamedEntry(name);
+  auto entry = NamedEntry(NodeName(node));
   auto overview = NamedEntry("Overview");
   overview->attr.emplace("uid", id);
   entry->items.push_back(std::move(overview));
@@ -293,7 +290,7 @@ TocItems Namespaces(Config const& config, pugi::xml_document const& doc) {
 
 void Toc2Yaml(YAML::Emitter& out, TocEntry const& e) {
   out << YAML::BeginMap;
-  out << YAML::Key << "name" << YAML::Value << e.name;
+  out << YAML::Key << "name" << YAML::Value << YAML::DoubleQuoted << e.name;
   for (auto const& [key, value] : e.attr) {
     out << YAML::Key << key << YAML::Value << value;
   }

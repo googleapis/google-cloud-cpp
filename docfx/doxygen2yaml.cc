@@ -19,6 +19,7 @@
 #include "docfx/doxygen2syntax.h"
 #include "docfx/doxygen_errors.h"
 #include "docfx/function_classifiers.h"
+#include "docfx/node_name.h"
 #include "docfx/public_docs.h"
 #include "docfx/yaml_emit.h"
 #include <algorithm>
@@ -156,14 +157,13 @@ bool AppendIfEnumValue(YAML::Emitter& yaml, YamlContext const& ctx,
                        pugi::xml_node node) {
   if (std::string_view{node.name()} != "enumvalue") return false;
   auto const id = std::string_view{node.attribute("id").as_string()};
-  auto const name = std::string_view{node.child("name").child_value()};
-
-  yaml << YAML::BeginMap                                         //
-       << YAML::Key << "uid" << YAML::Value << id                //
-       << YAML::Key << "name" << YAML::Value << name             //
-       << YAML::Key << "id" << YAML::Value << id                 //
-       << YAML::Key << "parent" << YAML::Value << ctx.parent_id  //
-       << YAML::Key << "type" << YAML::Value << "enumvalue"      //
+  yaml << YAML::BeginMap                                            //
+       << YAML::Key << "uid" << YAML::Value << id                   //
+       << YAML::Key << "name" << YAML::Value << YAML::DoubleQuoted  //
+       << NodeName(node)                                            //
+       << YAML::Key << "id" << YAML::Value << id                    //
+       << YAML::Key << "parent" << YAML::Value << ctx.parent_id     //
+       << YAML::Key << "type" << YAML::Value << "enumvalue"         //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;
   AppendDescription(yaml, node);
   yaml << YAML::EndMap;
@@ -175,12 +175,12 @@ bool AppendIfEnum(YAML::Emitter& yaml, YamlContext const& ctx,
   if (kind(node) != "enum") return false;
   if (node.attribute("id").empty()) MissingAttribute(__func__, "id", node);
   auto const id = std::string_view{node.attribute("id").as_string()};
-  auto const name = std::string_view{node.child("name").child_value()};
   auto const full_name =
       std::string_view{node.child("qualifiedname").child_value()};
   yaml << YAML::BeginMap                                                    //
        << YAML::Key << "uid" << YAML::Value << id                           //
-       << YAML::Key << "name" << YAML::Value << name                        //
+       << YAML::Key << "name" << YAML::Value << YAML::DoubleQuoted          //
+       << NodeName(node)                                                    //
        << YAML::Key << "fullName"                                           //
        << YAML::Value << YAML::Literal << full_name                         //
        << YAML::Key << "id" << YAML::Value << id                            //
@@ -206,12 +206,12 @@ bool AppendIfTypedef(YAML::Emitter& yaml, YamlContext const& ctx,
                      pugi::xml_node node) {
   if (kind(node) != "typedef") return false;
   auto const id = std::string_view{node.attribute("id").as_string()};
-  auto const name = std::string_view{node.child("name").child_value()};
   auto const full_name =
       std::string_view{node.child("qualifiedname").child_value()};
   yaml << YAML::BeginMap                                                    //
        << YAML::Key << "uid" << YAML::Value << id                           //
-       << YAML::Key << "name" << YAML::Value << YAML::DoubleQuoted << name  //
+       << YAML::Key << "name" << YAML::Value << YAML::DoubleQuoted          //
+       << NodeName(node)                                                    //
        << YAML::Key << "fullName"                                           //
        << YAML::Value << YAML::DoubleQuoted << full_name                    //
        << YAML::Key << "id" << YAML::Value << id                            //
@@ -228,12 +228,12 @@ bool AppendIfFriend(YAML::Emitter& yaml, YamlContext const& ctx,
                     pugi::xml_node node) {
   if (kind(node) != "friend") return false;
   auto const id = std::string_view{node.attribute("id").as_string()};
-  auto const name = std::string_view{node.child("name").child_value()};
   auto const full_name =
       std::string_view{node.child("qualifiedname").child_value()};
   yaml << YAML::BeginMap                                                    //
        << YAML::Key << "uid" << YAML::Value << id                           //
-       << YAML::Key << "name" << YAML::Value << YAML::Literal << name       //
+       << YAML::Key << "name" << YAML::Value << YAML::DoubleQuoted          //
+       << NodeName(node)                                                    //
        << YAML::Key << "fullName"                                           //
        << YAML::Value << YAML::Literal << full_name                         //
        << YAML::Key << "id" << YAML::Value << id                            //
@@ -250,12 +250,12 @@ bool AppendIfVariable(YAML::Emitter& yaml, YamlContext const& ctx,
                       pugi::xml_node node) {
   if (kind(node) != "variable") return false;
   auto const id = std::string_view{node.attribute("id").as_string()};
-  auto const name = std::string_view{node.child("name").child_value()};
   auto const qualified_name =
       std::string_view{node.child("qualifiedname").child_value()};
   yaml << YAML::BeginMap                                                    //
        << YAML::Key << "uid" << YAML::Value << id                           //
-       << YAML::Key << "name" << YAML::Value << YAML::Literal << name       //
+       << YAML::Key << "name" << YAML::Value << YAML::DoubleQuoted          //
+       << NodeName(node)                                                    //
        << YAML::Key << "fullName"                                           //
        << YAML::Value << YAML::Literal << qualified_name                    //
        << YAML::Key << "id" << YAML::Value << id                            //
@@ -289,7 +289,8 @@ bool AppendIfFunction(YAML::Emitter& yaml, YamlContext const& ctx,
   }
   yaml << YAML::BeginMap                                                    //
        << YAML::Key << "uid" << YAML::Value << id                           //
-       << YAML::Key << "name" << YAML::Value << name                        //
+       << YAML::Key << "name" << YAML::Value << YAML::DoubleQuoted          //
+       << NodeName(node)                                                    //
        << YAML::Key << "fullName"                                           //
        << YAML::Value << YAML::Literal << qualified_name                    //
        << YAML::Key << "id" << YAML::Value << id                            //
@@ -331,10 +332,10 @@ bool AppendIfNamespace(YAML::Emitter& yaml, YamlContext const& ctx,
                        pugi::xml_node node) {
   if (kind(node) != "namespace") return false;
   auto const id = std::string_view{node.attribute("id").as_string()};
-  auto const name = std::string_view{node.child("compoundname").child_value()};
   yaml << YAML::BeginMap                                                    //
        << YAML::Key << "uid" << YAML::Value << id                           //
-       << YAML::Key << "name" << YAML::Value << name                        //
+       << YAML::Key << "name" << YAML::Value << YAML::DoubleQuoted          //
+       << NodeName(node)                                                    //
        << YAML::Key << "id" << YAML::Value << id                            //
        << YAML::Key << "parent" << YAML::Value << ctx.parent_id             //
        << YAML::Key << "type" << YAML::Value << "namespace"                 //
@@ -354,10 +355,10 @@ bool AppendIfClass(YAML::Emitter& yaml, YamlContext const& ctx,
                    pugi::xml_node node) {
   if (kind(node) != "class") return false;
   auto const id = std::string_view{node.attribute("id").as_string()};
-  auto const name = std::string_view{node.child("compoundname").child_value()};
   yaml << YAML::BeginMap                                                    //
        << YAML::Key << "uid" << YAML::Value << id                           //
-       << YAML::Key << "name" << YAML::Value << name                        //
+       << YAML::Key << "name" << YAML::Value << YAML::DoubleQuoted          //
+       << NodeName(node)                                                    //
        << YAML::Key << "id" << YAML::Value << id                            //
        << YAML::Key << "parent" << YAML::Value << ctx.parent_id             //
        << YAML::Key << "type" << YAML::Value << "class"                     //
@@ -377,10 +378,10 @@ bool AppendIfStruct(YAML::Emitter& yaml, YamlContext const& ctx,
                     pugi::xml_node node) {
   if (kind(node) != "struct") return false;
   auto const id = std::string_view{node.attribute("id").as_string()};
-  auto const name = std::string_view{node.child("compoundname").child_value()};
   yaml << YAML::BeginMap                                                    //
        << YAML::Key << "uid" << YAML::Value << id                           //
-       << YAML::Key << "name" << YAML::Value << name                        //
+       << YAML::Key << "name" << YAML::Value << YAML::DoubleQuoted          //
+       << NodeName(node)                                                    //
        << YAML::Key << "id" << YAML::Value << id                            //
        << YAML::Key << "parent" << YAML::Value << ctx.parent_id             //
        << YAML::Key << "type" << YAML::Value << "struct"                    //

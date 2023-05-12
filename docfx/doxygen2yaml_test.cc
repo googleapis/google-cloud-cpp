@@ -404,7 +404,7 @@ TEST(Doxygen2Yaml, EnumValue) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
-    name: kIdempotent
+    name: "kIdempotent"
     id: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
     parent: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
     type: enumvalue
@@ -435,7 +435,7 @@ TEST(Doxygen2Yaml, Enum) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
-    name: Idempotency
+    name: "Idempotency"
     fullName: |
       google::cloud::Idempotency
     id: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
@@ -489,7 +489,7 @@ items:
       - namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
       - namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9cae75d33e94f2dc4028d4d67bdaab75190
   - uid: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
-    name: kIdempotent
+    name: "kIdempotent"
     id: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
     parent: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
     type: enumvalue
@@ -498,7 +498,7 @@ items:
     summary: |
       The operation is idempotent and can be retried after a transient failure.
   - uid: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9cae75d33e94f2dc4028d4d67bdaab75190
-    name: kNonIdempotent
+    name: "kNonIdempotent"
     id: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9cae75d33e94f2dc4028d4d67bdaab75190
     parent: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
     type: enumvalue
@@ -625,8 +625,7 @@ TEST(Doxygen2Yaml, Friend) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: classgoogle_1_1cloud_1_1ErrorInfo_1a3e7a9be9a728e13d3333784f63270555
-    name: |
-      operator==
+    name: "operator==(ErrorInfo const &, ErrorInfo const &)"
     fullName: |
       google::cloud::ErrorInfo::operator==
     id: classgoogle_1_1cloud_1_1ErrorInfo_1a3e7a9be9a728e13d3333784f63270555
@@ -676,8 +675,7 @@ TEST(Doxygen2Yaml, Variable) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: structgoogle_1_1cloud_1_1LogRecord_1a830f8xx5fe86e1581dddbbb2cd922cbc
-    name: |
-      severity
+    name: "severity"
     fullName: |
       google::cloud::LogRecord::severity
     id: structgoogle_1_1cloud_1_1LogRecord_1a830f8xx5fe86e1581dddbbb2cd922cbc
@@ -719,7 +717,7 @@ TEST(Doxygen2Yaml, Function) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: classgoogle_1_1cloud_1_1CompletionQueue_1a760d68ec606a03ab8cc80eea8bd965b3
-    name: MakeRelativeTimer
+    name: "MakeRelativeTimer(std::chrono::duration< Rep, Period >)"
     fullName: |
       google::cloud::CompletionQueue::MakeRelativeTimer
     id: classgoogle_1_1cloud_1_1CompletionQueue_1a760d68ec606a03ab8cc80eea8bd965b3
@@ -784,7 +782,7 @@ TEST(Doxygen2Yaml, MockedFunction) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: classgoogle_1_1cloud_1_1kms__inventory__v1__mocks_1_1MockKeyDashboardServiceConnection_1a789db998d71abf9016b64832d0c7a99e
-    name: ListCryptoKeys
+    name: "ListCryptoKeys(google::cloud::kms::inventory::v1::ListCryptoKeysRequest)"
     fullName: |
       google::cloud::kms_inventory_v1::KeyDashboardServiceConnection::ListCryptoKeys
     id: classgoogle_1_1cloud_1_1kms__inventory__v1__mocks_1_1MockKeyDashboardServiceConnection_1a789db998d71abf9016b64832d0c7a99e
@@ -881,7 +879,7 @@ TEST(Doxygen2Yaml, Namespace) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: namespacegoogle_1_1cloud_1_1mocks
-    name: google::cloud::mocks
+    name: "google::cloud::mocks"
     id: namespacegoogle_1_1cloud_1_1mocks
     parent: test-only-parent-id
     type: namespace
@@ -926,7 +924,7 @@ TEST(Doxygen2Yaml, Class) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: classgoogle_1_1cloud_1_1RuntimeStatusError
-    name: google::cloud::RuntimeStatusError
+    name: "RuntimeStatusError"
     id: classgoogle_1_1cloud_1_1RuntimeStatusError
     parent: test-only-parent-id
     type: class
@@ -950,7 +948,7 @@ items:
       - classgoogle_1_1cloud_1_1RuntimeStatusError_1aac6b78160cce6468696ce77eb1276a95
       - classgoogle_1_1cloud_1_1RuntimeStatusError_1ac30dbdb272a62aee4eb8f9bf45966c7e
   - uid: classgoogle_1_1cloud_1_1RuntimeStatusError_1aac6b78160cce6468696ce77eb1276a95
-    name: RuntimeStatusError
+    name: "RuntimeStatusError(Status)"
     fullName: |
       google::cloud::RuntimeStatusError::RuntimeStatusError
     id: classgoogle_1_1cloud_1_1RuntimeStatusError_1aac6b78160cce6468696ce77eb1276a95
@@ -975,7 +973,7 @@ items:
           branch: main
           path: google/cloud/status.h
   - uid: classgoogle_1_1cloud_1_1RuntimeStatusError_1ac30dbdb272a62aee4eb8f9bf45966c7e
-    name: status
+    name: "status() const"
     fullName: |
       google::cloud::RuntimeStatusError::status
     id: classgoogle_1_1cloud_1_1RuntimeStatusError_1ac30dbdb272a62aee4eb8f9bf45966c7e
@@ -1018,7 +1016,7 @@ TEST(Doxygen2Yaml, Struct) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: structgoogle_1_1cloud_1_1LogRecord
-    name: google::cloud::LogRecord
+    name: "LogRecord"
     id: structgoogle_1_1cloud_1_1LogRecord
     parent: test-only-parent-id
     type: struct
@@ -1047,8 +1045,7 @@ items:
       - structgoogle_1_1cloud_1_1LogRecord_1a949e7b4cb62d085ee13b107e63f83152
       - structgoogle_1_1cloud_1_1LogRecord_1a95652739567b944a4ffbbb6d31b3f2e0
   - uid: structgoogle_1_1cloud_1_1LogRecord_1a830f8xx5fe86e1581dddbbb2cd922cbc
-    name: |
-      severity
+    name: "severity"
     fullName: |
       google::cloud::LogRecord::severity
     id: structgoogle_1_1cloud_1_1LogRecord_1a830f8xx5fe86e1581dddbbb2cd922cbc
@@ -1068,8 +1065,7 @@ items:
           branch: main
           path: google/cloud/log.h
   - uid: structgoogle_1_1cloud_1_1LogRecord_1a8a04caf649e69b55404abf2d3b72d4a6
-    name: |
-      function
+    name: "function"
     fullName: |
       google::cloud::LogRecord::function
     id: structgoogle_1_1cloud_1_1LogRecord_1a8a04caf649e69b55404abf2d3b72d4a6
@@ -1089,8 +1085,7 @@ items:
           branch: main
           path: google/cloud/log.h
   - uid: structgoogle_1_1cloud_1_1LogRecord_1a46bc9a3adab542be80be9671d2ff82e6
-    name: |
-      filename
+    name: "filename"
     fullName: |
       google::cloud::LogRecord::filename
     id: structgoogle_1_1cloud_1_1LogRecord_1a46bc9a3adab542be80be9671d2ff82e6
@@ -1110,8 +1105,7 @@ items:
           branch: main
           path: google/cloud/log.h
   - uid: structgoogle_1_1cloud_1_1LogRecord_1a29f2cf2bafa97addc548c26xx48a4fe0
-    name: |
-      lineno
+    name: "lineno"
     fullName: |
       google::cloud::LogRecord::lineno
     id: structgoogle_1_1cloud_1_1LogRecord_1a29f2cf2bafa97addc548c26xx48a4fe0
@@ -1131,8 +1125,7 @@ items:
           branch: main
           path: google/cloud/log.h
   - uid: structgoogle_1_1cloud_1_1LogRecord_1a9acea199684809e231263a486559f834
-    name: |
-      thread_id
+    name: "thread_id"
     fullName: |
       google::cloud::LogRecord::thread_id
     id: structgoogle_1_1cloud_1_1LogRecord_1a9acea199684809e231263a486559f834
@@ -1152,8 +1145,7 @@ items:
           branch: main
           path: google/cloud/log.h
   - uid: structgoogle_1_1cloud_1_1LogRecord_1a949e7b4cb62d085ee13b107e63f83152
-    name: |
-      timestamp
+    name: "timestamp"
     fullName: |
       google::cloud::LogRecord::timestamp
     id: structgoogle_1_1cloud_1_1LogRecord_1a949e7b4cb62d085ee13b107e63f83152
@@ -1173,8 +1165,7 @@ items:
           branch: main
           path: google/cloud/log.h
   - uid: structgoogle_1_1cloud_1_1LogRecord_1a95652739567b944a4ffbbb6d31b3f2e0
-    name: |
-      message
+    name: "message"
     fullName: |
       google::cloud::LogRecord::message
     id: structgoogle_1_1cloud_1_1LogRecord_1a95652739567b944a4ffbbb6d31b3f2e0
