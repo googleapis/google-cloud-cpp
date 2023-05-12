@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/internal/call_context.h"
 #include <atomic>
 #include <string>
 #include <vector>
@@ -67,7 +68,7 @@ class AsyncBulkApplier : public std::enable_shared_from_this<AsyncBulkApplier> {
   bigtable::internal::BulkMutatorState state_;
   std::atomic<bool> keep_reading_{true};
   promise<std::vector<bigtable::FailedMutation>> promise_;
-  Options options_ = internal::CurrentOptions();
+  internal::CallContext call_context_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

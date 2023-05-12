@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/async_bulk_apply.h"
 #include "google/cloud/bigtable/internal/async_streaming_read.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
@@ -54,7 +55,7 @@ AsyncBulkApplier::AsyncBulkApplier(
       promise_([this] { keep_reading_ = false; }) {}
 
 void AsyncBulkApplier::StartIteration() {
-  internal::OptionsSpan span(options_);
+  internal::ScopedCallContext scope(call_context_);
   auto context = std::make_shared<grpc::ClientContext>();
   internal::ConfigureContext(*context, internal::CurrentOptions());
 
@@ -81,7 +82,7 @@ void AsyncBulkApplier::OnFinish(Status const& status) {
   }
 
   auto self = this->shared_from_this();
-  cq_.MakeRelativeTimer(backoff_policy_->OnCompletion())
+  internal::TracedAsyncBackoff(cq_, backoff_policy_->OnCompletion())
       .then([self](auto result) {
         if (result.get()) {
           self->StartIteration();
