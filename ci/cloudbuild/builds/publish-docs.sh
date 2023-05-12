@@ -159,7 +159,7 @@ for feature in "${FEATURE_LIST[@]}"; do
   if [[ "${feature}" == "grafeas" ]]; then continue; fi
   # TODO(#11430) - slowly change this limit until all libraries are published
   if [[ "${feature}" < "v" ]]; then continue; fi
-  upload_docfx "google-cloud-${feature}" "cmake-out/google/cloud/${feature}/docfx"
+  stage_docfx "google-cloud-${feature}" "cmake-out/google/cloud/${feature}/docfx"
 done
 
 io::log_h2 "Publishing docs"
