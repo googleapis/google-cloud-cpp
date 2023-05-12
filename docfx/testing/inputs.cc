@@ -583,15 +583,19 @@ std::string StatusClassXml() {
 }
 
 std::string StatusDefaultConstructorId() {
-  return R"""(classgoogle_1_1cloud_1_1Status_1af3de0fb0dee8fb557e693195a812987f)""";
+  return "classgoogle_1_1cloud_1_1Status_1af3de0fb0dee8fb557e693195a812987f";
+}
+
+std::string StatusCopyConstructorId() {
+  return "classgoogle_1_1cloud_1_1Status_1aa3656155ad44d8bd75d92cd797123f4d";
 }
 
 std::string StatusMessageFunctionId() {
-  return R"""(classgoogle_1_1cloud_1_1Status_1aaa8dea39008758d8494f29b12b92be02)""";
+  return "classgoogle_1_1cloud_1_1Status_1aaa8dea39008758d8494f29b12b92be02";
 }
 
 std::string StatusOperatorEqualId() {
-  return R"""(classgoogle_1_1cloud_1_1Status_1a8c00daab4bca2eeb428f816fabf59492)""";
+  return "classgoogle_1_1cloud_1_1Status_1a8c00daab4bca2eeb428f816fabf59492";
 }
 
 }  // namespace docfx_testing
