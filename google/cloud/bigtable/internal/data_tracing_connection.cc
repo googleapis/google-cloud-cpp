@@ -172,9 +172,9 @@ class DataTracingConnection : public bigtable::DataConnection {
                      bigtable::RowSet row_set, std::int64_t rows_limit,
                      bigtable::Filter filter) override {
     auto span = internal::MakeSpan("bigtable::Table::AsyncReadRows");
-    auto traced_on_finish = [s = std::move(span),
-                             on_finish](Status const& status) {
-      return on_finish(internal::EndSpan(*s, status));
+    auto scope = opentelemetry::trace::Scope(span);
+    auto traced_on_finish = [span, on_finish](Status const& status) {
+      return on_finish(internal::EndSpan(*span, status));
     };
     child_->AsyncReadRows(table_name, std::move(on_row),
                           std::move(traced_on_finish), std::move(row_set),

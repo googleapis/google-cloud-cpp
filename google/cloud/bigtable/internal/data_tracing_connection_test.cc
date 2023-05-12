@@ -476,6 +476,7 @@ TEST(DataTracingConnection, AsyncReadRows) {
                    std::function<void(Status)> const& on_finish,
                    bigtable::RowSet const&, std::int64_t,
                    bigtable::Filter const&) {
+        EXPECT_TRUE(ThereIsAnActiveSpan());
         // Invoke the callbacks.
         on_row(bigtable::Row("r1", {})).get();
         on_row(bigtable::Row("r2", {})).get();
