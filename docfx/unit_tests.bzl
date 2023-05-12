@@ -28,6 +28,7 @@ unit_tests = [
     "function_classifiers_test.cc",
     "generate_metadata_test.cc",
     "linked_text_type_test.cc",
+    "node_name_test.cc",
     "parse_arguments_test.cc",
     "public_docs_test.cc",
     "yaml_context_test.cc",

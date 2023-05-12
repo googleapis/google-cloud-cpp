@@ -28,6 +28,7 @@ std::string FunctionXmlId();
 
 std::string StatusClassXml();
 std::string StatusDefaultConstructorId();
+std::string StatusCopyConstructorId();
 std::string StatusMessageFunctionId();
 std::string StatusOperatorEqualId();
 
