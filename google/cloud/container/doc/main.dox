@@ -42,6 +42,7 @@ can override the default policies.
   endpoint.
 - @ref container-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref container-env - describes environment variables that can configure the behavior of the library.
 
 [cloud-service-docs]: https://cloud.google.com/kubernetes-engine/docs/
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff

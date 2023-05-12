@@ -41,6 +41,7 @@ can override the default policies.
 - @ref webrisk-override-endpoint - describes how to override the default
   endpoint.
 - @ref webrisk-override-authentication - describes how to change the
+- @ref webrisk-env - describes environment variables that can configure the behavior of the library.
   authentication credentials used by the library.
 
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff

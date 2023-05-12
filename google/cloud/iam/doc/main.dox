@@ -79,6 +79,7 @@ when testing your application.
 [concepts-link]: https://cloud.google.com/iam/docs/concepts 'IAM Concepts'
 [authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
 [gcloud-quickstart]: https://cloud.google.com/sdk/docs/quickstarts
+- @ref iam-env - describes environment variables that can configure the behavior of the library.
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 [quickstart-link]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/iam/quickstart
 [status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h

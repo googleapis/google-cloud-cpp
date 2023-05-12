@@ -42,6 +42,7 @@ can override the default policies.
 - @ref websecurityscanner-override-endpoint - describes how to override the default
   endpoint.
 - @ref websecurityscanner-override-authentication - describes how to change the
+- @ref websecurityscanner-env - describes environment variables that can configure the behavior of the library.
   authentication credentials used by the library.
 
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff

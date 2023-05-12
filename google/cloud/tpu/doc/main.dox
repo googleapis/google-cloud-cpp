@@ -48,6 +48,7 @@ can override the default policies.
   endpoint.
 - @ref tpu-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref tpu-env - describes environment variables that can configure the behavior of the library.
 
 [cloud-service]: https://cloud.google.com/tpu
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff

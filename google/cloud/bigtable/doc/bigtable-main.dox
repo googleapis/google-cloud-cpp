@@ -141,6 +141,7 @@ guide for more details.
 
 @snippet google/cloud/bigtable/admin/samples/bigtable_instance_admin_client_samples.cc set-client-endpoint
 */
+- @ref bigtable-env - describes environment variables that can configure the behavior of the library.
 
 /*! @page BigtableInstanceAdminClient-with-service-account-snippet Override @c BigtableInstanceAdminClient Default Authentication
 

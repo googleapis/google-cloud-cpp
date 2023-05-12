@@ -47,6 +47,7 @@ can override the default policies.
   endpoint.
 - @ref cloudbuild-override-authentication - describes how to change the
   authentication credentials used by the library.
+- @ref cloudbuild-env - describes environment variables that can configure the behavior of the library.
 
 [cloud-service-docs]: https://cloud.google.com/build
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
