@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/internal/async_row_sampler.h"
 #include "google/cloud/bigtable/internal/async_streaming_read.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 #include <chrono>
 
 namespace google {
@@ -54,7 +55,7 @@ void AsyncRowSampler::StartIteration() {
   request.set_app_profile_id(app_profile_id_);
   request.set_table_name(table_name_);
 
-  internal::OptionsSpan span(options_);
+  internal::ScopedCallContext scope(call_context_);
   auto context = std::make_shared<grpc::ClientContext>();
   internal::ConfigureContext(*context, internal::CurrentOptions());
 
@@ -89,15 +90,15 @@ void AsyncRowSampler::OnFinish(Status status) {
 
   samples_.clear();
   auto self = this->shared_from_this();
-  auto delay = backoff_policy_->OnCompletion();
-  cq_.MakeRelativeTimer(delay).then([self](TimerFuture result) {
-    if (result.get()) {
-      self->StartIteration();
-    } else {
-      self->promise_.set_value(
-          Status(StatusCode::kCancelled, "call cancelled"));
-    }
-  });
+  internal::TracedAsyncBackoff(cq_, backoff_policy_->OnCompletion())
+      .then([self](TimerFuture result) {
+        if (result.get()) {
+          self->StartIteration();
+        } else {
+          self->promise_.set_value(
+              Status(StatusCode::kCancelled, "call cancelled"));
+        }
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
