@@ -3,7 +3,7 @@
     "api_shortname": "batch",
     "client_documentation": "https://cloud.google.com/cpp/reference/batch/latest",
     "distribution_name": "google-cloud-cpp",
-    "issue_tracker": "",
+    "issue_tracker": "https://b.corp.google.com/issues?q=componentid:1221791%20status:open",
     "language": "cpp",
     "library_type": "GAPIC_AUTO",
     "name_pretty": "Batch API",
