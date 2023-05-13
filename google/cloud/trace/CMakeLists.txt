@@ -15,8 +15,8 @@
 # ~~~
 
 include(GoogleapisConfig)
-set(DOXYGEN_PROJECT_NAME "Stackdriver Trace API C++ Client")
-set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Stackdriver Trace API")
+set(DOXYGEN_PROJECT_NAME "Cloud Trace API C++ Client")
+set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Cloud Trace API")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
 set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
@@ -169,8 +169,8 @@ google_cloud_cpp_install_headers("google_cloud_cpp_trace_mocks"
 
 google_cloud_cpp_add_pkgconfig(
     trace
-    "The Stackdriver Trace API C++ Client Library"
-    "Provides C++ APIs to use the Stackdriver Trace API."
+    "The Cloud Trace API C++ Client Library"
+    "Provides C++ APIs to use the Cloud Trace API."
     "google_cloud_cpp_grpc_utils"
     " google_cloud_cpp_common"
     " google_cloud_cpp_trace_protos")

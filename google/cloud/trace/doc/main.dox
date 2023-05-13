@@ -1,11 +1,11 @@
 /*!
 
-@mainpage Stackdriver Trace API C++ Client Library
+@mainpage Cloud Trace API C++ Client Library
 
-An idiomatic C++ client library for the [Stackdriver Trace API][cloud-service-docs],
-a service to send application trace data to Stackdriver Trace for viewing. This
+An idiomatic C++ client library for the [Cloud Trace API][cloud-service-docs],
+a service to send application trace data to Cloud Trace for viewing. This
 library is used to interact with the Trace API directly. If you are looking to
-instrument your application for Stackdriver Trace, we recommend using
+instrument your application for Cloud Trace, we recommend using
 [OpenTelemetry](https://opentelemetry.io) or a similar framework.
 
 While this library is **GA**, please note Google Cloud C++ client libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -16,7 +16,7 @@ While this library is **GA**, please note Google Cloud C++ client libraries do *
 
 The following shows the code that you'll run in the
 `google/cloud/trace/quickstart/` directory,
-which should give you a taste of the Stackdriver Trace API C++ client library API.
+which should give you a taste of the Cloud Trace API C++ client library API.
 
 @snippet quickstart.cc all
 
