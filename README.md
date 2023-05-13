@@ -598,11 +598,27 @@ such, and the recommended alternatives, include:
   e.g., `google-cloud-cpp::bigtable`, or pkg-config modules, e.g.,
   `$(pkg-config google_cloud_cpp_bigtable --libs)` instead.
 
+### Environment Variables
+
+Environment variables referenced in our documentation come with the same
+guarantees as our public APIs. That is, we are committed to supporting their
+behavior unless the behavior affects experimental components, or the environment
+variable itself is experimental.
+
+### Telemetry Data
+
+The library can be configured to produce telemetry data, such as logs or traces.
+We make no guarantees around the **contents** of such data. For example, we may
+change the format of our logs, or the names of our spans without notice.
+
+The APIs to programmatically enable logging and tracing have the same guarantees
+as any other public APIs in our libraries.
+
 ### Documentation and Comments
 
 The documentation (and its links) is intended for human consumption and not
-third party websites, or automation (such as scripts scrapping the contents).
-The contents and links of our documentation may change without notice.
+third party websites, or automation (such as scripts scraping the contents). The
+contents and links of our documentation may change without notice.
 
 ### Other Interface Points
 
