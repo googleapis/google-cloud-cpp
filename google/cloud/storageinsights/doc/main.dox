@@ -23,10 +23,10 @@ which should give you a taste of the Storage Insights API C++ client library API
 
 <!-- inject-client-list-start -->
 The main class in this library is
-[\c storageinsights_v1::StorageInsightsClient](@ref google::cloud::storageinsights_v1::StorageInsightsClient).
-All RPCs are exposed as member functions of this class. Other classes provide
-helpers, retry policies, configuration parameters, and infrastructure to mock
-[\c storageinsights_v1::StorageInsightsClient](@ref google::cloud::storageinsights_v1::StorageInsightsClient) when testing your
+[`storageinsights_v1::StorageInsightsClient`](@ref google::cloud::storageinsights_v1::StorageInsightsClient). All RPCs are exposed
+as member functions of this class. Other classes provide helpers, configuration
+parameters, and infrastructure to mock
+[`storageinsights_v1::StorageInsightsClient`](@ref google::cloud::storageinsights_v1::StorageInsightsClient) when testing your
 application.
 <!-- inject-client-list-end -->
 

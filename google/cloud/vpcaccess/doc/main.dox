@@ -21,10 +21,10 @@ which should give you a taste of the Serverless VPC Access API C++ client librar
 
 <!-- inject-client-list-start -->
 The main class in this library is
-[\c vpcaccess_v1::VpcAccessServiceClient](@ref google::cloud::vpcaccess_v1::VpcAccessServiceClient).
-All RPCs are exposed as member functions of this class. Other classes provide
-helpers, retry policies, configuration parameters, and infrastructure to mock
-[\c vpcaccess_v1::VpcAccessServiceClient](@ref google::cloud::vpcaccess_v1::VpcAccessServiceClient) when testing your
+[`vpcaccess_v1::VpcAccessServiceClient`](@ref google::cloud::vpcaccess_v1::VpcAccessServiceClient). All RPCs are exposed
+as member functions of this class. Other classes provide helpers, configuration
+parameters, and infrastructure to mock
+[`vpcaccess_v1::VpcAccessServiceClient`](@ref google::cloud::vpcaccess_v1::VpcAccessServiceClient) when testing your
 application.
 <!-- inject-client-list-end -->
 
