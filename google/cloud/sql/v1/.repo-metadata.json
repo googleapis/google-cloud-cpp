@@ -1,0 +1,14 @@
+{
+    "api_id": "sqladmin.googleapis.com",
+    "api_shortname": "sqladmin",
+    "client_documentation": "https://cloud.google.com/cpp/reference/sql/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://b.corp.google.com/savedsearches/559773",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Cloud SQL Admin API",
+    "product_documentation": "https://cloud.google.com/sql",
+    "release_level": "preview",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}
