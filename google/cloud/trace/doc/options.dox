@@ -1,5 +1,5 @@
 /*!
-@defgroup google-cloud-trace-options Stackdriver Trace API Configuration Options
+@defgroup google-cloud-trace-options Cloud Trace API Configuration Options
 
 This library uses the same mechanism (`google::cloud::Options`) and the common
 [options](@ref options) as all other C++ client libraries for its configuration.

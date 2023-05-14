@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# A minimal WORKSPACE file showing how to use the Stackdriver Trace API
+# A minimal WORKSPACE file showing how to use the Cloud Trace API
 # C++ client library in Bazel-based projects.
 workspace(name = "qs")
 

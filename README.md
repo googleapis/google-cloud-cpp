@@ -362,7 +362,7 @@ See each library's `README.md` file for more information about:
 - [Cloud TPU API](google/cloud/tpu/README.md)
   [\[quickstart\]](google/cloud/tpu/quickstart/README.md)
   [\[reference\]](https://googleapis.dev/cpp/google-cloud-tpu/latest)
-- [Stackdriver Trace API](google/cloud/trace/README.md)
+- [Cloud Trace API](google/cloud/trace/README.md)
   [\[quickstart\]](google/cloud/trace/quickstart/README.md)
   [\[reference\]](https://googleapis.dev/cpp/google-cloud-trace/latest)
 - [Cloud Translation API](google/cloud/translate/README.md)
