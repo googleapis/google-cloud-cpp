@@ -67,13 +67,13 @@ class SampleRowsIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
  public:
   static void SetUpTestSuite() {
-    // Create kBatchSize * kBatchCount rows. Use a special client with tracing
+    // Create kBatchSize * kBatchCount rows. Use a special client with logging
     // disabled because it simply generates too much data.
-    auto table = Table(
-        MakeDataConnection(Options{}.set<TracingComponentsOption>({"rpc"})),
-        TableResource(TableTestEnvironment::project_id(),
-                      TableTestEnvironment::instance_id(),
-                      TableTestEnvironment::table_id()));
+    auto table =
+        Table(MakeDataConnection(Options{}.set<TracingComponentsOption>({})),
+              TableResource(TableTestEnvironment::project_id(),
+                            TableTestEnvironment::instance_id(),
+                            TableTestEnvironment::table_id()));
 
     int constexpr kBatchCount = 10;
     int constexpr kBatchSize = 5000;
