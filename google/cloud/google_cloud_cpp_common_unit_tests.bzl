@@ -43,6 +43,7 @@ google_cloud_cpp_common_unit_tests = [
     "internal/invoke_result_test.cc",
     "internal/log_impl_test.cc",
     "internal/make_status_test.cc",
+    "internal/noexcept_action_test.cc",
     "internal/opentelemetry_test.cc",
     "internal/pagination_range_test.cc",
     "internal/parse_rfc3339_test.cc",
