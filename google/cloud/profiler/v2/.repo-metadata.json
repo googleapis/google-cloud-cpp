@@ -1,0 +1,14 @@
+{
+    "api_id": "cloudprofiler.googleapis.com",
+    "api_shortname": "cloudprofiler",
+    "client_documentation": "https://cloud.google.com/cpp/reference/profiler/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/5116474",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Cloud Profiler API",
+    "product_documentation": "https://cloud.google.com/profiler/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}
