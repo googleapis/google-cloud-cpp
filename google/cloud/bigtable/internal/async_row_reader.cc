@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/async_row_reader.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/log.h"
 
 namespace google {
@@ -40,7 +41,7 @@ void AsyncRowReader::MakeRequest() {
   }
   parser_ = bigtable::internal::ReadRowsParserFactory().Create();
 
-  internal::OptionsSpan span(options_);
+  internal::ScopedCallContext scope(call_context_);
   auto context = std::make_shared<grpc::ClientContext>();
   internal::ConfigureContext(*context, internal::CurrentOptions());
 
@@ -206,7 +207,7 @@ void AsyncRowReader::OnStreamFinished(Status status) {
     return;
   }
   auto self = this->shared_from_this();
-  cq_.MakeRelativeTimer(backoff_policy_->OnCompletion())
+  internal::TracedAsyncBackoff(cq_, backoff_policy_->OnCompletion())
       .then(
           [self](
               future<StatusOr<std::chrono::system_clock::time_point>> result) {

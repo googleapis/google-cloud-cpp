@@ -26,6 +26,7 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/call_context.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
 #include <chrono>
@@ -159,7 +160,7 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
   Status status_;
   /// Tracks the level of recursion of TryGiveRowToUser
   int recursion_level_ = 0;
-  Options options_ = internal::CurrentOptions();
+  internal::CallContext call_context_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
