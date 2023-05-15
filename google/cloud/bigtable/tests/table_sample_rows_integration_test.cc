@@ -70,7 +70,10 @@ class SampleRowsIntegrationTest
     // Create kBatchSize * kBatchCount rows. Use a special client with logging
     // disabled because it simply generates too much data.
     auto table =
-        Table(MakeDataConnection(Options{}.set<TracingComponentsOption>({})),
+        Table(MakeDataConnection(
+                  Options{}
+                      .set<TracingComponentsOption>({"rpc"})
+                      .set<GrpcTracingOptionsOption>(TracingOptions())),
               TableResource(TableTestEnvironment::project_id(),
                             TableTestEnvironment::instance_id(),
                             TableTestEnvironment::table_id()));
