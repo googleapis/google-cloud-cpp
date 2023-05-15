@@ -82,9 +82,11 @@ endpoint for `google::cloud::bigtable::Table`:
 
 @snippet client_samples.cc table-set-endpoint
 
-Follow these links for additional examples
- [BigtableTableAdminClient](@ref BigtableTableAdminClient-set-endpoint-snippet)
- [InstanceTableAdminClient](@ref BigtableInstanceAdminClient-set-endpoint-snippet)
+Changing the default endpoint for other `*Client` classes is very similar, as
+shown in these examples:
+
+- [BigtableTableAdminClient](@ref BigtableTableAdminClient-set-endpoint-snippet)
+- [InstanceTableAdminClient](@ref BigtableInstanceAdminClient-set-endpoint-snippet)
 */
 
 /**
@@ -101,9 +103,11 @@ Keep in mind that we chose this as an example because it is relatively easy to
 understand. Consult the [Best practices for managing service account keys]
 guide for more details.
 
-Follow these links for additional examples
- [BigtableTableAdminClient](@ref BigtableTableAdminClient-with-service-account-snippet)
- [InstanceTableAdminClient](@ref BigtableInstanceAdminClient-with-service-account-snippet)
+Changing the default authentication configuration for other `*Client` classes is
+very similar, as shown in these examples:
+
+- [BigtableTableAdminClient](@ref BigtableTableAdminClient-with-service-account-snippet)
+- [InstanceTableAdminClient](@ref BigtableInstanceAdminClient-with-service-account-snippet)
 
 Keep in mind that we chose this as an example because it is relatively easy to
 understand. Consult the [Best practices for managing service account keys]
@@ -117,32 +121,32 @@ guide for more details.
 
 */
 
-/*! @page Table-set-endpoint Override @c Table Default Endpoint
+/*! @page Table-set-endpoint-snippet Override Table Default Endpoint
 
 @snippet google/cloud/bigtable/examples/client_samples.cc table-set-endpoint
 */
 
-/*! @page Table-with-service-account-snippet Override @c Table Default Authentication
+/*! @page Table-with-service-account-snippet Override Table Default Authentication
 
 @snippet google/cloud/bigtable/examples/client_samples.cc table-with-service-account
 */
 
-/*! @page BigtableTableAdminClient-set-endpoint-snippet Override @c BigtableTableAdminClient Default Endpoint
+/*! @page BigtableTableAdminClient-set-endpoint-snippet Override BigtableTableAdminClient Default Endpoint
 
 @snippet google/cloud/bigtable/admin/samples/bigtable_table_admin_client_samples.cc set-client-endpoint
 */
 
-/*! @page BigtableTableAdminClient-with-service-account-snippet Override @c BigtableTableAdminClient Default Authentication
+/*! @page BigtableTableAdminClient-with-service-account-snippet Override BigtableTableAdminClient Default Authentication
 
 @snippet google/cloud/bigtable/admin/samples/bigtable_table_admin_client_samples.cc with-service-account
 */
 
-/*! @page BigtableInstanceAdminClient-set-endpoint-snippet Override @c BigtableInstanceAdminClient Default Endpoint
+/*! @page BigtableInstanceAdminClient-set-endpoint-snippet Override BigtableInstanceAdminClient Default Endpoint
 
 @snippet google/cloud/bigtable/admin/samples/bigtable_instance_admin_client_samples.cc set-client-endpoint
 */
 
-/*! @page BigtableInstanceAdminClient-with-service-account-snippet Override @c BigtableInstanceAdminClient Default Authentication
+/*! @page BigtableInstanceAdminClient-with-service-account-snippet Override BigtableInstanceAdminClient Default Authentication
 
 @snippet google/cloud/bigtable/admin/samples/bigtable_instance_admin_client_samples.cc with-service-account
 */
