@@ -308,7 +308,7 @@ void AppendFunctionSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::BeginMap                                           //
        << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
        << FunctionSyntaxContent(node);
-  auto const rettype = HtmlEscape(LinkedTextType(node.child("type")));
+  auto const rettype = LinkedTextType(node.child("type"));
   if (!rettype.empty()) {
     // The `return` element accepts either a string for `type` or a sequence of
     // strings. If `type` is a string then it must be UID pointing to another

@@ -674,7 +674,7 @@ TEST(Doxygen2Syntax, Function) {
       )
   return:
     type:
-      - "future&lt; StatusOr&lt; std::chrono::system_clock::time_point &gt; &gt;"
+      - "future< StatusOr< std::chrono::system_clock::time_point > >"
     description: |
       a future that becomes satisfied after `duration` time has elapsed. The result of the future is the time at which it expired, or an error [Status](xref:classgoogle_1_1cloud_1_1Status) if the timer did not run to expiration (e.g. it was cancelled).
   parameters:

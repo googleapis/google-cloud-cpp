@@ -736,7 +736,7 @@ items:
           )
       return:
         type:
-          - "future&lt; StatusOr&lt; std::chrono::system_clock::time_point &gt; &gt;"
+          - "future< StatusOr< std::chrono::system_clock::time_point > >"
         description: |
           a future that becomes satisfied after `duration` time has elapsed. The result of the future is the time at which it expired, or an error [Status](xref:classgoogle_1_1cloud_1_1Status) if the timer did not run to expiration (e.g. it was cancelled).
       parameters:
@@ -799,7 +799,7 @@ items:
           )
       return:
         type:
-          - "StreamRange&lt; google::cloud::kms::v1::CryptoKey &gt;"
+          - "StreamRange< google::cloud::kms::v1::CryptoKey >"
       parameters:
         - id: request
           var_type: "google::cloud::kms::inventory::v1::ListCryptoKeysRequest"
