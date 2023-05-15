@@ -31,9 +31,11 @@ bool IncludeInPublicDocuments(Config const& cfg, pugi::xml_node node) {
   if (kind(node) == "private-attrib" || kind(node) == "private-func") {
     return false;
   }
-  // We do not generate documents for types in the C++ `std::` namespace:
+  // We do not generate documents for types in the C++ `std::` namespace or the
+  // `absl::` namespace.
   auto const id = std::string_view{node.attribute("id").as_string()};
-  for (std::string_view prefix : {"namespacestd", "classstd", "structstd"}) {
+  for (std::string_view prefix : {"namespacestd", "classstd", "structstd",
+                                  "namespaceabsl", "classabsl", "structabsl"}) {
     if (id.substr(0, prefix.size()) == prefix) return false;
   }
   // Doxygen generates a page listing all deprecated symbols. It does not seem
