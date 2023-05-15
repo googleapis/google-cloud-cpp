@@ -23,6 +23,7 @@
 #include "docfx/public_docs.h"
 #include "docfx/yaml_emit.h"
 #include <algorithm>
+#include <iostream>
 #include <sstream>
 #include <string_view>
 
@@ -96,10 +97,11 @@ std::string Summary(pugi::xml_node node) {
   return std::move(os).str();
 }
 
-std::string Conceptual(pugi::xml_node node) {
+std::string Conceptual(pugi::xml_node node, bool skip_xrefsect = false) {
   std::ostringstream os;
   MarkdownContext ctx;
   ctx.paragraph_start = "";
+  ctx.skip_xrefsect = skip_xrefsect;
   auto description = node.child("description");
   if (!description.empty()) {
     AppendDescriptionType(os, ctx, description);
@@ -341,7 +343,44 @@ bool AppendIfNamespace(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "type" << YAML::Value << "namespace"                 //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendNamespaceSyntax(yaml, ctx, node);
-  AppendDescription(yaml, node);
+  // Deprecated namespaces need special treatment
+  auto const summary = Summary(node);
+  if (!summary.empty()) {
+    yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
+  }
+  auto conceptual = Conceptual(node, true);
+  // Discover all the `xrefsect` descendants that document this is a deprecated
+  // namespace and list the alternatives.
+  std::map<std::string, std::string> deprecated;
+  for (auto const i :
+       node.child("detaileddescription").select_nodes(".//xrefsect")) {
+    auto const title = std::string_view{i.node().child_value("xreftitle")};
+    if (title != "Deprecated") continue;
+    auto xrefdescription = i.node().child("xrefdescription");
+    for (auto const j : xrefdescription.select_nodes(".//ref")) {
+      auto ref = j.node();
+      deprecated.emplace(ref.child_value(), ref.attribute("refid").as_string());
+    }
+  }
+  if (!deprecated.empty()) {
+    std::ostringstream os;
+    os << R"""(
+
+<aside class="deprecated">
+    <b>Deprecated:</b> This namespace is deprecated, prefer the types defined in)""";
+    auto sep = std::string_view{" "};
+    for (auto const& [name, uid] : deprecated) {
+      os << sep << "[`" << name << "`](xref:" << uid << ")";
+      sep = ", or ";
+    }
+    os << ".\n</aside>";
+    conceptual.append(std::move(os.str()));
+  }
+  if (!conceptual.empty()) {
+    yaml << YAML::Key << "conceptual" << YAML::Value << YAML::Literal
+         << conceptual;
+  }
+
   auto const children = Children(ctx, node);
   if (!children.empty()) {
     yaml << YAML::Key << "children" << YAML::Value << children;

@@ -34,6 +34,7 @@ struct MarkdownContext {
   std::string paragraph_indent;
   std::string item_prefix;
   std::vector<std::string> decorators;
+  bool skip_xrefsect = false;
 };
 
 /// Handles a sect4 node.

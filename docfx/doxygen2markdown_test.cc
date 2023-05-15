@@ -235,7 +235,7 @@ Second paragraph (4).)md";
   EXPECT_EQ(kExpected, os.str());
 }
 
-TEST(Doxygen2Markdown, DetailedDescriptionXrefSectDeprecatedTwice) {
+TEST(Doxygen2Markdown, DetailedDescriptionNotSkipped) {
   auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
       <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacegoogle_1_1cloud_1_1kms" kind="namespace" language="C++">
@@ -255,6 +255,40 @@ TEST(Doxygen2Markdown, DetailedDescriptionXrefSectDeprecatedTwice) {
 
 This namespace exists for backwards compatibility. Use the types defined in [kms_v1](xref:namespacegoogle_1_1cloud_1_1kms__v1) instead of the aliases defined in this namespace.
 
+**Deprecated**
+
+
+
+This namespace exists for backwards compatibility. Use the types defined in [kms_v1](xref:namespacegoogle_1_1cloud_1_1kms__v1) instead of the aliases defined in this namespace.)md";
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//detaileddescription");
+  ASSERT_TRUE(selected);
+  std::ostringstream os;
+  MarkdownContext ctx;
+  ctx.paragraph_start = "";
+  EXPECT_TRUE(AppendIfDetailedDescription(os, ctx, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
+}
+
+TEST(Doxygen2Markdown, DetailedDescriptionSkipped) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacegoogle_1_1cloud_1_1kms" kind="namespace" language="C++">
+          <compoundname>google::cloud::kms</compoundname>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+            <para><xrefsect id="deprecated_1_deprecated000001"><xreftitle>Deprecated</xreftitle><xrefdescription><para>This namespace exists for backwards compatibility. Use the types defined in <ref refid="namespacegoogle_1_1cloud_1_1kms__v1" kindref="compound">kms_v1</ref> instead of the aliases defined in this namespace.</para>
+</xrefdescription></xrefsect></para>
+            <para><xrefsect id="deprecated_1_deprecated000014"><xreftitle>Deprecated</xreftitle><xrefdescription><para>This namespace exists for backwards compatibility. Use the types defined in <ref refid="namespacegoogle_1_1cloud_1_1kms__v1" kindref="compound">kms_v1</ref> instead of the aliases defined in this namespace.</para>
+</xrefdescription></xrefsect></para>
+          </detaileddescription>
+      </compounddef>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"md(
+
 )md";
   pugi::xml_document doc;
   doc.load_string(kXml);
@@ -263,6 +297,7 @@ This namespace exists for backwards compatibility. Use the types defined in [kms
   std::ostringstream os;
   MarkdownContext ctx;
   ctx.paragraph_start = "";
+  ctx.skip_xrefsect = true;
   EXPECT_TRUE(AppendIfDetailedDescription(os, ctx, selected.node()));
   EXPECT_EQ(kExpected, os.str());
 }
