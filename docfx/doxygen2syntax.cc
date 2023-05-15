@@ -310,16 +310,20 @@ void AppendFunctionSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
        << FunctionSyntaxContent(node);
   auto const rettype = HtmlEscape(LinkedTextType(node.child("type")));
   if (!rettype.empty()) {
-    yaml << YAML::Key << "returns" << YAML::Value   //
-         << YAML::BeginSeq << YAML::BeginMap        //
-         << YAML::Key << "var_type" << YAML::Value  //
-         << YAML::DoubleQuoted << rettype;
+    // The `return` element accepts either a string for `type` or a sequence of
+    // strings. If `type` is a string then it must be UID pointing to another
+    // element in the documentation. That does not work in C++ where many
+    // functions return primitive types and Doxygen does not create links for
+    // the return type. So we create a sequence with a single element.
+    yaml << YAML::Key << "return" << YAML::Value << YAML::BeginMap  //
+         << YAML::Key << "type" << YAML::Value << YAML::BeginSeq    //
+         << YAML::DoubleQuoted << rettype << YAML::EndSeq;
     auto description = ReturnDescription(ctx, node);
     if (!description.empty()) {
       yaml << YAML::Key << "description" << YAML::Value << YAML::Literal
            << description;
     }
-    yaml << YAML::EndMap << YAML::EndSeq;
+    yaml << YAML::EndMap;
   }
   auto params = node.select_nodes("param");
   auto tparams = node.child("templateparamlist").children("param");

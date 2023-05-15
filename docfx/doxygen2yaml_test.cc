@@ -734,10 +734,11 @@ items:
         google::cloud::CompletionQueue::MakeRelativeTimer (
             std::chrono::duration< Rep, Period > duration
           )
-      returns:
-        - var_type: "future&lt; StatusOr&lt; std::chrono::system_clock::time_point &gt; &gt;"
-          description: |
-            a future that becomes satisfied after `duration` time has elapsed. The result of the future is the time at which it expired, or an error [Status](xref:classgoogle_1_1cloud_1_1Status) if the timer did not run to expiration (e.g. it was cancelled).
+      return:
+        type:
+          - "future&lt; StatusOr&lt; std::chrono::system_clock::time_point &gt; &gt;"
+        description: |
+          a future that becomes satisfied after `duration` time has elapsed. The result of the future is the time at which it expired, or an error [Status](xref:classgoogle_1_1cloud_1_1Status) if the timer did not run to expiration (e.g. it was cancelled).
       parameters:
         - id: duration
           var_type: "std::chrono::duration&lt; Rep, Period &gt;"
@@ -796,8 +797,9 @@ items:
         google::cloud::kms_inventory_v1::KeyDashboardServiceConnection::ListCryptoKeys (
             google::cloud::kms::inventory::v1::ListCryptoKeysRequest request
           )
-      returns:
-        - var_type: "StreamRange&lt; google::cloud::kms::v1::CryptoKey &gt;"
+      return:
+        type:
+          - "StreamRange&lt; google::cloud::kms::v1::CryptoKey &gt;"
       parameters:
         - id: request
           var_type: "google::cloud::kms::inventory::v1::ListCryptoKeysRequest"
@@ -985,8 +987,9 @@ items:
       contents: |
         Status const &
         google::cloud::RuntimeStatusError::status ()
-      returns:
-        - var_type: "Status const &"
+      return:
+        type:
+          - "Status const &"
       source:
         id: status
         path: google/cloud/status.h
