@@ -75,10 +75,15 @@ add_library(
     v2/minimal/internal/log_wrapper.h
     v2/minimal/internal/project.cc
     v2/minimal/internal/project.h
+    v2/minimal/internal/project_idempotency_policy.cc
+    v2/minimal/internal/project_idempotency_policy.h
+    v2/minimal/internal/project_options.cc
+    v2/minimal/internal/project_options.h
     v2/minimal/internal/project_request.cc
     v2/minimal/internal/project_request.h
     v2/minimal/internal/project_response.cc
     v2/minimal/internal/project_response.h
+    v2/minimal/internal/project_retry_policy.h
     v2/minimal/internal/rest_stub_utils.cc
     v2/minimal/internal/rest_stub_utils.h
     v2/minimal/internal/table.cc
@@ -227,6 +232,8 @@ function (bigquery_rest_define_tests)
         v2/minimal/internal/job_response_test.cc
         v2/minimal/internal/job_rest_stub_test.cc
         v2/minimal/internal/job_test.cc
+        v2/minimal/internal/project_idempotency_policy_test.cc
+        v2/minimal/internal/project_options_test.cc
         v2/minimal/internal/project_request_test.cc
         v2/minimal/internal/project_response_test.cc
         v2/minimal/internal/project_test.cc
