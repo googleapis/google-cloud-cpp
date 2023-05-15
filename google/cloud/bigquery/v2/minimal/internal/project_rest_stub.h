@@ -18,7 +18,6 @@
 #include "google/cloud/bigquery/v2/minimal/internal/project_request.h"
 #include "google/cloud/bigquery/v2/minimal/internal/project_response.h"
 #include "google/cloud/internal/rest_client.h"
-#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>

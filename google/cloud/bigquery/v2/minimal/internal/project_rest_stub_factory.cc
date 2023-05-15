@@ -14,7 +14,9 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/project_rest_stub_factory.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/unified_rest_credentials.h"
 #include "google/cloud/log.h"
 
 namespace google {
