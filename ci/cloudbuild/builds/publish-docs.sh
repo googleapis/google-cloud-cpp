@@ -152,6 +152,7 @@ io::log "branch:  ${BRANCH_NAME}"
 io::log "bucket:  gs://${docfx_bucket}"
 
 stage_docfx "google-cloud-common" "cmake-out/google/cloud/docfx"
+stage_docfx "google-cloud-bigtable" "cmake-out/google/cloud/bigtable/docfx"
 stage_docfx "google-cloud-kms" "cmake-out/google/cloud/kms/docfx"
 stage_docfx "google-cloud-secretmanager" "cmake-out/google/cloud/secretmanager/docfx"
 for feature in "${FEATURE_LIST[@]}"; do
