@@ -24,6 +24,8 @@ TEST(DoxygenGroups, CommonPage) {
     <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="group__terminate" kind="group">
     <compoundname>terminate</compoundname>
     <title>Intercepting Unrecoverable Errors</title>
+      <briefdescription><para>Something pithy.</para></briefdescription>
+      <detaileddescription><para>Something very long-winded.</para></detaileddescription>
       <sectiondef kind="typedef">
       <memberdef kind="typedef" id="group__terminate_1gacc215b41a0bf17a7ea762fd5bb205348" prot="public" static="no">
         <type>std::function&lt; void(char const  *msg)&gt;</type>
@@ -58,9 +60,21 @@ items:
       # Intercepting Unrecoverable Errors
 
 
-    references:
-      - group__terminate_1gacc215b41a0bf17a7ea762fd5bb205348
-      - classgoogle_1_1cloud_1_1Credentials
+      Something very long-winded.
+
+      ### Classes
+
+      - [`google::cloud::Credentials`](xref:classgoogle_1_1cloud_1_1Credentials)
+
+      ### Types
+
+      - [`TerminateHandler`](xref:group__terminate_1gacc215b41a0bf17a7ea762fd5bb205348)
+
+references:
+  - uid: group__terminate_1gacc215b41a0bf17a7ea762fd5bb205348
+    name: TerminateHandler
+  - uid: classgoogle_1_1cloud_1_1Credentials
+    name: google::cloud::Credentials
 )yml";
 
   pugi::xml_document doc;
