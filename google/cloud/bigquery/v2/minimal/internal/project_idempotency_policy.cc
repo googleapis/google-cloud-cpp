@@ -20,8 +20,6 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ::google::cloud::Idempotency;
-
 ProjectIdempotencyPolicy::~ProjectIdempotencyPolicy() = default;
 
 std::unique_ptr<ProjectIdempotencyPolicy> ProjectIdempotencyPolicy::clone()
@@ -30,7 +28,7 @@ std::unique_ptr<ProjectIdempotencyPolicy> ProjectIdempotencyPolicy::clone()
 }
 
 Idempotency ProjectIdempotencyPolicy::ListProjects(ListProjectsRequest const&) {
-  return Idempotency::kIdempotent;
+  return ::google::cloud::Idempotency::kIdempotent;
 }
 
 std::unique_ptr<ProjectIdempotencyPolicy>

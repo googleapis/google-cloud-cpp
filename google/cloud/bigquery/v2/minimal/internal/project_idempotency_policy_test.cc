@@ -13,8 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/project_idempotency_policy.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {

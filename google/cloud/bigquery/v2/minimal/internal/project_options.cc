@@ -15,8 +15,8 @@
 #include "google/cloud/bigquery/v2/minimal/internal/project_options.h"
 #include "google/cloud/bigquery/v2/minimal/internal/common_options.h"
 #include "google/cloud/internal/populate_common_options.h"
+#include <chrono>
 #include <memory>
-#include <thread>
 
 namespace google {
 namespace cloud {
