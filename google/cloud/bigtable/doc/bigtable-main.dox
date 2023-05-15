@@ -83,7 +83,7 @@ endpoint for `google::cloud::bigtable::Table`:
 @snippet client_samples.cc table-set-endpoint
 
 Changing the default endpoint for other `*Client` classes is very similar, as
-show in these examples:
+shown in these examples:
 
 - [BigtableTableAdminClient](@ref BigtableTableAdminClient-set-endpoint-snippet)
 - [InstanceTableAdminClient](@ref BigtableInstanceAdminClient-set-endpoint-snippet)
