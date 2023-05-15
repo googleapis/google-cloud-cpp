@@ -56,7 +56,6 @@ class ListProjectsRequest {
                           TracingOptions const& options = {},
                           int indent = 0) const;
 
-  // Members
  private:
   std::int32_t max_results_{0};
   std::string page_token_;
