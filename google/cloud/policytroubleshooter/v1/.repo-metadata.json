@@ -1,0 +1,14 @@
+{
+    "api_id": "policytroubleshooter.googleapis.com",
+    "api_shortname": "policytroubleshooter",
+    "client_documentation": "https://cloud.google.com/cpp/reference/policytroubleshooter/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://issuetracker.google.com/savedsearches/6137148",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Policy Troubleshooter API",
+    "product_documentation": "https://cloud.google.com/iam/docs/troubleshooting-access",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}
