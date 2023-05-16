@@ -63,6 +63,16 @@ DatabaseAdminRestMetadata::GetDatabase(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DatabaseAdminRestMetadata::AsyncUpdateDatabase(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+        request) {
+  SetMetadata(*rest_context);
+  return child_->AsyncUpdateDatabase(cq, std::move(rest_context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminRestMetadata::AsyncUpdateDatabaseDdl(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

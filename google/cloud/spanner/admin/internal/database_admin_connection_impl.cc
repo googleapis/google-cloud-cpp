@@ -116,6 +116,37 @@ DatabaseAdminConnectionImpl::GetDatabase(
       request, __func__);
 }
 
+future<StatusOr<google::spanner::admin::database::v1::Database>>
+DatabaseAdminConnectionImpl::UpdateDatabase(
+    google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+        request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::spanner::admin::database::v1::Database>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+                 request) {
+        return stub->AsyncUpdateDatabase(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::spanner::admin::database::v1::Database>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateDatabase(request), polling_policy(),
+      __func__);
+}
+
 future<
     StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
 DatabaseAdminConnectionImpl::UpdateDatabaseDdl(

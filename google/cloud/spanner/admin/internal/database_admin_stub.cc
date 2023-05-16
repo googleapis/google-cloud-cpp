@@ -74,6 +74,25 @@ DefaultDatabaseAdminStub::GetDatabase(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultDatabaseAdminStub::AsyncUpdateDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::spanner::admin::database::v1::UpdateDatabaseRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateDatabase(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultDatabaseAdminStub::AsyncUpdateDatabaseDdl(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

@@ -56,6 +56,12 @@ class DatabaseAdminLogging : public DatabaseAdminStub {
       google::spanner::admin::database::v1::GetDatabaseRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabase(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabaseDdl(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

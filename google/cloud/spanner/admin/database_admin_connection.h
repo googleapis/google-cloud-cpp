@@ -79,6 +79,11 @@ class DatabaseAdminConnection {
   virtual StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
       google::spanner::admin::database::v1::GetDatabaseRequest const& request);
 
+  virtual future<StatusOr<google::spanner::admin::database::v1::Database>>
+  UpdateDatabase(
+      google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+          request);
+
   virtual future<
       StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(

@@ -61,6 +61,16 @@ DatabaseAdminMetadata::GetDatabase(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DatabaseAdminMetadata::AsyncUpdateDatabase(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+        request) {
+  SetMetadata(*context, "database.name=" + request.database().name());
+  return child_->AsyncUpdateDatabase(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncUpdateDatabaseDdl(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

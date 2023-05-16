@@ -2193,12 +2193,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::Offer,google/cloud/channel/v1/offers.proto#L130}
+  /// @googleapis_link{google::cloud::channel::v1::Offer,google/cloud/channel/v1/offers.proto#L129}
   ///
   /// [google.cloud.channel.v1.LookupOfferRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2330}
   /// [google.cloud.channel.v1.Offer]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/offers.proto#L130}
+  /// @googleapis_reference_link{google/cloud/channel/v1/offers.proto#L129}
   ///
   StatusOr<google::cloud::channel::v1::Offer> LookupOffer(
       google::cloud::channel::v1::LookupOfferRequest const& request,
@@ -2261,12 +2261,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::channel::v1::Offer,google/cloud/channel/v1/offers.proto#L130}
+  /// @googleapis_link{google::cloud::channel::v1::Offer,google/cloud/channel/v1/offers.proto#L129}
   ///
   /// [google.cloud.channel.v1.ListOffersRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2412}
   /// [google.cloud.channel.v1.Offer]:
-  /// @googleapis_reference_link{google/cloud/channel/v1/offers.proto#L130}
+  /// @googleapis_reference_link{google/cloud/channel/v1/offers.proto#L129}
   ///
   StreamRange<google::cloud::channel::v1::Offer> ListOffers(
       google::cloud::channel::v1::ListOffersRequest request, Options opts = {});
