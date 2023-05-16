@@ -958,6 +958,7 @@ bool AppendIfSimpleSect(std::ostream& os, MarkdownContext const& ctx,
     nested = ctx;
     os << "\n\n###### ";
     AppendTitle(os, nested, node);
+    nested.paragraph_start = "\n\n";
   } else if (kind == "note") {
     os << "\n";
     os << nested.paragraph_start << nested.paragraph_indent << "**Note:**";
