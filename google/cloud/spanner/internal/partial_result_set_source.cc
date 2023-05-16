@@ -55,8 +55,8 @@ void ExtractSubrangeAndAppend(Values& src, int start, Values& dst) {
 
 }  // namespace
 
-StatusOr<std::unique_ptr<ResultSourceInterface>> PartialResultSetSource::Create(
-    std::unique_ptr<PartialResultSetReader> reader) {
+StatusOr<std::unique_ptr<spanner::ResultSourceInterface>>
+PartialResultSetSource::Create(std::unique_ptr<PartialResultSetReader> reader) {
   std::unique_ptr<PartialResultSetSource> source(
       new PartialResultSetSource(std::move(reader)));
 
