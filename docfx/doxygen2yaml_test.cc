@@ -922,6 +922,70 @@ items:
   EXPECT_EQ(actual, kExpected);
 }
 
+TEST(Doxygen2Yaml, NamespaceDeprecated) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacegoogle_1_1cloud_1_1kms" kind="namespace" language="C++">
+        <compoundname>google::cloud::kms</compoundname>
+          <sectiondef kind="func">
+          </sectiondef>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><xrefsect id="deprecated_1_deprecated000001"><xreftitle>Deprecated</xreftitle><xrefdescription><para>This namespace exists for backwards compatibility. Use the types defined in <ref refid="namespacegoogle_1_1cloud_1_1kms__v1" kindref="compound">kms_v1</ref> instead of the aliases defined in this namespace. </para>
+</xrefdescription></xrefsect></para>
+<para><xrefsect id="deprecated_1_deprecated000014"><xreftitle>Deprecated</xreftitle><xrefdescription><para>This namespace exists for backwards compatibility. Use the types defined in <ref refid="namespacegoogle_1_1cloud_1_1kms__v1" kindref="compound">kms_v1</ref> instead of the aliases defined in this namespace. </para>
+</xrefdescription></xrefsect></para>
+        </detaileddescription>
+        <location file="ekm_client.h" line="30" column="1"/>
+      </compounddef>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
+items:
+  - uid: namespacegoogle_1_1cloud_1_1kms
+    name: "google::cloud::kms"
+    id: namespacegoogle_1_1cloud_1_1kms
+    parent: test-only-parent-id
+    type: namespace
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        namespace google::cloud::kms { ... };
+      source:
+        id: google::cloud::kms
+        path: google/cloud/kms/ekm_client.h
+        startLine: 30
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/kms/ekm_client.h
+    conceptual: |
+
+
+
+
+      <aside class="deprecated">
+          <b>Deprecated:</b> This namespace is deprecated, prefer the types defined in [`kms_v1`](xref:namespacegoogle_1_1cloud_1_1kms__v1).
+      </aside>
+)yml";
+
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//*[@id='namespacegoogle_1_1cloud_1_1kms']");
+  ASSERT_TRUE(selected);
+  YAML::Emitter yaml;
+  TestPre(yaml);
+  YamlContext ctx;
+  ctx.parent_id = "test-only-parent-id";
+  ctx.library_root = "google/cloud/kms/";
+  ASSERT_TRUE(AppendIfNamespace(yaml, ctx, selected.node()));
+  TestPost(yaml);
+  auto const actual = EndDocFxYaml(yaml);
+  EXPECT_EQ(actual, kExpected);
+}
+
 TEST(Doxygen2Yaml, Class) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:

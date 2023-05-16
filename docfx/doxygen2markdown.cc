@@ -176,8 +176,9 @@ bool AppendIfSect1(std::ostream& os, MarkdownContext const& ctx,
 bool AppendIfXRefSect(std::ostream& os, MarkdownContext const& ctx,
                       pugi::xml_node node) {
   if (std::string_view{node.name()} != "xrefsect") return false;
-  // Add the title in bold, then some
-  os << "**" << node.child_value("xreftitle") << "**";
+  if (ctx.skip_xrefsect) return true;
+  // Add the title in bold, then the description.
+  os << "**" << node.child_value("xreftitle") << "**\n\n";
   AppendDescriptionType(os, ctx, node.child("xrefdescription"));
   return true;
 }
