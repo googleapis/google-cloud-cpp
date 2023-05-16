@@ -98,10 +98,10 @@ done
     client_name="${clients[${sample_cc}]}"
     cat <<_EOF_
 The main class in this library is
-[\\c ${client_name}](@ref google::cloud::${client_name}).
-All RPCs are exposed as member functions of this class. Other classes provide
-helpers, retry policies, configuration parameters, and infrastructure to mock
-[\\c ${client_name}](@ref google::cloud::${client_name}) when testing your
+[\`${client_name}\`](@ref google::cloud::${client_name}). All RPCs are exposed
+as member functions of this class. Other classes provide helpers, configuration
+parameters, and infrastructure to mock
+[\`${client_name}\`](@ref google::cloud::${client_name}) when testing your
 application.
 _EOF_
   else
@@ -112,9 +112,9 @@ functions of the class. This library groups multiple gRPC services because they
 are part of the same product or are often used together. A typical example may
 be the administrative and data plane operations for a single product.
 
-The library also has other classes that provide helpers, retry policies,
-configuration parameters, and infrastructure to mock the `*Client` classes
-when testing your application.
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
+application.
 
 _EOF_
     for sample_cc in "${samples_cc[@]}"; do

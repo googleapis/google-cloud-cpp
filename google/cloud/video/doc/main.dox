@@ -33,9 +33,9 @@ functions of the class. This library groups multiple gRPC services because they
 are part of the same product or are often used together. A typical example may
 be the administrative and data plane operations for a single product.
 
-The library also has other classes that provide helpers, retry policies,
-configuration parameters, and infrastructure to mock the `*Client` classes
-when testing your application.
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
+application.
 
 - [\c video_livestream_v1::LivestreamServiceClient](@ref google::cloud::video_livestream_v1::LivestreamServiceClient)
 - [\c video_stitcher_v1::VideoStitcherServiceClient](@ref google::cloud::video_stitcher_v1::VideoStitcherServiceClient)
