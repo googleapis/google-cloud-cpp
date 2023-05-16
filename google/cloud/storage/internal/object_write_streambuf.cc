@@ -103,7 +103,9 @@ std::streamsize ObjectWriteStreambuf::xsputn(char const* s,
   if (!IsOpen()) return traits_type::eof();
 
   auto const actual_size = put_area_size();
-  if (count + actual_size < max_buffer_size_) {
+  // One of the invariants in this class is that actual_size is always less than
+  // max_buffer_size_. Using max_buffer_size_ - actual size avoids overflow.
+  if (count < max_buffer_size_ - actual_size) {
     current_ios_buffer_.insert(current_ios_buffer_.end(), s, s + count);
     UpdatePutArea();
     return count;
