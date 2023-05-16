@@ -16,6 +16,7 @@
 #include "docfx/doxygen2markdown.h"
 #include "docfx/doxygen2yaml.h"
 #include "docfx/doxygen_errors.h"
+#include "docfx/node_name.h"
 #include <yaml-cpp/yaml.h>
 #include <iostream>
 #include <sstream>
@@ -35,11 +36,19 @@ void AppendReferences(YAML::Emitter& yaml, pugi::xml_node node) {
       continue;
     }
     if (name == "memberdef") {
-      yaml << std::string{child.attribute("id").as_string()};
+      yaml << YAML::BeginMap                                         //
+           << YAML::Key << "uid" << YAML::Value                      //
+           << std::string{child.attribute("id").as_string()}         //
+           << YAML::Key << "name" << YAML::Value << NodeName(child)  //
+           << YAML::EndMap;
       continue;
     }
     if (name == "innerclass") {
-      yaml << std::string{child.attribute("refid").as_string()};
+      yaml << YAML::BeginMap                                             //
+           << YAML::Key << "uid" << YAML::Value                          //
+           << std::string{child.attribute("refid").as_string()}          //
+           << YAML::Key << "name" << YAML::Value << child.child_value()  //
+           << YAML::EndMap;
       continue;
     }
   }
@@ -69,11 +78,12 @@ std::string Group2Yaml(pugi::xml_node node) {
        << YAML::BeginSeq << "cpp" << YAML::EndSeq         //
        << YAML::Key << "summary" << YAML::Literal
        << Group2SummaryMarkdown(node);
+  yaml << YAML::EndMap   // group
+       << YAML::EndSeq;  // items
+
   yaml << YAML::Key << "references" << YAML::BeginSeq;
   AppendReferences(yaml, node);
   yaml << YAML::EndSeq   // references
-       << YAML::EndMap   // group
-       << YAML::EndSeq   // items
        << YAML::EndMap;  // top-level
   return std::string{"### YamlMime:UniversalReference\n"} + yaml.c_str() + "\n";
 }
@@ -164,6 +174,30 @@ std::string Group2SummaryMarkdown(pugi::xml_node node) {
     if (AppendIfDetailedDescription(os, ctx, child)) continue;
     UnknownChildType(__func__, child);
   }
+
+  auto sep = std::string_view{"\n\n### Classes\n"};
+  for (auto child : node.children("innerclass")) {
+    os << sep << "\n- [`" << child.child_value()
+       << "`](xref:" << child.attribute("refid").as_string() << ")";
+    sep = "";
+  }
+  sep = std::string_view{"\n\n### Functions\n"};
+  for (auto i : node.select_nodes(".//memberdef[@kind='function']")) {
+    auto child = i.node();
+    auto const name = NodeName(child);
+    os << sep << "\n- [`" << name
+       << "`](xref:" << child.attribute("id").as_string() << ")";
+    sep = "";
+  }
+  sep = std::string_view{"\n\n### Types\n"};
+  for (auto i : node.select_nodes(".//memberdef[@kind='typedef']")) {
+    auto child = i.node();
+    auto const name = NodeName(child);
+    os << sep << "\n- [`" << name
+       << "`](xref:" << child.attribute("id").as_string() << ")";
+    sep = "";
+  }
+
   os << "\n";
   return std::move(os).str();
 }

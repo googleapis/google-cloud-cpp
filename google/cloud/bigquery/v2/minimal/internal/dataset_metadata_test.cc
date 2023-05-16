@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/dataset_metadata.h"
 #include "google/cloud/bigquery/v2/minimal/internal/dataset_rest_stub.h"
+#include "google/cloud/bigquery/v2/minimal/testing/metadata_test_utils.h"
 #include "google/cloud/bigquery/v2/minimal/testing/mock_dataset_rest_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -25,35 +26,14 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::bigquery_v2_minimal_testing::GetMetadataOptions;
 using ::google::cloud::bigquery_v2_minimal_testing::MockDatasetRestStub;
-using ::testing::Contains;
-using ::testing::ElementsAre;
-using ::testing::HasSubstr;
+using ::google::cloud::bigquery_v2_minimal_testing::VerifyMetadataContext;
 using ::testing::IsEmpty;
-
-static auto const kUserProject = "test-only-project";
-static auto const kQuotaUser = "test-quota-user";
 
 std::shared_ptr<DatasetMetadata> CreateMockDatasetMetadata(
     std::shared_ptr<DatasetRestStub> mock) {
   return std::make_shared<DatasetMetadata>(std::move(mock));
-}
-
-void VerifyMetadataContext(rest_internal::RestContext& context) {
-  EXPECT_THAT(context.GetHeader("x-goog-api-client"),
-              Contains(HasSubstr("bigquery_v2_dataset")));
-  EXPECT_THAT(context.GetHeader("x-goog-request-params"), IsEmpty());
-  EXPECT_THAT(context.GetHeader("x-goog-user-project"),
-              ElementsAre(kUserProject));
-  EXPECT_THAT(context.GetHeader("x-goog-quota-user"), ElementsAre(kQuotaUser));
-  EXPECT_THAT(context.GetHeader("x-server-timeout"), ElementsAre("3.141"));
-}
-
-Options GetMetadataOptions() {
-  return Options{}
-      .set<UserProjectOption>(kUserProject)
-      .set<QuotaUserOption>(kQuotaUser)
-      .set<ServerTimeoutOption>(std::chrono::milliseconds(3141));
 }
 
 TEST(DatasetMetadataTest, GetDataset) {
@@ -89,7 +69,7 @@ TEST(DatasetMetadataTest, GetDataset) {
 
   auto result = metadata->GetDataset(context, request);
   ASSERT_STATUS_OK(result);
-  VerifyMetadataContext(context);
+  VerifyMetadataContext(context, "bigquery_v2_dataset");
 }
 
 TEST(DatasetMetadataTest, ListDatasets) {
@@ -130,7 +110,7 @@ TEST(DatasetMetadataTest, ListDatasets) {
 
   auto result = metadata->ListDatasets(context, request);
   ASSERT_STATUS_OK(result);
-  VerifyMetadataContext(context);
+  VerifyMetadataContext(context, "bigquery_v2_dataset");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

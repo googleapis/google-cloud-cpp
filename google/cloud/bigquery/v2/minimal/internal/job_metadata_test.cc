@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_metadata.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
+#include "google/cloud/bigquery/v2/minimal/testing/metadata_test_utils.h"
 #include "google/cloud/bigquery/v2/minimal/testing/mock_job_rest_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -25,35 +26,15 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::bigquery_v2_minimal_testing::GetMetadataOptions;
 using ::google::cloud::bigquery_v2_minimal_testing::MockBigQueryJobRestStub;
-using ::testing::Contains;
-using ::testing::ElementsAre;
-using ::testing::HasSubstr;
-using ::testing::IsEmpty;
+using ::google::cloud::bigquery_v2_minimal_testing::VerifyMetadataContext;
 
-static auto const kUserProject = "test-only-project";
-static auto const kQuotaUser = "test-quota-user";
+using ::testing::IsEmpty;
 
 std::shared_ptr<BigQueryJobMetadata> CreateMockJobMetadata(
     std::shared_ptr<BigQueryJobRestStub> mock) {
   return std::make_shared<BigQueryJobMetadata>(std::move(mock));
-}
-
-void VerifyMetadataContext(rest_internal::RestContext& context) {
-  EXPECT_THAT(context.GetHeader("x-goog-api-client"),
-              Contains(HasSubstr("bigquery_v2_job")));
-  EXPECT_THAT(context.GetHeader("x-goog-request-params"), IsEmpty());
-  EXPECT_THAT(context.GetHeader("x-goog-user-project"),
-              ElementsAre(kUserProject));
-  EXPECT_THAT(context.GetHeader("x-goog-quota-user"), ElementsAre(kQuotaUser));
-  EXPECT_THAT(context.GetHeader("x-server-timeout"), ElementsAre("3.141"));
-}
-
-Options GetMetadataOptions() {
-  return Options{}
-      .set<UserProjectOption>(kUserProject)
-      .set<QuotaUserOption>(kQuotaUser)
-      .set<ServerTimeoutOption>(std::chrono::milliseconds(3141));
 }
 
 TEST(JobMetadataTest, GetJob) {
@@ -91,7 +72,7 @@ TEST(JobMetadataTest, GetJob) {
 
   auto result = metadata->GetJob(context, request);
   ASSERT_STATUS_OK(result);
-  VerifyMetadataContext(context);
+  VerifyMetadataContext(context, "bigquery_v2_job");
 }
 
 TEST(JobMetadataTest, ListJobs) {
@@ -136,7 +117,7 @@ TEST(JobMetadataTest, ListJobs) {
 
   auto result = metadata->ListJobs(context, request);
   ASSERT_STATUS_OK(result);
-  VerifyMetadataContext(context);
+  VerifyMetadataContext(context, "bigquery_v2_job");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
