@@ -49,6 +49,11 @@ Idempotency DatabaseAdminConnectionIdempotencyPolicy::GetDatabase(
   return Idempotency::kIdempotent;
 }
 
+Idempotency DatabaseAdminConnectionIdempotencyPolicy::UpdateDatabase(
+    google::spanner::admin::database::v1::UpdateDatabaseRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency DatabaseAdminConnectionIdempotencyPolicy::UpdateDatabaseDdl(
     google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&) {
   return Idempotency::kNonIdempotent;

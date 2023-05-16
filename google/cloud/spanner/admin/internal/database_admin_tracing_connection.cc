@@ -63,6 +63,16 @@ DatabaseAdminTracingConnection::GetDatabase(
   return internal::EndSpan(*span, child_->GetDatabase(request));
 }
 
+future<StatusOr<google::spanner::admin::database::v1::Database>>
+DatabaseAdminTracingConnection::UpdateDatabase(
+    google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::DatabaseAdminConnection::UpdateDatabase");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateDatabase(request));
+}
+
 future<
     StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
 DatabaseAdminTracingConnection::UpdateDatabaseDdl(

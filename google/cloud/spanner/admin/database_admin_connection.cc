@@ -58,6 +58,14 @@ DatabaseAdminConnection::GetDatabase(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::spanner::admin::database::v1::Database>>
+DatabaseAdminConnection::UpdateDatabase(
+    google::spanner::admin::database::v1::UpdateDatabaseRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::spanner::admin::database::v1::Database>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<
     StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
 DatabaseAdminConnection::UpdateDatabaseDdl(

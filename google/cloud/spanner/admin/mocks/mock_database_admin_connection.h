@@ -66,6 +66,13 @@ class MockDatabaseAdminConnection
       (override));
 
   MOCK_METHOD(
+      future<StatusOr<google::spanner::admin::database::v1::Database>>,
+      UpdateDatabase,
+      (google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<
           google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>,
       UpdateDatabaseDdl,

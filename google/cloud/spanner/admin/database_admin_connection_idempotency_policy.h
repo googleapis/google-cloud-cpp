@@ -48,6 +48,10 @@ class DatabaseAdminConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GetDatabase(
       google::spanner::admin::database::v1::GetDatabaseRequest const& request);
 
+  virtual google::cloud::Idempotency UpdateDatabase(
+      google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+          request);
+
   virtual google::cloud::Idempotency UpdateDatabaseDdl(
       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
           request);

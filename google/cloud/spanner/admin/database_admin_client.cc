@@ -84,6 +84,25 @@ DatabaseAdminClient::GetDatabase(
   return connection_->GetDatabase(request);
 }
 
+future<StatusOr<google::spanner::admin::database::v1::Database>>
+DatabaseAdminClient::UpdateDatabase(
+    google::spanner::admin::database::v1::Database const& database,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::database::v1::UpdateDatabaseRequest request;
+  *request.mutable_database() = database;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateDatabase(request);
+}
+
+future<StatusOr<google::spanner::admin::database::v1::Database>>
+DatabaseAdminClient::UpdateDatabase(
+    google::spanner::admin::database::v1::UpdateDatabaseRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDatabase(request);
+}
+
 future<
     StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
 DatabaseAdminClient::UpdateDatabaseDdl(

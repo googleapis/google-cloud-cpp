@@ -87,6 +87,27 @@ DefaultDatabaseAdminRestStub::GetDatabase(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultDatabaseAdminRestStub::AsyncUpdateDatabase(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+        request) {
+  promise<StatusOr<google::longrunning::Operation>> p;
+  future<StatusOr<google::longrunning::Operation>> f = p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context) {
+        p.set_value(rest_internal::Patch<google::longrunning::Operation>(
+            *service, *rest_context, request,
+            absl::StrCat("/v1/", request.database().name(), "")));
+      },
+      std::move(p), service_, request, std::move(rest_context)};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    return f.get();
+  });
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultDatabaseAdminRestStub::AsyncUpdateDatabaseDdl(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

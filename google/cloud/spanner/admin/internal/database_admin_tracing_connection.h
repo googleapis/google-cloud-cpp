@@ -53,6 +53,11 @@ class DatabaseAdminTracingConnection
       google::spanner::admin::database::v1::GetDatabaseRequest const& request)
       override;
 
+  future<StatusOr<google::spanner::admin::database::v1::Database>>
+  UpdateDatabase(
+      google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+          request) override;
+
   future<
       StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(
