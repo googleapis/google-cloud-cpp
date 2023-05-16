@@ -27,7 +27,9 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::bigquery_v2_minimal_testing::GetMetadataOptions;
 using ::google::cloud::bigquery_v2_minimal_testing::MockProjectRestStub;
+using ::google::cloud::bigquery_v2_minimal_testing::VerifyMetadataContext;
 using ::testing::IsEmpty;
 
 std::shared_ptr<ProjectMetadata> CreateMockProjectMetadata(
@@ -55,12 +57,11 @@ TEST(ProjectMetadataTest, ListProjects) {
   request.set_max_results(10).set_page_token("pg-123");
   rest_internal::RestContext context;
 
-  internal::OptionsSpan span(bigquery_v2_minimal_testing::GetMetadataOptions());
+  internal::OptionsSpan span(GetMetadataOptions());
 
   auto result = metadata->ListProjects(context, request);
   ASSERT_STATUS_OK(result);
-  bigquery_v2_minimal_testing::VerifyMetadataContext(context,
-                                                     "bigquery_v2_project");
+  VerifyMetadataContext(context, "bigquery_v2_project");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

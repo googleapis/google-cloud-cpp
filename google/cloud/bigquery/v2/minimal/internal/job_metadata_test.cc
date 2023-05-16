@@ -26,7 +26,10 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::bigquery_v2_minimal_testing::GetMetadataOptions;
 using ::google::cloud::bigquery_v2_minimal_testing::MockBigQueryJobRestStub;
+using ::google::cloud::bigquery_v2_minimal_testing::VerifyMetadataContext;
+
 using ::testing::IsEmpty;
 
 std::shared_ptr<BigQueryJobMetadata> CreateMockJobMetadata(
@@ -65,12 +68,11 @@ TEST(JobMetadataTest, GetJob) {
   request.set_project_id("test-project-id");
   request.set_job_id("test-job-id");
 
-  internal::OptionsSpan span(bigquery_v2_minimal_testing::GetMetadataOptions());
+  internal::OptionsSpan span(GetMetadataOptions());
 
   auto result = metadata->GetJob(context, request);
   ASSERT_STATUS_OK(result);
-  bigquery_v2_minimal_testing::VerifyMetadataContext(context,
-                                                     "bigquery_v2_job");
+  VerifyMetadataContext(context, "bigquery_v2_job");
 }
 
 TEST(JobMetadataTest, ListJobs) {
@@ -111,12 +113,11 @@ TEST(JobMetadataTest, ListJobs) {
   rest_internal::RestContext context;
   request.set_project_id("test-project-id");
 
-  internal::OptionsSpan span(bigquery_v2_minimal_testing::GetMetadataOptions());
+  internal::OptionsSpan span(GetMetadataOptions());
 
   auto result = metadata->ListJobs(context, request);
   ASSERT_STATUS_OK(result);
-  bigquery_v2_minimal_testing::VerifyMetadataContext(context,
-                                                     "bigquery_v2_job");
+  VerifyMetadataContext(context, "bigquery_v2_job");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -26,7 +26,9 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::bigquery_v2_minimal_testing::GetMetadataOptions;
 using ::google::cloud::bigquery_v2_minimal_testing::MockDatasetRestStub;
+using ::google::cloud::bigquery_v2_minimal_testing::VerifyMetadataContext;
 using ::testing::IsEmpty;
 
 std::shared_ptr<DatasetMetadata> CreateMockDatasetMetadata(
@@ -63,12 +65,11 @@ TEST(DatasetMetadataTest, GetDataset) {
   request.set_project_id("test-project-id");
   request.set_dataset_id("test-dataset-id");
 
-  internal::OptionsSpan span(bigquery_v2_minimal_testing::GetMetadataOptions());
+  internal::OptionsSpan span(GetMetadataOptions());
 
   auto result = metadata->GetDataset(context, request);
   ASSERT_STATUS_OK(result);
-  bigquery_v2_minimal_testing::VerifyMetadataContext(context,
-                                                     "bigquery_v2_dataset");
+  VerifyMetadataContext(context, "bigquery_v2_dataset");
 }
 
 TEST(DatasetMetadataTest, ListDatasets) {
@@ -105,12 +106,11 @@ TEST(DatasetMetadataTest, ListDatasets) {
   rest_internal::RestContext context;
   request.set_project_id("test-project-id");
 
-  internal::OptionsSpan span(bigquery_v2_minimal_testing::GetMetadataOptions());
+  internal::OptionsSpan span(GetMetadataOptions());
 
   auto result = metadata->ListDatasets(context, request);
   ASSERT_STATUS_OK(result);
-  bigquery_v2_minimal_testing::VerifyMetadataContext(context,
-                                                     "bigquery_v2_dataset");
+  VerifyMetadataContext(context, "bigquery_v2_dataset");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

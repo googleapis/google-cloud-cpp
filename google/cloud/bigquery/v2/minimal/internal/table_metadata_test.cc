@@ -27,7 +27,9 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::bigquery_v2_minimal_testing::GetMetadataOptions;
 using ::google::cloud::bigquery_v2_minimal_testing::MockTableRestStub;
+using ::google::cloud::bigquery_v2_minimal_testing::VerifyMetadataContext;
 using ::testing::IsEmpty;
 
 std::shared_ptr<TableMetadata> CreateMockTableMetadata(
@@ -55,12 +57,11 @@ TEST(TableMetadataTest, GetTable) {
   GetTableRequest request = bigquery_v2_minimal_testing::MakeGetTableRequest();
   rest_internal::RestContext context;
 
-  internal::OptionsSpan span(bigquery_v2_minimal_testing::GetMetadataOptions());
+  internal::OptionsSpan span(GetMetadataOptions());
 
   auto result = metadata->GetTable(context, request);
   ASSERT_STATUS_OK(result);
-  bigquery_v2_minimal_testing::VerifyMetadataContext(context,
-                                                     "bigquery_v2_table");
+  VerifyMetadataContext(context, "bigquery_v2_table");
 }
 
 TEST(TableMetadataTest, ListTables) {
@@ -83,12 +84,11 @@ TEST(TableMetadataTest, ListTables) {
       bigquery_v2_minimal_testing::MakeListTablesRequest();
   rest_internal::RestContext context;
 
-  internal::OptionsSpan span(bigquery_v2_minimal_testing::GetMetadataOptions());
+  internal::OptionsSpan span(GetMetadataOptions());
 
   auto result = metadata->ListTables(context, request);
   ASSERT_STATUS_OK(result);
-  bigquery_v2_minimal_testing::VerifyMetadataContext(context,
-                                                     "bigquery_v2_table");
+  VerifyMetadataContext(context, "bigquery_v2_table");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
