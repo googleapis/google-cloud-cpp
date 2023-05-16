@@ -148,15 +148,17 @@ class StatusOr final {
 
   /**
    * Assign a `T` (or anything convertible to `T`) into the `StatusOr`.
+   *
+   * @return a reference to this object.
+   * @tparam U a type convertible to @p T
+   * @tparam Unspecified removes this function from overload resolution if
+   *   `U` is (a possibly cv-qualified version of) `StatusOr<T>`.
    */
-  // Disable this assignment if U==StatusOr<T>. Well, really if U is a
-  // cv-qualified version of StatusOr<T>, so we need to apply std::decay<> to
-  // it first.
-  template <typename U = T>
-  typename std::enable_if<  // NOLINT(misc-unconventional-assign-operator)
-      !std::is_same<StatusOr, typename std::decay<U>::type>::value,
-      StatusOr>::type&
-  operator=(U&& rhs) {
+  template <typename U = T,
+            typename Unspecified = typename std::enable_if<
+                !std::is_same<StatusOr, typename std::decay<U>::type>::value,
+                int>::type>
+  StatusOr& operator=(U&& rhs) {
     status_ = Status();
     value_ = std::forward<U>(rhs);
     return *this;
@@ -186,13 +188,18 @@ class StatusOr final {
 
   ///@{
   /**
-   * @name Deference operators.
+   * @name Dereference operators.
+   *
+   * @par Pre-conditions
+   * @parblock
+   * `ok() == true`
    *
    * @warning Using these operators when `ok() == false` results in undefined
    *     behavior.
+   * @endparblock
    *
-   * @return All these return a (properly ref and const-qualified) reference to
-   *     the underlying value.
+   * @return A properly ref and const-qualified reference to the underlying
+   *     value.
    */
   T& operator*() & { return *value_; }
 
@@ -207,11 +214,15 @@ class StatusOr final {
   /**
    * @name Member access operators.
    *
+   * @par Pre-conditions
+   * @parblock
+   * `ok() == true`
+   *
    * @warning Using these operators when `ok() == false` results in undefined
    *     behavior.
+   * @endparblock
    *
-   * @return All these return a (properly ref and const-qualified) pointer to
-   *     the underlying value.
+   * @return A properly ref and const-qualified pointer to the underlying value.
    */
   T* operator->() & { return &*value_; }
 
