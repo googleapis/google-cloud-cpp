@@ -77,6 +77,8 @@ add_library(
     v2/minimal/internal/project.h
     v2/minimal/internal/project_idempotency_policy.cc
     v2/minimal/internal/project_idempotency_policy.h
+    v2/minimal/internal/project_metadata.cc
+    v2/minimal/internal/project_metadata.h
     v2/minimal/internal/project_options.cc
     v2/minimal/internal/project_options.h
     v2/minimal/internal/project_request.cc
@@ -187,9 +189,12 @@ function (bigquery_rest_define_tests)
     target_sources(
         bigquery_rest_testing
         INTERFACE
+            ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/metadata_test_utils.cc
+            ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/metadata_test_utils.h
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/mock_log_backend.h
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/mock_dataset_rest_stub.h
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/mock_job_rest_stub.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/mock_project_rest_stub.h
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/mock_table_rest_stub.h
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/project_test_utils.cc
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/project_test_utils.h
@@ -237,6 +242,7 @@ function (bigquery_rest_define_tests)
         v2/minimal/internal/job_rest_stub_test.cc
         v2/minimal/internal/job_test.cc
         v2/minimal/internal/project_idempotency_policy_test.cc
+        v2/minimal/internal/project_metadata_test.cc
         v2/minimal/internal/project_options_test.cc
         v2/minimal/internal/project_request_test.cc
         v2/minimal/internal/project_response_test.cc

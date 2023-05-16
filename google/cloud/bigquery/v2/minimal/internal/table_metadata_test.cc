@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/table_metadata.h"
 #include "google/cloud/bigquery/v2/minimal/internal/table_rest_stub.h"
+#include "google/cloud/bigquery/v2/minimal/testing/metadata_test_utils.h"
 #include "google/cloud/bigquery/v2/minimal/testing/mock_table_rest_stub.h"
 #include "google/cloud/bigquery/v2/minimal/testing/table_test_utils.h"
 #include "google/cloud/common_options.h"
@@ -27,34 +28,11 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::bigquery_v2_minimal_testing::MockTableRestStub;
-using ::testing::Contains;
-using ::testing::ElementsAre;
-using ::testing::HasSubstr;
 using ::testing::IsEmpty;
-
-static auto const kUserProject = "test-only-project";
-static auto const kQuotaUser = "test-quota-user";
 
 std::shared_ptr<TableMetadata> CreateMockTableMetadata(
     std::shared_ptr<TableRestStub> mock) {
   return std::make_shared<TableMetadata>(std::move(mock));
-}
-
-void VerifyMetadataContext(rest_internal::RestContext& context) {
-  EXPECT_THAT(context.GetHeader("x-goog-api-client"),
-              Contains(HasSubstr("bigquery_v2_table")));
-  EXPECT_THAT(context.GetHeader("x-goog-request-params"), IsEmpty());
-  EXPECT_THAT(context.GetHeader("x-goog-user-project"),
-              ElementsAre(kUserProject));
-  EXPECT_THAT(context.GetHeader("x-goog-quota-user"), ElementsAre(kQuotaUser));
-  EXPECT_THAT(context.GetHeader("x-server-timeout"), ElementsAre("3.141"));
-}
-
-Options GetMetadataOptions() {
-  return Options{}
-      .set<UserProjectOption>(kUserProject)
-      .set<QuotaUserOption>(kQuotaUser)
-      .set<ServerTimeoutOption>(std::chrono::milliseconds(3141));
 }
 
 TEST(TableMetadataTest, GetTable) {
@@ -77,11 +55,12 @@ TEST(TableMetadataTest, GetTable) {
   GetTableRequest request = bigquery_v2_minimal_testing::MakeGetTableRequest();
   rest_internal::RestContext context;
 
-  internal::OptionsSpan span(GetMetadataOptions());
+  internal::OptionsSpan span(bigquery_v2_minimal_testing::GetMetadataOptions());
 
   auto result = metadata->GetTable(context, request);
   ASSERT_STATUS_OK(result);
-  VerifyMetadataContext(context);
+  bigquery_v2_minimal_testing::VerifyMetadataContext(context,
+                                                     "bigquery_v2_table");
 }
 
 TEST(TableMetadataTest, ListTables) {
@@ -104,11 +83,12 @@ TEST(TableMetadataTest, ListTables) {
       bigquery_v2_minimal_testing::MakeListTablesRequest();
   rest_internal::RestContext context;
 
-  internal::OptionsSpan span(GetMetadataOptions());
+  internal::OptionsSpan span(bigquery_v2_minimal_testing::GetMetadataOptions());
 
   auto result = metadata->ListTables(context, request);
   ASSERT_STATUS_OK(result);
-  VerifyMetadataContext(context);
+  bigquery_v2_minimal_testing::VerifyMetadataContext(context,
+                                                     "bigquery_v2_table");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
