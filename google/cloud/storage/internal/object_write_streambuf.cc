@@ -30,10 +30,8 @@ ObjectWriteStreambuf::ObjectWriteStreambuf(Status status)
     : last_status_(std::move(status)),
       max_buffer_size_(UploadChunkRequest::kChunkSizeQuantum),
       span_options_(CurrentOptions()) {
-  current_ios_buffer_.resize(max_buffer_size_);
-  auto* pbeg = current_ios_buffer_.data();
-  auto* pend = pbeg + current_ios_buffer_.size();
-  setp(pbeg, pend);
+  current_ios_buffer_.reserve(UploadChunkRequest::kChunkSizeQuantum);
+  UpdatePutArea();
 }
 
 ObjectWriteStreambuf::ObjectWriteStreambuf(
@@ -54,10 +52,8 @@ ObjectWriteStreambuf::ObjectWriteStreambuf(
       hash_validator_(std::move(hash_validator)),
       auto_finalize_(auto_finalize),
       span_options_(CurrentOptions()) {
-  current_ios_buffer_.resize(max_buffer_size_);
-  auto* pbeg = current_ios_buffer_.data();
-  auto* pend = pbeg + current_ios_buffer_.size();
-  setp(pbeg, pend);
+  current_ios_buffer_.reserve(UploadChunkRequest::kChunkSizeQuantum);
+  UpdatePutArea();
 }
 
 void ObjectWriteStreambuf::AutoFlushFinal() {
@@ -107,20 +103,22 @@ std::streamsize ObjectWriteStreambuf::xsputn(char const* s,
   if (!IsOpen()) return traits_type::eof();
 
   auto const actual_size = put_area_size();
-  if (count + actual_size >= max_buffer_size_) {
-    if (actual_size == 0) {
-      FlushRoundChunk({ConstBuffer(s, static_cast<std::size_t>(count))});
-    } else {
-      FlushRoundChunk({
-          ConstBuffer(pbase(), actual_size),
-          ConstBuffer(s, static_cast<std::size_t>(count)),
-      });
-    }
-    if (!last_status_.ok()) return traits_type::eof();
-  } else {
-    std::copy(s, s + count, pptr());
-    pbump(static_cast<int>(count));
+  // One of the invariants in this class is that actual_size is always less than
+  // max_buffer_size_. Using max_buffer_size_ - actual size avoids overflow.
+  if (static_cast<std::size_t>(count) < max_buffer_size_ - actual_size) {
+    current_ios_buffer_.insert(current_ios_buffer_.end(), s, s + count);
+    UpdatePutArea();
+    return count;
   }
+  if (actual_size == 0) {
+    FlushRoundChunk({ConstBuffer(s, static_cast<std::size_t>(count))});
+  } else {
+    FlushRoundChunk({
+        ConstBuffer(pbase(), actual_size),
+        ConstBuffer(s, static_cast<std::size_t>(count)),
+    });
+  }
+  if (!last_status_.ok()) return traits_type::eof();
   return count;
 }
 
@@ -131,8 +129,8 @@ ObjectWriteStreambuf::int_type ObjectWriteStreambuf::overflow(int_type ch) {
 
   auto actual_size = put_area_size();
   if (actual_size >= max_buffer_size_) Flush();
-  *pptr() = traits_type::to_char_type(ch);
-  pbump(1);
+  current_ios_buffer_.push_back(traits_type::to_char_type(ch));
+  UpdatePutArea();
   return last_status_.ok() ? ch : traits_type::eof();
 }
 
@@ -163,7 +161,7 @@ void ObjectWriteStreambuf::FlushFinal() {
   headers_ = std::move(response->request_metadata);
 
   // Reset the iostream put area with valid pointers, but empty.
-  current_ios_buffer_.resize(1);
+  current_ios_buffer_.clear();
   auto* pbeg = current_ios_buffer_.data();
   setp(pbeg, pbeg);
 }
@@ -213,13 +211,12 @@ void ObjectWriteStreambuf::FlushRoundChunk(ConstBufferSequence buffers) {
 
   // Reset the internal buffer and copy any trailing bytes from `buffers` to
   // it.
-  auto* pbeg = current_ios_buffer_.data();
-  setp(pbeg, pbeg + current_ios_buffer_.size());
+  current_ios_buffer_.clear();
   PopFrontBytes(buffers, rounded_size);
   for (auto const& b : buffers) {
-    std::copy(b.begin(), b.end(), pptr());
-    pbump(static_cast<int>(b.size()));
+    current_ios_buffer_.insert(current_ios_buffer_.end(), b.begin(), b.end());
   }
+  UpdatePutArea();
 
   metadata_ = std::move(response->payload);
   committed_size_ = response->committed_size.value_or(0);
@@ -238,6 +235,13 @@ void ObjectWriteStreambuf::FlushRoundChunk(ConstBufferSequence buffers) {
                   << expected_committed_size;
     last_status_ = Status(StatusCode::kAborted, error_message.str());
   }
+}
+
+void ObjectWriteStreambuf::UpdatePutArea() {
+  auto* pbeg = current_ios_buffer_.data();
+  auto const n = current_ios_buffer_.size();
+  setp(pbeg, pbeg + n);
+  if (!current_ios_buffer_.empty()) pbump(static_cast<int>(n));
 }
 
 }  // namespace internal
