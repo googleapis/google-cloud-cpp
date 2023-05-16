@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/project_rest_stub_factory.h"
+#include "google/cloud/bigquery/v2/minimal/internal/project_logging.h"
+#include "google/cloud/bigquery/v2/minimal/internal/project_metadata.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/algorithm.h"
@@ -36,6 +38,15 @@ std::shared_ptr<ProjectRestStub> CreateDefaultProjectRestStub(
 
   std::shared_ptr<ProjectRestStub> stub =
       std::make_shared<DefaultProjectRestStub>(std::move(curl_rest_client));
+
+  stub = std::make_shared<ProjectMetadata>(std::move(stub));
+
+  if (internal::Contains(local_opts.get<TracingComponentsOption>(), "rpc")) {
+    GCP_LOG(INFO) << "Enabled logging for REST rpc calls";
+    stub = std::make_shared<ProjectLogging>(
+        std::move(stub), local_opts.get<RestTracingOptionsOption>(),
+        local_opts.get<TracingComponentsOption>());
+  }
 
   return stub;
 }
