@@ -955,6 +955,7 @@ bool AppendIfSimpleSect(std::ostream& os, MarkdownContext const& ctx,
   if (kind == "see") {
     nested = ctx;
     os << "\n\n###### See Also";
+    nested.paragraph_start = "\n\n";
   } else if (kUseH6->count(kind) != 0) {
     nested = ctx;
     os << "\n\n###### ";

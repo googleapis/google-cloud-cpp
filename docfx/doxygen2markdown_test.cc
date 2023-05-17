@@ -1055,6 +1055,34 @@ Second paragraph.)md";
   EXPECT_EQ(kExpected, os.str());
 }
 
+TEST(Doxygen2Markdown, SimpleSectSeeAlsoContext) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <simplesect id='test-node' kind="see">
+          <para>First paragraph.</para>
+          <para>Second paragraph.</para>
+        </simplesect>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"md(
+
+###### See Also
+
+First paragraph.
+
+Second paragraph.)md";
+
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  MarkdownContext ctx;
+  ctx.paragraph_start = "";
+  ASSERT_TRUE(AppendIfSimpleSect(os, ctx, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
+}
+
 TEST(Doxygen2Markdown, SimpleSectBlockQuote) {
   auto constexpr kXmlPrefix = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">)xml";
