@@ -47,7 +47,9 @@ class ResultSourceInterface {
    * Returns the next row in the stream.
    *
    * @return if the stream is interrupted due to a failure the
-   *   `StatusOr<spanner::Row>` contains the error. If the
+   *   `StatusOr<spanner::Row>` contains the error.  The function returns a
+   *   successful `StatusOr<>` with an empty `spanner::Row` to indicate
+   *   end-of-stream.
    */
   virtual StatusOr<spanner::Row> NextRow() = 0;
 
@@ -61,8 +63,8 @@ class ResultSourceInterface {
   virtual absl::optional<google::spanner::v1::ResultSetMetadata> Metadata() = 0;
 
   /**
-   * Returns statiscs about the result set, such as the number of rows returned,
-   * or the query plan used to compute the results.
+   * Returns statistics about the result set, such as the number of rows, and
+   * the query plan used to compute the results.
    *
    * @see https://cloud.google.com/spanner/docs/reference/rpc/google.spanner.v1#resultsetstats
    *     for more information.
