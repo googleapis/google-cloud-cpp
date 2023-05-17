@@ -77,6 +77,8 @@ add_library(
     v2/minimal/internal/project.h
     v2/minimal/internal/project_idempotency_policy.cc
     v2/minimal/internal/project_idempotency_policy.h
+    v2/minimal/internal/project_logging.cc
+    v2/minimal/internal/project_logging.h
     v2/minimal/internal/project_metadata.cc
     v2/minimal/internal/project_metadata.h
     v2/minimal/internal/project_options.cc
@@ -242,6 +244,7 @@ function (bigquery_rest_define_tests)
         v2/minimal/internal/job_rest_stub_test.cc
         v2/minimal/internal/job_test.cc
         v2/minimal/internal/project_idempotency_policy_test.cc
+        v2/minimal/internal/project_logging_test.cc
         v2/minimal/internal/project_metadata_test.cc
         v2/minimal/internal/project_options_test.cc
         v2/minimal/internal/project_request_test.cc
