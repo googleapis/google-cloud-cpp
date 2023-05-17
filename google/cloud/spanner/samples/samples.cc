@@ -1537,6 +1537,35 @@ void ListDatabaseOperationsCommand(std::vector<std::string> argv) {
   ListDatabaseOperations(std::move(client), argv[0], argv[1]);
 }
 
+//! [update-database] [START spanner_update_database]
+void UpdateDatabase(google::cloud::spanner_admin::DatabaseAdminClient client,
+                    std::string const& project_id,
+                    std::string const& instance_id,
+                    std::string const& database_id, bool drop_protection) {
+  google::cloud::spanner::Database db(project_id, instance_id, database_id);
+  google::spanner::admin::database::v1::Database database;
+  database.set_name(db.FullName());
+  database.set_enable_drop_protection(drop_protection);
+  google::protobuf::FieldMask update_mask;
+  update_mask.add_paths("enable_drop_protection");
+  auto updated = client.UpdateDatabase(database, update_mask).get();
+  if (!updated) throw std::move(updated).status();
+  std::cout << "Database " << updated->name() << " successfully updated.\n";
+}
+//! [update-database] [END spanner_update_database]
+
+void UpdateDatabaseCommand(std::vector<std::string> argv) {
+  if (argv.size() != 4) {
+    throw std::runtime_error(
+        "update-database <project-id> <instance-id> <database-id>"
+        " <drop-protection>");
+  }
+  google::cloud::spanner_admin::DatabaseAdminClient client(
+      google::cloud::spanner_admin::MakeDatabaseAdminConnection());
+  bool drop_protection = (argv[3][0] == 'T');
+  UpdateDatabase(std::move(client), argv[0], argv[1], argv[2], drop_protection);
+}
+
 //! [drop-database] [START spanner_drop_database]
 void DropDatabase(google::cloud::spanner_admin::DatabaseAdminClient client,
                   std::string const& project_id, std::string const& instance_id,
@@ -3898,6 +3927,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"list-backups", ListBackupsCommand},
       {"list-backup-operations", ListBackupOperationsCommand},
       {"list-database-operations", ListDatabaseOperationsCommand},
+      {"update-database", UpdateDatabaseCommand},
       make_database_command_entry("drop-database", DropDatabase),
       make_database_command_entry("database-get-iam-policy",
                                   DatabaseGetIamPolicy),
@@ -4717,6 +4747,13 @@ void RunAll(bool emulator) {
 
   SampleBanner("spanner_drop_database");
   DeleteAll(client);
+
+  if (!emulator) {
+    SampleBanner("spanner_update_database");
+    UpdateDatabase(database_admin_client, project_id, instance_id, database_id,
+                   /*drop_protection=*/false);
+  }
+
   DropDatabase(database_admin_client, project_id, instance_id, database_id);
 
   if (!emulator) {  // default_leader
