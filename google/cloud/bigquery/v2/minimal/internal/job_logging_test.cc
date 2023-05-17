@@ -15,9 +15,9 @@
 #include "google/cloud/bigquery/v2/minimal/internal/job_logging.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
 #include "google/cloud/bigquery/v2/minimal/testing/mock_job_rest_stub.h"
-#include "google/cloud/bigquery/v2/minimal/testing/mock_log_backend.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/log.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -27,8 +27,11 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::bigquery_v2_minimal_testing::MockBigQueryJobRestStub;
+using ::google::cloud::testing_util::ScopedLog;
+using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
+using ::testing::Not;
 
 std::shared_ptr<BigQueryJobLogging> CreateMockJobLogging(
     std::shared_ptr<BigQueryJobRestStub> mock) {
@@ -36,26 +39,9 @@ std::shared_ptr<BigQueryJobLogging> CreateMockJobLogging(
                                               std::set<std::string>{});
 }
 
-class JobLoggingClientTest : public ::testing::Test {
- protected:
-  void SetUp() override {
-    log_backend_ =
-        std::make_shared<bigquery_v2_minimal_testing::MockLogBackend>();
-    log_backend_id_ =
-        google::cloud::LogSink::Instance().AddBackend(log_backend_);
-  }
-  void TearDown() override {
-    google::cloud::LogSink::Instance().RemoveBackend(log_backend_id_);
-    log_backend_id_ = 0;
-    log_backend_.reset();
-  }
+TEST(JobLoggingClientTest, GetJob) {
+  ScopedLog log;
 
-  std::shared_ptr<bigquery_v2_minimal_testing::MockLogBackend> log_backend_ =
-      nullptr;
-  long log_backend_id_ = 0;  // NOLINT(google-runtime-int)
-};
-
-TEST_F(JobLoggingClientTest, GetJob) {
   auto mock_stub = std::make_shared<MockBigQueryJobRestStub>();
   auto constexpr kExpectedPayload =
       R"({"kind": "jkind",
@@ -80,29 +66,27 @@ TEST_F(JobLoggingClientTest, GetJob) {
         return GetJobResponse::BuildFromHttpResponse(std::move(http_response));
       });
 
-  // Not checking all fields exhaustively. Just that request and response are
-  // being logged.
-  EXPECT_CALL(*log_backend_, ProcessWithOwnership)
-      .WillOnce([](LogRecord const& lr) {
-        EXPECT_THAT(lr.message, HasSubstr(" << "));
-        EXPECT_THAT(lr.message, HasSubstr(R"(GetJobRequest)"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(job_id: "j123")"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(project_id: "p123")"));
-      })
-      .WillOnce([](LogRecord const& lr) {
-        EXPECT_THAT(lr.message, HasSubstr(R"(GetJobResponse)"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(status: "DONE")"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(id: "j123")"));
-      });
-
   auto client = CreateMockJobLogging(std::move(mock_stub));
   GetJobRequest request("p123", "j123");
   rest_internal::RestContext context;
 
   client->GetJob(context, request);
+
+  auto actual_lines = log.ExtractLines();
+
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(" << ")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(GetJobRequest)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(job_id: "j123")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(project_id: "p123")")));
+
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(GetJobResponse)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(status: "DONE")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(id: "j123")")));
 }
 
-TEST_F(JobLoggingClientTest, ListJobs) {
+TEST(JobLoggingClientTest, ListJobs) {
+  ScopedLog log;
+
   auto mock_stub = std::make_shared<MockBigQueryJobRestStub>();
   auto constexpr kExpectedPayload =
       R"({"etag": "tag-1",
@@ -135,25 +119,23 @@ TEST_F(JobLoggingClientTest, ListJobs) {
                 std::move(http_response));
           });
 
-  EXPECT_CALL(*log_backend_, ProcessWithOwnership)
-      .WillOnce([](LogRecord const& lr) {
-        EXPECT_THAT(lr.message, HasSubstr(" << "));
-        EXPECT_THAT(lr.message, HasSubstr(R"(ListJobsRequest)"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(project_id: "p123")"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(all_users: false)"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(max_results: 0)"));
-      })
-      .WillOnce([](LogRecord const& lr) {
-        EXPECT_THAT(lr.message, HasSubstr(R"(ListJobsResponse)"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(id: "1")"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(state: "DONE")"));
-      });
-
   auto client = CreateMockJobLogging(std::move(mock_stub));
   ListJobsRequest request("p123");
   rest_internal::RestContext context;
 
   client->ListJobs(context, request);
+
+  auto actual_lines = log.ExtractLines();
+
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(" << ")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(ListJobsRequest)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(project_id: "p123")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(all_users: false)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(max_results: 0)")));
+
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(ListJobsResponse)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(id: "1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(state: "DONE")")));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

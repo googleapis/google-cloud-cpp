@@ -42,6 +42,7 @@ std::shared_ptr<ProjectLogging> CreateMockProjectLogging(
 
 TEST(ProjectLoggingClientTest, ListProjects) {
   ScopedLog log;
+
   auto mock_stub = std::make_shared<MockProjectRestStub>();
 
   EXPECT_CALL(*mock_stub, ListProjects)
@@ -63,7 +64,7 @@ TEST(ProjectLoggingClientTest, ListProjects) {
 
   client->ListProjects(context, request);
 
-  auto const& actual_lines = log.ExtractLines();
+  auto actual_lines = log.ExtractLines();
 
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(ListProjectsRequest)")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(max_results: 10)")));
