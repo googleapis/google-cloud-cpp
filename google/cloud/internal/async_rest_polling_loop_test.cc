@@ -70,7 +70,7 @@ class MockPollingPolicy : public PollingPolicy {
   MOCK_METHOD(std::chrono::milliseconds, WaitPeriod, (), (override));
 };
 
-AsyncRestPollLongRunningOperation MakePoll(
+AsyncRestPollLongRunningOperation<> MakePoll(
     std::shared_ptr<MockStub> const& mock) {
   return [mock](CompletionQueue& cq, std::unique_ptr<RestContext> context,
                 google::longrunning::GetOperationRequest const& request) {
@@ -78,7 +78,7 @@ AsyncRestPollLongRunningOperation MakePoll(
   };
 }
 
-AsyncRestCancelLongRunningOperation MakeCancel(
+AsyncRestCancelLongRunningOperation<> MakeCancel(
     std::shared_ptr<MockStub> const& mock) {
   return [mock](CompletionQueue& cq, std::unique_ptr<RestContext> context,
                 google::longrunning::CancelOperationRequest const& request) {
@@ -562,6 +562,120 @@ TEST(AsyncRestPollingLoopTest, PollThenCancelDuringPoll) {
   EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled,
                                AllOf(HasSubstr("test-function"),
                                      HasSubstr("operation cancelled"))));
+}
+
+class BespokeOperationType {
+ public:
+  bool is_done() const { return is_done_; }
+  void set_is_done(bool is_done) { is_done_ = is_done; }
+  std::string const& name() const { return name_; }
+  void set_name(std::string name) { name_ = std::move(name); }
+  std::string* mutable_name() { return &name_; }
+  bool operator==(BespokeOperationType const& other) const {
+    return is_done_ == other.is_done_ && name_ == other.name_;
+  }
+
+ private:
+  bool is_done_;
+  std::string name_;
+};
+
+class BespokeGetOperationRequestType {
+ public:
+  std::string const& name() const { return name_; }
+  void set_name(std::string name) { name_ = std::move(name); }
+
+ private:
+  std::string name_;
+};
+
+class BespokeCancelOperationRequestType {
+ public:
+  std::string const& name() const { return name_; }
+  void set_name(std::string name) { name_ = std::move(name); }
+
+ private:
+  std::string name_;
+};
+
+class MockBespokeOperationStub {
+ public:
+  MOCK_METHOD(future<StatusOr<BespokeOperationType>>, AsyncGetOperation,
+              (CompletionQueue&, std::unique_ptr<RestContext>,
+               BespokeGetOperationRequestType const&),
+              ());
+
+  MOCK_METHOD(future<Status>, AsyncCancelOperation,
+              (CompletionQueue&, std::unique_ptr<RestContext>,
+               BespokeCancelOperationRequestType const&),
+              ());
+};
+
+AsyncRestPollLongRunningOperation<BespokeOperationType,
+                                  BespokeGetOperationRequestType>
+MakeBespokePoll(std::shared_ptr<MockBespokeOperationStub> const& mock) {
+  return [mock](CompletionQueue& cq, std::unique_ptr<RestContext> context,
+                BespokeGetOperationRequestType const& request) {
+    return mock->AsyncGetOperation(cq, std::move(context), request);
+  };
+}
+
+AsyncRestCancelLongRunningOperation<BespokeCancelOperationRequestType>
+MakeBespokeCancel(std::shared_ptr<MockBespokeOperationStub> const& mock) {
+  return [mock](CompletionQueue& cq, std::unique_ptr<RestContext> context,
+                BespokeCancelOperationRequestType const& request) {
+    return mock->AsyncCancelOperation(cq, std::move(context), request);
+  };
+}
+
+TEST(AsyncRestPollingLoopTest, PollThenSuccessWithBespokeOperationTypes) {
+  Instance instance;
+  instance.set_name("test-instance-name");
+  BespokeOperationType starting_op;
+  starting_op.set_name("test-op-name");
+  starting_op.set_is_done(false);
+  BespokeOperationType expected = starting_op;
+  expected.set_is_done(true);
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .WillOnce([](std::chrono::nanoseconds) {
+        return make_ready_future(
+            make_status_or(std::chrono::system_clock::now()));
+      });
+  CompletionQueue cq(mock_cq);
+
+  auto mock = std::make_shared<MockBespokeOperationStub>();
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([&](CompletionQueue&, std::unique_ptr<RestContext>,
+                    BespokeGetOperationRequestType const&) {
+        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
+                  "PollThenSuccess");
+        return make_ready_future(make_status_or(expected));
+      });
+  auto policy = std::make_unique<MockPollingPolicy>();
+  EXPECT_CALL(*policy, clone()).Times(0);
+  EXPECT_CALL(*policy, OnFailure).Times(0);
+  EXPECT_CALL(*policy, WaitPeriod)
+      .WillRepeatedly(Return(std::chrono::milliseconds(1)));
+  internal::OptionsSpan span(Options{}.set<StringOption>("PollThenSuccess"));
+  auto pending =
+      AsyncRestPollingLoop<BespokeOperationType, BespokeGetOperationRequestType,
+                           BespokeCancelOperationRequestType>(
+          std::move(cq), make_ready_future(make_status_or(starting_op)),
+          MakeBespokePoll(mock), MakeBespokeCancel(mock), std::move(policy),
+          "test-function",
+          [](BespokeOperationType const& op) { return op.is_done(); },
+          [](std::string const& s, BespokeGetOperationRequestType& op) {
+            op.set_name(s);
+          },
+          [](std::string const& s, BespokeCancelOperationRequestType& op) {
+            op.set_name(s);
+          });
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  StatusOr<BespokeOperationType> actual = pending.get();
+  ASSERT_THAT(actual, IsOk());
+  EXPECT_THAT(*actual, Eq(expected));
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

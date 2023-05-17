@@ -93,7 +93,7 @@ StartOperation MakeStart(std::shared_ptr<MockRestStub> const& m) {
   };
 }
 
-AsyncRestPollLongRunningOperation MakePoll(
+AsyncRestPollLongRunningOperation<> MakePoll(
     std::shared_ptr<MockRestStub> const& m) {
   return [m](CompletionQueue& cq, std::unique_ptr<RestContext> context,
              google::longrunning::GetOperationRequest const& request) {
@@ -101,7 +101,7 @@ AsyncRestPollLongRunningOperation MakePoll(
   };
 }
 
-AsyncRestCancelLongRunningOperation MakeCancel(
+AsyncRestCancelLongRunningOperation<> MakeCancel(
     std::shared_ptr<MockRestStub> const& m) {
   return [m](CompletionQueue& cq, std::unique_ptr<RestContext> context,
              google::longrunning::CancelOperationRequest const& request) {
@@ -293,6 +293,154 @@ TEST(AsyncLongRunningTest, RequestPollThenCancel) {
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
   auto actual = pending.get();
   EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled));
+}
+
+class BespokeOperationType {
+ public:
+  bool is_done() const { return is_done_; }
+  void set_is_done(bool is_done) { is_done_ = is_done; }
+  std::string const& name() const { return name_; }
+  void set_name(std::string name) { name_ = std::move(name); }
+  std::string* mutable_name() { return &name_; }
+  bool operator==(BespokeOperationType const& other) const {
+    return is_done_ == other.is_done_ && name_ == other.name_;
+  }
+
+ private:
+  bool is_done_;
+  std::string name_;
+};
+
+class BespokeGetOperationRequestType {
+ public:
+  std::string const& name() const { return name_; }
+  void set_name(std::string name) { name_ = std::move(name); }
+
+ private:
+  std::string name_;
+};
+
+class BespokeCancelOperationRequestType {
+ public:
+  std::string const& name() const { return name_; }
+  void set_name(std::string name) { name_ = std::move(name); }
+
+ private:
+  std::string name_;
+};
+
+class MockBespokeOperationStub {
+ public:
+  MOCK_METHOD(future<StatusOr<BespokeOperationType>>, AsyncCreateInstance,
+              (CompletionQueue & cq, std::unique_ptr<RestContext> context,
+               CreateInstanceRequest const&),
+              ());
+
+  MOCK_METHOD(future<StatusOr<BespokeOperationType>>, AsyncGetOperation,
+              (CompletionQueue&, std::unique_ptr<RestContext>,
+               BespokeGetOperationRequestType const&),
+              ());
+
+  MOCK_METHOD(future<Status>, AsyncCancelOperation,
+              (CompletionQueue&, std::unique_ptr<RestContext>,
+               BespokeCancelOperationRequestType const&),
+              ());
+};
+
+using StartBespokeOperation =
+    std::function<future<StatusOr<BespokeOperationType>>(
+        CompletionQueue&, std::unique_ptr<RestContext>,
+        CreateInstanceRequest const&)>;
+
+StartBespokeOperation MakeBespokeStart(
+    std::shared_ptr<MockBespokeOperationStub> const& m) {
+  return [m](CompletionQueue& cq, std::unique_ptr<RestContext> context,
+             CreateInstanceRequest const& request) {
+    return m->AsyncCreateInstance(cq, std::move(context), request);
+  };
+}
+
+AsyncRestPollLongRunningOperation<BespokeOperationType,
+                                  BespokeGetOperationRequestType>
+MakeBespokePoll(std::shared_ptr<MockBespokeOperationStub> const& mock) {
+  return [mock](CompletionQueue& cq, std::unique_ptr<RestContext> context,
+                BespokeGetOperationRequestType const& request) {
+    return mock->AsyncGetOperation(cq, std::move(context), request);
+  };
+}
+
+AsyncRestCancelLongRunningOperation<BespokeCancelOperationRequestType>
+MakeBespokeCancel(std::shared_ptr<MockBespokeOperationStub> const& mock) {
+  return [mock](CompletionQueue& cq, std::unique_ptr<RestContext> context,
+                BespokeCancelOperationRequestType const& request) {
+    return mock->AsyncCancelOperation(cq, std::move(context), request);
+  };
+}
+
+TEST(AsyncLongRunningTest,
+     RequestPollThenSuccessResponseWithBespokeOperationTypes) {
+  Instance expected;
+  expected.set_name("test-instance-name");
+  BespokeOperationType starting_op;
+  starting_op.set_name("test-op-name");
+  starting_op.set_is_done(false);
+  BespokeOperationType done_op = starting_op;
+  done_op.set_is_done(true);
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .WillOnce([](std::chrono::nanoseconds) {
+        return make_ready_future(
+            make_status_or(std::chrono::system_clock::now()));
+      });
+  CompletionQueue cq(mock_cq);
+
+  auto mock = std::make_shared<MockBespokeOperationStub>();
+  EXPECT_CALL(*mock, AsyncCreateInstance)
+      .WillOnce([&](CompletionQueue&, std::unique_ptr<RestContext>,
+                    CreateInstanceRequest const&) {
+        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
+                  "RequestPollThenSuccessResponse");
+        return make_ready_future(make_status_or(starting_op));
+      });
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([&](CompletionQueue&, std::unique_ptr<RestContext>,
+                    BespokeGetOperationRequestType const&) {
+        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
+                  "RequestPollThenSuccessResponse");
+        return make_ready_future(make_status_or(done_op));
+      });
+  auto policy = std::make_unique<MockPollingPolicy>();
+  EXPECT_CALL(*policy, clone()).Times(0);
+  EXPECT_CALL(*policy, OnFailure).Times(0);
+  EXPECT_CALL(*policy, WaitPeriod)
+      .WillRepeatedly(Return(std::chrono::milliseconds(1)));
+  CreateInstanceRequest request;
+  request.set_parent("test-parent");
+  request.set_instance_id("test-instance-id");
+  internal::OptionsSpan span(
+      Options{}.set<StringOption>("RequestPollThenSuccessResponse"));
+  auto actual =
+      AsyncRestLongRunningOperation<Instance, BespokeOperationType,
+                                    BespokeGetOperationRequestType,
+                                    BespokeCancelOperationRequestType>(
+          cq, std::move(request), MakeBespokeStart(mock), MakeBespokePoll(mock),
+          MakeBespokeCancel(mock),
+          [&](StatusOr<BespokeOperationType> const&,
+              std::string const&) -> StatusOr<Instance> { return expected; },
+          TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+          std::move(policy), "test-function",
+          [](BespokeOperationType const& op) { return op.is_done(); },
+          [](std::string const& s, BespokeGetOperationRequestType& op) {
+            op.set_name(s);
+          },
+          [](std::string const& s, BespokeCancelOperationRequestType& op) {
+            op.set_name(s);
+          })
+          .get();
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  ASSERT_THAT(actual, IsOk());
+  EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
 
 }  // namespace
