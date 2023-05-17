@@ -14,14 +14,6 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/project_logging.h"
 #include "google/cloud/bigquery/v2/minimal/internal/log_wrapper.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
-#include "google/cloud/internal/debug_string.h"
-#include "google/cloud/internal/debug_string_status.h"
-#include "google/cloud/internal/invoke_result.h"
-#include "google/cloud/internal/rest_context.h"
-#include "google/cloud/log.h"
-#include "google/cloud/status_or.h"
-#include "absl/strings/string_view.h"
 
 namespace google {
 namespace cloud {
