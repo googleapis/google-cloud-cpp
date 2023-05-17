@@ -110,12 +110,16 @@ class CompletionQueue {
   /**
    * Make an asynchronous unary RPC.
    *
+   * @deprecated Applications should have not need to call this function. The
+   *     libraries provide `Async*()` member functions in the generated (or)
+   *     hand-crafted `*Client` classes for the same purpose.
+   *
    * @param async_call a callable to start the asynchronous RPC.
    * @param request the contents of the request.
    * @param context an initialized request context to make the call.
    *
    * @tparam AsyncCallType the type of @a async_call. It must be invocable with
-   *     `(grpc::ClientContext*, RequestType const&, grpc::CompletionQueue*)`.
+   *     `(grpc::ClientContext*, Request const&, grpc::CompletionQueue*)`.
    *     Furthermore, it should return a
    *     `std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<Response>>>`.
    *     These requirements are verified by
@@ -123,14 +127,21 @@ class CompletionQueue {
    *     excluded from overload resolution if the parameters do not meet these
    *     requirements.
    * @tparam Request the type of the request parameter in the gRPC.
+   * @tparam Response the response from the asynchronous RPC.
+   * @tparam Sig a helper type to compute `Response`.
    *
    * @return a future that becomes satisfied when the operation completes.
    */
   template <
       typename AsyncCallType, typename Request,
+      /// @cond implementation_details
       typename Sig = internal::AsyncCallResponseType<AsyncCallType, Request>,
+      /// @endcond
       typename Response = typename Sig::type,
-      typename std::enable_if<Sig::value, int>::type = 0>
+      /// @cond implementation_details
+      typename std::enable_if<Sig::value, int>::type = 0
+      /// @endcond
+      >
   future<StatusOr<Response>> MakeUnaryRpc(
       AsyncCallType async_call, Request const& request,
       std::unique_ptr<grpc::ClientContext> context) {
@@ -145,6 +156,10 @@ class CompletionQueue {
    * of all interesting events in the stream. Note that then handler is called
    * by any thread blocked on this object's Run() member function. However, only
    * one callback in the handler is called at a time.
+   *
+   * @deprecated Applications should have not need to call this function. The
+   *     libraries provide `Async*()` member functions in the generated (or)
+   *     hand-crafted `*Client` classes for the same purpose.
    *
    * @param async_call a callable to start the asynchronous RPC.
    * @param request the contents of the request.
@@ -185,13 +200,18 @@ class CompletionQueue {
   /**
    * Asynchronously run a functor on a thread `Run()`ning the `CompletionQueue`.
    *
-   * @tparam Functor the functor to call on the CompletionQueue thread.
-   *   It must satisfy the `void(CompletionQueue&)` signature.
-   * @param functor the value of the functor.
+   * @param functor the functor to invoke in one of the CompletionQueue's
+   *     threads.
+   *
+   * @tparam Functor the type of @p functor. It must satisfy
+   *     `std::is_invocable<Functor, #CompletionQueue&>`
    */
   template <typename Functor,
+            /// @cond implementation_details
             typename std::enable_if<
-                internal::CheckRunAsyncCallback<Functor>::value, int>::type = 0>
+                internal::CheckRunAsyncCallback<Functor>::value, int>::type = 0
+            /// @endcond
+            >
   void RunAsync(Functor&& functor) {
     class Wrapper : public internal::RunAsyncBase {
      public:
@@ -216,13 +236,16 @@ class CompletionQueue {
   /**
    * Asynchronously run a functor on a thread `Run()`ning the `CompletionQueue`.
    *
-   * @tparam Functor the functor to call on the CompletionQueue thread.
-   *   It must satisfy the `void()` signature.
-   * @param functor the value of the functor.
+   * @param functor the functor to call in one of the CompletionQueue's threads.
+   * @tparam Functor the type of @p functor. It must satisfy
+   *     `std::is_invocable<Functor>`.
    */
   template <typename Functor,
+            /// @cond implementation_details
             typename std::enable_if<internal::is_invocable<Functor>::value,
-                                    int>::type = 0>
+                                    int>::type = 0
+            /// @endcond
+            >
   void RunAsync(Functor&& functor) {
     class Wrapper : public internal::RunAsyncBase {
      public:
