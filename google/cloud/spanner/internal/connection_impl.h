@@ -139,7 +139,7 @@ class ConnectionImpl : public spanner::Connection {
       StatusOr<google::spanner::v1::TransactionSelector>& s,
       TransactionContext const& ctx, SqlParams params,
       google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode,
-      std::function<StatusOr<std::unique_ptr<ResultSourceInterface>>(
+      std::function<StatusOr<std::unique_ptr<spanner::ResultSourceInterface>>(
           google::spanner::v1::ExecuteSqlRequest& request)> const&
           retry_resume_fn);
 

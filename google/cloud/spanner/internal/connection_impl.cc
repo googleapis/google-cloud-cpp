@@ -258,7 +258,7 @@ Status ConnectionImpl::Rollback(RollbackParams params) {
                });
 }
 
-class StatusOnlyResultSetSource : public ResultSourceInterface {
+class StatusOnlyResultSetSource : public spanner::ResultSourceInterface {
  public:
   explicit StatusOnlyResultSetSource(google::cloud::Status status)
       : status_(std::move(status)) {}
@@ -283,11 +283,11 @@ ResultType MakeStatusOnlyResult(Status status) {
       std::make_unique<StatusOnlyResultSetSource>(std::move(status)));
 }
 
-class DmlResultSetSource : public ResultSourceInterface {
+class DmlResultSetSource : public spanner::ResultSourceInterface {
  public:
-  static StatusOr<std::unique_ptr<ResultSourceInterface>> Create(
+  static StatusOr<std::unique_ptr<spanner::ResultSourceInterface>> Create(
       google::spanner::v1::ResultSet result_set) {
-    return std::unique_ptr<ResultSourceInterface>(
+    return std::unique_ptr<spanner::ResultSourceInterface>(
         new DmlResultSetSource(std::move(result_set)));
   }
 
@@ -320,7 +320,7 @@ class StreamingPartitionedDmlResult {
  public:
   StreamingPartitionedDmlResult() = default;
   explicit StreamingPartitionedDmlResult(
-      std::unique_ptr<ResultSourceInterface> source)
+      std::unique_ptr<spanner::ResultSourceInterface> source)
       : source_(std::move(source)) {}
 
   // This class is movable but not copyable.
@@ -345,7 +345,7 @@ class StreamingPartitionedDmlResult {
   }
 
  private:
-  std::unique_ptr<ResultSourceInterface> source_;
+  std::unique_ptr<spanner::ResultSourceInterface> source_;
 };
 
 /**
@@ -583,7 +583,7 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
     StatusOr<google::spanner::v1::TransactionSelector>& s,
     TransactionContext const& ctx, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode,
-    std::function<StatusOr<std::unique_ptr<ResultSourceInterface>>(
+    std::function<StatusOr<std::unique_ptr<spanner::ResultSourceInterface>>(
         google::spanner::v1::ExecuteSqlRequest& request)> const&
         retry_resume_fn) {
   if (!s.ok()) {
@@ -677,7 +677,7 @@ ResultType ConnectionImpl::CommonQueryImpl(
       [stub, retry_policy_prototype, backoff_policy_prototype,
        route_to_leader = ctx.route_to_leader, tracing_enabled,
        tracing_options](google::spanner::v1::ExecuteSqlRequest& request) mutable
-      -> StatusOr<std::unique_ptr<ResultSourceInterface>> {
+      -> StatusOr<std::unique_ptr<spanner::ResultSourceInterface>> {
     auto factory = [stub, request, route_to_leader, tracing_enabled,
                     tracing_options](std::string const& resume_token) mutable {
       if (!resume_token.empty()) request.set_resume_token(resume_token);

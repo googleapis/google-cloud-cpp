@@ -42,10 +42,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * reader and the spanner `ResultSet`, and is used to iterate over the rows
  * returned from a read operation.
  */
-class PartialResultSetSource : public ResultSourceInterface {
+class PartialResultSetSource : public spanner::ResultSourceInterface {
  public:
   /// Factory method to create a PartialResultSetSource.
-  static StatusOr<std::unique_ptr<ResultSourceInterface>> Create(
+  static StatusOr<std::unique_ptr<spanner::ResultSourceInterface>> Create(
       std::unique_ptr<PartialResultSetReader> reader);
 
   ~PartialResultSetSource() override;

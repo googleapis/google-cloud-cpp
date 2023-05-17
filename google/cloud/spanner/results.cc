@@ -26,7 +26,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 absl::optional<Timestamp> GetReadTimestamp(
-    std::unique_ptr<spanner_internal::ResultSourceInterface> const& source) {
+    std::unique_ptr<ResultSourceInterface> const& source) {
   auto metadata = source->Metadata();
   absl::optional<Timestamp> timestamp;
   if (metadata.has_value() && metadata->has_transaction() &&
@@ -38,13 +38,13 @@ absl::optional<Timestamp> GetReadTimestamp(
 }
 
 std::int64_t GetRowsModified(
-    std::unique_ptr<spanner_internal::ResultSourceInterface> const& source) {
+    std::unique_ptr<ResultSourceInterface> const& source) {
   auto stats = source->Stats();
   return stats ? stats->row_count_exact() : 0;
 }
 
 absl::optional<std::unordered_map<std::string, std::string>> GetExecutionStats(
-    std::unique_ptr<spanner_internal::ResultSourceInterface> const& source) {
+    std::unique_ptr<ResultSourceInterface> const& source) {
   auto stats = source->Stats();
   if (stats && stats->has_query_stats()) {
     std::unordered_map<std::string, std::string> execution_stats;
