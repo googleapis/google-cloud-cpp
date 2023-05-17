@@ -581,6 +581,69 @@ TEST_F(DatabaseAdminClientTest, DatabasePostgreSQLBasics) {
   EXPECT_STATUS_OK(drop_status);
 }
 
+/// @test Verify dropping a database fails with drop protection enabled.
+TEST_F(DatabaseAdminClientTest, DropDatabaseProtection) {
+  auto instance = database_.instance();
+  auto database =
+      client_
+          .CreateDatabase(
+              instance.FullName(),
+              absl::StrCat("CREATE DATABASE `", database_.database_id(), "`"))
+          .get();
+  ASSERT_THAT(database, IsOk());
+  EXPECT_FALSE(database->enable_drop_protection());
+  EXPECT_FALSE(database->reconciling());
+
+  google::protobuf::FieldMask update_mask;
+  update_mask.add_paths("enable_drop_protection");
+
+  database->set_enable_drop_protection(true);
+  auto updated = client_.UpdateDatabase(*database, update_mask).get();
+  if (emulator_) {
+    EXPECT_THAT(updated, StatusIs(StatusCode::kUnimplemented));
+  } else {
+    ASSERT_THAT(updated, IsOk());
+    EXPECT_TRUE(updated->enable_drop_protection());
+    EXPECT_FALSE(updated->reconciling());
+
+    // Verify that GetDatabase() populates the drop protection field.
+    auto get = client_.GetDatabase(database->name());
+    ASSERT_THAT(get, IsOk());
+    EXPECT_EQ(database->name(), get->name());
+    EXPECT_TRUE(database->enable_drop_protection());
+
+    // Verify that ListDatabases() populates the drop protection field.
+    auto list_db = [&] {
+      for (auto const& db : client_.ListDatabases(instance.FullName())) {
+        if (db && db->name() == database_.FullName()) return db;
+      }
+      return StatusOr<google::spanner::admin::database::v1::Database>{
+          Status{StatusCode::kNotFound, "disappeared"}};
+    }();
+    ASSERT_THAT(list_db, IsOk());
+    EXPECT_EQ(database->name(), list_db->name());
+    EXPECT_TRUE(list_db->enable_drop_protection());
+
+    auto drop_protected = client_.DropDatabase(database->name());
+    EXPECT_THAT(drop_protected,
+                StatusIs(StatusCode::kFailedPrecondition,
+                         AllOf(HasSubstr("Cannot drop database"),
+                               HasSubstr("enable_drop_protection"))));
+
+    // We didn't create the instance, so, while we should not be able to
+    // delete it while it contains a protected database, we don't even try.
+
+    database->set_enable_drop_protection(false);
+    updated = client_.UpdateDatabase(*database, update_mask).get();
+    ASSERT_THAT(updated, IsOk());
+    EXPECT_FALSE(updated->enable_drop_protection());
+    EXPECT_FALSE(updated->reconciling());
+  }
+
+  auto drop_unprotected = client_.DropDatabase(database->name());
+  EXPECT_STATUS_OK(drop_unprotected);
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
