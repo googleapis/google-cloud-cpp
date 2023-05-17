@@ -3,7 +3,7 @@
 @mainpage Cloud Spanner C++ Client Library
 
 The Cloud Spanner C++ Client library offers types and functions to use Cloud
-Spanner from C++11 applications.
+Spanner from C++ applications.
 
 @tableofcontents{HTML:2}
 
@@ -22,12 +22,12 @@ into your project.
   to execute SQL queries in Cloud Spanner.
 - [Client::Commit()](@ref google::cloud::spanner::Client::Commit())
   to execute read-write transactions in Cloud Spanner.
-- [Client::Read()](@ref google::cloud::spanner::Client::Read()) - to read the
+- [Client::Read()](@ref google::cloud::spanner::Client::Read()) to read the
   rows in a table.
 - @ref spanner-error-handling to learn how the library reports run-time errors.
-- @ref spanner-env-logging enable logging. THis can be an effective approach to
-  diagnose many problems.
-- @ref spanner-env for environment variables affecting the library.
+- @ref spanner-env for environment variables affecting the library. Some of
+  these environment variables enable logging to the console. This can be an
+  effective approach to diagnose runtime problems.
 - @ref spanner-endpoint-example
 - @ref spanner-auth-example
 - @ref spanner-retry-example
@@ -52,9 +52,11 @@ endpoint for `google::cloud::spanner::Client`:
 
 @snippet client_samples.cc set-client-endpoint
 
-Follow these links for additional examples
- [DatabaseAdminClient](@ref DatabaseAdminClient-set-endpoint-snippet)
- [InstanceAdminClient](@ref InstanceAdminClient-set-endpoint-snippet)
+Follow these links to find examples for other `*Client` classes:
+
+- [`DatabaseAdminClient`](@ref DatabaseAdminClient-set-endpoint-snippet)
+- [`InstanceAdminClient`](@ref InstanceAdminClient-set-endpoint-snippet)
+
 */
 
 /**
@@ -71,9 +73,11 @@ Keep in mind that we chose this as an example because it is relatively easy to
 understand. Consult the [Best practices for managing service account keys]
 guide for more details.
 
-Follow these links for additional examples
- [DatabaseAdminClient](@ref DatabaseAdminClient-with-service-account-snippet)
- [InstanceAdminClient](@ref InstanceAdminClient-with-service-account-snippet)
+Follow these links to find examples for other `*Client` classes:
+
+- [`DatabaseAdminClient`](@ref DatabaseAdminClient-with-service-account-snippet)
+- [`InstanceAdminClient`](@ref InstanceAdminClient-with-service-account-snippet)
+
 */
 
 /**
@@ -91,11 +95,11 @@ period between retries.
 
 @snippet samples.cc custom-retry-policy
 
-@see [LimitedTimeRetryPolicy](@ref google::cloud::spanner::LimitedTimeRetryPolicy)
-   and [LimitedErrorCountRetryPolicy](@ref google::cloud::spanner::LimitedErrorCountRetryPolicy)
+@see [`LimitedTimeRetryPolicy`](@ref google::cloud::spanner::LimitedTimeRetryPolicy)
+   and [`LimitedErrorCountRetryPolicy`](@ref google::cloud::spanner::LimitedErrorCountRetryPolicy)
    for alternative retry policies.
 
-@see [ExponentialBackoffPolicy](@ref google::cloud::spanner::ExponentialBackoffPolicy)
+@see [`ExponentialBackoffPolicy`](@ref google::cloud::spanner::ExponentialBackoffPolicy)
    to configure different parameters for the exponential backoff policy.
 */
 
