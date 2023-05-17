@@ -3,7 +3,7 @@
 @mainpage Cloud Spanner C++ Client Library
 
 The Cloud Spanner C++ Client library offers types and functions to use Cloud
-Spanner from C++11 applications.
+Spanner from C++ applications.
 
 @tableofcontents{HTML:2}
 
@@ -25,9 +25,9 @@ into your project.
 - [Client::Read()](@ref google::cloud::spanner::Client::Read()) - to read the
   rows in a table.
 - @ref spanner-error-handling to learn how the library reports run-time errors.
-- @ref spanner-env-logging enable logging. THis can be an effective approach to
-  diagnose many problems.
 - @ref spanner-env for environment variables affecting the library.
+- @ref spanner-env includes environment variables to enable logging. This can be
+  an effective approach to diagnose many problems.
 - @ref spanner-endpoint-example
 - @ref spanner-auth-example
 - @ref spanner-retry-example
