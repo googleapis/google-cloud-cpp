@@ -15,9 +15,9 @@
 #include "google/cloud/bigquery/v2/minimal/internal/dataset_logging.h"
 #include "google/cloud/bigquery/v2/minimal/internal/dataset_rest_stub.h"
 #include "google/cloud/bigquery/v2/minimal/testing/mock_dataset_rest_stub.h"
-#include "google/cloud/bigquery/v2/minimal/testing/mock_log_backend.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/log.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -27,8 +27,11 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::bigquery_v2_minimal_testing::MockDatasetRestStub;
+using ::google::cloud::testing_util::ScopedLog;
+using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
+using ::testing::Not;
 
 std::shared_ptr<DatasetLogging> CreateMockDatasetLogging(
     std::shared_ptr<DatasetRestStub> mock) {
@@ -36,26 +39,9 @@ std::shared_ptr<DatasetLogging> CreateMockDatasetLogging(
                                           std::set<std::string>{});
 }
 
-class DatasetLoggingClientTest : public ::testing::Test {
- protected:
-  void SetUp() override {
-    log_backend_ =
-        std::make_shared<bigquery_v2_minimal_testing::MockLogBackend>();
-    log_backend_id_ =
-        google::cloud::LogSink::Instance().AddBackend(log_backend_);
-  }
-  void TearDown() override {
-    google::cloud::LogSink::Instance().RemoveBackend(log_backend_id_);
-    log_backend_id_ = 0;
-    log_backend_.reset();
-  }
+TEST(DatasetLoggingClientTest, GetDataset) {
+  ScopedLog log;
 
-  std::shared_ptr<bigquery_v2_minimal_testing::MockLogBackend> log_backend_ =
-      nullptr;
-  long log_backend_id_ = 0;  // NOLINT(google-runtime-int)
-};
-
-TEST_F(DatasetLoggingClientTest, GetDataset) {
   auto mock_stub = std::make_shared<MockDatasetRestStub>();
   auto constexpr kExpectedPayload =
       R"({"kind": "d-kind",
@@ -78,29 +64,23 @@ TEST_F(DatasetLoggingClientTest, GetDataset) {
                 std::move(http_response));
           });
 
-  // Not checking all fields exhaustively since this has already been tested.
-  // Just ensuring here that the request and response are being logged.
-  EXPECT_CALL(*log_backend_, ProcessWithOwnership)
-      .WillOnce([](LogRecord const& lr) {
-        EXPECT_THAT(lr.message, HasSubstr(" << "));
-        EXPECT_THAT(lr.message, HasSubstr(R"(GetDatasetRequest)"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(project_id: "p-id")"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(dataset_id: "d-id")"));
-      })
-      .WillOnce([](LogRecord const& lr) {
-        EXPECT_THAT(lr.message, HasSubstr(R"(GetDatasetResponse)"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(project_id: "p-id")"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(dataset_id: "d-id")"));
-      });
-
   auto client = CreateMockDatasetLogging(std::move(mock_stub));
   GetDatasetRequest request("p-id", "d-id");
   rest_internal::RestContext context;
 
   client->GetDataset(context, request);
+
+  auto actual_lines = log.ExtractLines();
+
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(GetDatasetRequest)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(project_id: "p-id")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(dataset_id: "d-id")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(GetDatasetResponse)")));
 }
 
-TEST_F(DatasetLoggingClientTest, ListDatasets) {
+TEST(DatasetLoggingClientTest, ListDatasets) {
+  ScopedLog log;
+
   auto mock_stub = std::make_shared<MockDatasetRestStub>();
   auto constexpr kExpectedPayload =
       R"({"etag": "tag-1",
@@ -129,26 +109,22 @@ TEST_F(DatasetLoggingClientTest, ListDatasets) {
                 std::move(http_response));
           });
 
-  EXPECT_CALL(*log_backend_, ProcessWithOwnership)
-      .WillOnce([](LogRecord const& lr) {
-        EXPECT_THAT(lr.message, HasSubstr(" << "));
-        EXPECT_THAT(lr.message, HasSubstr(R"(ListDatasetsRequest)"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(project_id: "p123")"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(all_datasets: false)"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(max_results: 0)"));
-      })
-      .WillOnce([](LogRecord const& lr) {
-        EXPECT_THAT(lr.message, HasSubstr(R"(ListDatasetsResponse)"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(project_id: "p123")"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(dataset_id: "d123")"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(next_page_token: "npt-123")"));
-      });
-
   auto client = CreateMockDatasetLogging(std::move(mock_stub));
   ListDatasetsRequest request("p123");
   rest_internal::RestContext context;
 
   client->ListDatasets(context, request);
+
+  auto actual_lines = log.ExtractLines();
+
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(ListDatasetsRequest)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(project_id: "p123")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(all_datasets: false)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(max_results: 0)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(ListDatasetsResponse)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(dataset_id: "d123")")));
+  EXPECT_THAT(actual_lines,
+              Contains(HasSubstr(R"(next_page_token: "npt-123")")));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

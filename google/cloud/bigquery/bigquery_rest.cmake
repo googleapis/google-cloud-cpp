@@ -193,7 +193,6 @@ function (bigquery_rest_define_tests)
         INTERFACE
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/metadata_test_utils.cc
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/metadata_test_utils.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/mock_log_backend.h
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/mock_dataset_rest_stub.h
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/mock_job_rest_stub.h
             ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/mock_project_rest_stub.h

@@ -14,11 +14,11 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/table_logging.h"
 #include "google/cloud/bigquery/v2/minimal/internal/table_rest_stub.h"
-#include "google/cloud/bigquery/v2/minimal/testing/mock_log_backend.h"
 #include "google/cloud/bigquery/v2/minimal/testing/mock_table_rest_stub.h"
 #include "google/cloud/bigquery/v2/minimal/testing/table_test_utils.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/log.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -28,8 +28,11 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::bigquery_v2_minimal_testing::MockTableRestStub;
+using ::google::cloud::testing_util::ScopedLog;
+using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
+using ::testing::Not;
 
 std::shared_ptr<TableLogging> CreateMockTableLogging(
     std::shared_ptr<TableRestStub> mock) {
@@ -37,26 +40,9 @@ std::shared_ptr<TableLogging> CreateMockTableLogging(
                                         std::set<std::string>{});
 }
 
-class TableLoggingClientTest : public ::testing::Test {
- protected:
-  void SetUp() override {
-    log_backend_ =
-        std::make_shared<bigquery_v2_minimal_testing::MockLogBackend>();
-    log_backend_id_ =
-        google::cloud::LogSink::Instance().AddBackend(log_backend_);
-  }
-  void TearDown() override {
-    google::cloud::LogSink::Instance().RemoveBackend(log_backend_id_);
-    log_backend_id_ = 0;
-    log_backend_.reset();
-  }
+TEST(TableLoggingClientTest, GetTable) {
+  ScopedLog log;
 
-  std::shared_ptr<bigquery_v2_minimal_testing::MockLogBackend> log_backend_ =
-      nullptr;
-  long log_backend_id_ = 0;  // NOLINT(google-runtime-int)
-};
-
-TEST_F(TableLoggingClientTest, GetTable) {
   auto mock_stub = std::make_shared<MockTableRestStub>();
 
   EXPECT_CALL(*mock_stub, GetTable)
@@ -72,31 +58,24 @@ TEST_F(TableLoggingClientTest, GetTable) {
                 std::move(http_response));
           });
 
-  // Not checking all fields exhaustively since this has already been tested.
-  // Just ensuring here that the request and response are being logged.
-  EXPECT_CALL(*log_backend_, ProcessWithOwnership)
-      .WillOnce([](LogRecord const& lr) {
-        EXPECT_THAT(lr.message, HasSubstr(" << "));
-        EXPECT_THAT(lr.message, HasSubstr(R"(GetTableRequest)"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(project_id: "t-123")"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(dataset_id: "t-123")"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(table_id: "t-123")"));
-      })
-      .WillOnce([](LogRecord const& lr) {
-        EXPECT_THAT(lr.message, HasSubstr(R"(GetTableResponse)"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(project_id: "t-123")"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(dataset_id: "t-123")"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(table_id: "t-123")"));
-      });
-
   auto client = CreateMockTableLogging(std::move(mock_stub));
   GetTableRequest request = bigquery_v2_minimal_testing::MakeGetTableRequest();
   rest_internal::RestContext context;
 
   client->GetTable(context, request);
+
+  auto actual_lines = log.ExtractLines();
+
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(GetTableRequest)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(project_id: "t-123")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(dataset_id: "t-123")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(table_id: "t-123")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(GetTableResponse)")));
 }
 
-TEST_F(TableLoggingClientTest, ListTables) {
+TEST(TableLoggingClientTest, ListTables) {
+  ScopedLog log;
+
   auto mock_stub = std::make_shared<MockTableRestStub>();
 
   EXPECT_CALL(*mock_stub, ListTables)
@@ -111,29 +90,24 @@ TEST_F(TableLoggingClientTest, ListTables) {
                 std::move(http_response));
           });
 
-  EXPECT_CALL(*log_backend_, ProcessWithOwnership)
-      .WillOnce([](LogRecord const& lr) {
-        EXPECT_THAT(lr.message, HasSubstr(" << "));
-        EXPECT_THAT(lr.message, HasSubstr(R"(ListTablesRequest)"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(project_id: "t-123")"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(dataset_id: "t-123")"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(max_results: 10)"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(page_token: "123")"));
-      })
-      .WillOnce([](LogRecord const& lr) {
-        EXPECT_THAT(lr.message, HasSubstr(R"(ListTablesResponse)"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(project_id: "t-123")"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(dataset_id: "t-123")"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(table_id: "t-123")"));
-        EXPECT_THAT(lr.message, HasSubstr(R"(next_page_token: "npt-123")"));
-      });
-
   auto client = CreateMockTableLogging(std::move(mock_stub));
   ListTablesRequest request =
       bigquery_v2_minimal_testing::MakeListTablesRequest();
   rest_internal::RestContext context;
 
   client->ListTables(context, request);
+
+  auto actual_lines = log.ExtractLines();
+
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(ListTablesRequest)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(project_id: "t-123")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(dataset_id: "t-123")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(max_results: 10)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(page_token: "123")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(ListTablesResponse)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(table_id: "t-123")")));
+  EXPECT_THAT(actual_lines,
+              Contains(HasSubstr(R"(next_page_token: "npt-123")")));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
