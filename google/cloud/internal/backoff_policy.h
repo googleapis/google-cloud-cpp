@@ -90,7 +90,7 @@ class BackoffPolicy {
 class ExponentialBackoffPolicy : public BackoffPolicy {
  public:
   /**
-   * Constructor for an exponential backoff policy.
+   * Default constructor for an exponential backoff policy.
    *
    * Define the initial delay, maximum delay, and scaling factor for an instance
    * of the policy. While the constructor accepts `std::chrono::duration`
