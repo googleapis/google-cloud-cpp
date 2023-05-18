@@ -41,6 +41,20 @@ void SetLongrunningOperationMethodVars(
     google::protobuf::MethodDescriptor const& method,
     VarsDictionary& method_vars);
 
+/**
+ * Determines if the method uses `google::longrunning::Operation` types for
+ * long running operations.
+ */
+bool IsGRPCLongrunningOperation(
+    google::protobuf::MethodDescriptor const& method);
+
+/**
+ * Sets longrunning operation related key/value pairs in service_vars.
+ */
+void SetLongrunningOperationServiceVars(
+    google::protobuf::ServiceDescriptor const& service,
+    VarsDictionary& service_vars);
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google
