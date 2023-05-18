@@ -585,7 +585,7 @@ google::cloud::storage::Client StorageRetries(std::vector<std::string> const&) {
   // jitter around the backoff delay.
   options.set<gcs::BackoffPolicyOption>(
       gcs::ExponentialBackoffPolicy(
-          /*initial_delay_range=*/std::chrono::seconds(1),
+          /*initial_delay=*/std::chrono::seconds(1),
           /*minimum_delay=*/std::chrono::seconds(1),
           /*maximum_delay=*/std::chrono::minutes(1),
           /*scaling=*/3.0)
