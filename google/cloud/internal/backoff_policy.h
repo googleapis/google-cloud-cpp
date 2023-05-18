@@ -80,17 +80,17 @@ class BackoffPolicy {
  * retrying operations. After a request fails, and subject to a separate
  * retry policy, the client library will wait for an initial delay after
  * the specified minimum delay before trying again. If the second attempt fails
- * the delay time is increased, using a scaling factor.The delay time begins at
- * the minimum delay, if no minimum is specified the default constructor will
- * begin use the initial delay as the minimum.  The delay time growth stops at a
- * maximum delay wait time. The policy also randomizes the delay each time, to
- * avoid [thundering herd
+ * the delay time is increased, using a scaling factor. The delay time begins at
+ * the minimum delay. If no minimum is specified the constructor will
+ * use the initial delay as the minimum. The delay time growth stops at a
+ * maximum delay time. The policy also randomizes the delay each time, to
+ * avoid the [thundering herd
  * problem](https://en.wikipedia.org/wiki/Thundering_herd_problem).
  */
 class ExponentialBackoffPolicy : public BackoffPolicy {
  public:
   /**
-   * Default constructor for an exponential backoff policy.
+   * Constructor for an exponential backoff policy.
    *
    * Define the initial delay, maximum delay, and scaling factor for an instance
    * of the policy. While the constructor accepts `std::chrono::duration`
@@ -108,16 +108,16 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
    * @param maximum_delay the maximum value for the delay between operations.
    * @param scaling how fast does the delay increase between iterations.
    *
-   * @tparam Rep1 a placeholder to match the Rep tparam for @p initial_delay's
-   *     type, the semantics of this template parameter are documented in
-   *     `std::chrono::duration<>` (in brief, the underlying arithmetic type
-   *     used to store the number of ticks), for our purposes it is simply a
-   *     formal parameter.
+   * @tparam Rep1 a placeholder to match the Rep tparam for
+   *     @p initial_delay's type. The semantics of this template parameter
+   *     are documented in `std::chrono::duration<>` (in brief, the underlying
+   *     arithmetic type used to store the number of ticks). For our purposes,
+   *     it is simply a formal parameter.
    * @tparam Period1 a placeholder to match the Period tparam for
-   *     @p initial_delay's type, the semantics of this template parameter are
-   *     documented in `std::chrono::duration<>` (in brief, the length of the
-   *     tick in seconds, expressed as a `std::ratio<>`), for our purposes it
-   *     is simply a formal parameter.
+   *     @p initial_delay's type. The semantics of this template parameter
+   *     are documented in `std::chrono::duration<>` (in brief, the underlying
+   *     arithmetic type used to store the number of ticks). For our purposes,
+   *     it is simply a formal parameter.
    * @tparam Rep2 similar formal parameter for the type of @p maximum_delay.
    * @tparam Period2 similar formal parameter for the type of @p maximum_delay.
    *
@@ -155,15 +155,15 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
    * @param scaling how fast does the delay increase between iterations.
    *
    * @tparam Rep1 a placeholder to match the Rep tparam for
-   *     @p initial_delay_range's type, the semantics of this template parameter
+   *     @p initial_delay's type. The semantics of this template parameter
    *     are documented in `std::chrono::duration<>` (in brief, the underlying
-   *     arithmetic type used to store the number of ticks), for our purposes it
-   *     is simply a formal parameter.
+   *     arithmetic type used to store the number of ticks). For our purposes,
+   *     it is simply a formal parameter.
    * @tparam Period1 a placeholder to match the Period tparam for
-   *     @p initial_delay_range's type, the semantics of this template
-   *     parameter are documented in `std::chrono::duration<>` (in brief, the
-   *     length of the tick in seconds, expressed as a `std::ratio<>`), for our
-   *     purposes it is simply a formal parameter.
+   *     @p initial_delay's type. The semantics of this template parameter
+   *     are documented in `std::chrono::duration<>` (in brief, the underlying
+   *     arithmetic type used to store the number of ticks). For our purposes,
+   *     it is simply a formal parameter.
    * @tparam Rep2 similar formal parameter for the type of @p minimum_delay.
    * @tparam Period2 similar formal parameter for the type of @p minimum_delay.
    * @tparam Rep3 similar formal parameter for the type of @p maximum_delay.
@@ -177,7 +177,7 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
             typename Rep3, typename Period3>
   ExponentialBackoffPolicy(
       std::chrono::duration<Rep1, Period1> initial_delay_range,
-      std::chrono::duration<Rep2, Period2> minimum_delay,
+                           std::chrono::duration<Rep2, Period2> minimum_delay,
       std::chrono::duration<Rep3, Period3> maximum_delay, double scaling)
       : initial_delay_range_(initial_delay_range),
         minimum_delay_(minimum_delay),
