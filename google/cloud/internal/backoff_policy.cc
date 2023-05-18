@@ -20,8 +20,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 std::unique_ptr<BackoffPolicy> ExponentialBackoffPolicy::clone() const {
-  return std::make_unique<ExponentialBackoffPolicy>(initial_delay_,
-                                                    maximum_delay_, scaling_);
+  return std::make_unique<ExponentialBackoffPolicy>(
+      initial_delay_range_, minimum_delay_, maximum_delay_, scaling_);
 }
 
 std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion() {
@@ -39,19 +39,17 @@ std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion() {
     generator_ = google::cloud::internal::MakeDefaultPRNG();
   }
 
-  if (current_delay_end_ >= maximum_delay_) {
-    current_delay_start_ = std::max(maximum_delay_ / scaling_, initial_delay_);
-    current_delay_end_ = maximum_delay_;
-  }
-
   std::uniform_real_distribution<DoubleMicroseconds::rep> rng_distribution(
       current_delay_start_.count(), current_delay_end_.count());
   // Randomized sleep period because it is possible that after some time all
   // client have same sleep period if we use only exponential backoff policy.
   auto delay = DoubleMicroseconds(rng_distribution(*generator_));
 
-  current_delay_start_ = current_delay_end_;
-  current_delay_end_ *= scaling_;
+  if (current_delay_end_ < maximum_delay_) {
+    current_delay_range_ *= scaling_;
+    current_delay_end_ =
+        (std::min)(minimum_delay_ + current_delay_range_, maximum_delay_);
+  }
 
   return std::chrono::duration_cast<std::chrono::milliseconds>(delay);
 }
