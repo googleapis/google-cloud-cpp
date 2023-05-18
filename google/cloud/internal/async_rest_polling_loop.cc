@@ -29,12 +29,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::longrunning::Operation;
 
-future<StatusOr<Operation>> AsyncRestPollingLoop(
+future<StatusOr<Operation>> AsyncRestPollingLoopAip151(
     google::cloud::CompletionQueue cq, future<StatusOr<Operation>> op,
-    AsyncRestPollLongRunningOperation<> poll,
-    AsyncRestCancelLongRunningOperation<> cancel,
+    AsyncRestPollLongRunningOperation<google::longrunning::Operation,
+                                      google::longrunning::GetOperationRequest>
+        poll,
+    AsyncRestCancelLongRunningOperation<
+        google::longrunning::CancelOperationRequest>
+        cancel,
     std::unique_ptr<PollingPolicy> polling_policy, std::string location) {
-  auto loop = std::make_shared<AsyncRestPollingLoopImpl<>>(
+  auto loop = std::make_shared<AsyncRestPollingLoopImpl<
+      google::longrunning::Operation, google::longrunning::GetOperationRequest,
+      google::longrunning::CancelOperationRequest>>(
       std::move(cq), std::move(poll), std::move(cancel),
       std::move(polling_policy), std::move(location));
   return loop->Start(std::move(op));

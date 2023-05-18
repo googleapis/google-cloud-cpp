@@ -37,16 +37,13 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-template <typename OperationType = google::longrunning::Operation,
-          typename GetOperationRequestType =
-              google::longrunning::GetOperationRequest>
+template <typename OperationType, typename GetOperationRequestType>
 using AsyncRestPollLongRunningOperation =
     std::function<future<StatusOr<OperationType>>(
         google::cloud::CompletionQueue&, std::unique_ptr<RestContext>,
         GetOperationRequestType const&)>;
 
-template <typename CancelOperationRequestType =
-              google::longrunning::CancelOperationRequest>
+template <typename CancelOperationRequestType>
 using AsyncRestCancelLongRunningOperation = std::function<future<Status>(
     google::cloud::CompletionQueue&, std::unique_ptr<RestContext>,
     CancelOperationRequestType const&)>;
@@ -137,18 +134,22 @@ class AsyncRestPollingLoopImpl;
  *
  * [aip/151]: https://google.aip.dev/151
  */
-future<StatusOr<google::longrunning::Operation>> AsyncRestPollingLoop(
+future<StatusOr<google::longrunning::Operation>> AsyncRestPollingLoopAip151(
     google::cloud::CompletionQueue cq,
     future<StatusOr<google::longrunning::Operation>> op,
-    AsyncRestPollLongRunningOperation<> poll,
-    AsyncRestCancelLongRunningOperation<> cancel,
+    AsyncRestPollLongRunningOperation<google::longrunning::Operation,
+                                      google::longrunning::GetOperationRequest>
+        poll,
+    AsyncRestCancelLongRunningOperation<
+        google::longrunning::CancelOperationRequest>
+        cancel,
     std::unique_ptr<PollingPolicy> polling_policy, std::string location);
 
-template <typename OperationType = google::longrunning::Operation,
-          typename GetOperationRequestType =
-              google::longrunning::CancelOperationRequest,
-          typename CancelOperationRequestType =
-              google::longrunning::CancelOperationRequest>
+/**
+ * Customizable polling loop for services that do not conform to AIP-151.
+ */
+template <typename OperationType, typename GetOperationRequestType,
+          typename CancelOperationRequestType>
 future<StatusOr<OperationType>> AsyncRestPollingLoop(
     google::cloud::CompletionQueue cq, future<StatusOr<OperationType>> op,
     AsyncRestPollLongRunningOperation<OperationType, GetOperationRequestType>
@@ -168,11 +169,8 @@ future<StatusOr<OperationType>> AsyncRestPollingLoop(
   return loop->Start(std::move(op));
 }
 
-template <typename OperationType = google::longrunning::Operation,
-          typename GetOperationRequestType =
-              google::longrunning::GetOperationRequest,
-          typename CancelOperationRequestType =
-              google::longrunning::CancelOperationRequest>
+template <typename OperationType, typename GetOperationRequestType,
+          typename CancelOperationRequestType>
 class AsyncRestPollingLoopImpl
     : public std::enable_shared_from_this<AsyncRestPollingLoopImpl<
           OperationType, GetOperationRequestType, CancelOperationRequestType>> {

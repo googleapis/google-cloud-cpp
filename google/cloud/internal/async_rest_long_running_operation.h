@@ -32,8 +32,7 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-template <typename ReturnType,
-          typename OperationType = google::longrunning::Operation>
+template <typename ReturnType, typename OperationType>
 using LongRunningOperationValueExtractor = std::function<StatusOr<ReturnType>(
     StatusOr<OperationType>, std::string const&)>;
 
@@ -115,9 +114,15 @@ template <typename ReturnType, typename RequestType, typename StartFunctor,
           typename RetryPolicyType, typename CompletionQueue>
 future<StatusOr<ReturnType>> AsyncRestLongRunningOperation(
     CompletionQueue cq, RequestType&& request, StartFunctor&& start,
-    AsyncRestPollLongRunningOperation<> poll,
-    AsyncRestCancelLongRunningOperation<> cancel,
-    LongRunningOperationValueExtractor<ReturnType> value_extractor,
+    AsyncRestPollLongRunningOperation<google::longrunning::Operation,
+                                      google::longrunning::GetOperationRequest>
+        poll,
+    AsyncRestCancelLongRunningOperation<
+        google::longrunning::CancelOperationRequest>
+        cancel,
+    LongRunningOperationValueExtractor<ReturnType,
+                                       google::longrunning::Operation>
+        value_extractor,
     std::unique_ptr<RetryPolicyType> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy, Idempotency idempotent,
     std::unique_ptr<PollingPolicy> polling_policy, char const* location) {
@@ -126,15 +131,17 @@ future<StatusOr<ReturnType>> AsyncRestLongRunningOperation(
                          idempotent, cq, std::forward<StartFunctor>(start),
                          std::forward<RequestType>(request), location);
   auto loc = std::string{location};
-  return AsyncRestPollingLoop(std::move(cq), std::move(operation),
-                              std::move(poll), std::move(cancel),
-                              std::move(polling_policy), std::move(location))
-      .then([value_extractor,
-             loc](future<StatusOr<google::longrunning::Operation>> g) {
+  return AsyncRestPollingLoopAip151(
+             std::move(cq), std::move(operation), std::move(poll),
+             std::move(cancel), std::move(polling_policy), std::move(location))
+      .then([value_extractor, loc](auto g) {
         return value_extractor(g.get(), loc);
       });
 }
 
+/*
+ * AsyncRestLongRunningOperation for services that do not conform to AIP-151.
+ */
 template <typename ReturnType, typename OperationType,
           typename GetOperationRequestType, typename CancelOperationRequestType,
           typename RequestType, typename StartFunctor, typename RetryPolicyType,

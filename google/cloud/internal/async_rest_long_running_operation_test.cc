@@ -93,16 +93,17 @@ StartOperation MakeStart(std::shared_ptr<MockRestStub> const& m) {
   };
 }
 
-AsyncRestPollLongRunningOperation<> MakePoll(
-    std::shared_ptr<MockRestStub> const& m) {
+AsyncRestPollLongRunningOperation<google::longrunning::Operation,
+                                  google::longrunning::GetOperationRequest>
+MakePoll(std::shared_ptr<MockRestStub> const& m) {
   return [m](CompletionQueue& cq, std::unique_ptr<RestContext> context,
              google::longrunning::GetOperationRequest const& request) {
     return m->AsyncGetOperation(cq, std::move(context), request);
   };
 }
 
-AsyncRestCancelLongRunningOperation<> MakeCancel(
-    std::shared_ptr<MockRestStub> const& m) {
+AsyncRestCancelLongRunningOperation<google::longrunning::CancelOperationRequest>
+MakeCancel(std::shared_ptr<MockRestStub> const& m) {
   return [m](CompletionQueue& cq, std::unique_ptr<RestContext> context,
              google::longrunning::CancelOperationRequest const& request) {
     return m->AsyncCancelOperation(cq, std::move(context), request);
