@@ -71,9 +71,6 @@ TEST(TableLoggingClientTest, GetTable) {
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(dataset_id: "t-123")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(table_id: "t-123")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(GetTableResponse)")));
-  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(project_id: "t-123")")));
-  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(dataset_id: "t-123")")));
-  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(table_id: "t-123")")));
 }
 
 TEST(TableLoggingClientTest, ListTables) {
@@ -108,8 +105,6 @@ TEST(TableLoggingClientTest, ListTables) {
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(max_results: 10)")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(page_token: "123")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(ListTablesResponse)")));
-  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(project_id: "t-123")")));
-  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(dataset_id: "t-123")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(table_id: "t-123")")));
   EXPECT_THAT(actual_lines,
               Contains(HasSubstr(R"(next_page_token: "npt-123")")));

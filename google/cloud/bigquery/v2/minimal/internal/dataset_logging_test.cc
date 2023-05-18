@@ -76,8 +76,6 @@ TEST(DatasetLoggingClientTest, GetDataset) {
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(project_id: "p-id")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(dataset_id: "d-id")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(GetDatasetResponse)")));
-  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(project_id: "p-id")")));
-  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(dataset_id: "d-id")")));
 }
 
 TEST(DatasetLoggingClientTest, ListDatasets) {
@@ -124,8 +122,6 @@ TEST(DatasetLoggingClientTest, ListDatasets) {
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(all_datasets: false)")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(max_results: 0)")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(ListDatasetsResponse)")));
-  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(project_id: "p123")")));
-  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(dataset_id: "d123")")));
   EXPECT_THAT(actual_lines,
               Contains(HasSubstr(R"(next_page_token: "npt-123")")));
 }

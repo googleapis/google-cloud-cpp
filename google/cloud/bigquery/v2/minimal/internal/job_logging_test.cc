@@ -78,7 +78,6 @@ TEST(JobLoggingClientTest, GetJob) {
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(GetJobRequest)")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(job_id: "j123")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(project_id: "p123")")));
-
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(GetJobResponse)")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(status: "DONE")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(id: "j123")")));
@@ -132,7 +131,6 @@ TEST(JobLoggingClientTest, ListJobs) {
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(project_id: "p123")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(all_users: false)")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(max_results: 0)")));
-
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(ListJobsResponse)")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(id: "1")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(state: "DONE")")));
