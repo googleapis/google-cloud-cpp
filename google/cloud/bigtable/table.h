@@ -951,7 +951,10 @@ class Table {
    */
   template <
       typename... Policies,
-      typename std::enable_if<ValidPolicies<Policies...>::value, int>::type = 0>
+      /// @cond implementation_details
+      typename std::enable_if<ValidPolicies<Policies...>::value, int>::type = 0
+      /// @endcond
+      >
   Table(std::shared_ptr<DataClient> client, std::string const& table_id,
         Policies&&... policies)
       : Table(std::move(client), table_id) {
@@ -1012,7 +1015,10 @@ class Table {
    */
   template <
       typename... Policies,
-      typename std::enable_if<ValidPolicies<Policies...>::value, int>::type = 0>
+      /// @cond implementation_details
+      typename std::enable_if<ValidPolicies<Policies...>::value, int>::type = 0
+      /// @endcond
+      >
   Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
         std::string const& table_id, Policies&&... policies)
       : Table(std::move(client), std::move(app_profile_id), table_id) {

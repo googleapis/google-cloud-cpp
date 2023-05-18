@@ -149,15 +149,19 @@ class StatusOr final {
   /**
    * Assign a `T` (or anything convertible to `T`) into the `StatusOr`.
    *
+   * This function does not participate in overload resolution if `U` is equal
+   * to `StatusOr<T>` (or to a cv-ref-qualified `StatusOr<T>`).
+   *
    * @return a reference to this object.
-   * @tparam U a type convertible to @p T
-   * @tparam Unspecified removes this function from overload resolution if
-   *   `U` is (a possibly cv-qualified version of) `StatusOr<T>`.
+   * @tparam U a type convertible to @p T.
    */
   template <typename U = T,
-            typename Unspecified = typename std::enable_if<
+            /// @cond implementation_details
+            typename std::enable_if<
                 !std::is_same<StatusOr, typename std::decay<U>::type>::value,
-                int>::type>
+                int>::type = 0
+            /// @endcond
+            >
   StatusOr& operator=(U&& rhs) {
     status_ = Status();
     value_ = std::forward<U>(rhs);
