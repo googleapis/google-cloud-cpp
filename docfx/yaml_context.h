@@ -38,6 +38,10 @@ struct YamlContext {
 /// Creates a new context to recurse over @p node
 YamlContext NestedYamlContext(YamlContext const& ctx, pugi::xml_node node);
 
+/// Returns true if a <memberdef> element should be skipped from the
+/// children and references lists.
+bool IsSkippedChild(YamlContext const& ctx, pugi::xml_node node);
+
 }  // namespace docfx
 
 #endif  // GOOGLE_CLOUD_CPP_DOCFX_YAML_CONTEXT_H

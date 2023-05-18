@@ -69,6 +69,7 @@ std::list<Reference> ExtractReferences(YamlContext const& ctx,
     return recurse;
   }
   if (name == "memberdef") {
+    if (IsSkippedChild(ctx, node)) return {};
     auto const uid = std::string{node.attribute("id").as_string()};
     if (ctx.mocked_ids.count(uid) != 0) return {};
     auto const name = [&] {

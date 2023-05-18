@@ -40,9 +40,8 @@ std::vector<std::string> Children(YamlContext const& ctx, pugi::xml_node node) {
   }
   for (auto const child : node.children("memberdef")) {
     if (!IncludeInPublicDocuments(nested.config, child)) continue;
+    if (IsSkippedChild(nested, child)) continue;
     auto id = std::string{child.attribute("id").as_string()};
-    // Mocked functions are not children.
-    if (nested.mocked_ids.count(id) != 0) continue;
     if (!id.empty()) children.push_back(std::move(id));
   }
   for (auto const child : node.children("enumvalue")) {
