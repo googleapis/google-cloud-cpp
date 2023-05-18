@@ -154,16 +154,16 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
    * @param maximum_delay the maximum value for the delay between operations.
    * @param scaling how fast does the delay increase between iterations.
    *
-   * @tparam Rep1 a placeholder to match the Rep tparam for @p
-   * initial_delay_range's type, the semantics of this template parameter are
-   * documented in `std::chrono::duration<>` (in brief, the underlying
-   * arithmetic type used to store the number of ticks), for our purposes it is
-   * simply a formal parameter.
+   * @tparam Rep1 a placeholder to match the Rep tparam for
+   *     @p initial_delay_range's type, the semantics of this template parameter
+   *     are documented in `std::chrono::duration<>` (in brief, the underlying
+   *     arithmetic type used to store the number of ticks), for our purposes it
+   *     is simply a formal parameter.
    * @tparam Period1 a placeholder to match the Period tparam for
    *     @p initial_delay_range's type, the semantics of this template
-   * parameter are documented in `std::chrono::duration<>` (in brief, the length
-   * of the tick in seconds, expressed as a `std::ratio<>`), for our purposes it
-   *     is simply a formal parameter.
+   *     parameter are documented in `std::chrono::duration<>` (in brief, the
+   *     length of the tick in seconds, expressed as a `std::ratio<>`), for our
+   *     purposes it is simply a formal parameter.
    * @tparam Rep2 similar formal parameter for the type of @p minimum_delay.
    * @tparam Period2 similar formal parameter for the type of @p minimum_delay.
    * @tparam Rep3 similar formal parameter for the type of @p maximum_delay.
