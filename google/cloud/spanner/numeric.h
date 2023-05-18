@@ -260,7 +260,6 @@ template <
     /// @cond implementation_details
     typename std::enable_if<std::numeric_limits<T>::is_integer, int>::type = 0
     /// @endcond
-
     >
 StatusOr<Decimal<Mode>> MakeDecimal(T i, int exponent = 0) {
   return spanner_internal::MakeDecimal<Mode>(spanner_internal::ToString(i),

@@ -110,7 +110,7 @@ class CompletionQueue {
   /**
    * Make an asynchronous unary RPC.
    *
-   * @deprecated Applications should have not need to call this function. The
+   * @deprecated Applications should have no need to call this function. The
    *     libraries provide `Async*()` member functions in the generated (or)
    *     hand-crafted `*Client` classes for the same purpose.
    *
@@ -157,7 +157,7 @@ class CompletionQueue {
    * by any thread blocked on this object's Run() member function. However, only
    * one callback in the handler is called at a time.
    *
-   * @deprecated Applications should have not need to call this function. The
+   * @deprecated Applications should have no need to call this function. The
    *     libraries provide `Async*()` member functions in the generated (or)
    *     hand-crafted `*Client` classes for the same purpose.
    *
