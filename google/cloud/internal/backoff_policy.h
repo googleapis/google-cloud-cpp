@@ -148,7 +148,7 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
    * auto r2 = ExponentialBackoffPolicy<S,T>(0min, 10min, 10min + 2s, 1.002);
    * @endcode
    *
-   * @param initial_delay_range how long to wait after the first (unsuccessful)
+   * @param initial_delay how long to wait after the first (unsuccessful)
    *     operation.
    * @param minimum_delay the minimum value for the delay between operations.
    * @param maximum_delay the maximum value for the delay between operations.
@@ -175,15 +175,15 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
    */
   template <typename Rep1, typename Period1, typename Rep2, typename Period2,
             typename Rep3, typename Period3>
-  ExponentialBackoffPolicy(
-      std::chrono::duration<Rep1, Period1> initial_delay_range,
+  ExponentialBackoffPolicy(std::chrono::duration<Rep1, Period1> initial_delay,
                            std::chrono::duration<Rep2, Period2> minimum_delay,
-      std::chrono::duration<Rep3, Period3> maximum_delay, double scaling)
-      : initial_delay_range_(initial_delay_range),
+                           std::chrono::duration<Rep3, Period3> maximum_delay,
+                           double scaling)
+      : initial_delay_(initial_delay),
         minimum_delay_(minimum_delay),
         maximum_delay_(maximum_delay),
         scaling_(scaling),
-        current_delay_range_(initial_delay_range_),
+        current_delay_range_(initial_delay_),
         current_delay_start_(minimum_delay_),
         current_delay_end_(
             (std::min)(minimum_delay_ + current_delay_range_, maximum_delay_)) {
@@ -198,7 +198,7 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
   //    know specifically which one is at fault)
   //  - We want uncorrelated data streams for each copy anyway.
   ExponentialBackoffPolicy(ExponentialBackoffPolicy const& rhs) noexcept
-      : initial_delay_range_(rhs.initial_delay_range_),
+      : initial_delay_(rhs.initial_delay_),
         minimum_delay_(rhs.minimum_delay_),
         maximum_delay_(rhs.maximum_delay_),
         scaling_(rhs.scaling_),
@@ -211,7 +211,7 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
 
  private:
   using DoubleMicroseconds = std::chrono::duration<double, std::micro>;
-  DoubleMicroseconds initial_delay_range_;
+  DoubleMicroseconds initial_delay_;
   DoubleMicroseconds minimum_delay_;
   DoubleMicroseconds maximum_delay_;
   double scaling_;
