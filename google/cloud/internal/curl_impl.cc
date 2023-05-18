@@ -705,15 +705,28 @@ Status CurlImpl::PerformWorkUntil(absl::FunctionRef<bool()> predicate) {
 Status CurlImpl::WaitForHandles(int& repeats) {
   int const timeout_ms = 1000;
   int numfds = 0;
+  CURLMcode result;
 #if CURL_AT_LEAST_VERSION(7, 66, 0)
-  CURLMcode result =
-      curl_multi_poll(multi_.get(), nullptr, 0, timeout_ms, &numfds);
+  // Use curl_multi_poll()
+#if CURL_AT_LEAST_VERSION(7, 84, 0)
+  // Work around https://github.com/curl/curl/issues/11135 by retrying
+  // when EINTR fails poll(). We want to retry so that post-poll()
+  // curl_multi bookkeeping code runs.
+  do {
+    errno = 0;
+    result =
+        curl_multi_poll(multi_.get(), nullptr, 0, timeout_ms, &numfds);
+  } while (result == CURLM_UNRECOVERABLE_POLL && errno == EINTR);
+#else
+  // EINTR will be simply ignored by curl_multi_poll().
+  result = curl_multi_poll(multi_.get(), nullptr, 0, timeout_ms, &numfds);
+#endif
   TRACE_STATE() << ", numfds=" << numfds << ", result=" << result
                 << ", repeats=" << repeats;
   if (result != CURLM_OK) return AsStatus(result, __func__);
 #else
-  CURLMcode result =
-      curl_multi_wait(multi_.get(), nullptr, 0, timeout_ms, &numfds);
+  // Use curl_multi_wait()
+  result = curl_multi_wait(multi_.get(), nullptr, 0, timeout_ms, &numfds);
   TRACE_STATE() << ", numfds=" << numfds << ", result=" << result
                 << ", repeats=" << repeats;
   if (result != CURLM_OK) return AsStatus(result, __func__);
