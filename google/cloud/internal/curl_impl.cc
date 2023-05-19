@@ -714,8 +714,7 @@ Status CurlImpl::WaitForHandles(int& repeats) {
   // curl_multi bookkeeping code runs.
   do {
     errno = 0;
-    result =
-        curl_multi_poll(multi_.get(), nullptr, 0, timeout_ms, &numfds);
+    result = curl_multi_poll(multi_.get(), nullptr, 0, timeout_ms, &numfds);
   } while (result == CURLM_UNRECOVERABLE_POLL && errno == EINTR);
 #else
   // EINTR will be simply ignored by curl_multi_poll().
