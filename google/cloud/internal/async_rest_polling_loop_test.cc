@@ -70,16 +70,17 @@ class MockPollingPolicy : public PollingPolicy {
   MOCK_METHOD(std::chrono::milliseconds, WaitPeriod, (), (override));
 };
 
-AsyncRestPollLongRunningOperation MakePoll(
-    std::shared_ptr<MockStub> const& mock) {
+AsyncRestPollLongRunningOperation<google::longrunning::Operation,
+                                  google::longrunning::GetOperationRequest>
+MakePoll(std::shared_ptr<MockStub> const& mock) {
   return [mock](CompletionQueue& cq, std::unique_ptr<RestContext> context,
                 google::longrunning::GetOperationRequest const& request) {
     return mock->AsyncGetOperation(cq, std::move(context), request);
   };
 }
 
-AsyncRestCancelLongRunningOperation MakeCancel(
-    std::shared_ptr<MockStub> const& mock) {
+AsyncRestCancelLongRunningOperation<google::longrunning::CancelOperationRequest>
+MakeCancel(std::shared_ptr<MockStub> const& mock) {
   return [mock](CompletionQueue& cq, std::unique_ptr<RestContext> context,
                 google::longrunning::CancelOperationRequest const& request) {
     return mock->AsyncCancelOperation(cq, std::move(context), request);
@@ -102,9 +103,9 @@ TEST(AsyncRestPollingLoopTest, ImmediateSuccess) {
   EXPECT_CALL(*policy, WaitPeriod).Times(0);
   CompletionQueue cq;
   auto actual =
-      AsyncRestPollingLoop(std::move(cq), make_ready_future(make_status_or(op)),
-                           MakePoll(mock), MakeCancel(mock), std::move(policy),
-                           "test-function")
+      AsyncRestPollingLoopAip151(
+          std::move(cq), make_ready_future(make_status_or(op)), MakePoll(mock),
+          MakeCancel(mock), std::move(policy), "test-function")
           .get();
   ASSERT_THAT(actual, IsOk());
   EXPECT_THAT(*actual, IsProtoEqual(op));
@@ -151,9 +152,9 @@ TEST(AsyncRestPollingLoopTest, ImmediateCancel) {
 
   internal::OptionsSpan span(Options{}.set<StringOption>("ImmediateCancel"));
   promise<StatusOr<google::longrunning::Operation>> p;
-  auto pending = AsyncRestPollingLoop(std::move(cq), p.get_future(),
-                                      MakePoll(mock), MakeCancel(mock),
-                                      std::move(policy), "test-function");
+  auto pending = AsyncRestPollingLoopAip151(std::move(cq), p.get_future(),
+                                            MakePoll(mock), MakeCancel(mock),
+                                            std::move(policy), "test-function");
   {
     internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
     pending.cancel();
@@ -197,7 +198,7 @@ TEST(AsyncRestPollingLoopTest, PollThenSuccess) {
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
   internal::OptionsSpan span(Options{}.set<StringOption>("PollThenSuccess"));
-  auto pending = AsyncRestPollingLoop(
+  auto pending = AsyncRestPollingLoopAip151(
       std::move(cq), make_ready_future(make_status_or(starting_op)),
       MakePoll(mock), MakeCancel(mock), std::move(policy), "test-function");
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
@@ -227,7 +228,7 @@ TEST(AsyncRestPollingLoopTest, PollThenTimerError) {
   EXPECT_CALL(*policy, WaitPeriod)
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
   auto actual =
-      AsyncRestPollingLoop(
+      AsyncRestPollingLoopAip151(
           std::move(cq), make_ready_future(make_status_or(starting_op)),
           MakePoll(mock), MakeCancel(mock), std::move(policy), "test-function")
           .get();
@@ -286,7 +287,7 @@ TEST(AsyncRestPollingLoopTest, PollThenEventualSuccess) {
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
   internal::OptionsSpan span(
       Options{}.set<StringOption>("PollThenEventualSuccess"));
-  auto pending = AsyncRestPollingLoop(
+  auto pending = AsyncRestPollingLoopAip151(
       std::move(cq), make_ready_future(make_status_or(starting_op)),
       MakePoll(mock), MakeCancel(mock), std::move(policy), "test-function");
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
@@ -331,7 +332,7 @@ TEST(AsyncRestPollingLoopTest, PollThenExhaustedPollingPolicy) {
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
   internal::OptionsSpan span(
       Options{}.set<StringOption>("PollThenExhaustedPollingPolicy"));
-  auto pending = AsyncRestPollingLoop(
+  auto pending = AsyncRestPollingLoopAip151(
       std::move(cq), make_ready_future(make_status_or(starting_op)),
       MakePoll(mock), MakeCancel(mock), std::move(policy), "test-function");
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
@@ -379,7 +380,7 @@ TEST(AsyncRestPollingLoopTest, PollThenExhaustedPollingPolicyWithFailure) {
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
   internal::OptionsSpan span(
       Options{}.set<StringOption>("PollThenExhaustedPollingPolicyWithFailure"));
-  auto pending = AsyncRestPollingLoop(
+  auto pending = AsyncRestPollingLoopAip151(
       std::move(cq), make_ready_future(make_status_or(starting_op)),
       MakePoll(mock), MakeCancel(mock), std::move(policy), "test-function");
   internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
@@ -422,7 +423,7 @@ TEST(AsyncRestPollingLoopTest, PollLifetime) {
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
 
   internal::OptionsSpan span(Options{}.set<StringOption>("PollLifetime"));
-  auto pending = AsyncRestPollingLoop(
+  auto pending = AsyncRestPollingLoopAip151(
       std::move(cq), make_ready_future(make_status_or(starting_op)),
       MakePoll(mock), MakeCancel(mock), std::move(policy), "test-function");
 
@@ -479,7 +480,7 @@ TEST(AsyncRestPollingLoopTest, PollThenCancelDuringTimer) {
 
   internal::OptionsSpan span(
       Options{}.set<StringOption>("PollThenCancelDuringTimer"));
-  auto pending = AsyncRestPollingLoop(
+  auto pending = AsyncRestPollingLoopAip151(
       std::move(cq), make_ready_future(make_status_or(starting_op)),
       MakePoll(mock), MakeCancel(mock), std::move(policy), "test-function");
 
@@ -542,7 +543,7 @@ TEST(AsyncRestPollingLoopTest, PollThenCancelDuringPoll) {
 
   internal::OptionsSpan span(
       Options{}.set<StringOption>("PollThenCancelDuringPoll"));
-  auto pending = AsyncRestPollingLoop(
+  auto pending = AsyncRestPollingLoopAip151(
       std::move(cq), make_ready_future(make_status_or(starting_op)),
       MakePoll(mock), MakeCancel(mock), std::move(policy), "test-function");
 
@@ -562,6 +563,120 @@ TEST(AsyncRestPollingLoopTest, PollThenCancelDuringPoll) {
   EXPECT_THAT(actual, StatusIs(StatusCode::kCancelled,
                                AllOf(HasSubstr("test-function"),
                                      HasSubstr("operation cancelled"))));
+}
+
+class BespokeOperationType {
+ public:
+  bool is_done() const { return is_done_; }
+  void set_is_done(bool is_done) { is_done_ = is_done; }
+  std::string const& name() const { return name_; }
+  void set_name(std::string name) { name_ = std::move(name); }
+  std::string* mutable_name() { return &name_; }
+  bool operator==(BespokeOperationType const& other) const {
+    return is_done_ == other.is_done_ && name_ == other.name_;
+  }
+
+ private:
+  bool is_done_;
+  std::string name_;
+};
+
+class BespokeGetOperationRequestType {
+ public:
+  std::string const& name() const { return name_; }
+  void set_name(std::string name) { name_ = std::move(name); }
+
+ private:
+  std::string name_;
+};
+
+class BespokeCancelOperationRequestType {
+ public:
+  std::string const& name() const { return name_; }
+  void set_name(std::string name) { name_ = std::move(name); }
+
+ private:
+  std::string name_;
+};
+
+class MockBespokeOperationStub {
+ public:
+  MOCK_METHOD(future<StatusOr<BespokeOperationType>>, AsyncGetOperation,
+              (CompletionQueue&, std::unique_ptr<RestContext>,
+               BespokeGetOperationRequestType const&),
+              ());
+
+  MOCK_METHOD(future<Status>, AsyncCancelOperation,
+              (CompletionQueue&, std::unique_ptr<RestContext>,
+               BespokeCancelOperationRequestType const&),
+              ());
+};
+
+AsyncRestPollLongRunningOperation<BespokeOperationType,
+                                  BespokeGetOperationRequestType>
+MakeBespokePoll(std::shared_ptr<MockBespokeOperationStub> const& mock) {
+  return [mock](CompletionQueue& cq, std::unique_ptr<RestContext> context,
+                BespokeGetOperationRequestType const& request) {
+    return mock->AsyncGetOperation(cq, std::move(context), request);
+  };
+}
+
+AsyncRestCancelLongRunningOperation<BespokeCancelOperationRequestType>
+MakeBespokeCancel(std::shared_ptr<MockBespokeOperationStub> const& mock) {
+  return [mock](CompletionQueue& cq, std::unique_ptr<RestContext> context,
+                BespokeCancelOperationRequestType const& request) {
+    return mock->AsyncCancelOperation(cq, std::move(context), request);
+  };
+}
+
+TEST(AsyncRestPollingLoopTest, PollThenSuccessWithBespokeOperationTypes) {
+  Instance instance;
+  instance.set_name("test-instance-name");
+  BespokeOperationType starting_op;
+  starting_op.set_name("test-op-name");
+  starting_op.set_is_done(false);
+  BespokeOperationType expected = starting_op;
+  expected.set_is_done(true);
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .WillOnce([](std::chrono::nanoseconds) {
+        return make_ready_future(
+            make_status_or(std::chrono::system_clock::now()));
+      });
+  CompletionQueue cq(mock_cq);
+
+  auto mock = std::make_shared<MockBespokeOperationStub>();
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([&](CompletionQueue&, std::unique_ptr<RestContext>,
+                    BespokeGetOperationRequestType const&) {
+        EXPECT_EQ(internal::CurrentOptions().get<StringOption>(),
+                  "PollThenSuccess");
+        return make_ready_future(make_status_or(expected));
+      });
+  auto policy = std::make_unique<MockPollingPolicy>();
+  EXPECT_CALL(*policy, clone()).Times(0);
+  EXPECT_CALL(*policy, OnFailure).Times(0);
+  EXPECT_CALL(*policy, WaitPeriod)
+      .WillRepeatedly(Return(std::chrono::milliseconds(1)));
+  internal::OptionsSpan span(Options{}.set<StringOption>("PollThenSuccess"));
+  auto pending =
+      AsyncRestPollingLoop<BespokeOperationType, BespokeGetOperationRequestType,
+                           BespokeCancelOperationRequestType>(
+          std::move(cq), make_ready_future(make_status_or(starting_op)),
+          MakeBespokePoll(mock), MakeBespokeCancel(mock), std::move(policy),
+          "test-function",
+          [](BespokeOperationType const& op) { return op.is_done(); },
+          [](std::string const& s, BespokeGetOperationRequestType& op) {
+            op.set_name(s);
+          },
+          [](std::string const& s, BespokeCancelOperationRequestType& op) {
+            op.set_name(s);
+          });
+  internal::OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
+  StatusOr<BespokeOperationType> actual = pending.get();
+  ASSERT_THAT(actual, IsOk());
+  EXPECT_THAT(*actual, Eq(expected));
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -603,9 +718,9 @@ TEST(AsyncRestPollingLoopTest, TracedAsyncBackoff) {
       .WillRepeatedly(Return(std::chrono::milliseconds(1)));
 
   internal::OptionsSpan o(EnableTracing(Options{}));
-  (void)AsyncRestPollingLoop(cq, make_ready_future(make_status_or(starting_op)),
-                             MakePoll(mock), MakeCancel(mock),
-                             std::move(policy), "test-function")
+  (void)AsyncRestPollingLoopAip151(
+      cq, make_ready_future(make_status_or(starting_op)), MakePoll(mock),
+      MakeCancel(mock), std::move(policy), "test-function")
       .get();
 
   // The polling loop waits once initially, and once for each of the three retry
@@ -658,7 +773,7 @@ TEST(AsyncRestPollingLoopTest, SpanActiveThroughout) {
 
   auto scope = opentelemetry::trace::Scope(span);
   internal::OptionsSpan o(EnableTracing(Options{}));
-  auto pending = AsyncRestPollingLoop(
+  auto pending = AsyncRestPollingLoopAip151(
       cq, make_ready_future(make_status_or(starting_op)), MakePoll(mock),
       MakeCancel(mock), std::move(policy), "test-function");
 
@@ -690,9 +805,9 @@ TEST(AsyncRestPollingLoopTest, TraceCapturesOperationName) {
 
   auto scope = opentelemetry::trace::Scope(span);
   internal::OptionsSpan o(EnableTracing(Options{}));
-  (void)AsyncRestPollingLoop(cq, make_ready_future(make_status_or(op)),
-                             MakePoll(mock), MakeCancel(mock),
-                             std::move(policy), "test-function")
+  (void)AsyncRestPollingLoopAip151(cq, make_ready_future(make_status_or(op)),
+                                   MakePoll(mock), MakeCancel(mock),
+                                   std::move(policy), "test-function")
       .get();
   span->End();
 
