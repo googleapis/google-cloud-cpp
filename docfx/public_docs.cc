@@ -51,6 +51,13 @@ bool IncludeInPublicDocuments(Config const& cfg, pugi::xml_node node) {
   if (cfg.library != "cloud" && id == "namespacegoogle_1_1cloud") {
     return false;
   }
+  // Skip destructors in the public documents. There is rarely something
+  // interesting to say about them, and we would need to create a completely
+  // new organization
+  if (kind(node) == "function") {
+    auto const name = std::string_view{node.child_value("name")};
+    if (name[0] == '~') return false;
+  }
   // We do not generate documentation for private members or sections.
   auto const prot = std::string_view{node.attribute("prot").as_string()};
   return prot != "private";

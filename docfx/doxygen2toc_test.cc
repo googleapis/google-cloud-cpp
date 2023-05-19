@@ -302,8 +302,6 @@ items:
                         uid: classgoogle_1_1cloud_1_1Status_1afd186465a07fa176c10d437c1240f2de
                       - name: "Status()"
                         uid: classgoogle_1_1cloud_1_1Status_1af3de0fb0dee8fb557e693195a812987f
-                      - name: "~Status()"
-                        uid: classgoogle_1_1cloud_1_1Status_1a739165d43975222a55f064dd87db5e1f
                       - name: "Status(StatusCode, std::string, ErrorInfo)"
                         uid: classgoogle_1_1cloud_1_1Status_1af927a89141bbcf10f0e02d789ebade94
                   - name: "Operators"
