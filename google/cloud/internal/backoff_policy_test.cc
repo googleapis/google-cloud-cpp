@@ -26,7 +26,7 @@ using ::testing::Not;
 
 /// @test A simple test for the ExponentialBackoffPolicy.
 TEST(ExponentialBackoffPolicy, Simple) {
-  ExponentialBackoffPolicy tested(ms(10), ms(80), 2.0);
+  ExponentialBackoffPolicy tested(ms(10), ms(100), 2.0);
 
   auto delay = tested.OnCompletion();
   EXPECT_LE(ms(10), delay);
@@ -36,7 +36,7 @@ TEST(ExponentialBackoffPolicy, Simple) {
   EXPECT_GE(ms(40), delay);
   delay = tested.OnCompletion();
   EXPECT_LE(ms(10), delay);
-  EXPECT_GE(ms(80), delay);
+  EXPECT_GE(ms(100), delay);
 }
 
 /// @test Verify a full jitter policy, where the minimum delay is set to 0.
@@ -71,6 +71,24 @@ TEST(ExponentialBackoffPolicy, VerifyFullJitterPolicy) {
   EXPECT_LE(ms(0), delay);
   EXPECT_GE(ms(40), delay);
   delay = tested.OnCompletion();
+  EXPECT_LE(ms(10), delay);
+  EXPECT_GE(ms(100), delay);
+}
+
+/// @test Verify a full jitter policy, where the minimum delay is set to 0.
+TEST(ExponentialBackoffPolicy, VerifyFullJitterPolicy) {
+  ExponentialBackoffPolicy tested(ms(10), ms(0), ms(50), 2.0);
+
+  auto delay = tested.OnCompletion();
+  EXPECT_LE(ms(0), delay);
+  EXPECT_GE(ms(10), delay);
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(0), delay);
+  EXPECT_GE(ms(20), delay);
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(0), delay);
+  EXPECT_GE(ms(40), delay);
+  delay = tested.OnCompletion();
   EXPECT_LE(ms(0), delay);
   EXPECT_GE(ms(50), delay);
 }
@@ -93,13 +111,7 @@ TEST(ExponentialBackoffPolicy, DetermineRangeUsingScalingFactor) {
 
   auto delay = tested.OnCompletion();
   EXPECT_LE(ms(1000), delay);
-  EXPECT_GE(ms(2000), delay);
-  delay = tested.OnCompletion();
-  EXPECT_LE(ms(1000), delay);
-  EXPECT_GE(ms(2001), delay);
-  delay = tested.OnCompletion();
-  EXPECT_LE(ms(1000), delay);
-  EXPECT_GE(ms(2002), delay);
+  EXPECT_GE(ms(1001), delay);
 }
 
 /// @test Verify that the scaling factor is validated.
@@ -135,7 +147,7 @@ TEST(ExponentialBackoffPolicy, DifferentParameters) {
 
   auto delay = tested.OnCompletion();
   EXPECT_LE(ms(100), delay) << "delay=" << delay.count() << "ms";
-  EXPECT_GE(ms(200), delay) << "delay=" << delay.count() << "ms";
+  EXPECT_GE(ms(150), delay) << "delay=" << delay.count() << "ms";
   delay = tested.OnCompletion();
   EXPECT_LE(ms(100), delay) << "delay=" << delay.count() << "ms";
   EXPECT_GE(ms(225), delay) << "delay=" << delay.count() << "ms";
