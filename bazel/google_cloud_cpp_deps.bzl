@@ -139,6 +139,19 @@ def google_cloud_cpp_deps(name = None):
         strip_prefix = "boringssl-82a53d8c902f940eb1310f76a0b96c40c67f632f",
     )
 
+    # Manually load a repository that gRPC depends on whose sha256 has been
+    # invalidated.
+    maybe(
+        http_archive,
+        name = "com_envoyproxy_protoc_gen_validate",
+        urls = [
+            "https://github.com/envoyproxy/protoc-gen-validate/archive/4694024279bdac52b77e22dc87808bd0fd732b69.tar.gz",
+        ],
+        strip_prefix = "protovalidate-4694024279bdac52b77e22dc87808bd0fd732b69",
+        patch_args = ["-p1"],
+        patches = [Label("//bazel:protovalidate.patch")],
+    )
+
     # Load gRPC and its dependencies, using a similar pattern to this function.
     maybe(
         http_archive,
