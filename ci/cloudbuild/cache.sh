@@ -138,7 +138,7 @@ function restore_cache() {
   for url in "${urls[@]}"; do
     if gsutil stat "${url}"; then
       io::log "Fetching cache url ${url}"
-      (gcloud --quiet storage cp "${url}" "${tmpf}" && tar -zxf "${tmpf}") || continue
+      (timeout -s SIGKILL 2m gcloud --quiet storage cp "${url}" "${tmpf}" && tar -zxf "${tmpf}") || continue
       break
     fi
   done
