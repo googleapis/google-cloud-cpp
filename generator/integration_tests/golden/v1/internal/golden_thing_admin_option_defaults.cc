@@ -36,7 +36,7 @@ Options GoldenThingAdminDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOLDEN_KITCHEN_SINK_ENDPOINT",
       "GOLDEN_KITCHEN_SINK_EMULATOR_HOST", "GOLDEN_KITCHEN_SINK_AUTHORITY",
-      "test.googleapis.com");
+"test.googleapis.com");
   options = google::cloud::internal::PopulateGrpcOptions(
       std::move(options), "GOLDEN_KITCHEN_SINK_EMULATOR_HOST");
   if (!options.has<golden_v1::GoldenThingAdminRetryPolicyOption>()) {
