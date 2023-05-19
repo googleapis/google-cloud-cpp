@@ -3,4 +3,5 @@ InheritParentConfig: true
 
 Checks: >
   -misc-no-recursion,
-  -abseil-string-find-str-contains
+  -abseil-string-find-str-contains,
+  -abseil-string-find-startswith
