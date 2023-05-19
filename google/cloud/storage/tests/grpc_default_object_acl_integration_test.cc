@@ -14,7 +14,6 @@
 
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -29,7 +28,6 @@ namespace {
 
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::storage::testing::AclEntityNames;
-using ::google::cloud::testing_util::ContainsOnce;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
@@ -75,7 +73,7 @@ TEST_F(GrpcDefaultObjectAclIntegrationTest, AclCRUD) {
   auto current_acl = client->ListDefaultObjectAcl(bucket_name);
   ASSERT_STATUS_OK(current_acl);
   EXPECT_THAT(AclEntityNames(*current_acl),
-              ContainsOnce(existing_entity.entity()));
+              Contains(existing_entity.entity()).Times(1));
 
   auto get_acl =
       client->GetDefaultObjectAcl(bucket_name, existing_entity.entity());
@@ -92,7 +90,8 @@ TEST_F(GrpcDefaultObjectAclIntegrationTest, AclCRUD) {
 
   current_acl = client->ListDefaultObjectAcl(bucket_name);
   ASSERT_STATUS_OK(current_acl);
-  EXPECT_THAT(AclEntityNames(*current_acl), ContainsOnce(create_acl->entity()));
+  EXPECT_THAT(AclEntityNames(*current_acl),
+              Contains(create_acl->entity()).Times(1));
 
   auto c2 = client->CreateDefaultObjectAcl(bucket_name, viewers,
                                            ObjectAccessControl::ROLE_READER());

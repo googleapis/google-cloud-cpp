@@ -27,7 +27,6 @@ add_library(
     chrono_output.h
     command_line_parsing.cc
     command_line_parsing.h
-    contains_once.h
     example_driver.cc
     example_driver.h
     expect_exception.h
@@ -84,7 +83,6 @@ set(google_cloud_cpp_testing_unit_tests
     async_sequencer_test.cc
     chrono_output_test.cc
     command_line_parsing_test.cc
-    contains_once_test.cc
     example_driver_test.cc
     scoped_environment_test.cc
     setenv_test.cc

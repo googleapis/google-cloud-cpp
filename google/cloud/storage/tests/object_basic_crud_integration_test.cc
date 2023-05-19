@@ -17,7 +17,6 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -34,7 +33,6 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::ContainsOnce;
 using ::testing::Contains;
 using ::testing::Not;
 using ::testing::UnorderedElementsAreArray;
@@ -66,7 +64,7 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
       client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                            IfGenerationMatch(0), Projection("full"));
   ASSERT_STATUS_OK(insert_meta);
-  EXPECT_THAT(list_object_names(), ContainsOnce(object_name));
+  EXPECT_THAT(list_object_names(), Contains(object_name).Times(1));
 
   StatusOr<ObjectMetadata> get_meta = client->GetObjectMetadata(
       bucket_name_, object_name, Generation(insert_meta->generation()),

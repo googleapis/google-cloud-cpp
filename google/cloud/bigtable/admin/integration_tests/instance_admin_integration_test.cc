@@ -26,7 +26,6 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/project.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/scoped_log.h"
@@ -42,7 +41,6 @@ namespace {
 
 using ::google::cloud::bigtable::testing::RandomInstanceId;
 using ::google::cloud::internal::GetEnv;
-using ::google::cloud::testing_util::ContainsOnce;
 using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::HasSubstr;
@@ -237,8 +235,8 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
 
   profiles = profile_names(client_.ListAppProfiles(instance_name));
   ASSERT_STATUS_OK(profiles);
-  EXPECT_THAT(*profiles, ContainsOnce(name_1));
-  EXPECT_THAT(*profiles, ContainsOnce(name_2));
+  EXPECT_THAT(*profiles, Contains(name_1).Times(1));
+  EXPECT_THAT(*profiles, Contains(name_2).Times(1));
 
   profile_1 = client_.GetAppProfile(name_1);
   ASSERT_STATUS_OK(profile_1);
@@ -267,7 +265,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   profiles = profile_names(client_.ListAppProfiles(instance_name));
   ASSERT_STATUS_OK(profiles);
   EXPECT_THAT(*profiles, Not(Contains(name_1)));
-  EXPECT_THAT(*profiles, ContainsOnce(name_2));
+  EXPECT_THAT(*profiles, Contains(name_2).Times(1));
 
   btadmin::DeleteAppProfileRequest req_2;
   req_2.set_ignore_warnings(true);
