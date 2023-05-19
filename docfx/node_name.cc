@@ -71,6 +71,19 @@ std::string FunctionName(pugi::xml_node node) {
   auto const refqual = std::string_view{node.attribute("refqual").as_string()};
   if (refqual == "rvalue") os << " &&";
   if (refqual == "lvalue") os << " &";
+  sep = "  [";
+  auto close = std::string_view{};
+  if (std::string_view{node.attribute("static").as_string()} == "yes") {
+    os << sep << "static";
+    sep = " ";
+    close = "]";
+  }
+  if (std::string_view{node.attribute("virt").as_string()} == "virtual") {
+    os << sep << "virtual";
+    sep = " ";
+    close = "]";
+  }
+  os << close;
   return std::move(os).str();
 }
 
