@@ -26,25 +26,25 @@ using ::testing::Not;
 
 /// @test A simple test for the ExponentialBackoffPolicy.
 TEST(ExponentialBackoffPolicy, Simple) {
-  ExponentialBackoffPolicy tested(ms(10), ms(80), 2.0);
+  ExponentialBackoffPolicy tested(ms(10), ms(100), 2.0);
 
   auto delay = tested.OnCompletion();
   EXPECT_LE(ms(10), delay);
   EXPECT_GE(ms(20), delay);
   delay = tested.OnCompletion();
   EXPECT_LE(ms(10), delay);
-  EXPECT_GE(ms(30), delay);
-  delay = tested.OnCompletion();
-  EXPECT_LE(ms(10), delay);
-  EXPECT_GE(ms(50), delay);
+  EXPECT_GE(ms(40), delay);
   delay = tested.OnCompletion();
   EXPECT_LE(ms(10), delay);
   EXPECT_GE(ms(80), delay);
+  delay = tested.OnCompletion();
+  EXPECT_LE(ms(10), delay);
+  EXPECT_GE(ms(100), delay);
 }
 
 /// @test Verify a full jitter policy, where the minimum delay is set to 0.
 TEST(ExponentialBackoffPolicy, VerifyFullJitterPolicy) {
-  ExponentialBackoffPolicy tested(ms(0), ms(10), ms(50), 2.0);
+  ExponentialBackoffPolicy tested(ms(10), ms(0), ms(50), 2.0);
 
   auto delay = tested.OnCompletion();
   EXPECT_LE(ms(0), delay);
@@ -78,13 +78,7 @@ TEST(ExponentialBackoffPolicy, DetermineRangeUsingScalingFactor) {
 
   auto delay = tested.OnCompletion();
   EXPECT_LE(ms(1000), delay);
-  EXPECT_GE(ms(2000), delay);
-  delay = tested.OnCompletion();
-  EXPECT_LE(ms(1000), delay);
-  EXPECT_GE(ms(2001), delay);
-  delay = tested.OnCompletion();
-  EXPECT_LE(ms(1000), delay);
-  EXPECT_GE(ms(2002), delay);
+  EXPECT_GE(ms(1001), delay);
 }
 
 /// @test Verify that the scaling factor is validated.
@@ -102,19 +96,36 @@ TEST(ExponentialBackoffPolicy, ValidateScaling) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
+/// @test Verify the initial delay upper bound is validated.
+TEST(ExponentialBackoffPolicy, ValidateInitialDelayUpperBound) {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_THROW(ExponentialBackoffPolicy(ms(9), ms(10), ms(50), 2.0),
+               std::invalid_argument);
+  EXPECT_THROW(ExponentialBackoffPolicy(ms(0), ms(10), ms(50), 2.0),
+               std::invalid_argument);
+#else
+  EXPECT_DEATH_IF_SUPPORTED(
+      ExponentialBackoffPolicy(ms(9), ms(10), ms(50), 2.0),
+      "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(
+      ExponentialBackoffPolicy(ms(0), ms(10), ms(50), 2.0),
+      "exceptions are disabled");
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
 /// @test Verify that less common arguments work.
 TEST(ExponentialBackoffPolicy, DifferentParameters) {
   ExponentialBackoffPolicy tested(ms(100), std::chrono::seconds(10), 1.5);
 
   auto delay = tested.OnCompletion();
   EXPECT_LE(ms(100), delay) << "delay=" << delay.count() << "ms";
-  EXPECT_GE(ms(200), delay) << "delay=" << delay.count() << "ms";
+  EXPECT_GE(ms(150), delay) << "delay=" << delay.count() << "ms";
   delay = tested.OnCompletion();
   EXPECT_LE(ms(100), delay) << "delay=" << delay.count() << "ms";
-  EXPECT_GE(ms(250), delay) << "delay=" << delay.count() << "ms";
+  EXPECT_GE(ms(225), delay) << "delay=" << delay.count() << "ms";
   delay = tested.OnCompletion();
   EXPECT_LE(ms(100), delay) << "delay=" << delay.count() << "ms";
-  EXPECT_GE(ms(400), delay) << "delay=" << delay.count() << "ms";
+  EXPECT_GE(ms(338), delay) << "delay=" << delay.count() << "ms";
 }
 
 /// @test Test cloning for ExponentialBackoffPolicy.
@@ -127,7 +138,7 @@ TEST(ExponentialBackoffPolicy, Clone) {
   EXPECT_GE(ms(20), delay);
   delay = tested->OnCompletion();
   EXPECT_LE(ms(10), delay);
-  EXPECT_GE(ms(30), delay);
+  EXPECT_GE(ms(40), delay);
   delay = tested->OnCompletion();
   EXPECT_LE(ms(10), delay);
   EXPECT_GE(ms(50), delay);
