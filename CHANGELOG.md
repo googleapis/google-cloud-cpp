@@ -128,6 +128,11 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [Cloud Support API](/google/cloud/support/README.md)
 
+### [Storage Transfer Service](/google/cloud/storagetransfer/README.md)
+
+The library has been re-enabled on macOS. See
+[#8785](https://github.com/googleapis/google-cloud-cpp/issues/8785) for details.
+
 ## v2.10.0 - 2023-05
 
 ### New Libraries
