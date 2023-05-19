@@ -70,6 +70,9 @@ TEST(ProjectLoggingClientTest, ListProjects) {
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(max_results: 10)")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(page_token: "pt-123")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(ListProjectsResponse)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(id: "p-id")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(kind: "kind-1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(etag: "tag-1")")));
   EXPECT_THAT(actual_lines,
               Contains(HasSubstr(R"(project_id: "p-project-id")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(total_items: 1)")));

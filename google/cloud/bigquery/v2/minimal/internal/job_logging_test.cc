@@ -76,11 +76,14 @@ TEST(JobLoggingClientTest, GetJob) {
 
   EXPECT_THAT(actual_lines, Contains(HasSubstr(" << ")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(GetJobRequest)")));
-  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(job_id: "j123")")));
-  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(project_id: "p123")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(job_id: "j123")")).Times(2));
+  EXPECT_THAT(actual_lines,
+              Contains(HasSubstr(R"(project_id: "p123")")).Times(2));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(GetJobResponse)")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(status: "DONE")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(id: "j123")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(kind: "jkind")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(etag: "jtag")")));
 }
 
 TEST(JobLoggingClientTest, ListJobs) {
@@ -94,7 +97,7 @@ TEST(JobLoggingClientTest, ListJobs) {
           "jobs": [
               {
                 "id": "1",
-                "kind": "kind-2",
+                "kind": "kind-1",
                 "reference": {"project_id": "p123", "job_id": "j123"},
                 "state": "DONE",
                 "configuration": {
@@ -128,11 +131,14 @@ TEST(JobLoggingClientTest, ListJobs) {
 
   EXPECT_THAT(actual_lines, Contains(HasSubstr(" << ")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(ListJobsRequest)")));
-  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(project_id: "p123")")));
+  EXPECT_THAT(actual_lines,
+              Contains(HasSubstr(R"(project_id: "p123")")).Times(2));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(all_users: false)")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(max_results: 0)")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(ListJobsResponse)")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(id: "1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(kind: "kind-1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(job_id: "j123")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(state: "DONE")")));
 }
 
