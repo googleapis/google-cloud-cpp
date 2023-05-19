@@ -33,6 +33,9 @@ struct YamlContext {
   // Mocked functions (indexed by their id) pointing to the corresponding
   // `MOCK_METHOD()`'s id.
   std::unordered_map<std::string, std::string> mocked_ids;
+  // Fallback brief and detailed description.
+  std::string fallback_description_brief;
+  std::string fallback_description_detailed;
 };
 
 /// Creates a new context to recurse over @p node
