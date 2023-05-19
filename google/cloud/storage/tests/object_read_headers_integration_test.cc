@@ -15,7 +15,6 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <algorithm>
@@ -29,7 +28,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::GetEnv;
-using ::google::cloud::testing_util::ContainsOnce;
 using ::google::cloud::testing_util::IsOk;
 using ::testing::_;
 using ::testing::AnyOf;
@@ -170,8 +168,8 @@ TEST_F(ObjectReadHeadersIntegrationTest, NoDuplicatePeers) {
   EXPECT_THAT(is.status(), IsOk());
 
   auto const headers = is.headers();
-  EXPECT_THAT(headers, AnyOf(ContainsOnce(Pair(":curl-peer", _)),
-                             ContainsOnce(Pair(":grpc-context-peer", _))));
+  EXPECT_THAT(headers, AnyOf(Contains(Pair(":curl-peer", _)).Times(1),
+                             Contains(Pair(":grpc-context-peer", _)).Times(1)));
 }
 
 }  // namespace

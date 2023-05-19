@@ -13,7 +13,7 @@ Some sub-directories include **internal-only** types and functions. These are
 used in the implementation of the Google Cloud C++ libraries, but are **not**
 intended for general use. They are subject to change and/or removal without
 notice. These include `google/cloud/internal/`, and
-`google-cloud/testing_utils/`.
+`google/cloud/testing_utils/`.
 
 ## Supported Platforms
 

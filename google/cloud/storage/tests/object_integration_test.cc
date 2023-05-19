@@ -18,7 +18,6 @@
 #include "google/cloud/log.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/expect_exception.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -36,7 +35,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::storage::testing::AclEntityNames;
-using ::google::cloud::testing_util::ContainsOnce;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
@@ -107,7 +105,7 @@ TEST_F(ObjectIntegrationTest, FullPatch) {
   // acl() - cannot compare for equality because many fields are updated with
   // unknown values (entity_id, etag, etc)
   EXPECT_THAT(AclEntityNames(patched->acl()),
-              ContainsOnce("allAuthenticatedUsers"));
+              Contains("allAuthenticatedUsers").Times(1));
 
   EXPECT_EQ(desired.cache_control(), patched->cache_control());
   EXPECT_EQ(desired.content_disposition(), patched->content_disposition());
@@ -481,7 +479,8 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
   // Search using the entity name returned by the request, because we use
   // 'project-editors-<project_id>' this different than the original entity
   // name, the server "translates" the project id to a project number.
-  EXPECT_THAT(AclEntityNames(*current_acl), ContainsOnce(result->entity()));
+  EXPECT_THAT(AclEntityNames(*current_acl),
+              Contains(result->entity()).Times(1));
 
   auto get_result =
       client->GetObjectAcl(bucket_name_, object_name, entity_name);
