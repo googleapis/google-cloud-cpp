@@ -15,7 +15,7 @@ into your project.
 
 @snippet quickstart.cc all
 
-## Next Steps
+## More Information
 
 - Read more about [Cloud Spanner](https://cloud.google.com/spanner/docs/)
 - [Client::ExecuteQuery()](@ref google::cloud::spanner::Client::ExecuteQuery())
@@ -32,6 +32,9 @@ into your project.
 - @ref spanner-auth-example
 - @ref spanner-retry-example
 - @ref spanner-mocking
+- The [Setting up your development environment] guide describes how to set up
+  a C++ development environment in various platforms, including the Google Cloud
+  C++ client libraries.
 
 [google-cloud-cpp]: https://github.com/googleapis/google-cloud-cpp
 [project-readme]:   https://github.com/googleapis/google-cloud-cpp#readme
@@ -39,6 +42,7 @@ into your project.
 [howto-setup-dev-workstation]: https://github.com/googleapis/google-cloud-cpp/blob/main/doc/contributor/howto-guide-setup-development-workstation.md
 [quickstart guide]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/bigtable/quickstart#readme
 [packaging guide]:  https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging%2Emd
+[Setting up your development environment]: https://cloud.google.com/cpp/docs/setup
 
 */
 
