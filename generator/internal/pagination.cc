@@ -109,6 +109,10 @@ DetermineAlternatePagination(MethodDescriptor const& method) {
 
   FieldDescriptor const* items = response_message->FindFieldByName("items");
   if (!items->is_repeated()) return {};
+  // TODO(#11660): For map<K, V> types we need to add functionality to treat
+  // them as a repeated struct which contains two fields corresponding to
+  // K and V.
+  if (items->is_map()) return {};
   return std::make_pair(items->name(), items->message_type());
 }
 
