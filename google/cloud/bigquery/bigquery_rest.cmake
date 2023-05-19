@@ -75,6 +75,10 @@ add_library(
     v2/minimal/internal/log_wrapper.h
     v2/minimal/internal/project.cc
     v2/minimal/internal/project.h
+    v2/minimal/internal/project_client.cc
+    v2/minimal/internal/project_client.h
+    v2/minimal/internal/project_connection.cc
+    v2/minimal/internal/project_connection.h
     v2/minimal/internal/project_idempotency_policy.cc
     v2/minimal/internal/project_idempotency_policy.h
     v2/minimal/internal/project_logging.cc
@@ -87,6 +91,8 @@ add_library(
     v2/minimal/internal/project_request.h
     v2/minimal/internal/project_response.cc
     v2/minimal/internal/project_response.h
+    v2/minimal/internal/project_rest_connection_impl.cc
+    v2/minimal/internal/project_rest_connection_impl.h
     v2/minimal/internal/project_rest_stub.cc
     v2/minimal/internal/project_rest_stub.h
     v2/minimal/internal/project_rest_stub_factory.cc
@@ -155,6 +161,7 @@ target_sources(
     INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/mocks/mock_dataset_connection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/mocks/mock_job_connection.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/mocks/mock_project_connection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/mocks/mock_table_connection.h)
 target_link_libraries(
     google_cloud_cpp_bigquery_rest_mocks
@@ -242,6 +249,8 @@ function (bigquery_rest_define_tests)
         v2/minimal/internal/job_response_test.cc
         v2/minimal/internal/job_rest_stub_test.cc
         v2/minimal/internal/job_test.cc
+        v2/minimal/internal/project_client_test.cc
+        v2/minimal/internal/project_connection_test.cc
         v2/minimal/internal/project_idempotency_policy_test.cc
         v2/minimal/internal/project_logging_test.cc
         v2/minimal/internal/project_metadata_test.cc
