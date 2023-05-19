@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "docfx/doxygen2references.h"
+#include "docfx/node_name.h"
 #include "docfx/public_docs.h"
 #include "docfx/yaml_emit.h"
 #include <iterator>
