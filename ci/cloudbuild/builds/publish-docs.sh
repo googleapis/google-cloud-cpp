@@ -117,7 +117,6 @@ function upload_docs() {
     return 0
   fi
 
-  io::log_h2 "Uploading docs: ${package}"
   io::log "docs_dir=${docs_dir}"
 
   env -C "${docs_dir}" "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
@@ -138,7 +137,6 @@ function stage_docfx() {
     return 0
   fi
 
-  io::log_h2 "Uploading docs: ${package}"
   io::log "docfx_dir=${docfx_dir}"
 
   env -C "${docfx_dir}" "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
@@ -147,23 +145,23 @@ function stage_docfx() {
     --destination-prefix docfx .
 }
 
+exit_status=0
+
 io::log_h2 "Publishing DocFX"
 io::log "branch:  ${BRANCH_NAME}"
 io::log "bucket:  gs://${docfx_bucket}"
 
-stage_docfx "google-cloud-common" "cmake-out/google/cloud/docfx"
-stage_docfx "google-cloud-bigtable" "cmake-out/google/cloud/bigtable/docfx"
-stage_docfx "google-cloud-pubsub" "cmake-out/google/cloud/pubsub/docfx"
-stage_docfx "google-cloud-spanner" "cmake-out/google/cloud/spanner/docfx"
-stage_docfx "google-cloud-storage" "cmake-out/google/cloud/storage/docfx"
-stage_docfx "google-cloud-kms" "cmake-out/google/cloud/kms/docfx"
-stage_docfx "google-cloud-secretmanager" "cmake-out/google/cloud/secretmanager/docfx"
-for feature in "${FEATURE_LIST[@]}"; do
+for feature in common "${FEATURE_LIST[@]}"; do
   if [[ "${feature}" == "experimental-storage-grpc" ]]; then continue; fi
   if [[ "${feature}" == "grafeas" ]]; then continue; fi
-  # TODO(#11430) - slowly change this limit until all libraries are published
-  if [[ "${feature}" < "v" ]]; then continue; fi
-  stage_docfx "google-cloud-${feature}" "cmake-out/google/cloud/${feature}/docfx"
+  path="cmake-out/google/cloud/${feature}/docfx"
+  if [[ "${feature}" == "common" ]]; then path="cmake-out/google/cloud/docfx"; fi
+  io::log_h2 "Uploading docfx docs: ${feature}"
+  # These uploads are extremely noisy. Just print their output on error.
+  if ! mapfile -t LOG < <(stage_docfx "google-cloud-${feature}" "${path}" 2>&1); then
+    for line in "${LOG[@]}"; do echo "${line}"; done
+    exit_status=1
+  fi
 done
 
 io::log_h2 "Publishing docs"
@@ -171,10 +169,18 @@ io::log "version: ${version}"
 io::log "branch:  ${BRANCH_NAME}"
 io::log "bucket:  gs://${bucket}"
 
-upload_docs "google-cloud-common" "cmake-out/google/cloud/html"
-for feature in "${FEATURE_LIST[@]}"; do
+for feature in common "${FEATURE_LIST[@]}"; do
   if [[ "${feature}" == "experimental-storage-grpc" ]]; then continue; fi
   if [[ "${feature}" == "grafeas" ]]; then continue; fi
   if [[ "${feature}" == "experimental-opentelemetry" ]]; then feature="opentelemetry"; fi
-  upload_docs "google-cloud-${feature}" "cmake-out/google/cloud/${feature}/html"
+  # These uploads are extremely noisy. Just print their output on error.
+  path="cmake-out/google/cloud/${feature}/html"
+  if [[ "${feature}" == "common" ]]; then path="cmake-out/google/cloud/cloud/html"; fi
+  io::log_h2 "Uploading docs: ${feature}"
+  if ! mapfile -t LOG < <(upload_docs "google-cloud-${feature}" "${path}" 2>&1); then
+    for line in "${LOG[@]}"; do echo "${line}"; done
+    exit_status=1
+  fi
 done
+
+exit ${exit_status}
