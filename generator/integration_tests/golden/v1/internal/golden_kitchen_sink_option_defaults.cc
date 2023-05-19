@@ -36,7 +36,7 @@ Options GoldenKitchenSinkDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOLDEN_KITCHEN_SINK_ENDPOINT",
       "GOLDEN_KITCHEN_SINK_EMULATOR_HOST", "GOLDEN_KITCHEN_SINK_AUTHORITY",
-      "goldenkitchensink.googleapis.com");
+"goldenkitchensink.googleapis.com");
   options = google::cloud::internal::PopulateGrpcOptions(
       std::move(options), "GOLDEN_KITCHEN_SINK_EMULATOR_HOST");
   if (!options.has<golden_v1::GoldenKitchenSinkRetryPolicyOption>()) {
