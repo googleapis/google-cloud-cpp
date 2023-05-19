@@ -155,6 +155,7 @@ stage_docfx "google-cloud-common" "cmake-out/google/cloud/docfx"
 stage_docfx "google-cloud-bigtable" "cmake-out/google/cloud/bigtable/docfx"
 stage_docfx "google-cloud-pubsub" "cmake-out/google/cloud/pubsub/docfx"
 stage_docfx "google-cloud-spanner" "cmake-out/google/cloud/spanner/docfx"
+stage_docfx "google-cloud-storage" "cmake-out/google/cloud/storage/docfx"
 stage_docfx "google-cloud-kms" "cmake-out/google/cloud/kms/docfx"
 stage_docfx "google-cloud-secretmanager" "cmake-out/google/cloud/secretmanager/docfx"
 for feature in "${FEATURE_LIST[@]}"; do
