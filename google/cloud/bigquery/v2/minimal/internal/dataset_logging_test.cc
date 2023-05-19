@@ -67,6 +67,8 @@ TEST(DatasetLoggingClientTest, GetDataset) {
   auto client = CreateMockDatasetLogging(std::move(mock_stub));
   GetDatasetRequest request("p-id", "d-id");
   rest_internal::RestContext context;
+  context.AddHeader("header-1", "value-1");
+  context.AddHeader("header-2", "value-2");
 
   client->GetDataset(context, request);
 
@@ -81,6 +83,11 @@ TEST(DatasetLoggingClientTest, GetDataset) {
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(id: "d-id")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(kind: "d-kind")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(etag: "d-tag")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(Context)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(name: "header-1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(value: "value-1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(name: "header-2")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(value: "value-2")")));
 }
 
 TEST(DatasetLoggingClientTest, ListDatasets) {
@@ -116,6 +123,8 @@ TEST(DatasetLoggingClientTest, ListDatasets) {
   auto client = CreateMockDatasetLogging(std::move(mock_stub));
   ListDatasetsRequest request("p123");
   rest_internal::RestContext context;
+  context.AddHeader("header-1", "value-1");
+  context.AddHeader("header-2", "value-2");
 
   client->ListDatasets(context, request);
 
@@ -132,6 +141,11 @@ TEST(DatasetLoggingClientTest, ListDatasets) {
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(kind: "kind-1")")));
   EXPECT_THAT(actual_lines,
               Contains(HasSubstr(R"(next_page_token: "npt-123")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(Context)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(name: "header-1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(value: "value-1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(name: "header-2")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(value: "value-2")")));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

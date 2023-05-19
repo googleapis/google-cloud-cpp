@@ -69,6 +69,8 @@ TEST(JobLoggingClientTest, GetJob) {
   auto client = CreateMockJobLogging(std::move(mock_stub));
   GetJobRequest request("p123", "j123");
   rest_internal::RestContext context;
+  context.AddHeader("header-1", "value-1");
+  context.AddHeader("header-2", "value-2");
 
   client->GetJob(context, request);
 
@@ -84,6 +86,11 @@ TEST(JobLoggingClientTest, GetJob) {
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(id: "j123")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(kind: "jkind")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(etag: "jtag")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(Context)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(name: "header-1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(value: "value-1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(name: "header-2")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(value: "value-2")")));
 }
 
 TEST(JobLoggingClientTest, ListJobs) {
@@ -124,6 +131,8 @@ TEST(JobLoggingClientTest, ListJobs) {
   auto client = CreateMockJobLogging(std::move(mock_stub));
   ListJobsRequest request("p123");
   rest_internal::RestContext context;
+  context.AddHeader("header-1", "value-1");
+  context.AddHeader("header-2", "value-2");
 
   client->ListJobs(context, request);
 
@@ -140,6 +149,11 @@ TEST(JobLoggingClientTest, ListJobs) {
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(kind: "kind-1")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(job_id: "j123")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(state: "DONE")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(Context)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(name: "header-1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(value: "value-1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(name: "header-2")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(value: "value-2")")));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

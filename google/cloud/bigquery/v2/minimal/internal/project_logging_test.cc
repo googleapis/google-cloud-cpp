@@ -61,6 +61,8 @@ TEST(ProjectLoggingClientTest, ListProjects) {
   ListProjectsRequest request;
   request.set_max_results(10).set_page_token("pt-123");
   rest_internal::RestContext context;
+  context.AddHeader("header-1", "value-1");
+  context.AddHeader("header-2", "value-2");
 
   client->ListProjects(context, request);
 
@@ -78,6 +80,11 @@ TEST(ProjectLoggingClientTest, ListProjects) {
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(total_items: 1)")));
   EXPECT_THAT(actual_lines,
               Contains(HasSubstr(R"(next_page_token: "npt-123")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(Context)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(name: "header-1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(value: "value-1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(name: "header-2")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(value: "value-2")")));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
