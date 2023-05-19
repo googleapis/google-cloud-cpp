@@ -49,6 +49,7 @@ class TestGenerator : public ServiceCodeGenerator {
 
   using ServiceCodeGenerator::HasBidirStreamingMethod;
   using ServiceCodeGenerator::HasExplicitRoutingMethod;
+  using ServiceCodeGenerator::HasGRPCLongrunningOperation;
   using ServiceCodeGenerator::HasLongrunningMethod;
   using ServiceCodeGenerator::HasMessageWithMapField;
   using ServiceCodeGenerator::HasPaginatedMethod;
@@ -139,6 +140,7 @@ TEST(PredicateUtilsTest, HasLongRunningMethodNone) {
       .WillOnce(Return(output.release()));
   TestGenerator g(service_file_descriptor->service(0), generator_context.get());
   EXPECT_FALSE(g.HasLongrunningMethod());
+  EXPECT_FALSE(g.HasGRPCLongrunningOperation());
 }
 
 TEST(PredicateUtilsTest, HasLongRunningMethodOne) {
@@ -186,6 +188,7 @@ TEST(PredicateUtilsTest, HasLongRunningMethodOne) {
       .WillOnce(Return(output.release()));
   TestGenerator g(service_file_descriptor->service(0), generator_context.get());
   EXPECT_TRUE(g.HasLongrunningMethod());
+  EXPECT_TRUE(g.HasGRPCLongrunningOperation());
 }
 
 TEST(PredicateUtilsTest, HasLongRunningMethodMoreThanOne) {
@@ -238,6 +241,7 @@ TEST(PredicateUtilsTest, HasLongRunningMethodMoreThanOne) {
       .WillOnce(Return(output.release()));
   TestGenerator g(service_file_descriptor->service(0), generator_context.get());
   EXPECT_TRUE(g.HasLongrunningMethod());
+  EXPECT_TRUE(g.HasGRPCLongrunningOperation());
 }
 
 TEST(PredicateUtilsTest, HasPaginatedMethodTrue) {

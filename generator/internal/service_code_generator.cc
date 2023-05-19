@@ -108,6 +108,13 @@ bool ServiceCodeGenerator::HasLongrunningMethod() const {
                      });
 }
 
+bool ServiceCodeGenerator::HasGRPCLongrunningOperation() const {
+  return std::any_of(methods_.begin(), methods_.end(),
+                     [](google::protobuf::MethodDescriptor const& m) {
+                       return IsGRPCLongrunningOperation(m);
+                     });
+}
+
 bool ServiceCodeGenerator::HasAsyncMethod() const {
   return !async_methods_.empty() || HasLongrunningMethod();
 }
