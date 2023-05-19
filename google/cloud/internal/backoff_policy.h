@@ -126,18 +126,19 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
    *     for more details.
    */
   template <typename Rep1, typename Period1, typename Rep2, typename Period2>
-  ExponentialBackoffPolicy(std::chrono::duration<Rep1, Period1> initial_delay,
+  ExponentialBackoffPolicy(std::chrono::duration<Rep1, Period1> minimum_delay,
                            std::chrono::duration<Rep2, Period2> maximum_delay,
                            double scaling)
-      : ExponentialBackoffPolicy(initial_delay, initial_delay, maximum_delay,
-                                 scaling) {}
+      : ExponentialBackoffPolicy(
+            /*initial_delay_upper_bound=*/minimum_delay * scaling,
+            minimum_delay, maximum_delay, scaling) {}
 
   /**
-   * Constructor for an exponential backoff policy with an initial and minimum
-   * delay.
+   * Constructor for an exponential backoff policy with an initial delay upper
+   * bound and minimum delay.
    *
-   * Define the initial delay, minimum delay, maximum delay, and scaling factor
-   * for an instance of the policy. While the constructor accepts
+   * Define the initial delay upper bound, minimum delay, maximum delay, and
+   * scaling factor for an instance of the policy. While the constructor accepts
    * `std::chrono::duration` objects at any resolution, the data is kept
    * internally in microseconds. Sub-microsecond delays seem unnecessarily
    * precise for this application.
@@ -145,25 +146,24 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
    * @code
    * using namespace std::chrono_literals; // C++14
    * auto r1 = ExponentialBackoffPolicy<S,T>(0ms, 10ms, 500ms, 1.618);
-   * auto r2 = ExponentialBackoffPolicy<S,T>(0min, 10min, 10min + 2s, 1.002);
    * @endcode
    *
-   * @param initial_delay how long to wait after the first (unsuccessful)
-   *     operation.
+   * @param initial_delay_upper_bound how long to wait after the first
+   *     (unsuccessful) operation.
    * @param minimum_delay the minimum value for the delay between operations.
    * @param maximum_delay the maximum value for the delay between operations.
    * @param scaling how fast does the delay increase between iterations.
    *
    * @tparam Rep1 a placeholder to match the Rep tparam for
-   *     @p initial_delay's type. The semantics of this template parameter
-   *     are documented in `std::chrono::duration<>` (in brief, the underlying
-   *     arithmetic type used to store the number of ticks). For our purposes,
-   *     it is simply a formal parameter.
+   *     @p initial_delay_upper_bound's type. The semantics of this template
+   *     parameter are documented in `std::chrono::duration<>` (in brief, the
+   *     underlying arithmetic type used to store the number of ticks). For our
+   *     purposes, it is simply a formal parameter.
    * @tparam Period1 a placeholder to match the Period tparam for
-   *     @p initial_delay's type. The semantics of this template parameter
-   *     are documented in `std::chrono::duration<>` (in brief, the underlying
-   *     arithmetic type used to store the number of ticks). For our purposes,
-   *     it is simply a formal parameter.
+   *     @p initial_delay_upper_bound's type. The semantics of this template
+   *     parameter are documented in `std::chrono::duration<>` (in brief, the
+   *     underlying arithmetic type used to store the number of ticks). For our
+   *     purposes, it is simply a formal parameter.
    * @tparam Rep2 similar formal parameter for the type of @p minimum_delay.
    * @tparam Period2 similar formal parameter for the type of @p minimum_delay.
    * @tparam Rep3 similar formal parameter for the type of @p maximum_delay.
@@ -175,18 +175,23 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
    */
   template <typename Rep1, typename Period1, typename Rep2, typename Period2,
             typename Rep3, typename Period3>
-  ExponentialBackoffPolicy(std::chrono::duration<Rep1, Period1> initial_delay,
-                           std::chrono::duration<Rep2, Period2> minimum_delay,
-                           std::chrono::duration<Rep3, Period3> maximum_delay,
-                           double scaling)
-      : initial_delay_(initial_delay),
+  ExponentialBackoffPolicy(
+      std::chrono::duration<Rep1, Period1> initial_delay_upper_bound,
+      std::chrono::duration<Rep2, Period2> minimum_delay,
+      std::chrono::duration<Rep3, Period3> maximum_delay, double scaling)
+      : initial_delay_upper_bound_(initial_delay_upper_bound),
         minimum_delay_(minimum_delay),
         maximum_delay_(maximum_delay),
         scaling_(scaling),
-        current_delay_range_(initial_delay_),
-        current_delay_start_(minimum_delay_),
-        current_delay_end_(
-            (std::min)(minimum_delay_ + current_delay_range_, maximum_delay_)) {
+        current_delay_end_(initial_delay_upper_bound_) {
+    if (initial_delay_upper_bound_ < minimum_delay_) {
+      google::cloud::internal::ThrowInvalidArgument(
+          "initial delay upper bound must be >= minimum delay");
+    }
+    if (initial_delay_upper_bound_.count() == 0) {
+      google::cloud::internal::ThrowInvalidArgument(
+          "initial delay upper bound must be non zero");
+    }
     if (scaling_ <= 1.0) {
       google::cloud::internal::ThrowInvalidArgument(
           "scaling factor must be > 1.0");
@@ -198,12 +203,10 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
   //    know specifically which one is at fault)
   //  - We want uncorrelated data streams for each copy anyway.
   ExponentialBackoffPolicy(ExponentialBackoffPolicy const& rhs) noexcept
-      : initial_delay_(rhs.initial_delay_),
+      : initial_delay_upper_bound_(rhs.initial_delay_upper_bound_),
         minimum_delay_(rhs.minimum_delay_),
         maximum_delay_(rhs.maximum_delay_),
         scaling_(rhs.scaling_),
-        current_delay_range_(rhs.current_delay_range_),
-        current_delay_start_(rhs.current_delay_start_),
         current_delay_end_(rhs.current_delay_end_) {}
 
   std::unique_ptr<BackoffPolicy> clone() const override;
@@ -211,12 +214,10 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
 
  private:
   using DoubleMicroseconds = std::chrono::duration<double, std::micro>;
-  DoubleMicroseconds initial_delay_;
+  DoubleMicroseconds initial_delay_upper_bound_;
   DoubleMicroseconds minimum_delay_;
   DoubleMicroseconds maximum_delay_;
   double scaling_;
-  DoubleMicroseconds current_delay_range_;
-  DoubleMicroseconds current_delay_start_;
   DoubleMicroseconds current_delay_end_;
   absl::optional<DefaultPRNG> generator_;
 };
