@@ -85,39 +85,47 @@ void CompoundRecurse(YAML::Emitter& yaml, YamlContext const& ctx,
   }
 }
 
-std::string Summary(pugi::xml_node node) {
+std::string Summary(YamlContext const& ctx, pugi::xml_node node) {
   std::ostringstream os;
-  MarkdownContext ctx;
-  ctx.paragraph_start = "";
+  MarkdownContext mdctx;
+  mdctx.paragraph_start = "";
   auto brief = node.child("briefdescription");
-  if (!brief.empty()) {
-    AppendIfBriefDescription(os, ctx, brief);
-    ctx = MarkdownContext{};
+  if (!brief.children().empty()) {
+    AppendIfBriefDescription(os, mdctx, brief);
+  } else {
+    os << ctx.fallback_description_brief;
   }
   return std::move(os).str();
 }
 
-std::string Conceptual(pugi::xml_node node, bool skip_xrefsect = false) {
+std::string Conceptual(YamlContext const& ctx, pugi::xml_node node,
+                       bool skip_xrefsect = false) {
   std::ostringstream os;
-  MarkdownContext ctx;
-  ctx.paragraph_start = "";
-  ctx.skip_xrefsect = skip_xrefsect;
+  MarkdownContext mdctx;
+  mdctx.paragraph_start = "";
+  mdctx.skip_xrefsect = skip_xrefsect;
   auto description = node.child("description");
-  if (!description.empty()) {
-    AppendDescriptionType(os, ctx, description);
-    ctx = MarkdownContext{};
+  if (!description.children().empty()) {
+    AppendDescriptionType(os, mdctx, description);
+    mdctx = MarkdownContext{};
   }
   auto detailed = node.child("detaileddescription");
-  if (!detailed.empty()) AppendIfDetailedDescription(os, ctx, detailed);
+  if (!detailed.children().empty()) {
+    AppendIfDetailedDescription(os, mdctx, detailed);
+  }
+  if (description.children().empty() && detailed.children().empty()) {
+    os << ctx.fallback_description_detailed;
+  }
   return std::move(os).str();
 }
 
-void AppendDescription(YAML::Emitter& yaml, pugi::xml_node node) {
-  auto const summary = Summary(node);
+void AppendDescription(YAML::Emitter& yaml, YamlContext const& ctx,
+                       pugi::xml_node node) {
+  auto const summary = Summary(ctx, node);
   if (!summary.empty()) {
     yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
   }
-  auto const conceptual = Conceptual(node);
+  auto const conceptual = Conceptual(ctx, node);
   if (!conceptual.empty()) {
     yaml << YAML::Key << "conceptual" << YAML::Value << YAML::Literal
          << conceptual;
@@ -167,7 +175,7 @@ bool AppendIfEnumValue(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "parent" << YAML::Value << ctx.parent_id     //
        << YAML::Key << "type" << YAML::Value << "enumvalue"         //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;
-  AppendDescription(yaml, node);
+  AppendDescription(yaml, ctx, node);
   yaml << YAML::EndMap;
   return true;
 }
@@ -190,7 +198,7 @@ bool AppendIfEnum(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "type" << YAML::Value << "enum"                      //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendEnumSyntax(yaml, ctx, node);
-  AppendDescription(yaml, node);
+  AppendDescription(yaml, ctx, node);
   auto const children = Children(ctx, node);
   if (!children.empty()) {
     yaml << YAML::Key << "children" << YAML::Value << children;
@@ -221,7 +229,7 @@ bool AppendIfTypedef(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "type" << YAML::Value << "typealias"                 //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendTypedefSyntax(yaml, ctx, node);
-  AppendDescription(yaml, node);
+  AppendDescription(yaml, ctx, node);
   yaml << YAML::EndMap;
   return true;
 }
@@ -243,7 +251,7 @@ bool AppendIfFriend(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "type" << YAML::Value << "friend"                    //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendFriendSyntax(yaml, ctx, node);
-  AppendDescription(yaml, node);
+  AppendDescription(yaml, ctx, node);
   yaml << YAML::EndMap;
   return true;
 }
@@ -265,7 +273,7 @@ bool AppendIfVariable(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "type" << YAML::Value << "variable"                  //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendVariableSyntax(yaml, ctx, node);
-  AppendDescription(yaml, node);
+  AppendDescription(yaml, ctx, node);
   yaml << YAML::EndMap;
   return true;
 }
@@ -300,11 +308,11 @@ bool AppendIfFunction(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "type" << YAML::Value << type                        //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendFunctionSyntax(yaml, ctx, node);
-  auto const summary = Summary(node);
+  auto const summary = Summary(ctx, node);
   if (!summary.empty()) {
     yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
   }
-  auto conceptual = Conceptual(node);
+  auto conceptual = Conceptual(ctx, node);
   if (!conceptual.empty() || is_mocked) {
     auto constexpr kMockedSummary =
         R"md(This function is implemented using [gMock]'s `MOCK_METHOD()`.
@@ -326,7 +334,13 @@ Consult the gMock documentation to use this mock in your tests.
 bool AppendIfSectionDef(YAML::Emitter& yaml, YamlContext const& ctx,
                         pugi::xml_node node) {
   if (std::string_view{node.name()} != "sectiondef") return false;
-  CompoundRecurse(yaml, ctx, node);
+  auto nested = ctx;
+  nested.fallback_description_brief = Summary(ctx, node);
+  if (nested.fallback_description_brief.empty()) {
+    nested.fallback_description_brief = node.child_value("header");
+  }
+  nested.fallback_description_detailed = Conceptual(ctx, node);
+  CompoundRecurse(yaml, nested, node);
   return true;
 }
 
@@ -344,11 +358,11 @@ bool AppendIfNamespace(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendNamespaceSyntax(yaml, ctx, node);
   // Deprecated namespaces need special treatment
-  auto const summary = Summary(node);
+  auto const summary = Summary(ctx, node);
   if (!summary.empty()) {
     yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
   }
-  auto conceptual = Conceptual(node, true);
+  auto conceptual = Conceptual(ctx, node, true);
   // Discover all the `xrefsect` descendants that document this is a deprecated
   // namespace and list the alternatives.
   std::map<std::string, std::string> deprecated;
@@ -403,7 +417,7 @@ bool AppendIfClass(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "type" << YAML::Value << "class"                     //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendClassSyntax(yaml, ctx, node);
-  AppendDescription(yaml, node);
+  AppendDescription(yaml, ctx, node);
   auto const children = Children(ctx, node);
   if (!children.empty()) {
     yaml << YAML::Key << "children" << YAML::Value << children;
@@ -426,7 +440,7 @@ bool AppendIfStruct(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "type" << YAML::Value << "struct"                    //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendStructSyntax(yaml, ctx, node);
-  AppendDescription(yaml, node);
+  AppendDescription(yaml, ctx, node);
   auto const children = Children(ctx, node);
   if (!children.empty()) {
     yaml << YAML::Key << "children" << YAML::Value << children;

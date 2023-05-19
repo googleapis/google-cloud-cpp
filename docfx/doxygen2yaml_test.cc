@@ -779,6 +779,97 @@ items:
   EXPECT_EQ(actual, kExpected);
 }
 
+TEST(Doxygen2Yaml, InheritSectionDefSummary) {
+  auto constexpr kXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="classgoogle_1_1cloud_1_1StatusOr" kind="class" language="C++" prot="public" final="yes">
+        <compoundname>google::cloud::StatusOr</compoundname>
+        <includes refid="status__or_8h" local="no">google/cloud/status_or.h</includes>
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <sectiondef kind="user-defined">
+          <header>Dereference operators.</header>
+            <memberdef kind="function" id="classgoogle_1_1cloud_1_1StatusOr_1a95250d82418ed95673d41377347a3dbd" prot="public" static="no" const="no" explicit="no" inline="yes" refqual="lvalue" virt="non-virtual">
+              <type>T &amp;</type>
+              <definition>T &amp; google::cloud::StatusOr&lt; T &gt;::operator*</definition>
+              <argsstring>() &amp;</argsstring>
+              <name>operator*</name>
+              <qualifiedname>google::cloud::StatusOr::operator*</qualifiedname>
+              <briefdescription>
+              </briefdescription>
+              <detaileddescription>
+              </detaileddescription>
+              <inbodydescription>
+              </inbodydescription>
+              <location file="status_or.h" line="208" column="5" bodyfile="status_or.h" bodystart="208" bodyend="208"/>
+            </memberdef>
+        </sectiondef>
+      </compounddef>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
+items:
+  - uid: classgoogle_1_1cloud_1_1StatusOr
+    name: "StatusOr<T>"
+    id: classgoogle_1_1cloud_1_1StatusOr
+    parent: test-only-parent-id
+    type: class
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        // Found in #include <google/cloud/status_or.h>
+        template <
+            typename T>
+        class google::cloud::StatusOr { ... };
+    children:
+      - classgoogle_1_1cloud_1_1StatusOr_1a95250d82418ed95673d41377347a3dbd
+  - uid: classgoogle_1_1cloud_1_1StatusOr_1a95250d82418ed95673d41377347a3dbd
+    name: "operator*() &"
+    fullName: |
+      google::cloud::StatusOr::operator*
+    id: classgoogle_1_1cloud_1_1StatusOr_1a95250d82418ed95673d41377347a3dbd
+    parent: classgoogle_1_1cloud_1_1StatusOr
+    type: operator
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        T &
+        google::cloud::StatusOr::operator* ()
+      return:
+        type:
+          - "T &"
+      source:
+        id: operator*
+        path: google/cloud/status_or.h
+        startLine: 208
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/status_or.h
+    summary: |
+      Dereference operators.
+)yml";
+
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected =
+      doc.select_node("//*[@id='classgoogle_1_1cloud_1_1StatusOr']");
+  ASSERT_TRUE(selected);
+  YAML::Emitter yaml;
+  TestPre(yaml);
+  YamlContext ctx;
+  ctx.parent_id = "test-only-parent-id";
+  ASSERT_TRUE(AppendIfClass(yaml, ctx, selected.node()));
+  TestPost(yaml);
+  auto const actual = EndDocFxYaml(yaml);
+  EXPECT_EQ(actual, kExpected);
+}
+
 TEST(Doxygen2Yaml, MockedFunction) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
