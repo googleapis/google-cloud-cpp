@@ -57,6 +57,13 @@ std::string ClassName(pugi::xml_node node) {
 // functions also need any cv-qualifiers.
 std::string FunctionName(pugi::xml_node node) {
   std::ostringstream os;
+  if (std::string_view{node.attribute("static").as_string()} == "yes") {
+    os << "static ";
+  }
+  if (std::string_view{node.attribute("virt").as_string()} == "virtual") {
+    os << "virtual ";
+  }
+
   os << node.child_value("name") << "(";
   auto params = node.select_nodes("param");
   auto sep = std::string_view{};
