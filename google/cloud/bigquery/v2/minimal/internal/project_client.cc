@@ -25,7 +25,6 @@ ProjectClient::ProjectClient(std::shared_ptr<ProjectConnection> connection,
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
-ProjectClient::~ProjectClient() = default;
 
 StreamRange<Project> ProjectClient::ListProjects(
     ListProjectsRequest const& request, Options opts) {

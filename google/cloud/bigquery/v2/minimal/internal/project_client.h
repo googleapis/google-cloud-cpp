@@ -17,7 +17,6 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/project_connection.h"
 #include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -37,7 +36,7 @@ class ProjectClient {
  public:
   explicit ProjectClient(std::shared_ptr<ProjectConnection> connection,
                          Options opts = {});
-  ~ProjectClient();
+  ~ProjectClient() = default;
 
   ProjectClient(ProjectClient const&) = default;
   ProjectClient& operator=(ProjectClient const&) = default;
