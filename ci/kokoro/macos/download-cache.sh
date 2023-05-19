@@ -31,7 +31,7 @@ readonly CACHE_NAME="$2"
 
 mkdir -p "${HOME}/.ccache"
 [[ -f "${HOME}/.ccache/ccache.conf" ]] ||
-  echo "max_size = 5.0G" >"${HOME}/.ccache/ccache.conf"
+  echo "max_size = 8.0G" >"${HOME}/.ccache/ccache.conf"
 
 if ! cache_download_enabled; then
   exit 0
