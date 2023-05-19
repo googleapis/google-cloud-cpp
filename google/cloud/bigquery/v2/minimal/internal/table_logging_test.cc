@@ -61,6 +61,8 @@ TEST(TableLoggingClientTest, GetTable) {
   auto client = CreateMockTableLogging(std::move(mock_stub));
   GetTableRequest request = bigquery_v2_minimal_testing::MakeGetTableRequest();
   rest_internal::RestContext context;
+  context.AddHeader("header-1", "value-1");
+  context.AddHeader("header-2", "value-2");
 
   client->GetTable(context, request);
 
@@ -76,6 +78,11 @@ TEST(TableLoggingClientTest, GetTable) {
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(GetTableResponse)")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(id: "t-id")")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(kind: "t-kind")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(Context)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(name: "header-1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(value: "value-1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(name: "header-2")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(value: "value-2")")));
 }
 
 TEST(TableLoggingClientTest, ListTables) {
@@ -98,7 +105,10 @@ TEST(TableLoggingClientTest, ListTables) {
   auto client = CreateMockTableLogging(std::move(mock_stub));
   ListTablesRequest request =
       bigquery_v2_minimal_testing::MakeListTablesRequest();
+
   rest_internal::RestContext context;
+  context.AddHeader("header-1", "value-1");
+  context.AddHeader("header-2", "value-2");
 
   client->ListTables(context, request);
 
@@ -117,6 +127,11 @@ TEST(TableLoggingClientTest, ListTables) {
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(table_id: "t-123")")));
   EXPECT_THAT(actual_lines,
               Contains(HasSubstr(R"(next_page_token: "npt-123")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(Context)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(name: "header-1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(value: "value-1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(name: "header-2")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(value: "value-2")")));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
