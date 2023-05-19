@@ -102,14 +102,14 @@ bool IsSkippedChild(YamlContext const& ctx, pugi::xml_node node) {
   auto id = std::string{node.attribute("id").as_string()};
   if (ctx.mocked_ids.count(id) != 0) return true;
 
-  // Things that are not MOCK_METHOD() are always present
+  // Things that are not MOCK_METHOD() are always present.
   auto qname = std::string_view{node.child("qualifiedname").child_value()};
   auto const p = qname.find("::MOCK_METHOD");
   if (p == std::string_view::npos) return false;
 
   // In a few places we kept a MOCK_METHOD() definition for a function that
-  // does not exist in the base class.  These only exist for backwards
-  // compatibility. Skip them is no need to document those.
+  // does not exist in the base class. These only exist for backwards
+  // compatibility. Skip them as there is no need to document those.
   auto const m = ctx.mocking_functions_by_id.find(id);
   return m == ctx.mocking_functions_by_id.end();
 }
