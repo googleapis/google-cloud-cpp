@@ -117,7 +117,7 @@ def google_cloud_cpp_deps(name = None):
         name = "com_google_protobuf",
         urls = [
             "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_protobuf/v23.1.tar.gz",
-            "https://github.com/protocolbuffers/protobuf/archive/refs/tags/v23.1.tar.gz",
+            "https://github.com/protocolbuffers/protobuf/archive/v23.1.tar.gz",
         ],
         sha256 = "dc167b7d23ec0d6e4a3d4eae1798de6c8d162e69fa136d39753aaeb7a6e1289d",
         strip_prefix = "protobuf-23.1",
