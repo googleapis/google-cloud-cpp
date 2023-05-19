@@ -783,7 +783,7 @@ TEST(Doxygen2Yaml, MockedFunction) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
   - uid: classgoogle_1_1cloud_1_1kms__inventory__v1__mocks_1_1MockKeyDashboardServiceConnection_1a789db998d71abf9016b64832d0c7a99e
-    name: "ListCryptoKeys(google::cloud::kms::inventory::v1::ListCryptoKeysRequest)  [virtual]"
+    name: "virtual ListCryptoKeys(google::cloud::kms::inventory::v1::ListCryptoKeysRequest)"
     fullName: |
       google::cloud::kms_inventory_v1::KeyDashboardServiceConnection::ListCryptoKeys
     id: classgoogle_1_1cloud_1_1kms__inventory__v1__mocks_1_1MockKeyDashboardServiceConnection_1a789db998d71abf9016b64832d0c7a99e
