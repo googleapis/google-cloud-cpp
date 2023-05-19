@@ -73,9 +73,14 @@ TEST(DatasetLoggingClientTest, GetDataset) {
   auto actual_lines = log.ExtractLines();
 
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(GetDatasetRequest)")));
-  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(project_id: "p-id")")));
-  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(dataset_id: "d-id")")));
+  EXPECT_THAT(actual_lines,
+              Contains(HasSubstr(R"(project_id: "p-id")")).Times(2));
+  EXPECT_THAT(actual_lines,
+              Contains(HasSubstr(R"(dataset_id: "d-id")")).Times(2));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(GetDatasetResponse)")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(id: "d-id")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(kind: "d-kind")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(etag: "d-tag")")));
 }
 
 TEST(DatasetLoggingClientTest, ListDatasets) {
@@ -89,9 +94,8 @@ TEST(DatasetLoggingClientTest, ListDatasets) {
           "datasets": [
               {
                 "id": "1",
-                "kind": "kind-2",
+                "kind": "kind-1",
                 "dataset_reference": {"project_id": "p123", "dataset_id": "d123"},
-
                 "friendly_name": "friendly-name",
                 "location": "location",
                 "type": "DEFAULT"
@@ -118,11 +122,14 @@ TEST(DatasetLoggingClientTest, ListDatasets) {
   auto actual_lines = log.ExtractLines();
 
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(ListDatasetsRequest)")));
-  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(project_id: "p123")")));
+  EXPECT_THAT(actual_lines,
+              Contains(HasSubstr(R"(project_id: "p123")")).Times(2));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(all_datasets: false)")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(max_results: 0)")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(ListDatasetsResponse)")));
   EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(dataset_id: "d123")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(id: "1")")));
+  EXPECT_THAT(actual_lines, Contains(HasSubstr(R"(kind: "kind-1")")));
   EXPECT_THAT(actual_lines,
               Contains(HasSubstr(R"(next_page_token: "npt-123")")));
 }
