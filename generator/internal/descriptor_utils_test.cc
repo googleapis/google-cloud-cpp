@@ -665,7 +665,7 @@ TEST_F(CreateMethodVarsTest, FormatMethodCommentsProtobufRequestLongRunning) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
 
-   auto const actual = FormatMethodCommentsProtobufRequest(
+  auto const actual = FormatMethodCommentsProtobufRequest(
       *service_file_descriptor->service(0)->method(7));
   EXPECT_EQ(actual, R"""(  // clang-format off
   ///
