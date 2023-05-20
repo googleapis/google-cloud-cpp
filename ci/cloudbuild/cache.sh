@@ -143,6 +143,9 @@ function restore_cache() {
     fi
   done
   rm -fr "${tmpd}" || true
+  mkdir -p "${HOME}/.ccache"
+  [[ -f "${HOME}/.ccache/ccache.conf" ]] ||
+    echo "max_size = 8.0G" >"${HOME}/.ccache/ccache.conf"
   return 0
 }
 
