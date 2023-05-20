@@ -92,131 +92,228 @@ class CloudShellServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Gets an environment. Returns NOT_FOUND if the environment does not exist.
   ///
-  /// @param name  Required. Name of the requested resource, for example
-  /// `users/me/environments/default`
+  /// @param name  Required. Name of the requested resource, for example `users/me/environments/default`
   ///  or `users/someone@example.com/environments/default`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::shell::v1::Environment,google/cloud/shell/v1/cloudshell.proto#L116}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.shell.v1.Environment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.shell.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L116}
-  /// [google.cloud.shell.v1.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L191}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.shell.v1.Environment]: @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L116}
+  /// [google.cloud.shell.v1.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L191}
   ///
+  // clang-format on
   StatusOr<google::cloud::shell::v1::Environment> GetEnvironment(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets an environment. Returns NOT_FOUND if the environment does not exist.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::shell::v1::GetEnvironmentRequest,google/cloud/shell/v1/cloudshell.proto#L191}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.shell.v1.GetEnvironmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::shell::v1::Environment,google/cloud/shell/v1/cloudshell.proto#L116}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.shell.v1.Environment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.shell.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L116}
-  /// [google.cloud.shell.v1.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L191}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.shell.v1.Environment]: @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L116}
+  /// [google.cloud.shell.v1.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L191}
   ///
+  // clang-format on
   StatusOr<google::cloud::shell::v1::Environment> GetEnvironment(
       google::cloud::shell::v1::GetEnvironmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Starts an existing environment, allowing clients to connect to it. The
   /// returned operation will contain an instance of StartEnvironmentMetadata in
   /// its metadata field. Users can wait for the environment to start by polling
-  /// this operation via GetOperation. Once the environment has finished
-  /// starting and is ready to accept connections, the operation will contain a
+  /// this operation via GetOperation. Once the environment has finished starting
+  /// and is ready to accept connections, the operation will contain a
   /// StartEnvironmentResponse in its response field.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::shell::v1::StartEnvironmentRequest,google/cloud/shell/v1/cloudshell.proto#L216}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.shell.v1.StartEnvironmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::shell::v1::StartEnvironmentResponse,google/cloud/shell/v1/cloudshell.proto#L303}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.shell.v1.StartEnvironmentResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.shell.v1.StartEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L216}
-  /// [google.cloud.shell.v1.StartEnvironmentResponse]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L303}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.shell.v1.StartEnvironmentRequest]: @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L216}
+  /// [google.cloud.shell.v1.StartEnvironmentResponse]: @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L303}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>
   StartEnvironment(
       google::cloud::shell::v1::StartEnvironmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Sends OAuth credentials to a running environment on behalf of a user. When
   /// this completes, the environment will be authorized to run various Google
   /// Cloud command line tools without requiring the user to manually
   /// authenticate.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::shell::v1::AuthorizeEnvironmentRequest,google/cloud/shell/v1/cloudshell.proto#L234}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.shell.v1.AuthorizeEnvironmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::shell::v1::AuthorizeEnvironmentResponse,google/cloud/shell/v1/cloudshell.proto#L253}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.shell.v1.AuthorizeEnvironmentResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.shell.v1.AuthorizeEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L234}
-  /// [google.cloud.shell.v1.AuthorizeEnvironmentResponse]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L253}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.shell.v1.AuthorizeEnvironmentRequest]: @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L234}
+  /// [google.cloud.shell.v1.AuthorizeEnvironmentResponse]: @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L253}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
   AuthorizeEnvironment(
       google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Adds a public SSH key to an environment, allowing clients with the
   /// corresponding private key to connect to that environment via SSH. If a key
   /// with the same content already exists, this will error with ALREADY_EXISTS.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::shell::v1::AddPublicKeyRequest,google/cloud/shell/v1/cloudshell.proto#L310}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.shell.v1.AddPublicKeyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::shell::v1::AddPublicKeyResponse,google/cloud/shell/v1/cloudshell.proto#L326}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.shell.v1.AddPublicKeyResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.shell.v1.AddPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L310}
-  /// [google.cloud.shell.v1.AddPublicKeyResponse]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L326}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.shell.v1.AddPublicKeyRequest]: @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L310}
+  /// [google.cloud.shell.v1.AddPublicKeyResponse]: @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L326}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>> AddPublicKey(
       google::cloud::shell::v1::AddPublicKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Removes a public SSH key from an environment. Clients will no longer be
   /// able to connect to the environment using the corresponding private key.
   /// If a key with the same content is not present, this will error with
   /// NOT_FOUND.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::shell::v1::RemovePublicKeyRequest,google/cloud/shell/v1/cloudshell.proto#L339}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.shell.v1.RemovePublicKeyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::shell::v1::RemovePublicKeyResponse,google/cloud/shell/v1/cloudshell.proto#L350}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.shell.v1.RemovePublicKeyResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.shell.v1.RemovePublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L339}
-  /// [google.cloud.shell.v1.RemovePublicKeyResponse]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L350}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.shell.v1.RemovePublicKeyRequest]: @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L339}
+  /// [google.cloud.shell.v1.RemovePublicKeyResponse]: @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L350}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
   RemovePublicKey(
       google::cloud::shell::v1::RemovePublicKeyRequest const& request,

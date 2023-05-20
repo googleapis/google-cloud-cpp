@@ -85,98 +85,152 @@ class ApplicationsClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Gets information about an application.
   ///
-  /// @param name  Name of the Application resource to get. Example:
-  /// `apps/myapp`.
+  /// @param name  Name of the Application resource to get. Example: `apps/myapp`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L31}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.appengine.v1.Application])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.appengine.v1.Application]:
-  /// @googleapis_reference_link{google/appengine/v1/application.proto#L31}
-  /// [google.appengine.v1.GetApplicationRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L115}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.appengine.v1.Application]: @googleapis_reference_link{google/appengine/v1/application.proto#L31}
+  /// [google.appengine.v1.GetApplicationRequest]: @googleapis_reference_link{google/appengine/v1/appengine.proto#L115}
   ///
+  // clang-format on
   StatusOr<google::appengine::v1::Application> GetApplication(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets information about an application.
   ///
-  /// @param request
-  /// @googleapis_link{google::appengine::v1::GetApplicationRequest,google/appengine/v1/appengine.proto#L115}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.appengine.v1.GetApplicationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L31}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.appengine.v1.Application])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.appengine.v1.Application]:
-  /// @googleapis_reference_link{google/appengine/v1/application.proto#L31}
-  /// [google.appengine.v1.GetApplicationRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L115}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.appengine.v1.Application]: @googleapis_reference_link{google/appengine/v1/application.proto#L31}
+  /// [google.appengine.v1.GetApplicationRequest]: @googleapis_reference_link{google/appengine/v1/appengine.proto#L115}
   ///
+  // clang-format on
   StatusOr<google::appengine::v1::Application> GetApplication(
       google::appengine::v1::GetApplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates an App Engine application for a Google Cloud Platform project.
   /// Required fields:
   ///
   /// * `id` - The ID of the target Cloud Platform project.
-  /// * *location* - The
-  /// [region](https://cloud.google.com/appengine/docs/locations) where you want
-  /// the App Engine application located.
+  /// * *location* - The [region](https://cloud.google.com/appengine/docs/locations) where you want the App Engine application located.
   ///
-  /// For more information about App Engine applications, see [Managing
-  /// Projects, Applications, and
-  /// Billing](https://cloud.google.com/appengine/docs/standard/python/console/).
+  /// For more information about App Engine applications, see [Managing Projects, Applications, and Billing](https://cloud.google.com/appengine/docs/standard/python/console/).
   ///
-  /// @param request
-  /// @googleapis_link{google::appengine::v1::CreateApplicationRequest,google/appengine/v1/appengine.proto#L121}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.appengine.v1.CreateApplicationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L31}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.appengine.v1.Application] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.appengine.v1.Application]:
-  /// @googleapis_reference_link{google/appengine/v1/application.proto#L31}
-  /// [google.appengine.v1.CreateApplicationRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L121}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.appengine.v1.Application]: @googleapis_reference_link{google/appengine/v1/application.proto#L31}
+  /// [google.appengine.v1.CreateApplicationRequest]: @googleapis_reference_link{google/appengine/v1/appengine.proto#L121}
   ///
+  // clang-format on
   future<StatusOr<google::appengine::v1::Application>> CreateApplication(
       google::appengine::v1::CreateApplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the specified Application resource.
   /// You can update the following fields:
   ///
-  /// * `auth_domain` - Google authentication domain for controlling user access
-  /// to the application.
-  /// * `default_cookie_expiration` - Cookie expiration policy for the
-  /// application.
+  /// * `auth_domain` - Google authentication domain for controlling user access to the application.
+  /// * `default_cookie_expiration` - Cookie expiration policy for the application.
   /// * `iap` - Identity-Aware Proxy properties for the application.
   ///
-  /// @param request
-  /// @googleapis_link{google::appengine::v1::UpdateApplicationRequest,google/appengine/v1/appengine.proto#L127}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.appengine.v1.UpdateApplicationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L31}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.appengine.v1.Application] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.appengine.v1.Application]:
-  /// @googleapis_reference_link{google/appengine/v1/application.proto#L31}
-  /// [google.appengine.v1.UpdateApplicationRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L127}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.appengine.v1.Application]: @googleapis_reference_link{google/appengine/v1/application.proto#L31}
+  /// [google.appengine.v1.UpdateApplicationRequest]: @googleapis_reference_link{google/appengine/v1/appengine.proto#L127}
   ///
+  // clang-format on
   future<StatusOr<google::appengine::v1::Application>> UpdateApplication(
       google::appengine::v1::UpdateApplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Recreates the required App Engine features for the specified App Engine
   /// application, for example a Cloud Storage bucket or App Engine service
@@ -185,23 +239,40 @@ class ApplicationsClient {
   /// for example, *Error retrieving the App Engine service account*.
   /// If you have deleted your App Engine service account, this will
   /// not be able to recreate it. Instead, you should attempt to use the
-  /// IAM undelete API if possible at
-  /// https://cloud.google.com/iam/reference/rest/v1/projects.serviceAccounts/undelete?apix_params=%7B"name"%3A"projects%2F-%2FserviceAccounts%2Funique_id"%2C"resource"%3A%7B%7D%7D
-  /// . If the deletion was recent, the numeric ID can be found in the Cloud
+  /// IAM undelete API if possible at https://cloud.google.com/iam/reference/rest/v1/projects.serviceAccounts/undelete?apix_params=%7B"name"%3A"projects%2F-%2FserviceAccounts%2Funique_id"%2C"resource"%3A%7B%7D%7D .
+  /// If the deletion was recent, the numeric ID can be found in the Cloud
   /// Console Activity Log.
   ///
-  /// @param request
-  /// @googleapis_link{google::appengine::v1::RepairApplicationRequest,google/appengine/v1/appengine.proto#L139}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.appengine.v1.RepairApplicationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L31}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.appengine.v1.Application] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.appengine.v1.Application]:
-  /// @googleapis_reference_link{google/appengine/v1/application.proto#L31}
-  /// [google.appengine.v1.RepairApplicationRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L139}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.appengine.v1.Application]: @googleapis_reference_link{google/appengine/v1/application.proto#L31}
+  /// [google.appengine.v1.RepairApplicationRequest]: @googleapis_reference_link{google/appengine/v1/appengine.proto#L139}
   ///
+  // clang-format on
   future<StatusOr<google::appengine::v1::Application>> RepairApplication(
       google::appengine::v1::RepairApplicationRequest const& request,
       Options opts = {});

@@ -90,56 +90,92 @@ class TraceServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Batch writes new spans to new or existing traces. You cannot update
   /// existing spans.
   ///
-  /// @param name  Required. The name of the project where the spans belong. The
-  /// format is
+  /// @param name  Required. The name of the project where the spans belong. The format is
   ///  `projects/[PROJECT_ID]`.
-  /// @param spans  Required. A list of new spans. The span names must not match
-  /// existing
+  /// @param spans  Required. A list of new spans. The span names must not match existing
   ///  spans, otherwise the results are undefined.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.devtools.cloudtrace.v2.BatchWriteSpansRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudtrace/v2/tracing.proto#L67}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudtrace.v2.BatchWriteSpansRequest]: @googleapis_reference_link{google/devtools/cloudtrace/v2/tracing.proto#L67}
   ///
+  // clang-format on
   Status BatchWriteSpans(
       std::string const& name,
       std::vector<google::devtools::cloudtrace::v2::Span> const& spans,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Batch writes new spans to new or existing traces. You cannot update
   /// existing spans.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudtrace::v2::BatchWriteSpansRequest,google/devtools/cloudtrace/v2/tracing.proto#L67}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudtrace.v2.BatchWriteSpansRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.devtools.cloudtrace.v2.BatchWriteSpansRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudtrace/v2/tracing.proto#L67}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudtrace.v2.BatchWriteSpansRequest]: @googleapis_reference_link{google/devtools/cloudtrace/v2/tracing.proto#L67}
   ///
+  // clang-format on
   Status BatchWriteSpans(
       google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new span.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudtrace::v2::Span,google/devtools/cloudtrace/v2/trace.proto#L41}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.cloudtrace.v2.Span].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::devtools::cloudtrace::v2::Span,google/devtools/cloudtrace/v2/trace.proto#L41}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.cloudtrace.v2.Span])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.devtools.cloudtrace.v2.Span]:
-  /// @googleapis_reference_link{google/devtools/cloudtrace/v2/trace.proto#L41}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.cloudtrace.v2.Span]: @googleapis_reference_link{google/devtools/cloudtrace/v2/trace.proto#L41}
   ///
+  // clang-format on
   StatusOr<google::devtools::cloudtrace::v2::Span> CreateSpan(
       google::devtools::cloudtrace::v2::Span const& request, Options opts = {});
 

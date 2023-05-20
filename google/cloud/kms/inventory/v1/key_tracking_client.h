@@ -88,57 +88,79 @@ class KeyTrackingServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Returns aggregate information about the resources protected by the given
-  /// Cloud KMS [CryptoKey][google.cloud.kms.v1.CryptoKey]. Only resources
-  /// within the same Cloud organization as the key will be returned. The
-  /// project that holds the key must be part of an organization in order for
-  /// this call to succeed.
+  /// Cloud KMS [CryptoKey][google.cloud.kms.v1.CryptoKey]. Only resources within
+  /// the same Cloud organization as the key will be returned. The project that
+  /// holds the key must be part of an organization in order for this call to
+  /// succeed.
   ///
   /// @param name  Required. The resource name of the
   ///  [CryptoKey][google.cloud.kms.v1.CryptoKey].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::kms::inventory::v1::ProtectedResourcesSummary,google/cloud/kms/inventory/v1/key_tracking_service.proto#L79}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.kms.inventory.v1.ProtectedResourcesSummary])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.kms.inventory.v1.GetProtectedResourcesSummaryRequest]:
-  /// @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L66}
-  /// [google.cloud.kms.inventory.v1.ProtectedResourcesSummary]:
-  /// @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L79}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.kms.inventory.v1.GetProtectedResourcesSummaryRequest]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L66}
+  /// [google.cloud.kms.inventory.v1.ProtectedResourcesSummary]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L79}
   ///
+  // clang-format on
   StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
   GetProtectedResourcesSummary(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns aggregate information about the resources protected by the given
-  /// Cloud KMS [CryptoKey][google.cloud.kms.v1.CryptoKey]. Only resources
-  /// within the same Cloud organization as the key will be returned. The
-  /// project that holds the key must be part of an organization in order for
-  /// this call to succeed.
+  /// Cloud KMS [CryptoKey][google.cloud.kms.v1.CryptoKey]. Only resources within
+  /// the same Cloud organization as the key will be returned. The project that
+  /// holds the key must be part of an organization in order for this call to
+  /// succeed.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::kms::inventory::v1::GetProtectedResourcesSummaryRequest,google/cloud/kms/inventory/v1/key_tracking_service.proto#L66}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.kms.inventory.v1.GetProtectedResourcesSummaryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::kms::inventory::v1::ProtectedResourcesSummary,google/cloud/kms/inventory/v1/key_tracking_service.proto#L79}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.kms.inventory.v1.ProtectedResourcesSummary])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.kms.inventory.v1.GetProtectedResourcesSummaryRequest]:
-  /// @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L66}
-  /// [google.cloud.kms.inventory.v1.ProtectedResourcesSummary]:
-  /// @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L79}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.kms.inventory.v1.GetProtectedResourcesSummaryRequest]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L66}
+  /// [google.cloud.kms.inventory.v1.ProtectedResourcesSummary]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L79}
   ///
+  // clang-format on
   StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
   GetProtectedResourcesSummary(
       google::cloud::kms::inventory::v1::
           GetProtectedResourcesSummaryRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns metadata about the resources protected by the given Cloud KMS
-  /// [CryptoKey][google.cloud.kms.v1.CryptoKey] in the given Cloud
-  /// organization.
+  /// [CryptoKey][google.cloud.kms.v1.CryptoKey] in the given Cloud organization.
   ///
   /// @param scope  Required. Resource name of the organization.
   ///  Example: organizations/123
@@ -146,35 +168,73 @@ class KeyTrackingServiceClient {
   ///  [CryptoKey][google.cloud.kms.v1.CryptoKey].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::kms::inventory::v1::ProtectedResource,google/cloud/kms/inventory/v1/key_tracking_service.proto#L156}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.kms.inventory.v1.ProtectedResource], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.kms.inventory.v1.ProtectedResource]:
-  /// @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L156}
-  /// [google.cloud.kms.inventory.v1.SearchProtectedResourcesRequest]:
-  /// @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L111}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.kms.inventory.v1.ProtectedResource]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L156}
+  /// [google.cloud.kms.inventory.v1.SearchProtectedResourcesRequest]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L111}
   ///
+  // clang-format on
   StreamRange<google::cloud::kms::inventory::v1::ProtectedResource>
   SearchProtectedResources(std::string const& scope,
                            std::string const& crypto_key, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns metadata about the resources protected by the given Cloud KMS
-  /// [CryptoKey][google.cloud.kms.v1.CryptoKey] in the given Cloud
-  /// organization.
+  /// [CryptoKey][google.cloud.kms.v1.CryptoKey] in the given Cloud organization.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest,google/cloud/kms/inventory/v1/key_tracking_service.proto#L111}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.kms.inventory.v1.SearchProtectedResourcesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::kms::inventory::v1::ProtectedResource,google/cloud/kms/inventory/v1/key_tracking_service.proto#L156}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.kms.inventory.v1.ProtectedResource], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.kms.inventory.v1.ProtectedResource]:
-  /// @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L156}
-  /// [google.cloud.kms.inventory.v1.SearchProtectedResourcesRequest]:
-  /// @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L111}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.kms.inventory.v1.ProtectedResource]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L156}
+  /// [google.cloud.kms.inventory.v1.SearchProtectedResourcesRequest]: @googleapis_reference_link{google/cloud/kms/inventory/v1/key_tracking_service.proto#L111}
   ///
+  // clang-format on
   StreamRange<google::cloud::kms::inventory::v1::ProtectedResource>
   SearchProtectedResources(
       google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest

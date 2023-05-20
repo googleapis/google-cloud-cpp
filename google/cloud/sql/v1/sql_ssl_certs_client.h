@@ -87,83 +87,135 @@ class SqlSslCertsServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Deletes the SSL certificate. For First Generation instances, the
   /// certificate remains valid until the instance is restarted.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlSslCertsDeleteRequest,google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L72}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlSslCertsDeleteRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlSslCertsDeleteRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L72}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// [google.cloud.sql.v1.SqlSslCertsDeleteRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L72}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Delete(
       google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves a particular SSL certificate.  Does not include the private key
   /// (required for usage).  The private key must be saved from the response to
   /// initial creation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlSslCertsGetRequest,google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L83}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlSslCertsGetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::SslCert,google/cloud/sql/v1/cloud_sql_resources.proto#L974}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.SslCert])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.SqlSslCertsGetRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L83}
-  /// [google.cloud.sql.v1.SslCert]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L974}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.SqlSslCertsGetRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L83}
+  /// [google.cloud.sql.v1.SslCert]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L974}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::SslCert> Get(
       google::cloud::sql::v1::SqlSslCertsGetRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates an SSL certificate and returns it along with the private key and
-  /// server certificate authority.  The new certificate will not be usable
-  /// until the instance is restarted.
+  /// server certificate authority.  The new certificate will not be usable until
+  /// the instance is restarted.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlSslCertsInsertRequest,google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L94}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlSslCertsInsertRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::SslCertsInsertResponse,google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L120}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.SslCertsInsertResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.SqlSslCertsInsertRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L94}
-  /// [google.cloud.sql.v1.SslCertsInsertResponse]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L120}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.SqlSslCertsInsertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L94}
+  /// [google.cloud.sql.v1.SslCertsInsertResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L120}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::SslCertsInsertResponse> Insert(
       google::cloud::sql::v1::SqlSslCertsInsertRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all of the current SSL certificates for the instance.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlSslCertsListRequest,google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L104}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlSslCertsListRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::SslCertsListResponse,google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L137}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.SslCertsListResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.SqlSslCertsListRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L104}
-  /// [google.cloud.sql.v1.SslCertsListResponse]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L137}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.SqlSslCertsListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L104}
+  /// [google.cloud.sql.v1.SslCertsListResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_ssl_certs.proto#L137}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::SslCertsListResponse> List(
       google::cloud::sql::v1::SqlSslCertsListRequest const& request,
       Options opts = {});

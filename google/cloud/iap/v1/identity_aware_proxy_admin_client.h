@@ -89,109 +89,175 @@ class IdentityAwareProxyAdminServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Sets the access control policy for an Identity-Aware Proxy protected
   /// resource. Replaces any existing policy.
   /// More information about managing access via IAP can be found at:
   /// https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L101}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.SetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the access control policy for an Identity-Aware Proxy protected
   /// resource.
   /// More information about managing access via IAP can be found at:
   /// https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L123}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.GetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
-  /// Returns permissions that a caller has on the Identity-Aware Proxy
-  /// protected resource. More information about managing access via IAP can be
-  /// found at:
+  /// Returns permissions that a caller has on the Identity-Aware Proxy protected
+  /// resource.
+  /// More information about managing access via IAP can be found at:
   /// https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L136}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.TestIamPermissionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.TestIamPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
-  /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the IAP settings on a particular IAP protected resource.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::GetIapSettingsRequest,google/cloud/iap/v1/service.proto#L361}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iap.v1.GetIapSettingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iap::v1::IapSettings,google/cloud/iap/v1/service.proto#L385}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iap.v1.IapSettings])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iap.v1.GetIapSettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L361}
-  /// [google.cloud.iap.v1.IapSettings]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L385}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iap.v1.GetIapSettingsRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L361}
+  /// [google.cloud.iap.v1.IapSettings]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L385}
   ///
+  // clang-format on
   StatusOr<google::cloud::iap::v1::IapSettings> GetIapSettings(
       google::cloud::iap::v1::GetIapSettingsRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the IAP settings on a particular IAP protected resource. It
   /// replaces all fields unless the `update_mask` is set.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::UpdateIapSettingsRequest,google/cloud/iap/v1/service.proto#L369}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iap.v1.UpdateIapSettingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iap::v1::IapSettings,google/cloud/iap/v1/service.proto#L385}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iap.v1.IapSettings])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iap.v1.IapSettings]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L385}
-  /// [google.cloud.iap.v1.UpdateIapSettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L369}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iap.v1.IapSettings]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L385}
+  /// [google.cloud.iap.v1.UpdateIapSettingsRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L369}
   ///
+  // clang-format on
   StatusOr<google::cloud::iap::v1::IapSettings> UpdateIapSettings(
       google::cloud::iap::v1::UpdateIapSettingsRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the existing TunnelDestGroups. To group across all locations, use a
   /// `-` as the location ID. For example:
@@ -203,38 +269,78 @@ class IdentityAwareProxyAdminServiceClient {
   ///  A `-` can be used for the location to group across all locations.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L339}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.iap.v1.TunnelDestGroup], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.iap.v1.ListTunnelDestGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L239}
-  /// [google.cloud.iap.v1.TunnelDestGroup]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iap.v1.ListTunnelDestGroupsRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L239}
+  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
   ///
+  // clang-format on
   StreamRange<google::cloud::iap::v1::TunnelDestGroup> ListTunnelDestGroups(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the existing TunnelDestGroups. To group across all locations, use a
   /// `-` as the location ID. For example:
   /// `/v1/projects/123/iap_tunnel/locations/-/destGroups`
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::ListTunnelDestGroupsRequest,google/cloud/iap/v1/service.proto#L239}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iap.v1.ListTunnelDestGroupsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L339}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.iap.v1.TunnelDestGroup], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.iap.v1.ListTunnelDestGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L239}
-  /// [google.cloud.iap.v1.TunnelDestGroup]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iap.v1.ListTunnelDestGroupsRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L239}
+  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
   ///
+  // clang-format on
   StreamRange<google::cloud::iap::v1::TunnelDestGroup> ListTunnelDestGroups(
       google::cloud::iap::v1::ListTunnelDestGroupsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new TunnelDestGroup.
   ///
@@ -242,45 +348,66 @@ class IdentityAwareProxyAdminServiceClient {
   ///  In the following format:
   ///  `projects/{project_number/id}/iap_tunnel/locations/{location}`.
   /// @param tunnel_dest_group  Required. The TunnelDestGroup to create.
-  /// @param tunnel_dest_group_id  Required. The ID to use for the
-  /// TunnelDestGroup, which becomes the final
+  /// @param tunnel_dest_group_id  Required. The ID to use for the TunnelDestGroup, which becomes the final
   ///  component of the resource name.
   ///  This value must be 4-63 characters, and valid characters
   ///  are `[a-z]-`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L339}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iap.v1.TunnelDestGroup])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iap.v1.CreateTunnelDestGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L277}
-  /// [google.cloud.iap.v1.TunnelDestGroup]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iap.v1.CreateTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L277}
+  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
   ///
+  // clang-format on
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> CreateTunnelDestGroup(
       std::string const& parent,
       google::cloud::iap::v1::TunnelDestGroup const& tunnel_dest_group,
       std::string const& tunnel_dest_group_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new TunnelDestGroup.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::CreateTunnelDestGroupRequest,google/cloud/iap/v1/service.proto#L277}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iap.v1.CreateTunnelDestGroupRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L339}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iap.v1.TunnelDestGroup])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iap.v1.CreateTunnelDestGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L277}
-  /// [google.cloud.iap.v1.TunnelDestGroup]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iap.v1.CreateTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L277}
+  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
   ///
+  // clang-format on
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> CreateTunnelDestGroup(
       google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves an existing TunnelDestGroup.
   ///
@@ -289,36 +416,58 @@ class IdentityAwareProxyAdminServiceClient {
   ///  `projects/{project_number/id}/iap_tunnel/locations/{location}/destGroups/{dest_group}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L339}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iap.v1.TunnelDestGroup])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iap.v1.GetTunnelDestGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L301}
-  /// [google.cloud.iap.v1.TunnelDestGroup]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iap.v1.GetTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L301}
+  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
   ///
+  // clang-format on
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> GetTunnelDestGroup(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves an existing TunnelDestGroup.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::GetTunnelDestGroupRequest,google/cloud/iap/v1/service.proto#L301}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iap.v1.GetTunnelDestGroupRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L339}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iap.v1.TunnelDestGroup])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iap.v1.GetTunnelDestGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L301}
-  /// [google.cloud.iap.v1.TunnelDestGroup]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iap.v1.GetTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L301}
+  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
   ///
+  // clang-format on
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> GetTunnelDestGroup(
       google::cloud::iap::v1::GetTunnelDestGroupRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a TunnelDestGroup.
   ///
@@ -327,65 +476,108 @@ class IdentityAwareProxyAdminServiceClient {
   ///  `projects/{project_number/id}/iap_tunnel/locations/{location}/destGroups/{dest_group}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.iap.v1.DeleteTunnelDestGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L314}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iap.v1.DeleteTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L314}
   ///
+  // clang-format on
   Status DeleteTunnelDestGroup(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a TunnelDestGroup.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::DeleteTunnelDestGroupRequest,google/cloud/iap/v1/service.proto#L314}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iap.v1.DeleteTunnelDestGroupRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.iap.v1.DeleteTunnelDestGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L314}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iap.v1.DeleteTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L314}
   ///
+  // clang-format on
   Status DeleteTunnelDestGroup(
       google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a TunnelDestGroup.
   ///
-  /// @param tunnel_dest_group  Required. The new values for the
-  /// TunnelDestGroup.
-  /// @param update_mask  A field mask that specifies which IAP settings to
-  /// update.
+  /// @param tunnel_dest_group  Required. The new values for the TunnelDestGroup.
+  /// @param update_mask  A field mask that specifies which IAP settings to update.
   ///  If omitted, then all of the settings are updated. See
   ///  https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L339}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iap.v1.TunnelDestGroup])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iap.v1.TunnelDestGroup]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
-  /// [google.cloud.iap.v1.UpdateTunnelDestGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L327}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
+  /// [google.cloud.iap.v1.UpdateTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L327}
   ///
+  // clang-format on
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> UpdateTunnelDestGroup(
       google::cloud::iap::v1::TunnelDestGroup const& tunnel_dest_group,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a TunnelDestGroup.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::UpdateTunnelDestGroupRequest,google/cloud/iap/v1/service.proto#L327}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iap.v1.UpdateTunnelDestGroupRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L339}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iap.v1.TunnelDestGroup])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iap.v1.TunnelDestGroup]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
-  /// [google.cloud.iap.v1.UpdateTunnelDestGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L327}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iap.v1.TunnelDestGroup]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L339}
+  /// [google.cloud.iap.v1.UpdateTunnelDestGroupRequest]: @googleapis_reference_link{google/cloud/iap/v1/service.proto#L327}
   ///
+  // clang-format on
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> UpdateTunnelDestGroup(
       google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request,
       Options opts = {});

@@ -87,120 +87,208 @@ class OsConfigServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Patch VM instances by creating and running a patch job.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::osconfig::v1::ExecutePatchJobRequest,google/cloud/osconfig/v1/patch_jobs.proto#L34}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.osconfig.v1.ExecutePatchJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::v1::PatchJob,google/cloud/osconfig/v1/patch_jobs.proto#L180}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.v1.PatchJob])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.v1.ExecutePatchJobRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L34}
-  /// [google.cloud.osconfig.v1.PatchJob]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L180}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.v1.ExecutePatchJobRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L34}
+  /// [google.cloud.osconfig.v1.PatchJob]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L180}
   ///
+  // clang-format on
   StatusOr<google::cloud::osconfig::v1::PatchJob> ExecutePatchJob(
       google::cloud::osconfig::v1::ExecutePatchJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Get the patch job. This can be used to track the progress of an
   /// ongoing patch job or review the details of completed jobs.
   ///
-  /// @param name  Required. Name of the patch in the form
-  /// `projects/*/patchJobs/*`
+  /// @param name  Required. Name of the patch in the form `projects/*/patchJobs/*`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::v1::PatchJob,google/cloud/osconfig/v1/patch_jobs.proto#L180}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.v1.PatchJob])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.v1.GetPatchJobRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L72}
-  /// [google.cloud.osconfig.v1.PatchJob]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L180}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.v1.GetPatchJobRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L72}
+  /// [google.cloud.osconfig.v1.PatchJob]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L180}
   ///
+  // clang-format on
   StatusOr<google::cloud::osconfig::v1::PatchJob> GetPatchJob(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Get the patch job. This can be used to track the progress of an
   /// ongoing patch job or review the details of completed jobs.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::osconfig::v1::GetPatchJobRequest,google/cloud/osconfig/v1/patch_jobs.proto#L72}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.osconfig.v1.GetPatchJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::v1::PatchJob,google/cloud/osconfig/v1/patch_jobs.proto#L180}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.v1.PatchJob])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.v1.GetPatchJobRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L72}
-  /// [google.cloud.osconfig.v1.PatchJob]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L180}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.v1.GetPatchJobRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L72}
+  /// [google.cloud.osconfig.v1.PatchJob]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L180}
   ///
+  // clang-format on
   StatusOr<google::cloud::osconfig::v1::PatchJob> GetPatchJob(
       google::cloud::osconfig::v1::GetPatchJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Cancel a patch job. The patch job must be active. Canceled patch jobs
   /// cannot be restarted.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::osconfig::v1::CancelPatchJobRequest,google/cloud/osconfig/v1/patch_jobs.proto#L434}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.osconfig.v1.CancelPatchJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::v1::PatchJob,google/cloud/osconfig/v1/patch_jobs.proto#L180}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.v1.PatchJob])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.v1.CancelPatchJobRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L434}
-  /// [google.cloud.osconfig.v1.PatchJob]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L180}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.v1.CancelPatchJobRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L434}
+  /// [google.cloud.osconfig.v1.PatchJob]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L180}
   ///
+  // clang-format on
   StatusOr<google::cloud::osconfig::v1::PatchJob> CancelPatchJob(
       google::cloud::osconfig::v1::CancelPatchJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Get a list of patch jobs.
   ///
   /// @param parent  Required. In the form of `projects/*`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::v1::PatchJob,google/cloud/osconfig/v1/patch_jobs.proto#L180}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.osconfig.v1.PatchJob], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.osconfig.v1.ListPatchJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L140}
-  /// [google.cloud.osconfig.v1.PatchJob]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L180}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.v1.ListPatchJobsRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L140}
+  /// [google.cloud.osconfig.v1.PatchJob]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L180}
   ///
+  // clang-format on
   StreamRange<google::cloud::osconfig::v1::PatchJob> ListPatchJobs(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Get a list of patch jobs.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::osconfig::v1::ListPatchJobsRequest,google/cloud/osconfig/v1/patch_jobs.proto#L140}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.osconfig.v1.ListPatchJobsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::v1::PatchJob,google/cloud/osconfig/v1/patch_jobs.proto#L180}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.osconfig.v1.PatchJob], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.osconfig.v1.ListPatchJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L140}
-  /// [google.cloud.osconfig.v1.PatchJob]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L180}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.v1.ListPatchJobsRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L140}
+  /// [google.cloud.osconfig.v1.PatchJob]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L180}
   ///
+  // clang-format on
   StreamRange<google::cloud::osconfig::v1::PatchJob> ListPatchJobs(
       google::cloud::osconfig::v1::ListPatchJobsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Get a list of instance details for a given patch job.
   ///
@@ -208,46 +296,84 @@ class OsConfigServiceClient {
   ///  `projects/*/patchJobs/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::v1::PatchJobInstanceDetails,google/cloud/osconfig/v1/patch_jobs.proto#L119}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.osconfig.v1.PatchJobInstanceDetails], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.osconfig.v1.ListPatchJobInstanceDetailsRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L83}
-  /// [google.cloud.osconfig.v1.PatchJobInstanceDetails]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L119}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.v1.ListPatchJobInstanceDetailsRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L83}
+  /// [google.cloud.osconfig.v1.PatchJobInstanceDetails]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L119}
   ///
+  // clang-format on
   StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>
   ListPatchJobInstanceDetails(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Get a list of instance details for a given patch job.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest,google/cloud/osconfig/v1/patch_jobs.proto#L83}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.osconfig.v1.ListPatchJobInstanceDetailsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::v1::PatchJobInstanceDetails,google/cloud/osconfig/v1/patch_jobs.proto#L119}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.osconfig.v1.PatchJobInstanceDetails], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.osconfig.v1.ListPatchJobInstanceDetailsRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L83}
-  /// [google.cloud.osconfig.v1.PatchJobInstanceDetails]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L119}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.v1.ListPatchJobInstanceDetailsRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L83}
+  /// [google.cloud.osconfig.v1.PatchJobInstanceDetails]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_jobs.proto#L119}
   ///
+  // clang-format on
   StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>
   ListPatchJobInstanceDetails(
       google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Create an OS Config patch deployment.
   ///
-  /// @param parent  Required. The project to apply this patch deployment to in
-  /// the form
+  /// @param parent  Required. The project to apply this patch deployment to in the form
   ///  `projects/*`.
   /// @param patch_deployment  Required. The patch deployment to create.
-  /// @param patch_deployment_id  Required. A name for the patch deployment in
-  /// the project. When creating a
+  /// @param patch_deployment_id  Required. A name for the patch deployment in the project. When creating a
   ///  name the following rules apply:
   ///  * Must contain only lowercase letters, numbers, and hyphens.
   ///  * Must start with a letter.
@@ -256,259 +382,426 @@ class OsConfigServiceClient {
   ///  * Must be unique within the project.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.v1.PatchDeployment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.v1.CreatePatchDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L229}
-  /// [google.cloud.osconfig.v1.PatchDeployment]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.v1.CreatePatchDeploymentRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L229}
+  /// [google.cloud.osconfig.v1.PatchDeployment]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
   ///
+  // clang-format on
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> CreatePatchDeployment(
       std::string const& parent,
       google::cloud::osconfig::v1::PatchDeployment const& patch_deployment,
       std::string const& patch_deployment_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Create an OS Config patch deployment.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::osconfig::v1::CreatePatchDeploymentRequest,google/cloud/osconfig/v1/patch_deployments.proto#L229}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.osconfig.v1.CreatePatchDeploymentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.v1.PatchDeployment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.v1.CreatePatchDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L229}
-  /// [google.cloud.osconfig.v1.PatchDeployment]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.v1.CreatePatchDeploymentRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L229}
+  /// [google.cloud.osconfig.v1.PatchDeployment]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
   ///
+  // clang-format on
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> CreatePatchDeployment(
       google::cloud::osconfig::v1::CreatePatchDeploymentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Get an OS Config patch deployment.
   ///
-  /// @param name  Required. The resource name of the patch deployment in the
-  /// form
+  /// @param name  Required. The resource name of the patch deployment in the form
   ///  `projects/*/patchDeployments/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.v1.PatchDeployment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.v1.GetPatchDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L253}
-  /// [google.cloud.osconfig.v1.PatchDeployment]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.v1.GetPatchDeploymentRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L253}
+  /// [google.cloud.osconfig.v1.PatchDeployment]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
   ///
+  // clang-format on
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> GetPatchDeployment(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Get an OS Config patch deployment.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::osconfig::v1::GetPatchDeploymentRequest,google/cloud/osconfig/v1/patch_deployments.proto#L253}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.osconfig.v1.GetPatchDeploymentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.v1.PatchDeployment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.v1.GetPatchDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L253}
-  /// [google.cloud.osconfig.v1.PatchDeployment]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.v1.GetPatchDeploymentRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L253}
+  /// [google.cloud.osconfig.v1.PatchDeployment]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
   ///
+  // clang-format on
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> GetPatchDeployment(
       google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Get a page of OS Config patch deployments.
   ///
-  /// @param parent  Required. The resource name of the parent in the form
-  /// `projects/*`.
+  /// @param parent  Required. The resource name of the parent in the form `projects/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.osconfig.v1.PatchDeployment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.osconfig.v1.ListPatchDeploymentsRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L265}
-  /// [google.cloud.osconfig.v1.PatchDeployment]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.v1.ListPatchDeploymentsRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L265}
+  /// [google.cloud.osconfig.v1.PatchDeployment]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
   ///
+  // clang-format on
   StreamRange<google::cloud::osconfig::v1::PatchDeployment>
   ListPatchDeployments(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Get a page of OS Config patch deployments.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::osconfig::v1::ListPatchDeploymentsRequest,google/cloud/osconfig/v1/patch_deployments.proto#L265}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.osconfig.v1.ListPatchDeploymentsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.osconfig.v1.PatchDeployment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.osconfig.v1.ListPatchDeploymentsRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L265}
-  /// [google.cloud.osconfig.v1.PatchDeployment]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.v1.ListPatchDeploymentsRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L265}
+  /// [google.cloud.osconfig.v1.PatchDeployment]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
   ///
+  // clang-format on
   StreamRange<google::cloud::osconfig::v1::PatchDeployment>
   ListPatchDeployments(
       google::cloud::osconfig::v1::ListPatchDeploymentsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Delete an OS Config patch deployment.
   ///
-  /// @param name  Required. The resource name of the patch deployment in the
-  /// form
+  /// @param name  Required. The resource name of the patch deployment in the form
   ///  `projects/*/patchDeployments/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.osconfig.v1.DeletePatchDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L295}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.v1.DeletePatchDeploymentRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L295}
   ///
+  // clang-format on
   Status DeletePatchDeployment(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Delete an OS Config patch deployment.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::osconfig::v1::DeletePatchDeploymentRequest,google/cloud/osconfig/v1/patch_deployments.proto#L295}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.osconfig.v1.DeletePatchDeploymentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.osconfig.v1.DeletePatchDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L295}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.v1.DeletePatchDeploymentRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L295}
   ///
+  // clang-format on
   Status DeletePatchDeployment(
       google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Update an OS Config patch deployment.
   ///
   /// @param patch_deployment  Required. The patch deployment to Update.
-  /// @param update_mask  Optional. Field mask that controls which fields of the
-  /// patch deployment
+  /// @param update_mask  Optional. Field mask that controls which fields of the patch deployment
   ///  should be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.v1.PatchDeployment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.v1.PatchDeployment]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
-  /// [google.cloud.osconfig.v1.UpdatePatchDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L307}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.v1.PatchDeployment]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// [google.cloud.osconfig.v1.UpdatePatchDeploymentRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L307}
   ///
+  // clang-format on
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> UpdatePatchDeployment(
       google::cloud::osconfig::v1::PatchDeployment const& patch_deployment,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Update an OS Config patch deployment.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::osconfig::v1::UpdatePatchDeploymentRequest,google/cloud/osconfig/v1/patch_deployments.proto#L307}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.osconfig.v1.UpdatePatchDeploymentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.v1.PatchDeployment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.v1.PatchDeployment]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
-  /// [google.cloud.osconfig.v1.UpdatePatchDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L307}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.v1.PatchDeployment]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// [google.cloud.osconfig.v1.UpdatePatchDeploymentRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L307}
   ///
+  // clang-format on
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> UpdatePatchDeployment(
       google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Change state of patch deployment to "PAUSED".
   /// Patch deployment in paused state doesn't generate patch jobs.
   ///
-  /// @param name  Required. The resource name of the patch deployment in the
-  /// form
+  /// @param name  Required. The resource name of the patch deployment in the form
   ///  `projects/*/patchDeployments/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.v1.PatchDeployment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.v1.PatchDeployment]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
-  /// [google.cloud.osconfig.v1.PausePatchDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L318}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.v1.PatchDeployment]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// [google.cloud.osconfig.v1.PausePatchDeploymentRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L318}
   ///
+  // clang-format on
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> PausePatchDeployment(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Change state of patch deployment to "PAUSED".
   /// Patch deployment in paused state doesn't generate patch jobs.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::osconfig::v1::PausePatchDeploymentRequest,google/cloud/osconfig/v1/patch_deployments.proto#L318}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.osconfig.v1.PausePatchDeploymentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.v1.PatchDeployment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.v1.PatchDeployment]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
-  /// [google.cloud.osconfig.v1.PausePatchDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L318}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.v1.PatchDeployment]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// [google.cloud.osconfig.v1.PausePatchDeploymentRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L318}
   ///
+  // clang-format on
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> PausePatchDeployment(
       google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Change state of patch deployment back to "ACTIVE".
   /// Patch deployment in active state continues to generate patch jobs.
   ///
-  /// @param name  Required. The resource name of the patch deployment in the
-  /// form
+  /// @param name  Required. The resource name of the patch deployment in the form
   ///  `projects/*/patchDeployments/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.v1.PatchDeployment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.v1.PatchDeployment]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
-  /// [google.cloud.osconfig.v1.ResumePatchDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L330}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.v1.PatchDeployment]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// [google.cloud.osconfig.v1.ResumePatchDeploymentRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L330}
   ///
+  // clang-format on
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> ResumePatchDeployment(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Change state of patch deployment back to "ACTIVE".
   /// Patch deployment in active state continues to generate patch jobs.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::osconfig::v1::ResumePatchDeploymentRequest,google/cloud/osconfig/v1/patch_deployments.proto#L330}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.osconfig.v1.ResumePatchDeploymentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.v1.PatchDeployment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.v1.PatchDeployment]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
-  /// [google.cloud.osconfig.v1.ResumePatchDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L330}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.v1.PatchDeployment]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// [google.cloud.osconfig.v1.ResumePatchDeploymentRequest]: @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L330}
   ///
+  // clang-format on
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> ResumePatchDeployment(
       google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request,
       Options opts = {});

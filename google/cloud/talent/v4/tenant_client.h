@@ -84,47 +84,69 @@ class TenantServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a new tenant entity.
   ///
-  /// @param parent  Required. Resource name of the project under which the
-  /// tenant is created.
+  /// @param parent  Required. Resource name of the project under which the tenant is created.
   ///  The format is "projects/{project_id}", for example,
   ///  "projects/foo".
   /// @param tenant  Required. The tenant to be created.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.talent.v4.Tenant])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.talent.v4.CreateTenantRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L85}
-  /// [google.cloud.talent.v4.Tenant]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.CreateTenantRequest]: @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L85}
+  /// [google.cloud.talent.v4.Tenant]: @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
   ///
+  // clang-format on
   StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
       std::string const& parent,
       google::cloud::talent::v4::Tenant const& tenant, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new tenant entity.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::CreateTenantRequest,google/cloud/talent/v4/tenant_service.proto#L85}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.talent.v4.CreateTenantRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.talent.v4.Tenant])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.talent.v4.CreateTenantRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L85}
-  /// [google.cloud.talent.v4.Tenant]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.CreateTenantRequest]: @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L85}
+  /// [google.cloud.talent.v4.Tenant]: @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
   ///
+  // clang-format on
   StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
       google::cloud::talent::v4::CreateTenantRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves specified tenant.
   ///
@@ -133,83 +155,125 @@ class TenantServiceClient {
   ///  "projects/foo/tenants/bar".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.talent.v4.Tenant])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.talent.v4.GetTenantRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L102}
-  /// [google.cloud.talent.v4.Tenant]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.GetTenantRequest]: @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L102}
+  /// [google.cloud.talent.v4.Tenant]: @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
   ///
+  // clang-format on
   StatusOr<google::cloud::talent::v4::Tenant> GetTenant(std::string const& name,
                                                         Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves specified tenant.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::GetTenantRequest,google/cloud/talent/v4/tenant_service.proto#L102}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.talent.v4.GetTenantRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.talent.v4.Tenant])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.talent.v4.GetTenantRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L102}
-  /// [google.cloud.talent.v4.Tenant]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.GetTenantRequest]: @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L102}
+  /// [google.cloud.talent.v4.Tenant]: @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
   ///
+  // clang-format on
   StatusOr<google::cloud::talent::v4::Tenant> GetTenant(
       google::cloud::talent::v4::GetTenantRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates specified tenant.
   ///
-  /// @param tenant  Required. The tenant resource to replace the current
-  /// resource in the
+  /// @param tenant  Required. The tenant resource to replace the current resource in the
   ///  system.
   /// @param update_mask  Strongly recommended for the best service experience.
-  ///  If [update_mask][google.cloud.talent.v4.UpdateTenantRequest.update_mask]
-  ///  is provided, only the specified fields in
+  ///  If [update_mask][google.cloud.talent.v4.UpdateTenantRequest.update_mask] is
+  ///  provided, only the specified fields in
   ///  [tenant][google.cloud.talent.v4.UpdateTenantRequest.tenant] are updated.
   ///  Otherwise all the fields are updated.
   ///  A field mask to specify the tenant fields to be updated. Only
-  ///  top level fields of [Tenant][google.cloud.talent.v4.Tenant] are
-  ///  supported.
+  ///  top level fields of [Tenant][google.cloud.talent.v4.Tenant] are supported.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.talent.v4.Tenant])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.talent.v4.Tenant]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
-  /// [google.cloud.talent.v4.UpdateTenantRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L114}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.Tenant]: @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
+  /// [google.cloud.talent.v4.UpdateTenantRequest]: @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L114}
   ///
+  // clang-format on
   StatusOr<google::cloud::talent::v4::Tenant> UpdateTenant(
       google::cloud::talent::v4::Tenant const& tenant,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates specified tenant.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::UpdateTenantRequest,google/cloud/talent/v4/tenant_service.proto#L114}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.talent.v4.UpdateTenantRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.talent.v4.Tenant])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.talent.v4.Tenant]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
-  /// [google.cloud.talent.v4.UpdateTenantRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L114}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.Tenant]: @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
+  /// [google.cloud.talent.v4.UpdateTenantRequest]: @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L114}
   ///
+  // clang-format on
   StatusOr<google::cloud::talent::v4::Tenant> UpdateTenant(
       google::cloud::talent::v4::UpdateTenantRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes specified tenant.
   ///
@@ -218,62 +282,124 @@ class TenantServiceClient {
   ///  "projects/foo/tenants/bar".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.talent.v4.DeleteTenantRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L132}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.DeleteTenantRequest]: @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L132}
   ///
+  // clang-format on
   Status DeleteTenant(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes specified tenant.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::DeleteTenantRequest,google/cloud/talent/v4/tenant_service.proto#L132}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.talent.v4.DeleteTenantRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.talent.v4.DeleteTenantRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L132}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.DeleteTenantRequest]: @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L132}
   ///
+  // clang-format on
   Status DeleteTenant(
       google::cloud::talent::v4::DeleteTenantRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all tenants associated with the project.
   ///
-  /// @param parent  Required. Resource name of the project under which the
-  /// tenant is created.
+  /// @param parent  Required. Resource name of the project under which the tenant is created.
   ///  The format is "projects/{project_id}", for example,
   ///  "projects/foo".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L32}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.talent.v4.Tenant], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.talent.v4.ListTenantsRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L144}
-  /// [google.cloud.talent.v4.Tenant]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.ListTenantsRequest]: @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L144}
+  /// [google.cloud.talent.v4.Tenant]: @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
   ///
+  // clang-format on
   StreamRange<google::cloud::talent::v4::Tenant> ListTenants(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all tenants associated with the project.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::ListTenantsRequest,google/cloud/talent/v4/tenant_service.proto#L144}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.talent.v4.ListTenantsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L32}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.talent.v4.Tenant], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.talent.v4.ListTenantsRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L144}
-  /// [google.cloud.talent.v4.Tenant]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.ListTenantsRequest]: @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L144}
+  /// [google.cloud.talent.v4.Tenant]: @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
   ///
+  // clang-format on
   StreamRange<google::cloud::talent::v4::Tenant> ListTenants(
       google::cloud::talent::v4::ListTenantsRequest request, Options opts = {});
 

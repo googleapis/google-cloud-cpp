@@ -88,80 +88,132 @@ class SqlBackupRunsServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Deletes the backup taken by a backup run.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlBackupRunsDeleteRequest,google/cloud/sql/v1/cloud_sql_backup_runs.proto#L71}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlBackupRunsDeleteRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlBackupRunsDeleteRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L71}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// [google.cloud.sql.v1.SqlBackupRunsDeleteRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L71}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Delete(
       google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves a resource containing information about a backup run.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlBackupRunsGetRequest,google/cloud/sql/v1/cloud_sql_backup_runs.proto#L85}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlBackupRunsGetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::BackupRun,google/cloud/sql/v1/cloud_sql_backup_runs.proto#L125}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.BackupRun])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.BackupRun]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L125}
-  /// [google.cloud.sql.v1.SqlBackupRunsGetRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L85}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.BackupRun]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L125}
+  /// [google.cloud.sql.v1.SqlBackupRunsGetRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L85}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::BackupRun> Get(
       google::cloud::sql::v1::SqlBackupRunsGetRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new backup run on demand.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlBackupRunsInsertRequest,google/cloud/sql/v1/cloud_sql_backup_runs.proto#L97}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlBackupRunsInsertRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::Operation,google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.Operation]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
-  /// [google.cloud.sql.v1.SqlBackupRunsInsertRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L97}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L628}
+  /// [google.cloud.sql.v1.SqlBackupRunsInsertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L97}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Insert(
       google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all backup runs associated with the project or a given instance
   /// and configuration in the reverse chronological order of the backup
   /// initiation time.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlBackupRunsListRequest,google/cloud/sql/v1/cloud_sql_backup_runs.proto#L108}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlBackupRunsListRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::BackupRunsListResponse,google/cloud/sql/v1/cloud_sql_backup_runs.proto#L187}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.BackupRunsListResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.BackupRunsListResponse]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L187}
-  /// [google.cloud.sql.v1.SqlBackupRunsListRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L108}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.BackupRunsListResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L187}
+  /// [google.cloud.sql.v1.SqlBackupRunsListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_backup_runs.proto#L108}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::BackupRunsListResponse> List(
       google::cloud::sql::v1::SqlBackupRunsListRequest const& request,
       Options opts = {});

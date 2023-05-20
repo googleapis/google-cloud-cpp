@@ -86,6 +86,7 @@ class LoggingServiceV2Client {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Deletes all the log entries in a log for the _Default Log Bucket. The log
   /// reappears if it receives new entries. Log entries written shortly before
@@ -104,29 +105,53 @@ class LoggingServiceV2Client {
   ///  [LogEntry][google.logging.v2.LogEntry].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.logging.v2.DeleteLogRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L136}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.logging.v2.DeleteLogRequest]: @googleapis_reference_link{google/logging/v2/logging.proto#L136}
   ///
+  // clang-format on
   Status DeleteLog(std::string const& log_name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes all the log entries in a log for the _Default Log Bucket. The log
   /// reappears if it receives new entries. Log entries written shortly before
   /// the delete operation might not be deleted. Entries received after the
   /// delete operation with a timestamp before the operation will be deleted.
   ///
-  /// @param request
-  /// @googleapis_link{google::logging::v2::DeleteLogRequest,google/logging/v2/logging.proto#L136}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.logging.v2.DeleteLogRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.logging.v2.DeleteLogRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L136}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.logging.v2.DeleteLogRequest]: @googleapis_reference_link{google/logging/v2/logging.proto#L136}
   ///
+  // clang-format on
   Status DeleteLog(google::logging::v2::DeleteLogRequest const& request,
                    Options opts = {});
 
+  // clang-format off
   ///
   /// Writes log entries to Logging. This API method is the
   /// only way to send log entries to Logging. This method
@@ -136,8 +161,7 @@ class LoggingServiceV2Client {
   /// different resources (projects, organizations, billing accounts or
   /// folders)
   ///
-  /// @param log_name  Optional. A default log resource name that is assigned to
-  /// all log entries
+  /// @param log_name  Optional. A default log resource name that is assigned to all log entries
   ///  in `entries` that do not specify a value for `log_name`:
   ///  * `projects/[PROJECT_ID]/logs/[LOG_ID]`
   ///  * `organizations/[ORGANIZATION_ID]/logs/[LOG_ID]`
@@ -150,31 +174,28 @@ class LoggingServiceV2Client {
   ///  organization, billing account, or folder that is receiving new log
   ///  entries, whether the resource is specified in `logName` or in an
   ///  individual log entry.
-  /// @param resource  Optional. A default monitored resource object that is
-  /// assigned to all log
+  /// @param resource  Optional. A default monitored resource object that is assigned to all log
   ///  entries in `entries` that do not specify a value for `resource`. Example:
   ///      { "type": "gce_instance",
   ///        "labels": {
   ///          "zone": "us-central1-a", "instance_id": "00000000000000000000" }}
   ///  See [LogEntry][google.logging.v2.LogEntry].
-  /// @param labels  Optional. Default labels that are added to the `labels`
-  /// field of all log
-  ///  entries in `entries`. If a log entry already has a label with the same
-  ///  key as a label in this parameter, then the log entry's label is not
-  ///  changed. See [LogEntry][google.logging.v2.LogEntry].
-  /// @param entries  Required. The log entries to send to Logging. The order of
-  /// log
+  /// @param labels  Optional. Default labels that are added to the `labels` field of all log
+  ///  entries in `entries`. If a log entry already has a label with the same key
+  ///  as a label in this parameter, then the log entry's label is not changed.
+  ///  See [LogEntry][google.logging.v2.LogEntry].
+  /// @param entries  Required. The log entries to send to Logging. The order of log
   ///  entries in this list does not matter. Values supplied in this method's
   ///  `log_name`, `resource`, and `labels` fields are copied into those log
   ///  entries in this list that do not include values for their corresponding
   ///  fields. For more information, see the
   ///  [LogEntry][google.logging.v2.LogEntry] type.
   ///  If the `timestamp` or `insert_id` fields are missing in log entries, then
-  ///  this method supplies the current time or a unique identifier,
-  ///  respectively. The supplied values are chosen so that, among the log
-  ///  entries that did not supply their own values, the entries earlier in the
-  ///  list will sort before the entries later in the list. See the
-  ///  `entries.list` method. Log entries with timestamps that are more than the
+  ///  this method supplies the current time or a unique identifier, respectively.
+  ///  The supplied values are chosen so that, among the log entries that did not
+  ///  supply their own values, the entries earlier in the list will sort before
+  ///  the entries later in the list. See the `entries.list` method.
+  ///  Log entries with timestamps that are more than the
   ///  [logs retention period](https://cloud.google.com/logging/quotas) in
   ///  the past or more than 24 hours in the future will not be available when
   ///  calling `entries.list`. However, those log entries can still be [exported
@@ -186,14 +207,22 @@ class LoggingServiceV2Client {
   ///  list, rather than calling this method for each individual log entry.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L239}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.logging.v2.WriteLogEntriesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.logging.v2.WriteLogEntriesRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L157}
-  /// [google.logging.v2.WriteLogEntriesResponse]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L239}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.logging.v2.WriteLogEntriesRequest]: @googleapis_reference_link{google/logging/v2/logging.proto#L157}
+  /// [google.logging.v2.WriteLogEntriesResponse]: @googleapis_reference_link{google/logging/v2/logging.proto#L239}
   ///
+  // clang-format on
   StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
       std::string const& log_name,
       google::api::MonitoredResource const& resource,
@@ -201,6 +230,7 @@ class LoggingServiceV2Client {
       std::vector<google::logging::v2::LogEntry> const& entries,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Writes log entries to Logging. This API method is the
   /// only way to send log entries to Logging. This method
@@ -210,30 +240,42 @@ class LoggingServiceV2Client {
   /// different resources (projects, organizations, billing accounts or
   /// folders)
   ///
-  /// @param request
-  /// @googleapis_link{google::logging::v2::WriteLogEntriesRequest,google/logging/v2/logging.proto#L157}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.logging.v2.WriteLogEntriesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L239}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.logging.v2.WriteLogEntriesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.logging.v2.WriteLogEntriesRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L157}
-  /// [google.logging.v2.WriteLogEntriesResponse]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L239}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.logging.v2.WriteLogEntriesRequest]: @googleapis_reference_link{google/logging/v2/logging.proto#L157}
+  /// [google.logging.v2.WriteLogEntriesResponse]: @googleapis_reference_link{google/logging/v2/logging.proto#L239}
   ///
+  // clang-format on
   StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
       google::logging::v2::WriteLogEntriesRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Lists log entries.  Use this method to retrieve log entries that
-  /// originated from a project/folder/organization/billing account.  For ways
-  /// to export log entries, see [Exporting
+  /// Lists log entries.  Use this method to retrieve log entries that originated
+  /// from a project/folder/organization/billing account.  For ways to export log
+  /// entries, see [Exporting
   /// Logs](https://cloud.google.com/logging/docs/export).
   ///
-  /// @param resource_names  Required. Names of one or more parent resources
-  /// from which to
+  /// @param resource_names  Required. Names of one or more parent resources from which to
   ///  retrieve log entries:
   ///  *  `projects/[PROJECT_ID]`
   ///  *  `organizations/[ORGANIZATION_ID]`
@@ -246,74 +288,134 @@ class LoggingServiceV2Client {
   ///   * `folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]`
   ///  Projects listed in the `project_ids` field are added to this list.
   ///  A maximum of 100 resources may be specified in a single request.
-  /// @param filter  Optional. Only log entries that match the filter are
-  /// returned.  An empty
-  ///  filter matches all log entries in the resources listed in
-  ///  `resource_names`. Referencing a parent resource that is not listed in
-  ///  `resource_names` will cause the filter to return no results. The maximum
-  ///  length of a filter is 20,000 characters.
-  /// @param order_by  Optional. How the results should be sorted.  Presently,
-  /// the only permitted
+  /// @param filter  Optional. Only log entries that match the filter are returned.  An empty
+  ///  filter matches all log entries in the resources listed in `resource_names`.
+  ///  Referencing a parent resource that is not listed in `resource_names` will
+  ///  cause the filter to return no results. The maximum length of a filter is
+  ///  20,000 characters.
+  /// @param order_by  Optional. How the results should be sorted.  Presently, the only permitted
   ///  values are `"timestamp asc"` (default) and `"timestamp desc"`. The first
   ///  option returns entries in order of increasing values of
-  ///  `LogEntry.timestamp` (oldest first), and the second option returns
-  ///  entries in order of decreasing timestamps (newest first).  Entries with
-  ///  equal timestamps are returned in order of their `insert_id` values.
+  ///  `LogEntry.timestamp` (oldest first), and the second option returns entries
+  ///  in order of decreasing timestamps (newest first).  Entries with equal
+  ///  timestamps are returned in order of their `insert_id` values.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::logging::v2::LogEntry,google/logging/v2/log_entry.proto#L38}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.logging.v2.LogEntry], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.logging.v2.ListLogEntriesRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L253}
-  /// [google.logging.v2.LogEntry]:
-  /// @googleapis_reference_link{google/logging/v2/log_entry.proto#L38}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.logging.v2.ListLogEntriesRequest]: @googleapis_reference_link{google/logging/v2/logging.proto#L253}
+  /// [google.logging.v2.LogEntry]: @googleapis_reference_link{google/logging/v2/log_entry.proto#L38}
   ///
+  // clang-format on
   StreamRange<google::logging::v2::LogEntry> ListLogEntries(
       std::vector<std::string> const& resource_names, std::string const& filter,
       std::string const& order_by, Options opts = {});
 
+  // clang-format off
   ///
-  /// Lists log entries.  Use this method to retrieve log entries that
-  /// originated from a project/folder/organization/billing account.  For ways
-  /// to export log entries, see [Exporting
+  /// Lists log entries.  Use this method to retrieve log entries that originated
+  /// from a project/folder/organization/billing account.  For ways to export log
+  /// entries, see [Exporting
   /// Logs](https://cloud.google.com/logging/docs/export).
   ///
-  /// @param request
-  /// @googleapis_link{google::logging::v2::ListLogEntriesRequest,google/logging/v2/logging.proto#L253}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.logging.v2.ListLogEntriesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::logging::v2::LogEntry,google/logging/v2/log_entry.proto#L38}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.logging.v2.LogEntry], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.logging.v2.ListLogEntriesRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L253}
-  /// [google.logging.v2.LogEntry]:
-  /// @googleapis_reference_link{google/logging/v2/log_entry.proto#L38}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.logging.v2.ListLogEntriesRequest]: @googleapis_reference_link{google/logging/v2/logging.proto#L253}
+  /// [google.logging.v2.LogEntry]: @googleapis_reference_link{google/logging/v2/log_entry.proto#L38}
   ///
+  // clang-format on
   StreamRange<google::logging::v2::LogEntry> ListLogEntries(
       google::logging::v2::ListLogEntriesRequest request, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the descriptors for monitored resource types used by Logging.
   ///
-  /// @param request
-  /// @googleapis_link{google::logging::v2::ListMonitoredResourceDescriptorsRequest,google/logging/v2/logging.proto#L327}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.logging.v2.ListMonitoredResourceDescriptorsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::MonitoredResourceDescriptor,google/api/monitored_resource.proto#L41}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.api.MonitoredResourceDescriptor], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.api.MonitoredResourceDescriptor]:
-  /// @googleapis_reference_link{google/api/monitored_resource.proto#L41}
-  /// [google.logging.v2.ListMonitoredResourceDescriptorsRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L327}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.api.MonitoredResourceDescriptor]: @googleapis_reference_link{google/api/monitored_resource.proto#L41}
+  /// [google.logging.v2.ListMonitoredResourceDescriptorsRequest]: @googleapis_reference_link{google/logging/v2/logging.proto#L327}
   ///
+  // clang-format on
   StreamRange<google::api::MonitoredResourceDescriptor>
   ListMonitoredResourceDescriptors(
       google::logging::v2::ListMonitoredResourceDescriptorsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the logs in projects, organizations, folders, or billing accounts.
   /// Only logs that have entries are listed.
@@ -325,51 +427,102 @@ class LoggingServiceV2Client {
   ///  *  `folders/[FOLDER_ID]`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return std::string
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains a
+  ///     [`std::string`].
   ///
-  /// [google.logging.v2.ListLogsRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L352}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.logging.v2.ListLogsRequest]: @googleapis_reference_link{google/logging/v2/logging.proto#L352}
   ///
+  // clang-format on
   StreamRange<std::string> ListLogs(std::string const& parent,
                                     Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the logs in projects, organizations, folders, or billing accounts.
   /// Only logs that have entries are listed.
   ///
-  /// @param request
-  /// @googleapis_link{google::logging::v2::ListLogsRequest,google/logging/v2/logging.proto#L352}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.logging.v2.ListLogsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return std::string
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains a
+  ///     [`std::string`].
   ///
-  /// [google.logging.v2.ListLogsRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L352}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.logging.v2.ListLogsRequest]: @googleapis_reference_link{google/logging/v2/logging.proto#L352}
   ///
+  // clang-format on
   StreamRange<std::string> ListLogs(
       google::logging::v2::ListLogsRequest request, Options opts = {});
 
+  // clang-format off
   ///
   /// Streaming read of log entries as they are ingested. Until the stream is
   /// terminated, it will continue reading logs.
   ///
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return A bidirectional streaming interface with request (write) type:
-  /// @googleapis_link{google::logging::v2::TailLogEntriesRequest,google/logging/v2/logging.proto#L414}
-  /// and response (read) type:
-  /// @googleapis_link{google::logging::v2::TailLogEntriesResponse,google/logging/v2/logging.proto#L446}
+  /// @return An object representing the bidirectional streaming
+  ///     RPC. Applications can send multiple request messages and receive
+  ///     multiple response messages through this API. Bidirectional streaming
+  ///     RPCs can impose restrictions on the sequence of request and response
+  ///     messages. Please consult the service documentation for details.
+  ///     The request message type ([google.logging.v2.TailLogEntriesRequest]) and response messages
+  ///     ([google.logging.v2.TailLogEntriesResponse]) are mapped to C++ classes using the
+  ///     [Protobuf mapping rules].
   ///
-  /// [google.logging.v2.TailLogEntriesRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L414}
-  /// [google.logging.v2.TailLogEntriesResponse]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L446}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.logging.v2.TailLogEntriesRequest]: @googleapis_reference_link{google/logging/v2/logging.proto#L414}
+  /// [google.logging.v2.TailLogEntriesResponse]: @googleapis_reference_link{google/logging/v2/logging.proto#L446}
   ///
+  // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
   AsyncTailLogEntries(Options opts = {});
 
+  // clang-format off
   ///
   /// Writes log entries to Logging. This API method is the
   /// only way to send log entries to Logging. This method
@@ -379,8 +532,7 @@ class LoggingServiceV2Client {
   /// different resources (projects, organizations, billing accounts or
   /// folders)
   ///
-  /// @param log_name  Optional. A default log resource name that is assigned to
-  /// all log entries
+  /// @param log_name  Optional. A default log resource name that is assigned to all log entries
   ///  in `entries` that do not specify a value for `log_name`:
   ///  * `projects/[PROJECT_ID]/logs/[LOG_ID]`
   ///  * `organizations/[ORGANIZATION_ID]/logs/[LOG_ID]`
@@ -393,31 +545,28 @@ class LoggingServiceV2Client {
   ///  organization, billing account, or folder that is receiving new log
   ///  entries, whether the resource is specified in `logName` or in an
   ///  individual log entry.
-  /// @param resource  Optional. A default monitored resource object that is
-  /// assigned to all log
+  /// @param resource  Optional. A default monitored resource object that is assigned to all log
   ///  entries in `entries` that do not specify a value for `resource`. Example:
   ///      { "type": "gce_instance",
   ///        "labels": {
   ///          "zone": "us-central1-a", "instance_id": "00000000000000000000" }}
   ///  See [LogEntry][google.logging.v2.LogEntry].
-  /// @param labels  Optional. Default labels that are added to the `labels`
-  /// field of all log
-  ///  entries in `entries`. If a log entry already has a label with the same
-  ///  key as a label in this parameter, then the log entry's label is not
-  ///  changed. See [LogEntry][google.logging.v2.LogEntry].
-  /// @param entries  Required. The log entries to send to Logging. The order of
-  /// log
+  /// @param labels  Optional. Default labels that are added to the `labels` field of all log
+  ///  entries in `entries`. If a log entry already has a label with the same key
+  ///  as a label in this parameter, then the log entry's label is not changed.
+  ///  See [LogEntry][google.logging.v2.LogEntry].
+  /// @param entries  Required. The log entries to send to Logging. The order of log
   ///  entries in this list does not matter. Values supplied in this method's
   ///  `log_name`, `resource`, and `labels` fields are copied into those log
   ///  entries in this list that do not include values for their corresponding
   ///  fields. For more information, see the
   ///  [LogEntry][google.logging.v2.LogEntry] type.
   ///  If the `timestamp` or `insert_id` fields are missing in log entries, then
-  ///  this method supplies the current time or a unique identifier,
-  ///  respectively. The supplied values are chosen so that, among the log
-  ///  entries that did not supply their own values, the entries earlier in the
-  ///  list will sort before the entries later in the list. See the
-  ///  `entries.list` method. Log entries with timestamps that are more than the
+  ///  this method supplies the current time or a unique identifier, respectively.
+  ///  The supplied values are chosen so that, among the log entries that did not
+  ///  supply their own values, the entries earlier in the list will sort before
+  ///  the entries later in the list. See the `entries.list` method.
+  ///  Log entries with timestamps that are more than the
   ///  [logs retention period](https://cloud.google.com/logging/quotas) in
   ///  the past or more than 24 hours in the future will not be available when
   ///  calling `entries.list`. However, those log entries can still be [exported
@@ -429,14 +578,22 @@ class LoggingServiceV2Client {
   ///  list, rather than calling this method for each individual log entry.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L239}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.logging.v2.WriteLogEntriesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.logging.v2.WriteLogEntriesRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L157}
-  /// [google.logging.v2.WriteLogEntriesResponse]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L239}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.logging.v2.WriteLogEntriesRequest]: @googleapis_reference_link{google/logging/v2/logging.proto#L157}
+  /// [google.logging.v2.WriteLogEntriesResponse]: @googleapis_reference_link{google/logging/v2/logging.proto#L239}
   ///
+  // clang-format on
   future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
   AsyncWriteLogEntries(
       std::string const& log_name,
@@ -445,6 +602,7 @@ class LoggingServiceV2Client {
       std::vector<google::logging::v2::LogEntry> const& entries,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Writes log entries to Logging. This API method is the
   /// only way to send log entries to Logging. This method
@@ -454,18 +612,30 @@ class LoggingServiceV2Client {
   /// different resources (projects, organizations, billing accounts or
   /// folders)
   ///
-  /// @param request
-  /// @googleapis_link{google::logging::v2::WriteLogEntriesRequest,google/logging/v2/logging.proto#L157}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.logging.v2.WriteLogEntriesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::logging::v2::WriteLogEntriesResponse,google/logging/v2/logging.proto#L239}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.logging.v2.WriteLogEntriesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.logging.v2.WriteLogEntriesRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L157}
-  /// [google.logging.v2.WriteLogEntriesResponse]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L239}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.logging.v2.WriteLogEntriesRequest]: @googleapis_reference_link{google/logging/v2/logging.proto#L157}
+  /// [google.logging.v2.WriteLogEntriesResponse]: @googleapis_reference_link{google/logging/v2/logging.proto#L239}
   ///
+  // clang-format on
   future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
   AsyncWriteLogEntries(
       google::logging::v2::WriteLogEntriesRequest const& request,

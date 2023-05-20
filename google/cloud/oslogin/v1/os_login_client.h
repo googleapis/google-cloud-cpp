@@ -88,321 +88,487 @@ class OsLoginServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Create an SSH public key
   ///
-  /// @param parent  Required. The unique ID for the user in format
-  /// `users/{user}`.
+  /// @param parent  Required. The unique ID for the user in format `users/{user}`.
   /// @param ssh_public_key  Required. The SSH public key and expiration time.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::oslogin::common::SshPublicKey,google/cloud/oslogin/common/common.proto#L89}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oslogin.common.SshPublicKey])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.oslogin.common.SshPublicKey]:
-  /// @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
-  /// [google.cloud.oslogin.v1.CreateSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L133}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oslogin.common.SshPublicKey]: @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
+  /// [google.cloud.oslogin.v1.CreateSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L133}
   ///
+  // clang-format on
   StatusOr<google::cloud::oslogin::common::SshPublicKey> CreateSshPublicKey(
       std::string const& parent,
       google::cloud::oslogin::common::SshPublicKey const& ssh_public_key,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Create an SSH public key
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::oslogin::v1::CreateSshPublicKeyRequest,google/cloud/oslogin/v1/oslogin.proto#L133}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oslogin.v1.CreateSshPublicKeyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::oslogin::common::SshPublicKey,google/cloud/oslogin/common/common.proto#L89}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oslogin.common.SshPublicKey])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.oslogin.common.SshPublicKey]:
-  /// @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
-  /// [google.cloud.oslogin.v1.CreateSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L133}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oslogin.common.SshPublicKey]: @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
+  /// [google.cloud.oslogin.v1.CreateSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L133}
   ///
+  // clang-format on
   StatusOr<google::cloud::oslogin::common::SshPublicKey> CreateSshPublicKey(
       google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a POSIX account.
   ///
-  /// @param name  Required. A reference to the POSIX account to update. POSIX
-  /// accounts are
+  /// @param name  Required. A reference to the POSIX account to update. POSIX accounts are
   ///  identified by the project ID they are associated with. A reference to the
   ///  POSIX account is in format `users/{user}/projects/{project}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.oslogin.v1.DeletePosixAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L148}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oslogin.v1.DeletePosixAccountRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L148}
   ///
+  // clang-format on
   Status DeletePosixAccount(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a POSIX account.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::oslogin::v1::DeletePosixAccountRequest,google/cloud/oslogin/v1/oslogin.proto#L148}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oslogin.v1.DeletePosixAccountRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.oslogin.v1.DeletePosixAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L148}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oslogin.v1.DeletePosixAccountRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L148}
   ///
+  // clang-format on
   Status DeletePosixAccount(
       google::cloud::oslogin::v1::DeletePosixAccountRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an SSH public key.
   ///
-  /// @param name  Required. The fingerprint of the public key to update. Public
-  /// keys are
-  ///  identified by their SHA-256 fingerprint. The fingerprint of the public
-  ///  key is in format `users/{user}/sshPublicKeys/{fingerprint}`.
+  /// @param name  Required. The fingerprint of the public key to update. Public keys are
+  ///  identified by their SHA-256 fingerprint. The fingerprint of the public key
+  ///  is in format `users/{user}/sshPublicKeys/{fingerprint}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.oslogin.v1.DeleteSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L161}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oslogin.v1.DeleteSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L161}
   ///
+  // clang-format on
   Status DeleteSshPublicKey(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an SSH public key.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::oslogin::v1::DeleteSshPublicKeyRequest,google/cloud/oslogin/v1/oslogin.proto#L161}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oslogin.v1.DeleteSshPublicKeyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.oslogin.v1.DeleteSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L161}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oslogin.v1.DeleteSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L161}
   ///
+  // clang-format on
   Status DeleteSshPublicKey(
       google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves the profile information used for logging in to a virtual machine
   /// on Google Compute Engine.
   ///
-  /// @param name  Required. The unique ID for the user in format
-  /// `users/{user}`.
+  /// @param name  Required. The unique ID for the user in format `users/{user}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::oslogin::v1::LoginProfile,google/cloud/oslogin/v1/oslogin.proto#L121}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oslogin.v1.LoginProfile])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.oslogin.v1.GetLoginProfileRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L174}
-  /// [google.cloud.oslogin.v1.LoginProfile]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L121}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oslogin.v1.GetLoginProfileRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L174}
+  /// [google.cloud.oslogin.v1.LoginProfile]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L121}
   ///
+  // clang-format on
   StatusOr<google::cloud::oslogin::v1::LoginProfile> GetLoginProfile(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves the profile information used for logging in to a virtual machine
   /// on Google Compute Engine.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::oslogin::v1::GetLoginProfileRequest,google/cloud/oslogin/v1/oslogin.proto#L174}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oslogin.v1.GetLoginProfileRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::oslogin::v1::LoginProfile,google/cloud/oslogin/v1/oslogin.proto#L121}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oslogin.v1.LoginProfile])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.oslogin.v1.GetLoginProfileRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L174}
-  /// [google.cloud.oslogin.v1.LoginProfile]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L121}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oslogin.v1.GetLoginProfileRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L174}
+  /// [google.cloud.oslogin.v1.LoginProfile]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L121}
   ///
+  // clang-format on
   StatusOr<google::cloud::oslogin::v1::LoginProfile> GetLoginProfile(
       google::cloud::oslogin::v1::GetLoginProfileRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves an SSH public key.
   ///
-  /// @param name  Required. The fingerprint of the public key to retrieve.
-  /// Public keys are
-  ///  identified by their SHA-256 fingerprint. The fingerprint of the public
-  ///  key is in format `users/{user}/sshPublicKeys/{fingerprint}`.
+  /// @param name  Required. The fingerprint of the public key to retrieve. Public keys are
+  ///  identified by their SHA-256 fingerprint. The fingerprint of the public key
+  ///  is in format `users/{user}/sshPublicKeys/{fingerprint}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::oslogin::common::SshPublicKey,google/cloud/oslogin/common/common.proto#L89}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oslogin.common.SshPublicKey])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.oslogin.common.SshPublicKey]:
-  /// @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
-  /// [google.cloud.oslogin.v1.GetSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L191}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oslogin.common.SshPublicKey]: @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
+  /// [google.cloud.oslogin.v1.GetSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L191}
   ///
+  // clang-format on
   StatusOr<google::cloud::oslogin::common::SshPublicKey> GetSshPublicKey(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves an SSH public key.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::oslogin::v1::GetSshPublicKeyRequest,google/cloud/oslogin/v1/oslogin.proto#L191}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oslogin.v1.GetSshPublicKeyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::oslogin::common::SshPublicKey,google/cloud/oslogin/common/common.proto#L89}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oslogin.common.SshPublicKey])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.oslogin.common.SshPublicKey]:
-  /// @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
-  /// [google.cloud.oslogin.v1.GetSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L191}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oslogin.common.SshPublicKey]: @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
+  /// [google.cloud.oslogin.v1.GetSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L191}
   ///
+  // clang-format on
   StatusOr<google::cloud::oslogin::common::SshPublicKey> GetSshPublicKey(
       google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Adds an SSH public key and returns the profile information. Default POSIX
   /// account information is set when no username and UID exist as part of the
   /// login profile.
   ///
-  /// @param parent  Required. The unique ID for the user in format
-  /// `users/{user}`.
+  /// @param parent  Required. The unique ID for the user in format `users/{user}`.
   /// @param ssh_public_key  Optional. The SSH public key and expiration time.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::oslogin::v1::ImportSshPublicKeyResponse,google/cloud/oslogin/v1/oslogin.proto#L222}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oslogin.v1.ImportSshPublicKeyResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.oslogin.v1.ImportSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L204}
-  /// [google.cloud.oslogin.v1.ImportSshPublicKeyResponse]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L222}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oslogin.v1.ImportSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L204}
+  /// [google.cloud.oslogin.v1.ImportSshPublicKeyResponse]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L222}
   ///
+  // clang-format on
   StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
   ImportSshPublicKey(
       std::string const& parent,
       google::cloud::oslogin::common::SshPublicKey const& ssh_public_key,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Adds an SSH public key and returns the profile information. Default POSIX
   /// account information is set when no username and UID exist as part of the
   /// login profile.
   ///
-  /// @param parent  Required. The unique ID for the user in format
-  /// `users/{user}`.
+  /// @param parent  Required. The unique ID for the user in format `users/{user}`.
   /// @param ssh_public_key  Optional. The SSH public key and expiration time.
   /// @param project_id  The project ID of the Google Cloud Platform project.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::oslogin::v1::ImportSshPublicKeyResponse,google/cloud/oslogin/v1/oslogin.proto#L222}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oslogin.v1.ImportSshPublicKeyResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.oslogin.v1.ImportSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L204}
-  /// [google.cloud.oslogin.v1.ImportSshPublicKeyResponse]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L222}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oslogin.v1.ImportSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L204}
+  /// [google.cloud.oslogin.v1.ImportSshPublicKeyResponse]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L222}
   ///
+  // clang-format on
   StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
   ImportSshPublicKey(
       std::string const& parent,
       google::cloud::oslogin::common::SshPublicKey const& ssh_public_key,
       std::string const& project_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Adds an SSH public key and returns the profile information. Default POSIX
   /// account information is set when no username and UID exist as part of the
   /// login profile.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::oslogin::v1::ImportSshPublicKeyRequest,google/cloud/oslogin/v1/oslogin.proto#L204}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oslogin.v1.ImportSshPublicKeyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::oslogin::v1::ImportSshPublicKeyResponse,google/cloud/oslogin/v1/oslogin.proto#L222}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oslogin.v1.ImportSshPublicKeyResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.oslogin.v1.ImportSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L204}
-  /// [google.cloud.oslogin.v1.ImportSshPublicKeyResponse]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L222}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oslogin.v1.ImportSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L204}
+  /// [google.cloud.oslogin.v1.ImportSshPublicKeyResponse]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L222}
   ///
+  // clang-format on
   StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
   ImportSshPublicKey(
       google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an SSH public key and returns the profile information. This method
   /// supports patch semantics.
   ///
-  /// @param name  Required. The fingerprint of the public key to update. Public
-  /// keys are
-  ///  identified by their SHA-256 fingerprint. The fingerprint of the public
-  ///  key is in format `users/{user}/sshPublicKeys/{fingerprint}`.
+  /// @param name  Required. The fingerprint of the public key to update. Public keys are
+  ///  identified by their SHA-256 fingerprint. The fingerprint of the public key
+  ///  is in format `users/{user}/sshPublicKeys/{fingerprint}`.
   /// @param ssh_public_key  Required. The SSH public key and expiration time.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::oslogin::common::SshPublicKey,google/cloud/oslogin/common/common.proto#L89}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oslogin.common.SshPublicKey])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.oslogin.common.SshPublicKey]:
-  /// @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
-  /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L231}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oslogin.common.SshPublicKey]: @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
+  /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L231}
   ///
+  // clang-format on
   StatusOr<google::cloud::oslogin::common::SshPublicKey> UpdateSshPublicKey(
       std::string const& name,
       google::cloud::oslogin::common::SshPublicKey const& ssh_public_key,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an SSH public key and returns the profile information. This method
   /// supports patch semantics.
   ///
-  /// @param name  Required. The fingerprint of the public key to update. Public
-  /// keys are
-  ///  identified by their SHA-256 fingerprint. The fingerprint of the public
-  ///  key is in format `users/{user}/sshPublicKeys/{fingerprint}`.
+  /// @param name  Required. The fingerprint of the public key to update. Public keys are
+  ///  identified by their SHA-256 fingerprint. The fingerprint of the public key
+  ///  is in format `users/{user}/sshPublicKeys/{fingerprint}`.
   /// @param ssh_public_key  Required. The SSH public key and expiration time.
-  /// @param update_mask  Mask to control which fields get updated. Updates all
-  /// if not present.
+  /// @param update_mask  Mask to control which fields get updated. Updates all if not present.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::oslogin::common::SshPublicKey,google/cloud/oslogin/common/common.proto#L89}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oslogin.common.SshPublicKey])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.oslogin.common.SshPublicKey]:
-  /// @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
-  /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L231}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oslogin.common.SshPublicKey]: @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
+  /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L231}
   ///
+  // clang-format on
   StatusOr<google::cloud::oslogin::common::SshPublicKey> UpdateSshPublicKey(
       std::string const& name,
       google::cloud::oslogin::common::SshPublicKey const& ssh_public_key,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an SSH public key and returns the profile information. This method
   /// supports patch semantics.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::oslogin::v1::UpdateSshPublicKeyRequest,google/cloud/oslogin/v1/oslogin.proto#L231}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::oslogin::common::SshPublicKey,google/cloud/oslogin/common/common.proto#L89}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.oslogin.common.SshPublicKey])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.oslogin.common.SshPublicKey]:
-  /// @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
-  /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L231}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.oslogin.common.SshPublicKey]: @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
+  /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]: @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L231}
   ///
+  // clang-format on
   StatusOr<google::cloud::oslogin::common::SshPublicKey> UpdateSshPublicKey(
       google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request,
       Options opts = {});

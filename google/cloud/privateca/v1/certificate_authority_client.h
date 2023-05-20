@@ -96,6 +96,7 @@ class CertificateAuthorityServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Create a new [Certificate][google.cloud.security.privateca.v1.Certificate]
   /// in a given Project, Location from a particular
@@ -105,230 +106,348 @@ class CertificateAuthorityServiceClient {
   ///  [CaPool][google.cloud.security.privateca.v1.CaPool] associated with the
   ///  [Certificate][google.cloud.security.privateca.v1.Certificate], in the
   ///  format `projects/*/locations/*/caPools/*`.
-  /// @param certificate  Required. A
-  /// [Certificate][google.cloud.security.privateca.v1.Certificate]
+  /// @param certificate  Required. A [Certificate][google.cloud.security.privateca.v1.Certificate]
   ///  with initial field values.
-  /// @param certificate_id  Optional. It must be unique within a location and
-  /// match the regular
+  /// @param certificate_id  Optional. It must be unique within a location and match the regular
   ///  expression `[a-zA-Z0-9_-]{1,63}`. This field is required when using a
   ///  [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority]
   ///  in the Enterprise [CertificateAuthority.Tier][], but is optional and its
   ///  value is ignored otherwise.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L641}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.security.privateca.v1.Certificate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.security.privateca.v1.CaPool]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.Certificate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L641}
-  /// [google.cloud.security.privateca.v1.CreateCertificateRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L420}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
+  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L641}
+  /// [google.cloud.security.privateca.v1.CreateCertificateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L420}
   ///
+  // clang-format on
   StatusOr<google::cloud::security::privateca::v1::Certificate>
   CreateCertificate(
       std::string const& parent,
       google::cloud::security::privateca::v1::Certificate const& certificate,
       std::string const& certificate_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Create a new [Certificate][google.cloud.security.privateca.v1.Certificate]
   /// in a given Project, Location from a particular
   /// [CaPool][google.cloud.security.privateca.v1.CaPool].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::CreateCertificateRequest,google/cloud/security/privateca/v1/service.proto#L420}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.CreateCertificateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L641}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.security.privateca.v1.Certificate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.security.privateca.v1.CaPool]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.Certificate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L641}
-  /// [google.cloud.security.privateca.v1.CreateCertificateRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L420}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
+  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L641}
+  /// [google.cloud.security.privateca.v1.CreateCertificateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L420}
   ///
+  // clang-format on
   StatusOr<google::cloud::security::privateca::v1::Certificate>
   CreateCertificate(
       google::cloud::security::privateca::v1::CreateCertificateRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a [Certificate][google.cloud.security.privateca.v1.Certificate].
   ///
-  /// @param name  Required. The
-  /// [name][google.cloud.security.privateca.v1.Certificate.name]
+  /// @param name  Required. The [name][google.cloud.security.privateca.v1.Certificate.name]
   ///  of the [Certificate][google.cloud.security.privateca.v1.Certificate] to
   ///  get.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L641}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.security.privateca.v1.Certificate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.security.privateca.v1.Certificate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L641}
-  /// [google.cloud.security.privateca.v1.GetCertificateRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L493}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L641}
+  /// [google.cloud.security.privateca.v1.GetCertificateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L493}
   ///
+  // clang-format on
   StatusOr<google::cloud::security::privateca::v1::Certificate> GetCertificate(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a [Certificate][google.cloud.security.privateca.v1.Certificate].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::GetCertificateRequest,google/cloud/security/privateca/v1/service.proto#L493}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.GetCertificateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L641}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.security.privateca.v1.Certificate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.security.privateca.v1.Certificate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L641}
-  /// [google.cloud.security.privateca.v1.GetCertificateRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L493}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L641}
+  /// [google.cloud.security.privateca.v1.GetCertificateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L493}
   ///
+  // clang-format on
   StatusOr<google::cloud::security::privateca::v1::Certificate> GetCertificate(
       google::cloud::security::privateca::v1::GetCertificateRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists [Certificates][google.cloud.security.privateca.v1.Certificate].
   ///
-  /// @param parent  Required. The resource name of the location associated with
-  /// the
+  /// @param parent  Required. The resource name of the location associated with the
   ///  [Certificates][google.cloud.security.privateca.v1.Certificate], in the
   ///  format `projects/*/locations/*/caPools/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L641}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.security.privateca.v1.Certificate], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.Certificate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L641}
-  /// [google.cloud.security.privateca.v1.ListCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L507}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L641}
+  /// [google.cloud.security.privateca.v1.ListCertificatesRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L507}
   ///
+  // clang-format on
   StreamRange<google::cloud::security::privateca::v1::Certificate>
   ListCertificates(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists [Certificates][google.cloud.security.privateca.v1.Certificate].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::ListCertificatesRequest,google/cloud/security/privateca/v1/service.proto#L507}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.ListCertificatesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L641}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.security.privateca.v1.Certificate], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.Certificate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L641}
-  /// [google.cloud.security.privateca.v1.ListCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L507}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L641}
+  /// [google.cloud.security.privateca.v1.ListCertificatesRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L507}
   ///
+  // clang-format on
   StreamRange<google::cloud::security::privateca::v1::Certificate>
   ListCertificates(
       google::cloud::security::privateca::v1::ListCertificatesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Revoke a [Certificate][google.cloud.security.privateca.v1.Certificate].
   ///
   /// @param name  Required. The resource name for this
-  ///  [Certificate][google.cloud.security.privateca.v1.Certificate] in the
-  ///  format `projects/*/locations/*/caPools/*/certificates/*`.
+  ///  [Certificate][google.cloud.security.privateca.v1.Certificate] in the format
+  ///  `projects/*/locations/*/caPools/*/certificates/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L641}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.security.privateca.v1.Certificate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.security.privateca.v1.Certificate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L641}
-  /// [google.cloud.security.privateca.v1.RevokeCertificateRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L560}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L641}
+  /// [google.cloud.security.privateca.v1.RevokeCertificateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L560}
   ///
+  // clang-format on
   StatusOr<google::cloud::security::privateca::v1::Certificate>
   RevokeCertificate(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Revoke a [Certificate][google.cloud.security.privateca.v1.Certificate].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::RevokeCertificateRequest,google/cloud/security/privateca/v1/service.proto#L560}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.RevokeCertificateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L641}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.security.privateca.v1.Certificate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.security.privateca.v1.Certificate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L641}
-  /// [google.cloud.security.privateca.v1.RevokeCertificateRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L560}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L641}
+  /// [google.cloud.security.privateca.v1.RevokeCertificateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L560}
   ///
+  // clang-format on
   StatusOr<google::cloud::security::privateca::v1::Certificate>
   RevokeCertificate(
       google::cloud::security::privateca::v1::RevokeCertificateRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Update a [Certificate][google.cloud.security.privateca.v1.Certificate].
   /// Currently, the only field you can update is the
   /// [labels][google.cloud.security.privateca.v1.Certificate.labels] field.
   ///
-  /// @param certificate  Required.
-  /// [Certificate][google.cloud.security.privateca.v1.Certificate]
+  /// @param certificate  Required. [Certificate][google.cloud.security.privateca.v1.Certificate]
   ///  with updated values.
-  /// @param update_mask  Required. A list of fields to be updated in this
-  /// request.
+  /// @param update_mask  Required. A list of fields to be updated in this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L641}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.security.privateca.v1.Certificate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.security.privateca.v1.Certificate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L641}
-  /// [google.cloud.security.privateca.v1.Certificate.labels]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L751}
-  /// [google.cloud.security.privateca.v1.UpdateCertificateRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L594}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L641}
+  /// [google.cloud.security.privateca.v1.Certificate.labels]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L751}
+  /// [google.cloud.security.privateca.v1.UpdateCertificateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L594}
   ///
+  // clang-format on
   StatusOr<google::cloud::security::privateca::v1::Certificate>
   UpdateCertificate(
       google::cloud::security::privateca::v1::Certificate const& certificate,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Update a [Certificate][google.cloud.security.privateca.v1.Certificate].
   /// Currently, the only field you can update is the
   /// [labels][google.cloud.security.privateca.v1.Certificate.labels] field.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::UpdateCertificateRequest,google/cloud/security/privateca/v1/service.proto#L594}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.UpdateCertificateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::Certificate,google/cloud/security/privateca/v1/resources.proto#L641}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.security.privateca.v1.Certificate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.security.privateca.v1.Certificate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L641}
-  /// [google.cloud.security.privateca.v1.Certificate.labels]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L751}
-  /// [google.cloud.security.privateca.v1.UpdateCertificateRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L594}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.Certificate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L641}
+  /// [google.cloud.security.privateca.v1.Certificate.labels]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L751}
+  /// [google.cloud.security.privateca.v1.UpdateCertificateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L594}
   ///
+  // clang-format on
   StatusOr<google::cloud::security::privateca::v1::Certificate>
   UpdateCertificate(
       google::cloud::security::privateca::v1::UpdateCertificateRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Activate a
   /// [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority]
@@ -343,23 +462,36 @@ class CertificateAuthorityServiceClient {
   ///
   /// @param name  Required. The resource name for this
   ///  [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority]
-  ///  in the format
-  ///  `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
+  ///  in the format `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateAuthority,google/cloud/security/privateca/v1/resources.proto#L40}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CertificateAuthority] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.ActivateCertificateAuthorityRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L621}
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.CertificateAuthorityService.FetchCertificateAuthorityCsr]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L175}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.ActivateCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L621}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
+  /// [google.cloud.security.privateca.v1.CertificateAuthorityService.FetchCertificateAuthorityCsr]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L175}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   ActivateCertificateAuthority(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Activate a
   /// [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority]
@@ -372,26 +504,44 @@ class CertificateAuthorityServiceClient {
   /// [FetchCertificateAuthorityCsr][google.cloud.security.privateca.v1.CertificateAuthorityService.FetchCertificateAuthorityCsr],
   /// this method can complete the activation process.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::ActivateCertificateAuthorityRequest,google/cloud/security/privateca/v1/service.proto#L621}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.ActivateCertificateAuthorityRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateAuthority,google/cloud/security/privateca/v1/resources.proto#L40}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CertificateAuthority] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.ActivateCertificateAuthorityRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L621}
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.CertificateAuthorityService.FetchCertificateAuthorityCsr]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L175}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.ActivateCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L621}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
+  /// [google.cloud.security.privateca.v1.CertificateAuthorityService.FetchCertificateAuthorityCsr]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L175}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   ActivateCertificateAuthority(
       google::cloud::security::privateca::v1::
           ActivateCertificateAuthorityRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Create a new
   /// [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority]
@@ -404,19 +554,32 @@ class CertificateAuthorityServiceClient {
   /// @param certificate_authority  Required. A
   ///  [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority]
   ///  with initial field values.
-  /// @param certificate_authority_id  Required. It must be unique within a
-  /// location and match the regular
+  /// @param certificate_authority_id  Required. It must be unique within a location and match the regular
   ///  expression `[a-zA-Z0-9_-]{1,63}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateAuthority,google/cloud/security/privateca/v1/resources.proto#L40}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CertificateAuthority] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.CreateCertificateAuthorityRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L659}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
+  /// [google.cloud.security.privateca.v1.CreateCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L659}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   CreateCertificateAuthority(
       std::string const& parent,
@@ -424,115 +587,201 @@ class CertificateAuthorityServiceClient {
           certificate_authority,
       std::string const& certificate_authority_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Create a new
   /// [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority]
   /// in a given Project and Location.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::CreateCertificateAuthorityRequest,google/cloud/security/privateca/v1/service.proto#L659}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.CreateCertificateAuthorityRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateAuthority,google/cloud/security/privateca/v1/resources.proto#L40}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CertificateAuthority] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.CreateCertificateAuthorityRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L659}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
+  /// [google.cloud.security.privateca.v1.CreateCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L659}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   CreateCertificateAuthority(
       google::cloud::security::privateca::v1::
           CreateCertificateAuthorityRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Disable a
   /// [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority].
   ///
   /// @param name  Required. The resource name for this
   ///  [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority]
-  ///  in the format
-  ///  `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
+  ///  in the format `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateAuthority,google/cloud/security/privateca/v1/resources.proto#L40}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CertificateAuthority] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.DisableCertificateAuthorityRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L699}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
+  /// [google.cloud.security.privateca.v1.DisableCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L699}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   DisableCertificateAuthority(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Disable a
   /// [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::DisableCertificateAuthorityRequest,google/cloud/security/privateca/v1/service.proto#L699}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.DisableCertificateAuthorityRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateAuthority,google/cloud/security/privateca/v1/resources.proto#L40}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CertificateAuthority] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.DisableCertificateAuthorityRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L699}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
+  /// [google.cloud.security.privateca.v1.DisableCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L699}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   DisableCertificateAuthority(
       google::cloud::security::privateca::v1::
           DisableCertificateAuthorityRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Enable a
   /// [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority].
   ///
   /// @param name  Required. The resource name for this
   ///  [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority]
-  ///  in the format
-  ///  `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
+  ///  in the format `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateAuthority,google/cloud/security/privateca/v1/resources.proto#L40}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CertificateAuthority] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.EnableCertificateAuthorityRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L734}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
+  /// [google.cloud.security.privateca.v1.EnableCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L734}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   EnableCertificateAuthority(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Enable a
   /// [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::EnableCertificateAuthorityRequest,google/cloud/security/privateca/v1/service.proto#L734}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.EnableCertificateAuthorityRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateAuthority,google/cloud/security/privateca/v1/resources.proto#L40}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CertificateAuthority] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.EnableCertificateAuthorityRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L734}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
+  /// [google.cloud.security.privateca.v1.EnableCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L734}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   EnableCertificateAuthority(
       google::cloud::security::privateca::v1::
           EnableCertificateAuthorityRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Fetch a certificate signing request (CSR) from a
   /// [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority]
@@ -548,26 +797,32 @@ class CertificateAuthorityServiceClient {
   ///
   /// @param name  Required. The resource name for this
   ///  [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority]
-  ///  in the format
-  ///  `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
+  ///  in the format `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::FetchCertificateAuthorityCsrResponse,google/cloud/security/privateca/v1/service.proto#L777}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.security.privateca.v1.FetchCertificateAuthorityCsrResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.CertificateAuthorityService.ActivateCertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L104}
-  /// [google.cloud.security.privateca.v1.FetchCertificateAuthorityCsrRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L763}
-  /// [google.cloud.security.privateca.v1.FetchCertificateAuthorityCsrResponse]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L777}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
+  /// [google.cloud.security.privateca.v1.CertificateAuthorityService.ActivateCertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L104}
+  /// [google.cloud.security.privateca.v1.FetchCertificateAuthorityCsrRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L763}
+  /// [google.cloud.security.privateca.v1.FetchCertificateAuthorityCsrResponse]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L777}
   ///
+  // clang-format on
   StatusOr<google::cloud::security::privateca::v1::
                FetchCertificateAuthorityCsrResponse>
   FetchCertificateAuthorityCsr(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Fetch a certificate signing request (CSR) from a
   /// [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority]
@@ -581,22 +836,32 @@ class CertificateAuthorityServiceClient {
   /// resource, or could be an on-prem certificate authority. See also
   /// [ActivateCertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthorityService.ActivateCertificateAuthority].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::FetchCertificateAuthorityCsrRequest,google/cloud/security/privateca/v1/service.proto#L763}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.FetchCertificateAuthorityCsrRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::FetchCertificateAuthorityCsrResponse,google/cloud/security/privateca/v1/service.proto#L777}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.security.privateca.v1.FetchCertificateAuthorityCsrResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.CertificateAuthorityService.ActivateCertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L104}
-  /// [google.cloud.security.privateca.v1.FetchCertificateAuthorityCsrRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L763}
-  /// [google.cloud.security.privateca.v1.FetchCertificateAuthorityCsrResponse]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L777}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
+  /// [google.cloud.security.privateca.v1.CertificateAuthorityService.ActivateCertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L104}
+  /// [google.cloud.security.privateca.v1.FetchCertificateAuthorityCsrRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L763}
+  /// [google.cloud.security.privateca.v1.FetchCertificateAuthorityCsrResponse]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L777}
   ///
+  // clang-format on
   StatusOr<google::cloud::security::privateca::v1::
                FetchCertificateAuthorityCsrResponse>
   FetchCertificateAuthorityCsr(
@@ -604,49 +869,71 @@ class CertificateAuthorityServiceClient {
           FetchCertificateAuthorityCsrRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a
   /// [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority].
   ///
   /// @param name  Required. The
-  ///  [name][google.cloud.security.privateca.v1.CertificateAuthority.name] of
-  ///  the
+  ///  [name][google.cloud.security.privateca.v1.CertificateAuthority.name] of the
   ///  [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority]
   ///  to get.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateAuthority,google/cloud/security/privateca/v1/resources.proto#L40}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.security.privateca.v1.CertificateAuthority])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.GetCertificateAuthorityRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L784}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
+  /// [google.cloud.security.privateca.v1.GetCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L784}
   ///
+  // clang-format on
   StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>
   GetCertificateAuthority(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a
   /// [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::GetCertificateAuthorityRequest,google/cloud/security/privateca/v1/service.proto#L784}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.GetCertificateAuthorityRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateAuthority,google/cloud/security/privateca/v1/resources.proto#L40}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.security.privateca.v1.CertificateAuthority])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.GetCertificateAuthorityRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L784}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
+  /// [google.cloud.security.privateca.v1.GetCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L784}
   ///
+  // clang-format on
   StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>
   GetCertificateAuthority(google::cloud::security::privateca::v1::
                               GetCertificateAuthorityRequest const& request,
                           Options opts = {});
 
+  // clang-format off
   ///
   /// Lists
   /// [CertificateAuthorities][google.cloud.security.privateca.v1.CertificateAuthority].
@@ -657,39 +944,79 @@ class CertificateAuthorityServiceClient {
   ///  in the format `projects/*/locations/*/caPools/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateAuthority,google/cloud/security/privateca/v1/resources.proto#L40}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.security.privateca.v1.CertificateAuthority], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.ListCertificateAuthoritiesRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L799}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
+  /// [google.cloud.security.privateca.v1.ListCertificateAuthoritiesRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L799}
   ///
+  // clang-format on
   StreamRange<google::cloud::security::privateca::v1::CertificateAuthority>
   ListCertificateAuthorities(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists
   /// [CertificateAuthorities][google.cloud.security.privateca.v1.CertificateAuthority].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::ListCertificateAuthoritiesRequest,google/cloud/security/privateca/v1/service.proto#L799}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.ListCertificateAuthoritiesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateAuthority,google/cloud/security/privateca/v1/resources.proto#L40}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.security.privateca.v1.CertificateAuthority], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.ListCertificateAuthoritiesRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L799}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
+  /// [google.cloud.security.privateca.v1.ListCertificateAuthoritiesRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L799}
   ///
+  // clang-format on
   StreamRange<google::cloud::security::privateca::v1::CertificateAuthority>
   ListCertificateAuthorities(
       google::cloud::security::privateca::v1::ListCertificateAuthoritiesRequest
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Undelete a
   /// [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority]
@@ -697,87 +1024,153 @@ class CertificateAuthorityServiceClient {
   ///
   /// @param name  Required. The resource name for this
   ///  [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority]
-  ///  in the format
-  ///  `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
+  ///  in the format `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateAuthority,google/cloud/security/privateca/v1/resources.proto#L40}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CertificateAuthority] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.UndeleteCertificateAuthorityRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L850}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
+  /// [google.cloud.security.privateca.v1.UndeleteCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L850}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   UndeleteCertificateAuthority(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Undelete a
   /// [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority]
   /// that has been deleted.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::UndeleteCertificateAuthorityRequest,google/cloud/security/privateca/v1/service.proto#L850}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.UndeleteCertificateAuthorityRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateAuthority,google/cloud/security/privateca/v1/resources.proto#L40}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CertificateAuthority] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.UndeleteCertificateAuthorityRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L850}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
+  /// [google.cloud.security.privateca.v1.UndeleteCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L850}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   UndeleteCertificateAuthority(
       google::cloud::security::privateca::v1::
           UndeleteCertificateAuthorityRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Delete a
   /// [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority].
   ///
   /// @param name  Required. The resource name for this
   ///  [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority]
-  ///  in the format
-  ///  `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
+  ///  in the format `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateAuthority,google/cloud/security/privateca/v1/resources.proto#L40}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CertificateAuthority] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.DeleteCertificateAuthorityRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L879}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
+  /// [google.cloud.security.privateca.v1.DeleteCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L879}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   DeleteCertificateAuthority(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Delete a
   /// [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::DeleteCertificateAuthorityRequest,google/cloud/security/privateca/v1/service.proto#L879}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.DeleteCertificateAuthorityRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateAuthority,google/cloud/security/privateca/v1/resources.proto#L40}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CertificateAuthority] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.DeleteCertificateAuthorityRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L879}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
+  /// [google.cloud.security.privateca.v1.DeleteCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L879}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   DeleteCertificateAuthority(
       google::cloud::security::privateca::v1::
           DeleteCertificateAuthorityRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Update a
   /// [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority].
@@ -785,213 +1178,369 @@ class CertificateAuthorityServiceClient {
   /// @param certificate_authority  Required.
   ///  [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority]
   ///  with updated values.
-  /// @param update_mask  Required. A list of fields to be updated in this
-  /// request.
+  /// @param update_mask  Required. A list of fields to be updated in this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateAuthority,google/cloud/security/privateca/v1/resources.proto#L40}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CertificateAuthority] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.UpdateCertificateAuthorityRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L923}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
+  /// [google.cloud.security.privateca.v1.UpdateCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L923}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   UpdateCertificateAuthority(
       google::cloud::security::privateca::v1::CertificateAuthority const&
           certificate_authority,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Update a
   /// [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::UpdateCertificateAuthorityRequest,google/cloud/security/privateca/v1/service.proto#L923}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.UpdateCertificateAuthorityRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateAuthority,google/cloud/security/privateca/v1/resources.proto#L40}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CertificateAuthority] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.UpdateCertificateAuthorityRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L923}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
+  /// [google.cloud.security.privateca.v1.UpdateCertificateAuthorityRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L923}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   UpdateCertificateAuthority(
       google::cloud::security::privateca::v1::
           UpdateCertificateAuthorityRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Create a [CaPool][google.cloud.security.privateca.v1.CaPool].
   ///
-  /// @param parent  Required. The resource name of the location associated with
-  /// the
+  /// @param parent  Required. The resource name of the location associated with the
   ///  [CaPool][google.cloud.security.privateca.v1.CaPool], in the format
   ///  `projects/*/locations/*`.
-  /// @param ca_pool  Required. A
-  /// [CaPool][google.cloud.security.privateca.v1.CaPool] with
+  /// @param ca_pool  Required. A [CaPool][google.cloud.security.privateca.v1.CaPool] with
   ///  initial field values.
-  /// @param ca_pool_id  Required. It must be unique within a location and match
-  /// the regular
+  /// @param ca_pool_id  Required. It must be unique within a location and match the regular
   ///  expression `[a-zA-Z0-9_-]{1,63}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L314}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CaPool] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CaPool]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.CreateCaPoolRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L952}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
+  /// [google.cloud.security.privateca.v1.CreateCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L952}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CaPool>> CreateCaPool(
       std::string const& parent,
       google::cloud::security::privateca::v1::CaPool const& ca_pool,
       std::string const& ca_pool_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Create a [CaPool][google.cloud.security.privateca.v1.CaPool].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::CreateCaPoolRequest,google/cloud/security/privateca/v1/service.proto#L952}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.CreateCaPoolRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L314}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CaPool] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CaPool]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.CreateCaPoolRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L952}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
+  /// [google.cloud.security.privateca.v1.CreateCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L952}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CaPool>> CreateCaPool(
       google::cloud::security::privateca::v1::CreateCaPoolRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Update a [CaPool][google.cloud.security.privateca.v1.CaPool].
   ///
-  /// @param ca_pool  Required.
-  /// [CaPool][google.cloud.security.privateca.v1.CaPool] with updated
+  /// @param ca_pool  Required. [CaPool][google.cloud.security.privateca.v1.CaPool] with updated
   ///  values.
-  /// @param update_mask  Required. A list of fields to be updated in this
-  /// request.
+  /// @param update_mask  Required. A list of fields to be updated in this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L314}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CaPool] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CaPool]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.UpdateCaPoolRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L989}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
+  /// [google.cloud.security.privateca.v1.UpdateCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L989}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CaPool>> UpdateCaPool(
       google::cloud::security::privateca::v1::CaPool const& ca_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Update a [CaPool][google.cloud.security.privateca.v1.CaPool].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::UpdateCaPoolRequest,google/cloud/security/privateca/v1/service.proto#L989}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.UpdateCaPoolRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L314}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CaPool] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CaPool]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.UpdateCaPoolRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L989}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
+  /// [google.cloud.security.privateca.v1.UpdateCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L989}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CaPool>> UpdateCaPool(
       google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a [CaPool][google.cloud.security.privateca.v1.CaPool].
   ///
-  /// @param name  Required. The
-  /// [name][google.cloud.security.privateca.v1.CaPool.name] of the
+  /// @param name  Required. The [name][google.cloud.security.privateca.v1.CaPool.name] of the
   ///  [CaPool][google.cloud.security.privateca.v1.CaPool] to get.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L314}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.security.privateca.v1.CaPool])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.security.privateca.v1.CaPool]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.GetCaPoolRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1095}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
+  /// [google.cloud.security.privateca.v1.GetCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1095}
   ///
+  // clang-format on
   StatusOr<google::cloud::security::privateca::v1::CaPool> GetCaPool(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a [CaPool][google.cloud.security.privateca.v1.CaPool].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::GetCaPoolRequest,google/cloud/security/privateca/v1/service.proto#L1095}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.GetCaPoolRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L314}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.security.privateca.v1.CaPool])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.security.privateca.v1.CaPool]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.GetCaPoolRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1095}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
+  /// [google.cloud.security.privateca.v1.GetCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1095}
   ///
+  // clang-format on
   StatusOr<google::cloud::security::privateca::v1::CaPool> GetCaPool(
       google::cloud::security::privateca::v1::GetCaPoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists [CaPools][google.cloud.security.privateca.v1.CaPool].
   ///
-  /// @param parent  Required. The resource name of the location associated with
-  /// the
+  /// @param parent  Required. The resource name of the location associated with the
   ///  [CaPools][google.cloud.security.privateca.v1.CaPool], in the format
   ///  `projects/*/locations/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L314}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.security.privateca.v1.CaPool], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CaPool]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.ListCaPoolsRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1108}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
+  /// [google.cloud.security.privateca.v1.ListCaPoolsRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1108}
   ///
+  // clang-format on
   StreamRange<google::cloud::security::privateca::v1::CaPool> ListCaPools(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists [CaPools][google.cloud.security.privateca.v1.CaPool].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::ListCaPoolsRequest,google/cloud/security/privateca/v1/service.proto#L1108}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.ListCaPoolsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CaPool,google/cloud/security/privateca/v1/resources.proto#L314}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.security.privateca.v1.CaPool], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CaPool]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.ListCaPoolsRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1108}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
+  /// [google.cloud.security.privateca.v1.ListCaPoolsRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1108}
   ///
+  // clang-format on
   StreamRange<google::cloud::security::privateca::v1::CaPool> ListCaPools(
       google::cloud::security::privateca::v1::ListCaPoolsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Delete a [CaPool][google.cloud.security.privateca.v1.CaPool].
   ///
@@ -1000,42 +1549,74 @@ class CertificateAuthorityServiceClient {
   ///  `projects/*/locations/*/caPools/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::OperationMetadata,google/cloud/security/privateca/v1/service.proto#L1412}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CaPool]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.DeleteCaPoolRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1016}
-  /// [google.cloud.security.privateca.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1412}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
+  /// [google.cloud.security.privateca.v1.DeleteCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1016}
+  /// [google.cloud.security.privateca.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1412}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
   DeleteCaPool(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Delete a [CaPool][google.cloud.security.privateca.v1.CaPool].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::DeleteCaPoolRequest,google/cloud/security/privateca/v1/service.proto#L1016}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.DeleteCaPoolRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::OperationMetadata,google/cloud/security/privateca/v1/service.proto#L1412}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CaPool]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.DeleteCaPoolRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1016}
-  /// [google.cloud.security.privateca.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1412}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
+  /// [google.cloud.security.privateca.v1.DeleteCaPoolRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1016}
+  /// [google.cloud.security.privateca.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1412}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
   DeleteCaPool(
       google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// FetchCaCerts returns the current trust anchor for the
   /// [CaPool][google.cloud.security.privateca.v1.CaPool]. This will include CA
@@ -1048,21 +1629,28 @@ class CertificateAuthorityServiceClient {
   ///  `projects/*/locations/*/caPools/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::FetchCaCertsResponse,google/cloud/security/privateca/v1/service.proto#L1080}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.security.privateca.v1.FetchCaCertsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.security.privateca.v1.CaPool]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.FetchCaCertsRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1051}
-  /// [google.cloud.security.privateca.v1.FetchCaCertsResponse]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1080}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
+  /// [google.cloud.security.privateca.v1.FetchCaCertsRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1051}
+  /// [google.cloud.security.privateca.v1.FetchCaCertsResponse]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1080}
   ///
+  // clang-format on
   StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>
   FetchCaCerts(std::string const& ca_pool, Options opts = {});
 
+  // clang-format off
   ///
   /// FetchCaCerts returns the current trust anchor for the
   /// [CaPool][google.cloud.security.privateca.v1.CaPool]. This will include CA
@@ -1070,28 +1658,39 @@ class CertificateAuthorityServiceClient {
   /// [CertificateAuthority][google.cloud.security.privateca.v1.CertificateAuthority]
   /// resources in the [CaPool][google.cloud.security.privateca.v1.CaPool].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::FetchCaCertsRequest,google/cloud/security/privateca/v1/service.proto#L1051}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.FetchCaCertsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::FetchCaCertsResponse,google/cloud/security/privateca/v1/service.proto#L1080}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.security.privateca.v1.FetchCaCertsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.security.privateca.v1.CaPool]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
-  /// [google.cloud.security.privateca.v1.CertificateAuthority]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
-  /// [google.cloud.security.privateca.v1.FetchCaCertsRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1051}
-  /// [google.cloud.security.privateca.v1.FetchCaCertsResponse]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1080}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CaPool]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L314}
+  /// [google.cloud.security.privateca.v1.CertificateAuthority]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L40}
+  /// [google.cloud.security.privateca.v1.FetchCaCertsRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1051}
+  /// [google.cloud.security.privateca.v1.FetchCaCertsResponse]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1080}
   ///
+  // clang-format on
   StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>
   FetchCaCerts(
       google::cloud::security::privateca::v1::FetchCaCertsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a
   /// [CertificateRevocationList][google.cloud.security.privateca.v1.CertificateRevocationList].
@@ -1103,83 +1702,143 @@ class CertificateAuthorityServiceClient {
   ///  to get.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateRevocationList,google/cloud/security/privateca/v1/resources.proto#L547}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.security.privateca.v1.CertificateRevocationList])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.security.privateca.v1.CertificateRevocationList]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L547}
-  /// [google.cloud.security.privateca.v1.GetCertificateRevocationListRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1156}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateRevocationList]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L547}
+  /// [google.cloud.security.privateca.v1.GetCertificateRevocationListRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1156}
   ///
+  // clang-format on
   StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>
   GetCertificateRevocationList(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a
   /// [CertificateRevocationList][google.cloud.security.privateca.v1.CertificateRevocationList].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::GetCertificateRevocationListRequest,google/cloud/security/privateca/v1/service.proto#L1156}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.GetCertificateRevocationListRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateRevocationList,google/cloud/security/privateca/v1/resources.proto#L547}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.security.privateca.v1.CertificateRevocationList])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.security.privateca.v1.CertificateRevocationList]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L547}
-  /// [google.cloud.security.privateca.v1.GetCertificateRevocationListRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1156}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateRevocationList]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L547}
+  /// [google.cloud.security.privateca.v1.GetCertificateRevocationListRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1156}
   ///
+  // clang-format on
   StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>
   GetCertificateRevocationList(
       google::cloud::security::privateca::v1::
           GetCertificateRevocationListRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists
   /// [CertificateRevocationLists][google.cloud.security.privateca.v1.CertificateRevocationList].
   ///
-  /// @param parent  Required. The resource name of the location associated with
-  /// the
+  /// @param parent  Required. The resource name of the location associated with the
   ///  [CertificateRevocationLists][google.cloud.security.privateca.v1.CertificateRevocationList],
-  ///  in the format
-  ///  `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
+  ///  in the format `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateRevocationList,google/cloud/security/privateca/v1/resources.proto#L547}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.security.privateca.v1.CertificateRevocationList], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateRevocationList]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L547}
-  /// [google.cloud.security.privateca.v1.ListCertificateRevocationListsRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1172}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateRevocationList]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L547}
+  /// [google.cloud.security.privateca.v1.ListCertificateRevocationListsRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1172}
   ///
+  // clang-format on
   StreamRange<google::cloud::security::privateca::v1::CertificateRevocationList>
   ListCertificateRevocationLists(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists
   /// [CertificateRevocationLists][google.cloud.security.privateca.v1.CertificateRevocationList].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::ListCertificateRevocationListsRequest,google/cloud/security/privateca/v1/service.proto#L1172}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.ListCertificateRevocationListsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateRevocationList,google/cloud/security/privateca/v1/resources.proto#L547}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.security.privateca.v1.CertificateRevocationList], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateRevocationList]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L547}
-  /// [google.cloud.security.privateca.v1.ListCertificateRevocationListsRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1172}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateRevocationList]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L547}
+  /// [google.cloud.security.privateca.v1.ListCertificateRevocationListsRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1172}
   ///
+  // clang-format on
   StreamRange<google::cloud::security::privateca::v1::CertificateRevocationList>
   ListCertificateRevocationLists(
       google::cloud::security::privateca::v1::
           ListCertificateRevocationListsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Update a
   /// [CertificateRevocationList][google.cloud.security.privateca.v1.CertificateRevocationList].
@@ -1187,18 +1846,31 @@ class CertificateAuthorityServiceClient {
   /// @param certificate_revocation_list  Required.
   ///  [CertificateRevocationList][google.cloud.security.privateca.v1.CertificateRevocationList]
   ///  with updated values.
-  /// @param update_mask  Required. A list of fields to be updated in this
-  /// request.
+  /// @param update_mask  Required. A list of fields to be updated in this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateRevocationList,google/cloud/security/privateca/v1/resources.proto#L547}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CertificateRevocationList] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateRevocationList]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L547}
-  /// [google.cloud.security.privateca.v1.UpdateCertificateRevocationListRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1222}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateRevocationList]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L547}
+  /// [google.cloud.security.privateca.v1.UpdateCertificateRevocationListRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1222}
   ///
+  // clang-format on
   future<StatusOr<
       google::cloud::security::privateca::v1::CertificateRevocationList>>
   UpdateCertificateRevocationList(
@@ -1206,22 +1878,41 @@ class CertificateAuthorityServiceClient {
           certificate_revocation_list,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Update a
   /// [CertificateRevocationList][google.cloud.security.privateca.v1.CertificateRevocationList].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::UpdateCertificateRevocationListRequest,google/cloud/security/privateca/v1/service.proto#L1222}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.UpdateCertificateRevocationListRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateRevocationList,google/cloud/security/privateca/v1/resources.proto#L547}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CertificateRevocationList] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateRevocationList]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L547}
-  /// [google.cloud.security.privateca.v1.UpdateCertificateRevocationListRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1222}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateRevocationList]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L547}
+  /// [google.cloud.security.privateca.v1.UpdateCertificateRevocationListRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1222}
   ///
+  // clang-format on
   future<StatusOr<
       google::cloud::security::privateca::v1::CertificateRevocationList>>
   UpdateCertificateRevocationList(
@@ -1229,31 +1920,44 @@ class CertificateAuthorityServiceClient {
           UpdateCertificateRevocationListRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Create a new
   /// [CertificateTemplate][google.cloud.security.privateca.v1.CertificateTemplate]
   /// in a given Project and Location.
   ///
-  /// @param parent  Required. The resource name of the location associated with
-  /// the
+  /// @param parent  Required. The resource name of the location associated with the
   ///  [CertificateTemplate][google.cloud.security.privateca.v1.CertificateTemplate],
   ///  in the format `projects/*/locations/*`.
   /// @param certificate_template  Required. A
   ///  [CertificateTemplate][google.cloud.security.privateca.v1.CertificateTemplate]
   ///  with initial field values.
-  /// @param certificate_template_id  Required. It must be unique within a
-  /// location and match the regular
+  /// @param certificate_template_id  Required. It must be unique within a location and match the regular
   ///  expression `[a-zA-Z0-9_-]{1,63}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L757}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CertificateTemplate] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateTemplate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L757}
-  /// [google.cloud.security.privateca.v1.CreateCertificateTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1251}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L757}
+  /// [google.cloud.security.privateca.v1.CreateCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1251}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
   CreateCertificateTemplate(
       std::string const& parent,
@@ -1261,28 +1965,48 @@ class CertificateAuthorityServiceClient {
           certificate_template,
       std::string const& certificate_template_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Create a new
   /// [CertificateTemplate][google.cloud.security.privateca.v1.CertificateTemplate]
   /// in a given Project and Location.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::CreateCertificateTemplateRequest,google/cloud/security/privateca/v1/service.proto#L1251}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.CreateCertificateTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L757}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CertificateTemplate] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateTemplate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L757}
-  /// [google.cloud.security.privateca.v1.CreateCertificateTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1251}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L757}
+  /// [google.cloud.security.privateca.v1.CreateCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1251}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
   CreateCertificateTemplate(google::cloud::security::privateca::v1::
                                 CreateCertificateTemplateRequest const& request,
                             Options opts = {});
 
+  // clang-format off
   ///
   /// DeleteCertificateTemplate deletes a
   /// [CertificateTemplate][google.cloud.security.privateca.v1.CertificateTemplate].
@@ -1292,128 +2016,220 @@ class CertificateAuthorityServiceClient {
   ///  in the format `projects/*/locations/*/certificateTemplates/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::OperationMetadata,google/cloud/security/privateca/v1/service.proto#L1412}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateTemplate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L757}
-  /// [google.cloud.security.privateca.v1.DeleteCertificateTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1290}
-  /// [google.cloud.security.privateca.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1412}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L757}
+  /// [google.cloud.security.privateca.v1.DeleteCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1290}
+  /// [google.cloud.security.privateca.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1412}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
   DeleteCertificateTemplate(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// DeleteCertificateTemplate deletes a
   /// [CertificateTemplate][google.cloud.security.privateca.v1.CertificateTemplate].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::DeleteCertificateTemplateRequest,google/cloud/security/privateca/v1/service.proto#L1290}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.DeleteCertificateTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::OperationMetadata,google/cloud/security/privateca/v1/service.proto#L1412}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateTemplate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L757}
-  /// [google.cloud.security.privateca.v1.DeleteCertificateTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1290}
-  /// [google.cloud.security.privateca.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1412}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L757}
+  /// [google.cloud.security.privateca.v1.DeleteCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1290}
+  /// [google.cloud.security.privateca.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1412}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
   DeleteCertificateTemplate(google::cloud::security::privateca::v1::
                                 DeleteCertificateTemplateRequest const& request,
                             Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a
   /// [CertificateTemplate][google.cloud.security.privateca.v1.CertificateTemplate].
   ///
   /// @param name  Required. The
-  ///  [name][google.cloud.security.privateca.v1.CertificateTemplate.name] of
-  ///  the
+  ///  [name][google.cloud.security.privateca.v1.CertificateTemplate.name] of the
   ///  [CertificateTemplate][google.cloud.security.privateca.v1.CertificateTemplate]
   ///  to get.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L757}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.security.privateca.v1.CertificateTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.security.privateca.v1.CertificateTemplate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L757}
-  /// [google.cloud.security.privateca.v1.GetCertificateTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1319}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L757}
+  /// [google.cloud.security.privateca.v1.GetCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1319}
   ///
+  // clang-format on
   StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>
   GetCertificateTemplate(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a
   /// [CertificateTemplate][google.cloud.security.privateca.v1.CertificateTemplate].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::GetCertificateTemplateRequest,google/cloud/security/privateca/v1/service.proto#L1319}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.GetCertificateTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L757}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.security.privateca.v1.CertificateTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.security.privateca.v1.CertificateTemplate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L757}
-  /// [google.cloud.security.privateca.v1.GetCertificateTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1319}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L757}
+  /// [google.cloud.security.privateca.v1.GetCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1319}
   ///
+  // clang-format on
   StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>
   GetCertificateTemplate(google::cloud::security::privateca::v1::
                              GetCertificateTemplateRequest const& request,
                          Options opts = {});
 
+  // clang-format off
   ///
   /// Lists
   /// [CertificateTemplates][google.cloud.security.privateca.v1.CertificateTemplate].
   ///
-  /// @param parent  Required. The resource name of the location associated with
-  /// the
+  /// @param parent  Required. The resource name of the location associated with the
   ///  [CertificateTemplates][google.cloud.security.privateca.v1.CertificateTemplate],
   ///  in the format `projects/*/locations/*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L757}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.security.privateca.v1.CertificateTemplate], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateTemplate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L757}
-  /// [google.cloud.security.privateca.v1.ListCertificateTemplatesRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1334}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L757}
+  /// [google.cloud.security.privateca.v1.ListCertificateTemplatesRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1334}
   ///
+  // clang-format on
   StreamRange<google::cloud::security::privateca::v1::CertificateTemplate>
   ListCertificateTemplates(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists
   /// [CertificateTemplates][google.cloud.security.privateca.v1.CertificateTemplate].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::ListCertificateTemplatesRequest,google/cloud/security/privateca/v1/service.proto#L1334}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.ListCertificateTemplatesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L757}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.security.privateca.v1.CertificateTemplate], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateTemplate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L757}
-  /// [google.cloud.security.privateca.v1.ListCertificateTemplatesRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1334}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L757}
+  /// [google.cloud.security.privateca.v1.ListCertificateTemplatesRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1334}
   ///
+  // clang-format on
   StreamRange<google::cloud::security::privateca::v1::CertificateTemplate>
   ListCertificateTemplates(
       google::cloud::security::privateca::v1::ListCertificateTemplatesRequest
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Update a
   /// [CertificateTemplate][google.cloud.security.privateca.v1.CertificateTemplate].
@@ -1421,40 +2237,72 @@ class CertificateAuthorityServiceClient {
   /// @param certificate_template  Required.
   ///  [CertificateTemplate][google.cloud.security.privateca.v1.CertificateTemplate]
   ///  with updated values.
-  /// @param update_mask  Required. A list of fields to be updated in this
-  /// request.
+  /// @param update_mask  Required. A list of fields to be updated in this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L757}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CertificateTemplate] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateTemplate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L757}
-  /// [google.cloud.security.privateca.v1.UpdateCertificateTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1384}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L757}
+  /// [google.cloud.security.privateca.v1.UpdateCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1384}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
   UpdateCertificateTemplate(
       google::cloud::security::privateca::v1::CertificateTemplate const&
           certificate_template,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Update a
   /// [CertificateTemplate][google.cloud.security.privateca.v1.CertificateTemplate].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::security::privateca::v1::UpdateCertificateTemplateRequest,google/cloud/security/privateca/v1/service.proto#L1384}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.security.privateca.v1.UpdateCertificateTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::security::privateca::v1::CertificateTemplate,google/cloud/security/privateca/v1/resources.proto#L757}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.security.privateca.v1.CertificateTemplate] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.security.privateca.v1.CertificateTemplate]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L757}
-  /// [google.cloud.security.privateca.v1.UpdateCertificateTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1384}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.security.privateca.v1.CertificateTemplate]: @googleapis_reference_link{google/cloud/security/privateca/v1/resources.proto#L757}
+  /// [google.cloud.security.privateca.v1.UpdateCertificateTemplateRequest]: @googleapis_reference_link{google/cloud/security/privateca/v1/service.proto#L1384}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
   UpdateCertificateTemplate(google::cloud::security::privateca::v1::
                                 UpdateCertificateTemplateRequest const& request,

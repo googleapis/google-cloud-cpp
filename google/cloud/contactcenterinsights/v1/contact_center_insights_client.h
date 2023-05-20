@@ -89,27 +89,35 @@ class ContactCenterInsightsClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a conversation.
   ///
   /// @param parent  Required. The parent resource of the conversation.
   /// @param conversation  Required. The conversation resource to create.
-  /// @param conversation_id  A unique ID for the new conversation. This ID will
-  /// become the final
+  /// @param conversation_id  A unique ID for the new conversation. This ID will become the final
   ///  component of the conversation's resource name. If no ID is specified, a
   ///  server-generated ID will be used.
   ///  This value should be 4-64 characters and must match the regular
   ///  expression `^[a-z0-9-]{4,64}$`. Valid characters are `[a-z][0-9]-`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::Conversation,google/cloud/contactcenterinsights/v1/resources.proto#L42}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.Conversation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.Conversation]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L42}
-  /// [google.cloud.contactcenterinsights.v1.CreateConversationRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L534}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L42}
+  /// [google.cloud.contactcenterinsights.v1.CreateConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L534}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
   CreateConversation(
       std::string const& parent,
@@ -117,50 +125,83 @@ class ContactCenterInsightsClient {
           conversation,
       std::string const& conversation_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a conversation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::CreateConversationRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L534}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.CreateConversationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::Conversation,google/cloud/contactcenterinsights/v1/resources.proto#L42}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.Conversation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.Conversation]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L42}
-  /// [google.cloud.contactcenterinsights.v1.CreateConversationRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L534}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L42}
+  /// [google.cloud.contactcenterinsights.v1.CreateConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L534}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
   CreateConversation(
       google::cloud::contactcenterinsights::v1::CreateConversationRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Create a longrunning conversation upload operation. This method differs
   /// from CreateConversation by allowing audio transcription and optional DLP
   /// redaction.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::UploadConversationRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L556}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.UploadConversationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::Conversation,google/cloud/contactcenterinsights/v1/resources.proto#L42}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.Conversation] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.Conversation]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L42}
-  /// [google.cloud.contactcenterinsights.v1.UploadConversationRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L556}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L42}
+  /// [google.cloud.contactcenterinsights.v1.UploadConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L556}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
   UploadConversation(
       google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a conversation.
   ///
@@ -168,145 +209,253 @@ class ContactCenterInsightsClient {
   /// @param update_mask  The list of fields to be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::Conversation,google/cloud/contactcenterinsights/v1/resources.proto#L42}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.Conversation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.Conversation]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L42}
-  /// [google.cloud.contactcenterinsights.v1.UpdateConversationRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L659}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L42}
+  /// [google.cloud.contactcenterinsights.v1.UpdateConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L659}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
   UpdateConversation(
       google::cloud::contactcenterinsights::v1::Conversation const&
           conversation,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a conversation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::UpdateConversationRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L659}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.UpdateConversationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::Conversation,google/cloud/contactcenterinsights/v1/resources.proto#L42}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.Conversation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.Conversation]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L42}
-  /// [google.cloud.contactcenterinsights.v1.UpdateConversationRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L659}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L42}
+  /// [google.cloud.contactcenterinsights.v1.UpdateConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L659}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
   UpdateConversation(
       google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a conversation.
   ///
   /// @param name  Required. The name of the conversation to get.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::Conversation,google/cloud/contactcenterinsights/v1/resources.proto#L42}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.Conversation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.Conversation]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L42}
-  /// [google.cloud.contactcenterinsights.v1.GetConversationRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L645}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L42}
+  /// [google.cloud.contactcenterinsights.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L645}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
   GetConversation(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a conversation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::GetConversationRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L645}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.GetConversationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::Conversation,google/cloud/contactcenterinsights/v1/resources.proto#L42}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.Conversation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.Conversation]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L42}
-  /// [google.cloud.contactcenterinsights.v1.GetConversationRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L645}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L42}
+  /// [google.cloud.contactcenterinsights.v1.GetConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L645}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
   GetConversation(
       google::cloud::contactcenterinsights::v1::GetConversationRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists conversations.
   ///
   /// @param parent  Required. The parent resource of the conversation.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::Conversation,google/cloud/contactcenterinsights/v1/resources.proto#L42}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.contactcenterinsights.v1.Conversation], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.Conversation]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L42}
-  /// [google.cloud.contactcenterinsights.v1.ListConversationsRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L605}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L42}
+  /// [google.cloud.contactcenterinsights.v1.ListConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L605}
   ///
+  // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::Conversation>
   ListConversations(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists conversations.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::ListConversationsRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L605}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.ListConversationsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::Conversation,google/cloud/contactcenterinsights/v1/resources.proto#L42}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.contactcenterinsights.v1.Conversation], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.Conversation]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L42}
-  /// [google.cloud.contactcenterinsights.v1.ListConversationsRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L605}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.Conversation]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L42}
+  /// [google.cloud.contactcenterinsights.v1.ListConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L605}
   ///
+  // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::Conversation>
   ListConversations(
       google::cloud::contactcenterinsights::v1::ListConversationsRequest
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a conversation.
   ///
   /// @param name  Required. The name of the conversation to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.contactcenterinsights.v1.DeleteConversationRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L668}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L668}
   ///
+  // clang-format on
   Status DeleteConversation(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a conversation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::DeleteConversationRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L668}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.DeleteConversationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.contactcenterinsights.v1.DeleteConversationRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L668}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeleteConversationRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L668}
   ///
+  // clang-format on
   Status DeleteConversation(
       google::cloud::contactcenterinsights::v1::DeleteConversationRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates an analysis. The long running operation is done when the analysis
   /// has completed.
@@ -315,188 +464,340 @@ class ContactCenterInsightsClient {
   /// @param analysis  Required. The analysis to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::Analysis,google/cloud/contactcenterinsights/v1/resources.proto#L224}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.Analysis] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.Analysis]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L224}
-  /// [google.cloud.contactcenterinsights.v1.CreateAnalysisRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L778}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L224}
+  /// [google.cloud.contactcenterinsights.v1.CreateAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L778}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
   CreateAnalysis(
       std::string const& parent,
       google::cloud::contactcenterinsights::v1::Analysis const& analysis,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates an analysis. The long running operation is done when the analysis
   /// has completed.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::CreateAnalysisRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L778}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.CreateAnalysisRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::Analysis,google/cloud/contactcenterinsights/v1/resources.proto#L224}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.Analysis] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.Analysis]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L224}
-  /// [google.cloud.contactcenterinsights.v1.CreateAnalysisRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L778}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L224}
+  /// [google.cloud.contactcenterinsights.v1.CreateAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L778}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
   CreateAnalysis(
       google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets an analysis.
   ///
   /// @param name  Required. The name of the analysis to get.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::Analysis,google/cloud/contactcenterinsights/v1/resources.proto#L224}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.Analysis])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.Analysis]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L224}
-  /// [google.cloud.contactcenterinsights.v1.GetAnalysisRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L828}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L224}
+  /// [google.cloud.contactcenterinsights.v1.GetAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L828}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Analysis> GetAnalysis(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets an analysis.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::GetAnalysisRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L828}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.GetAnalysisRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::Analysis,google/cloud/contactcenterinsights/v1/resources.proto#L224}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.Analysis])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.Analysis]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L224}
-  /// [google.cloud.contactcenterinsights.v1.GetAnalysisRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L828}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L224}
+  /// [google.cloud.contactcenterinsights.v1.GetAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L828}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Analysis> GetAnalysis(
       google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists analyses.
   ///
   /// @param parent  Required. The parent resource of the analyses.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::Analysis,google/cloud/contactcenterinsights/v1/resources.proto#L224}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.contactcenterinsights.v1.Analysis], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.Analysis]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L224}
-  /// [google.cloud.contactcenterinsights.v1.ListAnalysesRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L792}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L224}
+  /// [google.cloud.contactcenterinsights.v1.ListAnalysesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L792}
   ///
+  // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::Analysis> ListAnalyses(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists analyses.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::ListAnalysesRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L792}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.ListAnalysesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::Analysis,google/cloud/contactcenterinsights/v1/resources.proto#L224}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.contactcenterinsights.v1.Analysis], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.Analysis]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L224}
-  /// [google.cloud.contactcenterinsights.v1.ListAnalysesRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L792}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.Analysis]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L224}
+  /// [google.cloud.contactcenterinsights.v1.ListAnalysesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L792}
   ///
+  // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::Analysis> ListAnalyses(
       google::cloud::contactcenterinsights::v1::ListAnalysesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an analysis.
   ///
   /// @param name  Required. The name of the analysis to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.contactcenterinsights.v1.DeleteAnalysisRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L839}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeleteAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L839}
   ///
+  // clang-format on
   Status DeleteAnalysis(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an analysis.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L839}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.DeleteAnalysisRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.contactcenterinsights.v1.DeleteAnalysisRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L839}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeleteAnalysisRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L839}
   ///
+  // clang-format on
   Status DeleteAnalysis(
       google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Analyzes multiple conversations in a single request.
   ///
   /// @param parent  Required. The parent resource to create analyses in.
-  /// @param filter  Required. Filter used to select the subset of conversations
-  /// to analyze.
-  /// @param analysis_percentage  Required. Percentage of selected conversation
-  /// to analyze, between
+  /// @param filter  Required. Filter used to select the subset of conversations to analyze.
+  /// @param analysis_percentage  Required. Percentage of selected conversation to analyze, between
   ///  [0, 100].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L894}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L850}
-  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsResponse]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L894}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L850}
+  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L894}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::
                       BulkAnalyzeConversationsResponse>>
   BulkAnalyzeConversations(std::string const& parent, std::string const& filter,
                            float analysis_percentage, Options opts = {});
 
+  // clang-format off
   ///
   /// Analyzes multiple conversations in a single request.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L850}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L894}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L850}
-  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsResponse]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L894}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L850}
+  /// [google.cloud.contactcenterinsights.v1.BulkAnalyzeConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L894}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::
                       BulkAnalyzeConversationsResponse>>
   BulkAnalyzeConversations(google::cloud::contactcenterinsights::v1::
                                BulkAnalyzeConversationsRequest const& request,
                            Options opts = {});
 
+  // clang-format off
   ///
   /// Imports conversations and processes them according to the user's
   /// configuration.
@@ -504,73 +805,140 @@ class ContactCenterInsightsClient {
   /// @param parent  Required. The parent resource for new conversations.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::IngestConversationsResponse,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L775}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.IngestConversationsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.IngestConversationsRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L684}
-  /// [google.cloud.contactcenterinsights.v1.IngestConversationsResponse]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L775}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.IngestConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L684}
+  /// [google.cloud.contactcenterinsights.v1.IngestConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L775}
   ///
+  // clang-format on
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
   IngestConversations(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Imports conversations and processes them according to the user's
   /// configuration.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::IngestConversationsRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L684}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.IngestConversationsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::IngestConversationsResponse,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L775}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.IngestConversationsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.IngestConversationsRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L684}
-  /// [google.cloud.contactcenterinsights.v1.IngestConversationsResponse]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L775}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.IngestConversationsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L684}
+  /// [google.cloud.contactcenterinsights.v1.IngestConversationsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L775}
   ///
+  // clang-format on
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
   IngestConversations(google::cloud::contactcenterinsights::v1::
                           IngestConversationsRequest const& request,
                       Options opts = {});
 
+  // clang-format off
   ///
   /// Export insights data to a destination defined in the request body.
   ///
   /// @param parent  Required. The parent resource to export data from.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L981}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.ExportInsightsDataResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L903}
-  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataResponse]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L981}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L903}
+  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L981}
   ///
+  // clang-format on
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
   ExportInsightsData(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Export insights data to a destination defined in the request body.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L903}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.ExportInsightsDataRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L981}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.ExportInsightsDataResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L903}
-  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataResponse]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L981}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L903}
+  /// [google.cloud.contactcenterinsights.v1.ExportInsightsDataResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L981}
   ///
+  // clang-format on
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
   ExportInsightsData(
@@ -578,6 +946,7 @@ class ContactCenterInsightsClient {
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates an issue model.
   ///
@@ -585,41 +954,75 @@ class ContactCenterInsightsClient {
   /// @param issue_model  Required. The issue model to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::IssueModel,google/cloud/contactcenterinsights/v1/resources.proto#L609}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.IssueModel] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.CreateIssueModelRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L984}
-  /// [google.cloud.contactcenterinsights.v1.IssueModel]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L609}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.CreateIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L984}
+  /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L609}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
   CreateIssueModel(
       std::string const& parent,
       google::cloud::contactcenterinsights::v1::IssueModel const& issue_model,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates an issue model.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::CreateIssueModelRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L984}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.CreateIssueModelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::IssueModel,google/cloud/contactcenterinsights/v1/resources.proto#L609}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.IssueModel] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.CreateIssueModelRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L984}
-  /// [google.cloud.contactcenterinsights.v1.IssueModel]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L609}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.CreateIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L984}
+  /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L609}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
   CreateIssueModel(
       google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an issue model.
   ///
@@ -627,148 +1030,247 @@ class ContactCenterInsightsClient {
   /// @param update_mask  The list of fields to be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::IssueModel,google/cloud/contactcenterinsights/v1/resources.proto#L609}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.IssueModel])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.IssueModel]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L609}
-  /// [google.cloud.contactcenterinsights.v1.UpdateIssueModelRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1012}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L609}
+  /// [google.cloud.contactcenterinsights.v1.UpdateIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1012}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
   UpdateIssueModel(
       google::cloud::contactcenterinsights::v1::IssueModel const& issue_model,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an issue model.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1012}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.UpdateIssueModelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::IssueModel,google/cloud/contactcenterinsights/v1/resources.proto#L609}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.IssueModel])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.IssueModel]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L609}
-  /// [google.cloud.contactcenterinsights.v1.UpdateIssueModelRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1012}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L609}
+  /// [google.cloud.contactcenterinsights.v1.UpdateIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1012}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
   UpdateIssueModel(
       google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets an issue model.
   ///
   /// @param name  Required. The name of the issue model to get.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::IssueModel,google/cloud/contactcenterinsights/v1/resources.proto#L609}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.IssueModel])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.GetIssueModelRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1038}
-  /// [google.cloud.contactcenterinsights.v1.IssueModel]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L609}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.GetIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1038}
+  /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L609}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::IssueModel> GetIssueModel(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets an issue model.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::GetIssueModelRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1038}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.GetIssueModelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::IssueModel,google/cloud/contactcenterinsights/v1/resources.proto#L609}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.IssueModel])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.GetIssueModelRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1038}
-  /// [google.cloud.contactcenterinsights.v1.IssueModel]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L609}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.GetIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1038}
+  /// [google.cloud.contactcenterinsights.v1.IssueModel]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L609}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::IssueModel> GetIssueModel(
       google::cloud::contactcenterinsights::v1::GetIssueModelRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists issue models.
   ///
   /// @param parent  Required. The parent resource of the issue model.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::ListIssueModelsResponse,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1032}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.ListIssueModelsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1021}
-  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsResponse]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1032}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1021}
+  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1032}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::ListIssueModelsResponse>
   ListIssueModels(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists issue models.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::ListIssueModelsRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1021}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.ListIssueModelsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::ListIssueModelsResponse,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1032}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.ListIssueModelsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1021}
-  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsResponse]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1032}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1021}
+  /// [google.cloud.contactcenterinsights.v1.ListIssueModelsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1032}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::ListIssueModelsResponse>
   ListIssueModels(
       google::cloud::contactcenterinsights::v1::ListIssueModelsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an issue model.
   ///
   /// @param name  Required. The name of the issue model to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1060}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.DeleteIssueModelMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelMetadata]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1060}
-  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1049}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelMetadata]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1060}
+  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1049}
   ///
+  // clang-format on
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
   DeleteIssueModel(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an issue model.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1049}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.DeleteIssueModelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1060}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.DeleteIssueModelMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelMetadata]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1060}
-  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1049}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelMetadata]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1060}
+  /// [google.cloud.contactcenterinsights.v1.DeleteIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1049}
   ///
+  // clang-format on
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
   DeleteIssueModel(
@@ -776,6 +1278,7 @@ class ContactCenterInsightsClient {
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deploys an issue model. Returns an error if a model is already deployed.
   /// An issue model can only be used in analysis after it has been deployed.
@@ -783,34 +1286,67 @@ class ContactCenterInsightsClient {
   /// @param name  Required. The issue model to deploy.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::DeployIssueModelResponse,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1085}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.DeployIssueModelResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1074}
-  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelResponse]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1085}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1074}
+  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1085}
   ///
+  // clang-format on
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
   DeployIssueModel(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deploys an issue model. Returns an error if a model is already deployed.
   /// An issue model can only be used in analysis after it has been deployed.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::DeployIssueModelRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1074}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.DeployIssueModelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::DeployIssueModelResponse,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1085}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.DeployIssueModelResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1074}
-  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelResponse]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1085}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1074}
+  /// [google.cloud.contactcenterinsights.v1.DeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1085}
   ///
+  // clang-format on
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
   DeployIssueModel(
@@ -818,6 +1354,7 @@ class ContactCenterInsightsClient {
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Undeploys an issue model.
   /// An issue model can not be used in analysis after it has been undeployed.
@@ -825,34 +1362,67 @@ class ContactCenterInsightsClient {
   /// @param name  Required. The issue model to undeploy.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1113}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.UndeployIssueModelResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1102}
-  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelResponse]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1113}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1102}
+  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1113}
   ///
+  // clang-format on
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
   UndeployIssueModel(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Undeploys an issue model.
   /// An issue model can not be used in analysis after it has been undeployed.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1102}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.UndeployIssueModelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1113}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.contactcenterinsights.v1.UndeployIssueModelResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1102}
-  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelResponse]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1113}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1102}
+  /// [google.cloud.contactcenterinsights.v1.UndeployIssueModelResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1113}
   ///
+  // clang-format on
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
   UndeployIssueModel(
@@ -860,79 +1430,124 @@ class ContactCenterInsightsClient {
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets an issue.
   ///
   /// @param name  Required. The name of the issue to get.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::Issue,google/cloud/contactcenterinsights/v1/resources.proto#L687}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.Issue])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.GetIssueRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1130}
-  /// [google.cloud.contactcenterinsights.v1.Issue]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L687}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.GetIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1130}
+  /// [google.cloud.contactcenterinsights.v1.Issue]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L687}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Issue> GetIssue(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets an issue.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::GetIssueRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1130}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.GetIssueRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::Issue,google/cloud/contactcenterinsights/v1/resources.proto#L687}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.Issue])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.GetIssueRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1130}
-  /// [google.cloud.contactcenterinsights.v1.Issue]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L687}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.GetIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1130}
+  /// [google.cloud.contactcenterinsights.v1.Issue]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L687}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Issue> GetIssue(
       google::cloud::contactcenterinsights::v1::GetIssueRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists issues.
   ///
   /// @param parent  Required. The parent resource of the issue.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::ListIssuesResponse,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1152}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.ListIssuesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.ListIssuesRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1141}
-  /// [google.cloud.contactcenterinsights.v1.ListIssuesResponse]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1152}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.ListIssuesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1141}
+  /// [google.cloud.contactcenterinsights.v1.ListIssuesResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1152}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::ListIssuesResponse>
   ListIssues(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists issues.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::ListIssuesRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1141}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.ListIssuesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::ListIssuesResponse,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1152}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.ListIssuesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.ListIssuesRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1141}
-  /// [google.cloud.contactcenterinsights.v1.ListIssuesResponse]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1152}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.ListIssuesRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1141}
+  /// [google.cloud.contactcenterinsights.v1.ListIssuesResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1152}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::ListIssuesResponse>
   ListIssues(google::cloud::contactcenterinsights::v1::ListIssuesRequest const&
                  request,
              Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an issue.
   ///
@@ -940,125 +1555,199 @@ class ContactCenterInsightsClient {
   /// @param update_mask  The list of fields to be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::Issue,google/cloud/contactcenterinsights/v1/resources.proto#L687}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.Issue])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.Issue]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L687}
-  /// [google.cloud.contactcenterinsights.v1.UpdateIssueRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1158}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.Issue]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L687}
+  /// [google.cloud.contactcenterinsights.v1.UpdateIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1158}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Issue> UpdateIssue(
       google::cloud::contactcenterinsights::v1::Issue const& issue,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an issue.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::UpdateIssueRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1158}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.UpdateIssueRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::Issue,google/cloud/contactcenterinsights/v1/resources.proto#L687}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.Issue])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.Issue]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L687}
-  /// [google.cloud.contactcenterinsights.v1.UpdateIssueRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1158}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.Issue]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L687}
+  /// [google.cloud.contactcenterinsights.v1.UpdateIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1158}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Issue> UpdateIssue(
       google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an issue.
   ///
   /// @param name  Required. The name of the issue to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.contactcenterinsights.v1.DeleteIssueRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1167}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeleteIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1167}
   ///
+  // clang-format on
   Status DeleteIssue(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an issue.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::DeleteIssueRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1167}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.DeleteIssueRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.contactcenterinsights.v1.DeleteIssueRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1167}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeleteIssueRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1167}
   ///
+  // clang-format on
   Status DeleteIssue(
       google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets an issue model's statistics.
   ///
-  /// @param issue_model  Required. The resource name of the issue model to
-  /// query against.
+  /// @param issue_model  Required. The resource name of the issue model to query against.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsResponse,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1189}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1178}
-  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsResponse]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1189}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1178}
+  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1189}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::
                CalculateIssueModelStatsResponse>
   CalculateIssueModelStats(std::string const& issue_model, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets an issue model's statistics.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1178}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsResponse,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1189}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1178}
-  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsResponse]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1189}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1178}
+  /// [google.cloud.contactcenterinsights.v1.CalculateIssueModelStatsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1189}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::
                CalculateIssueModelStatsResponse>
   CalculateIssueModelStats(google::cloud::contactcenterinsights::v1::
                                CalculateIssueModelStatsRequest const& request,
                            Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a phrase matcher.
   ///
-  /// @param parent  Required. The parent resource of the phrase matcher.
-  /// Required. The location
+  /// @param parent  Required. The parent resource of the phrase matcher. Required. The location
   ///  to create a phrase matcher for. Format: `projects/<Project
   ///  ID>/locations/<Location ID>` or `projects/<Project
   ///  Number>/locations/<Location ID>`
   /// @param phrase_matcher  Required. The phrase matcher resource to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::PhraseMatcher,google/cloud/contactcenterinsights/v1/resources.proto#L743}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.PhraseMatcher])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.CreatePhraseMatcherRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1196}
-  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L743}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.CreatePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1196}
+  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L743}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
   CreatePhraseMatcher(
       std::string const& parent,
@@ -1066,129 +1755,229 @@ class ContactCenterInsightsClient {
           phrase_matcher,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a phrase matcher.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::CreatePhraseMatcherRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1196}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.CreatePhraseMatcherRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::PhraseMatcher,google/cloud/contactcenterinsights/v1/resources.proto#L743}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.PhraseMatcher])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.CreatePhraseMatcherRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1196}
-  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L743}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.CreatePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1196}
+  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L743}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
   CreatePhraseMatcher(google::cloud::contactcenterinsights::v1::
                           CreatePhraseMatcherRequest const& request,
                       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a phrase matcher.
   ///
   /// @param name  Required. The name of the phrase matcher to get.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::PhraseMatcher,google/cloud/contactcenterinsights/v1/resources.proto#L743}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.PhraseMatcher])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.GetPhraseMatcherRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1249}
-  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L743}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.GetPhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1249}
+  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L743}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
   GetPhraseMatcher(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a phrase matcher.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::GetPhraseMatcherRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1249}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.GetPhraseMatcherRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::PhraseMatcher,google/cloud/contactcenterinsights/v1/resources.proto#L743}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.PhraseMatcher])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.GetPhraseMatcherRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1249}
-  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L743}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.GetPhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1249}
+  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L743}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
   GetPhraseMatcher(
       google::cloud::contactcenterinsights::v1::GetPhraseMatcherRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists phrase matchers.
   ///
   /// @param parent  Required. The parent resource of the phrase matcher.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::PhraseMatcher,google/cloud/contactcenterinsights/v1/resources.proto#L743}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.contactcenterinsights.v1.PhraseMatcher], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.ListPhraseMatchersRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1213}
-  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L743}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.ListPhraseMatchersRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1213}
+  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L743}
   ///
+  // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::PhraseMatcher>
   ListPhraseMatchers(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists phrase matchers.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1213}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.ListPhraseMatchersRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::PhraseMatcher,google/cloud/contactcenterinsights/v1/resources.proto#L743}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.contactcenterinsights.v1.PhraseMatcher], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.ListPhraseMatchersRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1213}
-  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L743}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.ListPhraseMatchersRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1213}
+  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L743}
   ///
+  // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::PhraseMatcher>
   ListPhraseMatchers(
       google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a phrase matcher.
   ///
   /// @param name  Required. The name of the phrase matcher to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.contactcenterinsights.v1.DeletePhraseMatcherRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1260}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeletePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1260}
   ///
+  // clang-format on
   Status DeletePhraseMatcher(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a phrase matcher.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::DeletePhraseMatcherRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1260}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.DeletePhraseMatcherRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.contactcenterinsights.v1.DeletePhraseMatcherRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1260}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeletePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1260}
   ///
+  // clang-format on
   Status DeletePhraseMatcher(google::cloud::contactcenterinsights::v1::
                                  DeletePhraseMatcherRequest const& request,
                              Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a phrase matcher.
   ///
@@ -1196,115 +1985,181 @@ class ContactCenterInsightsClient {
   /// @param update_mask  The list of fields to be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::PhraseMatcher,google/cloud/contactcenterinsights/v1/resources.proto#L743}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.PhraseMatcher])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L743}
-  /// [google.cloud.contactcenterinsights.v1.UpdatePhraseMatcherRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1271}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L743}
+  /// [google.cloud.contactcenterinsights.v1.UpdatePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1271}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
   UpdatePhraseMatcher(
       google::cloud::contactcenterinsights::v1::PhraseMatcher const&
           phrase_matcher,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a phrase matcher.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::UpdatePhraseMatcherRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1271}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.UpdatePhraseMatcherRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::PhraseMatcher,google/cloud/contactcenterinsights/v1/resources.proto#L743}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.PhraseMatcher])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L743}
-  /// [google.cloud.contactcenterinsights.v1.UpdatePhraseMatcherRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1271}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.PhraseMatcher]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L743}
+  /// [google.cloud.contactcenterinsights.v1.UpdatePhraseMatcherRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1271}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
   UpdatePhraseMatcher(google::cloud::contactcenterinsights::v1::
                           UpdatePhraseMatcherRequest const& request,
                       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets conversation statistics.
   ///
   /// @param location  Required. The location of the conversations.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::CalculateStatsResponse,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L455}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.CalculateStatsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.CalculateStatsRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L440}
-  /// [google.cloud.contactcenterinsights.v1.CalculateStatsResponse]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L455}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.CalculateStatsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L440}
+  /// [google.cloud.contactcenterinsights.v1.CalculateStatsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L455}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::CalculateStatsResponse>
   CalculateStats(std::string const& location, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets conversation statistics.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::CalculateStatsRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L440}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.CalculateStatsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::CalculateStatsResponse,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L455}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.CalculateStatsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.CalculateStatsRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L440}
-  /// [google.cloud.contactcenterinsights.v1.CalculateStatsResponse]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L455}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.CalculateStatsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L440}
+  /// [google.cloud.contactcenterinsights.v1.CalculateStatsResponse]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L455}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::CalculateStatsResponse>
   CalculateStats(
       google::cloud::contactcenterinsights::v1::CalculateStatsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets project-level settings.
   ///
   /// @param name  Required. The name of the settings resource to get.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::Settings,google/cloud/contactcenterinsights/v1/resources.proto#L864}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.Settings])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.GetSettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1280}
-  /// [google.cloud.contactcenterinsights.v1.Settings]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L864}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.GetSettingsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1280}
+  /// [google.cloud.contactcenterinsights.v1.Settings]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L864}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Settings> GetSettings(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets project-level settings.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::GetSettingsRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1280}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.GetSettingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::Settings,google/cloud/contactcenterinsights/v1/resources.proto#L864}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.Settings])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.GetSettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1280}
-  /// [google.cloud.contactcenterinsights.v1.Settings]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L864}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.GetSettingsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1280}
+  /// [google.cloud.contactcenterinsights.v1.Settings]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L864}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Settings> GetSettings(
       google::cloud::contactcenterinsights::v1::GetSettingsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates project-level settings.
   ///
@@ -1312,154 +2167,259 @@ class ContactCenterInsightsClient {
   /// @param update_mask  Required. The list of fields to be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::Settings,google/cloud/contactcenterinsights/v1/resources.proto#L864}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.Settings])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.Settings]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L864}
-  /// [google.cloud.contactcenterinsights.v1.UpdateSettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1291}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.Settings]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L864}
+  /// [google.cloud.contactcenterinsights.v1.UpdateSettingsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1291}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Settings> UpdateSettings(
       google::cloud::contactcenterinsights::v1::Settings const& settings,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates project-level settings.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::UpdateSettingsRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1291}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.UpdateSettingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::Settings,google/cloud/contactcenterinsights/v1/resources.proto#L864}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.Settings])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.Settings]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L864}
-  /// [google.cloud.contactcenterinsights.v1.UpdateSettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1291}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.Settings]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L864}
+  /// [google.cloud.contactcenterinsights.v1.UpdateSettingsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1291}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::Settings> UpdateSettings(
       google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a view.
   ///
-  /// @param parent  Required. The parent resource of the view. Required. The
-  /// location to create
+  /// @param parent  Required. The parent resource of the view. Required. The location to create
   ///  a view for.
   ///  Format: `projects/<Project ID>/locations/<Location ID>` or
   ///  `projects/<Project Number>/locations/<Location ID>`
   /// @param view  Required. The view resource to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1197}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.View])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.CreateViewRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1301}
-  /// [google.cloud.contactcenterinsights.v1.View]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1197}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.CreateViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1301}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1197}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::View> CreateView(
       std::string const& parent,
       google::cloud::contactcenterinsights::v1::View const& view,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a view.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::CreateViewRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1301}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.CreateViewRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1197}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.View])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.CreateViewRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1301}
-  /// [google.cloud.contactcenterinsights.v1.View]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1197}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.CreateViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1301}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1197}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::View> CreateView(
       google::cloud::contactcenterinsights::v1::CreateViewRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a view.
   ///
   /// @param name  Required. The name of the view to get.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1197}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.View])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.GetViewRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1318}
-  /// [google.cloud.contactcenterinsights.v1.View]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1197}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.GetViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1318}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1197}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::View> GetView(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a view.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::GetViewRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1318}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.GetViewRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1197}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.View])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.GetViewRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1318}
-  /// [google.cloud.contactcenterinsights.v1.View]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1197}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.GetViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1318}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1197}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::View> GetView(
       google::cloud::contactcenterinsights::v1::GetViewRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists views.
   ///
   /// @param parent  Required. The parent resource of the views.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1197}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.contactcenterinsights.v1.View], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.ListViewsRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1329}
-  /// [google.cloud.contactcenterinsights.v1.View]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1197}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.ListViewsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1329}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1197}
   ///
+  // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::View> ListViews(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists views.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::ListViewsRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1329}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.ListViewsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1197}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.contactcenterinsights.v1.View], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.contactcenterinsights.v1.ListViewsRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1329}
-  /// [google.cloud.contactcenterinsights.v1.View]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1197}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.ListViewsRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1329}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1197}
   ///
+  // clang-format on
   StreamRange<google::cloud::contactcenterinsights::v1::View> ListViews(
       google::cloud::contactcenterinsights::v1::ListViewsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a view.
   ///
@@ -1467,61 +2427,106 @@ class ContactCenterInsightsClient {
   /// @param update_mask  The list of fields to be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1197}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.View])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.UpdateViewRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1361}
-  /// [google.cloud.contactcenterinsights.v1.View]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1197}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.UpdateViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1361}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1197}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::View> UpdateView(
       google::cloud::contactcenterinsights::v1::View const& view,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a view.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::UpdateViewRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1361}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.UpdateViewRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1197}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.contactcenterinsights.v1.View])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.contactcenterinsights.v1.UpdateViewRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1361}
-  /// [google.cloud.contactcenterinsights.v1.View]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1197}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.UpdateViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1361}
+  /// [google.cloud.contactcenterinsights.v1.View]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1197}
   ///
+  // clang-format on
   StatusOr<google::cloud::contactcenterinsights::v1::View> UpdateView(
       google::cloud::contactcenterinsights::v1::UpdateViewRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a view.
   ///
   /// @param name  Required. The name of the view to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.contactcenterinsights.v1.DeleteViewRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1370}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeleteViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1370}
   ///
+  // clang-format on
   Status DeleteView(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a view.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::DeleteViewRequest,google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1370}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.contactcenterinsights.v1.DeleteViewRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.contactcenterinsights.v1.DeleteViewRequest]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1370}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.contactcenterinsights.v1.DeleteViewRequest]: @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1370}
   ///
+  // clang-format on
   Status DeleteView(
       google::cloud::contactcenterinsights::v1::DeleteViewRequest const&
           request,

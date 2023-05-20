@@ -86,122 +86,189 @@ class AgentsClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Retrieves the specified agent.
   ///
-  /// @param parent  Required. The project that the agent to fetch is associated
-  /// with.
+  /// @param parent  Required. The project that the agent to fetch is associated with.
   ///  Format: `projects/<Project ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L259}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.Agent])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.Agent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L259}
-  /// [google.cloud.dialogflow.v2.GetAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L379}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.Agent]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L259}
+  /// [google.cloud.dialogflow.v2.GetAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L379}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Agent> GetAgent(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves the specified agent.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::GetAgentRequest,google/cloud/dialogflow/v2/agent.proto#L379}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.GetAgentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L259}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.Agent])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.Agent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L259}
-  /// [google.cloud.dialogflow.v2.GetAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L379}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.Agent]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L259}
+  /// [google.cloud.dialogflow.v2.GetAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L379}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Agent> GetAgent(
       google::cloud::dialogflow::v2::GetAgentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates/updates the specified agent.
   ///
-  /// Note: You should always train an agent prior to sending it queries. See
-  /// the [training
+  /// Note: You should always train an agent prior to sending it queries. See the
+  /// [training
   /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
   ///
   /// @param agent  Required. The agent to update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L259}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.Agent])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.Agent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L259}
-  /// [google.cloud.dialogflow.v2.SetAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L392}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.Agent]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L259}
+  /// [google.cloud.dialogflow.v2.SetAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L392}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Agent> SetAgent(
       google::cloud::dialogflow::v2::Agent const& agent, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates/updates the specified agent.
   ///
-  /// Note: You should always train an agent prior to sending it queries. See
-  /// the [training
+  /// Note: You should always train an agent prior to sending it queries. See the
+  /// [training
   /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::SetAgentRequest,google/cloud/dialogflow/v2/agent.proto#L392}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.SetAgentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L259}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.Agent])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.Agent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L259}
-  /// [google.cloud.dialogflow.v2.SetAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L392}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.Agent]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L259}
+  /// [google.cloud.dialogflow.v2.SetAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L392}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::Agent> SetAgent(
       google::cloud::dialogflow::v2::SetAgentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified agent.
   ///
-  /// @param parent  Required. The project that the agent to delete is
-  /// associated with.
+  /// @param parent  Required. The project that the agent to delete is associated with.
   ///  Format: `projects/<Project ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.dialogflow.v2.DeleteAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L403}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.DeleteAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L403}
   ///
+  // clang-format on
   Status DeleteAgent(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified agent.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteAgentRequest,google/cloud/dialogflow/v2/agent.proto#L403}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.DeleteAgentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.dialogflow.v2.DeleteAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L403}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.DeleteAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L403}
   ///
+  // clang-format on
   Status DeleteAgent(
       google::cloud::dialogflow::v2::DeleteAgentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the list of agents.
   ///
-  /// Since there is at most one conversational agent per project, this method
-  /// is useful primarily for listing all agents across projects the caller has
+  /// Since there is at most one conversational agent per project, this method is
+  /// useful primarily for listing all agents across projects the caller has
   /// access to. One can achieve that with a wildcard project collection id "-".
   /// Refer to [List
   /// Sub-Collections](https://cloud.google.com/apis/design/design_patterns#list_sub-collections).
@@ -210,42 +277,82 @@ class AgentsClient {
   ///  Format: ``projects/<Project ID or '-'>``.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L259}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dialogflow.v2.Agent], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.Agent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L259}
-  /// [google.cloud.dialogflow.v2.SearchAgentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L416}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.Agent]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L259}
+  /// [google.cloud.dialogflow.v2.SearchAgentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L416}
   ///
+  // clang-format on
   StreamRange<google::cloud::dialogflow::v2::Agent> SearchAgents(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the list of agents.
   ///
-  /// Since there is at most one conversational agent per project, this method
-  /// is useful primarily for listing all agents across projects the caller has
+  /// Since there is at most one conversational agent per project, this method is
+  /// useful primarily for listing all agents across projects the caller has
   /// access to. One can achieve that with a wildcard project collection id "-".
   /// Refer to [List
   /// Sub-Collections](https://cloud.google.com/apis/design/design_patterns#list_sub-collections).
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::SearchAgentsRequest,google/cloud/dialogflow/v2/agent.proto#L416}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.SearchAgentsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L259}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dialogflow.v2.Agent], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.Agent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L259}
-  /// [google.cloud.dialogflow.v2.SearchAgentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L416}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.Agent]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L259}
+  /// [google.cloud.dialogflow.v2.SearchAgentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L416}
   ///
+  // clang-format on
   StreamRange<google::cloud::dialogflow::v2::Agent> SearchAgents(
       google::cloud::dialogflow::v2::SearchAgentsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Trains the specified agent.
   ///
@@ -258,26 +365,40 @@ class AgentsClient {
   /// - `response`: An [Empty
   ///   message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)
   ///
-  /// Note: You should always train an agent prior to sending it queries. See
-  /// the [training
+  /// Note: You should always train an agent prior to sending it queries. See the
+  /// [training
   /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
   ///
-  /// @param parent  Required. The project that the agent to train is associated
-  /// with.
+  /// @param parent  Required. The project that the agent to train is associated with.
   ///  Format: `projects/<Project ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.protobuf.Struct] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.TrainAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L448}
-  /// [google.protobuf.Struct]:
-  /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.TrainAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L448}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
+  // clang-format on
   future<StatusOr<google::protobuf::Struct>> TrainAgent(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Trains the specified agent.
   ///
@@ -290,26 +411,45 @@ class AgentsClient {
   /// - `response`: An [Empty
   ///   message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)
   ///
-  /// Note: You should always train an agent prior to sending it queries. See
-  /// the [training
+  /// Note: You should always train an agent prior to sending it queries. See the
+  /// [training
   /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::TrainAgentRequest,google/cloud/dialogflow/v2/agent.proto#L448}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.TrainAgentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.protobuf.Struct] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.TrainAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L448}
-  /// [google.protobuf.Struct]:
-  /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.TrainAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L448}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
+  // clang-format on
   future<StatusOr<google::protobuf::Struct>> TrainAgent(
       google::cloud::dialogflow::v2::TrainAgentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Exports the specified agent to a ZIP file.
   ///
@@ -322,22 +462,36 @@ class AgentsClient {
   /// - `response`:
   /// [ExportAgentResponse][google.cloud.dialogflow.v2.ExportAgentResponse]
   ///
-  /// @param parent  Required. The project that the agent to export is
-  /// associated with.
+  /// @param parent  Required. The project that the agent to export is associated with.
   ///  Format: `projects/<Project ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ExportAgentResponse,google/cloud/dialogflow/v2/agent.proto#L486}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dialogflow.v2.ExportAgentResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.ExportAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L461}
-  /// [google.cloud.dialogflow.v2.ExportAgentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L486}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.ExportAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L461}
+  /// [google.cloud.dialogflow.v2.ExportAgentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L486}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
   ExportAgent(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Exports the specified agent to a ZIP file.
   ///
@@ -350,22 +504,41 @@ class AgentsClient {
   /// - `response`:
   /// [ExportAgentResponse][google.cloud.dialogflow.v2.ExportAgentResponse]
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ExportAgentRequest,google/cloud/dialogflow/v2/agent.proto#L461}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.ExportAgentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ExportAgentResponse,google/cloud/dialogflow/v2/agent.proto#L486}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dialogflow.v2.ExportAgentResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.ExportAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L461}
-  /// [google.cloud.dialogflow.v2.ExportAgentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L486}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.ExportAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L461}
+  /// [google.cloud.dialogflow.v2.ExportAgentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L486}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
   ExportAgent(google::cloud::dialogflow::v2::ExportAgentRequest const& request,
               Options opts = {});
 
+  // clang-format off
   ///
   /// Imports the specified agent from a ZIP file.
   ///
@@ -374,10 +547,10 @@ class AgentsClient {
   /// versions from
   /// [ImportAgentRequest][google.cloud.dialogflow.v2.ImportAgentRequest]. After
   /// the import, the imported draft agent will be trained automatically (unless
-  /// disabled in agent settings). However, once the import is done, training
-  /// may not be completed yet. Please call
-  /// [TrainAgent][google.cloud.dialogflow.v2.Agents.TrainAgent] and wait for
-  /// the operation it returns in order to train explicitly.
+  /// disabled in agent settings). However, once the import is done, training may
+  /// not be completed yet. Please call
+  /// [TrainAgent][google.cloud.dialogflow.v2.Agents.TrainAgent] and wait for the
+  /// operation it returns in order to train explicitly.
   ///
   /// This method is a [long-running
   /// operation](https://cloud.google.com/dialogflow/es/docs/how/long-running-operations).
@@ -391,28 +564,46 @@ class AgentsClient {
   /// The operation only tracks when importing is complete, not when it is done
   /// training.
   ///
-  /// Note: You should always train an agent prior to sending it queries. See
-  /// the [training
+  /// Note: You should always train an agent prior to sending it queries. See the
+  /// [training
   /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ImportAgentRequest,google/cloud/dialogflow/v2/agent.proto#L500}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.ImportAgentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.protobuf.Struct] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.Agents.TrainAgent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L112}
-  /// [google.cloud.dialogflow.v2.ImportAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L500}
-  /// [google.protobuf.Struct]:
-  /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.Agents.TrainAgent]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L112}
+  /// [google.cloud.dialogflow.v2.ImportAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L500}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
+  // clang-format on
   future<StatusOr<google::protobuf::Struct>> ImportAgent(
       google::cloud::dialogflow::v2::ImportAgentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Restores the specified agent from a ZIP file.
   ///
@@ -421,8 +612,8 @@ class AgentsClient {
   /// restored draft agent will be trained automatically (unless disabled in
   /// agent settings). However, once the restore is done, training may not be
   /// completed yet. Please call
-  /// [TrainAgent][google.cloud.dialogflow.v2.Agents.TrainAgent] and wait for
-  /// the operation it returns in order to train explicitly.
+  /// [TrainAgent][google.cloud.dialogflow.v2.Agents.TrainAgent] and wait for the
+  /// operation it returns in order to train explicitly.
   ///
   /// This method is a [long-running
   /// operation](https://cloud.google.com/dialogflow/es/docs/how/long-running-operations).
@@ -436,44 +627,74 @@ class AgentsClient {
   /// The operation only tracks when restoring is complete, not when it is done
   /// training.
   ///
-  /// Note: You should always train an agent prior to sending it queries. See
-  /// the [training
+  /// Note: You should always train an agent prior to sending it queries. See the
+  /// [training
   /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::RestoreAgentRequest,google/cloud/dialogflow/v2/agent.proto#L529}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.RestoreAgentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.protobuf.Struct] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.Agents.TrainAgent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L112}
-  /// [google.cloud.dialogflow.v2.RestoreAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L529}
-  /// [google.protobuf.Struct]:
-  /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.Agents.TrainAgent]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L112}
+  /// [google.cloud.dialogflow.v2.RestoreAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L529}
+  /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
+  // clang-format on
   future<StatusOr<google::protobuf::Struct>> RestoreAgent(
       google::cloud::dialogflow::v2::RestoreAgentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets agent validation result. Agent validation is performed during
   /// training time and is updated automatically when training is completed.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::GetValidationResultRequest,google/cloud/dialogflow/v2/agent.proto#L558}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.GetValidationResultRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ValidationResult,google/cloud/dialogflow/v2/validation_result.proto#L71}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.ValidationResult])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.GetValidationResultRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L558}
-  /// [google.cloud.dialogflow.v2.ValidationResult]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/validation_result.proto#L71}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.GetValidationResultRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L558}
+  /// [google.cloud.dialogflow.v2.ValidationResult]: @googleapis_reference_link{google/cloud/dialogflow/v2/validation_result.proto#L71}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::ValidationResult> GetValidationResult(
       google::cloud::dialogflow::v2::GetValidationResultRequest const& request,
       Options opts = {});

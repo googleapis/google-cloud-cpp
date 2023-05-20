@@ -122,11 +122,11 @@ class ManagedIdentitiesServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a Microsoft AD domain.
   ///
-  /// @param parent  Required. The resource project name and location using the
-  /// form:
+  /// @param parent  Required. The resource project name and location using the form:
   ///  `projects/{project_id}/locations/global`
   /// @param domain_name  Required. The fully qualified domain name.
   ///  e.g. mydomain.myorganization.com, with the following restrictions:
@@ -142,40 +142,74 @@ class ManagedIdentitiesServiceClient {
   /// @param domain  Required. A Managed Identity domain resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.managedidentities.v1.Domain] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.managedidentities.v1.CreateMicrosoftAdDomainRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L217}
-  /// [google.cloud.managedidentities.v1.Domain]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedidentities.v1.CreateMicrosoftAdDomainRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L217}
+  /// [google.cloud.managedidentities.v1.Domain]: @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
   CreateMicrosoftAdDomain(
       std::string const& parent, std::string const& domain_name,
       google::cloud::managedidentities::v1::Domain const& domain,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a Microsoft AD domain.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest,google/cloud/managedidentities/v1/managed_identities_service.proto#L217}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.managedidentities.v1.CreateMicrosoftAdDomainRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.managedidentities.v1.Domain] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.managedidentities.v1.CreateMicrosoftAdDomainRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L217}
-  /// [google.cloud.managedidentities.v1.Domain]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedidentities.v1.CreateMicrosoftAdDomainRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L217}
+  /// [google.cloud.managedidentities.v1.Domain]: @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
   CreateMicrosoftAdDomain(google::cloud::managedidentities::v1::
                               CreateMicrosoftAdDomainRequest const& request,
                           Options opts = {});
 
+  // clang-format off
   ///
   /// Resets a domain's administrator password.
   ///
@@ -183,76 +217,137 @@ class ManagedIdentitiesServiceClient {
   ///  `projects/{project_id}/locations/global/domains/{domain_name}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::managedidentities::v1::ResetAdminPasswordResponse,google/cloud/managedidentities/v1/managed_identities_service.proto#L260}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.managedidentities.v1.ResetAdminPasswordResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.managedidentities.v1.ResetAdminPasswordRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L247}
-  /// [google.cloud.managedidentities.v1.ResetAdminPasswordResponse]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L260}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedidentities.v1.ResetAdminPasswordRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L247}
+  /// [google.cloud.managedidentities.v1.ResetAdminPasswordResponse]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L260}
   ///
+  // clang-format on
   StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
   ResetAdminPassword(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Resets a domain's administrator password.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::managedidentities::v1::ResetAdminPasswordRequest,google/cloud/managedidentities/v1/managed_identities_service.proto#L247}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.managedidentities.v1.ResetAdminPasswordRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::managedidentities::v1::ResetAdminPasswordResponse,google/cloud/managedidentities/v1/managed_identities_service.proto#L260}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.managedidentities.v1.ResetAdminPasswordResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.managedidentities.v1.ResetAdminPasswordRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L247}
-  /// [google.cloud.managedidentities.v1.ResetAdminPasswordResponse]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L260}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedidentities.v1.ResetAdminPasswordRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L247}
+  /// [google.cloud.managedidentities.v1.ResetAdminPasswordResponse]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L260}
   ///
+  // clang-format on
   StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
   ResetAdminPassword(
       google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists domains in a project.
   ///
-  /// @param parent  Required. The resource name of the domain location using
-  /// the form:
+  /// @param parent  Required. The resource name of the domain location using the form:
   ///  `projects/{project_id}/locations/global`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.managedidentities.v1.Domain], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.managedidentities.v1.Domain]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
-  /// [google.cloud.managedidentities.v1.ListDomainsRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L267}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedidentities.v1.Domain]: @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [google.cloud.managedidentities.v1.ListDomainsRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L267}
   ///
+  // clang-format on
   StreamRange<google::cloud::managedidentities::v1::Domain> ListDomains(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists domains in a project.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::managedidentities::v1::ListDomainsRequest,google/cloud/managedidentities/v1/managed_identities_service.proto#L267}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.managedidentities.v1.ListDomainsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.managedidentities.v1.Domain], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.managedidentities.v1.Domain]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
-  /// [google.cloud.managedidentities.v1.ListDomainsRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L267}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedidentities.v1.Domain]: @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [google.cloud.managedidentities.v1.ListDomainsRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L267}
   ///
+  // clang-format on
   StreamRange<google::cloud::managedidentities::v1::Domain> ListDomains(
       google::cloud::managedidentities::v1::ListDomainsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets information about a domain.
   ///
@@ -260,44 +355,64 @@ class ManagedIdentitiesServiceClient {
   ///  `projects/{project_id}/locations/global/domains/{domain_name}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.managedidentities.v1.Domain])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.managedidentities.v1.Domain]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
-  /// [google.cloud.managedidentities.v1.GetDomainRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L315}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedidentities.v1.Domain]: @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [google.cloud.managedidentities.v1.GetDomainRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L315}
   ///
+  // clang-format on
   StatusOr<google::cloud::managedidentities::v1::Domain> GetDomain(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets information about a domain.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::managedidentities::v1::GetDomainRequest,google/cloud/managedidentities/v1/managed_identities_service.proto#L315}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.managedidentities.v1.GetDomainRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.managedidentities.v1.Domain])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.managedidentities.v1.Domain]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
-  /// [google.cloud.managedidentities.v1.GetDomainRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L315}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedidentities.v1.Domain]: @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [google.cloud.managedidentities.v1.GetDomainRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L315}
   ///
+  // clang-format on
   StatusOr<google::cloud::managedidentities::v1::Domain> GetDomain(
       google::cloud::managedidentities::v1::GetDomainRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the metadata and configuration of a domain.
   ///
-  /// @param domain  Required. Domain message with updated fields. Only
-  /// supported fields specified in
+  /// @param domain  Required. Domain message with updated fields. Only supported fields specified in
   ///  update_mask are updated.
-  /// @param update_mask  Required. Mask of fields to update. At least one path
-  /// must be supplied in this
+  /// @param update_mask  Required. Mask of fields to update. At least one path must be supplied in this
   ///  field. The elements of the repeated paths field may only include
   ///  fields from [Domain][google.cloud.managedidentities.v1.Domain]:
   ///   * `labels`
@@ -305,37 +420,71 @@ class ManagedIdentitiesServiceClient {
   ///   * `authorized_networks`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.managedidentities.v1.Domain] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.managedidentities.v1.Domain]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
-  /// [google.cloud.managedidentities.v1.UpdateDomainRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L328}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedidentities.v1.Domain]: @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [google.cloud.managedidentities.v1.UpdateDomainRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L328}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> UpdateDomain(
       google::cloud::managedidentities::v1::Domain const& domain,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the metadata and configuration of a domain.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::managedidentities::v1::UpdateDomainRequest,google/cloud/managedidentities/v1/managed_identities_service.proto#L328}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.managedidentities.v1.UpdateDomainRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.managedidentities.v1.Domain] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.managedidentities.v1.Domain]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
-  /// [google.cloud.managedidentities.v1.UpdateDomainRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L328}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedidentities.v1.Domain]: @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [google.cloud.managedidentities.v1.UpdateDomainRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L328}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> UpdateDomain(
       google::cloud::managedidentities::v1::UpdateDomainRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a domain.
   ///
@@ -343,207 +492,370 @@ class ManagedIdentitiesServiceClient {
   ///  `projects/{project_id}/locations/global/domains/{domain_name}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::managedidentities::v1::OpMetadata,google/cloud/managedidentities/v1/managed_identities_service.proto#L192}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.managedidentities.v1.OpMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.managedidentities.v1.DeleteDomainRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L344}
-  /// [google.cloud.managedidentities.v1.OpMetadata]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L192}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedidentities.v1.DeleteDomainRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L344}
+  /// [google.cloud.managedidentities.v1.OpMetadata]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L192}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
   DeleteDomain(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a domain.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::managedidentities::v1::DeleteDomainRequest,google/cloud/managedidentities/v1/managed_identities_service.proto#L344}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.managedidentities.v1.DeleteDomainRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::managedidentities::v1::OpMetadata,google/cloud/managedidentities/v1/managed_identities_service.proto#L192}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.managedidentities.v1.OpMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.managedidentities.v1.DeleteDomainRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L344}
-  /// [google.cloud.managedidentities.v1.OpMetadata]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L192}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedidentities.v1.DeleteDomainRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L344}
+  /// [google.cloud.managedidentities.v1.OpMetadata]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L192}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
   DeleteDomain(
       google::cloud::managedidentities::v1::DeleteDomainRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Adds an AD trust to a domain.
   ///
-  /// @param name  Required. The resource domain name, project name and location
-  /// using the form:
+  /// @param name  Required. The resource domain name, project name and location using the form:
   ///  `projects/{project_id}/locations/global/domains/{domain_name}`
   /// @param trust  Required. The domain trust resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.managedidentities.v1.Domain] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.managedidentities.v1.AttachTrustRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L357}
-  /// [google.cloud.managedidentities.v1.Domain]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedidentities.v1.AttachTrustRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L357}
+  /// [google.cloud.managedidentities.v1.Domain]: @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> AttachTrust(
       std::string const& name,
       google::cloud::managedidentities::v1::Trust const& trust,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Adds an AD trust to a domain.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::managedidentities::v1::AttachTrustRequest,google/cloud/managedidentities/v1/managed_identities_service.proto#L357}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.managedidentities.v1.AttachTrustRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.managedidentities.v1.Domain] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.managedidentities.v1.AttachTrustRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L357}
-  /// [google.cloud.managedidentities.v1.Domain]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedidentities.v1.AttachTrustRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L357}
+  /// [google.cloud.managedidentities.v1.Domain]: @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> AttachTrust(
       google::cloud::managedidentities::v1::AttachTrustRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the DNS conditional forwarder.
   ///
-  /// @param name  Required. The resource domain name, project name and location
-  /// using the form:
+  /// @param name  Required. The resource domain name, project name and location using the form:
   ///  `projects/{project_id}/locations/global/domains/{domain_name}`
-  /// @param target_domain_name  Required. The fully-qualified target domain
-  /// name which will be in trust with current
+  /// @param target_domain_name  Required. The fully-qualified target domain name which will be in trust with current
   ///  domain.
-  /// @param target_dns_ip_addresses  Required. The target DNS server IP
-  /// addresses to resolve the remote domain involved
+  /// @param target_dns_ip_addresses  Required. The target DNS server IP addresses to resolve the remote domain involved
   ///  in the trust.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.managedidentities.v1.Domain] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.managedidentities.v1.Domain]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
-  /// [google.cloud.managedidentities.v1.ReconfigureTrustRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L373}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedidentities.v1.Domain]: @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [google.cloud.managedidentities.v1.ReconfigureTrustRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L373}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
   ReconfigureTrust(std::string const& name,
                    std::string const& target_domain_name,
                    std::vector<std::string> const& target_dns_ip_addresses,
                    Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the DNS conditional forwarder.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::managedidentities::v1::ReconfigureTrustRequest,google/cloud/managedidentities/v1/managed_identities_service.proto#L373}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.managedidentities.v1.ReconfigureTrustRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.managedidentities.v1.Domain] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.managedidentities.v1.Domain]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
-  /// [google.cloud.managedidentities.v1.ReconfigureTrustRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L373}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedidentities.v1.Domain]: @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [google.cloud.managedidentities.v1.ReconfigureTrustRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L373}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
   ReconfigureTrust(
       google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Removes an AD trust.
   ///
-  /// @param name  Required. The resource domain name, project name, and
-  /// location using the form:
+  /// @param name  Required. The resource domain name, project name, and location using the form:
   ///  `projects/{project_id}/locations/global/domains/{domain_name}`
   /// @param trust  Required. The domain trust resource to removed.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.managedidentities.v1.Domain] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.managedidentities.v1.DetachTrustRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L394}
-  /// [google.cloud.managedidentities.v1.Domain]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedidentities.v1.DetachTrustRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L394}
+  /// [google.cloud.managedidentities.v1.Domain]: @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> DetachTrust(
       std::string const& name,
       google::cloud::managedidentities::v1::Trust const& trust,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Removes an AD trust.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::managedidentities::v1::DetachTrustRequest,google/cloud/managedidentities/v1/managed_identities_service.proto#L394}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.managedidentities.v1.DetachTrustRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.managedidentities.v1.Domain] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.managedidentities.v1.DetachTrustRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L394}
-  /// [google.cloud.managedidentities.v1.Domain]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedidentities.v1.DetachTrustRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L394}
+  /// [google.cloud.managedidentities.v1.Domain]: @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> DetachTrust(
       google::cloud::managedidentities::v1::DetachTrustRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Validates a trust state, that the target domain is reachable, and that the
   /// target domain is able to accept incoming trust requests.
   ///
-  /// @param name  Required. The resource domain name, project name, and
-  /// location using the form:
+  /// @param name  Required. The resource domain name, project name, and location using the form:
   ///  `projects/{project_id}/locations/global/domains/{domain_name}`
   /// @param trust  Required. The domain trust to validate trust state for.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.managedidentities.v1.Domain] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.managedidentities.v1.Domain]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
-  /// [google.cloud.managedidentities.v1.ValidateTrustRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L410}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedidentities.v1.Domain]: @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [google.cloud.managedidentities.v1.ValidateTrustRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L410}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> ValidateTrust(
       std::string const& name,
       google::cloud::managedidentities::v1::Trust const& trust,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Validates a trust state, that the target domain is reachable, and that the
   /// target domain is able to accept incoming trust requests.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::managedidentities::v1::ValidateTrustRequest,google/cloud/managedidentities/v1/managed_identities_service.proto#L410}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.managedidentities.v1.ValidateTrustRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.managedidentities.v1.Domain] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.managedidentities.v1.Domain]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
-  /// [google.cloud.managedidentities.v1.ValidateTrustRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L410}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.managedidentities.v1.Domain]: @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [google.cloud.managedidentities.v1.ValidateTrustRequest]: @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L410}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> ValidateTrust(
       google::cloud::managedidentities::v1::ValidateTrustRequest const& request,
       Options opts = {});

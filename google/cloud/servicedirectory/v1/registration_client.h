@@ -108,171 +108,273 @@ class RegistrationServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a namespace, and returns the new Namespace.
   ///
-  /// @param parent  Required. The resource name of the project and location the
-  /// namespace
+  /// @param parent  Required. The resource name of the project and location the namespace
   ///  will be created in.
   /// @param namespace_  Required. A namespace with initial fields set.
-  /// @param namespace_id  Required. The Resource ID must be 1-63 characters
-  /// long, and comply with
-  ///  <a href="https://www.ietf.org/rfc/rfc1035.txt"
-  ///  target="_blank">RFC1035</a>. Specifically, the name must be 1-63
-  ///  characters long and match the regular expression
-  ///  `[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?` which means the first character must
-  ///  be a lowercase letter, and all following characters must be a dash,
-  ///  lowercase letter, or digit, except the last character, which cannot be a
-  ///  dash.
+  /// @param namespace_id  Required. The Resource ID must be 1-63 characters long, and comply with
+  ///  <a href="https://www.ietf.org/rfc/rfc1035.txt" target="_blank">RFC1035</a>.
+  ///  Specifically, the name must be 1-63 characters long and match the regular
+  ///  expression `[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?` which means the first
+  ///  character must be a lowercase letter, and all following characters must
+  ///  be a dash, lowercase letter, or digit, except the last character, which
+  ///  cannot be a dash.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.servicedirectory.v1.Namespace])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.servicedirectory.v1.CreateNamespaceRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L230}
-  /// [google.cloud.servicedirectory.v1.Namespace]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.CreateNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L230}
+  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
+  // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Namespace> CreateNamespace(
       std::string const& parent,
       google::cloud::servicedirectory::v1::Namespace const& namespace_,
       std::string const& namespace_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a namespace, and returns the new Namespace.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::servicedirectory::v1::CreateNamespaceRequest,google/cloud/servicedirectory/v1/registration_service.proto#L230}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.servicedirectory.v1.CreateNamespaceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.servicedirectory.v1.Namespace])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.servicedirectory.v1.CreateNamespaceRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L230}
-  /// [google.cloud.servicedirectory.v1.Namespace]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.CreateNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L230}
+  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
+  // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Namespace> CreateNamespace(
       google::cloud::servicedirectory::v1::CreateNamespaceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all namespaces.
   ///
-  /// @param parent  Required. The resource name of the project and location
-  /// whose namespaces
+  /// @param parent  Required. The resource name of the project and location whose namespaces
   ///  we'd like to list.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.servicedirectory.v1.Namespace], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.servicedirectory.v1.ListNamespacesRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L255}
-  /// [google.cloud.servicedirectory.v1.Namespace]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.ListNamespacesRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L255}
+  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
+  // clang-format on
   StreamRange<google::cloud::servicedirectory::v1::Namespace> ListNamespaces(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all namespaces.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::servicedirectory::v1::ListNamespacesRequest,google/cloud/servicedirectory/v1/registration_service.proto#L255}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.servicedirectory.v1.ListNamespacesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.servicedirectory.v1.Namespace], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.servicedirectory.v1.ListNamespacesRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L255}
-  /// [google.cloud.servicedirectory.v1.Namespace]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.ListNamespacesRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L255}
+  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
+  // clang-format on
   StreamRange<google::cloud::servicedirectory::v1::Namespace> ListNamespaces(
       google::cloud::servicedirectory::v1::ListNamespacesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a namespace.
   ///
   /// @param name  Required. The name of the namespace to retrieve.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.servicedirectory.v1.Namespace])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.servicedirectory.v1.GetNamespaceRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L322}
-  /// [google.cloud.servicedirectory.v1.Namespace]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.GetNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L322}
+  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
+  // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Namespace> GetNamespace(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a namespace.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::servicedirectory::v1::GetNamespaceRequest,google/cloud/servicedirectory/v1/registration_service.proto#L322}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.servicedirectory.v1.GetNamespaceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.servicedirectory.v1.Namespace])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.servicedirectory.v1.GetNamespaceRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L322}
-  /// [google.cloud.servicedirectory.v1.Namespace]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.GetNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L322}
+  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
+  // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Namespace> GetNamespace(
       google::cloud::servicedirectory::v1::GetNamespaceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a namespace.
   ///
   /// @param namespace_  Required. The updated namespace.
-  /// @param update_mask  Required. List of fields to be updated in this
-  /// request.
+  /// @param update_mask  Required. List of fields to be updated in this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.servicedirectory.v1.Namespace])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.servicedirectory.v1.Namespace]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
-  /// [google.cloud.servicedirectory.v1.UpdateNamespaceRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L334}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// [google.cloud.servicedirectory.v1.UpdateNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L334}
   ///
+  // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Namespace> UpdateNamespace(
       google::cloud::servicedirectory::v1::Namespace const& namespace_,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a namespace.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::servicedirectory::v1::UpdateNamespaceRequest,google/cloud/servicedirectory/v1/registration_service.proto#L334}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.servicedirectory.v1.UpdateNamespaceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.servicedirectory.v1.Namespace])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.servicedirectory.v1.Namespace]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
-  /// [google.cloud.servicedirectory.v1.UpdateNamespaceRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L334}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// [google.cloud.servicedirectory.v1.UpdateNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L334}
   ///
+  // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Namespace> UpdateNamespace(
       google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a namespace. This also deletes all services and endpoints in
   /// the namespace.
@@ -280,191 +382,316 @@ class RegistrationServiceClient {
   /// @param name  Required. The name of the namespace to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.servicedirectory.v1.DeleteNamespaceRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L345}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.DeleteNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L345}
   ///
+  // clang-format on
   Status DeleteNamespace(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a namespace. This also deletes all services and endpoints in
   /// the namespace.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::servicedirectory::v1::DeleteNamespaceRequest,google/cloud/servicedirectory/v1/registration_service.proto#L345}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.servicedirectory.v1.DeleteNamespaceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.servicedirectory.v1.DeleteNamespaceRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L345}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.DeleteNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L345}
   ///
+  // clang-format on
   Status DeleteNamespace(
       google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a service, and returns the new Service.
   ///
-  /// @param parent  Required. The resource name of the namespace this service
-  /// will belong to.
+  /// @param parent  Required. The resource name of the namespace this service will belong to.
   /// @param service  Required. A service  with initial fields set.
-  /// @param service_id  Required. The Resource ID must be 1-63 characters long,
-  /// and comply with
-  ///  <a href="https://www.ietf.org/rfc/rfc1035.txt"
-  ///  target="_blank">RFC1035</a>. Specifically, the name must be 1-63
-  ///  characters long and match the regular expression
-  ///  `[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?` which means the first character must
-  ///  be a lowercase letter, and all following characters must be a dash,
-  ///  lowercase letter, or digit, except the last character, which cannot be a
-  ///  dash.
+  /// @param service_id  Required. The Resource ID must be 1-63 characters long, and comply with
+  ///  <a href="https://www.ietf.org/rfc/rfc1035.txt" target="_blank">RFC1035</a>.
+  ///  Specifically, the name must be 1-63 characters long and match the regular
+  ///  expression `[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?` which means the first
+  ///  character must be a lowercase letter, and all following characters must
+  ///  be a dash, lowercase letter, or digit, except the last character, which
+  ///  cannot be a dash.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L36}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.servicedirectory.v1.Service])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.servicedirectory.v1.CreateServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L357}
-  /// [google.cloud.servicedirectory.v1.Service]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.CreateServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L357}
+  /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
   ///
+  // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Service> CreateService(
       std::string const& parent,
       google::cloud::servicedirectory::v1::Service const& service,
       std::string const& service_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a service, and returns the new Service.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::servicedirectory::v1::CreateServiceRequest,google/cloud/servicedirectory/v1/registration_service.proto#L357}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.servicedirectory.v1.CreateServiceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L36}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.servicedirectory.v1.Service])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.servicedirectory.v1.CreateServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L357}
-  /// [google.cloud.servicedirectory.v1.Service]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.CreateServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L357}
+  /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
   ///
+  // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Service> CreateService(
       google::cloud::servicedirectory::v1::CreateServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all services belonging to a namespace.
   ///
-  /// @param parent  Required. The resource name of the namespace whose services
-  /// we'd
+  /// @param parent  Required. The resource name of the namespace whose services we'd
   ///  like to list.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L36}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.servicedirectory.v1.Service], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.servicedirectory.v1.ListServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L381}
-  /// [google.cloud.servicedirectory.v1.Service]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.ListServicesRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L381}
+  /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
   ///
+  // clang-format on
   StreamRange<google::cloud::servicedirectory::v1::Service> ListServices(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all services belonging to a namespace.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::servicedirectory::v1::ListServicesRequest,google/cloud/servicedirectory/v1/registration_service.proto#L381}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.servicedirectory.v1.ListServicesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L36}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.servicedirectory.v1.Service], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.servicedirectory.v1.ListServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L381}
-  /// [google.cloud.servicedirectory.v1.Service]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.ListServicesRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L381}
+  /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
   ///
+  // clang-format on
   StreamRange<google::cloud::servicedirectory::v1::Service> ListServices(
       google::cloud::servicedirectory::v1::ListServicesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a service.
   ///
   /// @param name  Required. The name of the service to get.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L36}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.servicedirectory.v1.Service])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.servicedirectory.v1.GetServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L442}
-  /// [google.cloud.servicedirectory.v1.Service]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.GetServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L442}
+  /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
   ///
+  // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Service> GetService(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a service.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::servicedirectory::v1::GetServiceRequest,google/cloud/servicedirectory/v1/registration_service.proto#L442}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.servicedirectory.v1.GetServiceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L36}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.servicedirectory.v1.Service])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.servicedirectory.v1.GetServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L442}
-  /// [google.cloud.servicedirectory.v1.Service]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.GetServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L442}
+  /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
   ///
+  // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Service> GetService(
       google::cloud::servicedirectory::v1::GetServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a service.
   ///
   /// @param service  Required. The updated service.
-  /// @param update_mask  Required. List of fields to be updated in this
-  /// request.
+  /// @param update_mask  Required. List of fields to be updated in this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L36}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.servicedirectory.v1.Service])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.servicedirectory.v1.Service]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
-  /// [google.cloud.servicedirectory.v1.UpdateServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L454}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
+  /// [google.cloud.servicedirectory.v1.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L454}
   ///
+  // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Service> UpdateService(
       google::cloud::servicedirectory::v1::Service const& service,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a service.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::servicedirectory::v1::UpdateServiceRequest,google/cloud/servicedirectory/v1/registration_service.proto#L454}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.servicedirectory.v1.UpdateServiceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L36}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.servicedirectory.v1.Service])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.servicedirectory.v1.Service]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
-  /// [google.cloud.servicedirectory.v1.UpdateServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L454}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
+  /// [google.cloud.servicedirectory.v1.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L454}
   ///
+  // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Service> UpdateService(
       google::cloud::servicedirectory::v1::UpdateServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a service. This also deletes all endpoints associated with
   /// the service.
@@ -472,268 +699,455 @@ class RegistrationServiceClient {
   /// @param name  Required. The name of the service to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.servicedirectory.v1.DeleteServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L465}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L465}
   ///
+  // clang-format on
   Status DeleteService(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a service. This also deletes all endpoints associated with
   /// the service.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::servicedirectory::v1::DeleteServiceRequest,google/cloud/servicedirectory/v1/registration_service.proto#L465}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.servicedirectory.v1.DeleteServiceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.servicedirectory.v1.DeleteServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L465}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.DeleteServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L465}
   ///
+  // clang-format on
   Status DeleteService(
       google::cloud::servicedirectory::v1::DeleteServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a endpoint, and returns the new Endpoint.
   ///
-  /// @param parent  Required. The resource name of the service that this
-  /// endpoint provides.
+  /// @param parent  Required. The resource name of the service that this endpoint provides.
   /// @param endpoint  Required. A endpoint with initial fields set.
-  /// @param endpoint_id  Required. The Resource ID must be 1-63 characters
-  /// long, and comply with
-  ///  <a href="https://www.ietf.org/rfc/rfc1035.txt"
-  ///  target="_blank">RFC1035</a>. Specifically, the name must be 1-63
-  ///  characters long and match the regular expression
-  ///  `[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?` which means the first character must
-  ///  be a lowercase letter, and all following characters must be a dash,
-  ///  lowercase letter, or digit, except the last character, which cannot be a
-  ///  dash.
+  /// @param endpoint_id  Required. The Resource ID must be 1-63 characters long, and comply with
+  ///  <a href="https://www.ietf.org/rfc/rfc1035.txt" target="_blank">RFC1035</a>.
+  ///  Specifically, the name must be 1-63 characters long and match the regular
+  ///  expression `[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?` which means the first
+  ///  character must be a lowercase letter, and all following characters must
+  ///  be a dash, lowercase letter, or digit, except the last character, which
+  ///  cannot be a dash.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.servicedirectory.v1.Endpoint])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.servicedirectory.v1.CreateEndpointRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L477}
-  /// [google.cloud.servicedirectory.v1.Endpoint]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.CreateEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L477}
+  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
+  // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> CreateEndpoint(
       std::string const& parent,
       google::cloud::servicedirectory::v1::Endpoint const& endpoint,
       std::string const& endpoint_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a endpoint, and returns the new Endpoint.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::servicedirectory::v1::CreateEndpointRequest,google/cloud/servicedirectory/v1/registration_service.proto#L477}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.servicedirectory.v1.CreateEndpointRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.servicedirectory.v1.Endpoint])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.servicedirectory.v1.CreateEndpointRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L477}
-  /// [google.cloud.servicedirectory.v1.Endpoint]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.CreateEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L477}
+  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
+  // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> CreateEndpoint(
       google::cloud::servicedirectory::v1::CreateEndpointRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all endpoints.
   ///
-  /// @param parent  Required. The resource name of the service whose endpoints
-  /// we'd like to
+  /// @param parent  Required. The resource name of the service whose endpoints we'd like to
   ///  list.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.servicedirectory.v1.Endpoint], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.servicedirectory.v1.Endpoint]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
-  /// [google.cloud.servicedirectory.v1.ListEndpointsRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L501}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// [google.cloud.servicedirectory.v1.ListEndpointsRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L501}
   ///
+  // clang-format on
   StreamRange<google::cloud::servicedirectory::v1::Endpoint> ListEndpoints(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all endpoints.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::servicedirectory::v1::ListEndpointsRequest,google/cloud/servicedirectory/v1/registration_service.proto#L501}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.servicedirectory.v1.ListEndpointsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.servicedirectory.v1.Endpoint], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.servicedirectory.v1.Endpoint]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
-  /// [google.cloud.servicedirectory.v1.ListEndpointsRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L501}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// [google.cloud.servicedirectory.v1.ListEndpointsRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L501}
   ///
+  // clang-format on
   StreamRange<google::cloud::servicedirectory::v1::Endpoint> ListEndpoints(
       google::cloud::servicedirectory::v1::ListEndpointsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a endpoint.
   ///
   /// @param name  Required. The name of the endpoint to get.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.servicedirectory.v1.Endpoint])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.servicedirectory.v1.Endpoint]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
-  /// [google.cloud.servicedirectory.v1.GetEndpointRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L564}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// [google.cloud.servicedirectory.v1.GetEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L564}
   ///
+  // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> GetEndpoint(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a endpoint.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::servicedirectory::v1::GetEndpointRequest,google/cloud/servicedirectory/v1/registration_service.proto#L564}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.servicedirectory.v1.GetEndpointRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.servicedirectory.v1.Endpoint])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.servicedirectory.v1.Endpoint]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
-  /// [google.cloud.servicedirectory.v1.GetEndpointRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L564}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// [google.cloud.servicedirectory.v1.GetEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L564}
   ///
+  // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> GetEndpoint(
       google::cloud::servicedirectory::v1::GetEndpointRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a endpoint.
   ///
   /// @param endpoint  Required. The updated endpoint.
-  /// @param update_mask  Required. List of fields to be updated in this
-  /// request.
+  /// @param update_mask  Required. List of fields to be updated in this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.servicedirectory.v1.Endpoint])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.servicedirectory.v1.Endpoint]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
-  /// [google.cloud.servicedirectory.v1.UpdateEndpointRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L576}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// [google.cloud.servicedirectory.v1.UpdateEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L576}
   ///
+  // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> UpdateEndpoint(
       google::cloud::servicedirectory::v1::Endpoint const& endpoint,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a endpoint.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::servicedirectory::v1::UpdateEndpointRequest,google/cloud/servicedirectory/v1/registration_service.proto#L576}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.servicedirectory.v1.UpdateEndpointRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.servicedirectory.v1.Endpoint])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.servicedirectory.v1.Endpoint]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
-  /// [google.cloud.servicedirectory.v1.UpdateEndpointRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L576}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.Endpoint]: @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// [google.cloud.servicedirectory.v1.UpdateEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L576}
   ///
+  // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> UpdateEndpoint(
       google::cloud::servicedirectory::v1::UpdateEndpointRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a endpoint.
   ///
   /// @param name  Required. The name of the endpoint to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.servicedirectory.v1.DeleteEndpointRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L587}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.DeleteEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L587}
   ///
+  // clang-format on
   Status DeleteEndpoint(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a endpoint.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::servicedirectory::v1::DeleteEndpointRequest,google/cloud/servicedirectory/v1/registration_service.proto#L587}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.servicedirectory.v1.DeleteEndpointRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.servicedirectory.v1.DeleteEndpointRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L587}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.servicedirectory.v1.DeleteEndpointRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L587}
   ///
+  // clang-format on
   Status DeleteEndpoint(
       google::cloud::servicedirectory::v1::DeleteEndpointRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the IAM Policy for a resource (namespace or service only).
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L123}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.GetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Sets the IAM Policy for a resource (namespace or service only).
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L101}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.SetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Tests IAM permissions for a resource (namespace or service only).
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L136}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.TestIamPermissionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.TestIamPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
-  /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
       Options opts = {});

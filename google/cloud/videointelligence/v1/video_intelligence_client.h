@@ -89,6 +89,7 @@ class VideoIntelligenceServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Performs asynchronous video annotation. Progress and results can be
   /// retrieved through the `google.longrunning.Operations` interface.
@@ -99,24 +100,38 @@ class VideoIntelligenceServiceClient {
   ///  [Cloud Storage](https://cloud.google.com/storage/) URIs are
   ///  supported. URIs must be specified in the following format:
   ///  `gs://bucket-id/object-id` (other URI formats return
-  ///  [google.rpc.Code.INVALID_ARGUMENT][google.rpc.Code.INVALID_ARGUMENT]).
-  ///  For more information, see [Request
-  ///  URIs](https://cloud.google.com/storage/docs/request-endpoints). To
-  ///  identify multiple videos, a video URI may include wildcards in the
-  ///  `object-id`. Supported wildcards: '*' to match 0 or more characters;
+  ///  [google.rpc.Code.INVALID_ARGUMENT][google.rpc.Code.INVALID_ARGUMENT]). For
+  ///  more information, see [Request
+  ///  URIs](https://cloud.google.com/storage/docs/request-endpoints). To identify
+  ///  multiple videos, a video URI may include wildcards in the `object-id`.
+  ///  Supported wildcards: '*' to match 0 or more characters;
   ///  '?' to match 1 character. If unset, the input video should be embedded
   ///  in the request as `input_content`. If set, `input_content` must be unset.
   /// @param features  Required. Requested video annotation features.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::videointelligence::v1::AnnotateVideoResponse,google/cloud/videointelligence/v1/video_intelligence.proto#L602}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.videointelligence.v1.AnnotateVideoResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.videointelligence.v1.AnnotateVideoRequest]:
-  /// @googleapis_reference_link{google/cloud/videointelligence/v1/video_intelligence.proto#L60}
-  /// [google.cloud.videointelligence.v1.AnnotateVideoResponse]:
-  /// @googleapis_reference_link{google/cloud/videointelligence/v1/video_intelligence.proto#L602}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.videointelligence.v1.AnnotateVideoRequest]: @googleapis_reference_link{google/cloud/videointelligence/v1/video_intelligence.proto#L60}
+  /// [google.cloud.videointelligence.v1.AnnotateVideoResponse]: @googleapis_reference_link{google/cloud/videointelligence/v1/video_intelligence.proto#L602}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
   AnnotateVideo(
       std::string const& input_uri,
@@ -124,24 +139,43 @@ class VideoIntelligenceServiceClient {
           features,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Performs asynchronous video annotation. Progress and results can be
   /// retrieved through the `google.longrunning.Operations` interface.
   /// `Operation.metadata` contains `AnnotateVideoProgress` (progress).
   /// `Operation.response` contains `AnnotateVideoResponse` (results).
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::videointelligence::v1::AnnotateVideoRequest,google/cloud/videointelligence/v1/video_intelligence.proto#L60}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.videointelligence.v1.AnnotateVideoRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::videointelligence::v1::AnnotateVideoResponse,google/cloud/videointelligence/v1/video_intelligence.proto#L602}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.videointelligence.v1.AnnotateVideoResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.videointelligence.v1.AnnotateVideoRequest]:
-  /// @googleapis_reference_link{google/cloud/videointelligence/v1/video_intelligence.proto#L60}
-  /// [google.cloud.videointelligence.v1.AnnotateVideoResponse]:
-  /// @googleapis_reference_link{google/cloud/videointelligence/v1/video_intelligence.proto#L602}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.videointelligence.v1.AnnotateVideoRequest]: @googleapis_reference_link{google/cloud/videointelligence/v1/video_intelligence.proto#L60}
+  /// [google.cloud.videointelligence.v1.AnnotateVideoResponse]: @googleapis_reference_link{google/cloud/videointelligence/v1/video_intelligence.proto#L602}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
   AnnotateVideo(
       google::cloud::videointelligence::v1::AnnotateVideoRequest const& request,

@@ -90,50 +90,72 @@ class PolicyTagManagerClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a taxonomy in a specified project.
   ///
   /// The taxonomy is initially empty, that is, it doesn't contain policy tags.
   ///
-  /// @param parent  Required. Resource name of the project that the taxonomy
-  /// will belong to.
+  /// @param parent  Required. Resource name of the project that the taxonomy will belong to.
   /// @param taxonomy  The taxonomy to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L211}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.v1.Taxonomy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.v1.CreateTaxonomyRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L327}
-  /// [google.cloud.datacatalog.v1.Taxonomy]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L211}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.v1.CreateTaxonomyRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L327}
+  /// [google.cloud.datacatalog.v1.Taxonomy]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L211}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> CreateTaxonomy(
       std::string const& parent,
       google::cloud::datacatalog::v1::Taxonomy const& taxonomy,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a taxonomy in a specified project.
   ///
   /// The taxonomy is initially empty, that is, it doesn't contain policy tags.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::CreateTaxonomyRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L327}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.v1.CreateTaxonomyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L211}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.v1.Taxonomy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.v1.CreateTaxonomyRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L327}
-  /// [google.cloud.datacatalog.v1.Taxonomy]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L211}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.v1.CreateTaxonomyRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L327}
+  /// [google.cloud.datacatalog.v1.Taxonomy]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L211}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> CreateTaxonomy(
       google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a taxonomy, including all policy tags in this
   /// taxonomy, their associated policies, and the policy tags references from
@@ -143,185 +165,312 @@ class PolicyTagManagerClient {
   ///  Note: All policy tags in this taxonomy are also deleted.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.datacatalog.v1.DeleteTaxonomyRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L342}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.v1.DeleteTaxonomyRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L342}
   ///
+  // clang-format on
   Status DeleteTaxonomy(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a taxonomy, including all policy tags in this
   /// taxonomy, their associated policies, and the policy tags references from
   /// BigQuery columns.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::DeleteTaxonomyRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L342}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.v1.DeleteTaxonomyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.datacatalog.v1.DeleteTaxonomyRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L342}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.v1.DeleteTaxonomyRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L342}
   ///
+  // clang-format on
   Status DeleteTaxonomy(
       google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a taxonomy, including its display name,
   /// description, and activated policy types.
   ///
-  /// @param taxonomy  The taxonomy to update. You can update only its
-  /// description, display name,
+  /// @param taxonomy  The taxonomy to update. You can update only its description, display name,
   ///  and activated policy types.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L211}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.v1.Taxonomy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.v1.Taxonomy]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L211}
-  /// [google.cloud.datacatalog.v1.UpdateTaxonomyRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L356}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.v1.Taxonomy]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L211}
+  /// [google.cloud.datacatalog.v1.UpdateTaxonomyRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L356}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> UpdateTaxonomy(
       google::cloud::datacatalog::v1::Taxonomy const& taxonomy,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a taxonomy, including its display name,
   /// description, and activated policy types.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::UpdateTaxonomyRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L356}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.v1.UpdateTaxonomyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L211}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.v1.Taxonomy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.v1.Taxonomy]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L211}
-  /// [google.cloud.datacatalog.v1.UpdateTaxonomyRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L356}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.v1.Taxonomy]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L211}
+  /// [google.cloud.datacatalog.v1.UpdateTaxonomyRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L356}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> UpdateTaxonomy(
       google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all taxonomies in a project in a particular location that you
   /// have a permission to view.
   ///
-  /// @param parent  Required. Resource name of the project to list the
-  /// taxonomies of.
+  /// @param parent  Required. Resource name of the project to list the taxonomies of.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L211}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.datacatalog.v1.Taxonomy], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.datacatalog.v1.ListTaxonomiesRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L371}
-  /// [google.cloud.datacatalog.v1.Taxonomy]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L211}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.v1.ListTaxonomiesRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L371}
+  /// [google.cloud.datacatalog.v1.Taxonomy]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L211}
   ///
+  // clang-format on
   StreamRange<google::cloud::datacatalog::v1::Taxonomy> ListTaxonomies(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all taxonomies in a project in a particular location that you
   /// have a permission to view.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::ListTaxonomiesRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L371}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.v1.ListTaxonomiesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L211}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.datacatalog.v1.Taxonomy], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.datacatalog.v1.ListTaxonomiesRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L371}
-  /// [google.cloud.datacatalog.v1.Taxonomy]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L211}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.v1.ListTaxonomiesRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L371}
+  /// [google.cloud.datacatalog.v1.Taxonomy]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L211}
   ///
+  // clang-format on
   StreamRange<google::cloud::datacatalog::v1::Taxonomy> ListTaxonomies(
       google::cloud::datacatalog::v1::ListTaxonomiesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a taxonomy.
   ///
   /// @param name  Required. Resource name of the taxonomy to get.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L211}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.v1.Taxonomy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.v1.GetTaxonomyRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L408}
-  /// [google.cloud.datacatalog.v1.Taxonomy]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L211}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.v1.GetTaxonomyRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L408}
+  /// [google.cloud.datacatalog.v1.Taxonomy]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L211}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> GetTaxonomy(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a taxonomy.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::GetTaxonomyRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L408}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.v1.GetTaxonomyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L211}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.v1.Taxonomy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.v1.GetTaxonomyRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L408}
-  /// [google.cloud.datacatalog.v1.Taxonomy]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L211}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.v1.GetTaxonomyRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L408}
+  /// [google.cloud.datacatalog.v1.Taxonomy]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L211}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> GetTaxonomy(
       google::cloud::datacatalog::v1::GetTaxonomyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a policy tag in a taxonomy.
   ///
-  /// @param parent  Required. Resource name of the taxonomy that the policy tag
-  /// will belong to.
+  /// @param parent  Required. Resource name of the taxonomy that the policy tag will belong to.
   /// @param policy_tag  The policy tag to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L287}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.v1.PolicyTag])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.v1.CreatePolicyTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L420}
-  /// [google.cloud.datacatalog.v1.PolicyTag]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L287}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.v1.CreatePolicyTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L420}
+  /// [google.cloud.datacatalog.v1.PolicyTag]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L287}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> CreatePolicyTag(
       std::string const& parent,
       google::cloud::datacatalog::v1::PolicyTag const& policy_tag,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a policy tag in a taxonomy.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::CreatePolicyTagRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L420}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.v1.CreatePolicyTagRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L287}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.v1.PolicyTag])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.v1.CreatePolicyTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L420}
-  /// [google.cloud.datacatalog.v1.PolicyTag]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L287}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.v1.CreatePolicyTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L420}
+  /// [google.cloud.datacatalog.v1.PolicyTag]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L287}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> CreatePolicyTag(
       google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a policy tag together with the following:
   ///
@@ -334,12 +483,22 @@ class PolicyTagManagerClient {
   ///  Note: All of its descendant policy tags are also deleted.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.datacatalog.v1.DeletePolicyTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L435}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.v1.DeletePolicyTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L435}
   ///
+  // clang-format on
   Status DeletePolicyTag(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a policy tag together with the following:
   ///
@@ -348,184 +507,318 @@ class PolicyTagManagerClient {
   /// * References from BigQuery table schema of the policy tag and its
   ///   descendants
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::DeletePolicyTagRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L435}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.v1.DeletePolicyTagRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.datacatalog.v1.DeletePolicyTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L435}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.v1.DeletePolicyTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L435}
   ///
+  // clang-format on
   Status DeletePolicyTag(
       google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a policy tag, including its display
   /// name, description, and parent policy tag.
   ///
-  /// @param policy_tag  The policy tag to update. You can update only its
-  /// description, display
+  /// @param policy_tag  The policy tag to update. You can update only its description, display
   ///  name, and parent policy tag fields.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L287}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.v1.PolicyTag])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.v1.PolicyTag]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L287}
-  /// [google.cloud.datacatalog.v1.UpdatePolicyTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L449}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.v1.PolicyTag]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L287}
+  /// [google.cloud.datacatalog.v1.UpdatePolicyTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L449}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> UpdatePolicyTag(
       google::cloud::datacatalog::v1::PolicyTag const& policy_tag,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a policy tag, including its display
   /// name, description, and parent policy tag.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::UpdatePolicyTagRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L449}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.v1.UpdatePolicyTagRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L287}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.v1.PolicyTag])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.v1.PolicyTag]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L287}
-  /// [google.cloud.datacatalog.v1.UpdatePolicyTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L449}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.v1.PolicyTag]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L287}
+  /// [google.cloud.datacatalog.v1.UpdatePolicyTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L449}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> UpdatePolicyTag(
       google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all policy tags in a taxonomy.
   ///
-  /// @param parent  Required. Resource name of the taxonomy to list the policy
-  /// tags of.
+  /// @param parent  Required. Resource name of the taxonomy to list the policy tags of.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L287}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.datacatalog.v1.PolicyTag], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.datacatalog.v1.ListPolicyTagsRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L465}
-  /// [google.cloud.datacatalog.v1.PolicyTag]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L287}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.v1.ListPolicyTagsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L465}
+  /// [google.cloud.datacatalog.v1.PolicyTag]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L287}
   ///
+  // clang-format on
   StreamRange<google::cloud::datacatalog::v1::PolicyTag> ListPolicyTags(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all policy tags in a taxonomy.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::ListPolicyTagsRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L465}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.v1.ListPolicyTagsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L287}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.datacatalog.v1.PolicyTag], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.datacatalog.v1.ListPolicyTagsRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L465}
-  /// [google.cloud.datacatalog.v1.PolicyTag]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L287}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.v1.ListPolicyTagsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L465}
+  /// [google.cloud.datacatalog.v1.PolicyTag]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L287}
   ///
+  // clang-format on
   StreamRange<google::cloud::datacatalog::v1::PolicyTag> ListPolicyTags(
       google::cloud::datacatalog::v1::ListPolicyTagsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a policy tag.
   ///
   /// @param name  Required. Resource name of the policy tag.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L287}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.v1.PolicyTag])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.v1.GetPolicyTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L499}
-  /// [google.cloud.datacatalog.v1.PolicyTag]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L287}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.v1.GetPolicyTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L499}
+  /// [google.cloud.datacatalog.v1.PolicyTag]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L287}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> GetPolicyTag(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a policy tag.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::GetPolicyTagRequest,google/cloud/datacatalog/v1/policytagmanager.proto#L499}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.datacatalog.v1.GetPolicyTagRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L287}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.datacatalog.v1.PolicyTag])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.datacatalog.v1.GetPolicyTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L499}
-  /// [google.cloud.datacatalog.v1.PolicyTag]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L287}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.datacatalog.v1.GetPolicyTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L499}
+  /// [google.cloud.datacatalog.v1.PolicyTag]: @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L287}
   ///
+  // clang-format on
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> GetPolicyTag(
       google::cloud::datacatalog::v1::GetPolicyTagRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the IAM policy for a policy tag or a taxonomy.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L123}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.GetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Sets the IAM policy for a policy tag or a taxonomy.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L101}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.SetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns your permissions on a specified policy tag or
   /// taxonomy.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L136}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.TestIamPermissionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.TestIamPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
-  /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
       Options opts = {});

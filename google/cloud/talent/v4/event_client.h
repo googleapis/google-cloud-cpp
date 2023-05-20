@@ -84,6 +84,7 @@ class EventServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Report events issued when end user interacts with customer's application
   /// that uses Cloud Talent Solution. You may inspect the created events in
@@ -93,28 +94,35 @@ class EventServiceClient {
   /// more](https://cloud.google.com/talent-solution/docs/management-tools)
   /// about self service tools.
   ///
-  /// @param parent  Required. Resource name of the tenant under which the event
-  /// is created.
+  /// @param parent  Required. Resource name of the tenant under which the event is created.
   ///  The format is "projects/{project_id}/tenants/{tenant_id}", for example,
   ///  "projects/foo/tenants/bar".
-  /// @param client_event  Required. Events issued when end user interacts with
-  /// customer's application
+  /// @param client_event  Required. Events issued when end user interacts with customer's application
   ///  that uses Cloud Talent Solution.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::ClientEvent,google/cloud/talent/v4/event.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.talent.v4.ClientEvent])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.talent.v4.ClientEvent]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/event.proto#L33}
-  /// [google.cloud.talent.v4.CreateClientEventRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/event_service.proto#L55}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.ClientEvent]: @googleapis_reference_link{google/cloud/talent/v4/event.proto#L33}
+  /// [google.cloud.talent.v4.CreateClientEventRequest]: @googleapis_reference_link{google/cloud/talent/v4/event_service.proto#L55}
   ///
+  // clang-format on
   StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
       std::string const& parent,
       google::cloud::talent::v4::ClientEvent const& client_event,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Report events issued when end user interacts with customer's application
   /// that uses Cloud Talent Solution. You may inspect the created events in
@@ -124,18 +132,30 @@ class EventServiceClient {
   /// more](https://cloud.google.com/talent-solution/docs/management-tools)
   /// about self service tools.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::CreateClientEventRequest,google/cloud/talent/v4/event_service.proto#L55}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.talent.v4.CreateClientEventRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::ClientEvent,google/cloud/talent/v4/event.proto#L33}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.talent.v4.ClientEvent])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.talent.v4.ClientEvent]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/event.proto#L33}
-  /// [google.cloud.talent.v4.CreateClientEventRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/event_service.proto#L55}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.ClientEvent]: @googleapis_reference_link{google/cloud/talent/v4/event.proto#L33}
+  /// [google.cloud.talent.v4.CreateClientEventRequest]: @googleapis_reference_link{google/cloud/talent/v4/event_service.proto#L55}
   ///
+  // clang-format on
   StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
       google::cloud::talent::v4::CreateClientEventRequest const& request,
       Options opts = {});

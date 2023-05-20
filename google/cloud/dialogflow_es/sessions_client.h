@@ -85,6 +85,7 @@ class SessionsClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Processes a natural language query and returns structured, actionable data
   /// as a result. This method is not idempotent, because it may cause contexts
@@ -102,43 +103,50 @@ class SessionsClient {
   /// See [Versions and
   /// environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
   ///
-  /// @param session  Required. The name of the session this query is sent to.
-  /// Format:
+  /// @param session  Required. The name of the session this query is sent to. Format:
   ///  `projects/<Project ID>/agent/sessions/<Session ID>`, or
   ///  `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
-  ///  ID>/sessions/<Session ID>`. If `Environment ID` is not specified, we
-  ///  assume default 'draft' environment (`Environment ID` might be referred to
-  ///  as environment name at some places). If `User ID` is not specified, we
-  ///  are using "-". It's up to the API caller to choose an appropriate
-  ///  `Session ID` and `User Id`. They can be a random number or some type of
-  ///  user and session identifiers (preferably hashed). The length of the
-  ///  `Session ID` and `User ID` must not exceed 36 characters. For more
-  ///  information, see the [API interactions
+  ///  ID>/sessions/<Session ID>`. If `Environment ID` is not specified, we assume
+  ///  default 'draft' environment (`Environment ID` might be referred to as
+  ///  environment name at some places). If `User ID` is not specified, we are
+  ///  using "-". It's up to the API caller to choose an appropriate `Session ID`
+  ///  and `User Id`. They can be a random number or some type of user and session
+  ///  identifiers (preferably hashed). The length of the `Session ID` and
+  ///  `User ID` must not exceed 36 characters.
+  ///  For more information, see the [API interactions
   ///  guide](https://cloud.google.com/dialogflow/docs/api-overview).
   ///  Note: Always use agent versions for production traffic.
   ///  See [Versions and
   ///  environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
   /// @param query_input  Required. The input specification. It can be set to:
   ///  1.  an audio config
-  ///      which instructs the speech recognizer how to process the speech
-  ///      audio,
+  ///      which instructs the speech recognizer how to process the speech audio,
   ///  2.  a conversational query in the form of text, or
   ///  3.  an event that specifies which intent to trigger.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::DetectIntentResponse,google/cloud/dialogflow/v2/session.proto#L172}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.DetectIntentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.DetectIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L112}
-  /// [google.cloud.dialogflow.v2.DetectIntentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L172}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.DetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L112}
+  /// [google.cloud.dialogflow.v2.DetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L172}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse> DetectIntent(
       std::string const& session,
       google::cloud::dialogflow::v2::QueryInput const& query_input,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Processes a natural language query and returns structured, actionable data
   /// as a result. This method is not idempotent, because it may cause contexts
@@ -156,22 +164,35 @@ class SessionsClient {
   /// See [Versions and
   /// environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::DetectIntentRequest,google/cloud/dialogflow/v2/session.proto#L112}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.DetectIntentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::DetectIntentResponse,google/cloud/dialogflow/v2/session.proto#L172}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.DetectIntentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.DetectIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L112}
-  /// [google.cloud.dialogflow.v2.DetectIntentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L172}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.DetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L112}
+  /// [google.cloud.dialogflow.v2.DetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L172}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse> DetectIntent(
       google::cloud::dialogflow::v2::DetectIntentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Processes a natural language query in audio format in a streaming fashion
   /// and returns structured, actionable data as a result. This method is only
@@ -190,16 +211,26 @@ class SessionsClient {
   ///
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return A bidirectional streaming interface with request (write) type:
-  /// @googleapis_link{google::cloud::dialogflow::v2::StreamingDetectIntentRequest,google/cloud/dialogflow/v2/session.proto#L418}
-  /// and response (read) type:
-  /// @googleapis_link{google::cloud::dialogflow::v2::StreamingDetectIntentResponse,google/cloud/dialogflow/v2/session.proto#L570}
+  /// @return An object representing the bidirectional streaming
+  ///     RPC. Applications can send multiple request messages and receive
+  ///     multiple response messages through this API. Bidirectional streaming
+  ///     RPCs can impose restrictions on the sequence of request and response
+  ///     messages. Please consult the service documentation for details.
+  ///     The request message type ([google.cloud.dialogflow.v2.StreamingDetectIntentRequest]) and response messages
+  ///     ([google.cloud.dialogflow.v2.StreamingDetectIntentResponse]) are mapped to C++ classes using the
+  ///     [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.StreamingDetectIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L418}
-  /// [google.cloud.dialogflow.v2.StreamingDetectIntentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L570}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.StreamingDetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L418}
+  /// [google.cloud.dialogflow.v2.StreamingDetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L570}
   ///
+  // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::v2::StreamingDetectIntentRequest,
       google::cloud::dialogflow::v2::StreamingDetectIntentResponse>>

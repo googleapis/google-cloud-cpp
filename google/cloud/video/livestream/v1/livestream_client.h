@@ -91,12 +91,12 @@ class LivestreamServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a channel with the provided unique ID in the specified
   /// region.
   ///
-  /// @param parent  Required. The parent location for the resource, in the form
-  /// of:
+  /// @param parent  Required. The parent location for the resource, in the form of:
   ///  `projects/{project}/locations/{location}`.
   /// @param channel  Required. The channel resource to be created.
   /// @param channel_id  Required. The ID of the channel resource to be created.
@@ -104,77 +104,150 @@ class LivestreamServiceClient {
   ///  could contain dashes (-) in between.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L128}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.livestream.v1.Channel] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.livestream.v1.Channel]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
-  /// [google.cloud.video.livestream.v1.CreateChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L226}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.Channel]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
+  /// [google.cloud.video.livestream.v1.CreateChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L226}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Channel>> CreateChannel(
       std::string const& parent,
       google::cloud::video::livestream::v1::Channel const& channel,
       std::string const& channel_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a channel with the provided unique ID in the specified
   /// region.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::CreateChannelRequest,google/cloud/video/livestream/v1/service.proto#L226}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.livestream.v1.CreateChannelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L128}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.livestream.v1.Channel] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.livestream.v1.Channel]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
-  /// [google.cloud.video.livestream.v1.CreateChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L226}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.Channel]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
+  /// [google.cloud.video.livestream.v1.CreateChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L226}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Channel>> CreateChannel(
       google::cloud::video::livestream::v1::CreateChannelRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a list of all channels in the specified region.
   ///
-  /// @param parent  Required. The parent location for the resource, in the form
-  /// of:
+  /// @param parent  Required. The parent location for the resource, in the form of:
   ///  `projects/{project}/locations/{location}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L128}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.livestream.v1.Channel], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.livestream.v1.Channel]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
-  /// [google.cloud.video.livestream.v1.ListChannelsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L261}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.Channel]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
+  /// [google.cloud.video.livestream.v1.ListChannelsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L261}
   ///
+  // clang-format on
   StreamRange<google::cloud::video::livestream::v1::Channel> ListChannels(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a list of all channels in the specified region.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::ListChannelsRequest,google/cloud/video/livestream/v1/service.proto#L261}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.livestream.v1.ListChannelsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L128}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.livestream.v1.Channel], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.livestream.v1.Channel]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
-  /// [google.cloud.video.livestream.v1.ListChannelsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L261}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.Channel]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
+  /// [google.cloud.video.livestream.v1.ListChannelsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L261}
   ///
+  // clang-format on
   StreamRange<google::cloud::video::livestream::v1::Channel> ListChannels(
       google::cloud::video::livestream::v1::ListChannelsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the specified channel.
   ///
@@ -182,36 +255,58 @@ class LivestreamServiceClient {
   ///  `projects/{project}/locations/{location}/channels/{channelId}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L128}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.livestream.v1.Channel])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.livestream.v1.Channel]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
-  /// [google.cloud.video.livestream.v1.GetChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L303}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.Channel]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
+  /// [google.cloud.video.livestream.v1.GetChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L303}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::livestream::v1::Channel> GetChannel(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the specified channel.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::GetChannelRequest,google/cloud/video/livestream/v1/service.proto#L303}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.livestream.v1.GetChannelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L128}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.livestream.v1.Channel])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.livestream.v1.Channel]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
-  /// [google.cloud.video.livestream.v1.GetChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L303}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.Channel]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
+  /// [google.cloud.video.livestream.v1.GetChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L303}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::livestream::v1::Channel> GetChannel(
       google::cloud::video::livestream::v1::GetChannelRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified channel.
   ///
@@ -219,43 +314,76 @@ class LivestreamServiceClient {
   ///  `projects/{project}/locations/{location}/channels/{channelId}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::OperationMetadata,google/cloud/video/livestream/v1/service.proto#L715}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.livestream.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.livestream.v1.DeleteChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L315}
-  /// [google.cloud.video.livestream.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L715}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.DeleteChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L315}
+  /// [google.cloud.video.livestream.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L715}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
   DeleteChannel(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified channel.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::DeleteChannelRequest,google/cloud/video/livestream/v1/service.proto#L315}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.livestream.v1.DeleteChannelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::OperationMetadata,google/cloud/video/livestream/v1/service.proto#L715}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.livestream.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.livestream.v1.DeleteChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L315}
-  /// [google.cloud.video.livestream.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L715}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.DeleteChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L315}
+  /// [google.cloud.video.livestream.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L715}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
   DeleteChannel(
       google::cloud::video::livestream::v1::DeleteChannelRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the specified channel.
   ///
   /// @param channel  Required. The channel resource to be updated.
-  /// @param update_mask  Field mask is used to specify the fields to be
-  /// overwritten in the Channel
+  /// @param update_mask  Field mask is used to specify the fields to be overwritten in the Channel
   ///  resource by the update. You can only update the following fields:
   ///  * [`inputAttachments`](https://cloud.google.com/livestream/docs/reference/rest/v1/projects.locations.channels#inputattachment)
   ///  * [`inputConfig`](https://cloud.google.com/livestream/docs/reference/rest/v1/projects.locations.channels#inputconfig)
@@ -269,42 +397,76 @@ class LivestreamServiceClient {
   ///  * [`encryptions`](https://cloud.google.com/livestream/docs/reference/rest/v1/projects.locations.channels#encryption)
   ///  The fields specified in the update_mask are relative to the resource, not
   ///  the full request. A field will be overwritten if it is in the mask.
-  ///  If the mask is not present, then each field from the list above is
-  ///  updated if the field appears in the request payload. To unset a field,
-  ///  add the field to the update mask and remove it from the request payload.
+  ///  If the mask is not present, then each field from the list above is updated
+  ///  if the field appears in the request payload. To unset a field, add the
+  ///  field to the update mask and remove it from the request payload.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L128}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.livestream.v1.Channel] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.livestream.v1.Channel]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
-  /// [google.cloud.video.livestream.v1.UpdateChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L348}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.Channel]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
+  /// [google.cloud.video.livestream.v1.UpdateChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L348}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Channel>> UpdateChannel(
       google::cloud::video::livestream::v1::Channel const& channel,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the specified channel.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::UpdateChannelRequest,google/cloud/video/livestream/v1/service.proto#L348}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.livestream.v1.UpdateChannelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L128}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.livestream.v1.Channel] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.livestream.v1.Channel]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
-  /// [google.cloud.video.livestream.v1.UpdateChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L348}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.Channel]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
+  /// [google.cloud.video.livestream.v1.UpdateChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L348}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Channel>> UpdateChannel(
       google::cloud::video::livestream::v1::UpdateChannelRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Starts the specified channel. Part of the video pipeline will be created
   /// only when the StartChannel request is received by the server.
@@ -313,40 +475,74 @@ class LivestreamServiceClient {
   ///  `projects/{project}/locations/{location}/channels/{channelId}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::ChannelOperationResponse,google/cloud/video/livestream/v1/service.proto#L712}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.livestream.v1.ChannelOperationResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.livestream.v1.ChannelOperationResponse]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L712}
-  /// [google.cloud.video.livestream.v1.StartChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L391}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.ChannelOperationResponse]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L712}
+  /// [google.cloud.video.livestream.v1.StartChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L391}
   ///
+  // clang-format on
   future<
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
   StartChannel(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Starts the specified channel. Part of the video pipeline will be created
   /// only when the StartChannel request is received by the server.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::StartChannelRequest,google/cloud/video/livestream/v1/service.proto#L391}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.livestream.v1.StartChannelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::ChannelOperationResponse,google/cloud/video/livestream/v1/service.proto#L712}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.livestream.v1.ChannelOperationResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.livestream.v1.ChannelOperationResponse]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L712}
-  /// [google.cloud.video.livestream.v1.StartChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L391}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.ChannelOperationResponse]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L712}
+  /// [google.cloud.video.livestream.v1.StartChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L391}
   ///
+  // clang-format on
   future<
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
   StartChannel(
       google::cloud::video::livestream::v1::StartChannelRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Stops the specified channel. Part of the video pipeline will be released
   /// when the StopChannel request is received by the server.
@@ -355,45 +551,78 @@ class LivestreamServiceClient {
   ///  `projects/{project}/locations/{location}/channels/{channelId}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::ChannelOperationResponse,google/cloud/video/livestream/v1/service.proto#L712}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.livestream.v1.ChannelOperationResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.livestream.v1.ChannelOperationResponse]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L712}
-  /// [google.cloud.video.livestream.v1.StopChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L418}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.ChannelOperationResponse]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L712}
+  /// [google.cloud.video.livestream.v1.StopChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L418}
   ///
+  // clang-format on
   future<
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
   StopChannel(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Stops the specified channel. Part of the video pipeline will be released
   /// when the StopChannel request is received by the server.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::StopChannelRequest,google/cloud/video/livestream/v1/service.proto#L418}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.livestream.v1.StopChannelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::ChannelOperationResponse,google/cloud/video/livestream/v1/service.proto#L712}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.livestream.v1.ChannelOperationResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.livestream.v1.ChannelOperationResponse]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L712}
-  /// [google.cloud.video.livestream.v1.StopChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L418}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.ChannelOperationResponse]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L712}
+  /// [google.cloud.video.livestream.v1.StopChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L418}
   ///
+  // clang-format on
   future<
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
   StopChannel(
       google::cloud::video::livestream::v1::StopChannelRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates an input with the provided unique ID in the specified region.
   ///
-  /// @param parent  Required. The parent location for the resource, in the form
-  /// of:
+  /// @param parent  Required. The parent location for the resource, in the form of:
   ///  `projects/{project}/locations/{location}`.
   /// @param input  Required. The input resource to be created.
   /// @param input_id  Required. The ID of the input resource to be created.
@@ -401,76 +630,149 @@ class LivestreamServiceClient {
   ///  could contain dashes (-) in between.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Input,google/cloud/video/livestream/v1/resources.proto#L36}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.livestream.v1.Input] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.livestream.v1.CreateInputRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L445}
-  /// [google.cloud.video.livestream.v1.Input]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.CreateInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L445}
+  /// [google.cloud.video.livestream.v1.Input]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Input>> CreateInput(
       std::string const& parent,
       google::cloud::video::livestream::v1::Input const& input,
       std::string const& input_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates an input with the provided unique ID in the specified region.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::CreateInputRequest,google/cloud/video/livestream/v1/service.proto#L445}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.livestream.v1.CreateInputRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Input,google/cloud/video/livestream/v1/resources.proto#L36}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.livestream.v1.Input] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.livestream.v1.CreateInputRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L445}
-  /// [google.cloud.video.livestream.v1.Input]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.CreateInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L445}
+  /// [google.cloud.video.livestream.v1.Input]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Input>> CreateInput(
       google::cloud::video::livestream::v1::CreateInputRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a list of all inputs in the specified region.
   ///
-  /// @param parent  Required. The parent location for the resource, in the form
-  /// of:
+  /// @param parent  Required. The parent location for the resource, in the form of:
   ///  `projects/{project}/locations/{location}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Input,google/cloud/video/livestream/v1/resources.proto#L36}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.livestream.v1.Input], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.livestream.v1.Input]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
-  /// [google.cloud.video.livestream.v1.ListInputsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L480}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.Input]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
+  /// [google.cloud.video.livestream.v1.ListInputsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L480}
   ///
+  // clang-format on
   StreamRange<google::cloud::video::livestream::v1::Input> ListInputs(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a list of all inputs in the specified region.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::ListInputsRequest,google/cloud/video/livestream/v1/service.proto#L480}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.livestream.v1.ListInputsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Input,google/cloud/video/livestream/v1/resources.proto#L36}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.livestream.v1.Input], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.livestream.v1.Input]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
-  /// [google.cloud.video.livestream.v1.ListInputsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L480}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.Input]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
+  /// [google.cloud.video.livestream.v1.ListInputsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L480}
   ///
+  // clang-format on
   StreamRange<google::cloud::video::livestream::v1::Input> ListInputs(
       google::cloud::video::livestream::v1::ListInputsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the specified input.
   ///
@@ -478,36 +780,58 @@ class LivestreamServiceClient {
   ///  `projects/{project}/locations/{location}/inputs/{inputId}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Input,google/cloud/video/livestream/v1/resources.proto#L36}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.livestream.v1.Input])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.livestream.v1.GetInputRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L522}
-  /// [google.cloud.video.livestream.v1.Input]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.GetInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L522}
+  /// [google.cloud.video.livestream.v1.Input]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::livestream::v1::Input> GetInput(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the specified input.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::GetInputRequest,google/cloud/video/livestream/v1/service.proto#L522}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.livestream.v1.GetInputRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Input,google/cloud/video/livestream/v1/resources.proto#L36}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.livestream.v1.Input])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.livestream.v1.GetInputRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L522}
-  /// [google.cloud.video.livestream.v1.Input]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.GetInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L522}
+  /// [google.cloud.video.livestream.v1.Input]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::livestream::v1::Input> GetInput(
       google::cloud::video::livestream::v1::GetInputRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified input.
   ///
@@ -515,89 +839,155 @@ class LivestreamServiceClient {
   ///  `projects/{project}/locations/{location}/inputs/{inputId}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::OperationMetadata,google/cloud/video/livestream/v1/service.proto#L715}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.livestream.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.livestream.v1.DeleteInputRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L534}
-  /// [google.cloud.video.livestream.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L715}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.DeleteInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L534}
+  /// [google.cloud.video.livestream.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L715}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
   DeleteInput(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified input.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::DeleteInputRequest,google/cloud/video/livestream/v1/service.proto#L534}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.livestream.v1.DeleteInputRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::OperationMetadata,google/cloud/video/livestream/v1/service.proto#L715}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.livestream.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.livestream.v1.DeleteInputRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L534}
-  /// [google.cloud.video.livestream.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L715}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.DeleteInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L534}
+  /// [google.cloud.video.livestream.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L715}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
   DeleteInput(
       google::cloud::video::livestream::v1::DeleteInputRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the specified input.
   ///
   /// @param input  Required. The input resource to be updated.
-  /// @param update_mask  Field mask is used to specify the fields to be
-  /// overwritten in the Input
+  /// @param update_mask  Field mask is used to specify the fields to be overwritten in the Input
   ///  resource by the update. You can only update the following fields:
   ///  * [`preprocessingConfig`](https://cloud.google.com/livestream/docs/reference/rest/v1/projects.locations.inputs#PreprocessingConfig)
   ///  * [`securityRules`](https://cloud.google.com/livestream/docs/reference/rest/v1/projects.locations.inputs#SecurityRule)
   ///  The fields specified in the update_mask are relative to the resource, not
   ///  the full request. A field will be overwritten if it is in the mask.
-  ///  If the mask is not present, then each field from the list above is
-  ///  updated if the field appears in the request payload. To unset a field,
-  ///  add the field to the update mask and remove it from the request payload.
+  ///  If the mask is not present, then each field from the list above is updated
+  ///  if the field appears in the request payload. To unset a field, add the
+  ///  field to the update mask and remove it from the request payload.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Input,google/cloud/video/livestream/v1/resources.proto#L36}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.livestream.v1.Input] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.livestream.v1.Input]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
-  /// [google.cloud.video.livestream.v1.UpdateInputRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L561}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.Input]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
+  /// [google.cloud.video.livestream.v1.UpdateInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L561}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Input>> UpdateInput(
       google::cloud::video::livestream::v1::Input const& input,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the specified input.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::UpdateInputRequest,google/cloud/video/livestream/v1/service.proto#L561}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.livestream.v1.UpdateInputRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Input,google/cloud/video/livestream/v1/resources.proto#L36}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.video.livestream.v1.Input] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.livestream.v1.Input]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
-  /// [google.cloud.video.livestream.v1.UpdateInputRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L561}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.Input]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
+  /// [google.cloud.video.livestream.v1.UpdateInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L561}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Input>> UpdateInput(
       google::cloud::video::livestream::v1::UpdateInputRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates an event with the provided unique ID in the specified channel.
   ///
-  /// @param parent  Required. The parent channel for the resource, in the form
-  /// of:
+  /// @param parent  Required. The parent channel for the resource, in the form of:
   ///  `projects/{project}/locations/{location}/channels/{channelId}`.
   /// @param event  Required. The event resource to be created.
   /// @param event_id  Required. The ID of the event resource to be created.
@@ -605,76 +995,137 @@ class LivestreamServiceClient {
   ///  could contain dashes (-) in between.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Event,google/cloud/video/livestream/v1/resources.proto#L390}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.livestream.v1.Event])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.livestream.v1.CreateEventRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L596}
-  /// [google.cloud.video.livestream.v1.Event]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L390}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.CreateEventRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L596}
+  /// [google.cloud.video.livestream.v1.Event]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L390}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::livestream::v1::Event> CreateEvent(
       std::string const& parent,
       google::cloud::video::livestream::v1::Event const& event,
       std::string const& event_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates an event with the provided unique ID in the specified channel.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::CreateEventRequest,google/cloud/video/livestream/v1/service.proto#L596}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.livestream.v1.CreateEventRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Event,google/cloud/video/livestream/v1/resources.proto#L390}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.livestream.v1.Event])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.livestream.v1.CreateEventRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L596}
-  /// [google.cloud.video.livestream.v1.Event]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L390}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.CreateEventRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L596}
+  /// [google.cloud.video.livestream.v1.Event]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L390}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::livestream::v1::Event> CreateEvent(
       google::cloud::video::livestream::v1::CreateEventRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a list of all events in the specified channel.
   ///
-  /// @param parent  Required. The parent channel for the resource, in the form
-  /// of:
+  /// @param parent  Required. The parent channel for the resource, in the form of:
   ///  `projects/{project}/locations/{location}/channels/{channelId}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Event,google/cloud/video/livestream/v1/resources.proto#L390}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.livestream.v1.Event], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.livestream.v1.Event]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L390}
-  /// [google.cloud.video.livestream.v1.ListEventsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L631}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.Event]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L390}
+  /// [google.cloud.video.livestream.v1.ListEventsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L631}
   ///
+  // clang-format on
   StreamRange<google::cloud::video::livestream::v1::Event> ListEvents(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a list of all events in the specified channel.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::ListEventsRequest,google/cloud/video/livestream/v1/service.proto#L631}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.livestream.v1.ListEventsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Event,google/cloud/video/livestream/v1/resources.proto#L390}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.video.livestream.v1.Event], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.video.livestream.v1.Event]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L390}
-  /// [google.cloud.video.livestream.v1.ListEventsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L631}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.Event]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L390}
+  /// [google.cloud.video.livestream.v1.ListEventsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L631}
   ///
+  // clang-format on
   StreamRange<google::cloud::video::livestream::v1::Event> ListEvents(
       google::cloud::video::livestream::v1::ListEventsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the specified event.
   ///
@@ -682,36 +1133,58 @@ class LivestreamServiceClient {
   ///  `projects/{project}/locations/{location}/channels/{channelId}/events/{eventId}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Event,google/cloud/video/livestream/v1/resources.proto#L390}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.livestream.v1.Event])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.livestream.v1.Event]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L390}
-  /// [google.cloud.video.livestream.v1.GetEventRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L673}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.Event]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L390}
+  /// [google.cloud.video.livestream.v1.GetEventRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L673}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::livestream::v1::Event> GetEvent(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the specified event.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::GetEventRequest,google/cloud/video/livestream/v1/service.proto#L673}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.livestream.v1.GetEventRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Event,google/cloud/video/livestream/v1/resources.proto#L390}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.video.livestream.v1.Event])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.video.livestream.v1.Event]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L390}
-  /// [google.cloud.video.livestream.v1.GetEventRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L673}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.Event]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L390}
+  /// [google.cloud.video.livestream.v1.GetEventRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L673}
   ///
+  // clang-format on
   StatusOr<google::cloud::video::livestream::v1::Event> GetEvent(
       google::cloud::video::livestream::v1::GetEventRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified event.
   ///
@@ -719,23 +1192,46 @@ class LivestreamServiceClient {
   ///  `projects/{project}/locations/{location}/channels/{channelId}/events/{eventId}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.video.livestream.v1.DeleteEventRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L685}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.DeleteEventRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L685}
   ///
+  // clang-format on
   Status DeleteEvent(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified event.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::DeleteEventRequest,google/cloud/video/livestream/v1/service.proto#L685}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.video.livestream.v1.DeleteEventRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.video.livestream.v1.DeleteEventRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L685}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.video.livestream.v1.DeleteEventRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L685}
   ///
+  // clang-format on
   Status DeleteEvent(
       google::cloud::video::livestream::v1::DeleteEventRequest const& request,
       Options opts = {});

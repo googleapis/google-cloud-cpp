@@ -90,6 +90,7 @@ class ConversationDatasetsClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a new conversation dataset.
   ///
@@ -102,22 +103,34 @@ class ConversationDatasetsClient {
   /// - `response`:
   /// [ConversationDataset][google.cloud.dialogflow.v2.ConversationDataset]
   ///
-  /// @param parent  Required. The project to create conversation dataset for.
-  /// Format:
+  /// @param parent  Required. The project to create conversation dataset for. Format:
   ///  `projects/<Project ID>/locations/<Location ID>`
   /// @param conversation_dataset  Required. The conversation dataset to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L170}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dialogflow.v2.ConversationDataset] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.ConversationDataset]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L170}
-  /// [google.cloud.dialogflow.v2.CreateConversationDatasetOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L327}
-  /// [google.cloud.dialogflow.v2.CreateConversationDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L205}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.ConversationDataset]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L170}
+  /// [google.cloud.dialogflow.v2.CreateConversationDatasetOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L327}
+  /// [google.cloud.dialogflow.v2.CreateConversationDatasetRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L205}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
   CreateConversationDataset(
       std::string const& parent,
@@ -125,6 +138,7 @@ class ConversationDatasetsClient {
           conversation_dataset,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new conversation dataset.
   ///
@@ -137,26 +151,44 @@ class ConversationDatasetsClient {
   /// - `response`:
   /// [ConversationDataset][google.cloud.dialogflow.v2.ConversationDataset]
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::CreateConversationDatasetRequest,google/cloud/dialogflow/v2/conversation_dataset.proto#L205}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.CreateConversationDatasetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L170}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dialogflow.v2.ConversationDataset] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.ConversationDataset]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L170}
-  /// [google.cloud.dialogflow.v2.CreateConversationDatasetOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L327}
-  /// [google.cloud.dialogflow.v2.CreateConversationDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L205}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.ConversationDataset]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L170}
+  /// [google.cloud.dialogflow.v2.CreateConversationDatasetOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L327}
+  /// [google.cloud.dialogflow.v2.CreateConversationDatasetRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L205}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
   CreateConversationDataset(
       google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves the specified conversation dataset.
   ///
@@ -165,79 +197,140 @@ class ConversationDatasetsClient {
   ///  ID>/conversationDatasets/<Conversation Dataset ID>`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L170}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.ConversationDataset])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.ConversationDataset]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L170}
-  /// [google.cloud.dialogflow.v2.GetConversationDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L217}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.ConversationDataset]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L170}
+  /// [google.cloud.dialogflow.v2.GetConversationDatasetRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L217}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
   GetConversationDataset(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves the specified conversation dataset.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::GetConversationDatasetRequest,google/cloud/dialogflow/v2/conversation_dataset.proto#L217}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.GetConversationDatasetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L170}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.v2.ConversationDataset])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.v2.ConversationDataset]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L170}
-  /// [google.cloud.dialogflow.v2.GetConversationDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L217}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.ConversationDataset]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L170}
+  /// [google.cloud.dialogflow.v2.GetConversationDatasetRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L217}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
   GetConversationDataset(
       google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the list of all conversation datasets in the specified
   /// project and location.
   ///
-  /// @param parent  Required. The project and location name to list all
-  /// conversation datasets
+  /// @param parent  Required. The project and location name to list all conversation datasets
   ///  for. Format: `projects/<Project ID>/locations/<Location ID>`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L170}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dialogflow.v2.ConversationDataset], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.ConversationDataset]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L170}
-  /// [google.cloud.dialogflow.v2.ListConversationDatasetsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L231}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.ConversationDataset]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L170}
+  /// [google.cloud.dialogflow.v2.ListConversationDatasetsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L231}
   ///
+  // clang-format on
   StreamRange<google::cloud::dialogflow::v2::ConversationDataset>
   ListConversationDatasets(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the list of all conversation datasets in the specified
   /// project and location.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ListConversationDatasetsRequest,google/cloud/dialogflow/v2/conversation_dataset.proto#L231}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.ListConversationDatasetsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L170}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dialogflow.v2.ConversationDataset], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.ConversationDataset]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L170}
-  /// [google.cloud.dialogflow.v2.ListConversationDatasetsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L231}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.ConversationDataset]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L170}
+  /// [google.cloud.dialogflow.v2.ListConversationDatasetsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L231}
   ///
+  // clang-format on
   StreamRange<google::cloud::dialogflow::v2::ConversationDataset>
   ListConversationDatasets(
       google::cloud::dialogflow::v2::ListConversationDatasetsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified conversation dataset.
   ///
@@ -255,18 +348,33 @@ class ConversationDatasetsClient {
   ///  ID>/conversationDatasets/<Conversation Dataset ID>`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata,google/cloud/dialogflow/v2/conversation_dataset.proto#L337}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dialogflow.v2.DeleteConversationDatasetOperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.DeleteConversationDatasetOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L337}
-  /// [google.cloud.dialogflow.v2.DeleteConversationDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L262}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.DeleteConversationDatasetOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L337}
+  /// [google.cloud.dialogflow.v2.DeleteConversationDatasetRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L262}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::
                       DeleteConversationDatasetOperationMetadata>>
   DeleteConversationDataset(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified conversation dataset.
   ///
@@ -279,18 +387,36 @@ class ConversationDatasetsClient {
   /// - `response`: An [Empty
   ///   message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationDatasetRequest,google/cloud/dialogflow/v2/conversation_dataset.proto#L262}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.DeleteConversationDatasetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata,google/cloud/dialogflow/v2/conversation_dataset.proto#L337}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dialogflow.v2.DeleteConversationDatasetOperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.DeleteConversationDatasetOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L337}
-  /// [google.cloud.dialogflow.v2.DeleteConversationDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L262}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.DeleteConversationDatasetOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L337}
+  /// [google.cloud.dialogflow.v2.DeleteConversationDatasetRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L262}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::
                       DeleteConversationDatasetOperationMetadata>>
   DeleteConversationDataset(
@@ -298,6 +424,7 @@ class ConversationDatasetsClient {
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Import data into the specified conversation dataset. Note that it
   /// is not allowed to import data to a conversation dataset that
@@ -312,20 +439,37 @@ class ConversationDatasetsClient {
   /// - `response`:
   /// [ImportConversationDataOperationResponse][google.cloud.dialogflow.v2.ImportConversationDataOperationResponse]
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ImportConversationDataRequest,google/cloud/dialogflow/v2/conversation_dataset.proto#L276}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.v2.ImportConversationDataRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ImportConversationDataOperationResponse,google/cloud/dialogflow/v2/conversation_dataset.proto#L314}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dialogflow.v2.ImportConversationDataOperationResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.v2.ImportConversationDataOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L294}
-  /// [google.cloud.dialogflow.v2.ImportConversationDataOperationResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L314}
-  /// [google.cloud.dialogflow.v2.ImportConversationDataRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L276}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.v2.ImportConversationDataOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L294}
+  /// [google.cloud.dialogflow.v2.ImportConversationDataOperationResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L314}
+  /// [google.cloud.dialogflow.v2.ImportConversationDataRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L276}
   ///
+  // clang-format on
   future<StatusOr<
       google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
   ImportConversationData(

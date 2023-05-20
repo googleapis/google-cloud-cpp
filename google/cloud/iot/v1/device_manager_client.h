@@ -86,50 +86,71 @@ class DeviceManagerClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a device registry that contains devices.
   ///
-  /// @param parent  Required. The project and cloud region where this device
-  /// registry must be created.
+  /// @param parent  Required. The project and cloud region where this device registry must be created.
   ///  For example, `projects/example-project/locations/us-central1`.
-  /// @param device_registry  Required. The device registry. The field `name`
-  /// must be empty. The server will
+  /// @param device_registry  Required. The device registry. The field `name` must be empty. The server will
   ///  generate that field from the device registry `id` provided and the
   ///  `parent` field.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::DeviceRegistry,google/cloud/iot/v1/resources.proto#L155}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.DeviceRegistry])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.CreateDeviceRegistryRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L273}
-  /// [google.cloud.iot.v1.DeviceRegistry]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.CreateDeviceRegistryRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L273}
+  /// [google.cloud.iot.v1.DeviceRegistry]: @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::DeviceRegistry> CreateDeviceRegistry(
       std::string const& parent,
       google::cloud::iot::v1::DeviceRegistry const& device_registry,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a device registry that contains devices.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::CreateDeviceRegistryRequest,google/cloud/iot/v1/device_manager.proto#L273}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iot.v1.CreateDeviceRegistryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::DeviceRegistry,google/cloud/iot/v1/resources.proto#L155}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.DeviceRegistry])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.CreateDeviceRegistryRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L273}
-  /// [google.cloud.iot.v1.DeviceRegistry]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.CreateDeviceRegistryRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L273}
+  /// [google.cloud.iot.v1.DeviceRegistry]: @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::DeviceRegistry> CreateDeviceRegistry(
       google::cloud::iot::v1::CreateDeviceRegistryRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a device registry configuration.
   ///
@@ -137,82 +158,124 @@ class DeviceManagerClient {
   ///  `projects/example-project/locations/us-central1/registries/my-registry`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::DeviceRegistry,google/cloud/iot/v1/resources.proto#L155}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.DeviceRegistry])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.DeviceRegistry]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
-  /// [google.cloud.iot.v1.GetDeviceRegistryRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L290}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.DeviceRegistry]: @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
+  /// [google.cloud.iot.v1.GetDeviceRegistryRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L290}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::DeviceRegistry> GetDeviceRegistry(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a device registry configuration.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::GetDeviceRegistryRequest,google/cloud/iot/v1/device_manager.proto#L290}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iot.v1.GetDeviceRegistryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::DeviceRegistry,google/cloud/iot/v1/resources.proto#L155}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.DeviceRegistry])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.DeviceRegistry]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
-  /// [google.cloud.iot.v1.GetDeviceRegistryRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L290}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.DeviceRegistry]: @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
+  /// [google.cloud.iot.v1.GetDeviceRegistryRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L290}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::DeviceRegistry> GetDeviceRegistry(
       google::cloud::iot::v1::GetDeviceRegistryRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a device registry configuration.
   ///
-  /// @param device_registry  Required. The new values for the device registry.
-  /// The `id` field must be empty, and
+  /// @param device_registry  Required. The new values for the device registry. The `id` field must be empty, and
   ///  the `name` field must indicate the path of the resource. For example,
   ///  `projects/example-project/locations/us-central1/registries/my-registry`.
-  /// @param update_mask  Required. Only updates the `device_registry` fields
-  /// indicated by this mask.
+  /// @param update_mask  Required. Only updates the `device_registry` fields indicated by this mask.
   ///  The field mask must not be empty, and it must not contain fields that
   ///  are immutable or only set by the server.
   ///  Mutable top-level fields: `event_notification_config`, `http_config`,
   ///  `mqtt_config`, and `state_notification_config`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::DeviceRegistry,google/cloud/iot/v1/resources.proto#L155}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.DeviceRegistry])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.DeviceRegistry]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
-  /// [google.cloud.iot.v1.UpdateDeviceRegistryRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L314}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.DeviceRegistry]: @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
+  /// [google.cloud.iot.v1.UpdateDeviceRegistryRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L314}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::DeviceRegistry> UpdateDeviceRegistry(
       google::cloud::iot::v1::DeviceRegistry const& device_registry,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a device registry configuration.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::UpdateDeviceRegistryRequest,google/cloud/iot/v1/device_manager.proto#L314}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iot.v1.UpdateDeviceRegistryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::DeviceRegistry,google/cloud/iot/v1/resources.proto#L155}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.DeviceRegistry])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.DeviceRegistry]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
-  /// [google.cloud.iot.v1.UpdateDeviceRegistryRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L314}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.DeviceRegistry]: @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
+  /// [google.cloud.iot.v1.UpdateDeviceRegistryRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L314}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::DeviceRegistry> UpdateDeviceRegistry(
       google::cloud::iot::v1::UpdateDeviceRegistryRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a device registry configuration.
   ///
@@ -220,27 +283,51 @@ class DeviceManagerClient {
   ///  `projects/example-project/locations/us-central1/registries/my-registry`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.iot.v1.DeleteDeviceRegistryRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L302}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.DeleteDeviceRegistryRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L302}
   ///
+  // clang-format on
   Status DeleteDeviceRegistry(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a device registry configuration.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::DeleteDeviceRegistryRequest,google/cloud/iot/v1/device_manager.proto#L302}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iot.v1.DeleteDeviceRegistryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.iot.v1.DeleteDeviceRegistryRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L302}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.DeleteDeviceRegistryRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L302}
   ///
+  // clang-format on
   Status DeleteDeviceRegistry(
       google::cloud::iot::v1::DeleteDeviceRegistryRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists device registries.
   ///
@@ -248,195 +335,319 @@ class DeviceManagerClient {
   ///  `projects/example-project/locations/us-central1`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::DeviceRegistry,google/cloud/iot/v1/resources.proto#L155}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.iot.v1.DeviceRegistry], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.iot.v1.DeviceRegistry]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
-  /// [google.cloud.iot.v1.ListDeviceRegistriesRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L329}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.DeviceRegistry]: @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
+  /// [google.cloud.iot.v1.ListDeviceRegistriesRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L329}
   ///
+  // clang-format on
   StreamRange<google::cloud::iot::v1::DeviceRegistry> ListDeviceRegistries(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists device registries.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::ListDeviceRegistriesRequest,google/cloud/iot/v1/device_manager.proto#L329}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iot.v1.ListDeviceRegistriesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::DeviceRegistry,google/cloud/iot/v1/resources.proto#L155}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.iot.v1.DeviceRegistry], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.iot.v1.DeviceRegistry]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
-  /// [google.cloud.iot.v1.ListDeviceRegistriesRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L329}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.DeviceRegistry]: @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
+  /// [google.cloud.iot.v1.ListDeviceRegistriesRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L329}
   ///
+  // clang-format on
   StreamRange<google::cloud::iot::v1::DeviceRegistry> ListDeviceRegistries(
       google::cloud::iot::v1::ListDeviceRegistriesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a device in a device registry.
   ///
-  /// @param parent  Required. The name of the device registry where this device
-  /// should be created.
+  /// @param parent  Required. The name of the device registry where this device should be created.
   ///  For example,
   ///  `projects/example-project/locations/us-central1/registries/my-registry`.
-  /// @param device  Required. The device registration details. The field `name`
-  /// must be empty. The server
+  /// @param device  Required. The device registration details. The field `name` must be empty. The server
   ///  generates `name` from the device registry `id` and the
   ///  `parent` field.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::Device,google/cloud/iot/v1/resources.proto#L30}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.Device])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.CreateDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L363}
-  /// [google.cloud.iot.v1.Device]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.CreateDeviceRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L363}
+  /// [google.cloud.iot.v1.Device]: @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::Device> CreateDevice(
       std::string const& parent, google::cloud::iot::v1::Device const& device,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a device in a device registry.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::CreateDeviceRequest,google/cloud/iot/v1/device_manager.proto#L363}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iot.v1.CreateDeviceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::Device,google/cloud/iot/v1/resources.proto#L30}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.Device])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.CreateDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L363}
-  /// [google.cloud.iot.v1.Device]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.CreateDeviceRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L363}
+  /// [google.cloud.iot.v1.Device]: @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::Device> CreateDevice(
       google::cloud::iot::v1::CreateDeviceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets details about a device.
   ///
   /// @param name  Required. The name of the device. For example,
-  ///  `projects/p0/locations/us-central1/registries/registry0/devices/device0`
-  ///  or
+  ///  `projects/p0/locations/us-central1/registries/registry0/devices/device0` or
   ///  `projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::Device,google/cloud/iot/v1/resources.proto#L30}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.Device])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.Device]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
-  /// [google.cloud.iot.v1.GetDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L381}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.Device]: @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
+  /// [google.cloud.iot.v1.GetDeviceRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L381}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::Device> GetDevice(std::string const& name,
                                                      Options opts = {});
 
+  // clang-format off
   ///
   /// Gets details about a device.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::GetDeviceRequest,google/cloud/iot/v1/device_manager.proto#L381}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iot.v1.GetDeviceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::Device,google/cloud/iot/v1/resources.proto#L30}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.Device])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.Device]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
-  /// [google.cloud.iot.v1.GetDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L381}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.Device]: @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
+  /// [google.cloud.iot.v1.GetDeviceRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L381}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::Device> GetDevice(
       google::cloud::iot::v1::GetDeviceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a device.
   ///
-  /// @param device  Required. The new values for the device. The `id` and
-  /// `num_id` fields must
+  /// @param device  Required. The new values for the device. The `id` and `num_id` fields must
   ///  be empty, and the field `name` must specify the name path. For example,
   ///  `projects/p0/locations/us-central1/registries/registry0/devices/device0`or
   ///  `projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.
-  /// @param update_mask  Required. Only updates the `device` fields indicated
-  /// by this mask.
+  /// @param update_mask  Required. Only updates the `device` fields indicated by this mask.
   ///  The field mask must not be empty, and it must not contain fields that
   ///  are immutable or only set by the server.
   ///  Mutable top-level fields: `credentials`, `blocked`, and `metadata`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::Device,google/cloud/iot/v1/resources.proto#L30}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.Device])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.Device]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
-  /// [google.cloud.iot.v1.UpdateDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L399}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.Device]: @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
+  /// [google.cloud.iot.v1.UpdateDeviceRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L399}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::Device> UpdateDevice(
       google::cloud::iot::v1::Device const& device,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a device.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::UpdateDeviceRequest,google/cloud/iot/v1/device_manager.proto#L399}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iot.v1.UpdateDeviceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::Device,google/cloud/iot/v1/resources.proto#L30}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.Device])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.Device]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
-  /// [google.cloud.iot.v1.UpdateDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L399}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.Device]: @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
+  /// [google.cloud.iot.v1.UpdateDeviceRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L399}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::Device> UpdateDevice(
       google::cloud::iot::v1::UpdateDeviceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a device.
   ///
   /// @param name  Required. The name of the device. For example,
-  ///  `projects/p0/locations/us-central1/registries/registry0/devices/device0`
-  ///  or
+  ///  `projects/p0/locations/us-central1/registries/registry0/devices/device0` or
   ///  `projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.iot.v1.DeleteDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L414}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.DeleteDeviceRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L414}
   ///
+  // clang-format on
   Status DeleteDevice(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a device.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::DeleteDeviceRequest,google/cloud/iot/v1/device_manager.proto#L414}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iot.v1.DeleteDeviceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.iot.v1.DeleteDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L414}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.DeleteDeviceRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L414}
   ///
+  // clang-format on
   Status DeleteDevice(
       google::cloud::iot::v1::DeleteDeviceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// List devices in a device registry.
   ///
@@ -444,185 +655,294 @@ class DeviceManagerClient {
   ///  `projects/my-project/locations/us-central1/registries/my-registry`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::Device,google/cloud/iot/v1/resources.proto#L30}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.iot.v1.Device], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.iot.v1.Device]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
-  /// [google.cloud.iot.v1.ListDevicesRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L427}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.Device]: @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
+  /// [google.cloud.iot.v1.ListDevicesRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L427}
   ///
+  // clang-format on
   StreamRange<google::cloud::iot::v1::Device> ListDevices(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// List devices in a device registry.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::ListDevicesRequest,google/cloud/iot/v1/device_manager.proto#L427}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iot.v1.ListDevicesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::Device,google/cloud/iot/v1/resources.proto#L30}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.iot.v1.Device], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.iot.v1.Device]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
-  /// [google.cloud.iot.v1.ListDevicesRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L427}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.Device]: @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
+  /// [google.cloud.iot.v1.ListDevicesRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L427}
   ///
+  // clang-format on
   StreamRange<google::cloud::iot::v1::Device> ListDevices(
       google::cloud::iot::v1::ListDevicesRequest request, Options opts = {});
 
+  // clang-format off
   ///
   /// Modifies the configuration for the device, which is eventually sent from
   /// the Cloud IoT Core servers. Returns the modified configuration version and
   /// its metadata.
   ///
   /// @param name  Required. The name of the device. For example,
-  ///  `projects/p0/locations/us-central1/registries/registry0/devices/device0`
-  ///  or
+  ///  `projects/p0/locations/us-central1/registries/registry0/devices/device0` or
   ///  `projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.
   /// @param binary_data  Required. The configuration data for the device.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::DeviceConfig,google/cloud/iot/v1/resources.proto#L449}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.DeviceConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.DeviceConfig]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L449}
-  /// [google.cloud.iot.v1.ModifyCloudToDeviceConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L501}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.DeviceConfig]: @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L449}
+  /// [google.cloud.iot.v1.ModifyCloudToDeviceConfigRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L501}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::DeviceConfig> ModifyCloudToDeviceConfig(
       std::string const& name, std::string const& binary_data,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Modifies the configuration for the device, which is eventually sent from
   /// the Cloud IoT Core servers. Returns the modified configuration version and
   /// its metadata.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::ModifyCloudToDeviceConfigRequest,google/cloud/iot/v1/device_manager.proto#L501}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iot.v1.ModifyCloudToDeviceConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::DeviceConfig,google/cloud/iot/v1/resources.proto#L449}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.DeviceConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.DeviceConfig]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L449}
-  /// [google.cloud.iot.v1.ModifyCloudToDeviceConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L501}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.DeviceConfig]: @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L449}
+  /// [google.cloud.iot.v1.ModifyCloudToDeviceConfigRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L501}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::DeviceConfig> ModifyCloudToDeviceConfig(
       google::cloud::iot::v1::ModifyCloudToDeviceConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the last few versions of the device configuration in descending
   /// order (i.e.: newest first).
   ///
   /// @param name  Required. The name of the device. For example,
-  ///  `projects/p0/locations/us-central1/registries/registry0/devices/device0`
-  ///  or
+  ///  `projects/p0/locations/us-central1/registries/registry0/devices/device0` or
   ///  `projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::ListDeviceConfigVersionsResponse,google/cloud/iot/v1/device_manager.proto#L542}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.ListDeviceConfigVersionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.ListDeviceConfigVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L524}
-  /// [google.cloud.iot.v1.ListDeviceConfigVersionsResponse]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L542}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.ListDeviceConfigVersionsRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L524}
+  /// [google.cloud.iot.v1.ListDeviceConfigVersionsResponse]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L542}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::ListDeviceConfigVersionsResponse>
   ListDeviceConfigVersions(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the last few versions of the device configuration in descending
   /// order (i.e.: newest first).
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::ListDeviceConfigVersionsRequest,google/cloud/iot/v1/device_manager.proto#L524}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iot.v1.ListDeviceConfigVersionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::ListDeviceConfigVersionsResponse,google/cloud/iot/v1/device_manager.proto#L542}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.ListDeviceConfigVersionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.ListDeviceConfigVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L524}
-  /// [google.cloud.iot.v1.ListDeviceConfigVersionsResponse]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L542}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.ListDeviceConfigVersionsRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L524}
+  /// [google.cloud.iot.v1.ListDeviceConfigVersionsResponse]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L542}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::ListDeviceConfigVersionsResponse>
   ListDeviceConfigVersions(
       google::cloud::iot::v1::ListDeviceConfigVersionsRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the last few versions of the device state in descending order (i.e.:
   /// newest first).
   ///
   /// @param name  Required. The name of the device. For example,
-  ///  `projects/p0/locations/us-central1/registries/registry0/devices/device0`
-  ///  or
+  ///  `projects/p0/locations/us-central1/registries/registry0/devices/device0` or
   ///  `projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::ListDeviceStatesResponse,google/cloud/iot/v1/device_manager.proto#L567}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.ListDeviceStatesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.ListDeviceStatesRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L549}
-  /// [google.cloud.iot.v1.ListDeviceStatesResponse]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L567}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.ListDeviceStatesRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L549}
+  /// [google.cloud.iot.v1.ListDeviceStatesResponse]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L567}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::ListDeviceStatesResponse> ListDeviceStates(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the last few versions of the device state in descending order (i.e.:
   /// newest first).
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::ListDeviceStatesRequest,google/cloud/iot/v1/device_manager.proto#L549}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iot.v1.ListDeviceStatesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::ListDeviceStatesResponse,google/cloud/iot/v1/device_manager.proto#L567}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.ListDeviceStatesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.ListDeviceStatesRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L549}
-  /// [google.cloud.iot.v1.ListDeviceStatesResponse]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L567}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.ListDeviceStatesRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L549}
+  /// [google.cloud.iot.v1.ListDeviceStatesResponse]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L567}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::ListDeviceStatesResponse> ListDeviceStates(
       google::cloud::iot::v1::ListDeviceStatesRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy is being
-  /// specified.
+  /// @param resource  REQUIRED: The resource for which the policy is being specified.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param policy  REQUIRED: The complete policy to be applied to the
-  /// `resource`. The size of
+  /// @param policy  REQUIRED: The complete policy to be applied to the `resource`. The size of
   ///  the policy is limited to a few 10s of KB. An empty policy is a
   ///  valid policy but certain Cloud Platform services (such as Projects)
   ///  might reject them.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy,
       Options opts = {});
@@ -651,124 +971,178 @@ class DeviceManagerClient {
                                                  IamUpdater const& updater,
                                                  Options opts = {});
 
+  // clang-format off
   ///
   /// Sets the access control policy on the specified resource. Replaces any
   /// existing policy.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L101}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.SetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the access control policy for a resource.
   /// Returns an empty policy if the resource exists and does not have a policy
   /// set.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy is being
-  /// requested.
+  /// @param resource  REQUIRED: The resource for which the policy is being requested.
   ///  See the operation documentation for the appropriate value for this field.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
                                                  Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the access control policy for a resource.
   /// Returns an empty policy if the resource exists and does not have a policy
   /// set.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L123}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.GetIamPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.Policy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
-  /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
   /// If the resource does not exist, this will return an empty set of
   /// permissions, not a NOT_FOUND error.
   ///
-  /// @param resource  REQUIRED: The resource for which the policy detail is
-  /// being requested.
+  /// @param resource  REQUIRED: The resource for which the policy detail is being requested.
   ///  See the operation documentation for the appropriate value for this field.
-  /// @param permissions  The set of permissions to check for the `resource`.
-  /// Permissions with
+  /// @param permissions  The set of permissions to check for the `resource`. Permissions with
   ///  wildcards (such as '*' or 'storage.*') are not allowed. For more
   ///  information see
   ///  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.TestIamPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
-  /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       std::string const& resource, std::vector<std::string> const& permissions,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns permissions that a caller has on the specified resource.
   /// If the resource does not exist, this will return an empty set of
   /// permissions, not a NOT_FOUND error.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L136}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.v1.TestIamPermissionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.v1.TestIamPermissionsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
-  /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
+  // clang-format on
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Sends a command to the specified device. In order for a device to be able
   /// to receive commands, it must:
   /// 1) be connected to Cloud IoT Core using the MQTT protocol, and
   /// 2) be subscribed to the group of MQTT topics specified by
-  ///    /devices/{device-id}/commands/#. This subscription will receive
-  ///    commands at the top-level topic /devices/{device-id}/commands as well
-  ///    as commands for subfolders, like
-  ///    /devices/{device-id}/commands/subfolder. Note that subscribing to
-  ///    specific subfolders is not supported.
+  ///    /devices/{device-id}/commands/#. This subscription will receive commands
+  ///    at the top-level topic /devices/{device-id}/commands as well as commands
+  ///    for subfolders, like /devices/{device-id}/commands/subfolder.
+  ///    Note that subscribing to specific subfolders is not supported.
   /// If the command could not be delivered to the device, this method will
   /// return an error; in particular, if the device is not subscribed, this
   /// method will return FAILED_PRECONDITION. Otherwise, this method will
@@ -776,34 +1150,41 @@ class DeviceManagerClient {
   /// guaranteed; for QoS 0, no acknowledgment will be expected from the device.
   ///
   /// @param name  Required. The name of the device. For example,
-  ///  `projects/p0/locations/us-central1/registries/registry0/devices/device0`
-  ///  or
+  ///  `projects/p0/locations/us-central1/registries/registry0/devices/device0` or
   ///  `projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.
   /// @param binary_data  Required. The command data to send to the device.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::SendCommandToDeviceResponse,google/cloud/iot/v1/device_manager.proto#L597}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.SendCommandToDeviceResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.SendCommandToDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L574}
-  /// [google.cloud.iot.v1.SendCommandToDeviceResponse]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L597}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.SendCommandToDeviceRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L574}
+  /// [google.cloud.iot.v1.SendCommandToDeviceResponse]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L597}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::SendCommandToDeviceResponse>
   SendCommandToDevice(std::string const& name, std::string const& binary_data,
                       Options opts = {});
 
+  // clang-format off
   ///
   /// Sends a command to the specified device. In order for a device to be able
   /// to receive commands, it must:
   /// 1) be connected to Cloud IoT Core using the MQTT protocol, and
   /// 2) be subscribed to the group of MQTT topics specified by
-  ///    /devices/{device-id}/commands/#. This subscription will receive
-  ///    commands at the top-level topic /devices/{device-id}/commands as well
-  ///    as commands for subfolders, like
-  ///    /devices/{device-id}/commands/subfolder. Note that subscribing to
-  ///    specific subfolders is not supported.
+  ///    /devices/{device-id}/commands/#. This subscription will receive commands
+  ///    at the top-level topic /devices/{device-id}/commands as well as commands
+  ///    for subfolders, like /devices/{device-id}/commands/subfolder.
+  ///    Note that subscribing to specific subfolders is not supported.
   /// If the command could not be delivered to the device, this method will
   /// return an error; in particular, if the device is not subscribed, this
   /// method will return FAILED_PRECONDITION. Otherwise, this method will
@@ -811,152 +1192,209 @@ class DeviceManagerClient {
   /// guaranteed; for QoS 0, no acknowledgment will be expected from the device.
   ///
   /// @param name  Required. The name of the device. For example,
-  ///  `projects/p0/locations/us-central1/registries/registry0/devices/device0`
-  ///  or
+  ///  `projects/p0/locations/us-central1/registries/registry0/devices/device0` or
   ///  `projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.
   /// @param binary_data  Required. The command data to send to the device.
-  /// @param subfolder  Optional subfolder for the command. If empty, the
-  /// command will be delivered
-  ///  to the /devices/{device-id}/commands topic, otherwise it will be
-  ///  delivered to the /devices/{device-id}/commands/{subfolder} topic.
-  ///  Multi-level subfolders are allowed. This field must not have more than
-  ///  256 characters, and must not contain any MQTT wildcards ("+" or "#") or
-  ///  null characters.
+  /// @param subfolder  Optional subfolder for the command. If empty, the command will be delivered
+  ///  to the /devices/{device-id}/commands topic, otherwise it will be delivered
+  ///  to the /devices/{device-id}/commands/{subfolder} topic. Multi-level
+  ///  subfolders are allowed. This field must not have more than 256 characters,
+  ///  and must not contain any MQTT wildcards ("+" or "#") or null characters.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::SendCommandToDeviceResponse,google/cloud/iot/v1/device_manager.proto#L597}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.SendCommandToDeviceResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.SendCommandToDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L574}
-  /// [google.cloud.iot.v1.SendCommandToDeviceResponse]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L597}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.SendCommandToDeviceRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L574}
+  /// [google.cloud.iot.v1.SendCommandToDeviceResponse]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L597}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::SendCommandToDeviceResponse>
   SendCommandToDevice(std::string const& name, std::string const& binary_data,
                       std::string const& subfolder, Options opts = {});
 
+  // clang-format off
   ///
   /// Sends a command to the specified device. In order for a device to be able
   /// to receive commands, it must:
   /// 1) be connected to Cloud IoT Core using the MQTT protocol, and
   /// 2) be subscribed to the group of MQTT topics specified by
-  ///    /devices/{device-id}/commands/#. This subscription will receive
-  ///    commands at the top-level topic /devices/{device-id}/commands as well
-  ///    as commands for subfolders, like
-  ///    /devices/{device-id}/commands/subfolder. Note that subscribing to
-  ///    specific subfolders is not supported.
+  ///    /devices/{device-id}/commands/#. This subscription will receive commands
+  ///    at the top-level topic /devices/{device-id}/commands as well as commands
+  ///    for subfolders, like /devices/{device-id}/commands/subfolder.
+  ///    Note that subscribing to specific subfolders is not supported.
   /// If the command could not be delivered to the device, this method will
   /// return an error; in particular, if the device is not subscribed, this
   /// method will return FAILED_PRECONDITION. Otherwise, this method will
   /// return OK. If the subscription is QoS 1, at least once delivery will be
   /// guaranteed; for QoS 0, no acknowledgment will be expected from the device.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::SendCommandToDeviceRequest,google/cloud/iot/v1/device_manager.proto#L574}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iot.v1.SendCommandToDeviceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::SendCommandToDeviceResponse,google/cloud/iot/v1/device_manager.proto#L597}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.SendCommandToDeviceResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.SendCommandToDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L574}
-  /// [google.cloud.iot.v1.SendCommandToDeviceResponse]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L597}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.SendCommandToDeviceRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L574}
+  /// [google.cloud.iot.v1.SendCommandToDeviceResponse]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L597}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::SendCommandToDeviceResponse>
   SendCommandToDevice(
       google::cloud::iot::v1::SendCommandToDeviceRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Associates the device with the gateway.
   ///
   /// @param parent  Required. The name of the registry. For example,
   ///  `projects/example-project/locations/us-central1/registries/my-registry`.
-  /// @param gateway_id  Required. The value of `gateway_id` can be either the
-  /// device numeric ID or the
+  /// @param gateway_id  Required. The value of `gateway_id` can be either the device numeric ID or the
   ///  user-defined device identifier.
-  /// @param device_id  Required. The device to associate with the specified
-  /// gateway. The value of
-  ///  `device_id` can be either the device numeric ID or the user-defined
-  ///  device identifier.
+  /// @param device_id  Required. The device to associate with the specified gateway. The value of
+  ///  `device_id` can be either the device numeric ID or the user-defined device
+  ///  identifier.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::BindDeviceToGatewayResponse,google/cloud/iot/v1/device_manager.proto#L623}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.BindDeviceToGatewayResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.BindDeviceToGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L602}
-  /// [google.cloud.iot.v1.BindDeviceToGatewayResponse]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L623}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.BindDeviceToGatewayRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L602}
+  /// [google.cloud.iot.v1.BindDeviceToGatewayResponse]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L623}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::BindDeviceToGatewayResponse>
   BindDeviceToGateway(std::string const& parent, std::string const& gateway_id,
                       std::string const& device_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Associates the device with the gateway.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::BindDeviceToGatewayRequest,google/cloud/iot/v1/device_manager.proto#L602}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iot.v1.BindDeviceToGatewayRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::BindDeviceToGatewayResponse,google/cloud/iot/v1/device_manager.proto#L623}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.BindDeviceToGatewayResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.BindDeviceToGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L602}
-  /// [google.cloud.iot.v1.BindDeviceToGatewayResponse]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L623}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.BindDeviceToGatewayRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L602}
+  /// [google.cloud.iot.v1.BindDeviceToGatewayResponse]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L623}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::BindDeviceToGatewayResponse>
   BindDeviceToGateway(
       google::cloud::iot::v1::BindDeviceToGatewayRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the association between the device and the gateway.
   ///
   /// @param parent  Required. The name of the registry. For example,
   ///  `projects/example-project/locations/us-central1/registries/my-registry`.
-  /// @param gateway_id  Required. The value of `gateway_id` can be either the
-  /// device numeric ID or the
+  /// @param gateway_id  Required. The value of `gateway_id` can be either the device numeric ID or the
   ///  user-defined device identifier.
-  /// @param device_id  Required. The device to disassociate from the specified
-  /// gateway. The value of
-  ///  `device_id` can be either the device numeric ID or the user-defined
-  ///  device identifier.
+  /// @param device_id  Required. The device to disassociate from the specified gateway. The value of
+  ///  `device_id` can be either the device numeric ID or the user-defined device
+  ///  identifier.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::UnbindDeviceFromGatewayResponse,google/cloud/iot/v1/device_manager.proto#L649}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.UnbindDeviceFromGatewayResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.UnbindDeviceFromGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L628}
-  /// [google.cloud.iot.v1.UnbindDeviceFromGatewayResponse]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L649}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.UnbindDeviceFromGatewayRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L628}
+  /// [google.cloud.iot.v1.UnbindDeviceFromGatewayResponse]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L649}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::UnbindDeviceFromGatewayResponse>
   UnbindDeviceFromGateway(std::string const& parent,
                           std::string const& gateway_id,
                           std::string const& device_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the association between the device and the gateway.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::iot::v1::UnbindDeviceFromGatewayRequest,google/cloud/iot/v1/device_manager.proto#L628}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.iot.v1.UnbindDeviceFromGatewayRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::iot::v1::UnbindDeviceFromGatewayResponse,google/cloud/iot/v1/device_manager.proto#L649}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.iot.v1.UnbindDeviceFromGatewayResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.iot.v1.UnbindDeviceFromGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L628}
-  /// [google.cloud.iot.v1.UnbindDeviceFromGatewayResponse]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L649}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.iot.v1.UnbindDeviceFromGatewayRequest]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L628}
+  /// [google.cloud.iot.v1.UnbindDeviceFromGatewayResponse]: @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L649}
   ///
+  // clang-format on
   StatusOr<google::cloud::iot::v1::UnbindDeviceFromGatewayResponse>
   UnbindDeviceFromGateway(
       google::cloud::iot::v1::UnbindDeviceFromGatewayRequest const& request,

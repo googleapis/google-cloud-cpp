@@ -85,27 +85,41 @@ class TopicStatsServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Compute statistics about a range of messages in a given topic and
   /// partition.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::ComputeMessageStatsRequest,google/cloud/pubsublite/v1/topic_stats.proto#L76}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.pubsublite.v1.ComputeMessageStatsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::ComputeMessageStatsResponse,google/cloud/pubsublite/v1/topic_stats.proto#L98}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.ComputeMessageStatsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.ComputeMessageStatsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L76}
-  /// [google.cloud.pubsublite.v1.ComputeMessageStatsResponse]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L98}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.ComputeMessageStatsRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L76}
+  /// [google.cloud.pubsublite.v1.ComputeMessageStatsResponse]: @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L98}
   ///
+  // clang-format on
   StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
   ComputeMessageStats(
       google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Compute the head cursor for the partition.
   /// The head cursor's offset is guaranteed to be less than or equal to all
@@ -114,39 +128,64 @@ class TopicStatsServiceClient {
   /// been acknowledged. It is zero if there have never been messages in the
   /// partition.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::ComputeHeadCursorRequest,google/cloud/pubsublite/v1/topic_stats.proto#L117}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.pubsublite.v1.ComputeHeadCursorRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::ComputeHeadCursorResponse,google/cloud/pubsublite/v1/topic_stats.proto#L131}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.ComputeHeadCursorResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.ComputeHeadCursorRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L117}
-  /// [google.cloud.pubsublite.v1.ComputeHeadCursorResponse]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L131}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.ComputeHeadCursorRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L117}
+  /// [google.cloud.pubsublite.v1.ComputeHeadCursorResponse]: @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L131}
   ///
+  // clang-format on
   StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
   ComputeHeadCursor(
       google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Compute the corresponding cursor for a publish or event time in a topic
   /// partition.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::ComputeTimeCursorRequest,google/cloud/pubsublite/v1/topic_stats.proto#L138}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.pubsublite.v1.ComputeTimeCursorRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::ComputeTimeCursorResponse,google/cloud/pubsublite/v1/topic_stats.proto#L157}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.pubsublite.v1.ComputeTimeCursorResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.pubsublite.v1.ComputeTimeCursorRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L138}
-  /// [google.cloud.pubsublite.v1.ComputeTimeCursorResponse]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L157}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.pubsublite.v1.ComputeTimeCursorRequest]: @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L138}
+  /// [google.cloud.pubsublite.v1.ComputeTimeCursorResponse]: @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L157}
   ///
+  // clang-format on
   StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
   ComputeTimeCursor(
       google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request,

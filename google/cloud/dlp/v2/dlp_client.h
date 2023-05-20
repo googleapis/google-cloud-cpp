@@ -90,33 +90,47 @@ class DlpServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Finds potentially sensitive info in content.
   /// This method has limits on input size, processing time, and output size.
   ///
   /// When no InfoTypes or CustomInfoTypes are specified in this request, the
-  /// system will automatically choose what detectors to run. By default this
-  /// may be all types, but may change over time as detectors are updated.
+  /// system will automatically choose what detectors to run. By default this may
+  /// be all types, but may change over time as detectors are updated.
   ///
   /// For how to guides, see https://cloud.google.com/dlp/docs/inspecting-images
   /// and https://cloud.google.com/dlp/docs/inspecting-text,
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::InspectContentRequest,google/privacy/dlp/v2/dlp.proto#L1418}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.InspectContentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::InspectContentResponse,google/privacy/dlp/v2/dlp.proto#L1458}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.InspectContentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.InspectContentRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1418}
-  /// [google.privacy.dlp.v2.InspectContentResponse]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1458}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.InspectContentRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1418}
+  /// [google.privacy.dlp.v2.InspectContentResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1458}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::InspectContentResponse> InspectContent(
       google::privacy::dlp::v2::InspectContentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Redacts potentially sensitive info from an image.
   /// This method has limits on input size, processing time, and output size.
@@ -124,25 +138,38 @@ class DlpServiceClient {
   /// learn more.
   ///
   /// When no InfoTypes or CustomInfoTypes are specified in this request, the
-  /// system will automatically choose what detectors to run. By default this
-  /// may be all types, but may change over time as detectors are updated.
+  /// system will automatically choose what detectors to run. By default this may
+  /// be all types, but may change over time as detectors are updated.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::RedactImageRequest,google/privacy/dlp/v2/dlp.proto#L1192}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.RedactImageRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::RedactImageResponse,google/privacy/dlp/v2/dlp.proto#L1263}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.RedactImageResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.RedactImageRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1192}
-  /// [google.privacy.dlp.v2.RedactImageResponse]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1263}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.RedactImageRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1192}
+  /// [google.privacy.dlp.v2.RedactImageResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1263}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::RedactImageResponse> RedactImage(
       google::privacy::dlp::v2::RedactImageRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// De-identifies potentially sensitive info from a ContentItem.
   /// This method has limits on input size and output size.
@@ -150,49 +177,75 @@ class DlpServiceClient {
   /// learn more.
   ///
   /// When no InfoTypes or CustomInfoTypes are specified in this request, the
-  /// system will automatically choose what detectors to run. By default this
-  /// may be all types, but may change over time as detectors are updated.
+  /// system will automatically choose what detectors to run. By default this may
+  /// be all types, but may change over time as detectors are updated.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyContentRequest,google/privacy/dlp/v2/dlp.proto#L1277}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.DeidentifyContentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyContentResponse,google/privacy/dlp/v2/dlp.proto#L1337}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.DeidentifyContentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.DeidentifyContentRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1277}
-  /// [google.privacy.dlp.v2.DeidentifyContentResponse]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1337}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.DeidentifyContentRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1277}
+  /// [google.privacy.dlp.v2.DeidentifyContentResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1337}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyContentResponse>
   DeidentifyContent(
       google::privacy::dlp::v2::DeidentifyContentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Re-identifies content that has been de-identified.
   /// See
   /// https://cloud.google.com/dlp/docs/pseudonymization#re-identification_in_free_text_code_example
   /// to learn more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::ReidentifyContentRequest,google/privacy/dlp/v2/dlp.proto#L1346}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.ReidentifyContentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::ReidentifyContentResponse,google/privacy/dlp/v2/dlp.proto#L1409}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.ReidentifyContentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.ReidentifyContentRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1346}
-  /// [google.privacy.dlp.v2.ReidentifyContentResponse]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1409}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.ReidentifyContentRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1346}
+  /// [google.privacy.dlp.v2.ReidentifyContentResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1409}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::ReidentifyContentResponse>
   ReidentifyContent(
       google::privacy::dlp::v2::ReidentifyContentRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a list of the sensitive information types that DLP API
   /// supports. See https://cloud.google.com/dlp/docs/infotypes-reference to
@@ -203,38 +256,60 @@ class DlpServiceClient {
   ///      locations/<var>LOCATION_ID</var>
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::ListInfoTypesResponse,google/privacy/dlp/v2/dlp.proto#L1830}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.ListInfoTypesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.ListInfoTypesRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1808}
-  /// [google.privacy.dlp.v2.ListInfoTypesResponse]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1830}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.ListInfoTypesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1808}
+  /// [google.privacy.dlp.v2.ListInfoTypesResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1830}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse> ListInfoTypes(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns a list of the sensitive information types that DLP API
   /// supports. See https://cloud.google.com/dlp/docs/infotypes-reference to
   /// learn more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::ListInfoTypesRequest,google/privacy/dlp/v2/dlp.proto#L1808}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.ListInfoTypesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::ListInfoTypesResponse,google/privacy/dlp/v2/dlp.proto#L1830}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.ListInfoTypesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.ListInfoTypesRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1808}
-  /// [google.privacy.dlp.v2.ListInfoTypesResponse]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1830}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.ListInfoTypesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1808}
+  /// [google.privacy.dlp.v2.ListInfoTypesResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L1830}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse> ListInfoTypes(
       google::privacy::dlp::v2::ListInfoTypesRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates an InspectTemplate for reusing frequently used configuration
   /// for inspecting content, images, and storage.
@@ -259,126 +334,190 @@ class DlpServiceClient {
   /// @param inspect_template  Required. The InspectTemplate to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L3451}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.InspectTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.CreateInspectTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3785}
-  /// [google.privacy.dlp.v2.InspectTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3451}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.CreateInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3785}
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3451}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::InspectTemplate> CreateInspectTemplate(
       std::string const& parent,
       google::privacy::dlp::v2::InspectTemplate const& inspect_template,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates an InspectTemplate for reusing frequently used configuration
   /// for inspecting content, images, and storage.
   /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::CreateInspectTemplateRequest,google/privacy/dlp/v2/dlp.proto#L3785}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.CreateInspectTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L3451}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.InspectTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.CreateInspectTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3785}
-  /// [google.privacy.dlp.v2.InspectTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3451}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.CreateInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3785}
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3451}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::InspectTemplate> CreateInspectTemplate(
       google::privacy::dlp::v2::CreateInspectTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the InspectTemplate.
   /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
   ///
-  /// @param name  Required. Resource name of organization and inspectTemplate
-  /// to be updated, for
+  /// @param name  Required. Resource name of organization and inspectTemplate to be updated, for
   ///  example `organizations/433245324/inspectTemplates/432452342` or
   ///  projects/project-id/inspectTemplates/432452342.
   /// @param inspect_template  New InspectTemplate value.
   /// @param update_mask  Mask to control which fields get updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L3451}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.InspectTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.InspectTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3451}
-  /// [google.privacy.dlp.v2.UpdateInspectTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3827}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3451}
+  /// [google.privacy.dlp.v2.UpdateInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3827}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::InspectTemplate> UpdateInspectTemplate(
       std::string const& name,
       google::privacy::dlp::v2::InspectTemplate const& inspect_template,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the InspectTemplate.
   /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::UpdateInspectTemplateRequest,google/privacy/dlp/v2/dlp.proto#L3827}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.UpdateInspectTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L3451}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.InspectTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.InspectTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3451}
-  /// [google.privacy.dlp.v2.UpdateInspectTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3827}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3451}
+  /// [google.privacy.dlp.v2.UpdateInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3827}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::InspectTemplate> UpdateInspectTemplate(
       google::privacy::dlp::v2::UpdateInspectTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets an InspectTemplate.
   /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
   ///
-  /// @param name  Required. Resource name of the organization and
-  /// inspectTemplate to be read, for
+  /// @param name  Required. Resource name of the organization and inspectTemplate to be read, for
   ///  example `organizations/433245324/inspectTemplates/432452342` or
   ///  projects/project-id/inspectTemplates/432452342.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L3451}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.InspectTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.GetInspectTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3846}
-  /// [google.privacy.dlp.v2.InspectTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3451}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.GetInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3846}
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3451}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::InspectTemplate> GetInspectTemplate(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets an InspectTemplate.
   /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::GetInspectTemplateRequest,google/privacy/dlp/v2/dlp.proto#L3846}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.GetInspectTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L3451}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.InspectTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.GetInspectTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3846}
-  /// [google.privacy.dlp.v2.InspectTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3451}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.GetInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3846}
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3451}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::InspectTemplate> GetInspectTemplate(
       google::privacy::dlp::v2::GetInspectTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists InspectTemplates.
   /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
@@ -401,69 +540,132 @@ class DlpServiceClient {
   ///      parent=projects/example-project/locations/europe-west3
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L3451}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.privacy.dlp.v2.InspectTemplate], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.privacy.dlp.v2.InspectTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3451}
-  /// [google.privacy.dlp.v2.ListInspectTemplatesRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3859}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3451}
+  /// [google.privacy.dlp.v2.ListInspectTemplatesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3859}
   ///
+  // clang-format on
   StreamRange<google::privacy::dlp::v2::InspectTemplate> ListInspectTemplates(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists InspectTemplates.
   /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::ListInspectTemplatesRequest,google/privacy/dlp/v2/dlp.proto#L3859}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.ListInspectTemplatesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::InspectTemplate,google/privacy/dlp/v2/dlp.proto#L3451}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.privacy.dlp.v2.InspectTemplate], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.privacy.dlp.v2.InspectTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3451}
-  /// [google.privacy.dlp.v2.ListInspectTemplatesRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3859}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.InspectTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3451}
+  /// [google.privacy.dlp.v2.ListInspectTemplatesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3859}
   ///
+  // clang-format on
   StreamRange<google::privacy::dlp::v2::InspectTemplate> ListInspectTemplates(
       google::privacy::dlp::v2::ListInspectTemplatesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an InspectTemplate.
   /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
   ///
-  /// @param name  Required. Resource name of the organization and
-  /// inspectTemplate to be deleted, for
+  /// @param name  Required. Resource name of the organization and inspectTemplate to be deleted, for
   ///  example `organizations/433245324/inspectTemplates/432452342` or
   ///  projects/project-id/inspectTemplates/432452342.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.privacy.dlp.v2.DeleteInspectTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3925}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.DeleteInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3925}
   ///
+  // clang-format on
   Status DeleteInspectTemplate(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an InspectTemplate.
   /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::DeleteInspectTemplateRequest,google/privacy/dlp/v2/dlp.proto#L3925}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.DeleteInspectTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.privacy.dlp.v2.DeleteInspectTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3925}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.DeleteInspectTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3925}
   ///
+  // clang-format on
   Status DeleteInspectTemplate(
       google::privacy::dlp::v2::DeleteInspectTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a DeidentifyTemplate for reusing frequently used configuration
   /// for de-identifying content, images, and storage.
@@ -489,135 +691,199 @@ class DlpServiceClient {
   /// @param deidentify_template  Required. The DeidentifyTemplate to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L3485}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.DeidentifyTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.CreateDeidentifyTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4521}
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3485}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.CreateDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4521}
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3485}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
   CreateDeidentifyTemplate(
       std::string const& parent,
       google::privacy::dlp::v2::DeidentifyTemplate const& deidentify_template,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a DeidentifyTemplate for reusing frequently used configuration
   /// for de-identifying content, images, and storage.
   /// See https://cloud.google.com/dlp/docs/creating-templates-deid to learn
   /// more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::CreateDeidentifyTemplateRequest,google/privacy/dlp/v2/dlp.proto#L4521}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.CreateDeidentifyTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L3485}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.DeidentifyTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.CreateDeidentifyTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4521}
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3485}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.CreateDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4521}
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3485}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
   CreateDeidentifyTemplate(
       google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the DeidentifyTemplate.
   /// See https://cloud.google.com/dlp/docs/creating-templates-deid to learn
   /// more.
   ///
-  /// @param name  Required. Resource name of organization and deidentify
-  /// template to be updated, for
+  /// @param name  Required. Resource name of organization and deidentify template to be updated, for
   ///  example `organizations/433245324/deidentifyTemplates/432452342` or
   ///  projects/project-id/deidentifyTemplates/432452342.
   /// @param deidentify_template  New DeidentifyTemplate value.
   /// @param update_mask  Mask to control which fields get updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L3485}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.DeidentifyTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3485}
-  /// [google.privacy.dlp.v2.UpdateDeidentifyTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4563}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3485}
+  /// [google.privacy.dlp.v2.UpdateDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4563}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
   UpdateDeidentifyTemplate(
       std::string const& name,
       google::privacy::dlp::v2::DeidentifyTemplate const& deidentify_template,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the DeidentifyTemplate.
   /// See https://cloud.google.com/dlp/docs/creating-templates-deid to learn
   /// more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest,google/privacy/dlp/v2/dlp.proto#L4563}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.UpdateDeidentifyTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L3485}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.DeidentifyTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3485}
-  /// [google.privacy.dlp.v2.UpdateDeidentifyTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4563}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3485}
+  /// [google.privacy.dlp.v2.UpdateDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4563}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
   UpdateDeidentifyTemplate(
       google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a DeidentifyTemplate.
   /// See https://cloud.google.com/dlp/docs/creating-templates-deid to learn
   /// more.
   ///
-  /// @param name  Required. Resource name of the organization and deidentify
-  /// template to be read, for
+  /// @param name  Required. Resource name of the organization and deidentify template to be read, for
   ///  example `organizations/433245324/deidentifyTemplates/432452342` or
   ///  projects/project-id/deidentifyTemplates/432452342.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L3485}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.DeidentifyTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3485}
-  /// [google.privacy.dlp.v2.GetDeidentifyTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4582}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3485}
+  /// [google.privacy.dlp.v2.GetDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4582}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate> GetDeidentifyTemplate(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a DeidentifyTemplate.
   /// See https://cloud.google.com/dlp/docs/creating-templates-deid to learn
   /// more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::GetDeidentifyTemplateRequest,google/privacy/dlp/v2/dlp.proto#L4582}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.GetDeidentifyTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L3485}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.DeidentifyTemplate])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3485}
-  /// [google.privacy.dlp.v2.GetDeidentifyTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4582}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3485}
+  /// [google.privacy.dlp.v2.GetDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4582}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::DeidentifyTemplate> GetDeidentifyTemplate(
       google::privacy::dlp::v2::GetDeidentifyTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists DeidentifyTemplates.
   /// See https://cloud.google.com/dlp/docs/creating-templates-deid to learn
@@ -641,81 +907,144 @@ class DlpServiceClient {
   ///      parent=projects/example-project/locations/europe-west3
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L3485}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.privacy.dlp.v2.DeidentifyTemplate], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3485}
-  /// [google.privacy.dlp.v2.ListDeidentifyTemplatesRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4595}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3485}
+  /// [google.privacy.dlp.v2.ListDeidentifyTemplatesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4595}
   ///
+  // clang-format on
   StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>
   ListDeidentifyTemplates(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists DeidentifyTemplates.
   /// See https://cloud.google.com/dlp/docs/creating-templates-deid to learn
   /// more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::ListDeidentifyTemplatesRequest,google/privacy/dlp/v2/dlp.proto#L4595}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.ListDeidentifyTemplatesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DeidentifyTemplate,google/privacy/dlp/v2/dlp.proto#L3485}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.privacy.dlp.v2.DeidentifyTemplate], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.privacy.dlp.v2.DeidentifyTemplate]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3485}
-  /// [google.privacy.dlp.v2.ListDeidentifyTemplatesRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4595}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.DeidentifyTemplate]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3485}
+  /// [google.privacy.dlp.v2.ListDeidentifyTemplatesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4595}
   ///
+  // clang-format on
   StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>
   ListDeidentifyTemplates(
       google::privacy::dlp::v2::ListDeidentifyTemplatesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a DeidentifyTemplate.
   /// See https://cloud.google.com/dlp/docs/creating-templates-deid to learn
   /// more.
   ///
-  /// @param name  Required. Resource name of the organization and deidentify
-  /// template to be deleted,
+  /// @param name  Required. Resource name of the organization and deidentify template to be deleted,
   ///  for example `organizations/433245324/deidentifyTemplates/432452342` or
   ///  projects/project-id/deidentifyTemplates/432452342.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.privacy.dlp.v2.DeleteDeidentifyTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4662}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.DeleteDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4662}
   ///
+  // clang-format on
   Status DeleteDeidentifyTemplate(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a DeidentifyTemplate.
   /// See https://cloud.google.com/dlp/docs/creating-templates-deid to learn
   /// more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest,google/privacy/dlp/v2/dlp.proto#L4662}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.DeleteDeidentifyTemplateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.privacy.dlp.v2.DeleteDeidentifyTemplateRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4662}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.DeleteDeidentifyTemplateRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4662}
   ///
+  // clang-format on
   Status DeleteDeidentifyTemplate(
       google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a job trigger to run DLP actions such as scanning storage for
   /// sensitive information on a set schedule.
   /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
   ///
   /// @param parent  Required. Parent resource name.
-  ///  The format of this value varies depending on whether you have [specified
-  ///  a processing
+  ///  The format of this value varies depending on whether you have [specified a
+  ///  processing
   ///  location](https://cloud.google.com/dlp/docs/specifying-location):
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
@@ -728,174 +1057,259 @@ class DlpServiceClient {
   /// @param job_trigger  Required. The JobTrigger to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3529}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.JobTrigger])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.CreateJobTriggerRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3938}
-  /// [google.privacy.dlp.v2.JobTrigger]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3529}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.CreateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3938}
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3529}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::JobTrigger> CreateJobTrigger(
       std::string const& parent,
       google::privacy::dlp::v2::JobTrigger const& job_trigger,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a job trigger to run DLP actions such as scanning storage for
   /// sensitive information on a set schedule.
   /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::CreateJobTriggerRequest,google/privacy/dlp/v2/dlp.proto#L3938}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.CreateJobTriggerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3529}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.JobTrigger])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.CreateJobTriggerRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3938}
-  /// [google.privacy.dlp.v2.JobTrigger]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3529}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.CreateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3938}
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3529}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::JobTrigger> CreateJobTrigger(
       google::privacy::dlp::v2::CreateJobTriggerRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a job trigger.
   /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
   ///
-  /// @param name  Required. Resource name of the project and the triggeredJob,
-  /// for example
+  /// @param name  Required. Resource name of the project and the triggeredJob, for example
   ///  `projects/dlp-test-project/jobTriggers/53234423`.
   /// @param job_trigger  New JobTrigger value.
   /// @param update_mask  Mask to control which fields get updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3529}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.JobTrigger])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.JobTrigger]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3529}
-  /// [google.privacy.dlp.v2.UpdateJobTriggerRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3988}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3529}
+  /// [google.privacy.dlp.v2.UpdateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3988}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::JobTrigger> UpdateJobTrigger(
       std::string const& name,
       google::privacy::dlp::v2::JobTrigger const& job_trigger,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a job trigger.
   /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::UpdateJobTriggerRequest,google/privacy/dlp/v2/dlp.proto#L3988}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.UpdateJobTriggerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3529}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.JobTrigger])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.JobTrigger]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3529}
-  /// [google.privacy.dlp.v2.UpdateJobTriggerRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3988}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3529}
+  /// [google.privacy.dlp.v2.UpdateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3988}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::JobTrigger> UpdateJobTrigger(
       google::privacy::dlp::v2::UpdateJobTriggerRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Inspect hybrid content and store findings to a trigger. The inspection
   /// will be processed asynchronously. To review the findings monitor the
   /// jobs within the trigger.
   ///
-  /// @param name  Required. Resource name of the trigger to execute a hybrid
-  /// inspect on, for example
+  /// @param name  Required. Resource name of the trigger to execute a hybrid inspect on, for example
   ///  `projects/dlp-test-project/jobTriggers/53234423`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::HybridInspectResponse,google/privacy/dlp/v2/dlp.proto#L5024}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.HybridInspectResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.HybridInspectJobTriggerRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4942}
-  /// [google.privacy.dlp.v2.HybridInspectResponse]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5024}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.HybridInspectJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4942}
+  /// [google.privacy.dlp.v2.HybridInspectResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5024}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
   HybridInspectJobTrigger(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Inspect hybrid content and store findings to a trigger. The inspection
   /// will be processed asynchronously. To review the findings monitor the
   /// jobs within the trigger.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::HybridInspectJobTriggerRequest,google/privacy/dlp/v2/dlp.proto#L4942}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.HybridInspectJobTriggerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::HybridInspectResponse,google/privacy/dlp/v2/dlp.proto#L5024}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.HybridInspectResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.HybridInspectJobTriggerRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4942}
-  /// [google.privacy.dlp.v2.HybridInspectResponse]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5024}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.HybridInspectJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4942}
+  /// [google.privacy.dlp.v2.HybridInspectResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5024}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
   HybridInspectJobTrigger(
       google::privacy::dlp::v2::HybridInspectJobTriggerRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a job trigger.
   /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
   ///
-  /// @param name  Required. Resource name of the project and the triggeredJob,
-  /// for example
+  /// @param name  Required. Resource name of the project and the triggeredJob, for example
   ///  `projects/dlp-test-project/jobTriggers/53234423`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3529}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.JobTrigger])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.GetJobTriggerRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4006}
-  /// [google.privacy.dlp.v2.JobTrigger]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3529}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.GetJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4006}
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3529}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::JobTrigger> GetJobTrigger(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a job trigger.
   /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::GetJobTriggerRequest,google/privacy/dlp/v2/dlp.proto#L4006}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.GetJobTriggerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3529}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.JobTrigger])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.GetJobTriggerRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4006}
-  /// [google.privacy.dlp.v2.JobTrigger]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3529}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.GetJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4006}
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3529}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::JobTrigger> GetJobTrigger(
       google::privacy::dlp::v2::GetJobTriggerRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists job triggers.
   /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
   ///
   /// @param parent  Required. Parent resource name.
-  ///  The format of this value varies depending on whether you have [specified
-  ///  a processing
+  ///  The format of this value varies depending on whether you have [specified a
+  ///  processing
   ///  location](https://cloud.google.com/dlp/docs/specifying-location):
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
@@ -907,100 +1321,176 @@ class DlpServiceClient {
   ///      parent=projects/example-project/locations/europe-west3
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3529}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.privacy.dlp.v2.JobTrigger], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.privacy.dlp.v2.JobTrigger]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3529}
-  /// [google.privacy.dlp.v2.ListJobTriggersRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4065}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3529}
+  /// [google.privacy.dlp.v2.ListJobTriggersRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4065}
   ///
+  // clang-format on
   StreamRange<google::privacy::dlp::v2::JobTrigger> ListJobTriggers(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists job triggers.
   /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::ListJobTriggersRequest,google/privacy/dlp/v2/dlp.proto#L4065}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.ListJobTriggersRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::JobTrigger,google/privacy/dlp/v2/dlp.proto#L3529}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.privacy.dlp.v2.JobTrigger], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.privacy.dlp.v2.JobTrigger]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3529}
-  /// [google.privacy.dlp.v2.ListJobTriggersRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4065}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.JobTrigger]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3529}
+  /// [google.privacy.dlp.v2.ListJobTriggersRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4065}
   ///
+  // clang-format on
   StreamRange<google::privacy::dlp::v2::JobTrigger> ListJobTriggers(
       google::privacy::dlp::v2::ListJobTriggersRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a job trigger.
   /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
   ///
-  /// @param name  Required. Resource name of the project and the triggeredJob,
-  /// for example
+  /// @param name  Required. Resource name of the project and the triggeredJob, for example
   ///  `projects/dlp-test-project/jobTriggers/53234423`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.privacy.dlp.v2.DeleteJobTriggerRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4158}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.DeleteJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4158}
   ///
+  // clang-format on
   Status DeleteJobTrigger(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a job trigger.
   /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::DeleteJobTriggerRequest,google/privacy/dlp/v2/dlp.proto#L4158}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.DeleteJobTriggerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.privacy.dlp.v2.DeleteJobTriggerRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4158}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.DeleteJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4158}
   ///
+  // clang-format on
   Status DeleteJobTrigger(
       google::privacy::dlp::v2::DeleteJobTriggerRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Activate a job trigger. Causes the immediate execute of a trigger
   /// instead of waiting on the trigger event to occur.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::ActivateJobTriggerRequest,google/privacy/dlp/v2/dlp.proto#L3976}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.ActivateJobTriggerRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L4315}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.DlpJob])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.ActivateJobTriggerRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3976}
-  /// [google.privacy.dlp.v2.DlpJob]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4315}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.ActivateJobTriggerRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L3976}
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4315}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::DlpJob> ActivateJobTrigger(
       google::privacy::dlp::v2::ActivateJobTriggerRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new job to inspect storage or calculate risk metrics.
   /// See https://cloud.google.com/dlp/docs/inspecting-storage and
   /// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.
   ///
   /// When no InfoTypes or CustomInfoTypes are specified in inspect jobs, the
-  /// system will automatically choose what detectors to run. By default this
-  /// may be all types, but may change over time as detectors are updated.
+  /// system will automatically choose what detectors to run. By default this may
+  /// be all types, but may change over time as detectors are updated.
   ///
   /// @param parent  Required. Parent resource name.
-  ///  The format of this value varies depending on whether you have [specified
-  ///  a processing
+  ///  The format of this value varies depending on whether you have [specified a
+  ///  processing
   ///  location](https://cloud.google.com/dlp/docs/specifying-location):
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
@@ -1010,35 +1500,43 @@ class DlpServiceClient {
   ///  identifier `example-project`, and specifies the `europe-west3` location
   ///  for processing data:
   ///      parent=projects/example-project/locations/europe-west3
-  /// @param inspect_job  An inspection job scans a storage repository for
-  /// InfoTypes.
+  /// @param inspect_job  An inspection job scans a storage repository for InfoTypes.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L4315}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.DlpJob])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.CreateDlpJobRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4020}
-  /// [google.privacy.dlp.v2.DlpJob]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4315}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.CreateDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4020}
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4315}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::DlpJob> CreateDlpJob(
       std::string const& parent,
       google::privacy::dlp::v2::InspectJobConfig const& inspect_job,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new job to inspect storage or calculate risk metrics.
   /// See https://cloud.google.com/dlp/docs/inspecting-storage and
   /// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.
   ///
   /// When no InfoTypes or CustomInfoTypes are specified in inspect jobs, the
-  /// system will automatically choose what detectors to run. By default this
-  /// may be all types, but may change over time as detectors are updated.
+  /// system will automatically choose what detectors to run. By default this may
+  /// be all types, but may change over time as detectors are updated.
   ///
   /// @param parent  Required. Parent resource name.
-  ///  The format of this value varies depending on whether you have [specified
-  ///  a processing
+  ///  The format of this value varies depending on whether you have [specified a
+  ///  processing
   ///  location](https://cloud.google.com/dlp/docs/specifying-location):
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
@@ -1048,57 +1546,78 @@ class DlpServiceClient {
   ///  identifier `example-project`, and specifies the `europe-west3` location
   ///  for processing data:
   ///      parent=projects/example-project/locations/europe-west3
-  /// @param risk_job  A risk analysis job calculates re-identification risk
-  /// metrics for a
+  /// @param risk_job  A risk analysis job calculates re-identification risk metrics for a
   ///  BigQuery table.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L4315}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.DlpJob])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.CreateDlpJobRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4020}
-  /// [google.privacy.dlp.v2.DlpJob]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4315}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.CreateDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4020}
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4315}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::DlpJob> CreateDlpJob(
       std::string const& parent,
       google::privacy::dlp::v2::RiskAnalysisJobConfig const& risk_job,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new job to inspect storage or calculate risk metrics.
   /// See https://cloud.google.com/dlp/docs/inspecting-storage and
   /// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.
   ///
   /// When no InfoTypes or CustomInfoTypes are specified in inspect jobs, the
-  /// system will automatically choose what detectors to run. By default this
-  /// may be all types, but may change over time as detectors are updated.
+  /// system will automatically choose what detectors to run. By default this may
+  /// be all types, but may change over time as detectors are updated.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::CreateDlpJobRequest,google/privacy/dlp/v2/dlp.proto#L4020}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.CreateDlpJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L4315}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.DlpJob])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.CreateDlpJobRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4020}
-  /// [google.privacy.dlp.v2.DlpJob]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4315}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.CreateDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4020}
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4315}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::DlpJob> CreateDlpJob(
       google::privacy::dlp::v2::CreateDlpJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists DlpJobs that match the specified filter in the request.
   /// See https://cloud.google.com/dlp/docs/inspecting-storage and
   /// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.
   ///
   /// @param parent  Required. Parent resource name.
-  ///  The format of this value varies depending on whether you have [specified
-  ///  a processing
+  ///  The format of this value varies depending on whether you have [specified a
+  ///  processing
   ///  location](https://cloud.google.com/dlp/docs/specifying-location):
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
@@ -1110,37 +1629,77 @@ class DlpServiceClient {
   ///      parent=projects/example-project/locations/europe-west3
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L4315}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.privacy.dlp.v2.DlpJob], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.privacy.dlp.v2.DlpJob]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4315}
-  /// [google.privacy.dlp.v2.ListDlpJobsRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4396}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4315}
+  /// [google.privacy.dlp.v2.ListDlpJobsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4396}
   ///
+  // clang-format on
   StreamRange<google::privacy::dlp::v2::DlpJob> ListDlpJobs(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists DlpJobs that match the specified filter in the request.
   /// See https://cloud.google.com/dlp/docs/inspecting-storage and
   /// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::ListDlpJobsRequest,google/privacy/dlp/v2/dlp.proto#L4396}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.ListDlpJobsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L4315}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.privacy.dlp.v2.DlpJob], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.privacy.dlp.v2.DlpJob]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4315}
-  /// [google.privacy.dlp.v2.ListDlpJobsRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4396}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4315}
+  /// [google.privacy.dlp.v2.ListDlpJobsRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4396}
   ///
+  // clang-format on
   StreamRange<google::privacy::dlp::v2::DlpJob> ListDlpJobs(
       google::privacy::dlp::v2::ListDlpJobsRequest request, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the latest state of a long-running DlpJob.
   /// See https://cloud.google.com/dlp/docs/inspecting-storage and
@@ -1149,38 +1708,60 @@ class DlpServiceClient {
   /// @param name  Required. The name of the DlpJob resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L4315}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.DlpJob])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.DlpJob]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4315}
-  /// [google.privacy.dlp.v2.GetDlpJobRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4385}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4315}
+  /// [google.privacy.dlp.v2.GetDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4385}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::DlpJob> GetDlpJob(std::string const& name,
                                                        Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the latest state of a long-running DlpJob.
   /// See https://cloud.google.com/dlp/docs/inspecting-storage and
   /// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::GetDlpJobRequest,google/privacy/dlp/v2/dlp.proto#L4385}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.GetDlpJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::DlpJob,google/privacy/dlp/v2/dlp.proto#L4315}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.DlpJob])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.DlpJob]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4315}
-  /// [google.privacy.dlp.v2.GetDlpJobRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4385}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.DlpJob]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4315}
+  /// [google.privacy.dlp.v2.GetDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4385}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::DlpJob> GetDlpJob(
       google::privacy::dlp::v2::GetDlpJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a long-running DlpJob. This method indicates that the client is
   /// no longer interested in the DlpJob result. The job will be canceled if
@@ -1191,12 +1772,22 @@ class DlpServiceClient {
   /// @param name  Required. The name of the DlpJob resource to be deleted.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.privacy.dlp.v2.DeleteDlpJobRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4510}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.DeleteDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4510}
   ///
+  // clang-format on
   Status DeleteDlpJob(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a long-running DlpJob. This method indicates that the client is
   /// no longer interested in the DlpJob result. The job will be canceled if
@@ -1204,18 +1795,32 @@ class DlpServiceClient {
   /// See https://cloud.google.com/dlp/docs/inspecting-storage and
   /// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::DeleteDlpJobRequest,google/privacy/dlp/v2/dlp.proto#L4510}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.DeleteDlpJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.privacy.dlp.v2.DeleteDlpJobRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4510}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.DeleteDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4510}
   ///
+  // clang-format on
   Status DeleteDlpJob(
       google::privacy::dlp::v2::DeleteDlpJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Starts asynchronous cancellation on a long-running DlpJob. The server
   /// makes a best effort to cancel the DlpJob, but success is not
@@ -1223,18 +1828,32 @@ class DlpServiceClient {
   /// See https://cloud.google.com/dlp/docs/inspecting-storage and
   /// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::CancelDlpJobRequest,google/privacy/dlp/v2/dlp.proto#L4488}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.CancelDlpJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.privacy.dlp.v2.CancelDlpJobRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4488}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.CancelDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4488}
   ///
+  // clang-format on
   Status CancelDlpJob(
       google::privacy::dlp::v2::CancelDlpJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a pre-built stored infoType to be used for inspection.
   /// See https://cloud.google.com/dlp/docs/creating-stored-infotypes to
@@ -1259,133 +1878,198 @@ class DlpServiceClient {
   /// @param config  Required. Configuration of the storedInfoType to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4769}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.StoredInfoType])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.CreateStoredInfoTypeRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4790}
-  /// [google.privacy.dlp.v2.StoredInfoType]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4769}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.CreateStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4790}
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4769}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::StoredInfoType> CreateStoredInfoType(
       std::string const& parent,
       google::privacy::dlp::v2::StoredInfoTypeConfig const& config,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a pre-built stored infoType to be used for inspection.
   /// See https://cloud.google.com/dlp/docs/creating-stored-infotypes to
   /// learn more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::CreateStoredInfoTypeRequest,google/privacy/dlp/v2/dlp.proto#L4790}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.CreateStoredInfoTypeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4769}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.StoredInfoType])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.CreateStoredInfoTypeRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4790}
-  /// [google.privacy.dlp.v2.StoredInfoType]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4769}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.CreateStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4790}
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4769}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::StoredInfoType> CreateStoredInfoType(
       google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Updates the stored infoType by creating a new version. The existing
-  /// version will continue to be used until the new version is ready. See
-  /// https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn more.
+  /// Updates the stored infoType by creating a new version. The existing version
+  /// will continue to be used until the new version is ready.
+  /// See https://cloud.google.com/dlp/docs/creating-stored-infotypes to
+  /// learn more.
   ///
-  /// @param name  Required. Resource name of organization and storedInfoType to
-  /// be updated, for
+  /// @param name  Required. Resource name of organization and storedInfoType to be updated, for
   ///  example `organizations/433245324/storedInfoTypes/432452342` or
   ///  projects/project-id/storedInfoTypes/432452342.
-  /// @param config  Updated configuration for the storedInfoType. If not
-  /// provided, a new
+  /// @param config  Updated configuration for the storedInfoType. If not provided, a new
   ///  version of the storedInfoType will be created with the existing
   ///  configuration.
   /// @param update_mask  Mask to control which fields get updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4769}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.StoredInfoType])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.StoredInfoType]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4769}
-  /// [google.privacy.dlp.v2.UpdateStoredInfoTypeRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4832}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4769}
+  /// [google.privacy.dlp.v2.UpdateStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4832}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::StoredInfoType> UpdateStoredInfoType(
       std::string const& name,
       google::privacy::dlp::v2::StoredInfoTypeConfig const& config,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
-  /// Updates the stored infoType by creating a new version. The existing
-  /// version will continue to be used until the new version is ready. See
-  /// https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn more.
+  /// Updates the stored infoType by creating a new version. The existing version
+  /// will continue to be used until the new version is ready.
+  /// See https://cloud.google.com/dlp/docs/creating-stored-infotypes to
+  /// learn more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::UpdateStoredInfoTypeRequest,google/privacy/dlp/v2/dlp.proto#L4832}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.UpdateStoredInfoTypeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4769}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.StoredInfoType])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.StoredInfoType]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4769}
-  /// [google.privacy.dlp.v2.UpdateStoredInfoTypeRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4832}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4769}
+  /// [google.privacy.dlp.v2.UpdateStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4832}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::StoredInfoType> UpdateStoredInfoType(
       google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a stored infoType.
   /// See https://cloud.google.com/dlp/docs/creating-stored-infotypes to
   /// learn more.
   ///
-  /// @param name  Required. Resource name of the organization and
-  /// storedInfoType to be read, for
+  /// @param name  Required. Resource name of the organization and storedInfoType to be read, for
   ///  example `organizations/433245324/storedInfoTypes/432452342` or
   ///  projects/project-id/storedInfoTypes/432452342.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4769}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.StoredInfoType])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.GetStoredInfoTypeRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4853}
-  /// [google.privacy.dlp.v2.StoredInfoType]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4769}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.GetStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4853}
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4769}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::StoredInfoType> GetStoredInfoType(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a stored infoType.
   /// See https://cloud.google.com/dlp/docs/creating-stored-infotypes to
   /// learn more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::GetStoredInfoTypeRequest,google/privacy/dlp/v2/dlp.proto#L4853}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.GetStoredInfoTypeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4769}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.StoredInfoType])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.GetStoredInfoTypeRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4853}
-  /// [google.privacy.dlp.v2.StoredInfoType]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4769}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.GetStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4853}
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4769}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::StoredInfoType> GetStoredInfoType(
       google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists stored infoTypes.
   /// See https://cloud.google.com/dlp/docs/creating-stored-infotypes to
@@ -1405,126 +2089,223 @@ class DlpServiceClient {
   ///      parent=projects/example-project/locations/europe-west3
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4769}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.privacy.dlp.v2.StoredInfoType], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.privacy.dlp.v2.ListStoredInfoTypesRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4866}
-  /// [google.privacy.dlp.v2.StoredInfoType]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4769}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.ListStoredInfoTypesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4866}
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4769}
   ///
+  // clang-format on
   StreamRange<google::privacy::dlp::v2::StoredInfoType> ListStoredInfoTypes(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists stored infoTypes.
   /// See https://cloud.google.com/dlp/docs/creating-stored-infotypes to
   /// learn more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::ListStoredInfoTypesRequest,google/privacy/dlp/v2/dlp.proto#L4866}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.ListStoredInfoTypesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::StoredInfoType,google/privacy/dlp/v2/dlp.proto#L4769}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.privacy.dlp.v2.StoredInfoType], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.privacy.dlp.v2.ListStoredInfoTypesRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4866}
-  /// [google.privacy.dlp.v2.StoredInfoType]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4769}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.ListStoredInfoTypesRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4866}
+  /// [google.privacy.dlp.v2.StoredInfoType]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4769}
   ///
+  // clang-format on
   StreamRange<google::privacy::dlp::v2::StoredInfoType> ListStoredInfoTypes(
       google::privacy::dlp::v2::ListStoredInfoTypesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a stored infoType.
   /// See https://cloud.google.com/dlp/docs/creating-stored-infotypes to
   /// learn more.
   ///
-  /// @param name  Required. Resource name of the organization and
-  /// storedInfoType to be deleted, for
+  /// @param name  Required. Resource name of the organization and storedInfoType to be deleted, for
   ///  example `organizations/433245324/storedInfoTypes/432452342` or
   ///  projects/project-id/storedInfoTypes/432452342.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.privacy.dlp.v2.DeleteStoredInfoTypeRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4929}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.DeleteStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4929}
   ///
+  // clang-format on
   Status DeleteStoredInfoType(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a stored infoType.
   /// See https://cloud.google.com/dlp/docs/creating-stored-infotypes to
   /// learn more.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::DeleteStoredInfoTypeRequest,google/privacy/dlp/v2/dlp.proto#L4929}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.DeleteStoredInfoTypeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.privacy.dlp.v2.DeleteStoredInfoTypeRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4929}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.DeleteStoredInfoTypeRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4929}
   ///
+  // clang-format on
   Status DeleteStoredInfoType(
       google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Inspect hybrid content and store findings to a job.
   /// To review the findings, inspect the job. Inspection will occur
   /// asynchronously.
   ///
-  /// @param name  Required. Resource name of the job to execute a hybrid
-  /// inspect on, for example
+  /// @param name  Required. Resource name of the job to execute a hybrid inspect on, for example
   ///  `projects/dlp-test-project/dlpJob/53234423`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::HybridInspectResponse,google/privacy/dlp/v2/dlp.proto#L5024}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.HybridInspectResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.HybridInspectDlpJobRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4957}
-  /// [google.privacy.dlp.v2.HybridInspectResponse]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5024}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.HybridInspectDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4957}
+  /// [google.privacy.dlp.v2.HybridInspectResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5024}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::HybridInspectResponse> HybridInspectDlpJob(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Inspect hybrid content and store findings to a job.
   /// To review the findings, inspect the job. Inspection will occur
   /// asynchronously.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::HybridInspectDlpJobRequest,google/privacy/dlp/v2/dlp.proto#L4957}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.HybridInspectDlpJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::privacy::dlp::v2::HybridInspectResponse,google/privacy/dlp/v2/dlp.proto#L5024}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.privacy.dlp.v2.HybridInspectResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.privacy.dlp.v2.HybridInspectDlpJobRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4957}
-  /// [google.privacy.dlp.v2.HybridInspectResponse]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5024}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.HybridInspectDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4957}
+  /// [google.privacy.dlp.v2.HybridInspectResponse]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L5024}
   ///
+  // clang-format on
   StatusOr<google::privacy::dlp::v2::HybridInspectResponse> HybridInspectDlpJob(
       google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Finish a running hybrid DlpJob. Triggers the finalization steps and
-  /// running of any enabled actions that have not yet run.
+  /// Finish a running hybrid DlpJob. Triggers the finalization steps and running
+  /// of any enabled actions that have not yet run.
   ///
-  /// @param request
-  /// @googleapis_link{google::privacy::dlp::v2::FinishDlpJobRequest,google/privacy/dlp/v2/dlp.proto#L4499}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.privacy.dlp.v2.FinishDlpJobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.privacy.dlp.v2.FinishDlpJobRequest]:
-  /// @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4499}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.privacy.dlp.v2.FinishDlpJobRequest]: @googleapis_reference_link{google/privacy/dlp/v2/dlp.proto#L4499}
   ///
+  // clang-format on
   Status FinishDlpJob(
       google::privacy::dlp::v2::FinishDlpJobRequest const& request,
       Options opts = {});

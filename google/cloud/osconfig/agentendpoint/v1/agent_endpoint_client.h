@@ -86,97 +86,138 @@ class AgentEndpointServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Stream established by client to receive Task notifications.
   ///
-  /// @param instance_id_token  Required. This is the Compute Engine instance
-  /// identity token described in
+  /// @param instance_id_token  Required. This is the Compute Engine instance identity token described in
   ///  https://cloud.google.com/compute/docs/instances/verifying-instance-identity
   ///  where the audience is 'osconfig.googleapis.com' and the format is 'full'.
-  /// @param agent_version  Required. The version of the agent making the
-  /// request.
+  /// @param agent_version  Required. The version of the agent making the request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L78}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L66}
-  /// [google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L78}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L66}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L78}
   ///
+  // clang-format on
   StreamRange<google::cloud::osconfig::agentendpoint::v1::
                   ReceiveTaskNotificationResponse>
   ReceiveTaskNotification(std::string const& instance_id_token,
                           std::string const& agent_version, Options opts = {});
 
+  // clang-format off
   ///
   /// Stream established by client to receive Task notifications.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationRequest,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L66}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReceiveTaskNotificationResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L78}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L66}
-  /// [google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L78}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L66}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReceiveTaskNotificationResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L78}
   ///
+  // clang-format on
   StreamRange<google::cloud::osconfig::agentendpoint::v1::
                   ReceiveTaskNotificationResponse>
   ReceiveTaskNotification(google::cloud::osconfig::agentendpoint::v1::
                               ReceiveTaskNotificationRequest const& request,
                           Options opts = {});
 
+  // clang-format off
   ///
   /// Signals the start of a task execution and returns the task info.
   ///
-  /// @param instance_id_token  Required. This is the Compute Engine instance
-  /// identity token described in
+  /// @param instance_id_token  Required. This is the Compute Engine instance identity token described in
   ///  https://cloud.google.com/compute/docs/instances/verifying-instance-identity
   ///  where the audience is 'osconfig.googleapis.com' and the format is 'full'.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L91}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.agentendpoint.v1.StartNextTaskResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.agentendpoint.v1.StartNextTaskRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L83}
-  /// [google.cloud.osconfig.agentendpoint.v1.StartNextTaskResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L91}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.agentendpoint.v1.StartNextTaskRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L83}
+  /// [google.cloud.osconfig.agentendpoint.v1.StartNextTaskResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L91}
   ///
+  // clang-format on
   StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
   StartNextTask(std::string const& instance_id_token, Options opts = {});
 
+  // clang-format off
   ///
   /// Signals the start of a task execution and returns the task info.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L83}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.osconfig.agentendpoint.v1.StartNextTaskRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L91}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.agentendpoint.v1.StartNextTaskResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.agentendpoint.v1.StartNextTaskRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L83}
-  /// [google.cloud.osconfig.agentendpoint.v1.StartNextTaskResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L91}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.agentendpoint.v1.StartNextTaskRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L83}
+  /// [google.cloud.osconfig.agentendpoint.v1.StartNextTaskResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L91}
   ///
+  // clang-format on
   StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
   StartNextTask(
       google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Signals an intermediary progress checkpoint in task execution.
   ///
-  /// @param instance_id_token  Required. This is the Compute Engine instance
-  /// identity token described in
+  /// @param instance_id_token  Required. This is the Compute Engine instance identity token described in
   ///  https://cloud.google.com/compute/docs/instances/verifying-instance-identity
   ///  where the audience is 'osconfig.googleapis.com' and the format is 'full'.
   /// @param task_id  Required. Unique identifier of the task this applies to.
@@ -188,14 +229,22 @@ class AgentEndpointServiceClient {
   ///  APPLY_CONFIG_TASK = ApplyConfigTaskProgress
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L130}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L98}
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L130}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L98}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L130}
   ///
+  // clang-format on
   StatusOr<
       google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
   ReportTaskProgress(
@@ -203,33 +252,46 @@ class AgentEndpointServiceClient {
       google::cloud::osconfig::agentendpoint::v1::TaskType task_type,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Signals an intermediary progress checkpoint in task execution.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L98}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L130}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L98}
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L130}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L98}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskProgressResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L130}
   ///
+  // clang-format on
   StatusOr<
       google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
   ReportTaskProgress(google::cloud::osconfig::agentendpoint::v1::
                          ReportTaskProgressRequest const& request,
                      Options opts = {});
 
+  // clang-format off
   ///
-  /// Signals that the task execution is complete and optionally returns the
-  /// next task.
+  /// Signals that the task execution is complete and optionally returns the next
+  /// task.
   ///
-  /// @param instance_id_token  Required. This is the Compute Engine instance
-  /// identity token described in
+  /// @param instance_id_token  Required. This is the Compute Engine instance identity token described in
   ///  https://cloud.google.com/compute/docs/instances/verifying-instance-identity
   ///  where the audience is 'osconfig.googleapis.com' and the format is 'full'.
   /// @param task_id  Required. Unique identifier of the task this applies to.
@@ -239,18 +301,25 @@ class AgentEndpointServiceClient {
   ///  APPLY_PATCHES = ApplyPatchesTaskOutput
   ///  EXEC_STEP = ExecStepTaskOutput
   ///  APPLY_CONFIG_TASK = ApplyConfigTaskOutput
-  /// @param error_message  Descriptive error message if the task execution
-  /// ended in error.
+  /// @param error_message  Descriptive error message if the task execution ended in error.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L171}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L136}
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L171}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L136}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L171}
   ///
+  // clang-format on
   StatusOr<
       google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
   ReportTaskComplete(
@@ -258,103 +327,142 @@ class AgentEndpointServiceClient {
       google::cloud::osconfig::agentendpoint::v1::TaskType task_type,
       std::string const& error_message, Options opts = {});
 
+  // clang-format off
   ///
-  /// Signals that the task execution is complete and optionally returns the
-  /// next task.
+  /// Signals that the task execution is complete and optionally returns the next
+  /// task.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L136}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L171}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L136}
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L171}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L136}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportTaskCompleteResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L171}
   ///
+  // clang-format on
   StatusOr<
       google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
   ReportTaskComplete(google::cloud::osconfig::agentendpoint::v1::
                          ReportTaskCompleteRequest const& request,
                      Options opts = {});
 
+  // clang-format off
   ///
   /// Registers the agent running on the VM.
   ///
-  /// @param instance_id_token  Required. This is the Compute Engine instance
-  /// identity token described in
+  /// @param instance_id_token  Required. This is the Compute Engine instance identity token described in
   ///  https://cloud.google.com/compute/docs/instances/verifying-instance-identity
   ///  where the audience is 'osconfig.googleapis.com' and the format is 'full'.
   /// @param agent_version  Required. The version of the agent.
-  /// @param supported_capabilities  Required. The capabilities supported by the
-  /// agent. Supported values are:
+  /// @param supported_capabilities  Required. The capabilities supported by the agent. Supported values are:
   ///  PATCH_GA
   ///  GUEST_POLICY_BETA
   ///  CONFIG_V1
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L208}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.agentendpoint.v1.RegisterAgentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.agentendpoint.v1.RegisterAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L176}
-  /// [google.cloud.osconfig.agentendpoint.v1.RegisterAgentResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L208}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.agentendpoint.v1.RegisterAgentRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L176}
+  /// [google.cloud.osconfig.agentendpoint.v1.RegisterAgentResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L208}
   ///
+  // clang-format on
   StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
   RegisterAgent(std::string const& instance_id_token,
                 std::string const& agent_version,
                 std::vector<std::string> const& supported_capabilities,
                 Options opts = {});
 
+  // clang-format off
   ///
   /// Registers the agent running on the VM.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L176}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.osconfig.agentendpoint.v1.RegisterAgentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L208}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.agentendpoint.v1.RegisterAgentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.agentendpoint.v1.RegisterAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L176}
-  /// [google.cloud.osconfig.agentendpoint.v1.RegisterAgentResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L208}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.agentendpoint.v1.RegisterAgentRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L176}
+  /// [google.cloud.osconfig.agentendpoint.v1.RegisterAgentResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L208}
   ///
+  // clang-format on
   StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
   RegisterAgent(
       google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Reports the VMs current inventory.
   ///
-  /// @param instance_id_token  Required. This is the Compute Engine instance
-  /// identity token described in
+  /// @param instance_id_token  Required. This is the Compute Engine instance identity token described in
   ///  https://cloud.google.com/compute/docs/instances/verifying-instance-identity
   ///  where the audience is 'osconfig.googleapis.com' and the format is 'full'.
-  /// @param inventory_checksum  Required. This is a client created checksum
-  /// that should be generated based on the
+  /// @param inventory_checksum  Required. This is a client created checksum that should be generated based on the
   ///  contents of the reported inventory.  This will be used by the service to
   ///  determine if it has the latest version of inventory.
-  /// @param inventory  Optional. This is the details of the inventory.  Should
-  /// only be provided if the
+  /// @param inventory  Optional. This is the details of the inventory.  Should only be provided if the
   ///  inventory has changed since the last report, or if instructed by the
   ///  service to provide full inventory.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L231}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.agentendpoint.v1.ReportInventoryResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportInventoryRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L213}
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportInventoryResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L231}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportInventoryRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L213}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportInventoryResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L231}
   ///
+  // clang-format on
   StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
   ReportInventory(
       std::string const& instance_id_token,
@@ -362,21 +470,34 @@ class AgentEndpointServiceClient {
       google::cloud::osconfig::agentendpoint::v1::Inventory const& inventory,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Reports the VMs current inventory.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L213}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.osconfig.agentendpoint.v1.ReportInventoryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse,google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L231}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.osconfig.agentendpoint.v1.ReportInventoryResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportInventoryRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L213}
-  /// [google.cloud.osconfig.agentendpoint.v1.ReportInventoryResponse]:
-  /// @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L231}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportInventoryRequest]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L213}
+  /// [google.cloud.osconfig.agentendpoint.v1.ReportInventoryResponse]: @googleapis_reference_link{google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto#L231}
   ///
+  // clang-format on
   StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
   ReportInventory(
       google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&

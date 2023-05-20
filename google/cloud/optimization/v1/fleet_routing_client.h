@@ -101,9 +101,10 @@ class FleetRoutingClient {
   }
   ///@}
 
+  // clang-format off
   ///
-  /// Sends an `OptimizeToursRequest` containing a `ShipmentModel` and returns
-  /// an `OptimizeToursResponse` containing `ShipmentRoute`s, which are a set of
+  /// Sends an `OptimizeToursRequest` containing a `ShipmentModel` and returns an
+  /// `OptimizeToursResponse` containing `ShipmentRoute`s, which are a set of
   /// routes to be performed by vehicles minimizing the overall cost.
   ///
   /// A `ShipmentModel` model consists mainly of `Shipment`s that need to be
@@ -113,27 +114,40 @@ class FleetRoutingClient {
   /// corresponds to a `VisitRequest`, which is a pickup or delivery for a
   /// `Shipment`.
   ///
-  /// The goal is to provide an assignment of `ShipmentRoute`s to `Vehicle`s
-  /// that minimizes the total cost where cost has many components defined in
-  /// the `ShipmentModel`.
+  /// The goal is to provide an assignment of `ShipmentRoute`s to `Vehicle`s that
+  /// minimizes the total cost where cost has many components defined in the
+  /// `ShipmentModel`.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::optimization::v1::OptimizeToursRequest,google/cloud/optimization/v1/fleet_routing.proto#L109}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.optimization.v1.OptimizeToursRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::optimization::v1::OptimizeToursResponse,google/cloud/optimization/v1/fleet_routing.proto#L358}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.optimization.v1.OptimizeToursResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.optimization.v1.OptimizeToursRequest]:
-  /// @googleapis_reference_link{google/cloud/optimization/v1/fleet_routing.proto#L109}
-  /// [google.cloud.optimization.v1.OptimizeToursResponse]:
-  /// @googleapis_reference_link{google/cloud/optimization/v1/fleet_routing.proto#L358}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.optimization.v1.OptimizeToursRequest]: @googleapis_reference_link{google/cloud/optimization/v1/fleet_routing.proto#L109}
+  /// [google.cloud.optimization.v1.OptimizeToursResponse]: @googleapis_reference_link{google/cloud/optimization/v1/fleet_routing.proto#L358}
   ///
+  // clang-format on
   StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
   OptimizeTours(
       google::cloud::optimization::v1::OptimizeToursRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Optimizes vehicle tours for one or more `OptimizeToursRequest`
   /// messages as a batch.
@@ -146,18 +160,36 @@ class FleetRoutingClient {
   /// containing `ShipmentRoute`s, which are a set of routes to be performed by
   /// vehicles minimizing the overall cost.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::optimization::v1::BatchOptimizeToursRequest,google/cloud/optimization/v1/fleet_routing.proto#L434}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.optimization.v1.BatchOptimizeToursRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::optimization::v1::BatchOptimizeToursResponse,google/cloud/optimization/v1/fleet_routing.proto#L473}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.optimization.v1.BatchOptimizeToursResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.optimization.v1.BatchOptimizeToursRequest]:
-  /// @googleapis_reference_link{google/cloud/optimization/v1/fleet_routing.proto#L434}
-  /// [google.cloud.optimization.v1.BatchOptimizeToursResponse]:
-  /// @googleapis_reference_link{google/cloud/optimization/v1/fleet_routing.proto#L473}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.optimization.v1.BatchOptimizeToursRequest]: @googleapis_reference_link{google/cloud/optimization/v1/fleet_routing.proto#L434}
+  /// [google.cloud.optimization.v1.BatchOptimizeToursResponse]: @googleapis_reference_link{google/cloud/optimization/v1/fleet_routing.proto#L473}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
   BatchOptimizeTours(
       google::cloud::optimization::v1::BatchOptimizeToursRequest const& request,

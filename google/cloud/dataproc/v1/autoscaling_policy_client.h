@@ -90,11 +90,11 @@ class AutoscalingPolicyServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates new autoscaling policy.
   ///
-  /// @param parent  Required. The "resource name" of the region or location, as
-  /// described
+  /// @param parent  Required. The "resource name" of the region or location, as described
   ///  in https://cloud.google.com/apis/design/resource_names.
   ///  * For `projects.regions.autoscalingPolicies.create`, the resource name
   ///    of the region has the following format:
@@ -105,41 +105,63 @@ class AutoscalingPolicyServiceClient {
   /// @param policy  Required. The autoscaling policy to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataproc.v1.AutoscalingPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
-  /// [google.cloud.dataproc.v1.CreateAutoscalingPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L274}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.AutoscalingPolicy]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
+  /// [google.cloud.dataproc.v1.CreateAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L274}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   CreateAutoscalingPolicy(
       std::string const& parent,
       google::cloud::dataproc::v1::AutoscalingPolicy const& policy,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates new autoscaling policy.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest,google/cloud/dataproc/v1/autoscaling_policies.proto#L274}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.CreateAutoscalingPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataproc.v1.AutoscalingPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
-  /// [google.cloud.dataproc.v1.CreateAutoscalingPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L274}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.AutoscalingPolicy]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
+  /// [google.cloud.dataproc.v1.CreateAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L274}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   CreateAutoscalingPolicy(
       google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates (replaces) autoscaling policy.
   ///
@@ -149,48 +171,69 @@ class AutoscalingPolicyServiceClient {
   /// @param policy  Required. The updated autoscaling policy.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataproc.v1.AutoscalingPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
-  /// [google.cloud.dataproc.v1.UpdateAutoscalingPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L317}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.AutoscalingPolicy]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
+  /// [google.cloud.dataproc.v1.UpdateAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L317}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   UpdateAutoscalingPolicy(
       google::cloud::dataproc::v1::AutoscalingPolicy const& policy,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates (replaces) autoscaling policy.
   ///
   /// Disabled check for update_mask, because all updates will be full
   /// replacements.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest,google/cloud/dataproc/v1/autoscaling_policies.proto#L317}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.UpdateAutoscalingPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataproc.v1.AutoscalingPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
-  /// [google.cloud.dataproc.v1.UpdateAutoscalingPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L317}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.AutoscalingPolicy]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
+  /// [google.cloud.dataproc.v1.UpdateAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L317}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   UpdateAutoscalingPolicy(
       google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves autoscaling policy.
   ///
-  /// @param name  Required. The "resource name" of the autoscaling policy, as
-  /// described
+  /// @param name  Required. The "resource name" of the autoscaling policy, as described
   ///  in https://cloud.google.com/apis/design/resource_names.
   ///  * For `projects.regions.autoscalingPolicies.get`, the resource name
   ///    of the policy has the following format:
@@ -200,41 +243,62 @@ class AutoscalingPolicyServiceClient {
   ///    `projects/{project_id}/locations/{location}/autoscalingPolicies/{policy_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataproc.v1.AutoscalingPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
-  /// [google.cloud.dataproc.v1.GetAutoscalingPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L297}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.AutoscalingPolicy]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
+  /// [google.cloud.dataproc.v1.GetAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L297}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> GetAutoscalingPolicy(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves autoscaling policy.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::GetAutoscalingPolicyRequest,google/cloud/dataproc/v1/autoscaling_policies.proto#L297}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.GetAutoscalingPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataproc.v1.AutoscalingPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
-  /// [google.cloud.dataproc.v1.GetAutoscalingPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L297}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.AutoscalingPolicy]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
+  /// [google.cloud.dataproc.v1.GetAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L297}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> GetAutoscalingPolicy(
       google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists autoscaling policies in the project.
   ///
-  /// @param parent  Required. The "resource name" of the region or location, as
-  /// described
+  /// @param parent  Required. The "resource name" of the region or location, as described
   ///  in https://cloud.google.com/apis/design/resource_names.
   ///  * For `projects.regions.autoscalingPolicies.list`, the resource name
   ///    of the region has the following format:
@@ -244,43 +308,82 @@ class AutoscalingPolicyServiceClient {
   ///    `projects/{project_id}/locations/{location}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataproc.v1.AutoscalingPolicy], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
-  /// [google.cloud.dataproc.v1.ListAutoscalingPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L345}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.AutoscalingPolicy]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
+  /// [google.cloud.dataproc.v1.ListAutoscalingPoliciesRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L345}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>
   ListAutoscalingPolicies(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists autoscaling policies in the project.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest,google/cloud/dataproc/v1/autoscaling_policies.proto#L345}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.ListAutoscalingPoliciesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataproc.v1.AutoscalingPolicy], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
-  /// [google.cloud.dataproc.v1.ListAutoscalingPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L345}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.AutoscalingPolicy]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
+  /// [google.cloud.dataproc.v1.ListAutoscalingPoliciesRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L345}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>
   ListAutoscalingPolicies(
       google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an autoscaling policy. It is an error to delete an autoscaling
   /// policy that is in use by one or more clusters.
   ///
-  /// @param name  Required. The "resource name" of the autoscaling policy, as
-  /// described
+  /// @param name  Required. The "resource name" of the autoscaling policy, as described
   ///  in https://cloud.google.com/apis/design/resource_names.
   ///  * For `projects.regions.autoscalingPolicies.delete`, the resource name
   ///    of the policy has the following format:
@@ -290,24 +393,47 @@ class AutoscalingPolicyServiceClient {
   ///    `projects/{project_id}/locations/{location}/autoscalingPolicies/{policy_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.dataproc.v1.DeleteAutoscalingPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L325}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.DeleteAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L325}
   ///
+  // clang-format on
   Status DeleteAutoscalingPolicy(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes an autoscaling policy. It is an error to delete an autoscaling
   /// policy that is in use by one or more clusters.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest,google/cloud/dataproc/v1/autoscaling_policies.proto#L325}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.DeleteAutoscalingPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.dataproc.v1.DeleteAutoscalingPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L325}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.DeleteAutoscalingPolicyRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L325}
   ///
+  // clang-format on
   Status DeleteAutoscalingPolicy(
       google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
           request,

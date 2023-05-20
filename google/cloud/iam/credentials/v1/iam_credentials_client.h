@@ -93,45 +93,49 @@ class IAMCredentialsClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Generates an OAuth 2.0 access token for a service account.
   ///
-  /// @param name  Required. The resource name of the service account for which
-  /// the credentials
+  /// @param name  Required. The resource name of the service account for which the credentials
   ///  are requested, in the following format:
-  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
-  ///  wildcard character is required; replacing it with a project ID is
-  ///  invalid.
-  /// @param delegates  The sequence of service accounts in a delegation chain.
-  /// Each service
+  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
+  ///  character is required; replacing it with a project ID is invalid.
+  /// @param delegates  The sequence of service accounts in a delegation chain. Each service
   ///  account must be granted the `roles/iam.serviceAccountTokenCreator` role
   ///  on its next service account in the chain. The last service account in the
   ///  chain must be granted the `roles/iam.serviceAccountTokenCreator` role
   ///  on the service account that is specified in the `name` field of the
   ///  request.
   ///  The delegates must have the following format:
-  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
-  ///  wildcard character is required; replacing it with a project ID is
-  ///  invalid.
-  /// @param scope  Required. Code to identify the scopes to be included in the
-  /// OAuth 2.0 access token.
-  ///  See https://developers.google.com/identity/protocols/googlescopes for
-  ///  more information. At least one value required.
-  /// @param lifetime  The desired lifetime duration of the access token in
-  /// seconds.
+  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
+  ///  character is required; replacing it with a project ID is invalid.
+  /// @param scope  Required. Code to identify the scopes to be included in the OAuth 2.0 access token.
+  ///  See https://developers.google.com/identity/protocols/googlescopes for more
+  ///  information.
+  ///  At least one value required.
+  /// @param lifetime  The desired lifetime duration of the access token in seconds.
   ///  Must be set to a value less than or equal to 3600 (1 hour). If a value is
   ///  not specified, the token's lifetime will be set to a default value of one
   ///  hour.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenResponse,google/iam/credentials/v1/common.proto#L73}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.credentials.v1.GenerateAccessTokenResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.credentials.v1.GenerateAccessTokenRequest]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L36}
-  /// [google.iam.credentials.v1.GenerateAccessTokenResponse]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L73}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.credentials.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{google/iam/credentials/v1/common.proto#L36}
+  /// [google.iam.credentials.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{google/iam/credentials/v1/common.proto#L73}
   ///
+  // clang-format on
   StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(std::string const& name,
                       std::vector<std::string> const& delegates,
@@ -139,193 +143,257 @@ class IAMCredentialsClient {
                       google::protobuf::Duration const& lifetime,
                       Options opts = {});
 
+  // clang-format off
   ///
   /// Generates an OAuth 2.0 access token for a service account.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenRequest,google/iam/credentials/v1/common.proto#L36}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.credentials.v1.GenerateAccessTokenRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::credentials::v1::GenerateAccessTokenResponse,google/iam/credentials/v1/common.proto#L73}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.credentials.v1.GenerateAccessTokenResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.credentials.v1.GenerateAccessTokenRequest]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L36}
-  /// [google.iam.credentials.v1.GenerateAccessTokenResponse]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L73}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.credentials.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{google/iam/credentials/v1/common.proto#L36}
+  /// [google.iam.credentials.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{google/iam/credentials/v1/common.proto#L73}
   ///
+  // clang-format on
   StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
       google::iam::credentials::v1::GenerateAccessTokenRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Generates an OpenID Connect ID token for a service account.
   ///
-  /// @param name  Required. The resource name of the service account for which
-  /// the credentials
+  /// @param name  Required. The resource name of the service account for which the credentials
   ///  are requested, in the following format:
-  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
-  ///  wildcard character is required; replacing it with a project ID is
-  ///  invalid.
-  /// @param delegates  The sequence of service accounts in a delegation chain.
-  /// Each service
+  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
+  ///  character is required; replacing it with a project ID is invalid.
+  /// @param delegates  The sequence of service accounts in a delegation chain. Each service
   ///  account must be granted the `roles/iam.serviceAccountTokenCreator` role
   ///  on its next service account in the chain. The last service account in the
   ///  chain must be granted the `roles/iam.serviceAccountTokenCreator` role
   ///  on the service account that is specified in the `name` field of the
   ///  request.
   ///  The delegates must have the following format:
-  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
-  ///  wildcard character is required; replacing it with a project ID is
-  ///  invalid.
-  /// @param audience  Required. The audience for the token, such as the API or
-  /// account that this token
+  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
+  ///  character is required; replacing it with a project ID is invalid.
+  /// @param audience  Required. The audience for the token, such as the API or account that this token
   ///  grants access to.
-  /// @param include_email  Include the service account email in the token. If
-  /// set to `true`, the
+  /// @param include_email  Include the service account email in the token. If set to `true`, the
   ///  token will contain `email` and `email_verified` claims.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenResponse,google/iam/credentials/v1/common.proto#L187}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.credentials.v1.GenerateIdTokenResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.credentials.v1.GenerateIdTokenRequest]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L154}
-  /// [google.iam.credentials.v1.GenerateIdTokenResponse]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L187}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.credentials.v1.GenerateIdTokenRequest]: @googleapis_reference_link{google/iam/credentials/v1/common.proto#L154}
+  /// [google.iam.credentials.v1.GenerateIdTokenResponse]: @googleapis_reference_link{google/iam/credentials/v1/common.proto#L187}
   ///
+  // clang-format on
   StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
   GenerateIdToken(std::string const& name,
                   std::vector<std::string> const& delegates,
                   std::string const& audience, bool include_email,
                   Options opts = {});
 
+  // clang-format off
   ///
   /// Generates an OpenID Connect ID token for a service account.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenRequest,google/iam/credentials/v1/common.proto#L154}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.credentials.v1.GenerateIdTokenRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::credentials::v1::GenerateIdTokenResponse,google/iam/credentials/v1/common.proto#L187}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.credentials.v1.GenerateIdTokenResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.credentials.v1.GenerateIdTokenRequest]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L154}
-  /// [google.iam.credentials.v1.GenerateIdTokenResponse]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L187}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.credentials.v1.GenerateIdTokenRequest]: @googleapis_reference_link{google/iam/credentials/v1/common.proto#L154}
+  /// [google.iam.credentials.v1.GenerateIdTokenResponse]: @googleapis_reference_link{google/iam/credentials/v1/common.proto#L187}
   ///
+  // clang-format on
   StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
   GenerateIdToken(
       google::iam::credentials::v1::GenerateIdTokenRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Signs a blob using a service account's system-managed private key.
   ///
-  /// @param name  Required. The resource name of the service account for which
-  /// the credentials
+  /// @param name  Required. The resource name of the service account for which the credentials
   ///  are requested, in the following format:
-  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
-  ///  wildcard character is required; replacing it with a project ID is
-  ///  invalid.
-  /// @param delegates  The sequence of service accounts in a delegation chain.
-  /// Each service
+  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
+  ///  character is required; replacing it with a project ID is invalid.
+  /// @param delegates  The sequence of service accounts in a delegation chain. Each service
   ///  account must be granted the `roles/iam.serviceAccountTokenCreator` role
   ///  on its next service account in the chain. The last service account in the
   ///  chain must be granted the `roles/iam.serviceAccountTokenCreator` role
   ///  on the service account that is specified in the `name` field of the
   ///  request.
   ///  The delegates must have the following format:
-  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
-  ///  wildcard character is required; replacing it with a project ID is
-  ///  invalid.
+  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
+  ///  character is required; replacing it with a project ID is invalid.
   /// @param payload  Required. The bytes to sign.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::credentials::v1::SignBlobResponse,google/iam/credentials/v1/common.proto#L110}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.credentials.v1.SignBlobResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.credentials.v1.SignBlobRequest]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L82}
-  /// [google.iam.credentials.v1.SignBlobResponse]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L110}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.credentials.v1.SignBlobRequest]: @googleapis_reference_link{google/iam/credentials/v1/common.proto#L82}
+  /// [google.iam.credentials.v1.SignBlobResponse]: @googleapis_reference_link{google/iam/credentials/v1/common.proto#L110}
   ///
+  // clang-format on
   StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
       std::string const& name, std::vector<std::string> const& delegates,
       std::string const& payload, Options opts = {});
 
+  // clang-format off
   ///
   /// Signs a blob using a service account's system-managed private key.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::credentials::v1::SignBlobRequest,google/iam/credentials/v1/common.proto#L82}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.credentials.v1.SignBlobRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::credentials::v1::SignBlobResponse,google/iam/credentials/v1/common.proto#L110}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.credentials.v1.SignBlobResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.credentials.v1.SignBlobRequest]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L82}
-  /// [google.iam.credentials.v1.SignBlobResponse]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L110}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.credentials.v1.SignBlobRequest]: @googleapis_reference_link{google/iam/credentials/v1/common.proto#L82}
+  /// [google.iam.credentials.v1.SignBlobResponse]: @googleapis_reference_link{google/iam/credentials/v1/common.proto#L110}
   ///
+  // clang-format on
   StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
       google::iam::credentials::v1::SignBlobRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Signs a JWT using a service account's system-managed private key.
   ///
-  /// @param name  Required. The resource name of the service account for which
-  /// the credentials
+  /// @param name  Required. The resource name of the service account for which the credentials
   ///  are requested, in the following format:
-  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
-  ///  wildcard character is required; replacing it with a project ID is
-  ///  invalid.
-  /// @param delegates  The sequence of service accounts in a delegation chain.
-  /// Each service
+  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
+  ///  character is required; replacing it with a project ID is invalid.
+  /// @param delegates  The sequence of service accounts in a delegation chain. Each service
   ///  account must be granted the `roles/iam.serviceAccountTokenCreator` role
   ///  on its next service account in the chain. The last service account in the
   ///  chain must be granted the `roles/iam.serviceAccountTokenCreator` role
   ///  on the service account that is specified in the `name` field of the
   ///  request.
   ///  The delegates must have the following format:
-  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
-  ///  wildcard character is required; replacing it with a project ID is
-  ///  invalid.
-  /// @param payload  Required. The JWT payload to sign: a JSON object that
-  /// contains a JWT Claims Set.
+  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
+  ///  character is required; replacing it with a project ID is invalid.
+  /// @param payload  Required. The JWT payload to sign: a JSON object that contains a JWT Claims Set.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::credentials::v1::SignJwtResponse,google/iam/credentials/v1/common.proto#L146}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.credentials.v1.SignJwtResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.credentials.v1.SignJwtRequest]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L118}
-  /// [google.iam.credentials.v1.SignJwtResponse]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L146}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.credentials.v1.SignJwtRequest]: @googleapis_reference_link{google/iam/credentials/v1/common.proto#L118}
+  /// [google.iam.credentials.v1.SignJwtResponse]: @googleapis_reference_link{google/iam/credentials/v1/common.proto#L146}
   ///
+  // clang-format on
   StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
       std::string const& name, std::vector<std::string> const& delegates,
       std::string const& payload, Options opts = {});
 
+  // clang-format off
   ///
   /// Signs a JWT using a service account's system-managed private key.
   ///
-  /// @param request
-  /// @googleapis_link{google::iam::credentials::v1::SignJwtRequest,google/iam/credentials/v1/common.proto#L118}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.iam.credentials.v1.SignJwtRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::iam::credentials::v1::SignJwtResponse,google/iam/credentials/v1/common.proto#L146}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.iam.credentials.v1.SignJwtResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.iam.credentials.v1.SignJwtRequest]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L118}
-  /// [google.iam.credentials.v1.SignJwtResponse]:
-  /// @googleapis_reference_link{google/iam/credentials/v1/common.proto#L146}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.iam.credentials.v1.SignJwtRequest]: @googleapis_reference_link{google/iam/credentials/v1/common.proto#L118}
+  /// [google.iam.credentials.v1.SignJwtResponse]: @googleapis_reference_link{google/iam/credentials/v1/common.proto#L146}
   ///
+  // clang-format on
   StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
       google::iam::credentials::v1::SignJwtRequest const& request,
       Options opts = {});

@@ -89,6 +89,7 @@ class AssuredWorkloadsServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates Assured Workload.
   ///
@@ -97,39 +98,73 @@ class AssuredWorkloadsServiceClient {
   /// @param workload  Required. Assured Workload to create
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.assuredworkloads.v1.Workload] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.assuredworkloads.v1.CreateWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L133}
-  /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.assuredworkloads.v1.CreateWorkloadRequest]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L133}
+  /// [google.cloud.assuredworkloads.v1.Workload]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
   CreateWorkload(std::string const& parent,
                  google::cloud::assuredworkloads::v1::Workload const& workload,
                  Options opts = {});
 
+  // clang-format off
   ///
   /// Creates Assured Workload.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::CreateWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L133}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.assuredworkloads.v1.CreateWorkloadRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.assuredworkloads.v1.Workload] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.assuredworkloads.v1.CreateWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L133}
-  /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.assuredworkloads.v1.CreateWorkloadRequest]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L133}
+  /// [google.cloud.assuredworkloads.v1.Workload]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
   CreateWorkload(
       google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an existing workload.
   /// Currently allows updating of workload display_name and labels.
@@ -137,75 +172,110 @@ class AssuredWorkloadsServiceClient {
   /// Only one update operation per workload can be in progress.
   ///
   /// @param workload  Required. The workload to update.
-  ///  The workload's `name` field is used to identify the workload to be
-  ///  updated. Format:
+  ///  The workload's `name` field is used to identify the workload to be updated.
+  ///  Format:
   ///  organizations/{org_id}/locations/{location_id}/workloads/{workload_id}
   /// @param update_mask  Required. The list of fields to be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.assuredworkloads.v1.Workload])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.assuredworkloads.v1.UpdateWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L154}
-  /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.assuredworkloads.v1.UpdateWorkloadRequest]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L154}
+  /// [google.cloud.assuredworkloads.v1.Workload]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
+  // clang-format on
   StatusOr<google::cloud::assuredworkloads::v1::Workload> UpdateWorkload(
       google::cloud::assuredworkloads::v1::Workload const& workload,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates an existing workload.
   /// Currently allows updating of workload display_name and labels.
   /// For force updates don't set etag field in the Workload.
   /// Only one update operation per workload can be in progress.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::UpdateWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L154}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.assuredworkloads.v1.UpdateWorkloadRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.assuredworkloads.v1.Workload])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.assuredworkloads.v1.UpdateWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L154}
-  /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.assuredworkloads.v1.UpdateWorkloadRequest]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L154}
+  /// [google.cloud.assuredworkloads.v1.Workload]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
+  // clang-format on
   StatusOr<google::cloud::assuredworkloads::v1::Workload> UpdateWorkload(
       google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Restrict the list of resources allowed in the Workload environment.
   /// The current list of allowed products can be found at
   /// https://cloud.google.com/assured-workloads/docs/supported-products
-  /// In addition to assuredworkloads.workload.update permission, the user
-  /// should also have orgpolicy.policy.set permission on the folder resource to
-  /// use this functionality.
+  /// In addition to assuredworkloads.workload.update permission, the user should
+  /// also have orgpolicy.policy.set permission on the folder resource
+  /// to use this functionality.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L534}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.assuredworkloads.v1.RestrictAllowedResourcesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L563}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.assuredworkloads.v1.RestrictAllowedResourcesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.assuredworkloads.v1.RestrictAllowedResourcesRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L534}
-  /// [google.cloud.assuredworkloads.v1.RestrictAllowedResourcesResponse]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L563}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.assuredworkloads.v1.RestrictAllowedResourcesRequest]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L534}
+  /// [google.cloud.assuredworkloads.v1.RestrictAllowedResourcesResponse]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L563}
   ///
+  // clang-format on
   StatusOr<
       google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
   RestrictAllowedResources(google::cloud::assuredworkloads::v1::
                                RestrictAllowedResourcesRequest const& request,
                            Options opts = {});
 
+  // clang-format off
   ///
-  /// Deletes the workload. Make sure that workload's direct children are
-  /// already in a deleted state, otherwise the request will fail with a
+  /// Deletes the workload. Make sure that workload's direct children are already
+  /// in a deleted state, otherwise the request will fail with a
   /// FAILED_PRECONDITION error.
   ///
   /// @param name  Required. The `name` field is used to identify the workload.
@@ -213,70 +283,115 @@ class AssuredWorkloadsServiceClient {
   ///  organizations/{org_id}/locations/{location_id}/workloads/{workload_id}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.assuredworkloads.v1.DeleteWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L166}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.assuredworkloads.v1.DeleteWorkloadRequest]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L166}
   ///
+  // clang-format on
   Status DeleteWorkload(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
-  /// Deletes the workload. Make sure that workload's direct children are
-  /// already in a deleted state, otherwise the request will fail with a
+  /// Deletes the workload. Make sure that workload's direct children are already
+  /// in a deleted state, otherwise the request will fail with a
   /// FAILED_PRECONDITION error.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::DeleteWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L166}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.assuredworkloads.v1.DeleteWorkloadRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.assuredworkloads.v1.DeleteWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L166}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.assuredworkloads.v1.DeleteWorkloadRequest]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L166}
   ///
+  // clang-format on
   Status DeleteWorkload(
       google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets Assured Workload associated with a CRM Node
   ///
-  /// @param name  Required. The resource name of the Workload to fetch. This is
-  /// the workload's
+  /// @param name  Required. The resource name of the Workload to fetch. This is the workload's
   ///  relative path in the API, formatted as
   ///  "organizations/{organization_id}/locations/{location_id}/workloads/{workload_id}".
   ///  For example,
   ///  "organizations/123/locations/us-east1/workloads/assured-workload-1".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.assuredworkloads.v1.Workload])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.assuredworkloads.v1.GetWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L183}
-  /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.assuredworkloads.v1.GetWorkloadRequest]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L183}
+  /// [google.cloud.assuredworkloads.v1.Workload]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
+  // clang-format on
   StatusOr<google::cloud::assuredworkloads::v1::Workload> GetWorkload(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets Assured Workload associated with a CRM Node
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::GetWorkloadRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L183}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.assuredworkloads.v1.GetWorkloadRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.assuredworkloads.v1.Workload])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.assuredworkloads.v1.GetWorkloadRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L183}
-  /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.assuredworkloads.v1.GetWorkloadRequest]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L183}
+  /// [google.cloud.assuredworkloads.v1.Workload]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
+  // clang-format on
   StatusOr<google::cloud::assuredworkloads::v1::Workload> GetWorkload(
       google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists Assured Workloads under a CRM Node.
   ///
@@ -284,36 +399,76 @@ class AssuredWorkloadsServiceClient {
   ///  Must be of the form `organizations/{org_id}/locations/{location}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.assuredworkloads.v1.Workload], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.assuredworkloads.v1.ListWorkloadsRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
-  /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.assuredworkloads.v1.ListWorkloadsRequest]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
+  /// [google.cloud.assuredworkloads.v1.Workload]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
+  // clang-format on
   StreamRange<google::cloud::assuredworkloads::v1::Workload> ListWorkloads(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists Assured Workloads under a CRM Node.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::ListWorkloadsRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.assuredworkloads.v1.ListWorkloadsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Workload,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.assuredworkloads.v1.Workload], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.assuredworkloads.v1.ListWorkloadsRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
-  /// [google.cloud.assuredworkloads.v1.Workload]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.assuredworkloads.v1.ListWorkloadsRequest]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L198}
+  /// [google.cloud.assuredworkloads.v1.Workload]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L232}
   ///
+  // clang-format on
   StreamRange<google::cloud::assuredworkloads::v1::Workload> ListWorkloads(
       google::cloud::assuredworkloads::v1::ListWorkloadsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the Violations in the AssuredWorkload Environment.
   /// Callers may also choose to read across multiple Workloads as per
@@ -322,21 +477,38 @@ class AssuredWorkloadsServiceClient {
   /// Format `organizations/{org_id}/locations/{location}/workloads/-`
   ///
   /// @param parent  Required. The Workload name.
-  ///  Format
-  ///  `organizations/{org_id}/locations/{location}/workloads/{workload}`.
+  ///  Format `organizations/{org_id}/locations/{location}/workloads/{workload}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Violation,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L654}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.assuredworkloads.v1.Violation], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.assuredworkloads.v1.ListViolationsRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L606}
-  /// [google.cloud.assuredworkloads.v1.Violation]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L654}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.assuredworkloads.v1.ListViolationsRequest]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L606}
+  /// [google.cloud.assuredworkloads.v1.Violation]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L654}
   ///
+  // clang-format on
   StreamRange<google::cloud::assuredworkloads::v1::Violation> ListViolations(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists the Violations in the AssuredWorkload Environment.
   /// Callers may also choose to read across multiple Workloads as per
@@ -344,79 +516,134 @@ class AssuredWorkloadsServiceClient {
   /// character) as a wildcard character instead of workload-id in the parent.
   /// Format `organizations/{org_id}/locations/{location}/workloads/-`
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::ListViolationsRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L606}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.assuredworkloads.v1.ListViolationsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Violation,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L654}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.assuredworkloads.v1.Violation], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.assuredworkloads.v1.ListViolationsRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L606}
-  /// [google.cloud.assuredworkloads.v1.Violation]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L654}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.assuredworkloads.v1.ListViolationsRequest]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L606}
+  /// [google.cloud.assuredworkloads.v1.Violation]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L654}
   ///
+  // clang-format on
   StreamRange<google::cloud::assuredworkloads::v1::Violation> ListViolations(
       google::cloud::assuredworkloads::v1::ListViolationsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves Assured Workload Violation based on ID.
   ///
-  /// @param name  Required. The resource name of the Violation to fetch (ie.
-  /// Violation.name).
+  /// @param name  Required. The resource name of the Violation to fetch (ie. Violation.name).
   ///  Format:
   ///  organizations/{organization}/locations/{location}/workloads/{workload}/violations/{violation}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Violation,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L654}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.assuredworkloads.v1.Violation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.assuredworkloads.v1.GetViolationRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L641}
-  /// [google.cloud.assuredworkloads.v1.Violation]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L654}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.assuredworkloads.v1.GetViolationRequest]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L641}
+  /// [google.cloud.assuredworkloads.v1.Violation]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L654}
   ///
+  // clang-format on
   StatusOr<google::cloud::assuredworkloads::v1::Violation> GetViolation(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves Assured Workload Violation based on ID.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::GetViolationRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L641}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.assuredworkloads.v1.GetViolationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::Violation,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L654}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.assuredworkloads.v1.Violation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.assuredworkloads.v1.GetViolationRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L641}
-  /// [google.cloud.assuredworkloads.v1.Violation]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L654}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.assuredworkloads.v1.GetViolationRequest]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L641}
+  /// [google.cloud.assuredworkloads.v1.Violation]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L654}
   ///
+  // clang-format on
   StatusOr<google::cloud::assuredworkloads::v1::Violation> GetViolation(
       google::cloud::assuredworkloads::v1::GetViolationRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Acknowledges an existing violation. By acknowledging a violation, users
   /// acknowledge the existence of a compliance violation in their workload and
   /// decide to ignore it due to a valid business justification. Acknowledgement
   /// is a permanent operation and it cannot be reverted.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L569}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.assuredworkloads.v1.AcknowledgeViolationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse,google/cloud/assuredworkloads/v1/assuredworkloads.proto#L592}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.assuredworkloads.v1.AcknowledgeViolationResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.assuredworkloads.v1.AcknowledgeViolationRequest]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L569}
-  /// [google.cloud.assuredworkloads.v1.AcknowledgeViolationResponse]:
-  /// @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L592}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.assuredworkloads.v1.AcknowledgeViolationRequest]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L569}
+  /// [google.cloud.assuredworkloads.v1.AcknowledgeViolationResponse]: @googleapis_reference_link{google/cloud/assuredworkloads/v1/assuredworkloads.proto#L592}
   ///
+  // clang-format on
   StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
   AcknowledgeViolation(
       google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&

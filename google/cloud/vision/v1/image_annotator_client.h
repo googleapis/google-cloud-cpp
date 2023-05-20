@@ -87,47 +87,69 @@ class ImageAnnotatorClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Run image detection and annotation for a batch of images.
   ///
-  /// @param requests  Required. Individual image annotation requests for this
-  /// batch.
+  /// @param requests  Required. Individual image annotation requests for this batch.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateImagesResponse,google/cloud/vision/v1/image_annotator.proto#L788}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vision.v1.BatchAnnotateImagesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.vision.v1.BatchAnnotateImagesRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L768}
-  /// [google.cloud.vision.v1.BatchAnnotateImagesResponse]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L788}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.BatchAnnotateImagesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L768}
+  /// [google.cloud.vision.v1.BatchAnnotateImagesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L788}
   ///
+  // clang-format on
   StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
   BatchAnnotateImages(
       std::vector<google::cloud::vision::v1::AnnotateImageRequest> const&
           requests,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Run image detection and annotation for a batch of images.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateImagesRequest,google/cloud/vision/v1/image_annotator.proto#L768}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vision.v1.BatchAnnotateImagesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateImagesResponse,google/cloud/vision/v1/image_annotator.proto#L788}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vision.v1.BatchAnnotateImagesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.vision.v1.BatchAnnotateImagesRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L768}
-  /// [google.cloud.vision.v1.BatchAnnotateImagesResponse]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L788}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.BatchAnnotateImagesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L768}
+  /// [google.cloud.vision.v1.BatchAnnotateImagesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L788}
   ///
+  // clang-format on
   StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
   BatchAnnotateImages(
       google::cloud::vision::v1::BatchAnnotateImagesRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Service that performs image detection and annotation for a batch of files.
   /// Now only "application/pdf", "image/tiff" and "image/gif" are supported.
@@ -137,25 +159,33 @@ class ImageAnnotatorClient {
   /// file provided and perform detection and annotation for each image
   /// extracted.
   ///
-  /// @param requests  Required. The list of file annotation requests. Right now
-  /// we support only one
+  /// @param requests  Required. The list of file annotation requests. Right now we support only one
   ///  AnnotateFileRequest in BatchAnnotateFilesRequest.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateFilesResponse,google/cloud/vision/v1/image_annotator.proto#L861}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vision.v1.BatchAnnotateFilesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.vision.v1.BatchAnnotateFilesRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L840}
-  /// [google.cloud.vision.v1.BatchAnnotateFilesResponse]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L861}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.BatchAnnotateFilesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L840}
+  /// [google.cloud.vision.v1.BatchAnnotateFilesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L861}
   ///
+  // clang-format on
   StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
   BatchAnnotateFiles(
       std::vector<google::cloud::vision::v1::AnnotateFileRequest> const&
           requests,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Service that performs image detection and annotation for a batch of files.
   /// Now only "application/pdf", "image/tiff" and "image/gif" are supported.
@@ -165,49 +195,73 @@ class ImageAnnotatorClient {
   /// file provided and perform detection and annotation for each image
   /// extracted.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateFilesRequest,google/cloud/vision/v1/image_annotator.proto#L840}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vision.v1.BatchAnnotateFilesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::BatchAnnotateFilesResponse,google/cloud/vision/v1/image_annotator.proto#L861}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.vision.v1.BatchAnnotateFilesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.vision.v1.BatchAnnotateFilesRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L840}
-  /// [google.cloud.vision.v1.BatchAnnotateFilesResponse]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L861}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.BatchAnnotateFilesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L840}
+  /// [google.cloud.vision.v1.BatchAnnotateFilesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L861}
   ///
+  // clang-format on
   StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
   BatchAnnotateFiles(
       google::cloud::vision::v1::BatchAnnotateFilesRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Run asynchronous image detection and annotation for a list of images.
   ///
   /// Progress and results can be retrieved through the
   /// `google.longrunning.Operations` interface.
   /// `Operation.metadata` contains `OperationMetadata` (metadata).
-  /// `Operation.response` contains `AsyncBatchAnnotateImagesResponse`
-  /// (results).
+  /// `Operation.response` contains `AsyncBatchAnnotateImagesResponse` (results).
   ///
   /// This service will write image annotation outputs to json files in customer
   /// GCS bucket, each json file containing BatchAnnotateImagesResponse proto.
   ///
-  /// @param requests  Required. Individual image annotation requests for this
-  /// batch.
-  /// @param output_config  Required. The desired output location and metadata
-  /// (e.g. format).
+  /// @param requests  Required. Individual image annotation requests for this batch.
+  /// @param output_config  Required. The desired output location and metadata (e.g. format).
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse,google/cloud/vision/v1/image_annotator.proto#L912}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vision.v1.AsyncBatchAnnotateImagesResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.vision.v1.AsyncBatchAnnotateImagesRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L889}
-  /// [google.cloud.vision.v1.AsyncBatchAnnotateImagesResponse]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L912}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.AsyncBatchAnnotateImagesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L889}
+  /// [google.cloud.vision.v1.AsyncBatchAnnotateImagesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L912}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
   AsyncBatchAnnotateImages(
       std::vector<google::cloud::vision::v1::AnnotateImageRequest> const&
@@ -215,35 +269,54 @@ class ImageAnnotatorClient {
       google::cloud::vision::v1::OutputConfig const& output_config,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Run asynchronous image detection and annotation for a list of images.
   ///
   /// Progress and results can be retrieved through the
   /// `google.longrunning.Operations` interface.
   /// `Operation.metadata` contains `OperationMetadata` (metadata).
-  /// `Operation.response` contains `AsyncBatchAnnotateImagesResponse`
-  /// (results).
+  /// `Operation.response` contains `AsyncBatchAnnotateImagesResponse` (results).
   ///
   /// This service will write image annotation outputs to json files in customer
   /// GCS bucket, each json file containing BatchAnnotateImagesResponse proto.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest,google/cloud/vision/v1/image_annotator.proto#L889}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vision.v1.AsyncBatchAnnotateImagesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse,google/cloud/vision/v1/image_annotator.proto#L912}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vision.v1.AsyncBatchAnnotateImagesResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.vision.v1.AsyncBatchAnnotateImagesRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L889}
-  /// [google.cloud.vision.v1.AsyncBatchAnnotateImagesResponse]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L912}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.AsyncBatchAnnotateImagesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L889}
+  /// [google.cloud.vision.v1.AsyncBatchAnnotateImagesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L912}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
   AsyncBatchAnnotateImages(
       google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Run asynchronous image detection and annotation for a list of generic
   /// files, such as PDF files, which may contain multiple pages and multiple
@@ -252,24 +325,38 @@ class ImageAnnotatorClient {
   /// `Operation.metadata` contains `OperationMetadata` (metadata).
   /// `Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).
   ///
-  /// @param requests  Required. Individual async file annotation requests for
-  /// this batch.
+  /// @param requests  Required. Individual async file annotation requests for this batch.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse,google/cloud/vision/v1/image_annotator.proto#L939}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vision.v1.AsyncBatchAnnotateFilesResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.vision.v1.AsyncBatchAnnotateFilesRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L919}
-  /// [google.cloud.vision.v1.AsyncBatchAnnotateFilesResponse]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L939}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.AsyncBatchAnnotateFilesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L919}
+  /// [google.cloud.vision.v1.AsyncBatchAnnotateFilesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L939}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
   AsyncBatchAnnotateFiles(
       std::vector<google::cloud::vision::v1::AsyncAnnotateFileRequest> const&
           requests,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Run asynchronous image detection and annotation for a list of generic
   /// files, such as PDF files, which may contain multiple pages and multiple
@@ -278,18 +365,36 @@ class ImageAnnotatorClient {
   /// `Operation.metadata` contains `OperationMetadata` (metadata).
   /// `Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest,google/cloud/vision/v1/image_annotator.proto#L919}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.vision.v1.AsyncBatchAnnotateFilesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse,google/cloud/vision/v1/image_annotator.proto#L939}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.vision.v1.AsyncBatchAnnotateFilesResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.vision.v1.AsyncBatchAnnotateFilesRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L919}
-  /// [google.cloud.vision.v1.AsyncBatchAnnotateFilesResponse]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L939}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.vision.v1.AsyncBatchAnnotateFilesRequest]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L919}
+  /// [google.cloud.vision.v1.AsyncBatchAnnotateFilesResponse]: @googleapis_reference_link{google/cloud/vision/v1/image_annotator.proto#L939}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
   AsyncBatchAnnotateFiles(
       google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request,

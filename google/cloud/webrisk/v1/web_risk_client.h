@@ -85,6 +85,7 @@ class WebRiskServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Gets the most recent threat list diffs. These diffs should be applied to
   /// a local database of hashes to keep it up-to-date. If the local database is
@@ -93,28 +94,33 @@ class WebRiskServiceClient {
   /// update multiple ThreatList databases, this method needs to be called once
   /// for each list.
   ///
-  /// @param threat_type  Required. The threat list to update. Only a single
-  /// ThreatType should be specified
-  ///  per request. If you want to handle multiple ThreatTypes, you must make
-  ///  one request per ThreatType.
-  /// @param version_token  The current version token of the client for the
-  /// requested list (the
+  /// @param threat_type  Required. The threat list to update. Only a single ThreatType should be specified
+  ///  per request. If you want to handle multiple ThreatTypes, you must make one
+  ///  request per ThreatType.
+  /// @param version_token  The current version token of the client for the requested list (the
   ///  client version that was received from the last successful diff).
-  ///  If the client does not have a version token (this is the first time
-  ///  calling ComputeThreatListDiff), this may be left empty and a full
-  ///  database snapshot will be returned.
-  /// @param constraints  Required. The constraints associated with this
-  /// request.
+  ///  If the client does not have a version token (this is the first time calling
+  ///  ComputeThreatListDiff), this may be left empty and a full database
+  ///  snapshot will be returned.
+  /// @param constraints  Required. The constraints associated with this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::webrisk::v1::ComputeThreatListDiffResponse,google/cloud/webrisk/v1/webrisk.proto#L127}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.webrisk.v1.ComputeThreatListDiffResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.webrisk.v1.ComputeThreatListDiffRequest]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L94}
-  /// [google.cloud.webrisk.v1.ComputeThreatListDiffResponse]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L127}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.webrisk.v1.ComputeThreatListDiffRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L94}
+  /// [google.cloud.webrisk.v1.ComputeThreatListDiffResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L127}
   ///
+  // clang-format on
   StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
   ComputeThreatListDiff(
       google::cloud::webrisk::v1::ThreatType threat_type,
@@ -123,6 +129,7 @@ class WebRiskServiceClient {
           Constraints const& constraints,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the most recent threat list diffs. These diffs should be applied to
   /// a local database of hashes to keep it up-to-date. If the local database is
@@ -131,23 +138,36 @@ class WebRiskServiceClient {
   /// update multiple ThreatList databases, this method needs to be called once
   /// for each list.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::webrisk::v1::ComputeThreatListDiffRequest,google/cloud/webrisk/v1/webrisk.proto#L94}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.webrisk.v1.ComputeThreatListDiffRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::webrisk::v1::ComputeThreatListDiffResponse,google/cloud/webrisk/v1/webrisk.proto#L127}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.webrisk.v1.ComputeThreatListDiffResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.webrisk.v1.ComputeThreatListDiffRequest]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L94}
-  /// [google.cloud.webrisk.v1.ComputeThreatListDiffResponse]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L127}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.webrisk.v1.ComputeThreatListDiffRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L94}
+  /// [google.cloud.webrisk.v1.ComputeThreatListDiffResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L127}
   ///
+  // clang-format on
   StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
   ComputeThreatListDiff(
       google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// This method is used to check whether a URI is on a given threatList.
   /// Multiple threatLists may be searched in a single query.
@@ -156,23 +176,31 @@ class WebRiskServiceClient {
   /// empty response will be returned.
   ///
   /// @param uri  Required. The URI to be checked for matches.
-  /// @param threat_types  Required. The ThreatLists to search in. Multiple
-  /// ThreatLists may be specified.
+  /// @param threat_types  Required. The ThreatLists to search in. Multiple ThreatLists may be specified.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::webrisk::v1::SearchUrisResponse,google/cloud/webrisk/v1/webrisk.proto#L187}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.webrisk.v1.SearchUrisResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.webrisk.v1.SearchUrisRequest]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L179}
-  /// [google.cloud.webrisk.v1.SearchUrisResponse]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L187}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.webrisk.v1.SearchUrisRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L179}
+  /// [google.cloud.webrisk.v1.SearchUrisResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L187}
   ///
+  // clang-format on
   StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
       std::string const& uri,
       std::vector<google::cloud::webrisk::v1::ThreatType> const& threat_types,
       Options opts = {});
 
+  // clang-format off
   ///
   /// This method is used to check whether a URI is on a given threatList.
   /// Multiple threatLists may be searched in a single query.
@@ -180,22 +208,35 @@ class WebRiskServiceClient {
   /// match. If the URI is not found on any of the requested ThreatList an
   /// empty response will be returned.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::webrisk::v1::SearchUrisRequest,google/cloud/webrisk/v1/webrisk.proto#L179}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.webrisk.v1.SearchUrisRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::webrisk::v1::SearchUrisResponse,google/cloud/webrisk/v1/webrisk.proto#L187}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.webrisk.v1.SearchUrisResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.webrisk.v1.SearchUrisRequest]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L179}
-  /// [google.cloud.webrisk.v1.SearchUrisResponse]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L187}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.webrisk.v1.SearchUrisRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L179}
+  /// [google.cloud.webrisk.v1.SearchUrisResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L187}
   ///
+  // clang-format on
   StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
       google::cloud::webrisk::v1::SearchUrisRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the full hashes that match the requested hash prefix.
   /// This is used after a hash prefix is looked up in a threatList
@@ -203,28 +244,35 @@ class WebRiskServiceClient {
   /// so the client must query this method to determine if there is a full
   /// hash match of a threat.
   ///
-  /// @param hash_prefix  A hash prefix, consisting of the most significant 4-32
-  /// bytes of a SHA256
+  /// @param hash_prefix  A hash prefix, consisting of the most significant 4-32 bytes of a SHA256
   ///  hash. For JSON requests, this field is base64-encoded.
-  ///  Note that if this parameter is provided by a URI, it must be encoded
-  ///  using the web safe base64 variant (RFC 4648).
-  /// @param threat_types  Required. The ThreatLists to search in. Multiple
-  /// ThreatLists may be specified.
+  ///  Note that if this parameter is provided by a URI, it must be encoded using
+  ///  the web safe base64 variant (RFC 4648).
+  /// @param threat_types  Required. The ThreatLists to search in. Multiple ThreatLists may be specified.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::webrisk::v1::SearchHashesResponse,google/cloud/webrisk/v1/webrisk.proto#L214}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.webrisk.v1.SearchHashesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.webrisk.v1.SearchHashesRequest]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L203}
-  /// [google.cloud.webrisk.v1.SearchHashesResponse]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L214}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.webrisk.v1.SearchHashesRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L203}
+  /// [google.cloud.webrisk.v1.SearchHashesResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L214}
   ///
+  // clang-format on
   StatusOr<google::cloud::webrisk::v1::SearchHashesResponse> SearchHashes(
       std::string const& hash_prefix,
       std::vector<google::cloud::webrisk::v1::ThreatType> const& threat_types,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the full hashes that match the requested hash prefix.
   /// This is used after a hash prefix is looked up in a threatList
@@ -232,22 +280,35 @@ class WebRiskServiceClient {
   /// so the client must query this method to determine if there is a full
   /// hash match of a threat.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::webrisk::v1::SearchHashesRequest,google/cloud/webrisk/v1/webrisk.proto#L203}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.webrisk.v1.SearchHashesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::webrisk::v1::SearchHashesResponse,google/cloud/webrisk/v1/webrisk.proto#L214}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.webrisk.v1.SearchHashesResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.webrisk.v1.SearchHashesRequest]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L203}
-  /// [google.cloud.webrisk.v1.SearchHashesResponse]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L214}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.webrisk.v1.SearchHashesRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L203}
+  /// [google.cloud.webrisk.v1.SearchHashesResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L214}
   ///
+  // clang-format on
   StatusOr<google::cloud::webrisk::v1::SearchHashesResponse> SearchHashes(
       google::cloud::webrisk::v1::SearchHashesRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a Submission of a URI suspected of containing phishing content to
   /// be reviewed. If the result verifies the existence of malicious phishing
@@ -257,26 +318,33 @@ class WebRiskServiceClient {
   /// allowlisted projects can use this method during Early Access. Please reach
   /// out to Sales or your customer engineer to obtain access.
   ///
-  /// @param parent  Required. The name of the project that is making the
-  /// submission. This string is in
+  /// @param parent  Required. The name of the project that is making the submission. This string is in
   ///  the format "projects/{project_number}".
-  /// @param submission  Required. The submission that contains the content of
-  /// the phishing report.
+  /// @param submission  Required. The submission that contains the content of the phishing report.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::webrisk::v1::Submission,google/cloud/webrisk/v1/webrisk.proto#L344}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.webrisk.v1.Submission])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.webrisk.v1.CreateSubmissionRequest]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L350}
-  /// [google.cloud.webrisk.v1.Submission]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L344}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.webrisk.v1.CreateSubmissionRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L350}
+  /// [google.cloud.webrisk.v1.Submission]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L344}
   ///
+  // clang-format on
   StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
       std::string const& parent,
       google::cloud::webrisk::v1::Submission const& submission,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a Submission of a URI suspected of containing phishing content to
   /// be reviewed. If the result verifies the existence of malicious phishing
@@ -286,18 +354,30 @@ class WebRiskServiceClient {
   /// allowlisted projects can use this method during Early Access. Please reach
   /// out to Sales or your customer engineer to obtain access.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::webrisk::v1::CreateSubmissionRequest,google/cloud/webrisk/v1/webrisk.proto#L350}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.webrisk.v1.CreateSubmissionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::webrisk::v1::Submission,google/cloud/webrisk/v1/webrisk.proto#L344}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.webrisk.v1.Submission])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.webrisk.v1.CreateSubmissionRequest]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L350}
-  /// [google.cloud.webrisk.v1.Submission]:
-  /// @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L344}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.webrisk.v1.CreateSubmissionRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L350}
+  /// [google.cloud.webrisk.v1.Submission]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L344}
   ///
+  // clang-format on
   StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
       google::cloud::webrisk::v1::CreateSubmissionRequest const& request,
       Options opts = {});

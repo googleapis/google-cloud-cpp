@@ -87,6 +87,7 @@ class SecuritySettingsServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Create security settings in the specified location.
   ///
@@ -96,14 +97,22 @@ class SecuritySettingsServiceClient {
   /// @param security_settings  Required. The security settings to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.cx.v3.SecuritySettings])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.cx.v3.CreateSecuritySettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L162}
-  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.cx.v3.CreateSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L162}
+  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
   CreateSecuritySettings(
       std::string const& parent,
@@ -111,27 +120,41 @@ class SecuritySettingsServiceClient {
           security_settings,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Create security settings in the specified location.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest,google/cloud/dialogflow/cx/v3/security_settings.proto#L162}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.cx.v3.CreateSecuritySettingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.cx.v3.SecuritySettings])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.cx.v3.CreateSecuritySettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L162}
-  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.cx.v3.CreateSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L162}
+  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
   CreateSecuritySettings(
       google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves the specified
   /// [SecuritySettings][google.cloud.dialogflow.cx.v3.SecuritySettings]. The
@@ -142,88 +165,130 @@ class SecuritySettingsServiceClient {
   ///  ID>/securitySettings/<security settings ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.cx.v3.SecuritySettings])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.cx.v3.GetSecuritySettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L106}
-  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.cx.v3.GetSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L106}
+  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
   GetSecuritySettings(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves the specified
   /// [SecuritySettings][google.cloud.dialogflow.cx.v3.SecuritySettings]. The
   /// returned settings may be stale by up to 1 minute.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest,google/cloud/dialogflow/cx/v3/security_settings.proto#L106}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.cx.v3.GetSecuritySettingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.cx.v3.SecuritySettings])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.cx.v3.GetSecuritySettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L106}
-  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.cx.v3.GetSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L106}
+  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
   GetSecuritySettings(
       google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the specified
   /// [SecuritySettings][google.cloud.dialogflow.cx.v3.SecuritySettings].
   ///
-  /// @param security_settings  Required. [SecuritySettings] object that
-  /// contains values for each of the
+  /// @param security_settings  Required. [SecuritySettings] object that contains values for each of the
   ///  fields to update.
-  /// @param update_mask  Required. The mask to control which fields get
-  /// updated. If the mask is not
+  /// @param update_mask  Required. The mask to control which fields get updated. If the mask is not
   ///  present, all fields will be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.cx.v3.SecuritySettings])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
-  /// [google.cloud.dialogflow.cx.v3.UpdateSecuritySettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L120}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.UpdateSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L120}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
   UpdateSecuritySettings(
       google::cloud::dialogflow::cx::v3::SecuritySettings const&
           security_settings,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates the specified
   /// [SecuritySettings][google.cloud.dialogflow.cx.v3.SecuritySettings].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest,google/cloud/dialogflow/cx/v3/security_settings.proto#L120}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.cx.v3.UpdateSecuritySettingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dialogflow.cx.v3.SecuritySettings])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
-  /// [google.cloud.dialogflow.cx.v3.UpdateSecuritySettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L120}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.UpdateSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L120}
   ///
+  // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
   UpdateSecuritySettings(
       google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the list of all security settings in the specified location.
   ///
@@ -231,37 +296,77 @@ class SecuritySettingsServiceClient {
   ///  Format: `projects/<Project ID>/locations/<Location ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dialogflow.cx.v3.SecuritySettings], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.cx.v3.ListSecuritySettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L133}
-  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.cx.v3.ListSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L133}
+  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
+  // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings>
   ListSecuritySettings(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns the list of all security settings in the specified location.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest,google/cloud/dialogflow/cx/v3/security_settings.proto#L133}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.cx.v3.ListSecuritySettingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dialogflow.cx.v3.SecuritySettings], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dialogflow.cx.v3.ListSecuritySettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L133}
-  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.cx.v3.ListSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L133}
+  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
+  // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings>
   ListSecuritySettings(
       google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified
   /// [SecuritySettings][google.cloud.dialogflow.cx.v3.SecuritySettings].
@@ -272,28 +377,49 @@ class SecuritySettingsServiceClient {
   ///  ID>/securitySettings/<Security Settings ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.dialogflow.cx.v3.DeleteSecuritySettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L179}
-  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.cx.v3.DeleteSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L179}
+  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
+  // clang-format on
   Status DeleteSecuritySettings(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified
   /// [SecuritySettings][google.cloud.dialogflow.cx.v3.SecuritySettings].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest,google/cloud/dialogflow/cx/v3/security_settings.proto#L179}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.cx.v3.DeleteSecuritySettingsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.dialogflow.cx.v3.DeleteSecuritySettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L179}
-  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.cx.v3.DeleteSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L179}
+  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
+  // clang-format on
   Status DeleteSecuritySettings(
       google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&
           request,

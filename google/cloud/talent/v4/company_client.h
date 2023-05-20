@@ -84,47 +84,69 @@ class CompanyServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a new company entity.
   ///
-  /// @param parent  Required. Resource name of the tenant under which the
-  /// company is created.
+  /// @param parent  Required. Resource name of the tenant under which the company is created.
   ///  The format is "projects/{project_id}/tenants/{tenant_id}", for example,
   ///  "projects/foo/tenants/bar".
   /// @param company  Required. The company to be created.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.talent.v4.Company])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.talent.v4.Company]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
-  /// [google.cloud.talent.v4.CreateCompanyRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L86}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.Company]: @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
+  /// [google.cloud.talent.v4.CreateCompanyRequest]: @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L86}
   ///
+  // clang-format on
   StatusOr<google::cloud::talent::v4::Company> CreateCompany(
       std::string const& parent,
       google::cloud::talent::v4::Company const& company, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new company entity.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::CreateCompanyRequest,google/cloud/talent/v4/company_service.proto#L86}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.talent.v4.CreateCompanyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.talent.v4.Company])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.talent.v4.Company]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
-  /// [google.cloud.talent.v4.CreateCompanyRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L86}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.Company]: @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
+  /// [google.cloud.talent.v4.CreateCompanyRequest]: @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L86}
   ///
+  // clang-format on
   StatusOr<google::cloud::talent::v4::Company> CreateCompany(
       google::cloud::talent::v4::CreateCompanyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves specified company.
   ///
@@ -134,82 +156,126 @@ class CompanyServiceClient {
   ///  example, "projects/api-test-project/tenants/foo/companies/bar".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.talent.v4.Company])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.talent.v4.Company]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
-  /// [google.cloud.talent.v4.GetCompanyRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L101}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.Company]: @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
+  /// [google.cloud.talent.v4.GetCompanyRequest]: @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L101}
   ///
+  // clang-format on
   StatusOr<google::cloud::talent::v4::Company> GetCompany(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves specified company.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::GetCompanyRequest,google/cloud/talent/v4/company_service.proto#L101}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.talent.v4.GetCompanyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.talent.v4.Company])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.talent.v4.Company]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
-  /// [google.cloud.talent.v4.GetCompanyRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L101}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.Company]: @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
+  /// [google.cloud.talent.v4.GetCompanyRequest]: @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L101}
   ///
+  // clang-format on
   StatusOr<google::cloud::talent::v4::Company> GetCompany(
       google::cloud::talent::v4::GetCompanyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates specified company.
   ///
-  /// @param company  Required. The company resource to replace the current
-  /// resource in the
+  /// @param company  Required. The company resource to replace the current resource in the
   ///  system.
   /// @param update_mask  Strongly recommended for the best service experience.
   ///  If [update_mask][google.cloud.talent.v4.UpdateCompanyRequest.update_mask]
   ///  is provided, only the specified fields in
-  ///  [company][google.cloud.talent.v4.UpdateCompanyRequest.company] are
-  ///  updated. Otherwise all the fields are updated. A field mask to specify
-  ///  the company fields to be updated. Only top level fields of
-  ///  [Company][google.cloud.talent.v4.Company] are supported.
+  ///  [company][google.cloud.talent.v4.UpdateCompanyRequest.company] are updated.
+  ///  Otherwise all the fields are updated.
+  ///  A field mask to specify the company fields to be updated. Only
+  ///  top level fields of [Company][google.cloud.talent.v4.Company] are
+  ///  supported.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.talent.v4.Company])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.talent.v4.Company]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
-  /// [google.cloud.talent.v4.UpdateCompanyRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L114}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.Company]: @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
+  /// [google.cloud.talent.v4.UpdateCompanyRequest]: @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L114}
   ///
+  // clang-format on
   StatusOr<google::cloud::talent::v4::Company> UpdateCompany(
       google::cloud::talent::v4::Company const& company,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates specified company.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::UpdateCompanyRequest,google/cloud/talent/v4/company_service.proto#L114}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.talent.v4.UpdateCompanyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.talent.v4.Company])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.talent.v4.Company]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
-  /// [google.cloud.talent.v4.UpdateCompanyRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L114}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.Company]: @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
+  /// [google.cloud.talent.v4.UpdateCompanyRequest]: @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L114}
   ///
+  // clang-format on
   StatusOr<google::cloud::talent::v4::Company> UpdateCompany(
       google::cloud::talent::v4::UpdateCompanyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes specified company.
   /// Prerequisite: The company has no jobs associated with it.
@@ -220,63 +286,125 @@ class CompanyServiceClient {
   ///  example, "projects/foo/tenants/bar/companies/baz".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.talent.v4.DeleteCompanyRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L133}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.DeleteCompanyRequest]: @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L133}
   ///
+  // clang-format on
   Status DeleteCompany(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes specified company.
   /// Prerequisite: The company has no jobs associated with it.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::DeleteCompanyRequest,google/cloud/talent/v4/company_service.proto#L133}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.talent.v4.DeleteCompanyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.talent.v4.DeleteCompanyRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L133}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.DeleteCompanyRequest]: @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L133}
   ///
+  // clang-format on
   Status DeleteCompany(
       google::cloud::talent::v4::DeleteCompanyRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all companies associated with the project.
   ///
-  /// @param parent  Required. Resource name of the tenant under which the
-  /// company is created.
+  /// @param parent  Required. Resource name of the tenant under which the company is created.
   ///  The format is "projects/{project_id}/tenants/{tenant_id}", for example,
   ///  "projects/foo/tenants/bar".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.talent.v4.Company], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.talent.v4.Company]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
-  /// [google.cloud.talent.v4.ListCompaniesRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L146}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.Company]: @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
+  /// [google.cloud.talent.v4.ListCompaniesRequest]: @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L146}
   ///
+  // clang-format on
   StreamRange<google::cloud::talent::v4::Company> ListCompanies(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists all companies associated with the project.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::ListCompaniesRequest,google/cloud/talent/v4/company_service.proto#L146}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.talent.v4.ListCompaniesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.talent.v4.Company], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.talent.v4.Company]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
-  /// [google.cloud.talent.v4.ListCompaniesRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L146}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.talent.v4.Company]: @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
+  /// [google.cloud.talent.v4.ListCompaniesRequest]: @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L146}
   ///
+  // clang-format on
   StreamRange<google::cloud::talent::v4::Company> ListCompanies(
       google::cloud::talent::v4::ListCompaniesRequest request,
       Options opts = {});

@@ -86,21 +86,34 @@ class SqlFlagsServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Lists all available database flags for Cloud SQL instances.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::sql::v1::SqlFlagsListRequest,google/cloud/sql/v1/cloud_sql_flags.proto#L47}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.sql.v1.SqlFlagsListRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::sql::v1::FlagsListResponse,google/cloud/sql/v1/cloud_sql_flags.proto#L54}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.sql.v1.FlagsListResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.sql.v1.FlagsListResponse]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_flags.proto#L54}
-  /// [google.cloud.sql.v1.SqlFlagsListRequest]:
-  /// @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_flags.proto#L47}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.sql.v1.FlagsListResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_flags.proto#L54}
+  /// [google.cloud.sql.v1.SqlFlagsListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_flags.proto#L47}
   ///
+  // clang-format on
   StatusOr<google::cloud::sql::v1::FlagsListResponse> List(
       google::cloud::sql::v1::SqlFlagsListRequest const& request,
       Options opts = {});

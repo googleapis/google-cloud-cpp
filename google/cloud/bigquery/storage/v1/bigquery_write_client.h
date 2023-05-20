@@ -90,6 +90,7 @@ class BigQueryWriteClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a write stream to the given table.
   /// Additionally, every table has a special stream named '_default'
@@ -98,25 +99,33 @@ class BigQueryWriteClient {
   /// number of clients. Data written to this stream is considered committed as
   /// soon as an acknowledgement is received.
   ///
-  /// @param parent  Required. Reference to the table to which the stream
-  /// belongs, in the format
+  /// @param parent  Required. Reference to the table to which the stream belongs, in the format
   ///  of `projects/{project}/datasets/{dataset}/tables/{table}`.
   /// @param write_stream  Required. Stream to be created.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::WriteStream,google/cloud/bigquery/storage/v1/stream.proto#L234}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.storage.v1.WriteStream])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.storage.v1.CreateWriteStreamRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L386}
-  /// [google.cloud.bigquery.storage.v1.WriteStream]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L234}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.storage.v1.CreateWriteStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L386}
+  /// [google.cloud.bigquery.storage.v1.WriteStream]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L234}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> CreateWriteStream(
       std::string const& parent,
       google::cloud::bigquery::storage::v1::WriteStream const& write_stream,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a write stream to the given table.
   /// Additionally, every table has a special stream named '_default'
@@ -125,31 +134,44 @@ class BigQueryWriteClient {
   /// number of clients. Data written to this stream is considered committed as
   /// soon as an acknowledgement is received.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::CreateWriteStreamRequest,google/cloud/bigquery/storage/v1/storage.proto#L386}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.storage.v1.CreateWriteStreamRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::WriteStream,google/cloud/bigquery/storage/v1/stream.proto#L234}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.storage.v1.WriteStream])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.storage.v1.CreateWriteStreamRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L386}
-  /// [google.cloud.bigquery.storage.v1.WriteStream]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L234}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.storage.v1.CreateWriteStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L386}
+  /// [google.cloud.bigquery.storage.v1.WriteStream]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L234}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> CreateWriteStream(
       google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Appends data to the given stream.
   ///
   /// If `offset` is specified, the `offset` is checked against the end of
   /// stream. The server returns `OUT_OF_RANGE` in `AppendRowsResponse` if an
-  /// attempt is made to append to an offset beyond the current end of the
-  /// stream or `ALREADY_EXISTS` if user provides an `offset` that has already
-  /// been written to. User can retry with adjusted offset within the same RPC
+  /// attempt is made to append to an offset beyond the current end of the stream
+  /// or `ALREADY_EXISTS` if user provides an `offset` that has already been
+  /// written to. User can retry with adjusted offset within the same RPC
   /// connection. If `offset` is not specified, append happens at the end of the
   /// stream.
   ///
@@ -158,9 +180,9 @@ class BigQueryWriteClient {
   /// default stream.
   ///
   /// Responses are received in the same order in which requests are sent.
-  /// There will be one response for each successful inserted request. Responses
-  /// may optionally embed error information if the originating AppendRequest
-  /// was not successfully processed.
+  /// There will be one response for each successful inserted request.  Responses
+  /// may optionally embed error information if the originating AppendRequest was
+  /// not successfully processed.
   ///
   /// The specifics of when successfully appended data is made visible to the
   /// table are governed by the type of stream:
@@ -172,26 +194,37 @@ class BigQueryWriteClient {
   /// rpc which advances a cursor to a newer offset in the stream.
   ///
   /// * For PENDING streams, data is not made visible until the stream itself is
-  /// finalized (via the `FinalizeWriteStream` rpc), and the stream is
-  /// explicitly committed via the `BatchCommitWriteStreams` rpc.
+  /// finalized (via the `FinalizeWriteStream` rpc), and the stream is explicitly
+  /// committed via the `BatchCommitWriteStreams` rpc.
   ///
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return A bidirectional streaming interface with request (write) type:
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::AppendRowsRequest,google/cloud/bigquery/storage/v1/storage.proto#L406}
-  /// and response (read) type:
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::AppendRowsResponse,google/cloud/bigquery/storage/v1/storage.proto#L499}
+  /// @return An object representing the bidirectional streaming
+  ///     RPC. Applications can send multiple request messages and receive
+  ///     multiple response messages through this API. Bidirectional streaming
+  ///     RPCs can impose restrictions on the sequence of request and response
+  ///     messages. Please consult the service documentation for details.
+  ///     The request message type ([google.cloud.bigquery.storage.v1.AppendRowsRequest]) and response messages
+  ///     ([google.cloud.bigquery.storage.v1.AppendRowsResponse]) are mapped to C++ classes using the
+  ///     [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.storage.v1.AppendRowsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L406}
-  /// [google.cloud.bigquery.storage.v1.AppendRowsResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L499}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.storage.v1.AppendRowsRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L406}
+  /// [google.cloud.bigquery.storage.v1.AppendRowsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L499}
   ///
+  // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::bigquery::storage::v1::AppendRowsRequest,
       google::cloud::bigquery::storage::v1::AppendRowsResponse>>
   AsyncAppendRows(Options opts = {});
 
+  // clang-format off
   ///
   /// Gets information about a write stream.
   ///
@@ -199,37 +232,59 @@ class BigQueryWriteClient {
   ///  `projects/{project}/datasets/{dataset}/tables/{table}/streams/{stream}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::WriteStream,google/cloud/bigquery/storage/v1/stream.proto#L234}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.storage.v1.WriteStream])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.storage.v1.GetWriteStreamRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L550}
-  /// [google.cloud.bigquery.storage.v1.WriteStream]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L234}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.storage.v1.GetWriteStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L550}
+  /// [google.cloud.bigquery.storage.v1.WriteStream]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L234}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> GetWriteStream(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets information about a write stream.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::GetWriteStreamRequest,google/cloud/bigquery/storage/v1/storage.proto#L550}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.storage.v1.GetWriteStreamRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::WriteStream,google/cloud/bigquery/storage/v1/stream.proto#L234}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.storage.v1.WriteStream])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.storage.v1.GetWriteStreamRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L550}
-  /// [google.cloud.bigquery.storage.v1.WriteStream]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L234}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.storage.v1.GetWriteStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L550}
+  /// [google.cloud.bigquery.storage.v1.WriteStream]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L234}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> GetWriteStream(
       google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Finalize a write stream so that no new data can be appended to the
   /// stream. Finalize is not supported on the '_default' stream.
@@ -238,39 +293,61 @@ class BigQueryWriteClient {
   ///  `projects/{project}/datasets/{dataset}/tables/{table}/streams/{stream}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse,google/cloud/bigquery/storage/v1/storage.proto#L606}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.storage.v1.FinalizeWriteStreamResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.storage.v1.FinalizeWriteStreamRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L594}
-  /// [google.cloud.bigquery.storage.v1.FinalizeWriteStreamResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L606}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.storage.v1.FinalizeWriteStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L594}
+  /// [google.cloud.bigquery.storage.v1.FinalizeWriteStreamResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L606}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>
   FinalizeWriteStream(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Finalize a write stream so that no new data can be appended to the
   /// stream. Finalize is not supported on the '_default' stream.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest,google/cloud/bigquery/storage/v1/storage.proto#L594}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.storage.v1.FinalizeWriteStreamRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse,google/cloud/bigquery/storage/v1/storage.proto#L606}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.storage.v1.FinalizeWriteStreamResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.storage.v1.FinalizeWriteStreamRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L594}
-  /// [google.cloud.bigquery.storage.v1.FinalizeWriteStreamResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L606}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.storage.v1.FinalizeWriteStreamRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L594}
+  /// [google.cloud.bigquery.storage.v1.FinalizeWriteStreamResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L606}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>
   FinalizeWriteStream(
       google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Atomically commits a group of `PENDING` streams that belong to the same
   /// `parent` table.
@@ -279,23 +356,31 @@ class BigQueryWriteClient {
   /// times. Once a stream is committed, data in the stream becomes available
   /// for read operations.
   ///
-  /// @param parent  Required. Parent table that all the streams should belong
-  /// to, in the form
+  /// @param parent  Required. Parent table that all the streams should belong to, in the form
   ///  of `projects/{project}/datasets/{dataset}/tables/{table}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse,google/cloud/bigquery/storage/v1/storage.proto#L579}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L566}
-  /// [google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L579}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L566}
+  /// [google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L579}
   ///
+  // clang-format on
   StatusOr<
       google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
   BatchCommitWriteStreams(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Atomically commits a group of `PENDING` streams that belong to the same
   /// `parent` table.
@@ -304,24 +389,37 @@ class BigQueryWriteClient {
   /// times. Once a stream is committed, data in the stream becomes available
   /// for read operations.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest,google/cloud/bigquery/storage/v1/storage.proto#L566}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse,google/cloud/bigquery/storage/v1/storage.proto#L579}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L566}
-  /// [google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L579}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L566}
+  /// [google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L579}
   ///
+  // clang-format on
   StatusOr<
       google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
   BatchCommitWriteStreams(google::cloud::bigquery::storage::v1::
                               BatchCommitWriteStreamsRequest const& request,
                           Options opts = {});
 
+  // clang-format off
   ///
   /// Flushes rows to a BUFFERED stream.
   ///
@@ -332,21 +430,29 @@ class BigQueryWriteClient {
   ///
   /// Flush is not supported on the _default stream, since it is not BUFFERED.
   ///
-  /// @param write_stream  Required. The stream that is the target of the flush
-  /// operation.
+  /// @param write_stream  Required. The stream that is the target of the flush operation.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::FlushRowsResponse,google/cloud/bigquery/storage/v1/storage.proto#L627}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.storage.v1.FlushRowsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.storage.v1.FlushRowsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L612}
-  /// [google.cloud.bigquery.storage.v1.FlushRowsResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L627}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.storage.v1.FlushRowsRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L612}
+  /// [google.cloud.bigquery.storage.v1.FlushRowsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L627}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse> FlushRows(
       std::string const& write_stream, Options opts = {});
 
+  // clang-format off
   ///
   /// Flushes rows to a BUFFERED stream.
   ///
@@ -357,18 +463,30 @@ class BigQueryWriteClient {
   ///
   /// Flush is not supported on the _default stream, since it is not BUFFERED.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::FlushRowsRequest,google/cloud/bigquery/storage/v1/storage.proto#L612}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.storage.v1.FlushRowsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::FlushRowsResponse,google/cloud/bigquery/storage/v1/storage.proto#L627}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.storage.v1.FlushRowsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.storage.v1.FlushRowsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L612}
-  /// [google.cloud.bigquery.storage.v1.FlushRowsResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L627}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.storage.v1.FlushRowsRequest]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L612}
+  /// [google.cloud.bigquery.storage.v1.FlushRowsResponse]: @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L627}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse> FlushRows(
       google::cloud::bigquery::storage::v1::FlushRowsRequest const& request,
       Options opts = {});

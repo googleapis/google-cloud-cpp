@@ -86,106 +86,174 @@ class DataTransferServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Retrieves a supported data source and returns its settings.
   ///
-  /// @param name  Required. The field will contain name of the resource
-  /// requested, for
+  /// @param name  Required. The field will contain name of the resource requested, for
   ///  example: `projects/{project_id}/dataSources/{data_source_id}` or
   ///  `projects/{project_id}/locations/{location_id}/dataSources/{data_source_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::DataSource,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L320}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.datatransfer.v1.DataSource])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.DataSource]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L320}
-  /// [google.cloud.bigquery.datatransfer.v1.GetDataSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L430}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.DataSource]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L320}
+  /// [google.cloud.bigquery.datatransfer.v1.GetDataSourceRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L430}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource> GetDataSource(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Retrieves a supported data source and returns its settings.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L430}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.datatransfer.v1.GetDataSourceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::DataSource,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L320}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.datatransfer.v1.DataSource])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.DataSource]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L320}
-  /// [google.cloud.bigquery.datatransfer.v1.GetDataSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L430}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.DataSource]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L320}
+  /// [google.cloud.bigquery.datatransfer.v1.GetDataSourceRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L430}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource> GetDataSource(
       google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists supported data sources and returns their settings.
   ///
-  /// @param parent  Required. The BigQuery project id for which data sources
-  /// should be
+  /// @param parent  Required. The BigQuery project id for which data sources should be
   ///  returned. Must be in the form: `projects/{project_id}` or
   ///  `projects/{project_id}/locations/{location_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::DataSource,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L320}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.datatransfer.v1.DataSource], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.DataSource]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L320}
-  /// [google.cloud.bigquery.datatransfer.v1.ListDataSourcesRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L443}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.DataSource]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L320}
+  /// [google.cloud.bigquery.datatransfer.v1.ListDataSourcesRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L443}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::datatransfer::v1::DataSource>
   ListDataSources(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists supported data sources and returns their settings.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L443}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.datatransfer.v1.ListDataSourcesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::DataSource,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L320}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.datatransfer.v1.DataSource], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.DataSource]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L320}
-  /// [google.cloud.bigquery.datatransfer.v1.ListDataSourcesRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L443}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.DataSource]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L320}
+  /// [google.cloud.bigquery.datatransfer.v1.ListDataSourcesRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L443}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::datatransfer::v1::DataSource>
   ListDataSources(
       google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new data transfer configuration.
   ///
-  /// @param parent  Required. The BigQuery project id where the transfer
-  /// configuration should
+  /// @param parent  Required. The BigQuery project id where the transfer configuration should
   ///  be created. Must be in the format
-  ///  projects/{project_id}/locations/{location_id} or projects/{project_id}.
-  ///  If specified location and location of the destination bigquery dataset do
-  ///  not match - the request will fail.
+  ///  projects/{project_id}/locations/{location_id} or projects/{project_id}. If
+  ///  specified location and location of the destination bigquery dataset do not
+  ///  match - the request will fail.
   /// @param transfer_config  Required. Data transfer configuration to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferConfig,google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.datatransfer.v1.TransferConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.CreateTransferConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L483}
-  /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.CreateTransferConfigRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L483}
+  /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
   CreateTransferConfig(
       std::string const& parent,
@@ -193,186 +261,304 @@ class DataTransferServiceClient {
           transfer_config,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a new data transfer configuration.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::CreateTransferConfigRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L483}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.datatransfer.v1.CreateTransferConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferConfig,google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.datatransfer.v1.TransferConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.CreateTransferConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L483}
-  /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.CreateTransferConfigRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L483}
+  /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
   CreateTransferConfig(google::cloud::bigquery::datatransfer::v1::
                            CreateTransferConfigRequest const& request,
                        Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a data transfer configuration.
   /// All fields must be set, even if they are not updated.
   ///
   /// @param transfer_config  Required. Data transfer configuration to create.
-  /// @param update_mask  Required. Required list of fields to be updated in
-  /// this request.
+  /// @param update_mask  Required. Required list of fields to be updated in this request.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferConfig,google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.datatransfer.v1.TransferConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
-  /// [google.cloud.bigquery.datatransfer.v1.UpdateTransferConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L545}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
+  /// [google.cloud.bigquery.datatransfer.v1.UpdateTransferConfigRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L545}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
   UpdateTransferConfig(
       google::cloud::bigquery::datatransfer::v1::TransferConfig const&
           transfer_config,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a data transfer configuration.
   /// All fields must be set, even if they are not updated.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::UpdateTransferConfigRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L545}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.datatransfer.v1.UpdateTransferConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferConfig,google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.datatransfer.v1.TransferConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
-  /// [google.cloud.bigquery.datatransfer.v1.UpdateTransferConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L545}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
+  /// [google.cloud.bigquery.datatransfer.v1.UpdateTransferConfigRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L545}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
   UpdateTransferConfig(google::cloud::bigquery::datatransfer::v1::
                            UpdateTransferConfigRequest const& request,
                        Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a data transfer configuration, including any associated transfer
   /// runs and logs.
   ///
-  /// @param name  Required. The field will contain name of the resource
-  /// requested, for
+  /// @param name  Required. The field will contain name of the resource requested, for
   ///  example: `projects/{project_id}/transferConfigs/{config_id}` or
   ///  `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L612}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferConfigRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L612}
   ///
+  // clang-format on
   Status DeleteTransferConfig(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a data transfer configuration, including any associated transfer
   /// runs and logs.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::DeleteTransferConfigRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L612}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.datatransfer.v1.DeleteTransferConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L612}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferConfigRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L612}
   ///
+  // clang-format on
   Status DeleteTransferConfig(google::cloud::bigquery::datatransfer::v1::
                                   DeleteTransferConfigRequest const& request,
                               Options opts = {});
 
+  // clang-format off
   ///
   /// Returns information about a data transfer config.
   ///
-  /// @param name  Required. The field will contain name of the resource
-  /// requested, for
+  /// @param name  Required. The field will contain name of the resource requested, for
   ///  example: `projects/{project_id}/transferConfigs/{config_id}` or
   ///  `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferConfig,google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.datatransfer.v1.TransferConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.GetTransferConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L598}
-  /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.GetTransferConfigRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L598}
+  /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
   GetTransferConfig(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns information about a data transfer config.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L598}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.datatransfer.v1.GetTransferConfigRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferConfig,google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.datatransfer.v1.TransferConfig])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.GetTransferConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L598}
-  /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.GetTransferConfigRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L598}
+  /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
   GetTransferConfig(
       google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns information about all transfer configs owned by a project in the
   /// specified location.
   ///
-  /// @param parent  Required. The BigQuery project id for which transfer
-  /// configs
+  /// @param parent  Required. The BigQuery project id for which transfer configs
   ///  should be returned: `projects/{project_id}` or
   ///  `projects/{project_id}/locations/{location_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferConfig,google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.datatransfer.v1.TransferConfig], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.ListTransferConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L653}
-  /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.ListTransferConfigsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L653}
+  /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::datatransfer::v1::TransferConfig>
   ListTransferConfigs(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns information about all transfer configs owned by a project in the
   /// specified location.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L653}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.datatransfer.v1.ListTransferConfigsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferConfig,google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.datatransfer.v1.TransferConfig], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.ListTransferConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L653}
-  /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.ListTransferConfigsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L653}
+  /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::datatransfer::v1::TransferConfig>
   ListTransferConfigs(
       google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Creates transfer runs for a time range [start_time, end_time].
   /// For each date - or whatever granularity the data source supports - in the
@@ -383,22 +569,28 @@ class DataTransferServiceClient {
   /// @param parent  Required. Transfer configuration name in the form:
   ///  `projects/{project_id}/transferConfigs/{config_id}` or
   ///  `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.
-  /// @param start_time  Required. Start time of the range of transfer runs. For
-  /// example,
+  /// @param start_time  Required. Start time of the range of transfer runs. For example,
   ///  `"2017-05-25T00:00:00+00:00"`.
-  /// @param end_time  Required. End time of the range of transfer runs. For
-  /// example,
+  /// @param end_time  Required. End time of the range of transfer runs. For example,
   ///  `"2017-05-30T00:00:00+00:00"`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L831}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L808}
-  /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L831}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L808}
+  /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsResponse]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L831}
   ///
+  // clang-format on
   StatusOr<
       google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
   ScheduleTransferRuns(std::string const& parent,
@@ -406,6 +598,7 @@ class DataTransferServiceClient {
                        google::protobuf::Timestamp const& end_time,
                        Options opts = {});
 
+  // clang-format off
   ///
   /// Creates transfer runs for a time range [start_time, end_time].
   /// For each date - or whatever granularity the data source supports - in the
@@ -413,164 +606,273 @@ class DataTransferServiceClient {
   /// Note that runs are created per UTC time in the time range.
   /// DEPRECATED: use StartManualTransferRuns instead.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L808}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L831}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L808}
-  /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L831}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L808}
+  /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsResponse]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L831}
   ///
+  // clang-format on
   StatusOr<
       google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
   ScheduleTransferRuns(google::cloud::bigquery::datatransfer::v1::
                            ScheduleTransferRunsRequest const& request,
                        Options opts = {});
 
+  // clang-format off
   ///
   /// Start manual transfer runs to be executed now with schedule_time equal to
   /// current time. The transfer runs can be created for a time range where the
-  /// run_time is between start_time (inclusive) and end_time (exclusive), or
-  /// for a specific run_time.
+  /// run_time is between start_time (inclusive) and end_time (exclusive), or for
+  /// a specific run_time.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L837}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.datatransfer.v1.StartManualTransferRunsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsResponse,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L874}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.datatransfer.v1.StartManualTransferRunsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.StartManualTransferRunsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L837}
-  /// [google.cloud.bigquery.datatransfer.v1.StartManualTransferRunsResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L874}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.StartManualTransferRunsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L837}
+  /// [google.cloud.bigquery.datatransfer.v1.StartManualTransferRunsResponse]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L874}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::
                StartManualTransferRunsResponse>
   StartManualTransferRuns(google::cloud::bigquery::datatransfer::v1::
                               StartManualTransferRunsRequest const& request,
                           Options opts = {});
 
+  // clang-format off
   ///
   /// Returns information about the particular transfer run.
   ///
-  /// @param name  Required. The field will contain name of the resource
-  /// requested, for
-  ///  example:
-  ///  `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or
+  /// @param name  Required. The field will contain name of the resource requested, for
+  ///  example: `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
+  ///  or
   ///  `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/runs/{run_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferRun,google/cloud/bigquery/datatransfer/v1/transfer.proto#L213}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.datatransfer.v1.TransferRun])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.GetTransferRunRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L625}
-  /// [google.cloud.bigquery.datatransfer.v1.TransferRun]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L213}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.GetTransferRunRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L625}
+  /// [google.cloud.bigquery.datatransfer.v1.TransferRun]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L213}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferRun>
   GetTransferRun(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns information about the particular transfer run.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L625}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.datatransfer.v1.GetTransferRunRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferRun,google/cloud/bigquery/datatransfer/v1/transfer.proto#L213}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.datatransfer.v1.TransferRun])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.GetTransferRunRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L625}
-  /// [google.cloud.bigquery.datatransfer.v1.TransferRun]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L213}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.GetTransferRunRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L625}
+  /// [google.cloud.bigquery.datatransfer.v1.TransferRun]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L213}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferRun>
   GetTransferRun(
       google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified transfer run.
   ///
-  /// @param name  Required. The field will contain name of the resource
-  /// requested, for
-  ///  example:
-  ///  `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}` or
+  /// @param name  Required. The field will contain name of the resource requested, for
+  ///  example: `projects/{project_id}/transferConfigs/{config_id}/runs/{run_id}`
+  ///  or
   ///  `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/runs/{run_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferRunRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L639}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferRunRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L639}
   ///
+  // clang-format on
   Status DeleteTransferRun(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes the specified transfer run.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L639}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.datatransfer.v1.DeleteTransferRunRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferRunRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L639}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferRunRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L639}
   ///
+  // clang-format on
   Status DeleteTransferRun(
       google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns information about running and completed transfer runs.
   ///
-  /// @param parent  Required. Name of transfer configuration for which transfer
-  /// runs should be
+  /// @param parent  Required. Name of transfer configuration for which transfer runs should be
   ///  retrieved. Format of transfer configuration resource name is:
   ///  `projects/{project_id}/transferConfigs/{config_id}` or
   ///  `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferRun,google/cloud/bigquery/datatransfer/v1/transfer.proto#L213}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.datatransfer.v1.TransferRun], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.ListTransferRunsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L692}
-  /// [google.cloud.bigquery.datatransfer.v1.TransferRun]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L213}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.ListTransferRunsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L692}
+  /// [google.cloud.bigquery.datatransfer.v1.TransferRun]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L213}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::datatransfer::v1::TransferRun>
   ListTransferRuns(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns information about running and completed transfer runs.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L692}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.datatransfer.v1.ListTransferRunsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferRun,google/cloud/bigquery/datatransfer/v1/transfer.proto#L213}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.datatransfer.v1.TransferRun], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.ListTransferRunsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L692}
-  /// [google.cloud.bigquery.datatransfer.v1.TransferRun]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L213}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.ListTransferRunsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L692}
+  /// [google.cloud.bigquery.datatransfer.v1.TransferRun]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L213}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::datatransfer::v1::TransferRun>
   ListTransferRuns(
       google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns log messages for the transfer run.
   ///
@@ -579,38 +881,78 @@ class DataTransferServiceClient {
   ///  `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}/runs/{run_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferMessage,google/cloud/bigquery/datatransfer/v1/transfer.proto#L296}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.datatransfer.v1.TransferMessage], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.ListTransferLogsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L744}
-  /// [google.cloud.bigquery.datatransfer.v1.TransferMessage]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L296}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.ListTransferLogsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L744}
+  /// [google.cloud.bigquery.datatransfer.v1.TransferMessage]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L296}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::datatransfer::v1::TransferMessage>
   ListTransferLogs(std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns log messages for the transfer run.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L744}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.datatransfer.v1.ListTransferLogsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferMessage,google/cloud/bigquery/datatransfer/v1/transfer.proto#L296}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.bigquery.datatransfer.v1.TransferMessage], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.ListTransferLogsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L744}
-  /// [google.cloud.bigquery.datatransfer.v1.TransferMessage]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L296}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.ListTransferLogsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L744}
+  /// [google.cloud.bigquery.datatransfer.v1.TransferMessage]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L296}
   ///
+  // clang-format on
   StreamRange<google::cloud::bigquery::datatransfer::v1::TransferMessage>
   ListTransferLogs(
       google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest
           request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Returns true if valid credentials exist for the given data source and
   /// requesting user.
@@ -620,56 +962,92 @@ class DataTransferServiceClient {
   ///  `projects/{project_id}/locations/{location_id}/dataSources/{data_source_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L802}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.datatransfer.v1.CheckValidCredsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.CheckValidCredsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L789}
-  /// [google.cloud.bigquery.datatransfer.v1.CheckValidCredsResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L802}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.CheckValidCredsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L789}
+  /// [google.cloud.bigquery.datatransfer.v1.CheckValidCredsResponse]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L802}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>
   CheckValidCreds(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Returns true if valid credentials exist for the given data source and
   /// requesting user.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L789}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.datatransfer.v1.CheckValidCredsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L802}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.datatransfer.v1.CheckValidCredsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.CheckValidCredsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L789}
-  /// [google.cloud.bigquery.datatransfer.v1.CheckValidCredsResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L802}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.CheckValidCredsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L789}
+  /// [google.cloud.bigquery.datatransfer.v1.CheckValidCredsResponse]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L802}
   ///
+  // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>
   CheckValidCreds(
       google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Enroll data sources in a user project. This allows users to create
-  /// transfer configurations for these data sources. They will also appear in
-  /// the ListDataSources RPC and as such, will appear in the [BigQuery
-  /// UI](https://console.cloud.google.com/bigquery), and the documents can be
-  /// found in the public guide for [BigQuery Web
-  /// UI](https://cloud.google.com/bigquery/bigquery-web-ui) and [Data Transfer
+  /// Enroll data sources in a user project. This allows users to create transfer
+  /// configurations for these data sources. They will also appear in the
+  /// ListDataSources RPC and as such, will appear in the
+  /// [BigQuery UI](https://console.cloud.google.com/bigquery), and the documents
+  /// can be found in the public guide for
+  /// [BigQuery Web UI](https://cloud.google.com/bigquery/bigquery-web-ui) and
+  /// [Data Transfer
   /// Service](https://cloud.google.com/bigquery/docs/working-with-transfers).
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L881}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.datatransfer.v1.EnrollDataSourcesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.EnrollDataSourcesRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L881}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.datatransfer.v1.EnrollDataSourcesRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L881}
   ///
+  // clang-format on
   Status EnrollDataSources(
       google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
           request,

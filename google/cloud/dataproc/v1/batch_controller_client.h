@@ -86,50 +86,83 @@ class BatchControllerClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a batch workload that executes asynchronously.
   ///
-  /// @param parent  Required. The parent resource where this batch will be
-  /// created.
+  /// @param parent  Required. The parent resource where this batch will be created.
   /// @param batch  Required. The batch to create.
-  /// @param batch_id  Optional. The ID to use for the batch, which will become
-  /// the final
+  /// @param batch_id  Optional. The ID to use for the batch, which will become the final
   ///  component of the batch's resource name.
   ///  This value must be 4-63 characters. Valid characters are `/[a-z][0-9]-/`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Batch,google/cloud/dataproc/v1/batches.proto#L187}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataproc.v1.Batch] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.Batch]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L187}
-  /// [google.cloud.dataproc.v1.CreateBatchRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L79}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Batch]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L187}
+  /// [google.cloud.dataproc.v1.CreateBatchRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L79}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Batch>> CreateBatch(
       std::string const& parent,
       google::cloud::dataproc::v1::Batch const& batch,
       std::string const& batch_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a batch workload that executes asynchronously.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::CreateBatchRequest,google/cloud/dataproc/v1/batches.proto#L79}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.CreateBatchRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Batch,google/cloud/dataproc/v1/batches.proto#L187}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dataproc.v1.Batch] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.Batch]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L187}
-  /// [google.cloud.dataproc.v1.CreateBatchRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L79}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Batch]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L187}
+  /// [google.cloud.dataproc.v1.CreateBatchRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L79}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Batch>> CreateBatch(
       google::cloud::dataproc::v1::CreateBatchRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the batch workload resource representation.
   ///
@@ -138,100 +171,184 @@ class BatchControllerClient {
   ///  "projects/PROJECT_ID/locations/DATAPROC_REGION/batches/BATCH_ID"
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Batch,google/cloud/dataproc/v1/batches.proto#L187}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataproc.v1.Batch])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataproc.v1.Batch]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L187}
-  /// [google.cloud.dataproc.v1.GetBatchRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L113}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Batch]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L187}
+  /// [google.cloud.dataproc.v1.GetBatchRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L113}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataproc::v1::Batch> GetBatch(std::string const& name,
                                                         Options opts = {});
 
+  // clang-format off
   ///
   /// Gets the batch workload resource representation.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::GetBatchRequest,google/cloud/dataproc/v1/batches.proto#L113}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.GetBatchRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Batch,google/cloud/dataproc/v1/batches.proto#L187}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.dataproc.v1.Batch])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.dataproc.v1.Batch]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L187}
-  /// [google.cloud.dataproc.v1.GetBatchRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L113}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Batch]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L187}
+  /// [google.cloud.dataproc.v1.GetBatchRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L113}
   ///
+  // clang-format on
   StatusOr<google::cloud::dataproc::v1::Batch> GetBatch(
       google::cloud::dataproc::v1::GetBatchRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Lists batch workloads.
   ///
-  /// @param parent  Required. The parent, which owns this collection of
-  /// batches.
+  /// @param parent  Required. The parent, which owns this collection of batches.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Batch,google/cloud/dataproc/v1/batches.proto#L187}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataproc.v1.Batch], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.Batch]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L187}
-  /// [google.cloud.dataproc.v1.ListBatchesRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L124}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Batch]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L187}
+  /// [google.cloud.dataproc.v1.ListBatchesRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L124}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataproc::v1::Batch> ListBatches(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Lists batch workloads.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::ListBatchesRequest,google/cloud/dataproc/v1/batches.proto#L124}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.ListBatchesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Batch,google/cloud/dataproc/v1/batches.proto#L187}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.dataproc.v1.Batch], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.dataproc.v1.Batch]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L187}
-  /// [google.cloud.dataproc.v1.ListBatchesRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L124}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.Batch]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L187}
+  /// [google.cloud.dataproc.v1.ListBatchesRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L124}
   ///
+  // clang-format on
   StreamRange<google::cloud::dataproc::v1::Batch> ListBatches(
       google::cloud::dataproc::v1::ListBatchesRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
-  /// Deletes the batch workload resource. If the batch is not in terminal
-  /// state, the delete fails and the response returns `FAILED_PRECONDITION`.
+  /// Deletes the batch workload resource. If the batch is not in terminal state,
+  /// the delete fails and the response returns `FAILED_PRECONDITION`.
   ///
   /// @param name  Required. The fully qualified name of the batch to retrieve
   ///  in the format
   ///  "projects/PROJECT_ID/locations/DATAPROC_REGION/batches/BATCH_ID"
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.dataproc.v1.DeleteBatchRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L176}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.DeleteBatchRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L176}
   ///
+  // clang-format on
   Status DeleteBatch(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
-  /// Deletes the batch workload resource. If the batch is not in terminal
-  /// state, the delete fails and the response returns `FAILED_PRECONDITION`.
+  /// Deletes the batch workload resource. If the batch is not in terminal state,
+  /// the delete fails and the response returns `FAILED_PRECONDITION`.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::DeleteBatchRequest,google/cloud/dataproc/v1/batches.proto#L176}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dataproc.v1.DeleteBatchRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.dataproc.v1.DeleteBatchRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L176}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dataproc.v1.DeleteBatchRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L176}
   ///
+  // clang-format on
   Status DeleteBatch(
       google::cloud::dataproc::v1::DeleteBatchRequest const& request,
       Options opts = {});

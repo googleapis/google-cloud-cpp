@@ -90,103 +90,146 @@ class ProductServiceClient {
   }
   ///@}
 
+  // clang-format off
   ///
   /// Creates a [Product][google.cloud.retail.v2.Product].
   ///
   /// @param parent  Required. The parent catalog resource name, such as
   ///  `projects/*/locations/global/catalogs/default_catalog/branches/default_branch`.
-  /// @param product  Required. The [Product][google.cloud.retail.v2.Product] to
-  /// create.
-  /// @param product_id  Required. The ID to use for the
-  /// [Product][google.cloud.retail.v2.Product],
+  /// @param product  Required. The [Product][google.cloud.retail.v2.Product] to create.
+  /// @param product_id  Required. The ID to use for the [Product][google.cloud.retail.v2.Product],
   ///  which will become the final component of the
   ///  [Product.name][google.cloud.retail.v2.Product.name].
   ///  If the caller does not have permission to create the
-  ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not
-  ///  it exists, a PERMISSION_DENIED error is returned. This field must be
-  ///  unique among all [Product][google.cloud.retail.v2.Product]s with the same
-  ///  [parent][google.cloud.retail.v2.CreateProductRequest.parent]. Otherwise,
-  ///  an ALREADY_EXISTS error is returned. This field must be a UTF-8 encoded
-  ///  string with a length limit of 128 characters. Otherwise, an
-  ///  INVALID_ARGUMENT error is returned.
+  ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not it
+  ///  exists, a PERMISSION_DENIED error is returned.
+  ///  This field must be unique among all
+  ///  [Product][google.cloud.retail.v2.Product]s with the same
+  ///  [parent][google.cloud.retail.v2.CreateProductRequest.parent]. Otherwise, an
+  ///  ALREADY_EXISTS error is returned.
+  ///  This field must be a UTF-8 encoded string with a length limit of 128
+  ///  characters. Otherwise, an INVALID_ARGUMENT error is returned.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.retail.v2.Product])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.retail.v2.CreateProductRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L337}
-  /// [google.cloud.retail.v2.Product]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.CreateProductRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L337}
+  /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
+  // clang-format on
   StatusOr<google::cloud::retail::v2::Product> CreateProduct(
       std::string const& parent,
       google::cloud::retail::v2::Product const& product,
       std::string const& product_id, Options opts = {});
 
+  // clang-format off
   ///
   /// Creates a [Product][google.cloud.retail.v2.Product].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::CreateProductRequest,google/cloud/retail/v2/product_service.proto#L337}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.retail.v2.CreateProductRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.retail.v2.Product])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.retail.v2.CreateProductRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L337}
-  /// [google.cloud.retail.v2.Product]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.CreateProductRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L337}
+  /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
+  // clang-format on
   StatusOr<google::cloud::retail::v2::Product> CreateProduct(
       google::cloud::retail::v2::CreateProductRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a [Product][google.cloud.retail.v2.Product].
   ///
-  /// @param name  Required. Full resource name of
-  /// [Product][google.cloud.retail.v2.Product],
+  /// @param name  Required. Full resource name of [Product][google.cloud.retail.v2.Product],
   ///  such as
   ///  `projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/some_product_id`.
   ///  If the caller does not have permission to access the
-  ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not
-  ///  it exists, a PERMISSION_DENIED error is returned. If the requested
-  ///  [Product][google.cloud.retail.v2.Product] does not exist, a NOT_FOUND
-  ///  error is returned.
+  ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not it
+  ///  exists, a PERMISSION_DENIED error is returned.
+  ///  If the requested [Product][google.cloud.retail.v2.Product] does not exist,
+  ///  a NOT_FOUND error is returned.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.retail.v2.Product])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.retail.v2.GetProductRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L369}
-  /// [google.cloud.retail.v2.Product]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.GetProductRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L369}
+  /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
+  // clang-format on
   StatusOr<google::cloud::retail::v2::Product> GetProduct(
       std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a [Product][google.cloud.retail.v2.Product].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::GetProductRequest,google/cloud/retail/v2/product_service.proto#L369}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.retail.v2.GetProductRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.retail.v2.Product])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.retail.v2.GetProductRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L369}
-  /// [google.cloud.retail.v2.Product]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.GetProductRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L369}
+  /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
+  // clang-format on
   StatusOr<google::cloud::retail::v2::Product> GetProduct(
       google::cloud::retail::v2::GetProductRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a list of [Product][google.cloud.retail.v2.Product]s.
   ///
@@ -195,106 +238,168 @@ class ProductServiceClient {
   ///  `default_branch` as the branch ID, to list products under the default
   ///  branch.
   ///  If the caller does not have permission to list
-  ///  [Product][google.cloud.retail.v2.Product]s under this branch, regardless
-  ///  of whether or not this branch exists, a PERMISSION_DENIED error is
-  ///  returned.
+  ///  [Product][google.cloud.retail.v2.Product]s under this branch, regardless of
+  ///  whether or not this branch exists, a PERMISSION_DENIED error is returned.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.retail.v2.Product], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.retail.v2.ListProductsRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L456}
-  /// [google.cloud.retail.v2.Product]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.ListProductsRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L456}
+  /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
+  // clang-format on
   StreamRange<google::cloud::retail::v2::Product> ListProducts(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
   ///
   /// Gets a list of [Product][google.cloud.retail.v2.Product]s.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::ListProductsRequest,google/cloud/retail/v2/product_service.proto#L456}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.retail.v2.ListProductsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.retail.v2.Product], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
-  /// [google.cloud.retail.v2.ListProductsRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L456}
-  /// [google.cloud.retail.v2.Product]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.ListProductsRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L456}
+  /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
+  // clang-format on
   StreamRange<google::cloud::retail::v2::Product> ListProducts(
       google::cloud::retail::v2::ListProductsRequest request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a [Product][google.cloud.retail.v2.Product].
   ///
   /// @param product  Required. The product to update/create.
   ///  If the caller does not have permission to update the
-  ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not
-  ///  it exists, a PERMISSION_DENIED error is returned. If the
-  ///  [Product][google.cloud.retail.v2.Product] to update does not exist and
+  ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not it
+  ///  exists, a PERMISSION_DENIED error is returned.
+  ///  If the [Product][google.cloud.retail.v2.Product] to update does not exist
+  ///  and
   ///  [allow_missing][google.cloud.retail.v2.UpdateProductRequest.allow_missing]
   ///  is not set, a NOT_FOUND error is returned.
   /// @param update_mask  Indicates which fields in the provided
   ///  [Product][google.cloud.retail.v2.Product] to update. The immutable and
-  ///  output only fields are NOT supported. If not set, all supported fields
-  ///  (the fields that are neither immutable nor output only) are updated. If
-  ///  an unsupported or unknown field is provided, an INVALID_ARGUMENT error is
-  ///  returned. The attribute key can be updated by setting the mask path as
+  ///  output only fields are NOT supported. If not set, all supported fields (the
+  ///  fields that are neither immutable nor output only) are updated.
+  ///  If an unsupported or unknown field is provided, an INVALID_ARGUMENT error
+  ///  is returned.
+  ///  The attribute key can be updated by setting the mask path as
   ///  "attributes.${key_name}". If a key name is present in the mask but not in
   ///  the patching product from the request, this key will be deleted after the
   ///  update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.retail.v2.Product])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.retail.v2.Product]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
-  /// [google.cloud.retail.v2.UpdateProductRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L389}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.UpdateProductRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L389}
   ///
+  // clang-format on
   StatusOr<google::cloud::retail::v2::Product> UpdateProduct(
       google::cloud::retail::v2::Product const& product,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates a [Product][google.cloud.retail.v2.Product].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::UpdateProductRequest,google/cloud/retail/v2/product_service.proto#L389}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.retail.v2.UpdateProductRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.retail.v2.Product])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
   ///
-  /// [google.cloud.retail.v2.Product]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
-  /// [google.cloud.retail.v2.UpdateProductRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L389}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.UpdateProductRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L389}
   ///
+  // clang-format on
   StatusOr<google::cloud::retail::v2::Product> UpdateProduct(
       google::cloud::retail::v2::UpdateProductRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a [Product][google.cloud.retail.v2.Product].
   ///
-  /// @param name  Required. Full resource name of
-  /// [Product][google.cloud.retail.v2.Product],
+  /// @param name  Required. Full resource name of [Product][google.cloud.retail.v2.Product],
   ///  such as
   ///  `projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/some_product_id`.
   ///  If the caller does not have permission to delete the
-  ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not
-  ///  it exists, a PERMISSION_DENIED error is returned. If the
-  ///  [Product][google.cloud.retail.v2.Product] to delete does not exist, a
-  ///  NOT_FOUND error is returned. The
-  ///  [Product][google.cloud.retail.v2.Product] to delete can neither be a
+  ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not it
+  ///  exists, a PERMISSION_DENIED error is returned.
+  ///  If the [Product][google.cloud.retail.v2.Product] to delete does not exist,
+  ///  a NOT_FOUND error is returned.
+  ///  The [Product][google.cloud.retail.v2.Product] to delete can neither be a
   ///  [Product.Type.COLLECTION][google.cloud.retail.v2.Product.Type.COLLECTION]
   ///  [Product][google.cloud.retail.v2.Product] member nor a
   ///  [Product.Type.PRIMARY][google.cloud.retail.v2.Product.Type.PRIMARY]
@@ -305,31 +410,53 @@ class ProductServiceClient {
   ///  [Product][google.cloud.retail.v2.Product] will be deleted.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.retail.v2.DeleteProductRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L425}
-  /// [google.cloud.retail.v2.Product]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.DeleteProductRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L425}
+  /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
+  // clang-format on
   Status DeleteProduct(std::string const& name, Options opts = {});
 
+  // clang-format off
   ///
   /// Deletes a [Product][google.cloud.retail.v2.Product].
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::DeleteProductRequest,google/cloud/retail/v2/product_service.proto#L425}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.retail.v2.DeleteProductRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-  /// [google.cloud.retail.v2.DeleteProductRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L425}
-  /// [google.cloud.retail.v2.Product]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.DeleteProductRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L425}
+  /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
+  // clang-format on
   Status DeleteProduct(
       google::cloud::retail::v2::DeleteProductRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Bulk import of multiple [Product][google.cloud.retail.v2.Product]s.
   ///
@@ -339,25 +466,43 @@ class ProductServiceClient {
   /// Note that it is possible for a subset of the
   /// [Product][google.cloud.retail.v2.Product]s to be successfully updated.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::ImportProductsRequest,google/cloud/retail/v2/import_config.proto#L164}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.retail.v2.ImportProductsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::retail::v2::ImportProductsResponse,google/cloud/retail/v2/import_config.proto#L345}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.retail.v2.ImportProductsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.retail.v2.ImportProductsRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L164}
-  /// [google.cloud.retail.v2.ImportProductsResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L345}
-  /// [google.cloud.retail.v2.Product]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.ImportProductsRequest]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L164}
+  /// [google.cloud.retail.v2.ImportProductsResponse]: @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L345}
+  /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
   ImportProducts(
       google::cloud::retail::v2::ImportProductsRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates inventory information for a
   /// [Product][google.cloud.retail.v2.Product] while respecting the last update
@@ -401,17 +546,15 @@ class ProductServiceClient {
   /// [ProductService.RemoveFulfillmentPlaces][google.cloud.retail.v2.ProductService.RemoveFulfillmentPlaces].
   ///
   /// The returned [Operation][google.longrunning.Operation]s is obsolete after
-  /// one day, and the
-  /// [GetOperation][google.longrunning.Operations.GetOperation] API returns
-  /// `NOT_FOUND` afterwards.
+  /// one day, and the [GetOperation][google.longrunning.Operations.GetOperation]
+  /// API returns `NOT_FOUND` afterwards.
   ///
   /// If conflicting updates are issued, the
   /// [Operation][google.longrunning.Operation]s associated with the stale
   /// updates are not marked as [done][google.longrunning.Operation.done] until
   /// they are obsolete.
   ///
-  /// @param inventory  Required. The inventory information to update. The
-  /// allowable fields to
+  /// @param inventory  Required. The inventory information to update. The allowable fields to
   ///  update are:
   ///  * [Product.price_info][google.cloud.retail.v2.Product.price_info]
   ///  * [Product.availability][google.cloud.retail.v2.Product.availability]
@@ -424,21 +567,22 @@ class ProductServiceClient {
   ///  is empty or invalid, an INVALID_ARGUMENT error is returned.
   ///  If the caller does not have permission to update the
   ///  [Product][google.cloud.retail.v2.Product] named in
-  ///  [Product.name][google.cloud.retail.v2.Product.name], regardless of
-  ///  whether or not it exists, a PERMISSION_DENIED error is returned. If the
-  ///  [Product][google.cloud.retail.v2.Product] to update does not have
-  ///  existing inventory information, the provided inventory information will
-  ///  be inserted. If the [Product][google.cloud.retail.v2.Product] to update
-  ///  has existing inventory information, the provided inventory information
-  ///  will be merged while respecting the last update time for each inventory
-  ///  field, using the provided or default value for
+  ///  [Product.name][google.cloud.retail.v2.Product.name], regardless of whether
+  ///  or not it exists, a PERMISSION_DENIED error is returned.
+  ///  If the [Product][google.cloud.retail.v2.Product] to update does not have
+  ///  existing inventory information, the provided inventory information will be
+  ///  inserted.
+  ///  If the [Product][google.cloud.retail.v2.Product] to update has existing
+  ///  inventory information, the provided inventory information will be merged
+  ///  while respecting the last update time for each inventory field, using the
+  ///  provided or default value for
   ///  [SetInventoryRequest.set_time][google.cloud.retail.v2.SetInventoryRequest.set_time].
   ///  The caller can replace place IDs for a subset of fulfillment types in the
   ///  following ways:
   ///  * Adds "fulfillment_info" in
   ///  [SetInventoryRequest.set_mask][google.cloud.retail.v2.SetInventoryRequest.set_mask]
-  ///  * Specifies only the desired fulfillment types and corresponding place
-  ///  IDs to update in
+  ///  * Specifies only the desired fulfillment types and corresponding place IDs
+  ///  to update in
   ///  [SetInventoryRequest.inventory.fulfillment_info][google.cloud.retail.v2.Product.fulfillment_info]
   ///  The caller can clear all place IDs from a subset of fulfillment types in
   ///  the following ways:
@@ -464,44 +608,46 @@ class ProductServiceClient {
   ///  is returned and the entire update will be ignored.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::retail::v2::SetInventoryResponse,google/cloud/retail/v2/product_service.proto#L650}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.retail.v2.SetInventoryResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.retail.v2.CreateProductRequest.product]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L346}
-  /// [google.cloud.retail.v2.Product]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
-  /// [google.cloud.retail.v2.ProductService.AddFulfillmentPlaces]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L198}
-  /// [google.cloud.retail.v2.ProductService.CreateProduct]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L48}
-  /// [google.cloud.retail.v2.ProductService.GetProduct]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
-  /// [google.cloud.retail.v2.ProductService.ListProducts]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
-  /// [google.cloud.retail.v2.ProductService.RemoveFulfillmentPlaces]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L240}
-  /// [google.cloud.retail.v2.ProductService.SetInventory]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L157}
-  /// [google.cloud.retail.v2.ProductService.UpdateProduct]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L73}
-  /// [google.cloud.retail.v2.SetInventoryRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L556}
-  /// [google.cloud.retail.v2.SetInventoryRequest.set_mask]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L624}
-  /// [google.cloud.retail.v2.SetInventoryResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L650}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.CreateProductRequest.product]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L346}
+  /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.ProductService.AddFulfillmentPlaces]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L198}
+  /// [google.cloud.retail.v2.ProductService.CreateProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L48}
+  /// [google.cloud.retail.v2.ProductService.GetProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
+  /// [google.cloud.retail.v2.ProductService.ListProducts]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
+  /// [google.cloud.retail.v2.ProductService.RemoveFulfillmentPlaces]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L240}
+  /// [google.cloud.retail.v2.ProductService.SetInventory]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L157}
+  /// [google.cloud.retail.v2.ProductService.UpdateProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L73}
+  /// [google.cloud.retail.v2.SetInventoryRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L556}
+  /// [google.cloud.retail.v2.SetInventoryRequest.set_mask]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L624}
+  /// [google.cloud.retail.v2.SetInventoryResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L650}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
   SetInventory(google::cloud::retail::v2::Product const& inventory,
                google::protobuf::FieldMask const& set_mask, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates inventory information for a
   /// [Product][google.cloud.retail.v2.Product] while respecting the last update
@@ -545,57 +691,62 @@ class ProductServiceClient {
   /// [ProductService.RemoveFulfillmentPlaces][google.cloud.retail.v2.ProductService.RemoveFulfillmentPlaces].
   ///
   /// The returned [Operation][google.longrunning.Operation]s is obsolete after
-  /// one day, and the
-  /// [GetOperation][google.longrunning.Operations.GetOperation] API returns
-  /// `NOT_FOUND` afterwards.
+  /// one day, and the [GetOperation][google.longrunning.Operations.GetOperation]
+  /// API returns `NOT_FOUND` afterwards.
   ///
   /// If conflicting updates are issued, the
   /// [Operation][google.longrunning.Operation]s associated with the stale
   /// updates are not marked as [done][google.longrunning.Operation.done] until
   /// they are obsolete.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::SetInventoryRequest,google/cloud/retail/v2/product_service.proto#L556}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.retail.v2.SetInventoryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::retail::v2::SetInventoryResponse,google/cloud/retail/v2/product_service.proto#L650}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.retail.v2.SetInventoryResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.retail.v2.CreateProductRequest.product]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L346}
-  /// [google.cloud.retail.v2.Product]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
-  /// [google.cloud.retail.v2.ProductService.AddFulfillmentPlaces]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L198}
-  /// [google.cloud.retail.v2.ProductService.CreateProduct]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L48}
-  /// [google.cloud.retail.v2.ProductService.GetProduct]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
-  /// [google.cloud.retail.v2.ProductService.ListProducts]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
-  /// [google.cloud.retail.v2.ProductService.RemoveFulfillmentPlaces]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L240}
-  /// [google.cloud.retail.v2.ProductService.SetInventory]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L157}
-  /// [google.cloud.retail.v2.ProductService.UpdateProduct]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L73}
-  /// [google.cloud.retail.v2.SetInventoryRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L556}
-  /// [google.cloud.retail.v2.SetInventoryRequest.set_mask]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L624}
-  /// [google.cloud.retail.v2.SetInventoryResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L650}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.CreateProductRequest.product]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L346}
+  /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.ProductService.AddFulfillmentPlaces]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L198}
+  /// [google.cloud.retail.v2.ProductService.CreateProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L48}
+  /// [google.cloud.retail.v2.ProductService.GetProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
+  /// [google.cloud.retail.v2.ProductService.ListProducts]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
+  /// [google.cloud.retail.v2.ProductService.RemoveFulfillmentPlaces]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L240}
+  /// [google.cloud.retail.v2.ProductService.SetInventory]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L157}
+  /// [google.cloud.retail.v2.ProductService.UpdateProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L73}
+  /// [google.cloud.retail.v2.SetInventoryRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L556}
+  /// [google.cloud.retail.v2.SetInventoryRequest.set_mask]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L624}
+  /// [google.cloud.retail.v2.SetInventoryResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L650}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
   SetInventory(google::cloud::retail::v2::SetInventoryRequest const& request,
                Options opts = {});
 
+  // clang-format off
   ///
   /// It is recommended to use the
   /// [ProductService.AddLocalInventories][google.cloud.retail.v2.ProductService.AddLocalInventories]
@@ -619,53 +770,57 @@ class ProductServiceClient {
   /// [ProductService.ListProducts][google.cloud.retail.v2.ProductService.ListProducts].
   ///
   /// The returned [Operation][google.longrunning.Operation]s will be obsolete
-  /// after 1 day, and
-  /// [GetOperation][google.longrunning.Operations.GetOperation] API will return
-  /// NOT_FOUND afterwards.
+  /// after 1 day, and [GetOperation][google.longrunning.Operations.GetOperation]
+  /// API will return NOT_FOUND afterwards.
   ///
   /// If conflicting updates are issued, the
   /// [Operation][google.longrunning.Operation]s associated with the stale
   /// updates will not be marked as [done][google.longrunning.Operation.done]
   /// until being obsolete.
   ///
-  /// @param product  Required. Full resource name of
-  /// [Product][google.cloud.retail.v2.Product],
+  /// @param product  Required. Full resource name of [Product][google.cloud.retail.v2.Product],
   ///  such as
   ///  `projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/some_product_id`.
   ///  If the caller does not have permission to access the
-  ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not
-  ///  it exists, a PERMISSION_DENIED error is returned.
+  ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not it
+  ///  exists, a PERMISSION_DENIED error is returned.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::retail::v2::AddFulfillmentPlacesResponse,google/cloud/retail/v2/product_service.proto#L731}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.retail.v2.AddFulfillmentPlacesResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.retail.v2.AddFulfillmentPlacesRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L655}
-  /// [google.cloud.retail.v2.AddFulfillmentPlacesResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L731}
-  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/common.proto#L479}
-  /// [google.cloud.retail.v2.Product]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
-  /// [google.cloud.retail.v2.ProductService.AddFulfillmentPlaces]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L198}
-  /// [google.cloud.retail.v2.ProductService.AddLocalInventories]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L281}
-  /// [google.cloud.retail.v2.ProductService.GetProduct]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
-  /// [google.cloud.retail.v2.ProductService.ListProducts]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.AddFulfillmentPlacesRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L655}
+  /// [google.cloud.retail.v2.AddFulfillmentPlacesResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L731}
+  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]: @googleapis_reference_link{google/cloud/retail/v2/common.proto#L479}
+  /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.ProductService.AddFulfillmentPlaces]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L198}
+  /// [google.cloud.retail.v2.ProductService.AddLocalInventories]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L281}
+  /// [google.cloud.retail.v2.ProductService.GetProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
+  /// [google.cloud.retail.v2.ProductService.ListProducts]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
   AddFulfillmentPlaces(std::string const& product, Options opts = {});
 
+  // clang-format off
   ///
   /// It is recommended to use the
   /// [ProductService.AddLocalInventories][google.cloud.retail.v2.ProductService.AddLocalInventories]
@@ -689,50 +844,59 @@ class ProductServiceClient {
   /// [ProductService.ListProducts][google.cloud.retail.v2.ProductService.ListProducts].
   ///
   /// The returned [Operation][google.longrunning.Operation]s will be obsolete
-  /// after 1 day, and
-  /// [GetOperation][google.longrunning.Operations.GetOperation] API will return
-  /// NOT_FOUND afterwards.
+  /// after 1 day, and [GetOperation][google.longrunning.Operations.GetOperation]
+  /// API will return NOT_FOUND afterwards.
   ///
   /// If conflicting updates are issued, the
   /// [Operation][google.longrunning.Operation]s associated with the stale
   /// updates will not be marked as [done][google.longrunning.Operation.done]
   /// until being obsolete.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::AddFulfillmentPlacesRequest,google/cloud/retail/v2/product_service.proto#L655}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.retail.v2.AddFulfillmentPlacesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::retail::v2::AddFulfillmentPlacesResponse,google/cloud/retail/v2/product_service.proto#L731}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.retail.v2.AddFulfillmentPlacesResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.retail.v2.AddFulfillmentPlacesRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L655}
-  /// [google.cloud.retail.v2.AddFulfillmentPlacesResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L731}
-  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/common.proto#L479}
-  /// [google.cloud.retail.v2.Product]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
-  /// [google.cloud.retail.v2.ProductService.AddFulfillmentPlaces]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L198}
-  /// [google.cloud.retail.v2.ProductService.AddLocalInventories]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L281}
-  /// [google.cloud.retail.v2.ProductService.GetProduct]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
-  /// [google.cloud.retail.v2.ProductService.ListProducts]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.AddFulfillmentPlacesRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L655}
+  /// [google.cloud.retail.v2.AddFulfillmentPlacesResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L731}
+  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]: @googleapis_reference_link{google/cloud/retail/v2/common.proto#L479}
+  /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.ProductService.AddFulfillmentPlaces]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L198}
+  /// [google.cloud.retail.v2.ProductService.AddLocalInventories]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L281}
+  /// [google.cloud.retail.v2.ProductService.GetProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
+  /// [google.cloud.retail.v2.ProductService.ListProducts]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
   AddFulfillmentPlaces(
       google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// It is recommended to use the
   /// [ProductService.RemoveLocalInventories][google.cloud.retail.v2.ProductService.RemoveLocalInventories]
@@ -756,53 +920,57 @@ class ProductServiceClient {
   /// [ProductService.ListProducts][google.cloud.retail.v2.ProductService.ListProducts].
   ///
   /// The returned [Operation][google.longrunning.Operation]s will be obsolete
-  /// after 1 day, and
-  /// [GetOperation][google.longrunning.Operations.GetOperation] API will return
-  /// NOT_FOUND afterwards.
+  /// after 1 day, and [GetOperation][google.longrunning.Operations.GetOperation]
+  /// API will return NOT_FOUND afterwards.
   ///
   /// If conflicting updates are issued, the
   /// [Operation][google.longrunning.Operation]s associated with the stale
   /// updates will not be marked as [done][google.longrunning.Operation.done]
   /// until being obsolete.
   ///
-  /// @param product  Required. Full resource name of
-  /// [Product][google.cloud.retail.v2.Product],
+  /// @param product  Required. Full resource name of [Product][google.cloud.retail.v2.Product],
   ///  such as
   ///  `projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/some_product_id`.
   ///  If the caller does not have permission to access the
-  ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not
-  ///  it exists, a PERMISSION_DENIED error is returned.
+  ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not it
+  ///  exists, a PERMISSION_DENIED error is returned.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::retail::v2::RemoveFulfillmentPlacesResponse,google/cloud/retail/v2/product_service.proto#L921}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.retail.v2.RemoveFulfillmentPlacesResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/common.proto#L479}
-  /// [google.cloud.retail.v2.Product]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
-  /// [google.cloud.retail.v2.ProductService.GetProduct]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
-  /// [google.cloud.retail.v2.ProductService.ListProducts]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
-  /// [google.cloud.retail.v2.ProductService.RemoveFulfillmentPlaces]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L240}
-  /// [google.cloud.retail.v2.ProductService.RemoveLocalInventories]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L320}
-  /// [google.cloud.retail.v2.RemoveFulfillmentPlacesRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L850}
-  /// [google.cloud.retail.v2.RemoveFulfillmentPlacesResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L921}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]: @googleapis_reference_link{google/cloud/retail/v2/common.proto#L479}
+  /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.ProductService.GetProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
+  /// [google.cloud.retail.v2.ProductService.ListProducts]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
+  /// [google.cloud.retail.v2.ProductService.RemoveFulfillmentPlaces]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L240}
+  /// [google.cloud.retail.v2.ProductService.RemoveLocalInventories]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L320}
+  /// [google.cloud.retail.v2.RemoveFulfillmentPlacesRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L850}
+  /// [google.cloud.retail.v2.RemoveFulfillmentPlacesResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L921}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
   RemoveFulfillmentPlaces(std::string const& product, Options opts = {});
 
+  // clang-format off
   ///
   /// It is recommended to use the
   /// [ProductService.RemoveLocalInventories][google.cloud.retail.v2.ProductService.RemoveLocalInventories]
@@ -826,50 +994,59 @@ class ProductServiceClient {
   /// [ProductService.ListProducts][google.cloud.retail.v2.ProductService.ListProducts].
   ///
   /// The returned [Operation][google.longrunning.Operation]s will be obsolete
-  /// after 1 day, and
-  /// [GetOperation][google.longrunning.Operations.GetOperation] API will return
-  /// NOT_FOUND afterwards.
+  /// after 1 day, and [GetOperation][google.longrunning.Operations.GetOperation]
+  /// API will return NOT_FOUND afterwards.
   ///
   /// If conflicting updates are issued, the
   /// [Operation][google.longrunning.Operation]s associated with the stale
   /// updates will not be marked as [done][google.longrunning.Operation.done]
   /// until being obsolete.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::RemoveFulfillmentPlacesRequest,google/cloud/retail/v2/product_service.proto#L850}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.retail.v2.RemoveFulfillmentPlacesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::retail::v2::RemoveFulfillmentPlacesResponse,google/cloud/retail/v2/product_service.proto#L921}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.retail.v2.RemoveFulfillmentPlacesResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/common.proto#L479}
-  /// [google.cloud.retail.v2.Product]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
-  /// [google.cloud.retail.v2.ProductService.GetProduct]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
-  /// [google.cloud.retail.v2.ProductService.ListProducts]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
-  /// [google.cloud.retail.v2.ProductService.RemoveFulfillmentPlaces]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L240}
-  /// [google.cloud.retail.v2.ProductService.RemoveLocalInventories]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L320}
-  /// [google.cloud.retail.v2.RemoveFulfillmentPlacesRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L850}
-  /// [google.cloud.retail.v2.RemoveFulfillmentPlacesResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L921}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]: @googleapis_reference_link{google/cloud/retail/v2/common.proto#L479}
+  /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.ProductService.GetProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
+  /// [google.cloud.retail.v2.ProductService.ListProducts]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
+  /// [google.cloud.retail.v2.ProductService.RemoveFulfillmentPlaces]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L240}
+  /// [google.cloud.retail.v2.ProductService.RemoveLocalInventories]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L320}
+  /// [google.cloud.retail.v2.RemoveFulfillmentPlacesRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L850}
+  /// [google.cloud.retail.v2.RemoveFulfillmentPlacesResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L921}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
   RemoveFulfillmentPlaces(
       google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Updates local inventory information for a
   /// [Product][google.cloud.retail.v2.Product] at a list of places, while
@@ -877,9 +1054,9 @@ class ProductServiceClient {
   ///
   /// This process is asynchronous and does not require the
   /// [Product][google.cloud.retail.v2.Product] to exist before updating
-  /// inventory information. If the request is valid, the update will be
-  /// enqueued and processed downstream. As a consequence, when a response is
-  /// returned, updates are not immediately manifested in the
+  /// inventory information. If the request is valid, the update will be enqueued
+  /// and processed downstream. As a consequence, when a response is returned,
+  /// updates are not immediately manifested in the
   /// [Product][google.cloud.retail.v2.Product] queried by
   /// [ProductService.GetProduct][google.cloud.retail.v2.ProductService.GetProduct]
   /// or
@@ -892,51 +1069,56 @@ class ProductServiceClient {
   /// has no effect on local inventories.
   ///
   /// The returned [Operation][google.longrunning.Operation]s will be obsolete
-  /// after 1 day, and
-  /// [GetOperation][google.longrunning.Operations.GetOperation] API will return
-  /// NOT_FOUND afterwards.
+  /// after 1 day, and [GetOperation][google.longrunning.Operations.GetOperation]
+  /// API will return NOT_FOUND afterwards.
   ///
   /// If conflicting updates are issued, the
   /// [Operation][google.longrunning.Operation]s associated with the stale
   /// updates will not be marked as [done][google.longrunning.Operation.done]
   /// until being obsolete.
   ///
-  /// @param product  Required. Full resource name of
-  /// [Product][google.cloud.retail.v2.Product],
+  /// @param product  Required. Full resource name of [Product][google.cloud.retail.v2.Product],
   ///  such as
   ///  `projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/some_product_id`.
   ///  If the caller does not have permission to access the
-  ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not
-  ///  it exists, a PERMISSION_DENIED error is returned.
+  ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not it
+  ///  exists, a PERMISSION_DENIED error is returned.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::retail::v2::AddLocalInventoriesResponse,google/cloud/retail/v2/product_service.proto#L797}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.retail.v2.AddLocalInventoriesResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.retail.v2.AddLocalInventoriesRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L736}
-  /// [google.cloud.retail.v2.AddLocalInventoriesResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L797}
-  /// [google.cloud.retail.v2.Product]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
-  /// [google.cloud.retail.v2.ProductService.CreateProduct]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L48}
-  /// [google.cloud.retail.v2.ProductService.GetProduct]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
-  /// [google.cloud.retail.v2.ProductService.ListProducts]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
-  /// [google.cloud.retail.v2.ProductService.UpdateProduct]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L73}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.AddLocalInventoriesRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L736}
+  /// [google.cloud.retail.v2.AddLocalInventoriesResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L797}
+  /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.ProductService.CreateProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L48}
+  /// [google.cloud.retail.v2.ProductService.GetProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
+  /// [google.cloud.retail.v2.ProductService.ListProducts]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
+  /// [google.cloud.retail.v2.ProductService.UpdateProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L73}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
   AddLocalInventories(std::string const& product, Options opts = {});
 
+  // clang-format off
   ///
   /// Updates local inventory information for a
   /// [Product][google.cloud.retail.v2.Product] at a list of places, while
@@ -944,9 +1126,9 @@ class ProductServiceClient {
   ///
   /// This process is asynchronous and does not require the
   /// [Product][google.cloud.retail.v2.Product] to exist before updating
-  /// inventory information. If the request is valid, the update will be
-  /// enqueued and processed downstream. As a consequence, when a response is
-  /// returned, updates are not immediately manifested in the
+  /// inventory information. If the request is valid, the update will be enqueued
+  /// and processed downstream. As a consequence, when a response is returned,
+  /// updates are not immediately manifested in the
   /// [Product][google.cloud.retail.v2.Product] queried by
   /// [ProductService.GetProduct][google.cloud.retail.v2.ProductService.GetProduct]
   /// or
@@ -959,48 +1141,58 @@ class ProductServiceClient {
   /// has no effect on local inventories.
   ///
   /// The returned [Operation][google.longrunning.Operation]s will be obsolete
-  /// after 1 day, and
-  /// [GetOperation][google.longrunning.Operations.GetOperation] API will return
-  /// NOT_FOUND afterwards.
+  /// after 1 day, and [GetOperation][google.longrunning.Operations.GetOperation]
+  /// API will return NOT_FOUND afterwards.
   ///
   /// If conflicting updates are issued, the
   /// [Operation][google.longrunning.Operation]s associated with the stale
   /// updates will not be marked as [done][google.longrunning.Operation.done]
   /// until being obsolete.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::AddLocalInventoriesRequest,google/cloud/retail/v2/product_service.proto#L736}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.retail.v2.AddLocalInventoriesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::retail::v2::AddLocalInventoriesResponse,google/cloud/retail/v2/product_service.proto#L797}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.retail.v2.AddLocalInventoriesResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.retail.v2.AddLocalInventoriesRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L736}
-  /// [google.cloud.retail.v2.AddLocalInventoriesResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L797}
-  /// [google.cloud.retail.v2.Product]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
-  /// [google.cloud.retail.v2.ProductService.CreateProduct]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L48}
-  /// [google.cloud.retail.v2.ProductService.GetProduct]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
-  /// [google.cloud.retail.v2.ProductService.ListProducts]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
-  /// [google.cloud.retail.v2.ProductService.UpdateProduct]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L73}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.AddLocalInventoriesRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L736}
+  /// [google.cloud.retail.v2.AddLocalInventoriesResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L797}
+  /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.ProductService.CreateProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L48}
+  /// [google.cloud.retail.v2.ProductService.GetProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
+  /// [google.cloud.retail.v2.ProductService.ListProducts]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
+  /// [google.cloud.retail.v2.ProductService.UpdateProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L73}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
   AddLocalInventories(
       google::cloud::retail::v2::AddLocalInventoriesRequest const& request,
       Options opts = {});
 
+  // clang-format off
   ///
   /// Remove local inventory information for a
   /// [Product][google.cloud.retail.v2.Product] at a list of places at a removal
@@ -1021,51 +1213,56 @@ class ProductServiceClient {
   /// has no effect on local inventories.
   ///
   /// The returned [Operation][google.longrunning.Operation]s will be obsolete
-  /// after 1 day, and
-  /// [GetOperation][google.longrunning.Operations.GetOperation] API will return
-  /// NOT_FOUND afterwards.
+  /// after 1 day, and [GetOperation][google.longrunning.Operations.GetOperation]
+  /// API will return NOT_FOUND afterwards.
   ///
   /// If conflicting updates are issued, the
   /// [Operation][google.longrunning.Operation]s associated with the stale
   /// updates will not be marked as [done][google.longrunning.Operation.done]
   /// until being obsolete.
   ///
-  /// @param product  Required. Full resource name of
-  /// [Product][google.cloud.retail.v2.Product],
+  /// @param product  Required. Full resource name of [Product][google.cloud.retail.v2.Product],
   ///  such as
   ///  `projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/some_product_id`.
   ///  If the caller does not have permission to access the
-  ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not
-  ///  it exists, a PERMISSION_DENIED error is returned.
+  ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not it
+  ///  exists, a PERMISSION_DENIED error is returned.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::retail::v2::RemoveLocalInventoriesResponse,google/cloud/retail/v2/product_service.proto#L845}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.retail.v2.RemoveLocalInventoriesResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.retail.v2.Product]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
-  /// [google.cloud.retail.v2.ProductService.CreateProduct]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L48}
-  /// [google.cloud.retail.v2.ProductService.GetProduct]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
-  /// [google.cloud.retail.v2.ProductService.ListProducts]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
-  /// [google.cloud.retail.v2.ProductService.UpdateProduct]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L73}
-  /// [google.cloud.retail.v2.RemoveLocalInventoriesRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L802}
-  /// [google.cloud.retail.v2.RemoveLocalInventoriesResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L845}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.ProductService.CreateProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L48}
+  /// [google.cloud.retail.v2.ProductService.GetProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
+  /// [google.cloud.retail.v2.ProductService.ListProducts]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
+  /// [google.cloud.retail.v2.ProductService.UpdateProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L73}
+  /// [google.cloud.retail.v2.RemoveLocalInventoriesRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L802}
+  /// [google.cloud.retail.v2.RemoveLocalInventoriesResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L845}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
   RemoveLocalInventories(std::string const& product, Options opts = {});
 
+  // clang-format off
   ///
   /// Remove local inventory information for a
   /// [Product][google.cloud.retail.v2.Product] at a list of places at a removal
@@ -1086,43 +1283,52 @@ class ProductServiceClient {
   /// has no effect on local inventories.
   ///
   /// The returned [Operation][google.longrunning.Operation]s will be obsolete
-  /// after 1 day, and
-  /// [GetOperation][google.longrunning.Operations.GetOperation] API will return
-  /// NOT_FOUND afterwards.
+  /// after 1 day, and [GetOperation][google.longrunning.Operations.GetOperation]
+  /// API will return NOT_FOUND afterwards.
   ///
   /// If conflicting updates are issued, the
   /// [Operation][google.longrunning.Operation]s associated with the stale
   /// updates will not be marked as [done][google.longrunning.Operation.done]
   /// until being obsolete.
   ///
-  /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::RemoveLocalInventoriesRequest,google/cloud/retail/v2/product_service.proto#L802}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.retail.v2.RemoveLocalInventoriesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::retail::v2::RemoveLocalInventoriesResponse,google/cloud/retail/v2/product_service.proto#L845}
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.retail.v2.RemoveLocalInventoriesResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
   ///
-  /// [google.cloud.retail.v2.Product]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
-  /// [google.cloud.retail.v2.ProductService.CreateProduct]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L48}
-  /// [google.cloud.retail.v2.ProductService.GetProduct]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
-  /// [google.cloud.retail.v2.ProductService.ListProducts]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
-  /// [google.cloud.retail.v2.ProductService.UpdateProduct]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L73}
-  /// [google.cloud.retail.v2.RemoveLocalInventoriesRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L802}
-  /// [google.cloud.retail.v2.RemoveLocalInventoriesResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L845}
-  /// [google.longrunning.Operation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]:
-  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.ProductService.CreateProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L48}
+  /// [google.cloud.retail.v2.ProductService.GetProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
+  /// [google.cloud.retail.v2.ProductService.ListProducts]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
+  /// [google.cloud.retail.v2.ProductService.UpdateProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L73}
+  /// [google.cloud.retail.v2.RemoveLocalInventoriesRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L802}
+  /// [google.cloud.retail.v2.RemoveLocalInventoriesResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L845}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
   RemoveLocalInventories(
       google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request,
