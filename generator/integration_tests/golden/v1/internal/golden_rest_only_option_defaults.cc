@@ -36,7 +36,7 @@ Options GoldenRestOnlyDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_GOLDEN_REST_ONLY_ENDPOINT",
       "", "GOOGLE_CLOUD_CPP_GOLDEN_REST_ONLY_AUTHORITY",
-"goldenrestonly.googleapis.com");
+      "goldenrestonly.googleapis.com");
   options = google::cloud::internal::PopulateGrpcOptions(
       std::move(options), "");
   if (!options.has<golden_v1::GoldenRestOnlyRetryPolicyOption>()) {
