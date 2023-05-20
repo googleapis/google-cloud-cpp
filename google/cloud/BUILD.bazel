@@ -80,6 +80,7 @@ to your build command, or set this value in your `.bazelrc` file(s).
     deps = [
         "@boringssl//:crypto",
         "@com_google_absl//absl/base",
+        "@com_google_absl//absl/functional:function_ref",
         "@com_google_absl//absl/time",
         "@com_google_absl//absl/types:optional",
         "@com_google_absl//absl/types:span",
