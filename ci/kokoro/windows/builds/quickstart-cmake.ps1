@@ -50,9 +50,7 @@ function Get-Vcpkg-Features {
             # TODO(#8145) - does not compile on Windows.
             "asset",
             # TODO(#8125) - does not compile on Windows.
-            "channel",
-            # TODO(#8785) - does not compile on Windows.
-            "storagetransfer" -contains $_) } |
+            "channel" -contains $_) } |
         # These are convenience features to refactor dependencies; they do not have quickstarts.
         Where-Object { -not ("googleapis", "grpc-common", "grafeas" -contains $_) }
 }

@@ -42,11 +42,6 @@ cc_library(
     name = "google_cloud_cpp_storagetransfer",
     srcs = [":srcs"],
     hdrs = [":hdrs"],
-    # TODO(#8785): Enable on macOS.
-    target_compatible_with = select({
-        "@platforms//os:macos": ["@platforms//:incompatible"],
-        "//conditions:default": [],
-    }),
     visibility = ["//:__pkg__"],
     deps = [
         "//:common",
