@@ -124,22 +124,22 @@ Status OptionDefaultsGenerator::GenerateCc() {
     default:
       break;
   }
-  CcPrint("Options options) {");
-  CcPrint(R"""(
-  options = google::cloud::internal::PopulateCommonOptions(
-      std::move(options), "$service_endpoint_env_var$",
-      "$emulator_endpoint_env_var$", "$service_authority_env_var$",
-      )""");
+  CcPrint(
+    "Options options) {\n"
+    "  options = google::cloud::internal::PopulateCommonOptions(\n"
+    "      std::move(options), \"$service_endpoint_env_var$\",\n"
+    "      \"$emulator_endpoint_env_var$\", \"$service_authority_env_var$\",\n"
+  );
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
-      CcPrint(R"""(absl::StrCat(location, "-", "$service_endpoint$"))""");
+      CcPrint(R"""(      absl::StrCat(location, "-", "$service_endpoint$"))""");
       break;
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
-      CcPrint(R"""(absl::StrCat(location, )"""
+      CcPrint(R"""(      absl::StrCat(location, )"""
               R"""(location.empty() ? "" : "-", "$service_endpoint$"))""");
       break;
     default:
-      CcPrint(R"""("$service_endpoint$")""");
+      CcPrint(R"""(      "$service_endpoint$")""");
       break;
   }
   CcPrint({  // clang-format off
