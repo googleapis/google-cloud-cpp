@@ -71,6 +71,8 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
   io::log_h2 "Formatting generated code"
   git ls-files -z -- '*.h' '*.cc' '*.proto' |
     xargs -P "$(nproc)" -n 1 -0 clang-format -i
+  git ls-files -z -- '*.h' |
+    xargs -r -P "$(nproc)" -n 50 -0 sed -i 's/[[:blank:]]\+$//'
 else
   io::log_red "Only formatting generated golden code."
   git ls-files -z -- 'generator/integration_tests/golden/internal/*.h' \

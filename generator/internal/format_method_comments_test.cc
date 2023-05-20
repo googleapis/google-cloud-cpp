@@ -25,8 +25,6 @@ namespace {
 
 using ::testing::AllOf;
 using ::testing::Contains;
-using ::testing::ElementsAre;
-using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::NotNull;
 using ::testing::StartsWith;
@@ -53,28 +51,35 @@ service Service {
   ASSERT_THAT(method, NotNull());
 
   auto const actual =
-      FormatMethodComments(*method, "/// <variable parameter comments>\n");
-  // This is the only test where we will check all the lines in detail.
-  auto const lines = std::vector<std::string>{absl::StrSplit(actual, '\n')};
-  EXPECT_THAT(
-      lines,
-      ElementsAre(
-          Eq(std::string{"  ///"}),  //
-          StartsWith(std::string{"  /// Some brief description"}),
-          StartsWith(std::string{"  /// message [Metadata]"}),
-          Eq(std::string{"  ///"}),  //
-          HasSubstr("<variable parameter comments>"),
-          StartsWith("  /// @param opts Optional."),
-          StartsWith("  ///     backoff policies."),
-          Eq(std::string{"  /// @return $method_return_doxygen_link$"}),
-          Eq("  ///"),
-          StartsWith("  /// [test.v1.Metadata]: "
-                     "@googleapis_reference_link{test/v1/common.proto#L"),
-          StartsWith("  /// [test.v1.Request]: "
-                     "@googleapis_reference_link{test/v1/common.proto#L"),
-          StartsWith("  /// [test.v1.Response]: "
-                     "@googleapis_reference_link{test/v1/common.proto#L"),
-          Eq(std::string{"  ///"}), Eq(std::string{})));
+      FormatMethodComments(*method, "  /// <variable parameter comments>\n");
+  // Modern versions of googletest produce diffs for large strings with
+  // newlines.
+  EXPECT_EQ(actual, R"""(  // clang-format off
+  ///
+  /// Some brief description of the method. With a reference to another
+  /// message [Metadata][test.v1.Metadata].
+  ///
+  /// <variable parameter comments>
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([test.v1.Response])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [test.v1.Metadata]: @googleapis_reference_link{test/v1/common.proto#L13}
+  /// [test.v1.Request]: @googleapis_reference_link{test/v1/common.proto#L9}
+  /// [test.v1.Response]: @googleapis_reference_link{test/v1/common.proto#L11}
+  ///
+  // clang-format on
+)""");
 }
 
 TEST_F(FormatMethodCommentsTest, EmptyReturn) {

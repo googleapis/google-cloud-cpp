@@ -630,43 +630,106 @@ TEST_F(CreateMethodVarsTest, FilesParseSuccessfully) {
 TEST_F(CreateMethodVarsTest, FormatMethodCommentsProtobufRequest) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
-  EXPECT_THAT(FormatMethodCommentsProtobufRequest(
-                  *service_file_descriptor->service(0)->method(0)),
-              HasSubstr(R"""(  ///
+
+  auto const actual = FormatMethodCommentsProtobufRequest(
+      *service_file_descriptor->service(0)->method(0));
+  EXPECT_EQ(actual, R"""(  // clang-format off
+  ///
   /// Leading comments about rpc Method0$$.
   ///
-  /// @param request @googleapis_link{google::protobuf::Bar,google/foo/v1/service.proto#L17}
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.protobuf.Bar].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-)"""));
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.protobuf.Bar]: @googleapis_reference_link{google/foo/v1/service.proto#L17}
+  ///
+  // clang-format on
+)""");
+}
+
+TEST_F(CreateMethodVarsTest, FormatMethodCommentsProtobufRequestLongRunning) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+
+   auto const actual = FormatMethodCommentsProtobufRequest(
+      *service_file_descriptor->service(0)->method(7));
+  EXPECT_EQ(actual, R"""(  // clang-format off
+  ///
+  /// Leading comments about rpc Method7.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.protobuf.Bar].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [$longrunning_deduced_response_message_type$] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.protobuf.Bar]: @googleapis_reference_link{google/foo/v1/service.proto#L17}
+  ///
+  // clang-format on
+)""");
 }
 
 TEST_F(CreateMethodVarsTest, FormatMethodCommentsMethodSignature) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
-  EXPECT_THAT(FormatMethodCommentsMethodSignature(
-                  *service_file_descriptor->service(0)->method(6), "labels"),
-              HasSubstr(R"""(  ///
+
+  auto const actual = FormatMethodCommentsMethodSignature(
+      *service_file_descriptor->service(0)->method(6), "labels");
+  EXPECT_EQ(actual, R"""(  // clang-format off
+  ///
   /// Leading comments about rpc $$Method6.
   ///
   /// @param labels  labels $$field comment.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed the
+  ///     status contains the details of the failure.
   ///
-)"""));
-  EXPECT_THAT(
-      FormatMethodCommentsMethodSignature(
-          *service_file_descriptor->service(0)->method(6), "name,labels"),
-      HasSubstr(R"""(  ///
-  /// Leading comments about rpc $$Method6.
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.protobuf.Foo]: @googleapis_reference_link{google/foo/v1/service.proto#L9}
   ///
-  /// @param name  name field$$ comment.
-  /// @param labels  labels $$field comment.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  ///
-)"""));
+  // clang-format on
+)""");
 }
 
 TEST_F(CreateMethodVarsTest, SkipMethodsWithDeprecatedFields) {
