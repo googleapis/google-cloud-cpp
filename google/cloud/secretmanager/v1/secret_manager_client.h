@@ -725,6 +725,7 @@ class SecretManagerServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.secretmanager.v1.DisableSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L407}
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+  /// [google.cloud.secretmanager.v1.SecretVersion.State.DISABLED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L166}
   /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L198}
   ///
   // clang-format on
@@ -760,6 +761,7 @@ class SecretManagerServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.secretmanager.v1.DisableSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L407}
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+  /// [google.cloud.secretmanager.v1.SecretVersion.State.DISABLED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L166}
   /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L198}
   ///
   // clang-format on
@@ -794,6 +796,7 @@ class SecretManagerServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.secretmanager.v1.EnableSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L424}
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+  /// [google.cloud.secretmanager.v1.SecretVersion.State.ENABLED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L159}
   /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L198}
   ///
   // clang-format on
@@ -829,6 +832,7 @@ class SecretManagerServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.secretmanager.v1.EnableSecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L424}
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+  /// [google.cloud.secretmanager.v1.SecretVersion.State.ENABLED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L159}
   /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L198}
   ///
   // clang-format on
@@ -863,6 +867,7 @@ class SecretManagerServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.secretmanager.v1.DestroySecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L441}
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+  /// [google.cloud.secretmanager.v1.SecretVersion.State.DESTROYED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L171}
   /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L198}
   ///
   // clang-format on
@@ -899,6 +904,7 @@ class SecretManagerServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.secretmanager.v1.DestroySecretVersionRequest]: @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L441}
   /// [google.cloud.secretmanager.v1.SecretVersion]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+  /// [google.cloud.secretmanager.v1.SecretVersion.State.DESTROYED]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L171}
   /// [google.cloud.secretmanager.v1.SecretVersion.state]: @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L198}
   ///
   // clang-format on

@@ -691,6 +691,8 @@ class ProjectsClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.resourcemanager.v3.DeleteProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L607}
   /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// [google.cloud.resourcemanager.v3.Project.State.ACTIVE]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L309}
+  /// [google.cloud.resourcemanager.v3.Project.State.DELETE_REQUESTED]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L317}
   /// [google.cloud.resourcemanager.v3.Projects.SearchProjects]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L79}
   ///
   // clang-format on
@@ -761,6 +763,8 @@ class ProjectsClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.resourcemanager.v3.DeleteProjectRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L607}
   /// [google.cloud.resourcemanager.v3.Project]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L295}
+  /// [google.cloud.resourcemanager.v3.Project.State.ACTIVE]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L309}
+  /// [google.cloud.resourcemanager.v3.Project.State.DELETE_REQUESTED]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L317}
   /// [google.cloud.resourcemanager.v3.Projects.SearchProjects]: @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L79}
   ///
   // clang-format on

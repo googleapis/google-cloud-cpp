@@ -737,6 +737,8 @@ class FoldersClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.resourcemanager.v3.DeleteFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L517}
   /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// [google.cloud.resourcemanager.v3.Folder.State.ACTIVE]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L286}
+  /// [google.cloud.resourcemanager.v3.Folder.State.DELETE_REQUESTED]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L289}
   ///
   // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> DeleteFolder(
@@ -784,6 +786,8 @@ class FoldersClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.resourcemanager.v3.DeleteFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L517}
   /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// [google.cloud.resourcemanager.v3.Folder.State.ACTIVE]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L286}
+  /// [google.cloud.resourcemanager.v3.Folder.State.DELETE_REQUESTED]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L289}
   ///
   // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> DeleteFolder(
@@ -827,6 +831,7 @@ class FoldersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// [google.cloud.resourcemanager.v3.Folder.State.ACTIVE]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L286}
   /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
   /// [google.cloud.resourcemanager.v3.UndeleteFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L533}
   ///
@@ -875,6 +880,7 @@ class FoldersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.resourcemanager.v3.Folder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L273}
+  /// [google.cloud.resourcemanager.v3.Folder.State.ACTIVE]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L286}
   /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
   /// [google.cloud.resourcemanager.v3.UndeleteFolderRequest]: @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L533}
   ///
