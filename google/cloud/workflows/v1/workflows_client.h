@@ -235,6 +235,7 @@ class WorkflowsClient {
   /// @param workflow  Required. Workflow to be created.
   /// @param workflow_id  Required. The ID of the workflow to be created. It has to fulfill the
   ///  following requirements:
+  ///  @n
   ///  * Must contain only letters, numbers, underscores and hyphens.
   ///  * Must start with a letter.
   ///  * Must be between 1-64 characters.

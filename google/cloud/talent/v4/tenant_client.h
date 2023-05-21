@@ -89,6 +89,7 @@ class TenantServiceClient {
   /// Creates a new tenant entity.
   ///
   /// @param parent  Required. Resource name of the project under which the tenant is created.
+  ///  @n
   ///  The format is "projects/{project_id}", for example,
   ///  "projects/foo".
   /// @param tenant  Required. The tenant to be created.
@@ -151,6 +152,7 @@ class TenantServiceClient {
   /// Retrieves specified tenant.
   ///
   /// @param name  Required. The resource name of the tenant to be retrieved.
+  ///  @n
   ///  The format is "projects/{project_id}/tenants/{tenant_id}", for example,
   ///  "projects/foo/tenants/bar".
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -213,10 +215,12 @@ class TenantServiceClient {
   /// @param tenant  Required. The tenant resource to replace the current resource in the
   ///  system.
   /// @param update_mask  Strongly recommended for the best service experience.
+  ///  @n
   ///  If [update_mask][google.cloud.talent.v4.UpdateTenantRequest.update_mask] is
   ///  provided, only the specified fields in
   ///  [tenant][google.cloud.talent.v4.UpdateTenantRequest.tenant] are updated.
   ///  Otherwise all the fields are updated.
+  ///  @n
   ///  A field mask to specify the tenant fields to be updated. Only
   ///  top level fields of [Tenant][google.cloud.talent.v4.Tenant] are supported.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -278,6 +282,7 @@ class TenantServiceClient {
   /// Deletes specified tenant.
   ///
   /// @param name  Required. The resource name of the tenant to be deleted.
+  ///  @n
   ///  The format is "projects/{project_id}/tenants/{tenant_id}", for example,
   ///  "projects/foo/tenants/bar".
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -331,6 +336,7 @@ class TenantServiceClient {
   /// Lists all tenants associated with the project.
   ///
   /// @param parent  Required. Resource name of the project under which the tenant is created.
+  ///  @n
   ///  The format is "projects/{project_id}", for example,
   ///  "projects/foo".
   /// @param opts Optional. Override the class-level options, such as retry and

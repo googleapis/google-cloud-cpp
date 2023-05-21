@@ -418,13 +418,16 @@ class StorageTransferServiceClient {
   ///  agent pool.
   /// @param agent_pool  Required. The agent pool to create.
   /// @param agent_pool_id  Required. The ID of the agent pool to create.
+  ///  @n
   ///  The `agent_pool_id` must meet the following requirements:
+  ///  @n
   ///  *   Length of 128 characters or less.
   ///  *   Not start with the string `goog`.
   ///  *   Start with a lowercase ASCII character, followed by:
   ///      *   Zero or more: lowercase Latin alphabet characters, numerals,
   ///          hyphens (`-`), periods (`.`), underscores (`_`), or tildes (`~`).
   ///      *   One or more numerals or lowercase ASCII characters.
+  ///  @n
   ///  As expressed by the regular expression:
   ///  `^(?!goog)[a-z]([a-z0-9-._~]*[a-z0-9])?$`.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -488,8 +491,11 @@ class StorageTransferServiceClient {
   ///
   /// @param agent_pool  Required. The agent pool to update. `agent_pool` is expected to specify following
   ///  fields:
+  ///  @n
   ///  *  [name][google.storagetransfer.v1.AgentPool.name]
+  ///  @n
   ///  *  [display_name][google.storagetransfer.v1.AgentPool.display_name]
+  ///  @n
   ///  *  [bandwidth_limit][google.storagetransfer.v1.AgentPool.bandwidth_limit]
   ///  An `UpdateAgentPoolRequest` with any other fields is rejected
   ///  with the error [INVALID_ARGUMENT][google.rpc.Code.INVALID_ARGUMENT].
@@ -497,7 +503,9 @@ class StorageTransferServiceClient {
   ///  (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf)
   ///  of the fields in `agentPool` to update in this request.
   ///  The following `agentPool` fields can be updated:
+  ///  @n
   ///  *  [display_name][google.storagetransfer.v1.AgentPool.display_name]
+  ///  @n
   ///  *  [bandwidth_limit][google.storagetransfer.v1.AgentPool.bandwidth_limit]
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.

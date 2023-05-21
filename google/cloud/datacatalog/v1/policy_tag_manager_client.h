@@ -162,6 +162,7 @@ class PolicyTagManagerClient {
   /// BigQuery columns.
   ///
   /// @param name  Required. Resource name of the taxonomy to delete.
+  ///  @n
   ///  Note: All policy tags in this taxonomy are also deleted.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -480,6 +481,7 @@ class PolicyTagManagerClient {
   ///   descendants
   ///
   /// @param name  Required. Resource name of the policy tag to delete.
+  ///  @n
   ///  Note: All of its descendant policy tags are also deleted.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.

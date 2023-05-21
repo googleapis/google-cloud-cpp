@@ -1310,13 +1310,17 @@ class SecurityCenterClient {
   /// @param group_by  Required. Expression that defines what assets fields to use for grouping
   ///  (including `state_change`). The string value should follow SQL syntax:
   ///  comma separated list of fields. For example: "parent,resource_name".
+  ///  @n
   ///  The following fields are supported:
+  ///  @n
   ///  * resource_name
   ///  * category
   ///  * state
   ///  * parent
   ///  * severity
+  ///  @n
   ///  The following fields are supported when compare_duration is set:
+  ///  @n
   ///  * state_change
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -2352,6 +2356,7 @@ class SecurityCenterClient {
   ///
   /// @param external_system  Required. The external system resource to update.
   /// @param update_mask  The FieldMask to use when updating the external system resource.
+  ///  @n
   ///  If empty all mutable fields will be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -2417,6 +2422,7 @@ class SecurityCenterClient {
   ///
   /// @param finding  Required. The finding resource to update or create if it does not already
   ///  exist. parent, security_marks, and update_time will be ignored.
+  ///  @n
   ///  In the case of creation, the finding id portion of the name must be
   ///  alphanumeric and less than or equal to 32 characters and greater than 0
   ///  characters in length.
@@ -2575,6 +2581,7 @@ class SecurityCenterClient {
   ///
   /// @param notification_config  Required. The notification config to update.
   /// @param update_mask  The FieldMask to use when updating the notification config.
+  ///  @n
   ///  If empty all mutable fields will be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.

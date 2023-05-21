@@ -95,6 +95,7 @@ class SpeechClient {
   /// @param recognizer  Required. The Recognizer to create.
   /// @param recognizer_id  The ID to use for the Recognizer, which will become the final component of
   ///  the Recognizer's resource name.
+  ///  @n
   ///  This value should be 4-63 characters, and valid characters
   ///  are /[a-z][0-9]-/.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -311,6 +312,7 @@ class SpeechClient {
   /// Updates the [Recognizer][google.cloud.speech.v2.Recognizer].
   ///
   /// @param recognizer  Required. The Recognizer to update.
+  ///  @n
   ///  The Recognizer's `name` field is used to identify the Recognizer to update.
   ///  Format: `projects/{project}/locations/{location}/recognizers/{recognizer}`.
   /// @param update_mask  The list of fields to update. If empty, all non-default valued fields are
@@ -810,6 +812,7 @@ class SpeechClient {
   /// Updates the [Config][google.cloud.speech.v2.Config].
   ///
   /// @param config  Required. The config to update.
+  ///  @n
   ///  The config's `name` field is used to identify the config to be updated.
   ///  The expected format is `projects/{project}/locations/{location}/config`.
   /// @param update_mask  The list of fields to be updated.
@@ -876,6 +879,7 @@ class SpeechClient {
   /// @param custom_class  Required. The CustomClass to create.
   /// @param custom_class_id  The ID to use for the CustomClass, which will become the final component of
   ///  the CustomClass's resource name.
+  ///  @n
   ///  This value should be 4-63 characters, and valid characters
   ///  are /[a-z][0-9]-/.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1088,6 +1092,7 @@ class SpeechClient {
   /// Updates the [CustomClass][google.cloud.speech.v2.CustomClass].
   ///
   /// @param custom_class  Required. The CustomClass to update.
+  ///  @n
   ///  The CustomClass's `name` field is used to identify the CustomClass to
   ///  update. Format:
   ///  `projects/{project}/locations/{location}/customClasses/{custom_class}`.
@@ -1312,6 +1317,7 @@ class SpeechClient {
   /// @param phrase_set  Required. The PhraseSet to create.
   /// @param phrase_set_id  The ID to use for the PhraseSet, which will become the final component of
   ///  the PhraseSet's resource name.
+  ///  @n
   ///  This value should be 4-63 characters, and valid characters
   ///  are /[a-z][0-9]-/.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1524,6 +1530,7 @@ class SpeechClient {
   /// Updates the [PhraseSet][google.cloud.speech.v2.PhraseSet].
   ///
   /// @param phrase_set  Required. The PhraseSet to update.
+  ///  @n
   ///  The PhraseSet's `name` field is used to identify the PhraseSet to update.
   ///  Format: `projects/{project}/locations/{location}/phraseSets/{phrase_set}`.
   /// @param update_mask  The list of fields to update. If empty, all non-default valued fields are

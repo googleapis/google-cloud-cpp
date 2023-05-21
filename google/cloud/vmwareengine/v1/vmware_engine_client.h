@@ -248,6 +248,7 @@ class VmwareEngineClient {
   ///  This identifier must be unique among each `PrivateCloud` within the parent
   ///  and becomes the final token in the name URI.
   ///  The identifier must meet the following requirements:
+  ///  @n
   ///  * Only contains 1-63 alphanumeric characters and hyphens
   ///  * Begins with an alphabetical character
   ///  * Ends with a non-hyphen character
@@ -765,6 +766,7 @@ class VmwareEngineClient {
   ///  This identifier must be unique among clusters within the parent and becomes
   ///  the final token in the name URI.
   ///  The identifier must meet the following requirements:
+  ///  @n
   ///  * Only contains 1-63 alphanumeric characters and hyphens
   ///  * Begins with an alphabetical character
   ///  * Ends with a non-hyphen character
@@ -1531,6 +1533,7 @@ class VmwareEngineClient {
   ///  created. This identifier must be unique among `HcxActivationKey` resources
   ///  within the parent and becomes the final token in the name URI.
   ///  The identifier must meet the following requirements:
+  ///  @n
   ///  * Only contains 1-63 alphanumeric characters and hyphens
   ///  * Begins with an alphabetical character
   ///  * Ends with a non-hyphen character
@@ -1914,6 +1917,7 @@ class VmwareEngineClient {
   ///  `projects/{my-project}/locations/{us-central1}/networkPolicies` and becomes
   ///  the final token in the name URI.
   ///  The identifier must meet the following requirements:
+  ///  @n
   ///  * Only contains 1-63 alphanumeric characters and hyphens
   ///  * Begins with an alphabetical character
   ///  * Ends with a non-hyphen character
@@ -2189,6 +2193,7 @@ class VmwareEngineClient {
   ///  This identifier must be unique among VMware Engine network resources
   ///  within the parent and becomes the final token in the name URI. The
   ///  identifier must meet the following requirements:
+  ///  @n
   ///  * For networks of type LEGACY, adheres to the format:
   ///  `{region-id}-default`. Replace `{region-id}` with the region where you want
   ///  to create the VMware Engine network. For example, "us-central1-default".

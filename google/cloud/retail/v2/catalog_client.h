@@ -91,6 +91,7 @@ class CatalogServiceClient {
   /// the project.
   ///
   /// @param parent  Required. The account resource name with an associated location.
+  ///  @n
   ///  If the caller does not have permission to list
   ///  [Catalog][google.cloud.retail.v2.Catalog]s under this location, regardless
   ///  of whether or not this location exists, a PERMISSION_DENIED error is
@@ -172,13 +173,16 @@ class CatalogServiceClient {
   /// Updates the [Catalog][google.cloud.retail.v2.Catalog]s.
   ///
   /// @param catalog  Required. The [Catalog][google.cloud.retail.v2.Catalog] to update.
+  ///  @n
   ///  If the caller does not have permission to update the
   ///  [Catalog][google.cloud.retail.v2.Catalog], regardless of whether or not it
   ///  exists, a PERMISSION_DENIED error is returned.
+  ///  @n
   ///  If the [Catalog][google.cloud.retail.v2.Catalog] to update does not exist,
   ///  a NOT_FOUND error is returned.
   /// @param update_mask  Indicates which fields in the provided
   ///  [Catalog][google.cloud.retail.v2.Catalog] to update.
+  ///  @n
   ///  If an unsupported or unknown field is provided, an INVALID_ARGUMENT error
   ///  is returned.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -482,18 +486,22 @@ class CatalogServiceClient {
   ///
   /// @param completion_config  Required. The [CompletionConfig][google.cloud.retail.v2.CompletionConfig]
   ///  to update.
+  ///  @n
   ///  If the caller does not have permission to update the
   ///  [CompletionConfig][google.cloud.retail.v2.CompletionConfig], then a
   ///  PERMISSION_DENIED error is returned.
+  ///  @n
   ///  If the [CompletionConfig][google.cloud.retail.v2.CompletionConfig] to
   ///  update does not exist, a NOT_FOUND error is returned.
   /// @param update_mask  Indicates which fields in the provided
   ///  [CompletionConfig][google.cloud.retail.v2.CompletionConfig] to update. The
   ///  following are the only supported fields:
+  ///  @n
   ///  * [CompletionConfig.matching_order][google.cloud.retail.v2.CompletionConfig.matching_order]
   ///  * [CompletionConfig.max_suggestions][google.cloud.retail.v2.CompletionConfig.max_suggestions]
   ///  * [CompletionConfig.min_prefix_length][google.cloud.retail.v2.CompletionConfig.min_prefix_length]
   ///  * [CompletionConfig.auto_learning][google.cloud.retail.v2.CompletionConfig.auto_learning]
+  ///  @n
   ///  If not set, all supported fields are updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -624,7 +632,9 @@ class CatalogServiceClient {
   /// @param update_mask  Indicates which fields in the provided
   ///  [AttributesConfig][google.cloud.retail.v2.AttributesConfig] to update. The
   ///  following is the only supported field:
+  ///  @n
   ///  * [AttributesConfig.catalog_attributes][google.cloud.retail.v2.AttributesConfig.catalog_attributes]
+  ///  @n
   ///  If not set, all supported fields are updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.

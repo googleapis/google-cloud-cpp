@@ -1039,6 +1039,7 @@ class CloudBuildClient {
   /// @param worker_pool  Required. `WorkerPool` resource to create.
   /// @param worker_pool_id  Required. Immutable. The ID to use for the `WorkerPool`, which will become
   ///  the final component of the resource name.
+  ///  @n
   ///  This value should be 1-63 characters, and valid characters
   ///  are /[a-z][0-9]-/.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1249,6 +1250,7 @@ class CloudBuildClient {
   /// Updates a `WorkerPool`.
   ///
   /// @param worker_pool  Required. The `WorkerPool` to update.
+  ///  @n
   ///  The `name` field is used to identify the `WorkerPool` to update.
   ///  Format: `projects/{project}/locations/{location}/workerPools/{workerPool}`.
   /// @param update_mask  A mask specifying which fields in `worker_pool` to update.

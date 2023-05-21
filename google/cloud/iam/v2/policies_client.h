@@ -95,11 +95,13 @@ class PoliciesClient {
   /// @param parent  Required. The resource that the policy is attached to, along with the kind of policy
   ///  to list. Format:
   ///  `policies/{attachment_point}/denypolicies`
+  ///  @n
   ///
   ///  The attachment point is identified by its URL-encoded full resource name,
   ///  which means that the forward-slash character, `/`, must be written as
   ///  `%2F`. For example,
   ///  `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`.
+  ///  @n
   ///  For organizations and folders, use the numeric ID in the full resource
   ///  name. For projects, you can use the alphanumeric or the numeric ID.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -182,10 +184,12 @@ class PoliciesClient {
   ///
   /// @param name  Required. The resource name of the policy to retrieve. Format:
   ///  `policies/{attachment_point}/denypolicies/{policy_id}`
+  ///  @n
   ///
   ///  Use the URL-encoded full resource name, which means that the forward-slash
   ///  character, `/`, must be written as `%2F`. For example,
   ///  `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
+  ///  @n
   ///  For organizations and folders, use the numeric ID in the full resource
   ///  name. For projects, you can use the alphanumeric or the numeric ID.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -246,11 +250,13 @@ class PoliciesClient {
   ///
   /// @param parent  Required. The resource that the policy is attached to, along with the kind of policy
   ///  to create. Format: `policies/{attachment_point}/denypolicies`
+  ///  @n
   ///
   ///  The attachment point is identified by its URL-encoded full resource name,
   ///  which means that the forward-slash character, `/`, must be written as
   ///  `%2F`. For example,
   ///  `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`.
+  ///  @n
   ///  For organizations and folders, use the numeric ID in the full resource
   ///  name. For projects, you can use the alphanumeric or the numeric ID.
   /// @param policy  Required. The policy to create.
@@ -377,10 +383,12 @@ class PoliciesClient {
   ///
   /// @param name  Required. The resource name of the policy to delete. Format:
   ///  `policies/{attachment_point}/denypolicies/{policy_id}`
+  ///  @n
   ///
   ///  Use the URL-encoded full resource name, which means that the forward-slash
   ///  character, `/`, must be written as `%2F`. For example,
   ///  `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
+  ///  @n
   ///  For organizations and folders, use the numeric ID in the full resource
   ///  name. For projects, you can use the alphanumeric or the numeric ID.
   /// @param opts Optional. Override the class-level options, such as retry and

@@ -94,6 +94,7 @@ class BatchControllerClient {
   /// @param batch  Required. The batch to create.
   /// @param batch_id  Optional. The ID to use for the batch, which will become the final
   ///  component of the batch's resource name.
+  ///  @n
   ///  This value must be 4-63 characters. Valid characters are `/[a-z][0-9]-/`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.

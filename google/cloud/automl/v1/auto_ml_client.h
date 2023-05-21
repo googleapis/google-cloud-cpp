@@ -1365,9 +1365,12 @@ class AutoMlClient {
   ///  If modelId is set as "-", this will list model evaluations from across all
   ///  models of the parent location.
   /// @param filter  Required. An expression for filtering the results of the request.
+  ///  @n
   ///    * `annotation_spec_id` - for =, !=  or existence. See example below for
   ///                           the last.
+  ///  @n
   ///  Some examples of using the filter are:
+  ///  @n
   ///    * `annotation_spec_id!=4` --> The model evaluation was done for
   ///                              annotation spec with ID different than 4.
   ///    * `NOT annotation_spec_id:*` --> The model evaluation was done for

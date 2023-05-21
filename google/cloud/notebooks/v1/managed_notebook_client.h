@@ -310,6 +310,7 @@ class ManagedNotebookServiceClient {
   ///  kernels, the `update_mask` parameter would be
   ///  specified as `software_config.kernels`,
   ///  and the `PATCH` request body would specify the new value, as follows:
+  ///  @n
   ///      {
   ///        "software_config":{
   ///          "kernels": [{
@@ -318,6 +319,7 @@ class ManagedNotebookServiceClient {
   ///             'latest' }],
   ///          }
   ///      }
+  ///  @n
   ///
   ///  Currently, only the following fields can be updated:
   ///  - `software_config.kernels`

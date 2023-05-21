@@ -222,6 +222,7 @@ class AgentEndpointServiceClient {
   ///  where the audience is 'osconfig.googleapis.com' and the format is 'full'.
   /// @param task_id  Required. Unique identifier of the task this applies to.
   /// @param task_type  Required. The type of task to report progress on.
+  ///  @n
   ///  Progress must include the appropriate message based on this enum as
   ///  specified below:
   ///  APPLY_PATCHES = ApplyPatchesTaskProgress
@@ -296,6 +297,7 @@ class AgentEndpointServiceClient {
   ///  where the audience is 'osconfig.googleapis.com' and the format is 'full'.
   /// @param task_id  Required. Unique identifier of the task this applies to.
   /// @param task_type  Required. The type of task to report completed.
+  ///  @n
   ///  Output must include the appropriate message based on this enum as
   ///  specified below:
   ///  APPLY_PATCHES = ApplyPatchesTaskOutput

@@ -253,6 +253,7 @@ class ClientConnectorServicesServiceClient {
   ///   * Must start with a letter.
   ///   * Must contain between 4-63 characters from `/[a-z][0-9]-/`.
   ///   * Must end with a number or a letter.
+  ///  @n
   ///  A random system generated name will be assigned
   ///  if not specified by the user.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -338,6 +339,7 @@ class ClientConnectorServicesServiceClient {
   ///  The fields specified in the update_mask are relative to the resource, not
   ///  the full request. A field will be overwritten if it is in the mask. If the
   ///  user does not provide a mask then all fields will be overwritten.
+  ///  @n
   ///  Mutable fields: display_name.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.

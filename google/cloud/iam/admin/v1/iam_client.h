@@ -569,6 +569,7 @@ class IAMClient {
   ///
   /// @param name  Required. The resource name of the service account in the following format:
   ///  `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`.
+  ///  @n
   ///  Using `-` as a wildcard for the `PROJECT_ID`, will infer the project from
   ///  the account. The `ACCOUNT` value can be the `email` address or the
   ///  `unique_id` of the service account.
@@ -642,6 +643,7 @@ class IAMClient {
   ///
   /// @param name  Required. The resource name of the service account key in the following format:
   ///  `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}`.
+  ///  @n
   ///  Using `-` as a wildcard for the `PROJECT_ID` will infer the project from
   ///  the account. The `ACCOUNT` value can be the `email` address or the
   ///  `unique_id` of the service account.
@@ -878,6 +880,7 @@ class IAMClient {
   ///
   /// @param name  Required. The resource name of the service account key in the following format:
   ///  `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}`.
+  ///  @n
   ///  Using `-` as a wildcard for the `PROJECT_ID` will infer the project from
   ///  the account. The `ACCOUNT` value can be the `email` address or the
   ///  `unique_id` of the service account.
@@ -938,6 +941,7 @@ class IAMClient {
   ///
   /// @param name  Required. The resource name of the service account key in the following format:
   ///  `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}`.
+  ///  @n
   ///  Using `-` as a wildcard for the `PROJECT_ID` will infer the project from
   ///  the account. The `ACCOUNT` value can be the `email` address or the
   ///  `unique_id` of the service account.
@@ -1267,6 +1271,7 @@ class IAMClient {
   /// role.
   ///
   /// @param full_resource_name  Required. The full resource name to query from the list of grantable roles.
+  ///  @n
   ///  The name follows the Google Cloud Platform resource format.
   ///  For example, a Cloud Platform project with id `my-project` will be named
   ///  `//cloudresourcemanager.googleapis.com/projects/my-project`.

@@ -233,6 +233,7 @@ class BareMetalSolutionClient {
   /// Update details of a single server.
   ///
   /// @param instance  Required. The server to update.
+  ///  @n
   ///  The `name` field is used to identify the instance to update.
   ///  Format: projects/{project}/locations/{location}/instances/{instance}
   /// @param update_mask  The list of fields to update.
@@ -734,6 +735,7 @@ class BareMetalSolutionClient {
   /// Update details of a single storage volume.
   ///
   /// @param volume  Required. The volume to update.
+  ///  @n
   ///  The `name` field is used to identify the volume to update.
   ///  Format: projects/{project}/locations/{location}/volumes/{volume}
   /// @param update_mask  The list of fields to update.
@@ -1081,6 +1083,7 @@ class BareMetalSolutionClient {
   /// Update details of a single network.
   ///
   /// @param network  Required. The network to update.
+  ///  @n
   ///  The `name` field is used to identify the instance to update.
   ///  Format: projects/{project}/locations/{location}/networks/{network}
   /// @param update_mask  The list of fields to update.
@@ -1425,6 +1428,7 @@ class BareMetalSolutionClient {
   /// Update details of a single NFS share.
   ///
   /// @param nfs_share  Required. The NFS share to update.
+  ///  @n
   ///  The `name` field is used to identify the NFS share to update.
   ///  Format: projects/{project}/locations/{location}/nfsShares/{nfs_share}
   /// @param update_mask  The list of fields to update.

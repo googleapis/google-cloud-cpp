@@ -101,7 +101,9 @@ class AlertPolicyServiceClient {
   ///
   /// @param name  Required. The [project](https://cloud.google.com/monitoring/api/v3#project_name)
   ///  whose alert policies are to be listed. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
+  ///  @n
   ///  Note that this field names the parent container in which the alerting
   ///  policies to be listed are stored. To retrieve a single alerting policy
   ///  by name, use the
@@ -183,6 +185,7 @@ class AlertPolicyServiceClient {
   /// Gets a single alerting policy.
   ///
   /// @param name  Required. The alerting policy to retrieve. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -243,7 +246,9 @@ class AlertPolicyServiceClient {
   ///
   /// @param name  Required. The [project](https://cloud.google.com/monitoring/api/v3#project_name) in
   ///  which to create the alerting policy. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
+  ///  @n
   ///  Note that this field names the parent container in which the alerting
   ///  policy will be written, not the name of the created policy. |name| must be
   ///  a host project of a Metrics Scope, otherwise INVALID_ARGUMENT error will
@@ -314,7 +319,9 @@ class AlertPolicyServiceClient {
   /// Deletes an alerting policy.
   ///
   /// @param name  Required. The alerting policy to delete. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
+  ///  @n
   ///  For more information, see [AlertPolicy][google.monitoring.v3.AlertPolicy].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -374,12 +381,15 @@ class AlertPolicyServiceClient {
   ///  value of the corresponding field in the supplied policy (`alert_policy`),
   ///  or to the field's default value if the field is not in the supplied
   ///  alerting policy.  Fields not listed retain their previous value.
+  ///  @n
   ///  Examples of valid field masks include `display_name`, `documentation`,
   ///  `documentation.content`, `documentation.mime_type`, `user_labels`,
   ///  `user_label.nameofkey`, `enabled`, `conditions`, `combiner`, etc.
+  ///  @n
   ///  If this field is empty, then the supplied alerting policy replaces the
   ///  existing policy. It is the same as deleting the existing policy and
   ///  adding the supplied policy, except for the following:
+  ///  @n
   ///  +   The new policy will have the same `[ALERT_POLICY_ID]` as the former
   ///      policy. This gives you continuity with the former policy in your
   ///      notifications and incidents.

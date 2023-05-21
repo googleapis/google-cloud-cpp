@@ -104,6 +104,7 @@ class GroupServiceClient {
   ///
   /// @param name  Required. The [project](https://cloud.google.com/monitoring/api/v3#project_name)
   ///  whose groups are to be listed. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -180,6 +181,7 @@ class GroupServiceClient {
   /// Gets a single group.
   ///
   /// @param name  Required. The group to retrieve. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -240,6 +242,7 @@ class GroupServiceClient {
   ///
   /// @param name  Required. The [project](https://cloud.google.com/monitoring/api/v3#project_name) in
   ///  which to create the group. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   /// @param group  Required. A group definition. It is an error to define the `name` field because
   ///  the system assigns the name.
@@ -363,6 +366,7 @@ class GroupServiceClient {
   /// Deletes an existing group.
   ///
   /// @param name  Required. The group to delete. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -414,6 +418,7 @@ class GroupServiceClient {
   /// Lists the monitored resources that are members of a group.
   ///
   /// @param name  Required. The group whose members are listed. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID]
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.

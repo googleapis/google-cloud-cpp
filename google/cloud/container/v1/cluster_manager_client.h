@@ -427,11 +427,13 @@ class ClusterManagerClient {
   ///  Specified in the format `projects/*/locations/*/clusters/*`.
   /// @param logging_service  Required. The logging service the cluster should use to write logs.
   ///  Currently available options:
+  ///  @n
   ///  * `logging.googleapis.com/kubernetes` - The Cloud Logging
   ///  service with a Kubernetes-native resource model
   ///  * `logging.googleapis.com` - The legacy Cloud Logging service (no longer
   ///    available as of GKE 1.15).
   ///  * `none` - no logs will be exported from the cluster.
+  ///  @n
   ///  If left as an empty string,`logging.googleapis.com/kubernetes` will be
   ///  used for GKE 1.14+ or `logging.googleapis.com` for earlier versions.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -496,11 +498,13 @@ class ClusterManagerClient {
   ///  Specified in the format `projects/*/locations/*/clusters/*`.
   /// @param monitoring_service  Required. The monitoring service the cluster should use to write metrics.
   ///  Currently available options:
+  ///  @n
   ///  * "monitoring.googleapis.com/kubernetes" - The Cloud Monitoring
   ///  service with a Kubernetes-native resource model
   ///  * `monitoring.googleapis.com` - The legacy Cloud Monitoring service (no
   ///    longer available as of GKE 1.15).
   ///  * `none` - No metrics will be exported from the cluster.
+  ///  @n
   ///  If left as an empty string,`monitoring.googleapis.com/kubernetes` will be
   ///  used for GKE 1.14+ or `monitoring.googleapis.com` for earlier versions.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -634,6 +638,7 @@ class ClusterManagerClient {
   ///  cluster's nodes should be located. Changing the locations a cluster is in
   ///  will result in nodes being either created or removed from the cluster,
   ///  depending on whether locations are being added or removed.
+  ///  @n
   ///  This list must always include the cluster's primary zone.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -699,8 +704,10 @@ class ClusterManagerClient {
   /// @param name  The name (project, location, cluster) of the cluster to update.
   ///  Specified in the format `projects/*/locations/*/clusters/*`.
   /// @param master_version  Required. The Kubernetes version to change the master to.
+  ///  @n
   ///  Users may specify either explicit versions offered by Kubernetes Engine or
   ///  version aliases, which have the following behavior:
+  ///  @n
   ///  - "latest": picks the highest valid Kubernetes version
   ///  - "1.X": picks the highest valid patch+gke.N patch in the 1.X version
   ///  - "1.X.Y": picks the highest valid gke.N patch in the 1.X.Y version

@@ -102,6 +102,7 @@ class UptimeCheckServiceClient {
   /// @param parent  Required. The
   ///  [project](https://cloud.google.com/monitoring/api/v3#project_name) whose
   ///  Uptime check configurations are listed. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -180,6 +181,7 @@ class UptimeCheckServiceClient {
   /// Gets a single Uptime check configuration.
   ///
   /// @param name  Required. The Uptime check configuration to retrieve. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID]
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -241,6 +243,7 @@ class UptimeCheckServiceClient {
   /// @param parent  Required. The
   ///  [project](https://cloud.google.com/monitoring/api/v3#project_name) in which
   ///  to create the Uptime check. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   /// @param uptime_check_config  Required. The new Uptime check configuration.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -312,6 +315,7 @@ class UptimeCheckServiceClient {
   ///  the corresponding field is omitted in this partial Uptime check
   ///  configuration, it has the effect of deleting/clearing the field from the
   ///  configuration on the server.
+  ///  @n
   ///  The following fields can be updated: `display_name`,
   ///  `http_check`, `tcp_check`, `timeout`, `content_matchers`, and
   ///  `selected_regions`.
@@ -379,6 +383,7 @@ class UptimeCheckServiceClient {
   /// other dependent configs that would be rendered invalid by the deletion.
   ///
   /// @param name  Required. The Uptime check configuration to delete. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID]
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.

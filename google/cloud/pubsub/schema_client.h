@@ -91,11 +91,13 @@ class SchemaServiceClient {
   /// @param parent  Required. The name of the project in which to create the schema.
   ///  Format is `projects/{project-id}`.
   /// @param schema  Required. The schema object to create.
+  ///  @n
   ///  This schema's `name` parameter is ignored. The schema object returned
   ///  by CreateSchema will have a `name` made using the given `parent` and
   ///  `schema_id`.
   /// @param schema_id  The ID to use for the schema, which will become the final component of
   ///  the schema's resource name.
+  ///  @n
   ///  See https://cloud.google.com/pubsub/docs/admin#resource_names for resource
   ///  name constraints.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -430,6 +432,7 @@ class SchemaServiceClient {
   /// @param name  Required. The schema being rolled back with revision id.
   /// @param revision_id  Required. The revision ID to roll back to.
   ///  It must be a revision of the same schema.
+  ///  @n
   ///    Example: c7cfa2a8
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -491,6 +494,7 @@ class SchemaServiceClient {
   ///
   /// @param name  Required. The name of the schema revision to be deleted, with a revision ID
   ///  explicitly included.
+  ///  @n
   ///  Example: `projects/123/schemas/my-schema@c7cfa2a8`
   /// @param revision_id  Optional. This field is deprecated and should not be used for specifying
   ///  the revision ID. The revision ID should be specified via the `name`

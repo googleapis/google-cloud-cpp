@@ -101,6 +101,7 @@ class VideoStitcherServiceClient {
   /// @param cdn_key  Required. The CDN key resource to create.
   /// @param cdn_key_id  Required. The ID to use for the CDN key, which will become the final
   ///  component of the CDN key's resource name.
+  ///  @n
   ///  This value should conform to RFC-1034, which restricts to
   ///  lower-case letters, numbers, and hyphen, with the first character a
   ///  letter, the last a letter or a number, and a 63 character maximum.

@@ -96,9 +96,11 @@ class WorkflowTemplateServiceClient {
   ///
   /// @param parent  Required. The resource name of the region or location, as described
   ///  in https://cloud.google.com/apis/design/resource_names.
+  ///  @n
   ///  * For `projects.regions.workflowTemplates.create`, the resource name of the
   ///    region has the following format:
   ///    `projects/{project_id}/regions/{region}`
+  ///  @n
   ///  * For `projects.locations.workflowTemplates.create`, the resource name of
   ///    the location has the following format:
   ///    `projects/{project_id}/locations/{location}`
@@ -169,9 +171,11 @@ class WorkflowTemplateServiceClient {
   ///
   /// @param name  Required. The resource name of the workflow template, as described
   ///  in https://cloud.google.com/apis/design/resource_names.
+  ///  @n
   ///  * For `projects.regions.workflowTemplates.get`, the resource name of the
   ///    template has the following format:
   ///    `projects/{project_id}/regions/{region}/workflowTemplates/{template_id}`
+  ///  @n
   ///  * For `projects.locations.workflowTemplates.get`, the resource name of the
   ///    template has the following format:
   ///    `projects/{project_id}/locations/{location}/workflowTemplates/{template_id}`
@@ -256,9 +260,11 @@ class WorkflowTemplateServiceClient {
   ///
   /// @param name  Required. The resource name of the workflow template, as described
   ///  in https://cloud.google.com/apis/design/resource_names.
+  ///  @n
   ///  * For `projects.regions.workflowTemplates.instantiate`, the resource name
   ///  of the template has the following format:
   ///    `projects/{project_id}/regions/{region}/workflowTemplates/{template_id}`
+  ///  @n
   ///  * For `projects.locations.workflowTemplates.instantiate`, the resource name
   ///    of the template has the following format:
   ///    `projects/{project_id}/locations/{location}/workflowTemplates/{template_id}`
@@ -319,9 +325,11 @@ class WorkflowTemplateServiceClient {
   ///
   /// @param name  Required. The resource name of the workflow template, as described
   ///  in https://cloud.google.com/apis/design/resource_names.
+  ///  @n
   ///  * For `projects.regions.workflowTemplates.instantiate`, the resource name
   ///  of the template has the following format:
   ///    `projects/{project_id}/regions/{region}/workflowTemplates/{template_id}`
+  ///  @n
   ///  * For `projects.locations.workflowTemplates.instantiate`, the resource name
   ///    of the template has the following format:
   ///    `projects/{project_id}/locations/{location}/workflowTemplates/{template_id}`
@@ -455,9 +463,11 @@ class WorkflowTemplateServiceClient {
   ///
   /// @param parent  Required. The resource name of the region or location, as described
   ///  in https://cloud.google.com/apis/design/resource_names.
+  ///  @n
   ///  * For `projects.regions.workflowTemplates,instantiateinline`, the resource
   ///    name of the region has the following format:
   ///    `projects/{project_id}/regions/{region}`
+  ///  @n
   ///  * For `projects.locations.workflowTemplates.instantiateinline`, the
   ///    resource name of the location has the following format:
   ///    `projects/{project_id}/locations/{location}`
@@ -578,6 +588,7 @@ class WorkflowTemplateServiceClient {
   /// must contain version that matches the current server version.
   ///
   /// @param template_  Required. The updated workflow template.
+  ///  @n
   ///  The `template.version` field must match the current version.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -642,9 +653,11 @@ class WorkflowTemplateServiceClient {
   ///
   /// @param parent  Required. The resource name of the region or location, as described
   ///  in https://cloud.google.com/apis/design/resource_names.
+  ///  @n
   ///  * For `projects.regions.workflowTemplates,list`, the resource
   ///    name of the region has the following format:
   ///    `projects/{project_id}/regions/{region}`
+  ///  @n
   ///  * For `projects.locations.workflowTemplates.list`, the
   ///    resource name of the location has the following format:
   ///    `projects/{project_id}/locations/{location}`
@@ -726,9 +739,11 @@ class WorkflowTemplateServiceClient {
   ///
   /// @param name  Required. The resource name of the workflow template, as described
   ///  in https://cloud.google.com/apis/design/resource_names.
+  ///  @n
   ///  * For `projects.regions.workflowTemplates.delete`, the resource name
   ///  of the template has the following format:
   ///    `projects/{project_id}/regions/{region}/workflowTemplates/{template_id}`
+  ///  @n
   ///  * For `projects.locations.workflowTemplates.instantiate`, the resource name
   ///    of the template has the following format:
   ///    `projects/{project_id}/locations/{location}/workflowTemplates/{template_id}`

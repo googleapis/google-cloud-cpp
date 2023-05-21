@@ -342,6 +342,7 @@ class CloudFilestoreManagerClient {
   /// @param update_mask  Mask of fields to update.  At least one path must be supplied in this
   ///  field.  The elements of the repeated paths field may only include these
   ///  fields:
+  ///  @n
   ///  * "description"
   ///  * "file_shares"
   ///  * "labels"
@@ -672,6 +673,7 @@ class CloudFilestoreManagerClient {
   /// @param snapshot  Required. A snapshot resource.
   /// @param snapshot_id  Required. The ID to use for the snapshot.
   ///  The ID must be unique within the specified instance.
+  ///  @n
   ///  This value must start with a lowercase letter followed by up to 62
   ///  lowercase letters, numbers, or hyphens, and cannot end with a hyphen.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1037,6 +1039,7 @@ class CloudFilestoreManagerClient {
   /// @param backup  Required. A [backup resource][google.cloud.filestore.v1.Backup]
   /// @param backup_id  Required. The ID to use for the backup.
   ///  The ID must be unique within the specified project and location.
+  ///  @n
   ///  This value must start with a lowercase letter followed by up to 62
   ///  lowercase letters, numbers, or hyphens, and cannot end with a hyphen.
   ///  Values that do not match this pattern will trigger an INVALID_ARGUMENT

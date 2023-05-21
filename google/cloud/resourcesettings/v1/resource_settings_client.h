@@ -104,6 +104,7 @@ class ResourceSettingsServiceClient {
   ///
   /// @param parent  Required. The Cloud resource that parents the setting. Must be in one of the
   ///  following forms:
+  ///  @n
   ///  * `projects/{project_number}`
   ///  * `projects/{project_id}`
   ///  * `folders/{folder_id}`

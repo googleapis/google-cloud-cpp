@@ -99,17 +99,21 @@ class AwsClustersClient {
   /// @param parent  Required. The parent location where this
   ///  [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster] resource will be
   ///  created.
+  ///  @n
   ///  Location names are formatted as `projects/<project-id>/locations/<region>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param aws_cluster  Required. The specification of the
   ///  [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster] to create.
   /// @param aws_cluster_id  Required. A client provided ID the resource. Must be unique within the
   ///  parent resource.
+  ///  @n
   ///  The provided ID will be part of the
   ///  [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster] resource name
   ///  formatted as
   ///  `projects/<project-id>/locations/<region>/awsClusters/<cluster-id>`.
+  ///  @n
   ///  Valid characters are `/[a-z][0-9]-/`. Cannot be longer than 63 characters.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -196,6 +200,7 @@ class AwsClustersClient {
   /// @param update_mask  Required. Mask of fields to update. At least one path must be supplied in
   ///  this field. The elements of the repeated paths field can only include these
   ///  fields from [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]:
+  ///  @n
   ///   *   `description`.
   ///   *   `annotations`.
   ///   *   `control_plane.version`.
@@ -295,8 +300,10 @@ class AwsClustersClient {
   /// @param name  Required. The name of the
   ///  [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster] resource to
   ///  describe.
+  ///  @n
   ///  `AwsCluster` names are formatted as
   ///  `projects/<project-id>/locations/<region>/awsClusters/<cluster-id>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -360,7 +367,9 @@ class AwsClustersClient {
   ///
   /// @param parent  Required. The parent location which owns this collection of
   ///  [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster] resources.
+  ///  @n
   ///  Location names are formatted as `projects/<project-id>/locations/<region>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -449,8 +458,10 @@ class AwsClustersClient {
   ///
   /// @param name  Required. The resource name the
   ///  [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster] to delete.
+  ///  @n
   ///  `AwsCluster` names are formatted as
   ///  `projects/<project-id>/locations/<region>/awsClusters/<cluster-id>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -580,18 +591,22 @@ class AwsClustersClient {
   ///
   /// @param parent  Required. The [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]
   ///  resource where this node pool will be created.
+  ///  @n
   ///  `AwsCluster` names are formatted as
   ///  `projects/<project-id>/locations/<region>/awsClusters/<cluster-id>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param aws_node_pool  Required. The specification of the
   ///  [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool] to create.
   /// @param aws_node_pool_id  Required. A client provided ID the resource. Must be unique within the
   ///  parent resource.
+  ///  @n
   ///  The provided ID will be part of the
   ///  [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool] resource name
   ///  formatted as
   ///  `projects/<project-id>/locations/<region>/awsClusters/<cluster-id>/awsNodePools/<node-pool-id>`.
+  ///  @n
   ///  Valid characters are `/[a-z][0-9]-/`. Cannot be longer than 63 characters.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -680,6 +695,7 @@ class AwsClustersClient {
   /// @param update_mask  Required. Mask of fields to update. At least one path must be supplied in
   ///  this field. The elements of the repeated paths field can only include these
   ///  fields from [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool]:
+  ///  @n
   ///   *   `annotations`.
   ///   *   `version`.
   ///   *   `autoscaling.min_node_count`.
@@ -778,8 +794,10 @@ class AwsClustersClient {
   /// @param name  Required. The name of the
   ///  [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool] resource to
   ///  describe.
+  ///  @n
   ///  `AwsNodePool` names are formatted as
   ///  `projects/<project-id>/locations/<region>/awsClusters/<cluster-id>/awsNodePools/<node-pool-id>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -844,8 +862,10 @@ class AwsClustersClient {
   ///
   /// @param parent  Required. The parent `AwsCluster` which owns this collection of
   ///  [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool] resources.
+  ///  @n
   ///  `AwsCluster` names are formatted as
   ///  `projects/<project-id>/locations/<region>/awsClusters/<cluster-id>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -934,8 +954,10 @@ class AwsClustersClient {
   ///
   /// @param name  Required. The resource name the
   ///  [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool] to delete.
+  ///  @n
   ///  `AwsNodePool` names are formatted as
   ///  `projects/<project-id>/locations/<region>/awsClusters/<cluster-id>/awsNodePools/<node-pool-id>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1021,8 +1043,10 @@ class AwsClustersClient {
   /// @param name  Required. The name of the
   ///  [AwsServerConfig][google.cloud.gkemulticloud.v1.AwsServerConfig] resource
   ///  to describe.
+  ///  @n
   ///  `AwsServerConfig` names are formatted as
   ///  `projects/<project-id>/locations/<region>/awsServerConfig`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param opts Optional. Override the class-level options, such as retry and

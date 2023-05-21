@@ -95,6 +95,7 @@ class DeploymentsClient {
   ///
   /// @param parent  Required. The [Environment][google.cloud.dialogflow.cx.v3.Environment] to
   ///  list all environments for. Format:
+  ///  @n
   ///  @code
   ///  projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>
   ///  @endcode

@@ -94,12 +94,16 @@ class TranslationServiceClient {
   ///
   /// @param parent  Required. Project or location to make a call. Must refer to a caller's
   ///  project.
+  ///  @n
   ///  Format: `projects/{project-number-or-id}` or
   ///  `projects/{project-number-or-id}/locations/{location-id}`.
+  ///  @n
   ///  For global calls, use `projects/{project-number-or-id}/locations/global` or
   ///  `projects/{project-number-or-id}`.
+  ///  @n
   ///  Non-global location is required for requests using AutoML models or
   ///  custom glossaries.
+  ///  @n
   ///  Models and glossaries must be within the same region (have same
   ///  location-id), otherwise an INVALID_ARGUMENT (400) error is returned.
   /// @param target_language_code  Required. The ISO-639 language code to use for translation of the input
@@ -135,24 +139,33 @@ class TranslationServiceClient {
   ///
   /// @param parent  Required. Project or location to make a call. Must refer to a caller's
   ///  project.
+  ///  @n
   ///  Format: `projects/{project-number-or-id}` or
   ///  `projects/{project-number-or-id}/locations/{location-id}`.
+  ///  @n
   ///  For global calls, use `projects/{project-number-or-id}/locations/global` or
   ///  `projects/{project-number-or-id}`.
+  ///  @n
   ///  Non-global location is required for requests using AutoML models or
   ///  custom glossaries.
+  ///  @n
   ///  Models and glossaries must be within the same region (have same
   ///  location-id), otherwise an INVALID_ARGUMENT (400) error is returned.
   /// @param model  Optional. The `model` type requested for this translation.
+  ///  @n
   ///  The format depends on model type:
+  ///  @n
   ///  - AutoML Translation models:
   ///    `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}`
+  ///  @n
   ///  - General (built-in) models:
   ///    `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`,
+  ///  @n
   ///
   ///  For global (non-regionalized) requests, use `location-id` `global`.
   ///  For example,
   ///  `projects/{project-number-or-id}/locations/global/models/general/nmt`.
+  ///  @n
   ///  If not provided, the default Google model (NMT) will be used.
   /// @param mime_type  Optional. The format of the source text, for example, "text/html",
   ///   "text/plain". If left blank, the MIME type defaults to "text/html".
@@ -228,17 +241,23 @@ class TranslationServiceClient {
   ///
   /// @param parent  Required. Project or location to make a call. Must refer to a caller's
   ///  project.
+  ///  @n
   ///  Format: `projects/{project-number-or-id}/locations/{location-id}` or
   ///  `projects/{project-number-or-id}`.
+  ///  @n
   ///  For global calls, use `projects/{project-number-or-id}/locations/global` or
   ///  `projects/{project-number-or-id}`.
+  ///  @n
   ///  Only models within the same region (has same location-id) can be used.
   ///  Otherwise an INVALID_ARGUMENT (400) error is returned.
   /// @param model  Optional. The language detection model to be used.
+  ///  @n
   ///  Format:
   ///  `projects/{project-number-or-id}/locations/{location-id}/models/language-detection/{model-id}`
+  ///  @n
   ///  Only one language detection model is currently supported:
   ///  `projects/{project-number-or-id}/locations/{location-id}/models/language-detection/default`.
+  ///  @n
   ///  If not specified, the default model is used.
   /// @param mime_type  Optional. The format of the source text, for example, "text/html",
   ///  "text/plain". If left blank, the MIME type defaults to "text/html".
@@ -305,19 +324,27 @@ class TranslationServiceClient {
   ///
   /// @param parent  Required. Project or location to make a call. Must refer to a caller's
   ///  project.
+  ///  @n
   ///  Format: `projects/{project-number-or-id}` or
   ///  `projects/{project-number-or-id}/locations/{location-id}`.
+  ///  @n
   ///  For global calls, use `projects/{project-number-or-id}/locations/global` or
   ///  `projects/{project-number-or-id}`.
+  ///  @n
   ///  Non-global location is required for AutoML models.
+  ///  @n
   ///  Only models within the same region (have same location-id) can be used,
   ///  otherwise an INVALID_ARGUMENT (400) error is returned.
   /// @param model  Optional. Get supported languages of this model.
+  ///  @n
   ///  The format depends on model type:
+  ///  @n
   ///  - AutoML Translation models:
   ///    `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}`
+  ///  @n
   ///  - General (built-in) models:
   ///    `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`,
+  ///  @n
   ///
   ///  Returns languages supported by the specified model.
   ///  If missing, we get supported languages of Google general NMT model.
@@ -470,8 +497,11 @@ class TranslationServiceClient {
   /// google.longrunning.Operation.name to poll the status of the call.
   ///
   /// @param parent  Required. Location to make a regional call.
+  ///  @n
   ///  Format: `projects/{project-number-or-id}/locations/{location-id}`.
+  ///  @n
   ///  The `global` location is not supported for batch translation.
+  ///  @n
   ///  Only AutoML Translation models or glossaries within the same region (have
   ///  the same location-id) can be used, otherwise an INVALID_ARGUMENT (400)
   ///  error is returned.

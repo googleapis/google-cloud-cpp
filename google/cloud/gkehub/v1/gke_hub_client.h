@@ -391,9 +391,11 @@ class GkeHubClient {
   /// @param resource  Required. The membership to create.
   /// @param membership_id  Required. Client chosen ID for the membership. `membership_id` must be a
   ///  valid RFC 1123 compliant DNS label:
+  ///  @n
   ///    1. At most 63 characters in length
   ///    2. It must consist of lower case alphanumeric characters or `-`
   ///    3. It must start and end with an alphanumeric character
+  ///  @n
   ///  Which can be expressed as the regex: `[a-z0-9]([-a-z0-9]*[a-z0-9])?`,
   ///  with a maximum length of 63 characters.
   /// @param opts Optional. Override the class-level options, such as retry and

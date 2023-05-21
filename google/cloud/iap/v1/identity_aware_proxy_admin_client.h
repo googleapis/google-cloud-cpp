@@ -350,6 +350,7 @@ class IdentityAwareProxyAdminServiceClient {
   /// @param tunnel_dest_group  Required. The TunnelDestGroup to create.
   /// @param tunnel_dest_group_id  Required. The ID to use for the TunnelDestGroup, which becomes the final
   ///  component of the resource name.
+  ///  @n
   ///  This value must be 4-63 characters, and valid characters
   ///  are `[a-z]-`.
   /// @param opts Optional. Override the class-level options, such as retry and

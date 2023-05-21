@@ -107,15 +107,19 @@ class DataCatalogClient {
   /// (https://cloud.google.com/data-catalog/docs/how-to/search-reference).
   ///
   /// @param scope  Required. The scope of this search request.
+  ///  @n
   ///  The `scope` is invalid if `include_org_ids`, `include_project_ids` are
   ///  empty AND `include_gcp_public_datasets` is set to `false`. In this case,
   ///  the request returns an error.
   /// @param query  Optional. The query string with a minimum of 3 characters and specific
   ///  syntax. For more information, see [Data Catalog search
   ///  syntax](https://cloud.google.com/data-catalog/docs/how-to/search-reference).
+  ///  @n
   ///  An empty query string returns all data assets (in the specified scope)
   ///  that you have access to.
+  ///  @n
   ///  A query string can be a simple `xyz` or qualified by predicates:
+  ///  @n
   ///  * `name:x`
   ///  * `column:y`
   ///  * `description:z`
@@ -238,9 +242,11 @@ class DataCatalogClient {
   ///
   /// @param parent  Required. The names of the project and location that the new entry group
   ///  belongs to.
+  ///  @n
   ///  Note: The entry group itself and its child resources might not be
   ///  stored in the location specified in its name.
   /// @param entry_group_id  Required. The ID of the entry group to create.
+  ///  @n
   ///  The ID must contain only letters (a-z, A-Z), numbers (0-9),
   ///  underscores (_), and must start with a letter or underscore.
   ///  The maximum size is 64 bytes when encoded in UTF-8.
@@ -455,6 +461,7 @@ class DataCatalogClient {
   ///
   /// @param entry_group  Required. Updates for the entry group. The `name` field must be set.
   /// @param update_mask  Names of fields whose values to overwrite on an entry group.
+  ///  @n
   ///  If this parameter is absent or empty, all modifiable fields
   ///  are overwritten. If such fields are non-required and omitted in the
   ///  request body, their values are emptied.
@@ -583,6 +590,7 @@ class DataCatalogClient {
   /// Lists entry groups.
   ///
   /// @param parent  Required. The name of the location that contains the entry groups to list.
+  ///  @n
   ///  Can be provided as a URL.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -670,9 +678,11 @@ class DataCatalogClient {
   /// An entry group can have a maximum of 100,000 entries.
   ///
   /// @param parent  Required. The name of the entry group this entry belongs to.
+  ///  @n
   ///  Note: The entry itself and its child resources might not be stored in
   ///  the location specified in its name.
   /// @param entry_id  Required. The ID of the entry to create.
+  ///  @n
   ///  The ID must contain only letters (a-z, A-Z), numbers (0-9),
   ///  and underscores (_).
   ///  The maximum size is 64 bytes when encoded in UTF-8.
@@ -783,19 +793,27 @@ class DataCatalogClient {
   ///
   /// @param entry  Required. Updates for the entry. The `name` field must be set.
   /// @param update_mask  Names of fields whose values to overwrite on an entry.
+  ///  @n
   ///  If this parameter is absent or empty, all modifiable fields
   ///  are overwritten. If such fields are non-required and omitted in the
   ///  request body, their values are emptied.
+  ///  @n
   ///  You can modify only the fields listed below.
+  ///  @n
   ///  For entries with type `DATA_STREAM`:
+  ///  @n
   ///  * `schema`
+  ///  @n
   ///  For entries with type `FILESET`:
+  ///  @n
   ///  * `schema`
   ///  * `display_name`
   ///  * `description`
   ///  * `gcs_fileset_spec`
   ///  * `gcs_fileset_spec.file_patterns`
+  ///  @n
   ///  For entries with `user_specified_type`:
+  ///  @n
   ///  * `schema`
   ///  * `display_name`
   ///  * `description`
@@ -1034,6 +1052,7 @@ class DataCatalogClient {
   /// [SearchCatalog][google.cloud.datacatalog.v1.DataCatalog.SearchCatalog].
   ///
   /// @param parent  Required. The name of the entry group that contains the entries to list.
+  ///  @n
   ///  Can be provided in URL format.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -1198,6 +1217,7 @@ class DataCatalogClient {
   /// @param parent  Required. The name of the project and the template location
   ///  [region](https://cloud.google.com/data-catalog/docs/concepts/regions).
   /// @param tag_template_id  Required. The ID of the tag template to create.
+  ///  @n
   ///  The ID must contain only lowercase letters (a-z), numbers (0-9),
   ///  or underscores (_), and must start with a letter or underscore.
   ///  The maximum size is 64 bytes when encoded in UTF-8.
@@ -1370,9 +1390,11 @@ class DataCatalogClient {
   /// @param tag_template  Required. The template to update. The `name` field must be set.
   /// @param update_mask  Names of fields whose values to overwrite on a tag template. Currently,
   ///  only `display_name` and `is_publicly_readable` can be overwritten.
+  ///  @n
   ///  If this parameter is absent or empty, all modifiable fields
   ///  are overwritten. If such fields are non-required and omitted in the
   ///  request body, their values are emptied.
+  ///  @n
   ///  Note: Updating the `is_publicly_readable` field may require up to 12
   ///  hours to take effect in search results.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1447,6 +1469,7 @@ class DataCatalogClient {
   ///
   /// @param name  Required. The name of the tag template to delete.
   /// @param force  Required. If true, deletes all tags that use this template.
+  ///  @n
   ///  Currently, `true` is the only supported value.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -1510,7 +1533,9 @@ class DataCatalogClient {
   /// @param parent  Required. The name of the project and the template location
   ///  [region](https://cloud.google.com/data-catalog/docs/concepts/regions).
   /// @param tag_template_field_id  Required. The ID of the tag template field to create.
+  ///  @n
   ///  Note: Adding a required field to an existing template is *not* allowed.
+  ///  @n
   ///  Field IDs can contain letters (both uppercase and lowercase), numbers
   ///  (0-9), underscores (_) and dashes (-). Field IDs must be at least 1
   ///  character long and at most 128 characters long. Field IDs must also be
@@ -1631,15 +1656,18 @@ class DataCatalogClient {
   /// @param tag_template_field  Required. The template to update.
   /// @param update_mask  Optional. Names of fields whose values to overwrite on an individual field
   ///  of a tag template. The following fields are modifiable:
+  ///  @n
   ///  * `display_name`
   ///  * `type.enum_type`
   ///  * `is_required`
+  ///  @n
   ///  If this parameter is absent or empty, all modifiable fields
   ///  are overwritten. If such fields are non-required and omitted in the request
   ///  body, their values are emptied with one exception: when updating an enum
   ///  type, the provided values are merged with the existing values. Therefore,
   ///  enum values can only be added, existing enum values cannot be deleted or
   ///  renamed.
+  ///  @n
   ///  Additionally, updating a template field from optional to required is
   ///  *not* allowed.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1859,6 +1887,7 @@ class DataCatalogClient {
   ///
   /// @param name  Required. The name of the tag template field to delete.
   /// @param force  Required. If true, deletes this field from any tags that use it.
+  ///  @n
   ///  Currently, `true` is the only supported value.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -1929,8 +1958,10 @@ class DataCatalogClient {
   /// used to create the tag must be in the same organization.
   ///
   /// @param parent  Required. The name of the resource to attach this tag to.
+  ///  @n
   ///  Tags can be attached to entries or entry groups. An entry can have up to
   ///  1000 attached tags.
+  ///  @n
   ///  Note: The tag and its child resources might not be stored in
   ///  the location specified in its name.
   /// @param tag  Required. The tag to create.
@@ -2036,6 +2067,7 @@ class DataCatalogClient {
   /// @param tag  Required. The updated tag. The "name" field must be set.
   /// @param update_mask  Names of fields whose values to overwrite on a tag. Currently, a tag has
   ///  the only modifiable field with the name `fields`.
+  ///  @n
   ///  In general, if this parameter is absent or empty, all modifiable fields
   ///  are overwritten. If such fields are non-required and omitted in the
   ///  request body, their values are emptied.
@@ -2151,6 +2183,7 @@ class DataCatalogClient {
   /// lowercased.
   ///
   /// @param parent  Required. The name of the Data Catalog resource to list the tags of.
+  ///  @n
   ///  The resource can be an [Entry][google.cloud.datacatalog.v1.Entry]
   ///  or an [EntryGroup][google.cloud.datacatalog.v1.EntryGroup]
   ///  (without `/entries/{entries}` at the end).

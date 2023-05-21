@@ -159,12 +159,14 @@ class DataPolicyServiceClient {
   /// can be specified by the resource name.
   ///
   /// @param data_policy  Required. Update the data policy's metadata.
+  ///  @n
   ///  The target data policy is determined by the `name` field.
   ///  Other fields are updated to the specified values based on the field masks.
   /// @param update_mask  The update mask applies to the resource. For the `FieldMask` definition,
   ///  see
   ///  https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
   ///  If not set, defaults to all of the fields that are allowed to update.
+  ///  @n
   ///  Updates to the `name` and `dataPolicyId` fields are not allowed.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.

@@ -171,10 +171,13 @@ class ContextsClient {
   /// Retrieves the specified context.
   ///
   /// @param name  Required. The name of the context. Format:
+  ///  @n
   ///  @code
   ///  projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>
   ///  @endcode
+  ///  @n
   ///  or
+  ///  @n
   ///  @code
   ///  projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>/contexts/<Context ID>`
   ///  @endcode
@@ -367,10 +370,13 @@ class ContextsClient {
   /// Deletes the specified context.
   ///
   /// @param name  Required. The name of the context to delete. Format:
+  ///  @n
   ///  @code
   ///  projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>
   ///  @endcode
+  ///  @n
   ///  or
+  ///  @n
   ///  @code
   ///  projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>/contexts/<Context ID>`
   ///  @endcode
@@ -427,10 +433,13 @@ class ContextsClient {
   /// Deletes all active contexts in the specified session.
   ///
   /// @param parent  Required. The name of the session to delete all contexts from. Format:
+  ///  @n
   ///  @code
   ///  projects/<Project ID>/agent/sessions/<Session ID>
   ///  @endcode
+  ///  @n
   ///  or
+  ///  @n
   ///  @code
   ///  projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>
   ///  @endcode

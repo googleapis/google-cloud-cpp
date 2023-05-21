@@ -1406,6 +1406,7 @@ class AlloyDBAdminClient {
   ///
   /// @param parent  Required. The name of the parent resource. The required format is:
   ///   * projects/{project}/locations/{location}
+  ///  @n
   ///  Regardless of the parent specified here, as long it is contains a valid
   ///  project and location, the service will return a static list of supported
   ///  flags resources. Note that we do not yet support region-specific

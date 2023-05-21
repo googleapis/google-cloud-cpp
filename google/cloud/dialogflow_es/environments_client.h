@@ -93,6 +93,7 @@ class EnvironmentsClient {
   ///
   /// @param parent  Required. The agent to list all environments from.
   ///  Format:
+  ///  @n
   ///  - `projects/<Project ID>/agent`
   ///  - `projects/<Project ID>/locations/<Location ID>/agent`
   /// @param opts Optional. Override the class-level options, such as retry and

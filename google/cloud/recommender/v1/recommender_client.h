@@ -95,11 +95,17 @@ class RecommenderClient {
   ///
   /// @param parent  Required. The container resource on which to execute the request.
   ///  Acceptable formats:
+  ///  @n
   ///  * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]`
+  ///  @n
   ///  * `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]`
+  ///  @n
   ///  * `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]`
+  ///  @n
   ///  * `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]`
+  ///  @n
   ///  * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]`
+  ///  @n
   ///  LOCATION here refers to GCP Locations:
   ///  https://cloud.google.com/about/locations/
   ///  INSIGHT_TYPE_ID refers to supported insight types:
@@ -316,11 +322,17 @@ class RecommenderClient {
   ///
   /// @param parent  Required. The container resource on which to execute the request.
   ///  Acceptable formats:
+  ///  @n
   ///  * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
+  ///  @n
   ///  * `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
+  ///  @n
   ///  * `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
+  ///  @n
   ///  * `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
+  ///  @n
   ///  * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
+  ///  @n
   ///  LOCATION here refers to GCP Locations:
   ///  https://cloud.google.com/about/locations/
   ///  RECOMMENDER_ID refers to supported recommenders:
@@ -362,25 +374,40 @@ class RecommenderClient {
   ///
   /// @param parent  Required. The container resource on which to execute the request.
   ///  Acceptable formats:
+  ///  @n
   ///  * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
+  ///  @n
   ///  * `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
+  ///  @n
   ///  * `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
+  ///  @n
   ///  * `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
+  ///  @n
   ///  * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]`
+  ///  @n
   ///  LOCATION here refers to GCP Locations:
   ///  https://cloud.google.com/about/locations/
   ///  RECOMMENDER_ID refers to supported recommenders:
   ///  https://cloud.google.com/recommender/docs/recommenders.
   /// @param filter  Filter expression to restrict the recommendations returned. Supported
   ///  filter fields:
+  ///  @n
   ///  * `state_info.state`
+  ///  @n
   ///  * `recommenderSubtype`
+  ///  @n
   ///  * `priority`
+  ///  @n
   ///  Examples:
+  ///  @n
   ///  * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED`
+  ///  @n
   ///  * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE`
+  ///  @n
   ///  * `priority = P1 OR priority = P2`
+  ///  @n
   ///  * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)`
+  ///  @n
   ///  (These expressions are based on the filter language described at
   ///  https://google.aip.dev/160)
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -785,9 +812,13 @@ class RecommenderClient {
   /// config for each Recommender.
   ///
   /// @param name  Required. Name of the Recommendation Config to get.
+  ///  @n
   ///  Acceptable formats:
+  ///  @n
   ///  * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config`
+  ///  @n
   ///  * `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config`
+  ///  @n
   ///  * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/config`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -917,9 +948,13 @@ class RecommenderClient {
   /// config for each InsightType.
   ///
   /// @param name  Required. Name of the InsightTypeConfig to get.
+  ///  @n
   ///  Acceptable formats:
+  ///  @n
   ///  * `projects/[PROJECT_NUMBER]/locations/global/recommenders/[INSIGHT_TYPE_ID]/config`
+  ///  @n
   ///  * `projects/[PROJECT_ID]/locations/global/recommenders/[INSIGHT_TYPE_ID]/config`
+  ///  @n
   ///  * `organizations/[ORGANIZATION_ID]/locations/global/recommenders/[INSIGHT_TYPE_ID]/config`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.

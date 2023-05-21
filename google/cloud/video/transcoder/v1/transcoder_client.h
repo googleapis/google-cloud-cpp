@@ -348,6 +348,7 @@ class TranscoderServiceClient {
   /// @param job_template  Required. Parameters for creating job template.
   /// @param job_template_id  Required. The ID to use for the job template, which will become the final
   ///  component of the job template's resource name.
+  ///  @n
   ///  This value should be 4-63 characters, and valid characters must match the
   ///  regular expression `[a-zA-Z][a-zA-Z0-9_-]*`.
   /// @param opts Optional. Override the class-level options, such as retry and

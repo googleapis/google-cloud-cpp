@@ -338,6 +338,7 @@ class CloudRedisClient {
   ///  where `location_id` refers to a GCP region.
   /// @param instance_id  Required. The logical name of the Redis instance in the customer project
   ///  with the following restrictions:
+  ///  @n
   ///  * Must contain only lowercase letters, numbers, and hyphens.
   ///  * Must start with a letter.
   ///  * Must be between 1-40 characters.
@@ -432,6 +433,7 @@ class CloudRedisClient {
   /// @param update_mask  Required. Mask of fields to update. At least one path must be supplied in
   ///  this field. The elements of the repeated paths field may only include these
   ///  fields from [Instance][google.cloud.redis.v1.Instance]:
+  ///  @n
   ///   *   `displayName`
   ///   *   `labels`
   ///   *   `memorySizeGb`

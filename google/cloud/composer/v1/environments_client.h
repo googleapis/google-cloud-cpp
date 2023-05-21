@@ -319,6 +319,7 @@ class EnvironmentsClient {
   ///  `paths` values: "config.softwareConfig.pypiPackages.scikit-learn" and
   ///  "config.softwareConfig.pypiPackages.numpy". The included patch
   ///  environment would specify the scikit-learn version as follows:
+  ///  @n
   ///      {
   ///        "config":{
   ///          "softwareConfig":{
@@ -328,8 +329,10 @@ class EnvironmentsClient {
   ///          }
   ///        }
   ///      }
+  ///  @n
   ///  Note that in the above example, any existing PyPI packages
   ///  other than scikit-learn and numpy will be unaffected.
+  ///  @n
   ///  Only one update type may be included in a single request's `updateMask`.
   ///  For example, one cannot update both the PyPI packages and
   ///  labels in the same request. However, it is possible to update multiple
@@ -338,14 +341,17 @@ class EnvironmentsClient {
   ///  it already exists), one can
   ///  provide the paths "labels.label1", "labels.label2", and "labels.label3"
   ///  and populate the patch environment as follows:
+  ///  @n
   ///      {
   ///        "labels":{
   ///          "label1":"new-label1-value"
   ///          "label2":"new-label2-value"
   ///        }
   ///      }
+  ///  @n
   ///  Note that in the above example, any existing labels that are not
   ///  included in the `updateMask` will be unaffected.
+  ///  @n
   ///  It is also possible to replace an entire map field by providing the
   ///  map field's path in the `updateMask`. The new value of the field will
   ///  be that which is provided in the patch environment. For example, to
@@ -353,6 +359,7 @@ class EnvironmentsClient {
   ///  install botocore at version 1.7.14, the `updateMask` would contain
   ///  the path "config.softwareConfig.pypiPackages", and
   ///  the patch environment would be the following:
+  ///  @n
   ///      {
   ///        "config":{
   ///          "softwareConfig":{
@@ -362,7 +369,9 @@ class EnvironmentsClient {
   ///          }
   ///        }
   ///      }
+  ///  @n
   ///  **Note:** Only the following fields can be updated:
+  ///  @n
   ///  * `config.softwareConfig.pypiPackages`
   ///      * Replace all custom custom PyPI packages. If a replacement
   ///        package map is not included in `environment`, all custom

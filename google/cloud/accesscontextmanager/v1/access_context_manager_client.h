@@ -148,6 +148,7 @@ class AccessContextManagerClient {
   /// [google.identity.accesscontextmanager.v1.AccessPolicy] based on the name.
   ///
   /// @param name  Required. Resource name for the access policy to get.
+  ///  @n
   ///  Format `accessPolicies/{policy_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -340,6 +341,7 @@ class AccessContextManagerClient {
   /// is removed from long-lasting storage.
   ///
   /// @param name  Required. Resource name for the access policy to delete.
+  ///  @n
   ///  Format `accessPolicies/{policy_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -421,6 +423,7 @@ class AccessContextManagerClient {
   ///
   /// @param parent  Required. Resource name for the access policy to list [Access Levels]
   ///  [google.identity.accesscontextmanager.v1.AccessLevel] from.
+  ///  @n
   ///  Format:
   ///  `accessPolicies/{policy_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -506,6 +509,7 @@ class AccessContextManagerClient {
   ///
   /// @param name  Required. Resource name for the [Access Level]
   ///  [google.identity.accesscontextmanager.v1.AccessLevel].
+  ///  @n
   ///  Format:
   ///  `accessPolicies/{policy_id}/accessLevels/{access_level_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -577,6 +581,7 @@ class AccessContextManagerClient {
   ///
   /// @param parent  Required. Resource name for the access policy which owns this [Access
   ///  Level] [google.identity.accesscontextmanager.v1.AccessLevel].
+  ///  @n
   ///  Format: `accessPolicies/{policy_id}`
   /// @param access_level  Required. The [Access Level]
   ///  [google.identity.accesscontextmanager.v1.AccessLevel] to create.
@@ -763,6 +768,7 @@ class AccessContextManagerClient {
   ///
   /// @param name  Required. Resource name for the [Access Level]
   ///  [google.identity.accesscontextmanager.v1.AccessLevel].
+  ///  @n
   ///  Format:
   ///  `accessPolicies/{policy_id}/accessLevels/{access_level_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -902,6 +908,7 @@ class AccessContextManagerClient {
   ///
   /// @param parent  Required. Resource name for the access policy to list [Service Perimeters]
   ///  [google.identity.accesscontextmanager.v1.ServicePerimeter] from.
+  ///  @n
   ///  Format:
   ///  `accessPolicies/{policy_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -987,6 +994,7 @@ class AccessContextManagerClient {
   ///
   /// @param name  Required. Resource name for the [Service Perimeter]
   ///  [google.identity.accesscontextmanager.v1.ServicePerimeter].
+  ///  @n
   ///  Format:
   ///  `accessPolicies/{policy_id}/servicePerimeters/{service_perimeters_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1058,6 +1066,7 @@ class AccessContextManagerClient {
   ///
   /// @param parent  Required. Resource name for the access policy which owns this [Service
   ///  Perimeter] [google.identity.accesscontextmanager.v1.ServicePerimeter].
+  ///  @n
   ///  Format: `accessPolicies/{policy_id}`
   /// @param service_perimeter  Required. The [Service Perimeter]
   ///  [google.identity.accesscontextmanager.v1.ServicePerimeter] to create.
@@ -1242,6 +1251,7 @@ class AccessContextManagerClient {
   ///
   /// @param name  Required. Resource name for the [Service Perimeter]
   ///  [google.identity.accesscontextmanager.v1.ServicePerimeter].
+  ///  @n
   ///  Format:
   ///  `accessPolicies/{policy_id}/servicePerimeters/{service_perimeter_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1678,6 +1688,7 @@ class AccessContextManagerClient {
   ///  [google.identity.accesscontextmanager.v1.GcpUserAccessBinding]
   /// @param update_mask  Required. Only the fields specified in this mask are updated. Because name and
   ///  group_key cannot be changed, update_mask is required and must always be:
+  ///  @n
   ///  update_mask {
   ///  paths: "access_levels"
   ///  }

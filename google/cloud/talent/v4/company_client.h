@@ -89,6 +89,7 @@ class CompanyServiceClient {
   /// Creates a new company entity.
   ///
   /// @param parent  Required. Resource name of the tenant under which the company is created.
+  ///  @n
   ///  The format is "projects/{project_id}/tenants/{tenant_id}", for example,
   ///  "projects/foo/tenants/bar".
   /// @param company  Required. The company to be created.
@@ -151,6 +152,7 @@ class CompanyServiceClient {
   /// Retrieves specified company.
   ///
   /// @param name  Required. The resource name of the company to be retrieved.
+  ///  @n
   ///  The format is
   ///  "projects/{project_id}/tenants/{tenant_id}/companies/{company_id}", for
   ///  example, "projects/api-test-project/tenants/foo/companies/bar".
@@ -214,10 +216,12 @@ class CompanyServiceClient {
   /// @param company  Required. The company resource to replace the current resource in the
   ///  system.
   /// @param update_mask  Strongly recommended for the best service experience.
+  ///  @n
   ///  If [update_mask][google.cloud.talent.v4.UpdateCompanyRequest.update_mask]
   ///  is provided, only the specified fields in
   ///  [company][google.cloud.talent.v4.UpdateCompanyRequest.company] are updated.
   ///  Otherwise all the fields are updated.
+  ///  @n
   ///  A field mask to specify the company fields to be updated. Only
   ///  top level fields of [Company][google.cloud.talent.v4.Company] are
   ///  supported.
@@ -281,6 +285,7 @@ class CompanyServiceClient {
   /// Prerequisite: The company has no jobs associated with it.
   ///
   /// @param name  Required. The resource name of the company to be deleted.
+  ///  @n
   ///  The format is
   ///  "projects/{project_id}/tenants/{tenant_id}/companies/{company_id}", for
   ///  example, "projects/foo/tenants/bar/companies/baz".
@@ -336,6 +341,7 @@ class CompanyServiceClient {
   /// Lists all companies associated with the project.
   ///
   /// @param parent  Required. Resource name of the tenant under which the company is created.
+  ///  @n
   ///  The format is "projects/{project_id}/tenants/{tenant_id}", for example,
   ///  "projects/foo/tenants/bar".
   /// @param opts Optional. Override the class-level options, such as retry and

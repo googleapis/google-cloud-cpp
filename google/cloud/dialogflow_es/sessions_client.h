@@ -113,15 +113,20 @@ class SessionsClient {
   ///  and `User Id`. They can be a random number or some type of user and session
   ///  identifiers (preferably hashed). The length of the `Session ID` and
   ///  `User ID` must not exceed 36 characters.
+  ///  @n
   ///  For more information, see the [API interactions
   ///  guide](https://cloud.google.com/dialogflow/docs/api-overview).
+  ///  @n
   ///  Note: Always use agent versions for production traffic.
   ///  See [Versions and
   ///  environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
   /// @param query_input  Required. The input specification. It can be set to:
+  ///  @n
   ///  1.  an audio config
   ///      which instructs the speech recognizer how to process the speech audio,
+  ///  @n
   ///  2.  a conversational query in the form of text, or
+  ///  @n
   ///  3.  an event that specifies which intent to trigger.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
