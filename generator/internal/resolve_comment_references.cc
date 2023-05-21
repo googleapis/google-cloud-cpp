@@ -34,6 +34,18 @@ absl::optional<std::pair<std::string, ProtoDefinitionLocation>> GetLocation(
       ProtoDefinitionLocation{d->file()->name(), loc.start_line + 1});
 }
 
+absl::optional<std::pair<std::string, ProtoDefinitionLocation>>
+FindByAlternativeEnumValueName(google::protobuf::DescriptorPool const& pool,
+                               std::string const& name) {
+  std::vector<absl::string_view> components = absl::StrSplit(name, '.');
+  if (components.size() < 2) return absl::nullopt;
+  components.erase(std::next(components.begin(), components.size() - 2));
+  auto alternative = absl::StrJoin(components, ".");
+  auto result = GetLocation(pool.FindEnumValueByName(alternative));
+  if (!result.has_value()) return result;
+  return std::make_pair(name, std::move(result->second));
+}
+
 /// Search @p pool for an entity called @p name and return its fully qualified
 /// name and location.
 absl::optional<std::pair<std::string, ProtoDefinitionLocation>> FindByName(
@@ -54,7 +66,10 @@ absl::optional<std::pair<std::string, ProtoDefinitionLocation>> FindByName(
   if (location.has_value()) return location;
   location = GetLocation(pool.FindServiceByName(name));
   if (location.has_value()) return location;
-  return absl::nullopt;
+
+  // Last ditch, sometimes the comments use `foo.bar.Baz.EnumName.EnumValue`.
+  // The Protobuf library can only find `foo.bar.Baz.EnumValue`.
+  return FindByAlternativeEnumValueName(pool, name);
 }
 
 }  // namespace
