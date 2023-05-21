@@ -127,6 +127,7 @@ class GoldenKitchenSinkClient {
   ///  chain must be granted the `roles/iam.serviceAccountTokenCreator` role
   ///  on the service account that is specified in the `name` field of the
   ///  request.
+  ///  @n
   ///  The delegates must have the following format:
   ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
   ///  character is required; replacing it with a project ID is invalid.
@@ -205,6 +206,7 @@ class GoldenKitchenSinkClient {
   ///  chain must be granted the `roles/iam.serviceAccountTokenCreator` role
   ///  on the service account that is specified in the `name` field of the
   ///  request.
+  ///  @n
   ///  The delegates must have the following format:
   ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
   ///  character is required; replacing it with a project ID is invalid.
@@ -276,13 +278,17 @@ class GoldenKitchenSinkClient {
   ///
   /// @param log_name  Optional. A default log resource name that is assigned to all log entries
   ///  in `entries` that do not specify a value for `log_name`:
+  ///  @n
   ///      "projects/[PROJECT_ID]/logs/[LOG_ID]"
   ///      "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
   ///      "billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]"
   ///      "folders/[FOLDER_ID]/logs/[LOG_ID]"
+  ///  @n
   ///  `[LOG_ID]` must be URL-encoded. For example:
+  ///  @n
   ///      "projects/my-project-id/logs/syslog"
   ///      "organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity"
+  ///  @n
   ///  The permission `logging.logEntries.create` is needed on each project,
   ///  organization, billing account, or folder that is receiving new log
   ///  entries, whether the resource is specified in `logName` or in an
@@ -355,6 +361,7 @@ class GoldenKitchenSinkClient {
   /// Only logs that have entries are listed.
   ///
   /// @param parent  Required. The resource name that owns the logs:
+  ///  @n
   ///      "projects/[PROJECT_ID]"
   ///      "organizations/[ORGANIZATION_ID]"
   ///      "billingAccounts/[BILLING_ACCOUNT_ID]"
@@ -431,6 +438,7 @@ class GoldenKitchenSinkClient {
   ///
   /// @param name  Required. The resource name of the service account in the following format:
   ///  `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`.
+  ///  @n
   ///  Using `-` as a wildcard for the `PROJECT_ID`, will infer the project from
   ///  the account. The `ACCOUNT` value can be the `email` address or the
   ///  `unique_id` of the service account.
