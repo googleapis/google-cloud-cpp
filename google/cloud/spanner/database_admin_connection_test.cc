@@ -52,7 +52,7 @@ std::shared_ptr<DatabaseAdminConnection> CreateTestingConnection(
     std::shared_ptr<spanner_internal::DatabaseAdminStub> mock) {
   LimitedErrorCountRetryPolicy retry(/*maximum_failures=*/2);
   ExponentialBackoffPolicy backoff(
-      /*initial_delay=*/std::chrono::microseconds(1),
+      /*minimum_delay=*/std::chrono::microseconds(1),
       /*maximum_delay=*/std::chrono::microseconds(1),
       /*scaling=*/2.0);
   GenericPollingPolicy<LimitedErrorCountRetryPolicy> polling(retry, backoff);

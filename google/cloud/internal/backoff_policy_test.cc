@@ -44,7 +44,7 @@ TEST(ExponentialBackoffPolicy, Simple) {
 
 /// @test Verify a full jitter policy, where the minimum delay is set to 0.
 TEST(ExponentialBackoffPolicy, VerifyFullJitterPolicy) {
-  ExponentialBackoffPolicy tested(ms(10), ms(0), ms(50), 2.0);
+  ExponentialBackoffPolicy tested(ms(0), ms(10), ms(50), 2.0);
 
   auto delay = tested.OnCompletion();
   EXPECT_LE(ms(0), delay);
@@ -99,16 +99,11 @@ TEST(ExponentialBackoffPolicy, ValidateScaling) {
 /// @test Verify the initial delay upper bound is validated.
 TEST(ExponentialBackoffPolicy, ValidateInitialDelayUpperBound) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(ExponentialBackoffPolicy(ms(9), ms(10), ms(50), 2.0),
-               std::invalid_argument);
-  EXPECT_THROW(ExponentialBackoffPolicy(ms(0), ms(10), ms(50), 2.0),
+  EXPECT_THROW(ExponentialBackoffPolicy(ms(10), ms(9), ms(50), 2.0),
                std::invalid_argument);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
-      ExponentialBackoffPolicy(ms(9), ms(10), ms(50), 2.0),
-      "exceptions are disabled");
-  EXPECT_DEATH_IF_SUPPORTED(
-      ExponentialBackoffPolicy(ms(0), ms(10), ms(50), 2.0),
+      ExponentialBackoffPolicy(ms(10), ms(9), ms(50), 2.0),
       "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
