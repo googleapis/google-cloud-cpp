@@ -25,6 +25,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -94,9 +95,9 @@ class WebRiskServiceClient {
   /// update multiple ThreatList databases, this method needs to be called once
   /// for each list.
   ///
-  /// @param threat_type  Required. The threat list to update. Only a single ThreatType should be specified
-  ///  per request. If you want to handle multiple ThreatTypes, you must make one
-  ///  request per ThreatType.
+  /// @param threat_type  Required. The threat list to update. Only a single ThreatType should be
+  ///  specified per request. If you want to handle multiple ThreatTypes, you must
+  ///  make one request per ThreatType.
   /// @param version_token  The current version token of the client for the requested list (the
   ///  client version that was received from the last successful diff).
   ///  If the client does not have a version token (this is the first time calling
@@ -117,8 +118,8 @@ class WebRiskServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.webrisk.v1.ComputeThreatListDiffRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L94}
-  /// [google.cloud.webrisk.v1.ComputeThreatListDiffResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L127}
+  /// [google.cloud.webrisk.v1.ComputeThreatListDiffRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L119}
+  /// [google.cloud.webrisk.v1.ComputeThreatListDiffResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L152}
   ///
   // clang-format on
   StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
@@ -158,8 +159,8 @@ class WebRiskServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.webrisk.v1.ComputeThreatListDiffRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L94}
-  /// [google.cloud.webrisk.v1.ComputeThreatListDiffResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L127}
+  /// [google.cloud.webrisk.v1.ComputeThreatListDiffRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L119}
+  /// [google.cloud.webrisk.v1.ComputeThreatListDiffResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L152}
   ///
   // clang-format on
   StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
@@ -176,7 +177,8 @@ class WebRiskServiceClient {
   /// empty response will be returned.
   ///
   /// @param uri  Required. The URI to be checked for matches.
-  /// @param threat_types  Required. The ThreatLists to search in. Multiple ThreatLists may be specified.
+  /// @param threat_types  Required. The ThreatLists to search in. Multiple ThreatLists may be
+  ///  specified.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -191,8 +193,8 @@ class WebRiskServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.webrisk.v1.SearchUrisRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L179}
-  /// [google.cloud.webrisk.v1.SearchUrisResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L187}
+  /// [google.cloud.webrisk.v1.SearchUrisRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L204}
+  /// [google.cloud.webrisk.v1.SearchUrisResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L213}
   ///
   // clang-format on
   StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
@@ -228,8 +230,8 @@ class WebRiskServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.webrisk.v1.SearchUrisRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L179}
-  /// [google.cloud.webrisk.v1.SearchUrisResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L187}
+  /// [google.cloud.webrisk.v1.SearchUrisRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L204}
+  /// [google.cloud.webrisk.v1.SearchUrisResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L213}
   ///
   // clang-format on
   StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
@@ -248,7 +250,8 @@ class WebRiskServiceClient {
   ///  hash. For JSON requests, this field is base64-encoded.
   ///  Note that if this parameter is provided by a URI, it must be encoded using
   ///  the web safe base64 variant (RFC 4648).
-  /// @param threat_types  Required. The ThreatLists to search in. Multiple ThreatLists may be specified.
+  /// @param threat_types  Required. The ThreatLists to search in. Multiple ThreatLists may be
+  ///  specified.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -263,8 +266,8 @@ class WebRiskServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.webrisk.v1.SearchHashesRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L203}
-  /// [google.cloud.webrisk.v1.SearchHashesResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L214}
+  /// [google.cloud.webrisk.v1.SearchHashesRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L229}
+  /// [google.cloud.webrisk.v1.SearchHashesResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L241}
   ///
   // clang-format on
   StatusOr<google::cloud::webrisk::v1::SearchHashesResponse> SearchHashes(
@@ -300,8 +303,8 @@ class WebRiskServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.webrisk.v1.SearchHashesRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L203}
-  /// [google.cloud.webrisk.v1.SearchHashesResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L214}
+  /// [google.cloud.webrisk.v1.SearchHashesRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L229}
+  /// [google.cloud.webrisk.v1.SearchHashesResponse]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L241}
   ///
   // clang-format on
   StatusOr<google::cloud::webrisk::v1::SearchHashesResponse> SearchHashes(
@@ -318,8 +321,8 @@ class WebRiskServiceClient {
   /// allowlisted projects can use this method during Early Access. Please reach
   /// out to Sales or your customer engineer to obtain access.
   ///
-  /// @param parent  Required. The name of the project that is making the submission. This string is in
-  ///  the format "projects/{project_number}".
+  /// @param parent  Required. The name of the project that is making the submission. This
+  ///  string is in the format "projects/{project_number}".
   /// @param submission  Required. The submission that contains the content of the phishing report.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -335,8 +338,8 @@ class WebRiskServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.webrisk.v1.CreateSubmissionRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L350}
-  /// [google.cloud.webrisk.v1.Submission]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L344}
+  /// [google.cloud.webrisk.v1.CreateSubmissionRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L493}
+  /// [google.cloud.webrisk.v1.Submission]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L371}
   ///
   // clang-format on
   StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
@@ -374,12 +377,59 @@ class WebRiskServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.webrisk.v1.CreateSubmissionRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L350}
-  /// [google.cloud.webrisk.v1.Submission]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L344}
+  /// [google.cloud.webrisk.v1.CreateSubmissionRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L493}
+  /// [google.cloud.webrisk.v1.Submission]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L371}
   ///
   // clang-format on
   StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
       google::cloud::webrisk::v1::CreateSubmissionRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Submits a URI suspected of containing malicious content to be reviewed.
+  /// Returns a google.longrunning.Operation which, once the review is complete,
+  /// is updated with its result. You can use the [Pub/Sub API]
+  /// (https://cloud.google.com/pubsub) to receive notifications for the returned
+  /// Operation. If the result verifies the existence of malicious content, the
+  /// site will be added to the [Google's Social Engineering lists]
+  /// (https://support.google.com/webmasters/answer/6350487/) in order to
+  /// protect users that could get exposed to this threat in the future. Only
+  /// allowlisted projects can use this method during Early Access. Please reach
+  /// out to Sales or your customer engineer to obtain access.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.webrisk.v1.SubmitUriRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.webrisk.v1.Submission] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.webrisk.v1.Submission]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L371}
+  /// [google.cloud.webrisk.v1.SubmitUriRequest]: @googleapis_reference_link{google/cloud/webrisk/v1/webrisk.proto#L508}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::webrisk::v1::Submission>> SubmitUri(
+      google::cloud::webrisk::v1::SubmitUriRequest const& request,
       Options opts = {});
 
  private:

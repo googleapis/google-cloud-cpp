@@ -49,6 +49,9 @@ class WebRiskServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency CreateSubmission(
       google::cloud::webrisk::v1::CreateSubmissionRequest const& request);
+
+  virtual google::cloud::Idempotency SubmitUri(
+      google::cloud::webrisk::v1::SubmitUriRequest const& request);
 };
 
 std::unique_ptr<WebRiskServiceConnectionIdempotencyPolicy>

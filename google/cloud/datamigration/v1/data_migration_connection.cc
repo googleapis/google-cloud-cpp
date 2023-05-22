@@ -166,6 +166,151 @@ DataMigrationServiceConnection::DeleteConnectionProfile(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
+DataMigrationServiceConnection::CreatePrivateConnection(
+    google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::clouddms::v1::PrivateConnection>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::clouddms::v1::PrivateConnection>
+DataMigrationServiceConnection::GetPrivateConnection(
+    google::cloud::clouddms::v1::GetPrivateConnectionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::clouddms::v1::PrivateConnection>
+DataMigrationServiceConnection::ListPrivateConnections(
+    google::cloud::clouddms::v1::
+        ListPrivateConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::clouddms::v1::PrivateConnection>>();
+}
+
+future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
+DataMigrationServiceConnection::DeletePrivateConnection(
+    google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
+DataMigrationServiceConnection::GetConversionWorkspace(
+    google::cloud::clouddms::v1::GetConversionWorkspaceRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::clouddms::v1::ConversionWorkspace>
+DataMigrationServiceConnection::ListConversionWorkspaces(
+    google::cloud::clouddms::v1::
+        ListConversionWorkspacesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::clouddms::v1::ConversionWorkspace>>();
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceConnection::CreateConversionWorkspace(
+    google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceConnection::UpdateConversionWorkspace(
+    google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
+DataMigrationServiceConnection::DeleteConversionWorkspace(
+    google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::clouddms::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceConnection::SeedConversionWorkspace(
+    google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceConnection::ImportMappingRules(
+    google::cloud::clouddms::v1::ImportMappingRulesRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceConnection::ConvertConversionWorkspace(
+    google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceConnection::CommitConversionWorkspace(
+    google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceConnection::RollbackConversionWorkspace(
+    google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceConnection::ApplyConversionWorkspace(
+    google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::clouddms::v1::DatabaseEntity>
+DataMigrationServiceConnection::DescribeDatabaseEntities(
+    google::cloud::clouddms::v1::
+        DescribeDatabaseEntitiesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::clouddms::v1::DatabaseEntity>>();
+}
+
+StatusOr<google::cloud::clouddms::v1::SearchBackgroundJobsResponse>
+DataMigrationServiceConnection::SearchBackgroundJobs(
+    google::cloud::clouddms::v1::SearchBackgroundJobsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<
+    google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsResponse>
+DataMigrationServiceConnection::DescribeConversionWorkspaceRevisions(
+    google::cloud::clouddms::v1::
+        DescribeConversionWorkspaceRevisionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<std::string> DataMigrationServiceConnection::FetchStaticIps(
+    google::cloud::clouddms::v1::
+        FetchStaticIpsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<std::string>>();
+}
+
 std::shared_ptr<DataMigrationServiceConnection>
 MakeDataMigrationServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

@@ -67,6 +67,11 @@ class MockWebRiskServiceConnection
       StatusOr<google::cloud::webrisk::v1::Submission>, CreateSubmission,
       (google::cloud::webrisk::v1::CreateSubmissionRequest const& request),
       (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::webrisk::v1::Submission>>,
+              SubmitUri,
+              (google::cloud::webrisk::v1::SubmitUriRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -66,6 +66,32 @@ WebRiskServiceMetadata::CreateSubmission(
   return child_->CreateSubmission(context, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+WebRiskServiceMetadata::AsyncSubmitUri(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::webrisk::v1::SubmitUriRequest const& request) {
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncSubmitUri(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+WebRiskServiceMetadata::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncGetOperation(cq, std::move(context), request);
+}
+
+future<Status> WebRiskServiceMetadata::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::longrunning::CancelOperationRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncCancelOperation(cq, std::move(context), request);
+}
+
 void WebRiskServiceMetadata::SetMetadata(grpc::ClientContext& context,
                                          std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

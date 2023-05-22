@@ -50,6 +50,16 @@ Options WebRiskServiceDefaultOptions(Options options) {
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
+  if (!options.has<webrisk_v1::WebRiskServicePollingPolicyOption>()) {
+    options.set<webrisk_v1::WebRiskServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            webrisk_v1::WebRiskServiceRetryPolicyOption::Type,
+            webrisk_v1::WebRiskServiceBackoffPolicyOption::Type>(
+            options.get<webrisk_v1::WebRiskServiceRetryPolicyOption>()->clone(),
+            options.get<webrisk_v1::WebRiskServiceBackoffPolicyOption>()
+                ->clone())
+            .clone());
+  }
   if (!options.has<
           webrisk_v1::WebRiskServiceConnectionIdempotencyPolicyOption>()) {
     options.set<webrisk_v1::WebRiskServiceConnectionIdempotencyPolicyOption>(

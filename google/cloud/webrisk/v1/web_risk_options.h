@@ -59,6 +59,16 @@ struct WebRiskServiceConnectionIdempotencyPolicyOption {
 };
 
 /**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-webrisk-options
+ */
+struct WebRiskServicePollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
  * The options applicable to WebRiskService.
  *
  * @ingroup google-cloud-webrisk-options
@@ -66,6 +76,7 @@ struct WebRiskServiceConnectionIdempotencyPolicyOption {
 using WebRiskServicePolicyOptionList =
     OptionList<WebRiskServiceRetryPolicyOption,
                WebRiskServiceBackoffPolicyOption,
+               WebRiskServicePollingPolicyOption,
                WebRiskServiceConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

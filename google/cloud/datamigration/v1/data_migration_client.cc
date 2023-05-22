@@ -269,6 +269,265 @@ DataMigrationServiceClient::DeleteConnectionProfile(
   return connection_->DeleteConnectionProfile(request);
 }
 
+future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
+DataMigrationServiceClient::CreatePrivateConnection(
+    std::string const& parent,
+    google::cloud::clouddms::v1::PrivateConnection const& private_connection,
+    std::string const& private_connection_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::clouddms::v1::CreatePrivateConnectionRequest request;
+  request.set_parent(parent);
+  *request.mutable_private_connection() = private_connection;
+  request.set_private_connection_id(private_connection_id);
+  return connection_->CreatePrivateConnection(request);
+}
+
+future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
+DataMigrationServiceClient::CreatePrivateConnection(
+    google::cloud::clouddms::v1::CreatePrivateConnectionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreatePrivateConnection(request);
+}
+
+StatusOr<google::cloud::clouddms::v1::PrivateConnection>
+DataMigrationServiceClient::GetPrivateConnection(std::string const& name,
+                                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::clouddms::v1::GetPrivateConnectionRequest request;
+  request.set_name(name);
+  return connection_->GetPrivateConnection(request);
+}
+
+StatusOr<google::cloud::clouddms::v1::PrivateConnection>
+DataMigrationServiceClient::GetPrivateConnection(
+    google::cloud::clouddms::v1::GetPrivateConnectionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetPrivateConnection(request);
+}
+
+StreamRange<google::cloud::clouddms::v1::PrivateConnection>
+DataMigrationServiceClient::ListPrivateConnections(std::string const& parent,
+                                                   Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::clouddms::v1::ListPrivateConnectionsRequest request;
+  request.set_parent(parent);
+  return connection_->ListPrivateConnections(request);
+}
+
+StreamRange<google::cloud::clouddms::v1::PrivateConnection>
+DataMigrationServiceClient::ListPrivateConnections(
+    google::cloud::clouddms::v1::ListPrivateConnectionsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListPrivateConnections(std::move(request));
+}
+
+future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
+DataMigrationServiceClient::DeletePrivateConnection(std::string const& name,
+                                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::clouddms::v1::DeletePrivateConnectionRequest request;
+  request.set_name(name);
+  return connection_->DeletePrivateConnection(request);
+}
+
+future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
+DataMigrationServiceClient::DeletePrivateConnection(
+    google::cloud::clouddms::v1::DeletePrivateConnectionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeletePrivateConnection(request);
+}
+
+StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
+DataMigrationServiceClient::GetConversionWorkspace(std::string const& name,
+                                                   Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::clouddms::v1::GetConversionWorkspaceRequest request;
+  request.set_name(name);
+  return connection_->GetConversionWorkspace(request);
+}
+
+StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
+DataMigrationServiceClient::GetConversionWorkspace(
+    google::cloud::clouddms::v1::GetConversionWorkspaceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetConversionWorkspace(request);
+}
+
+StreamRange<google::cloud::clouddms::v1::ConversionWorkspace>
+DataMigrationServiceClient::ListConversionWorkspaces(std::string const& parent,
+                                                     Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::clouddms::v1::ListConversionWorkspacesRequest request;
+  request.set_parent(parent);
+  return connection_->ListConversionWorkspaces(request);
+}
+
+StreamRange<google::cloud::clouddms::v1::ConversionWorkspace>
+DataMigrationServiceClient::ListConversionWorkspaces(
+    google::cloud::clouddms::v1::ListConversionWorkspacesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListConversionWorkspaces(std::move(request));
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceClient::CreateConversionWorkspace(
+    std::string const& parent,
+    google::cloud::clouddms::v1::ConversionWorkspace const&
+        conversion_workspace,
+    std::string const& conversion_workspace_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::clouddms::v1::CreateConversionWorkspaceRequest request;
+  request.set_parent(parent);
+  *request.mutable_conversion_workspace() = conversion_workspace;
+  request.set_conversion_workspace_id(conversion_workspace_id);
+  return connection_->CreateConversionWorkspace(request);
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceClient::CreateConversionWorkspace(
+    google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateConversionWorkspace(request);
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceClient::UpdateConversionWorkspace(
+    google::cloud::clouddms::v1::ConversionWorkspace const&
+        conversion_workspace,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest request;
+  *request.mutable_conversion_workspace() = conversion_workspace;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateConversionWorkspace(request);
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceClient::UpdateConversionWorkspace(
+    google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateConversionWorkspace(request);
+}
+
+future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
+DataMigrationServiceClient::DeleteConversionWorkspace(std::string const& name,
+                                                      Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest request;
+  request.set_name(name);
+  return connection_->DeleteConversionWorkspace(request);
+}
+
+future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
+DataMigrationServiceClient::DeleteConversionWorkspace(
+    google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteConversionWorkspace(request);
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceClient::SeedConversionWorkspace(
+    google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SeedConversionWorkspace(request);
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceClient::ImportMappingRules(
+    google::cloud::clouddms::v1::ImportMappingRulesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportMappingRules(request);
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceClient::ConvertConversionWorkspace(
+    google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ConvertConversionWorkspace(request);
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceClient::CommitConversionWorkspace(
+    google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CommitConversionWorkspace(request);
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceClient::RollbackConversionWorkspace(
+    google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RollbackConversionWorkspace(request);
+}
+
+future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+DataMigrationServiceClient::ApplyConversionWorkspace(
+    google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ApplyConversionWorkspace(request);
+}
+
+StreamRange<google::cloud::clouddms::v1::DatabaseEntity>
+DataMigrationServiceClient::DescribeDatabaseEntities(
+    google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DescribeDatabaseEntities(std::move(request));
+}
+
+StatusOr<google::cloud::clouddms::v1::SearchBackgroundJobsResponse>
+DataMigrationServiceClient::SearchBackgroundJobs(
+    google::cloud::clouddms::v1::SearchBackgroundJobsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SearchBackgroundJobs(request);
+}
+
+StatusOr<
+    google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsResponse>
+DataMigrationServiceClient::DescribeConversionWorkspaceRevisions(
+    google::cloud::clouddms::v1::
+        DescribeConversionWorkspaceRevisionsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DescribeConversionWorkspaceRevisions(request);
+}
+
+StreamRange<std::string> DataMigrationServiceClient::FetchStaticIps(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::clouddms::v1::FetchStaticIpsRequest request;
+  request.set_name(name);
+  return connection_->FetchStaticIps(request);
+}
+
+StreamRange<std::string> DataMigrationServiceClient::FetchStaticIps(
+    google::cloud::clouddms::v1::FetchStaticIpsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->FetchStaticIps(std::move(request));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datamigration_v1
 }  // namespace cloud

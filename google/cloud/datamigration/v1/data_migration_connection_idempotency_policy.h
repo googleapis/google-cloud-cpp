@@ -91,6 +91,75 @@ class DataMigrationServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteConnectionProfile(
       google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
           request);
+
+  virtual google::cloud::Idempotency CreatePrivateConnection(
+      google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetPrivateConnection(
+      google::cloud::clouddms::v1::GetPrivateConnectionRequest const& request);
+
+  virtual google::cloud::Idempotency ListPrivateConnections(
+      google::cloud::clouddms::v1::ListPrivateConnectionsRequest request);
+
+  virtual google::cloud::Idempotency DeletePrivateConnection(
+      google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetConversionWorkspace(
+      google::cloud::clouddms::v1::GetConversionWorkspaceRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListConversionWorkspaces(
+      google::cloud::clouddms::v1::ListConversionWorkspacesRequest request);
+
+  virtual google::cloud::Idempotency CreateConversionWorkspace(
+      google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateConversionWorkspace(
+      google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteConversionWorkspace(
+      google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
+          request);
+
+  virtual google::cloud::Idempotency SeedConversionWorkspace(
+      google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ImportMappingRules(
+      google::cloud::clouddms::v1::ImportMappingRulesRequest const& request);
+
+  virtual google::cloud::Idempotency ConvertConversionWorkspace(
+      google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CommitConversionWorkspace(
+      google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
+          request);
+
+  virtual google::cloud::Idempotency RollbackConversionWorkspace(
+      google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ApplyConversionWorkspace(
+      google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DescribeDatabaseEntities(
+      google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest request);
+
+  virtual google::cloud::Idempotency SearchBackgroundJobs(
+      google::cloud::clouddms::v1::SearchBackgroundJobsRequest const& request);
+
+  virtual google::cloud::Idempotency DescribeConversionWorkspaceRevisions(
+      google::cloud::clouddms::v1::
+          DescribeConversionWorkspaceRevisionsRequest const& request);
+
+  virtual google::cloud::Idempotency FetchStaticIps(
+      google::cloud::clouddms::v1::FetchStaticIpsRequest request);
 };
 
 std::unique_ptr<DataMigrationServiceConnectionIdempotencyPolicy>

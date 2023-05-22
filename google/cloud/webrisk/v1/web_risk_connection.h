@@ -22,10 +22,13 @@
 #include "google/cloud/webrisk/v1/internal/web_risk_retry_traits.h"
 #include "google/cloud/webrisk/v1/web_risk_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/webrisk/v1/webrisk.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -75,6 +78,9 @@ class WebRiskServiceConnection {
 
   virtual StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
       google::cloud::webrisk::v1::CreateSubmissionRequest const& request);
+
+  virtual future<StatusOr<google::cloud::webrisk::v1::Submission>> SubmitUri(
+      google::cloud::webrisk::v1::SubmitUriRequest const& request);
 };
 
 /**
