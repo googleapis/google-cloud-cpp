@@ -26,7 +26,7 @@ namespace cloud {
  *
  * @warning The types, functions, aliases, and objects in this namespace are
  *   subject to change without notice. Some of these features depend on aspects
- *   of the service that are not generally avaiable, do not have an SLA, and
+ *   of the service that are not generally available, do not have an SLA, and
  *   may require projects to be allow-listed.
  */
 namespace storage_experimental {
