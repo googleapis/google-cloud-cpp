@@ -37,6 +37,16 @@ class TraceExporter final : public opentelemetry::sdk::trace::SpanExporter {
       opentelemetry::nostd::span<
           std::unique_ptr<opentelemetry::sdk::trace::Recordable>> const&
           spans) noexcept override {
+    return ExportImpl(spans);
+  }
+
+  bool Shutdown(std::chrono::microseconds) noexcept override { return true; }
+
+ private:
+  opentelemetry::sdk::common::ExportResult ExportImpl(
+      opentelemetry::nostd::span<
+          std::unique_ptr<opentelemetry::sdk::trace::Recordable>> const&
+          spans) {
     google::devtools::cloudtrace::v2::BatchWriteSpansRequest request;
     request.set_name(project_.FullName());
     for (auto& recordable : spans) {
@@ -52,9 +62,6 @@ class TraceExporter final : public opentelemetry::sdk::trace::SpanExporter {
     return opentelemetry::sdk::common::ExportResult::kFailure;
   }
 
-  bool Shutdown(std::chrono::microseconds) noexcept override { return true; }
-
- private:
   Project project_;
   trace_v2::TraceServiceClient client_;
 };

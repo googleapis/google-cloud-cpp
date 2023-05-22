@@ -139,6 +139,16 @@ class Recordable final : public opentelemetry::sdk::trace::Recordable {
           instrumentation_scope) noexcept override;
 
  private:
+  void SetIdentityImpl(opentelemetry::trace::SpanContext const& span_context,
+                       opentelemetry::trace::SpanId parent_span_id);
+  void AddEventImpl(opentelemetry::nostd::string_view name,
+                    opentelemetry::common::SystemTimestamp timestamp,
+                    opentelemetry::common::KeyValueIterable const& attributes);
+  void AddLinkImpl(opentelemetry::trace::SpanContext const& span_context,
+                   opentelemetry::common::KeyValueIterable const& attributes);
+  void SetStatusImpl(opentelemetry::trace::StatusCode code,
+                     opentelemetry::nostd::string_view description);
+
   Project project_;
   google::devtools::cloudtrace::v2::Span span_;
 };
