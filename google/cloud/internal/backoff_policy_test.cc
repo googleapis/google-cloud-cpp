@@ -77,7 +77,7 @@ TEST(ExponentialBackoffPolicy, VerifyFullJitterPolicy) {
 
 /// @test Verify a full jitter policy, where the minimum delay is set to 0.
 TEST(ExponentialBackoffPolicy, VerifyFullJitterPolicy) {
-  ExponentialBackoffPolicy tested(ms(10), ms(0), ms(50), 2.0);
+  ExponentialBackoffPolicy tested(ms(0), ms(10), ms(50), 2.0);
 
   auto delay = tested.OnCompletion();
   EXPECT_LE(ms(0), delay);

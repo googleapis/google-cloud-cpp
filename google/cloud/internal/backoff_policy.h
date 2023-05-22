@@ -181,8 +181,8 @@ class ExponentialBackoffPolicy : public BackoffPolicy {
   template <typename Rep1, typename Period1, typename Rep2, typename Period2,
             typename Rep3, typename Period3>
   ExponentialBackoffPolicy(
-      std::chrono::duration<Rep1, Period1> initial_delay_range,
-      std::chrono::duration<Rep2, Period2> minimum_delay,
+      std::chrono::duration<Rep1, Period1> minimum_delay,
+      std::chrono::duration<Rep2, Period2> initial_delay_upper_bound,
       std::chrono::duration<Rep3, Period3> maximum_delay, double scaling)
       : minimum_delay_(minimum_delay),
         initial_delay_upper_bound_(initial_delay_upper_bound),
