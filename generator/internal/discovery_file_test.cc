@@ -184,7 +184,7 @@ message DoFooRequest {
   // Description for fooId.
   optional string foo_id = 1;
 
-  optional Foo my_foo_resource = 2 [json_name="resource"];
+  optional Foo my_foo_resource = 2 [json_name="__json_request_body"];
 
   // Description for project.
   optional string project = 3;
@@ -285,7 +285,7 @@ message DoFooRequest {
   // Description for fooId.
   optional string foo_id = 1;
 
-  optional Foo my_foo_resource = 2 [json_name="resource"];
+  optional Foo my_foo_resource = 2 [json_name="__json_request_body"];
 
   // Description for project.
   optional string project = 3;
@@ -360,7 +360,7 @@ message DoFooRequest {
   // Description for fooId.
   optional string foo_id = 1;
 
-  optional Foo my_foo_resource = 2 [json_name="resource"];
+  optional Foo my_foo_resource = 2 [json_name="__json_request_body"];
 
   // Description for project.
   optional string project = 3;

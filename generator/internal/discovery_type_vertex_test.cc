@@ -141,9 +141,9 @@ TEST(DiscoveryTypeVertexTest, FormatFieldOptionsRequiredIsResource) {
   auto json =
       nlohmann::json::parse(kRequiredIsResourceFieldJson, nullptr, false);
   ASSERT_TRUE(json.is_object());
-  EXPECT_THAT(
-      DiscoveryTypeVertex::FormatFieldOptions("test_field", json),
-      Eq(" [(google.api.field_behavior) = REQUIRED,json_name=\"resource\"]"));
+  EXPECT_THAT(DiscoveryTypeVertex::FormatFieldOptions("test_field", json),
+              Eq(" [(google.api.field_behavior) = "
+                 "REQUIRED,json_name=\"__json_request_body\"]"));
 }
 
 struct DetermineTypesSuccess {

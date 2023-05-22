@@ -497,7 +497,7 @@ std::string FormatResourceAccessor(
     google::protobuf::Descriptor const& request) {
   for (int i = 0; i != request.field_count(); ++i) {
     auto const* field = request.field(i);
-    if (field->has_json_name() && field->json_name() == "resource") {
+    if (field->has_json_name() && field->json_name() == "__json_request_body") {
       return absl::StrCat("request.", field->name(), "()");
     }
   }
