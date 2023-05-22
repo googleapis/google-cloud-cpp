@@ -177,8 +177,17 @@ bool AppendIfXRefSect(std::ostream& os, MarkdownContext const& ctx,
                       pugi::xml_node node) {
   if (std::string_view{node.name()} != "xrefsect") return false;
   if (ctx.skip_xrefsect) return true;
+  auto const title = std::string_view{node.child_value("xreftitle")};
+  if (title == "Deprecated") {
+    // The GCP site has a special representation for deprecated elements.
+    os << R"""(<aside class="deprecated"><b>Deprecated:</b>)"""
+       << "\n";
+    AppendDescriptionType(os, ctx, node.child("xrefdescription"));
+    os << "\n</aside>";
+    return true;
+  }
   // Add the title in bold, then the description.
-  os << "**" << node.child_value("xreftitle") << "**\n\n";
+  os << "**" << title << "**\n\n";
   AppendDescriptionType(os, ctx, node.child("xrefdescription"));
   return true;
 }
@@ -944,7 +953,6 @@ bool AppendIfSimpleSect(std::ostream& os, MarkdownContext const& ctx,
 
   auto nested = ctx;
   nested.paragraph_start = "\n";
-  nested.paragraph_indent = ctx.paragraph_indent + "> ";
 
   auto const kind = std::string{node.attribute("kind").as_string()};
   // In DocFX YAML the return description and type are captured as
@@ -952,6 +960,7 @@ bool AppendIfSimpleSect(std::ostream& os, MarkdownContext const& ctx,
   // just repeat the text.
   if (kind == "return") return true;
 
+  auto closing = std::string_view{};
   if (kind == "see") {
     nested = ctx;
     os << "\n\n###### See Also";
@@ -962,17 +971,27 @@ bool AppendIfSimpleSect(std::ostream& os, MarkdownContext const& ctx,
     AppendTitle(os, nested, node);
     nested.paragraph_start = "\n\n";
   } else if (kind == "note") {
-    os << "\n";
-    os << nested.paragraph_start << nested.paragraph_indent << "**Note:**";
-  } else if (kind == "warning") {
-    os << "\n";
-    os << nested.paragraph_start << nested.paragraph_indent << "**Warning:**";
+    os << "\n"
+       << nested.paragraph_start << nested.paragraph_indent
+       << R"""(<aside class="note"><b>Note:</b>)""";
+    closing = "\n</aside>";
   } else if (kind == "remark") {
-    os << "\n";
-    os << nested.paragraph_start << nested.paragraph_indent << "Remark:";
+    // Use `note` class because the GCP side does not have something that
+    // strictly matches "remark".
+    os << "\n"
+       << nested.paragraph_start << nested.paragraph_indent
+       << R"""(<aside class="note"><b>Remark:</b>)""";
+    closing = "\n</aside>";
+  } else if (kind == "warning") {
+    os << "\n"
+       << nested.paragraph_start << nested.paragraph_indent
+       << R"""(<aside class="warning"><b>Warning:</b>)""";
+    closing = "\n</aside>";
   } else if (kind == "attention") {
-    os << "\n";
-    os << nested.paragraph_start << nested.paragraph_indent << "Attention:";
+    os << "\n"
+       << nested.paragraph_start << nested.paragraph_indent
+       << R"""(<aside class="caution"><b>Attention:</b>)""";
+    closing = "\n</aside>";
   } else {
     std::ostringstream os;
     os << "Unknown simplesect kind in " << __func__ << "(): node=";
@@ -985,6 +1004,7 @@ bool AppendIfSimpleSect(std::ostream& os, MarkdownContext const& ctx,
     if (AppendIfParagraph(os, nested, child)) continue;
     UnknownChildType(__func__, child);
   }
+  os << closing;
   return true;
 }
 

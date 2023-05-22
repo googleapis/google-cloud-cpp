@@ -251,15 +251,15 @@ TEST(Doxygen2Markdown, DetailedDescriptionNotSkipped) {
       </compounddef>
     </doxygen>)xml";
 
-  auto constexpr kExpected = R"md(**Deprecated**
+  auto constexpr kExpected = R"md(<aside class="deprecated"><b>Deprecated:</b>
+This namespace exists for backwards compatibility. Use the types defined in [kms_v1](xref:namespacegoogle_1_1cloud_1_1kms__v1) instead of the aliases defined in this namespace.
+</aside>
+
+<aside class="deprecated"><b>Deprecated:</b>
+
 
 This namespace exists for backwards compatibility. Use the types defined in [kms_v1](xref:namespacegoogle_1_1cloud_1_1kms__v1) instead of the aliases defined in this namespace.
-
-**Deprecated**
-
-
-
-This namespace exists for backwards compatibility. Use the types defined in [kms_v1](xref:namespacegoogle_1_1cloud_1_1kms__v1) instead of the aliases defined in this namespace.)md";
+</aside>)md";
   pugi::xml_document doc;
   doc.load_string(kXml);
   auto selected = doc.select_node("//detaileddescription");
@@ -599,13 +599,15 @@ TEST(Doxygen2Markdown, ParagraphSimpleSect) {
 
 
 
-> Remark:
-> First remark paragraph.
-> Second remark paragraph.
+<aside class="note"><b>Remark:</b>
+First remark paragraph.
+Second remark paragraph.
+</aside>
 
-> **Warning:**
-> First warning paragraph.
-> Second warning paragraph.)md";
+<aside class="warning"><b>Warning:</b>
+First warning paragraph.
+Second warning paragraph.
+</aside>)md";
 
   pugi::xml_document doc;
   doc.load_string(kXml);
@@ -820,9 +822,9 @@ TEST(Doxygen2Markdown, ParagraphXrefSect) {
       </para>
     </doxygen>)xml";
 
-  auto constexpr kExpected = R"md(**Deprecated**
-
-Use [`Options`](xref:classgoogle_1_1cloud_1_1Options) and [`EndpointOption`](xref:structgoogle_1_1cloud_1_1EndpointOption).)md";
+  auto constexpr kExpected = R"md(<aside class="deprecated"><b>Deprecated:</b>
+Use [`Options`](xref:classgoogle_1_1cloud_1_1Options) and [`EndpointOption`](xref:structgoogle_1_1cloud_1_1EndpointOption).
+</aside>)md";
   pugi::xml_document doc;
   doc.load_string(kXml);
   auto selected = doc.select_node("//*[@id='tested-node']");
@@ -1093,17 +1095,18 @@ TEST(Doxygen2Markdown, SimpleSectBlockQuote) {
     </doxygen>)xml";
 
   auto constexpr kExpectedBody = R"md(
-> First paragraph.
-> Second paragraph.)md";
+First paragraph.
+Second paragraph.
+</aside>)md";
 
   struct TestCase {
     std::string kind;
     std::string header;
   } const cases[] = {
-      {"warning", "> **Warning:**"},
-      {"note", "> **Note:**"},
-      {"remark", "> Remark:"},
-      {"attention", "> Attention:"},
+      {"warning", "<aside class=\"warning\"><b>Warning:</b>"},
+      {"note", "<aside class=\"note\"><b>Note:</b>"},
+      {"remark", "<aside class=\"note\"><b>Remark:</b>"},
+      {"attention", "<aside class=\"caution\"><b>Attention:</b>"},
   };
 
   for (auto const& test : cases) {

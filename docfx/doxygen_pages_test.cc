@@ -39,9 +39,11 @@ TEST(DoxygenPages, CommonPage) {
               </listitem></itemizedlist>
             </para>
             <para>
-              <simplesect kind="warning"><para>The symbols in the <computeroutput>google::cloud::internal</computeroutput> namespace are implementation details and subject to change and/or removal without notice.</para>
-              </simplesect>
+              <simplesect kind="note"><para>Say something noteworthy.</para></simplesect>
+              <simplesect kind="remark"><para>Say something remarkable.</para></simplesect>
               <simplesect kind="warning"><para>The symbols in the <computeroutput>google::cloud::testing_util</computeroutput> namespace are implementation details and subject to change and/or removal without notice.</para>
+              </simplesect>
+              <simplesect kind="attention"><para>The symbols in the <computeroutput>google::cloud::internal</computeroutput> namespace are implementation details and subject to change and/or removal without notice.</para>
               </simplesect>
             </para>
             <sect2 id="index_1autotoc_md1">
@@ -77,11 +79,21 @@ This library contains common components shared by all the Google Cloud C++ Clien
 
 
 
-> **Warning:**
-> The symbols in the `google::cloud::internal` namespace are implementation details and subject to change and/or removal without notice.
+<aside class="note"><b>Note:</b>
+Say something noteworthy.
+</aside>
 
-> **Warning:**
-> The symbols in the `google::cloud::testing_util` namespace are implementation details and subject to change and/or removal without notice.
+<aside class="note"><b>Remark:</b>
+Say something remarkable.
+</aside>
+
+<aside class="warning"><b>Warning:</b>
+The symbols in the `google::cloud::testing_util` namespace are implementation details and subject to change and/or removal without notice.
+</aside>
+
+<aside class="caution"><b>Attention:</b>
+The symbols in the `google::cloud::internal` namespace are implementation details and subject to change and/or removal without notice.
+</aside>
 
 ### More information
 
