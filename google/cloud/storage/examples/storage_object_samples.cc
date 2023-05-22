@@ -580,8 +580,8 @@ google::cloud::storage::Client StorageRetries(std::vector<std::string> const&) {
   // Retries only idempotent operations.
   options.set<gcs::IdempotencyPolicyOption>(
       gcs::StrictIdempotencyPolicy().clone());
-  // On error, it backs off for a random delay between [1, 3] seconds, then [1,
-  // 9] seconds, then [1, 27] seconds, etc. The backoff time never grows larger
+  // On error, it backs off for a random delay between [1, 3] seconds, then [3,
+  // 9] seconds, then [9, 27] seconds, etc. The backoff time never grows larger
   // than 1 minute.
   options.set<gcs::BackoffPolicyOption>(
       gcs::ExponentialBackoffPolicy(

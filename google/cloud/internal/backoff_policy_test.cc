@@ -53,42 +53,6 @@ TEST(ExponentialBackoffPolicy, VerifyFullJitterPolicy) {
   EXPECT_LE(ms(0), delay);
   EXPECT_GE(ms(40), delay);
   delay = tested.OnCompletion();
-  EXPECT_LE(ms(10), delay);
-  EXPECT_GE(ms(100), delay);
-}
-
-/// @test Verify a full jitter policy, where the minimum delay is set to 0.
-TEST(ExponentialBackoffPolicy, VerifyFullJitterPolicy) {
-  ExponentialBackoffPolicy tested(ms(0), ms(10), ms(50), 2.0);
-
-  auto delay = tested.OnCompletion();
-  EXPECT_LE(ms(0), delay);
-  EXPECT_GE(ms(10), delay);
-  delay = tested.OnCompletion();
-  EXPECT_LE(ms(0), delay);
-  EXPECT_GE(ms(20), delay);
-  delay = tested.OnCompletion();
-  EXPECT_LE(ms(0), delay);
-  EXPECT_GE(ms(40), delay);
-  delay = tested.OnCompletion();
-  EXPECT_LE(ms(10), delay);
-  EXPECT_GE(ms(100), delay);
-}
-
-/// @test Verify a full jitter policy, where the minimum delay is set to 0.
-TEST(ExponentialBackoffPolicy, VerifyFullJitterPolicy) {
-  ExponentialBackoffPolicy tested(ms(10), ms(0), ms(50), 2.0);
-
-  auto delay = tested.OnCompletion();
-  EXPECT_LE(ms(0), delay);
-  EXPECT_GE(ms(10), delay);
-  delay = tested.OnCompletion();
-  EXPECT_LE(ms(0), delay);
-  EXPECT_GE(ms(20), delay);
-  delay = tested.OnCompletion();
-  EXPECT_LE(ms(0), delay);
-  EXPECT_GE(ms(40), delay);
-  delay = tested.OnCompletion();
   EXPECT_LE(ms(0), delay);
   EXPECT_GE(ms(50), delay);
 }
