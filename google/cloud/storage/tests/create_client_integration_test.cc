@@ -80,7 +80,7 @@ TEST_F(CreateClientIntegrationTest, SettingPolicies) {
   auto client =
       Client(ClientOptions(std::move(credentials)),
              LimitedErrorCountRetryPolicy(/*maximum_failures=*/5),
-             ExponentialBackoffPolicy(/*initial_delay=*/std::chrono::seconds(1),
+             ExponentialBackoffPolicy(/*minimum_delay=*/std::chrono::seconds(1),
                                       /*maximum_delay=*/std::chrono::minutes(5),
                                       /*scaling=*/1.5));
   ASSERT_NO_FATAL_FAILURE(
