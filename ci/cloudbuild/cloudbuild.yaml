@@ -191,4 +191,4 @@ steps:
       query+=" AND substitutions.COMMIT_SHA != ${COMMIT_SHA}"
       query+=" AND create_time < ${ctime}"
       gcloud builds list --region 'us-east1' --ongoing --format='value(id)' --filter "${query}" | \
-        xargs -r -t gcloud builds cancel --region 'us-east1'
+        xargs -r -t gcloud builds cancel --region 'us-east1' || exit 0
