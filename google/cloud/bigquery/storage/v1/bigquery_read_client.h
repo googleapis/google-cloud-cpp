@@ -116,6 +116,7 @@ class BigQueryReadClient {
   ///  non-negative. The number of streams may be lower than the requested number,
   ///  depending on the amount parallelism that is reasonable for the table.
   ///  There is a default system max limit of 1,000.
+  ///  @n
   ///  This must be greater than or equal to preferred_min_stream_count.
   ///  Typically, clients should either leave this unset to let the system to
   ///  determine an upper bound OR set this a size for the maximum "units of work"

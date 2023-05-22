@@ -252,7 +252,9 @@ class DlpServiceClient {
   /// learn more.
   ///
   /// @param parent  The parent resource name.
+  ///  @n
   ///  The format of this value is as follows:
+  ///  @n
   ///      locations/<var>LOCATION_ID</var>
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -316,9 +318,11 @@ class DlpServiceClient {
   /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
   ///
   /// @param parent  Required. Parent resource name.
+  ///  @n
   ///  The format of this value varies depending on the scope of the request
   ///  (project or organization) and whether you have [specified a processing
   ///  location](https://cloud.google.com/dlp/docs/specifying-location):
+  ///  @n
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
   ///  + Projects scope, no location specified (defaults to global):<br/>
@@ -327,9 +331,11 @@ class DlpServiceClient {
   ///    `organizations/`<var>ORG_ID</var>`/locations/`<var>LOCATION_ID</var>
   ///  + Organizations scope, no location specified (defaults to global):<br/>
   ///    `organizations/`<var>ORG_ID</var>
+  ///  @n
   ///  The following example `parent` string specifies a parent project with the
   ///  identifier `example-project`, and specifies the `europe-west3` location
   ///  for processing data:
+  ///  @n
   ///      parent=projects/example-project/locations/europe-west3
   /// @param inspect_template  Required. The InspectTemplate to create.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -523,9 +529,11 @@ class DlpServiceClient {
   /// See https://cloud.google.com/dlp/docs/creating-templates to learn more.
   ///
   /// @param parent  Required. Parent resource name.
+  ///  @n
   ///  The format of this value varies depending on the scope of the request
   ///  (project or organization) and whether you have [specified a processing
   ///  location](https://cloud.google.com/dlp/docs/specifying-location):
+  ///  @n
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
   ///  + Projects scope, no location specified (defaults to global):<br/>
@@ -534,9 +542,11 @@ class DlpServiceClient {
   ///    `organizations/`<var>ORG_ID</var>`/locations/`<var>LOCATION_ID</var>
   ///  + Organizations scope, no location specified (defaults to global):<br/>
   ///    `organizations/`<var>ORG_ID</var>
+  ///  @n
   ///  The following example `parent` string specifies a parent project with the
   ///  identifier `example-project`, and specifies the `europe-west3` location
   ///  for processing data:
+  ///  @n
   ///      parent=projects/example-project/locations/europe-west3
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -673,9 +683,11 @@ class DlpServiceClient {
   /// more.
   ///
   /// @param parent  Required. Parent resource name.
+  ///  @n
   ///  The format of this value varies depending on the scope of the request
   ///  (project or organization) and whether you have [specified a processing
   ///  location](https://cloud.google.com/dlp/docs/specifying-location):
+  ///  @n
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
   ///  + Projects scope, no location specified (defaults to global):<br/>
@@ -684,9 +696,11 @@ class DlpServiceClient {
   ///    `organizations/`<var>ORG_ID</var>`/locations/`<var>LOCATION_ID</var>
   ///  + Organizations scope, no location specified (defaults to global):<br/>
   ///    `organizations/`<var>ORG_ID</var>
+  ///  @n
   ///  The following example `parent` string specifies a parent project with the
   ///  identifier `example-project`, and specifies the `europe-west3` location
   ///  for processing data:
+  ///  @n
   ///      parent=projects/example-project/locations/europe-west3
   /// @param deidentify_template  Required. The DeidentifyTemplate to create.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -890,9 +904,11 @@ class DlpServiceClient {
   /// more.
   ///
   /// @param parent  Required. Parent resource name.
+  ///  @n
   ///  The format of this value varies depending on the scope of the request
   ///  (project or organization) and whether you have [specified a processing
   ///  location](https://cloud.google.com/dlp/docs/specifying-location):
+  ///  @n
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
   ///  + Projects scope, no location specified (defaults to global):<br/>
@@ -901,9 +917,11 @@ class DlpServiceClient {
   ///    `organizations/`<var>ORG_ID</var>`/locations/`<var>LOCATION_ID</var>
   ///  + Organizations scope, no location specified (defaults to global):<br/>
   ///    `organizations/`<var>ORG_ID</var>
+  ///  @n
   ///  The following example `parent` string specifies a parent project with the
   ///  identifier `example-project`, and specifies the `europe-west3` location
   ///  for processing data:
+  ///  @n
   ///      parent=projects/example-project/locations/europe-west3
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -1043,16 +1061,20 @@ class DlpServiceClient {
   /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
   ///
   /// @param parent  Required. Parent resource name.
+  ///  @n
   ///  The format of this value varies depending on whether you have [specified a
   ///  processing
   ///  location](https://cloud.google.com/dlp/docs/specifying-location):
+  ///  @n
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
   ///  + Projects scope, no location specified (defaults to global):<br/>
   ///    `projects/`<var>PROJECT_ID</var>
+  ///  @n
   ///  The following example `parent` string specifies a parent project with the
   ///  identifier `example-project`, and specifies the `europe-west3` location
   ///  for processing data:
+  ///  @n
   ///      parent=projects/example-project/locations/europe-west3
   /// @param job_trigger  Required. The JobTrigger to create.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1308,16 +1330,20 @@ class DlpServiceClient {
   /// See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.
   ///
   /// @param parent  Required. Parent resource name.
+  ///  @n
   ///  The format of this value varies depending on whether you have [specified a
   ///  processing
   ///  location](https://cloud.google.com/dlp/docs/specifying-location):
+  ///  @n
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
   ///  + Projects scope, no location specified (defaults to global):<br/>
   ///    `projects/`<var>PROJECT_ID</var>
+  ///  @n
   ///  The following example `parent` string specifies a parent project with the
   ///  identifier `example-project`, and specifies the `europe-west3` location
   ///  for processing data:
+  ///  @n
   ///      parent=projects/example-project/locations/europe-west3
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -1489,16 +1515,20 @@ class DlpServiceClient {
   /// be all types, but may change over time as detectors are updated.
   ///
   /// @param parent  Required. Parent resource name.
+  ///  @n
   ///  The format of this value varies depending on whether you have [specified a
   ///  processing
   ///  location](https://cloud.google.com/dlp/docs/specifying-location):
+  ///  @n
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
   ///  + Projects scope, no location specified (defaults to global):<br/>
   ///    `projects/`<var>PROJECT_ID</var>
+  ///  @n
   ///  The following example `parent` string specifies a parent project with the
   ///  identifier `example-project`, and specifies the `europe-west3` location
   ///  for processing data:
+  ///  @n
   ///      parent=projects/example-project/locations/europe-west3
   /// @param inspect_job  An inspection job scans a storage repository for InfoTypes.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1535,16 +1565,20 @@ class DlpServiceClient {
   /// be all types, but may change over time as detectors are updated.
   ///
   /// @param parent  Required. Parent resource name.
+  ///  @n
   ///  The format of this value varies depending on whether you have [specified a
   ///  processing
   ///  location](https://cloud.google.com/dlp/docs/specifying-location):
+  ///  @n
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
   ///  + Projects scope, no location specified (defaults to global):<br/>
   ///    `projects/`<var>PROJECT_ID</var>
+  ///  @n
   ///  The following example `parent` string specifies a parent project with the
   ///  identifier `example-project`, and specifies the `europe-west3` location
   ///  for processing data:
+  ///  @n
   ///      parent=projects/example-project/locations/europe-west3
   /// @param risk_job  A risk analysis job calculates re-identification risk metrics for a
   ///  BigQuery table.
@@ -1616,16 +1650,20 @@ class DlpServiceClient {
   /// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.
   ///
   /// @param parent  Required. Parent resource name.
+  ///  @n
   ///  The format of this value varies depending on whether you have [specified a
   ///  processing
   ///  location](https://cloud.google.com/dlp/docs/specifying-location):
+  ///  @n
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
   ///  + Projects scope, no location specified (defaults to global):<br/>
   ///    `projects/`<var>PROJECT_ID</var>
+  ///  @n
   ///  The following example `parent` string specifies a parent project with the
   ///  identifier `example-project`, and specifies the `europe-west3` location
   ///  for processing data:
+  ///  @n
   ///      parent=projects/example-project/locations/europe-west3
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -1860,9 +1898,11 @@ class DlpServiceClient {
   /// learn more.
   ///
   /// @param parent  Required. Parent resource name.
+  ///  @n
   ///  The format of this value varies depending on the scope of the request
   ///  (project or organization) and whether you have [specified a processing
   ///  location](https://cloud.google.com/dlp/docs/specifying-location):
+  ///  @n
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
   ///  + Projects scope, no location specified (defaults to global):<br/>
@@ -1871,9 +1911,11 @@ class DlpServiceClient {
   ///    `organizations/`<var>ORG_ID</var>`/locations/`<var>LOCATION_ID</var>
   ///  + Organizations scope, no location specified (defaults to global):<br/>
   ///    `organizations/`<var>ORG_ID</var>
+  ///  @n
   ///  The following example `parent` string specifies a parent project with the
   ///  identifier `example-project`, and specifies the `europe-west3` location
   ///  for processing data:
+  ///  @n
   ///      parent=projects/example-project/locations/europe-west3
   /// @param config  Required. Configuration of the storedInfoType to create.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -2076,16 +2118,20 @@ class DlpServiceClient {
   /// learn more.
   ///
   /// @param parent  Required. Parent resource name.
+  ///  @n
   ///  The format of this value varies depending on the scope of the request
   ///  (project or organization) and whether you have [specified a processing
   ///  location](https://cloud.google.com/dlp/docs/specifying-location):
+  ///  @n
   ///  + Projects scope, location specified:<br/>
   ///    `projects/`<var>PROJECT_ID</var>`/locations/`<var>LOCATION_ID</var>
   ///  + Projects scope, no location specified (defaults to global):<br/>
   ///    `projects/`<var>PROJECT_ID</var>
+  ///  @n
   ///  The following example `parent` string specifies a parent project with the
   ///  identifier `example-project`, and specifies the `europe-west3` location
   ///  for processing data:
+  ///  @n
   ///      parent=projects/example-project/locations/europe-west3
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.

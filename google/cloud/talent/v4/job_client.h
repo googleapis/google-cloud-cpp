@@ -93,6 +93,7 @@ class JobServiceClient {
   /// up to 5 minutes.
   ///
   /// @param parent  Required. The resource name of the tenant under which the job is created.
+  ///  @n
   ///  The format is "projects/{project_id}/tenants/{tenant_id}". For example,
   ///  "projects/foo/tenants/bar".
   /// @param job  Required. The Job to be created.
@@ -158,6 +159,7 @@ class JobServiceClient {
   /// Begins executing a batch create jobs operation.
   ///
   /// @param parent  Required. The resource name of the tenant under which the job is created.
+  ///  @n
   ///  The format is "projects/{project_id}/tenants/{tenant_id}". For example,
   ///  "projects/foo/tenants/bar".
   /// @param jobs  Required. The jobs to be created.
@@ -236,6 +238,7 @@ class JobServiceClient {
   /// within the last 90 days.
   ///
   /// @param name  Required. The resource name of the job to retrieve.
+  ///  @n
   ///  The format is
   ///  "projects/{project_id}/tenants/{tenant_id}/jobs/{job_id}". For
   ///  example, "projects/foo/tenants/bar/jobs/baz".
@@ -302,10 +305,12 @@ class JobServiceClient {
   ///
   /// @param job  Required. The Job to be updated.
   /// @param update_mask  Strongly recommended for the best service experience.
+  ///  @n
   ///  If [update_mask][google.cloud.talent.v4.UpdateJobRequest.update_mask] is
   ///  provided, only the specified fields in
   ///  [job][google.cloud.talent.v4.UpdateJobRequest.job] are updated. Otherwise
   ///  all the fields are updated.
+  ///  @n
   ///  A field mask to restrict the fields that are updated. Only
   ///  top level fields of [Job][google.cloud.talent.v4.Job] are supported.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -370,6 +375,7 @@ class JobServiceClient {
   /// Begins executing a batch update jobs operation.
   ///
   /// @param parent  Required. The resource name of the tenant under which the job is created.
+  ///  @n
   ///  The format is "projects/{project_id}/tenants/{tenant_id}". For example,
   ///  "projects/foo/tenants/bar".
   /// @param jobs  Required. The jobs to be updated.
@@ -450,6 +456,7 @@ class JobServiceClient {
   /// up to 5 minutes.
   ///
   /// @param name  Required. The resource name of the job to be deleted.
+  ///  @n
   ///  The format is
   ///  "projects/{project_id}/tenants/{tenant_id}/jobs/{job_id}". For
   ///  example, "projects/foo/tenants/bar/jobs/baz".
@@ -506,12 +513,16 @@ class JobServiceClient {
   /// Begins executing a batch delete jobs operation.
   ///
   /// @param parent  Required. The resource name of the tenant under which the job is created.
+  ///  @n
   ///  The format is "projects/{project_id}/tenants/{tenant_id}". For example,
   ///  "projects/foo/tenants/bar".
+  ///  @n
   ///  The parent of all of the jobs specified in `names` must match this field.
   /// @param names  The names of the jobs to delete.
+  ///  @n
   ///  The format is "projects/{project_id}/tenants/{tenant_id}/jobs/{job_id}".
   ///  For example, "projects/foo/tenants/bar/jobs/baz".
+  ///  @n
   ///  A maximum of 200 jobs can be deleted in a batch.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -585,18 +596,25 @@ class JobServiceClient {
   /// Lists jobs by filter.
   ///
   /// @param parent  Required. The resource name of the tenant under which the job is created.
+  ///  @n
   ///  The format is "projects/{project_id}/tenants/{tenant_id}". For example,
   ///  "projects/foo/tenants/bar".
   /// @param filter  Required. The filter string specifies the jobs to be enumerated.
+  ///  @n
   ///  Supported operator: =, AND
+  ///  @n
   ///  The fields eligible for filtering are:
+  ///  @n
   ///  * `companyName`
   ///  * `requisitionId`
   ///  * `status` Available values: OPEN, EXPIRED, ALL. Defaults to
   ///  OPEN if no value is specified.
+  ///  @n
   ///  At least one of `companyName` and `requisitionId` must present or an
   ///  INVALID_ARGUMENT error is thrown.
+  ///  @n
   ///  Sample Query:
+  ///  @n
   ///  * companyName = "projects/foo/tenants/bar/companies/baz"
   ///  * companyName = "projects/foo/tenants/bar/companies/baz" AND
   ///  requisitionId = "req-1"

@@ -402,6 +402,7 @@ class TransitionRouteGroupsClient {
   /// @param name  Required. The name of the
   ///  [TransitionRouteGroup][google.cloud.dialogflow.cx.v3.TransitionRouteGroup]
   ///  to delete. Format:
+  ///  @n
   ///  @code
   ///  projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>/transitionRouteGroups/<Transition Route Group ID>
   ///  @endcode

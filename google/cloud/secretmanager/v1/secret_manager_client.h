@@ -182,6 +182,7 @@ class SecretManagerServiceClient {
   /// @param parent  Required. The resource name of the project to associate with the
   ///  [Secret][google.cloud.secretmanager.v1.Secret], in the format `projects/*`.
   /// @param secret_id  Required. This must be unique within the project.
+  ///  @n
   ///  A secret ID is a string with a maximum length of 255 characters and can
   ///  contain uppercase and lowercase letters, numerals, and the hyphen (`-`) and
   ///  underscore (`_`) characters.
@@ -571,6 +572,7 @@ class SecretManagerServiceClient {
   ///
   /// @param name  Required. The resource name of the [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] in the format
   ///  `projects/*/secrets/*/versions/*`.
+  ///  @n
   ///  `projects/*/secrets/*/versions/latest` is an alias to the most recently
   ///  created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -638,6 +640,7 @@ class SecretManagerServiceClient {
   ///
   /// @param name  Required. The resource name of the [SecretVersion][google.cloud.secretmanager.v1.SecretVersion] in the format
   ///  `projects/*/secrets/*/versions/*`.
+  ///  @n
   ///  `projects/*/secrets/*/versions/latest` is an alias to the most recently
   ///  created [SecretVersion][google.cloud.secretmanager.v1.SecretVersion].
   /// @param opts Optional. Override the class-level options, such as retry and

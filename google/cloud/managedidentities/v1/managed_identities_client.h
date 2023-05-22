@@ -130,6 +130,7 @@ class ManagedIdentitiesServiceClient {
   ///  `projects/{project_id}/locations/global`
   /// @param domain_name  Required. The fully qualified domain name.
   ///  e.g. mydomain.myorganization.com, with the following restrictions:
+  ///  @n
   ///   * Must contain only lowercase letters, numbers, periods and hyphens.
   ///   * Must start with a letter.
   ///   * Must contain between 2-64 characters.

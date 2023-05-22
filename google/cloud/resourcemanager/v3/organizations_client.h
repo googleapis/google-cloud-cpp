@@ -156,6 +156,7 @@ class OrganizationsClient {
   ///
   /// @param query  Optional. An optional query string used to filter the Organizations to
   ///  return in the response. Query rules are case-insensitive.
+  ///  @n
   ///
   ///  ```
   ///  | Field            | Description                                |
@@ -164,8 +165,10 @@ class OrganizationsClient {
   ///  customer id. |
   ///  | domain           | Filters by domain.                         |
   ///  ```
+  ///  @n
   ///  Organizations may be queried by `directoryCustomerId` or by
   ///  `domain`, where the domain is a G Suite domain, for example:
+  ///  @n
   ///  * Query `directorycustomerid:123456789` returns Organization
   ///  resources with `owner.directory_customer_id` equal to `123456789`.
   ///  * Query `domain:google.com` returns Organization resources corresponding

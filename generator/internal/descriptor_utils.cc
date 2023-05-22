@@ -444,7 +444,7 @@ std::string FormatApiMethodSignatureParameters(
     }
     absl::StrReplaceAll(
         {
-            {"\n\n", "\n  /// "},
+            {"\n\n", "\n  ///  @n\n  /// "},
             {"\n", "\n  /// "},
         },
         &comment);

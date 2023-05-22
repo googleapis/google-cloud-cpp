@@ -118,6 +118,7 @@ class ProductSearchClient {
   ///   4096 characters.
   ///
   /// @param parent  Required. The project in which the ProductSet should be created.
+  ///  @n
   ///  Format is `projects/PROJECT_ID/locations/LOC_ID`.
   /// @param product_set  Required. The ProductSet to create.
   /// @param product_set_id  A user-supplied resource id for this ProductSet. If set, the server will
@@ -194,6 +195,7 @@ class ProductSearchClient {
   ///   than 1.
   ///
   /// @param parent  Required. The project from which ProductSets should be listed.
+  ///  @n
   ///  Format is `projects/PROJECT_ID/locations/LOC_ID`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -280,6 +282,7 @@ class ProductSearchClient {
   /// * Returns NOT_FOUND if the ProductSet does not exist.
   ///
   /// @param name  Required. Resource name of the ProductSet to get.
+  ///  @n
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -424,6 +427,7 @@ class ProductSearchClient {
   /// The actual image files are not deleted from Google Cloud Storage.
   ///
   /// @param name  Required. Resource name of the ProductSet to delete.
+  ///  @n
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -487,6 +491,7 @@ class ProductSearchClient {
   /// * Returns INVALID_ARGUMENT if product_category is missing or invalid.
   ///
   /// @param parent  Required. The project in which the Product should be created.
+  ///  @n
   ///  Format is
   ///  `projects/PROJECT_ID/locations/LOC_ID`.
   /// @param product  Required. The product to create.
@@ -565,6 +570,7 @@ class ProductSearchClient {
   /// * Returns INVALID_ARGUMENT if page_size is greater than 100 or less than 1.
   ///
   /// @param parent  Required. The project OR ProductSet from which Products should be listed.
+  ///  @n
   ///  Format:
   ///  `projects/PROJECT_ID/locations/LOC_ID`
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -651,6 +657,7 @@ class ProductSearchClient {
   /// * Returns NOT_FOUND if the Product does not exist.
   ///
   /// @param name  Required. Resource name of the Product to get.
+  ///  @n
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -812,6 +819,7 @@ class ProductSearchClient {
   /// until all related caches are refreshed.
   ///
   /// @param name  Required. Resource name of product to delete.
+  ///  @n
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -887,6 +895,7 @@ class ProductSearchClient {
   /// * Returns INVALID_ARGUMENT if bounding_poly contains more than 10 polygons.
   ///
   /// @param parent  Required. Resource name of the product in which to create the reference image.
+  ///  @n
   ///  Format is
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
   /// @param reference_image  Required. The reference image to create.
@@ -979,6 +988,7 @@ class ProductSearchClient {
   /// The actual image files are not deleted from Google Cloud Storage.
   ///
   /// @param name  Required. The resource name of the reference image to delete.
+  ///  @n
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceImages/IMAGE_ID`
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1044,6 +1054,7 @@ class ProductSearchClient {
   ///   than 1.
   ///
   /// @param parent  Required. Resource name of the product containing the reference images.
+  ///  @n
   ///  Format is
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1132,6 +1143,7 @@ class ProductSearchClient {
   /// * Returns NOT_FOUND if the specified image does not exist.
   ///
   /// @param name  Required. The resource name of the ReferenceImage to get.
+  ///  @n
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referenceImages/IMAGE_ID`.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1203,9 +1215,11 @@ class ProductSearchClient {
   /// * Returns NOT_FOUND if the Product or the ProductSet doesn't exist.
   ///
   /// @param name  Required. The resource name for the ProductSet to modify.
+  ///  @n
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
   /// @param product  Required. The resource name for the Product to be added to this ProductSet.
+  ///  @n
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1267,9 +1281,11 @@ class ProductSearchClient {
   /// Removes a Product from the specified ProductSet.
   ///
   /// @param name  Required. The resource name for the ProductSet to modify.
+  ///  @n
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
   /// @param product  Required. The resource name for the Product to be removed from this ProductSet.
+  ///  @n
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1332,6 +1348,7 @@ class ProductSearchClient {
   /// * Returns INVALID_ARGUMENT if page_size is greater than 100 or less than 1.
   ///
   /// @param name  Required. The ProductSet resource for which to retrieve Products.
+  ///  @n
   ///  Format is:
   ///  `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1426,6 +1443,7 @@ class ProductSearchClient {
   /// [ImportProductSetsGcsSource.csv_file_uri][google.cloud.vision.v1.ImportProductSetsGcsSource.csv_file_uri].
   ///
   /// @param parent  Required. The project in which the ProductSets should be imported.
+  ///  @n
   ///  Format is `projects/PROJECT_ID/locations/LOC_ID`.
   /// @param input_config  Required. The input content for the list of requests.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1540,6 +1558,7 @@ class ProductSearchClient {
   /// `Operation.metadata` contains `BatchOperationMetadata`. (progress)
   ///
   /// @param parent  Required. The project and location in which the Products should be deleted.
+  ///  @n
   ///  Format is `projects/PROJECT_ID/locations/LOC_ID`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.

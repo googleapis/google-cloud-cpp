@@ -301,6 +301,7 @@ class CloudSchedulerClient {
   ///
   /// @param job  Required. The new job properties.
   ///  [name][google.cloud.scheduler.v1.Job.name] must be specified.
+  ///  @n
   ///  Output only fields cannot be modified using UpdateJob.
   ///  Any value specified for an output only field will be ignored.
   /// @param update_mask  A  mask used to specify which fields of the job are being updated.

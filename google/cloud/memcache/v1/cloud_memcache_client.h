@@ -250,11 +250,13 @@ class CloudMemcacheClient {
   /// @param instance  Required. A Memcached Instance
   /// @param instance_id  Required. The logical name of the Memcached instance in the user
   ///  project with the following restrictions:
+  ///  @n
   ///  * Must contain only lowercase letters, numbers, and hyphens.
   ///  * Must start with a letter.
   ///  * Must be between 1-40 characters.
   ///  * Must end with a number or a letter.
   ///  * Must be unique within the user project / location.
+  ///  @n
   ///  If any of the above are not met, the API raises an invalid argument error.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -330,6 +332,7 @@ class CloudMemcacheClient {
   /// @param instance  Required. A Memcached Instance.
   ///  Only fields specified in update_mask are updated.
   /// @param update_mask  Required. Mask of fields to update.
+  ///  @n
   ///   *   `displayName`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.

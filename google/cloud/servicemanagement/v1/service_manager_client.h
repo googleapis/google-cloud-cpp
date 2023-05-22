@@ -545,6 +545,7 @@ class ServiceManagerClient {
   ///  [overview](https://cloud.google.com/service-infrastructure/docs/overview) for naming requirements.  For
   ///  example: `example.googleapis.com`.
   /// @param config_id  Required. The id of the service configuration resource.
+  ///  @n
   ///  This field must be specified for the server to return all fields, including
   ///  `SourceInfo`.
   /// @param view  Specifies which parts of the Service Config should be returned in the

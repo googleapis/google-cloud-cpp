@@ -189,10 +189,13 @@ class SessionEntityTypesClient {
   /// with Google Assistant integration.
   ///
   /// @param name  Required. The name of the session entity type. Format:
+  ///  @n
   ///  @code
   ///  projects/<Project ID>/agent/sessions/<Session ID>/entityTypes/<Entity Type Display Name>
   ///  @endcode
+  ///  @n
   ///  or
+  ///  @n
   ///  @code
   ///  projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>/entityTypes/<Entity Type Display Name>
   ///  @endcode
@@ -454,10 +457,13 @@ class SessionEntityTypesClient {
   /// with Google Assistant integration.
   ///
   /// @param name  Required. The name of the entity type to delete. Format:
+  ///  @n
   ///  @code
   ///  projects/<Project ID>/agent/sessions/<Session ID>/entityTypes/<Entity Type Display Name>
   ///  @endcode
+  ///  @n
   ///  or
+  ///  @n
   ///  @code
   ///  projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>/entityTypes/<Entity Type Display Name>
   ///  @endcode

@@ -3285,6 +3285,7 @@ class CloudChannelServiceClient {
   /// @param parent  Required. The resource name of the entitlement for which to list
   ///  entitlement changes. The `-` wildcard may be used to match entitlements
   ///  across a customer. Formats:
+  ///  @n
   ///    * accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}
   ///    * accounts/{account_id}/customers/{customer_id}/entitlements/-
   /// @param opts Optional. Override the class-level options, such as retry and

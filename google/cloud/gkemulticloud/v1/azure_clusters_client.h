@@ -103,17 +103,21 @@ class AzureClustersClient {
   /// @param parent  Required. The parent location where this
   ///  [AzureClient][google.cloud.gkemulticloud.v1.AzureClient] resource will be
   ///  created.
+  ///  @n
   ///  Location names are formatted as `projects/<project-id>/locations/<region>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param azure_client  Required. The specification of the
   ///  [AzureClient][google.cloud.gkemulticloud.v1.AzureClient] to create.
   /// @param azure_client_id  Required. A client provided ID the resource. Must be unique within the
   ///  parent resource.
+  ///  @n
   ///  The provided ID will be part of the
   ///  [AzureClient][google.cloud.gkemulticloud.v1.AzureClient] resource name
   ///  formatted as
   ///  `projects/<project-id>/locations/<region>/azureClients/<client-id>`.
+  ///  @n
   ///  Valid characters are `/[a-z][0-9]-/`. Cannot be longer than 63 characters.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -203,9 +207,11 @@ class AzureClustersClient {
   /// @param name  Required. The name of the
   ///  [AzureClient][google.cloud.gkemulticloud.v1.AzureClient] resource to
   ///  describe.
+  ///  @n
   ///  [AzureClient][google.cloud.gkemulticloud.v1.AzureClient] names are
   ///  formatted as
   ///  `projects/<project-id>/locations/<region>/azureClients/<client-id>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -269,7 +275,9 @@ class AzureClustersClient {
   ///
   /// @param parent  Required. The parent location which owns this collection of
   ///  [AzureClient][google.cloud.gkemulticloud.v1.AzureClient] resources.
+  ///  @n
   ///  Location names are formatted as `projects/<project-id>/locations/<region>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -358,9 +366,11 @@ class AzureClustersClient {
   ///
   /// @param name  Required. The resource name the
   ///  [AzureClient][google.cloud.gkemulticloud.v1.AzureClient] to delete.
+  ///  @n
   ///  [AzureClient][google.cloud.gkemulticloud.v1.AzureClient] names are
   ///  formatted as
   ///  `projects/<project-id>/locations/<region>/azureClients/<client-id>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -453,17 +463,21 @@ class AzureClustersClient {
   /// @param parent  Required. The parent location where this
   ///  [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] resource will be
   ///  created.
+  ///  @n
   ///  Location names are formatted as `projects/<project-id>/locations/<region>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param azure_cluster  Required. The specification of the
   ///  [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] to create.
   /// @param azure_cluster_id  Required. A client provided ID the resource. Must be unique within the
   ///  parent resource.
+  ///  @n
   ///  The provided ID will be part of the
   ///  [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] resource name
   ///  formatted as
   ///  `projects/<project-id>/locations/<region>/azureClusters/<cluster-id>`.
+  ///  @n
   ///  Valid characters are `/[a-z][0-9]-/`. Cannot be longer than 63 characters.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -551,6 +565,7 @@ class AzureClustersClient {
   /// @param update_mask  Required. Mask of fields to update. At least one path must be supplied in
   ///  this field. The elements of the repeated paths field can only include these
   ///  fields from [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster]:
+  ///  @n
   ///   *   `description`.
   ///   *   `azureClient`.
   ///   *   `control_plane.version`.
@@ -644,8 +659,10 @@ class AzureClustersClient {
   /// @param name  Required. The name of the
   ///  [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] resource to
   ///  describe.
+  ///  @n
   ///  `AzureCluster` names are formatted as
   ///  `projects/<project-id>/locations/<region>/azureClusters/<cluster-id>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -709,7 +726,9 @@ class AzureClustersClient {
   ///
   /// @param parent  Required. The parent location which owns this collection of
   ///  [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] resources.
+  ///  @n
   ///  Location names are formatted as `projects/<project-id>/locations/<region>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -798,8 +817,10 @@ class AzureClustersClient {
   ///
   /// @param name  Required. The resource name the
   ///  [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] to delete.
+  ///  @n
   ///  `AzureCluster` names are formatted as
   ///  `projects/<project-id>/locations/<region>/azureClusters/<cluster-id>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -931,17 +952,21 @@ class AzureClustersClient {
   ///
   /// @param parent  Required. The [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster]
   ///  resource where this node pool will be created.
+  ///  @n
   ///  Location names are formatted as `projects/<project-id>/locations/<region>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param azure_node_pool  Required. The specification of the
   ///  [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool] to create.
   /// @param azure_node_pool_id  Required. A client provided ID the resource. Must be unique within the
   ///  parent resource.
+  ///  @n
   ///  The provided ID will be part of the
   ///  [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool] resource name
   ///  formatted as
   ///  `projects/<project-id>/locations/<region>/azureClusters/<cluster-id>/azureNodePools/<node-pool-id>`.
+  ///  @n
   ///  Valid characters are `/[a-z][0-9]-/`. Cannot be longer than 63 characters.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -1032,6 +1057,7 @@ class AzureClustersClient {
   /// @param update_mask  Required. Mask of fields to update. At least one path must be supplied in
   ///  this field. The elements of the repeated paths field can only include these
   ///  fields from [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool]:
+  ///  @n
   ///   *.  `annotations`.
   ///   *   `version`.
   ///   *   `autoscaling.min_node_count`.
@@ -1114,8 +1140,10 @@ class AzureClustersClient {
   /// @param name  Required. The name of the
   ///  [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool] resource to
   ///  describe.
+  ///  @n
   ///  `AzureNodePool` names are formatted as
   ///  `projects/<project-id>/locations/<region>/azureClusters/<cluster-id>/azureNodePools/<node-pool-id>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1180,8 +1208,10 @@ class AzureClustersClient {
   ///
   /// @param parent  Required. The parent `AzureCluster` which owns this collection of
   ///  [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool] resources.
+  ///  @n
   ///  `AzureCluster` names are formatted as
   ///  `projects/<project-id>/locations/<region>/azureClusters/<cluster-id>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1271,8 +1301,10 @@ class AzureClustersClient {
   ///
   /// @param name  Required. The resource name the
   ///  [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool] to delete.
+  ///  @n
   ///  `AzureNodePool` names are formatted as
   ///  `projects/<project-id>/locations/<region>/azureClusters/<cluster-id>/azureNodePools/<node-pool-id>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1359,8 +1391,10 @@ class AzureClustersClient {
   /// @param name  Required. The name of the
   ///  [AzureServerConfig][google.cloud.gkemulticloud.v1.AzureServerConfig]
   ///  resource to describe.
+  ///  @n
   ///  `AzureServerConfig` names are formatted as
   ///  `projects/<project-id>/locations/<region>/azureServerConfig`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param opts Optional. Override the class-level options, such as retry and

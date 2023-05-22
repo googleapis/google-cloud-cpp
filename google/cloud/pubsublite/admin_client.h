@@ -97,6 +97,7 @@ class AdminServiceClient {
   ///  ignored.
   /// @param topic_id  Required. The ID to use for the topic, which will become the final
   ///  component of the topic's name.
+  ///  @n
   ///  This value is structured like: `my-topic-name`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -537,6 +538,7 @@ class AdminServiceClient {
   ///  ignored.
   /// @param subscription_id  Required. The ID to use for the subscription, which will become the final
   ///  component of the subscription's name.
+  ///  @n
   ///  This value is structured like: `my-sub-name`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -909,6 +911,7 @@ class AdminServiceClient {
   ///  ignored.
   /// @param reservation_id  Required. The ID to use for the reservation, which will become the final
   ///  component of the reservation's name.
+  ///  @n
   ///  This value is structured like: `my-reservation-name`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.

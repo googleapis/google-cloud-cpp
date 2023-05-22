@@ -187,6 +187,7 @@ class ClusterControllerClient {
   ///  in a cluster to 5, the `update_mask` parameter would be
   ///  specified as `config.worker_config.num_instances`,
   ///  and the `PATCH` request body would specify the new value, as follows:
+  ///  @n
   ///      {
   ///        "config":{
   ///          "workerConfig":{
@@ -198,6 +199,7 @@ class ClusterControllerClient {
   ///  the `update_mask` parameter would be
   ///  `config.secondary_worker_config.num_instances`, and the `PATCH` request
   ///  body would be set as follows:
+  ///  @n
   ///      {
   ///        "config":{
   ///          "secondaryWorkerConfig":{
@@ -206,6 +208,7 @@ class ClusterControllerClient {
   ///        }
   ///      }
   ///  <strong>Note:</strong> Currently, only the following fields can be updated:
+  ///  @n
   ///   <table>
   ///   <!--<tbody>-->
   ///   <tr>
@@ -573,7 +576,9 @@ class ClusterControllerClient {
   /// @param region  Required. The Dataproc region in which to handle the request.
   /// @param filter  Optional. A filter constraining the clusters to list. Filters are
   ///  case-sensitive and have the following syntax:
+  ///  @n
   ///  field = value [AND [field = value]] ...
+  ///  @n
   ///  where **field** is one of `status.state`, `clusterName`, or `labels.[KEY]`,
   ///  and `[KEY]` is a label key. **value** can be `*` to match all values.
   ///  `status.state` can be one of the following: `ACTIVE`, `INACTIVE`,
@@ -583,7 +588,9 @@ class ClusterControllerClient {
   ///  `clusterName` is the name of the cluster provided at creation time.
   ///  Only the logical `AND` operator is supported; space-separated items are
   ///  treated as having an implicit `AND` operator.
+  ///  @n
   ///  Example filter:
+  ///  @n
   ///  status.state = ACTIVE AND clusterName = mycluster
   ///  AND labels.env = staging AND labels.starred = *
   /// @param opts Optional. Override the class-level options, such as retry and

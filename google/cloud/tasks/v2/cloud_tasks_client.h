@@ -240,10 +240,12 @@ class CloudTasksClient {
   ///
   /// @param parent  Required. The location name in which the queue will be created.
   ///  For example: `projects/PROJECT_ID/locations/LOCATION_ID`
+  ///  @n
   ///  The list of allowed locations can be obtained by calling Cloud
   ///  Tasks' implementation of
   ///  [ListLocations][google.cloud.location.Locations.ListLocations].
   /// @param queue  Required. The queue to create.
+  ///  @n
   ///  [Queue's name][google.cloud.tasks.v2.Queue.name] cannot be the same as an existing queue.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -329,11 +331,14 @@ class CloudTasksClient {
   /// this method.
   ///
   /// @param queue  Required. The queue to create or update.
+  ///  @n
   ///  The queue's [name][google.cloud.tasks.v2.Queue.name] must be specified.
+  ///  @n
   ///  Output only fields cannot be modified using UpdateQueue.
   ///  Any value specified for an output only field will be ignored.
   ///  The queue's [name][google.cloud.tasks.v2.Queue.name] cannot be changed.
   /// @param update_mask  A mask used to specify which fields of the queue are being updated.
+  ///  @n
   ///  If empty, then all fields will be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -1144,17 +1149,22 @@ class CloudTasksClient {
   ///
   /// @param parent  Required. The queue name. For example:
   ///  `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`
+  ///  @n
   ///  The queue must already exist.
   /// @param task  Required. The task to add.
+  ///  @n
   ///  Task names have the following format:
   ///  `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`.
   ///  The user can optionally specify a task [name][google.cloud.tasks.v2.Task.name]. If a
   ///  name is not specified then the system will generate a random
   ///  unique task id, which will be set in the task returned in the
   ///  [response][google.cloud.tasks.v2.Task.name].
+  ///  @n
   ///  If [schedule_time][google.cloud.tasks.v2.Task.schedule_time] is not set or is in the
   ///  past then Cloud Tasks will set it to the current time.
+  ///  @n
   ///  Task De-duplication:
+  ///  @n
   ///  Explicitly specifying a task ID enables task de-duplication.  If
   ///  a task's ID is identical to that of an existing task or a task
   ///  that was deleted or executed recently then the call will fail
@@ -1164,6 +1174,7 @@ class CloudTasksClient {
   ///  deleted or executed. If the task's queue was created using queue.yaml or
   ///  queue.xml, then another task with the same name can't be created
   ///  for ~9days after the original task was deleted or executed.
+  ///  @n
   ///  Because there is an extra lookup cost to identify duplicate task
   ///  names, these [CreateTask][google.cloud.tasks.v2.CloudTasks.CreateTask] calls have significantly
   ///  increased latency. Using hashed strings for the task id or for

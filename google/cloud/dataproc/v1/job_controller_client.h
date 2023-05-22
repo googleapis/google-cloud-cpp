@@ -331,13 +331,17 @@ class JobControllerClient {
   /// @param region  Required. The Dataproc region in which to handle the request.
   /// @param filter  Optional. A filter constraining the jobs to list. Filters are
   ///  case-sensitive and have the following syntax:
+  ///  @n
   ///  [field = value] AND [field [= value]] ...
+  ///  @n
   ///  where **field** is `status.state` or `labels.[KEY]`, and `[KEY]` is a label
   ///  key. **value** can be `*` to match all values.
   ///  `status.state` can be either `ACTIVE` or `NON_ACTIVE`.
   ///  Only the logical `AND` operator is supported; space-separated items are
   ///  treated as having an implicit `AND` operator.
+  ///  @n
   ///  Example filter:
+  ///  @n
   ///  status.state = ACTIVE AND labels.env = staging AND labels.starred = *
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.

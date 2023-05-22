@@ -568,7 +568,9 @@ class AssetServiceClient {
   ///  granted the
   ///  [`cloudasset.assets.searchAllResources`](https://cloud.google.com/asset-inventory/docs/access-control#required_permissions)
   ///  permission on the desired scope.
+  ///  @n
   ///  The allowed values are:
+  ///  @n
   ///  * projects/{PROJECT_ID} (e.g., "projects/foo-bar")
   ///  * projects/{PROJECT_NUMBER} (e.g., "projects/12345678")
   ///  * folders/{FOLDER_NUMBER} (e.g., "folders/1234567")
@@ -577,7 +579,9 @@ class AssetServiceClient {
   ///  query](https://cloud.google.com/asset-inventory/docs/searching-resources#how_to_construct_a_query)
   ///  for more information. If not specified or empty, it will search all the
   ///  resources within the specified `scope`.
+  ///  @n
   ///  Examples:
+  ///  @n
   ///  * `name:Important` to find Google Cloud resources whose name contains
   ///    "Important" as a word.
   ///  * `name=Important` to find the Google Cloud resource whose name is exactly
@@ -626,11 +630,14 @@ class AssetServiceClient {
   /// @param asset_types  Optional. A list of asset types that this request searches for. If empty,
   ///  it will search all the [searchable asset
   ///  types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
+  ///  @n
   ///  Regular expressions are also supported. For example:
+  ///  @n
   ///  * "compute.googleapis.com.*" snapshots resources whose asset type starts
   ///  with "compute.googleapis.com".
   ///  * ".*Instance" snapshots resources whose asset type ends with "Instance".
   ///  * ".*Instance.*" snapshots resources whose asset type contains "Instance".
+  ///  @n
   ///  See [RE2](https://github.com/google/re2/wiki/Syntax) for all supported
   ///  regular expression syntax. If the regular expression does not match any
   ///  supported asset type, an INVALID_ARGUMENT error will be returned.
@@ -723,7 +730,9 @@ class AssetServiceClient {
   ///  be granted the
   ///  [`cloudasset.assets.searchAllIamPolicies`](https://cloud.google.com/asset-inventory/docs/access-control#required_permissions)
   ///  permission on the desired scope.
+  ///  @n
   ///  The allowed values are:
+  ///  @n
   ///  * projects/{PROJECT_ID} (e.g., "projects/foo-bar")
   ///  * projects/{PROJECT_NUMBER} (e.g., "projects/12345678")
   ///  * folders/{FOLDER_NUMBER} (e.g., "folders/1234567")
@@ -737,7 +746,9 @@ class AssetServiceClient {
   ///  contain the bindings that match your query. To learn more about the IAM
   ///  policy structure, see the [IAM policy
   ///  documentation](https://cloud.google.com/iam/help/allow-policies/structure).
+  ///  @n
   ///  Examples:
+  ///  @n
   ///  * `policy:amy@gmail.com` to find IAM policy bindings that specify user
   ///    "amy@gmail.com".
   ///  * `policy:roles/compute.admin` to find IAM policy bindings that specify
@@ -1024,8 +1035,10 @@ class AssetServiceClient {
   /// @param saved_query_id  Required. The ID to use for the saved query, which must be unique in the
   ///  specified parent. It will become the final component of the saved query's
   ///  resource name.
+  ///  @n
   ///  This value should be 4-63 characters, and valid characters
   ///  are `[a-z][0-9]-`.
+  ///  @n
   ///  Notice that this field is required in the saved query creation, and the
   ///  `name` field of the `saved_query` will be ignored.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1088,6 +1101,7 @@ class AssetServiceClient {
   /// Gets details about a saved query.
   ///
   /// @param name  Required. The name of the saved query and it must be in the format of:
+  ///  @n
   ///  * projects/project_number/savedQueries/saved_query_id
   ///  * folders/folder_number/savedQueries/saved_query_id
   ///  * organizations/organization_number/savedQueries/saved_query_id
@@ -1227,8 +1241,10 @@ class AssetServiceClient {
   /// Updates a saved query.
   ///
   /// @param saved_query  Required. The saved query to update.
+  ///  @n
   ///  The saved query's `name` field is used to identify the one to update,
   ///  which has format as below:
+  ///  @n
   ///  * projects/project_number/savedQueries/saved_query_id
   ///  * folders/folder_number/savedQueries/saved_query_id
   ///  * organizations/organization_number/savedQueries/saved_query_id
@@ -1293,6 +1309,7 @@ class AssetServiceClient {
   ///
   /// @param name  Required. The name of the saved query to delete. It must be in the format
   ///  of:
+  ///  @n
   ///  * projects/project_number/savedQueries/saved_query_id
   ///  * folders/folder_number/savedQueries/saved_query_id
   ///  * organizations/organization_number/savedQueries/saved_query_id
@@ -1382,6 +1399,7 @@ class AssetServiceClient {
   ///
   /// @param scope  Required. The organization to scope the request. Only organization
   ///  policies within the scope will be analyzed.
+  ///  @n
   ///  * organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/123456")
   /// @param constraint  Required. The name of the constraint to analyze organization policies for.
   ///  The response only contains analyzed organization policies for the provided
@@ -1390,6 +1408,7 @@ class AssetServiceClient {
   ///  [AnalyzeOrgPoliciesResponse.org_policy_results][google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.org_policy_results].
   ///  The only supported field is `consolidated_policy.attached_resource`, and
   ///  the only supported operator is `=`.
+  ///  @n
   ///  Example:
   ///  consolidated_policy.attached_resource="//cloudresourcemanager.googleapis.com/folders/001"
   ///  will return the org policy results of"folders/001".
@@ -1477,6 +1496,7 @@ class AssetServiceClient {
   ///  policies within the scope will be analyzed. The output containers will
   ///  also be limited to the ones governed by those in-scope organization
   ///  policies.
+  ///  @n
   ///  * organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/123456")
   /// @param constraint  Required. The name of the constraint to analyze governed containers for.
   ///  The analysis only contains organization policies for the provided
@@ -1484,6 +1504,7 @@ class AssetServiceClient {
   /// @param filter  The expression to filter the governed containers in result.
   ///  The only supported field is `parent`, and the only supported operator is
   ///  `=`.
+  ///  @n
   ///  Example:
   ///  parent="//cloudresourcemanager.googleapis.com/folders/001" will return all
   ///  containers under "folders/001".
@@ -1592,6 +1613,7 @@ class AssetServiceClient {
   ///  policies within the scope will be analyzed. The output assets will
   ///  also be limited to the ones governed by those in-scope organization
   ///  policies.
+  ///  @n
   ///  * organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/123456")
   /// @param constraint  Required. The name of the constraint to analyze governed assets for. The
   ///  analysis only contains analyzed organization policies for the provided
@@ -1601,9 +1623,11 @@ class AssetServiceClient {
   ///  `governed_resource.folders`. The only supported fields for governed iam
   ///  policies are `governed_iam_policy.project` and
   ///  `governed_iam_policy.folders`. The only supported operator is `=`.
+  ///  @n
   ///  Example 1: governed_resource.project="projects/12345678" filter will return
   ///  all governed resources under projects/12345678 including the project
   ///  ifself, if applicable.
+  ///  @n
   ///  Example 2: governed_iam_policy.folders="folders/12345678" filter will
   ///  return all governed iam policies under folders/12345678, if applicable.
   /// @param opts Optional. Override the class-level options, such as retry and

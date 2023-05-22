@@ -107,6 +107,7 @@ class IAMCredentialsClient {
   ///  chain must be granted the `roles/iam.serviceAccountTokenCreator` role
   ///  on the service account that is specified in the `name` field of the
   ///  request.
+  ///  @n
   ///  The delegates must have the following format:
   ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
   ///  character is required; replacing it with a project ID is invalid.
@@ -190,6 +191,7 @@ class IAMCredentialsClient {
   ///  chain must be granted the `roles/iam.serviceAccountTokenCreator` role
   ///  on the service account that is specified in the `name` field of the
   ///  request.
+  ///  @n
   ///  The delegates must have the following format:
   ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
   ///  character is required; replacing it with a project ID is invalid.
@@ -268,6 +270,7 @@ class IAMCredentialsClient {
   ///  chain must be granted the `roles/iam.serviceAccountTokenCreator` role
   ///  on the service account that is specified in the `name` field of the
   ///  request.
+  ///  @n
   ///  The delegates must have the following format:
   ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
   ///  character is required; replacing it with a project ID is invalid.
@@ -340,6 +343,7 @@ class IAMCredentialsClient {
   ///  chain must be granted the `roles/iam.serviceAccountTokenCreator` role
   ///  on the service account that is specified in the `name` field of the
   ///  request.
+  ///  @n
   ///  The delegates must have the following format:
   ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
   ///  character is required; replacing it with a project ID is invalid.

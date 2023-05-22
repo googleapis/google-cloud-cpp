@@ -98,6 +98,7 @@ class ServiceMonitoringServiceClient {
   ///
   /// @param parent  Required. Resource [name](https://cloud.google.com/monitoring/api/v3#project_name) of
   ///  the parent workspace. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   /// @param service  Required. The `Service` to create.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -159,6 +160,7 @@ class ServiceMonitoringServiceClient {
   /// Get the named `Service`.
   ///
   /// @param name  Required. Resource name of the `Service`. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -220,6 +222,7 @@ class ServiceMonitoringServiceClient {
   /// @param parent  Required. Resource name of the parent containing the listed services, either a
   ///  [project](https://cloud.google.com/monitoring/api/v3#project_name) or a
   ///  Monitoring Workspace. The formats are:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   ///      workspaces/[HOST_PROJECT_ID_OR_NUMBER]
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -356,6 +359,7 @@ class ServiceMonitoringServiceClient {
   /// Soft delete this `Service`.
   ///
   /// @param name  Required. Resource name of the `Service` to delete. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -408,6 +412,7 @@ class ServiceMonitoringServiceClient {
   /// Create a `ServiceLevelObjective` for the given `Service`.
   ///
   /// @param parent  Required. Resource name of the parent `Service`. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]
   /// @param service_level_objective  Required. The `ServiceLevelObjective` to create.
   ///  The provided `name` will be respected if no `ServiceLevelObjective` exists
@@ -475,6 +480,7 @@ class ServiceMonitoringServiceClient {
   /// Get a `ServiceLevelObjective` by name.
   ///
   /// @param name  Required. Resource name of the `ServiceLevelObjective` to get. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelObjectives/[SLO_NAME]
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -536,6 +542,7 @@ class ServiceMonitoringServiceClient {
   ///
   /// @param parent  Required. Resource name of the parent containing the listed SLOs, either a
   ///  project or a Monitoring Workspace. The formats are:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]
   ///      workspaces/[HOST_PROJECT_ID_OR_NUMBER]/services/-
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -678,6 +685,7 @@ class ServiceMonitoringServiceClient {
   /// Delete the given `ServiceLevelObjective`.
   ///
   /// @param name  Required. Resource name of the `ServiceLevelObjective` to delete. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelObjectives/[SLO_NAME]
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.

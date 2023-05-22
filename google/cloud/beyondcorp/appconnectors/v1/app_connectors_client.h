@@ -248,6 +248,7 @@ class AppConnectorsServiceClient {
   ///  form: `projects/{project_id}/locations/{location_id}`
   /// @param app_connector  Required. A BeyondCorp AppConnector resource.
   /// @param app_connector_id  Optional. User-settable AppConnector resource ID.
+  ///  @n
   ///   * Must start with a letter.
   ///   * Must contain between 4-63 characters from `/[a-z][0-9]-/`.
   ///   * Must end with a number or a letter.

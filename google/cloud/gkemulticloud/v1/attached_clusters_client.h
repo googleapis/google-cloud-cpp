@@ -102,17 +102,21 @@ class AttachedClustersClient {
   /// @param parent  Required. The parent location where this
   ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resource
   ///  will be created.
+  ///  @n
   ///  Location names are formatted as `projects/<project-id>/locations/<region>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param attached_cluster  Required. The specification of the
   ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] to create.
   /// @param attached_cluster_id  Required. A client provided ID the resource. Must be unique within the
   ///  parent resource.
+  ///  @n
   ///  The provided ID will be part of the
   ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resource
   ///  name formatted as
   ///  `projects/<project-id>/locations/<region>/attachedClusters/<cluster-id>`.
+  ///  @n
   ///  Valid characters are `/[a-z][0-9]-/`. Cannot be longer than 63 characters.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -204,6 +208,7 @@ class AttachedClustersClient {
   ///  this field. The elements of the repeated paths field can only include these
   ///  fields from
   ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster]:
+  ///  @n
   ///   *   `description`.
   ///   *   `annotations`.
   ///   *   `platform_version`.
@@ -296,7 +301,9 @@ class AttachedClustersClient {
   /// @param parent  Required. The parent location where this
   ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resource
   ///  will be created.
+  ///  @n
   ///  Location names are formatted as `projects/<project-id>/locations/<region>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param fleet_membership  Required. The name of the fleet membership resource to import.
@@ -387,8 +394,10 @@ class AttachedClustersClient {
   /// @param name  Required. The name of the
   ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resource
   ///  to describe.
+  ///  @n
   ///  `AttachedCluster` names are formatted as
   ///  `projects/<project-id>/locations/<region>/attachedClusters/<cluster-id>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -454,7 +463,9 @@ class AttachedClustersClient {
   ///
   /// @param parent  Required. The parent location which owns this collection of
   ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resources.
+  ///  @n
   ///  Location names are formatted as `projects/<project-id>/locations/<region>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -541,8 +552,10 @@ class AttachedClustersClient {
   ///
   /// @param name  Required. The resource name the
   ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] to delete.
+  ///  @n
   ///  `AttachedCluster` names are formatted as
   ///  `projects/<project-id>/locations/<region>/attachedClusters/<cluster-id>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -629,8 +642,10 @@ class AttachedClustersClient {
   /// @param name  Required. The name of the
   ///  [AttachedServerConfig][google.cloud.gkemulticloud.v1.AttachedServerConfig]
   ///  resource to describe.
+  ///  @n
   ///  `AttachedServerConfig` names are formatted as
   ///  `projects/<project-id>/locations/<region>/attachedServerConfig`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -696,18 +711,24 @@ class AttachedClustersClient {
   /// @param parent  Required. The parent location where this
   ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resource
   ///  will be created.
+  ///  @n
   ///  Location names are formatted as `projects/<project-id>/locations/<region>`.
+  ///  @n
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
   ///  for more details on Google Cloud resource names.
   /// @param attached_cluster_id  Required. A client provided ID of the resource. Must be unique within the
   ///  parent resource.
+  ///  @n
   ///  The provided ID will be part of the
   ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resource
   ///  name formatted as
   ///  `projects/<project-id>/locations/<region>/attachedClusters/<cluster-id>`.
+  ///  @n
   ///  Valid characters are `/[a-z][0-9]-/`. Cannot be longer than 63 characters.
+  ///  @n
   ///  When generating an install manifest for importing an existing Membership
   ///  resource, the attached_cluster_id field must be the Membership id.
+  ///  @n
   ///  Membership names are formatted as
   ///  `projects/<project-id>/locations/<region>/memberships/<membership-id>`.
   /// @param opts Optional. Override the class-level options, such as retry and

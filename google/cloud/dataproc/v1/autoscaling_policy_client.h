@@ -96,9 +96,11 @@ class AutoscalingPolicyServiceClient {
   ///
   /// @param parent  Required. The "resource name" of the region or location, as described
   ///  in https://cloud.google.com/apis/design/resource_names.
+  ///  @n
   ///  * For `projects.regions.autoscalingPolicies.create`, the resource name
   ///    of the region has the following format:
   ///    `projects/{project_id}/regions/{region}`
+  ///  @n
   ///  * For `projects.locations.autoscalingPolicies.create`, the resource name
   ///    of the location has the following format:
   ///    `projects/{project_id}/locations/{location}`
@@ -235,9 +237,11 @@ class AutoscalingPolicyServiceClient {
   ///
   /// @param name  Required. The "resource name" of the autoscaling policy, as described
   ///  in https://cloud.google.com/apis/design/resource_names.
+  ///  @n
   ///  * For `projects.regions.autoscalingPolicies.get`, the resource name
   ///    of the policy has the following format:
   ///    `projects/{project_id}/regions/{region}/autoscalingPolicies/{policy_id}`
+  ///  @n
   ///  * For `projects.locations.autoscalingPolicies.get`, the resource name
   ///    of the policy has the following format:
   ///    `projects/{project_id}/locations/{location}/autoscalingPolicies/{policy_id}`
@@ -300,9 +304,11 @@ class AutoscalingPolicyServiceClient {
   ///
   /// @param parent  Required. The "resource name" of the region or location, as described
   ///  in https://cloud.google.com/apis/design/resource_names.
+  ///  @n
   ///  * For `projects.regions.autoscalingPolicies.list`, the resource name
   ///    of the region has the following format:
   ///    `projects/{project_id}/regions/{region}`
+  ///  @n
   ///  * For `projects.locations.autoscalingPolicies.list`, the resource name
   ///    of the location has the following format:
   ///    `projects/{project_id}/locations/{location}`
@@ -385,9 +391,11 @@ class AutoscalingPolicyServiceClient {
   ///
   /// @param name  Required. The "resource name" of the autoscaling policy, as described
   ///  in https://cloud.google.com/apis/design/resource_names.
+  ///  @n
   ///  * For `projects.regions.autoscalingPolicies.delete`, the resource name
   ///    of the policy has the following format:
   ///    `projects/{project_id}/regions/{region}/autoscalingPolicies/{policy_id}`
+  ///  @n
   ///  * For `projects.locations.autoscalingPolicies.delete`, the resource name
   ///    of the policy has the following format:
   ///    `projects/{project_id}/locations/{location}/autoscalingPolicies/{policy_id}`

@@ -160,6 +160,7 @@ class LineageClient {
   /// Updates a process.
   ///
   /// @param process  Required. The lineage process to update.
+  ///  @n
   ///  The process's `name` field is used to identify the process to update.
   /// @param update_mask  The list of fields to update. Currently not used. The whole message is
   ///  updated.
@@ -493,7 +494,9 @@ class LineageClient {
   /// Updates a run.
   ///
   /// @param run  Required. The lineage run to update.
+  ///  @n
   ///  The run's `name` field is used to identify the run to update.
+  ///  @n
   ///  Format:
   ///  `projects/{project}/locations/{location}/processes/{process}/runs/{run}`.
   /// @param update_mask  The list of fields to update. Currently not used. The whole message is

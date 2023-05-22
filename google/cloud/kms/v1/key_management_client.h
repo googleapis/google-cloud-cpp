@@ -1516,9 +1516,11 @@ class KeyManagementServiceClient {
   ///  [CryptoKey][google.cloud.kms.v1.CryptoKey] or
   ///  [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] to use for
   ///  encryption.
+  ///  @n
   ///  If a [CryptoKey][google.cloud.kms.v1.CryptoKey] is specified, the server
   ///  will use its [primary version][google.cloud.kms.v1.CryptoKey.primary].
   /// @param plaintext  Required. The data to encrypt. Must be no larger than 64KiB.
+  ///  @n
   ///  The maximum size depends on the key version's
   ///  [protection_level][google.cloud.kms.v1.CryptoKeyVersionTemplate.protection_level].
   ///  For [SOFTWARE][google.cloud.kms.v1.ProtectionLevel.SOFTWARE],
@@ -1677,6 +1679,7 @@ class KeyManagementServiceClient {
   /// @param digest  Optional. The digest of the data to sign. The digest must be produced with
   ///  the same digest algorithm as specified by the key version's
   ///  [algorithm][google.cloud.kms.v1.CryptoKeyVersion.algorithm].
+  ///  @n
   ///  This field may not be supplied if
   ///  [AsymmetricSignRequest.data][google.cloud.kms.v1.AsymmetricSignRequest.data]
   ///  is supplied.

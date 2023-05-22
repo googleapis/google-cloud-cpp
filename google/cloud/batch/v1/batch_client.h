@@ -101,6 +101,7 @@ class BatchServiceClient {
   ///  Only lowercase characters, numbers and '-' are accepted.
   ///  The '-' character cannot be the first or the last one.
   ///  A system generated ID will be used if the field is not set.
+  ///  @n
   ///  The job.name field in the request will be ignored and the created resource
   ///  name of the Job will be "{parent}/jobs/{job_id}".
   /// @param opts Optional. Override the class-level options, such as retry and

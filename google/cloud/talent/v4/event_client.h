@@ -95,6 +95,7 @@ class EventServiceClient {
   /// about self service tools.
   ///
   /// @param parent  Required. Resource name of the tenant under which the event is created.
+  ///  @n
   ///  The format is "projects/{project_id}/tenants/{tenant_id}", for example,
   ///  "projects/foo/tenants/bar".
   /// @param client_event  Required. Events issued when end user interacts with customer's application

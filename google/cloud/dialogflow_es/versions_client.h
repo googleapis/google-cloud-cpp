@@ -91,6 +91,7 @@ class VersionsClient {
   ///
   /// @param parent  Required. The agent to list all versions from.
   ///  Supported formats:
+  ///  @n
   ///  - `projects/<Project ID>/agent`
   ///  - `projects/<Project ID>/locations/<Location ID>/agent`
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -170,6 +171,7 @@ class VersionsClient {
   ///
   /// @param name  Required. The name of the version.
   ///  Supported formats:
+  ///  @n
   ///  - `projects/<Project ID>/agent/versions/<Version ID>`
   ///  - `projects/<Project ID>/locations/<Location ID>/agent/versions/<Version
   ///    ID>`
@@ -234,6 +236,7 @@ class VersionsClient {
   ///
   /// @param parent  Required. The agent to create a version for.
   ///  Supported formats:
+  ///  @n
   ///  - `projects/<Project ID>/agent`
   ///  - `projects/<Project ID>/locations/<Location ID>/agent`
   /// @param version  Required. The version to create.
@@ -303,6 +306,7 @@ class VersionsClient {
   ///
   /// @param version  Required. The version to update.
   ///  Supported formats:
+  ///  @n
   ///  - `projects/<Project ID>/agent/versions/<Version ID>`
   ///  - `projects/<Project ID>/locations/<Location ID>/agent/versions/<Version
   ///    ID>`
@@ -371,6 +375,7 @@ class VersionsClient {
   ///
   /// @param name  Required. The name of the version to delete.
   ///  Supported formats:
+  ///  @n
   ///  - `projects/<Project ID>/agent/versions/<Version ID>`
   ///  - `projects/<Project ID>/locations/<Location ID>/agent/versions/<Version
   ///    ID>`

@@ -576,6 +576,7 @@ class DocumentsClient {
   ///  ID>/knowledgeBases/<Knowledge Base ID>/documents/<Document ID>`
   /// @param content_uri  Optional. The path of gcs source file for reloading document content. For
   ///  now, only gcs uri is supported.
+  ///  @n
   ///  For documents stored in Google Cloud Storage, these URIs must have
   ///  the form `gs://<bucket-name>/<object-name>`.
   /// @param opts Optional. Override the class-level options, such as retry and

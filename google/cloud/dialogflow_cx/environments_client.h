@@ -487,6 +487,7 @@ class EnvironmentsClient {
   ///
   /// @param name  Required. Resource name of the environment to look up the history for.
   ///  Format:
+  ///  @n
   ///  @code
   ///  projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>
   ///  @endcode

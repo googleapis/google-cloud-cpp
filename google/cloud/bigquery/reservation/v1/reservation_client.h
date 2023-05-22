@@ -1079,8 +1079,11 @@ class ReservationServiceClient {
   /// **Note** "-" cannot be used for projects nor locations.
   ///
   /// @param parent  Required. The parent resource name e.g.:
+  ///  @n
   ///  `projects/myproject/locations/US/reservations/team1-prod`
+  ///  @n
   ///  Or:
+  ///  @n
   ///  `projects/myproject/locations/US/reservations/-`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -1285,7 +1288,9 @@ class ReservationServiceClient {
   ///  location), e.g.:
   ///    `projects/myproject/locations/US`.
   /// @param query  Please specify resource name as assignee in the query.
+  ///  @n
   ///  Examples:
+  ///  @n
   ///  * `assignee=projects/myproject`
   ///  * `assignee=folders/123`
   ///  * `assignee=organizations/456`
@@ -1412,7 +1417,9 @@ class ReservationServiceClient {
   ///  wildcard '-'), e.g.:
   ///    `projects/-/locations/US`.
   /// @param query  Please specify resource name as assignee in the query.
+  ///  @n
   ///  Examples:
+  ///  @n
   ///  * `assignee=projects/myproject`
   ///  * `assignee=folders/123`
   ///  * `assignee=organizations/456`

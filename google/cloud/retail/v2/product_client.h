@@ -100,13 +100,16 @@ class ProductServiceClient {
   /// @param product_id  Required. The ID to use for the [Product][google.cloud.retail.v2.Product],
   ///  which will become the final component of the
   ///  [Product.name][google.cloud.retail.v2.Product.name].
+  ///  @n
   ///  If the caller does not have permission to create the
   ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not it
   ///  exists, a PERMISSION_DENIED error is returned.
+  ///  @n
   ///  This field must be unique among all
   ///  [Product][google.cloud.retail.v2.Product]s with the same
   ///  [parent][google.cloud.retail.v2.CreateProductRequest.parent]. Otherwise, an
   ///  ALREADY_EXISTS error is returned.
+  ///  @n
   ///  This field must be a UTF-8 encoded string with a length limit of 128
   ///  characters. Otherwise, an INVALID_ARGUMENT error is returned.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -171,9 +174,11 @@ class ProductServiceClient {
   /// @param name  Required. Full resource name of [Product][google.cloud.retail.v2.Product],
   ///  such as
   ///  `projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/some_product_id`.
+  ///  @n
   ///  If the caller does not have permission to access the
   ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not it
   ///  exists, a PERMISSION_DENIED error is returned.
+  ///  @n
   ///  If the requested [Product][google.cloud.retail.v2.Product] does not exist,
   ///  a NOT_FOUND error is returned.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -237,6 +242,7 @@ class ProductServiceClient {
   ///  `projects/*/locations/global/catalogs/default_catalog/branches/0`. Use
   ///  `default_branch` as the branch ID, to list products under the default
   ///  branch.
+  ///  @n
   ///  If the caller does not have permission to list
   ///  [Product][google.cloud.retail.v2.Product]s under this branch, regardless of
   ///  whether or not this branch exists, a PERMISSION_DENIED error is returned.
@@ -316,9 +322,11 @@ class ProductServiceClient {
   /// Updates a [Product][google.cloud.retail.v2.Product].
   ///
   /// @param product  Required. The product to update/create.
+  ///  @n
   ///  If the caller does not have permission to update the
   ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not it
   ///  exists, a PERMISSION_DENIED error is returned.
+  ///  @n
   ///  If the [Product][google.cloud.retail.v2.Product] to update does not exist
   ///  and
   ///  [allow_missing][google.cloud.retail.v2.UpdateProductRequest.allow_missing]
@@ -327,8 +335,10 @@ class ProductServiceClient {
   ///  [Product][google.cloud.retail.v2.Product] to update. The immutable and
   ///  output only fields are NOT supported. If not set, all supported fields (the
   ///  fields that are neither immutable nor output only) are updated.
+  ///  @n
   ///  If an unsupported or unknown field is provided, an INVALID_ARGUMENT error
   ///  is returned.
+  ///  @n
   ///  The attribute key can be updated by setting the mask path as
   ///  "attributes.${key_name}". If a key name is present in the mask but not in
   ///  the patching product from the request, this key will be deleted after the
@@ -394,11 +404,14 @@ class ProductServiceClient {
   /// @param name  Required. Full resource name of [Product][google.cloud.retail.v2.Product],
   ///  such as
   ///  `projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/some_product_id`.
+  ///  @n
   ///  If the caller does not have permission to delete the
   ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not it
   ///  exists, a PERMISSION_DENIED error is returned.
+  ///  @n
   ///  If the [Product][google.cloud.retail.v2.Product] to delete does not exist,
   ///  a NOT_FOUND error is returned.
+  ///  @n
   ///  The [Product][google.cloud.retail.v2.Product] to delete can neither be a
   ///  [Product.Type.COLLECTION][google.cloud.retail.v2.Product.Type.COLLECTION]
   ///  [Product][google.cloud.retail.v2.Product] member nor a
@@ -406,6 +419,7 @@ class ProductServiceClient {
   ///  [Product][google.cloud.retail.v2.Product] with more than one
   ///  [variants][google.cloud.retail.v2.Product.Type.VARIANT]. Otherwise, an
   ///  INVALID_ARGUMENT error is returned.
+  ///  @n
   ///  All inventory information for the named
   ///  [Product][google.cloud.retail.v2.Product] will be deleted.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -556,54 +570,67 @@ class ProductServiceClient {
   ///
   /// @param inventory  Required. The inventory information to update. The allowable fields to
   ///  update are:
+  ///  @n
   ///  * [Product.price_info][google.cloud.retail.v2.Product.price_info]
   ///  * [Product.availability][google.cloud.retail.v2.Product.availability]
   ///  * [Product.available_quantity][google.cloud.retail.v2.Product.available_quantity]
   ///  * [Product.fulfillment_info][google.cloud.retail.v2.Product.fulfillment_info]
   ///  The updated inventory fields must be specified in
   ///  [SetInventoryRequest.set_mask][google.cloud.retail.v2.SetInventoryRequest.set_mask].
+  ///  @n
   ///  If
   ///  [SetInventoryRequest.inventory.name][google.cloud.retail.v2.Product.name]
   ///  is empty or invalid, an INVALID_ARGUMENT error is returned.
+  ///  @n
   ///  If the caller does not have permission to update the
   ///  [Product][google.cloud.retail.v2.Product] named in
   ///  [Product.name][google.cloud.retail.v2.Product.name], regardless of whether
   ///  or not it exists, a PERMISSION_DENIED error is returned.
+  ///  @n
   ///  If the [Product][google.cloud.retail.v2.Product] to update does not have
   ///  existing inventory information, the provided inventory information will be
   ///  inserted.
+  ///  @n
   ///  If the [Product][google.cloud.retail.v2.Product] to update has existing
   ///  inventory information, the provided inventory information will be merged
   ///  while respecting the last update time for each inventory field, using the
   ///  provided or default value for
   ///  [SetInventoryRequest.set_time][google.cloud.retail.v2.SetInventoryRequest.set_time].
+  ///  @n
   ///  The caller can replace place IDs for a subset of fulfillment types in the
   ///  following ways:
+  ///  @n
   ///  * Adds "fulfillment_info" in
   ///  [SetInventoryRequest.set_mask][google.cloud.retail.v2.SetInventoryRequest.set_mask]
   ///  * Specifies only the desired fulfillment types and corresponding place IDs
   ///  to update in
   ///  [SetInventoryRequest.inventory.fulfillment_info][google.cloud.retail.v2.Product.fulfillment_info]
+  ///  @n
   ///  The caller can clear all place IDs from a subset of fulfillment types in
   ///  the following ways:
+  ///  @n
   ///  * Adds "fulfillment_info" in
   ///  [SetInventoryRequest.set_mask][google.cloud.retail.v2.SetInventoryRequest.set_mask]
   ///  * Specifies only the desired fulfillment types to clear in
   ///  [SetInventoryRequest.inventory.fulfillment_info][google.cloud.retail.v2.Product.fulfillment_info]
   ///  * Checks that only the desired fulfillment info types have empty
   ///  [SetInventoryRequest.inventory.fulfillment_info.place_ids][google.cloud.retail.v2.FulfillmentInfo.place_ids]
+  ///  @n
   ///  The last update time is recorded for the following inventory fields:
   ///  * [Product.price_info][google.cloud.retail.v2.Product.price_info]
   ///  * [Product.availability][google.cloud.retail.v2.Product.availability]
   ///  * [Product.available_quantity][google.cloud.retail.v2.Product.available_quantity]
   ///  * [Product.fulfillment_info][google.cloud.retail.v2.Product.fulfillment_info]
+  ///  @n
   ///  If a full overwrite of inventory information while ignoring timestamps is
   ///  needed,
   ///  [ProductService.UpdateProduct][google.cloud.retail.v2.ProductService.UpdateProduct]
   ///  should be invoked instead.
   /// @param set_mask  Indicates which inventory fields in the provided
   ///  [Product][google.cloud.retail.v2.Product] to update.
+  ///  @n
   ///  At least one field must be provided.
+  ///  @n
   ///  If an unsupported or unknown field is provided, an INVALID_ARGUMENT error
   ///  is returned and the entire update will be ignored.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -781,6 +808,7 @@ class ProductServiceClient {
   /// @param product  Required. Full resource name of [Product][google.cloud.retail.v2.Product],
   ///  such as
   ///  `projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/some_product_id`.
+  ///  @n
   ///  If the caller does not have permission to access the
   ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not it
   ///  exists, a PERMISSION_DENIED error is returned.
@@ -931,6 +959,7 @@ class ProductServiceClient {
   /// @param product  Required. Full resource name of [Product][google.cloud.retail.v2.Product],
   ///  such as
   ///  `projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/some_product_id`.
+  ///  @n
   ///  If the caller does not have permission to access the
   ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not it
   ///  exists, a PERMISSION_DENIED error is returned.
@@ -1080,6 +1109,7 @@ class ProductServiceClient {
   /// @param product  Required. Full resource name of [Product][google.cloud.retail.v2.Product],
   ///  such as
   ///  `projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/some_product_id`.
+  ///  @n
   ///  If the caller does not have permission to access the
   ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not it
   ///  exists, a PERMISSION_DENIED error is returned.
@@ -1224,6 +1254,7 @@ class ProductServiceClient {
   /// @param product  Required. Full resource name of [Product][google.cloud.retail.v2.Product],
   ///  such as
   ///  `projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/some_product_id`.
+  ///  @n
   ///  If the caller does not have permission to access the
   ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not it
   ///  exists, a PERMISSION_DENIED error is returned.

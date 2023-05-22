@@ -91,6 +91,7 @@ class MetricServiceClient {
   ///
   /// @param name  Required. The [project](https://cloud.google.com/monitoring/api/v3#project_name) on
   ///  which to execute the request. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -169,7 +170,9 @@ class MetricServiceClient {
   /// Gets a single monitored resource descriptor. This method does not require a Workspace.
   ///
   /// @param name  Required. The monitored resource descriptor to get.  The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/monitoredResourceDescriptors/[RESOURCE_TYPE]
+  ///  @n
   ///  The `[RESOURCE_TYPE]` is a predefined type, such as
   ///  `cloudsql_database`.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -233,6 +236,7 @@ class MetricServiceClient {
   ///
   /// @param name  Required. The [project](https://cloud.google.com/monitoring/api/v3#project_name) on
   ///  which to execute the request. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -310,7 +314,9 @@ class MetricServiceClient {
   /// Gets a single metric descriptor. This method does not require a Workspace.
   ///
   /// @param name  Required. The metric descriptor on which to execute the request. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID]
+  ///  @n
   ///  An example value of `[METRIC_ID]` is
   ///  `"compute.googleapis.com/instance/disk/read_bytes_count"`.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -446,7 +452,9 @@ class MetricServiceClient {
   /// deleted.
   ///
   /// @param name  Required. The metric descriptor on which to execute the request. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID]
+  ///  @n
   ///  An example of `[METRIC_ID]` is:
   ///  `"custom.googleapis.com/my_test_metric"`.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -503,6 +511,7 @@ class MetricServiceClient {
   ///
   /// @param name  Required. The [project](https://cloud.google.com/monitoring/api/v3#project_name),
   ///  organization or folder on which to execute the request. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   ///      organizations/[ORGANIZATION_ID]
   ///      folders/[FOLDER_ID]
@@ -510,6 +519,7 @@ class MetricServiceClient {
   ///  that specifies which time series should be returned.  The filter must
   ///  specify a single metric type, and can additionally specify metric labels
   ///  and other information. For example:
+  ///  @n
   ///      metric.type = "compute.googleapis.com/instance/cpu/usage_time" AND
   ///          metric.labels.instance_name = "my-instance-name"
   /// @param interval  Required. The time interval for which results should be returned. Only time series
@@ -598,12 +608,14 @@ class MetricServiceClient {
   ///
   /// @param name  Required. The [project](https://cloud.google.com/monitoring/api/v3#project_name) on
   ///  which to execute the request. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   /// @param time_series  Required. The new data to be added to a list of time series.
   ///  Adds at most one data point to each of several time series.  The new data
   ///  point must be more recent than any other point in its time series.  Each
   ///  `TimeSeries` value must fully specify a unique time series by supplying
   ///  all label values for the metric and the monitored resource.
+  ///  @n
   ///  The maximum number of `TimeSeries` objects per `Create` request is 200.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -671,12 +683,14 @@ class MetricServiceClient {
   ///
   /// @param name  Required. The [project](https://cloud.google.com/monitoring/api/v3#project_name) on
   ///  which to execute the request. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   /// @param time_series  Required. The new data to be added to a list of time series.
   ///  Adds at most one data point to each of several time series.  The new data
   ///  point must be more recent than any other point in its time series.  Each
   ///  `TimeSeries` value must fully specify a unique time series by supplying
   ///  all label values for the metric and the monitored resource.
+  ///  @n
   ///  The maximum number of `TimeSeries` objects per `Create` request is 200.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -746,12 +760,14 @@ class MetricServiceClient {
   ///
   /// @param name  Required. The [project](https://cloud.google.com/monitoring/api/v3#project_name) on
   ///  which to execute the request. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
   /// @param time_series  Required. The new data to be added to a list of time series.
   ///  Adds at most one data point to each of several time series.  The new data
   ///  point must be more recent than any other point in its time series.  Each
   ///  `TimeSeries` value must fully specify a unique time series by supplying
   ///  all label values for the metric and the monitored resource.
+  ///  @n
   ///  The maximum number of `TimeSeries` objects per `Create` request is 200.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.

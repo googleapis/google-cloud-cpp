@@ -98,7 +98,9 @@ class NotificationChannelServiceClient {
   ///
   /// @param name  Required. The REST resource name of the parent from which to retrieve
   ///  the notification channel descriptors. The expected syntax is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
+  ///  @n
   ///  Note that this
   ///  [names](https://cloud.google.com/monitoring/api/v3#project_name) the parent
   ///  container in which to look for the descriptors; to retrieve a single
@@ -185,6 +187,7 @@ class NotificationChannelServiceClient {
   /// are expected / permitted for a notification channel of the given type.
   ///
   /// @param name  Required. The channel type for which to execute the request. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/notificationChannelDescriptors/[CHANNEL_TYPE]
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -248,7 +251,9 @@ class NotificationChannelServiceClient {
   ///
   /// @param name  Required. The [project](https://cloud.google.com/monitoring/api/v3#project_name) on
   ///  which to execute the request. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
+  ///  @n
   ///  This names the container
   ///  in which to look for the notification channels; it does not name a
   ///  specific channel. To query a specific channel by REST resource name, use
@@ -336,6 +341,7 @@ class NotificationChannelServiceClient {
   /// that was supplied in the call to the create method.
   ///
   /// @param name  Required. The channel for which to execute the request. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -401,7 +407,9 @@ class NotificationChannelServiceClient {
   ///
   /// @param name  Required. The [project](https://cloud.google.com/monitoring/api/v3#project_name) on
   ///  which to execute the request. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]
+  ///  @n
   ///  This names the container into which the channel will be
   ///  written, this does not name the newly created channel. The resulting
   ///  channel's name will have a normalized version of this field as a prefix,
@@ -538,6 +546,7 @@ class NotificationChannelServiceClient {
   /// Deletes a notification channel.
   ///
   /// @param name  Required. The channel for which to execute the request. The format is:
+  ///  @n
   ///      projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]
   /// @param force  If true, the notification channel will be deleted regardless of its
   ///  use in alert policies (the policies will be updated to remove the

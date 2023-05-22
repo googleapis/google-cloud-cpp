@@ -302,10 +302,13 @@ class ConnectorsClient {
   ///
   /// @param connection  Required. Connection resource.
   /// @param update_mask  Required. You can modify only the fields listed below.
+  ///  @n
   ///  To lock/unlock a connection:
   ///  * `lock_config`
+  ///  @n
   ///  To suspend/resume a connection:
   ///  * `suspended`
+  ///  @n
   ///  To update the connection details:
   ///  * `description`
   ///  * `labels`

@@ -166,8 +166,10 @@ class FoldersClient {
   /// @param parent  Required. The name of the parent resource whose folders are being listed.
   ///  Only children of this parent resource are listed; descendants are not
   ///  listed.
+  ///  @n
   ///  If the parent is a folder, use the value `folders/{folder_id}`. If the
   ///  parent is an organization, use the value `organizations/{org_id}`.
+  ///  @n
   ///  Access to this method is controlled by checking the
   ///  `resourcemanager.folders.list` permission on the `parent`.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -259,11 +261,14 @@ class FoldersClient {
   /// @param query  Optional. Search criteria used to select the folders to return.
   ///  If no search criteria is specified then all accessible folders will be
   ///  returned.
+  ///  @n
   ///  Query expressions can be used to restrict results based upon displayName,
   ///  state and parent, where the operators `=` (`:`) `NOT`, `AND` and `OR`
   ///  can be used along with the suffix wildcard symbol `*`.
+  ///  @n
   ///  The `displayName` field in a query expression should use escaped quotes
   ///  for values that include whitespace to prevent unexpected behavior.
+  ///  @n
   ///  ```
   ///  | Field                   | Description                            |
   ///  |-------------------------|----------------------------------------|
@@ -271,7 +276,9 @@ class FoldersClient {
   ///  | parent                  | Filters by parent (for example: folders/123). |
   ///  | state, lifecycleState   | Filters by state.                      |
   ///  ```
+  ///  @n
   ///  Some example queries are:
+  ///  @n
   ///  * Query `displayName=Test*` returns Folder resources whose display name
   ///  starts with "Test".
   ///  * Query `state=ACTIVE` returns Folder resources with

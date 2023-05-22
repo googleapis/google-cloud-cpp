@@ -162,6 +162,7 @@ class ProjectsClient {
   /// @param parent  Required. The name of the parent resource whose projects are being listed.
   ///  Only children of this parent resource are listed; descendants are not
   ///  listed.
+  ///  @n
   ///  If the parent is a folder, use the value `folders/{folder_id}`. If the
   ///  parent is an organization, use the value `organizations/{org_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -257,6 +258,7 @@ class ProjectsClient {
   ///  `resourcemanager.projects.get` permission to. If multiple fields are
   ///  included in the query, then it will return results that match any of the
   ///  fields. Some eligible fields are:
+  ///  @n
   ///  - **`displayName`, `name`**: Filters by displayName.
   ///  - **`parent`**: Project's parent (for example: `folders/123`,
   ///  `organizations/*`). Prefer `parent` field over `parent.type` and
@@ -268,8 +270,11 @@ class ProjectsClient {
   ///  - **`labels`**: Filters by label name or value.
   ///  - **`labels.<key>` (where `<key>` is the name of a label)**: Filters by label
   ///  name.
+  ///  @n
   ///  Search expressions are case insensitive.
+  ///  @n
   ///  Some examples queries:
+  ///  @n
   ///
   ///  - **`name:how*`**: The project's name starts with "how".
   ///  - **`name:Howl`**: The project's name is `Howl` or `howl`.
@@ -279,6 +284,7 @@ class ProjectsClient {
   ///  - **`labels.color:red`**:  The project's label `color` has the value `red`.
   ///  - **`labels.color:red labels.size:big`**: The project's label `color` has
   ///  the value `red` or its label `size` has the value `big`.
+  ///  @n
   ///  If no query is specified, the call will return projects for which the user
   ///  has the `resourcemanager.projects.get` permission.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -372,8 +378,10 @@ class ProjectsClient {
   /// `DeleteOperation`.
   ///
   /// @param project  Required. The Project to create.
+  ///  @n
   ///  Project ID is required. If the requested ID is unavailable, the request
   ///  fails.
+  ///  @n
   ///  If the `parent` field is set, the `resourcemanager.projects.create`
   ///  permission is checked on the parent resource. If no parent is set and
   ///  the authorization credentials belong to an Organization, the parent
@@ -785,6 +793,7 @@ class ProjectsClient {
   /// this project.
   ///
   /// @param name  Required. The name of the project (for example, `projects/415104041262`).
+  ///  @n
   ///  Required.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
