@@ -2,9 +2,9 @@
 
 @mainpage Google Cloud C++ OpenTelemetry Exporters
 
-This directory contains the [OpenTelemetry] [trace exporter] for [Cloud Trace].
-It also contains helpers to install the Cloud Trace exporter with reasonable
-defaults.
+This directory contains the [OpenTelemetry] [trace exporter][trace-exporter] for
+[Cloud Trace][cloud-trace]. It also contains helpers to install the Cloud Trace
+exporter with reasonable defaults.
 
 This library is **experimental**. Its APIs are subject to change without notice.
 
@@ -21,8 +21,8 @@ enable tracing in the Google Cloud client libraries.
 
 @snippet quickstart.cc all
 
-*/
-
-[cloud trace]: https://cloud.google.com/trace
+[cloud-trace]: https://cloud.google.com/trace
 [opentelemetry]: https://opentelemetry.io/
-[trace exporter]: https://opentelemetry.io/docs/concepts/signals/traces/#trace-exporters
+[trace-exporter]: https://opentelemetry.io/docs/concepts/signals/traces/#trace-exporters
+
+*/
