@@ -547,7 +547,8 @@ TEST(Doxygen2Syntax, Typedef) {
   contents: |
     using google::cloud::BackgroundThreadsFactory =
       std::function< std::unique_ptr< BackgroundThreads >()>;
-  aliasof: "std::function&lt; std::unique_ptr&lt; BackgroundThreads &gt;()&gt;"
+  aliasof: |
+    <code>std::function&lt; std::unique_ptr&lt; BackgroundThreads &gt;()&gt;</code>
   source:
     id: BackgroundThreadsFactory
     path: google/cloud/grpc_options.h

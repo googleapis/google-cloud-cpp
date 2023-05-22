@@ -271,12 +271,13 @@ void AppendEnumSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
 
 void AppendTypedefSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
                          pugi::xml_node node) {
+  auto const aliasof =
+      "<code>" + HtmlEscape(LinkedTextType(node.child("type"))) + "</code>";
   yaml << YAML::Key << "syntax" << YAML::Value                     //
        << YAML::BeginMap                                           //
        << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
        << TypedefSyntaxContent(node)                               //
-       << YAML::Key << "aliasof" << YAML::Value << YAML::DoubleQuoted
-       << HtmlEscape(LinkedTextType(node.child("type")));
+       << YAML::Key << "aliasof" << YAML::Value << YAML::Literal << aliasof;
   AppendLocation(yaml, ctx, node, "name");
   yaml << YAML::EndMap;
 }

@@ -562,7 +562,8 @@ items:
       contents: |
         using google::cloud::BackgroundThreadsFactory =
           std::function< std::unique_ptr< BackgroundThreads >()>;
-      aliasof: "std::function&lt; std::unique_ptr&lt; BackgroundThreads &gt;()&gt;"
+      aliasof: |
+        <code>std::function&lt; std::unique_ptr&lt; BackgroundThreads &gt;()&gt;</code>
       source:
         id: BackgroundThreadsFactory
         path: google/cloud/grpc_options.h
@@ -943,7 +944,8 @@ items:
       contents: |
         using google::cloud::AccessTokenLifetimeOption::Type =
           std::chrono::seconds;
-      aliasof: "std::chrono::seconds"
+      aliasof: |
+        <code>std::chrono::seconds</code>
       source:
         id: Type
         path: google/cloud/credentials.h
